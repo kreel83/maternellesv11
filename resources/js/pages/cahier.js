@@ -10,8 +10,13 @@ const choicePhrase = (quill) => {
         var section  = $(this).data('section')
         var enfant = $(this).data('enfant')
         var that = $(this)
+        var phrase = $(this).find(':selected').text()
+        console.log(phrase)
+        var selection = quill.getSelection(true);
+        quill.insertText(selection.index, phrase+'\n')
+        $(that).val('null')
 
-        $.ajax({
+        /*$.ajax({
             method: 'POST',
             url: "/enfants/"+enfant+"/translate",
             data: {
@@ -24,7 +29,7 @@ const choicePhrase = (quill) => {
                 quill.insertText(selection.index, data+'\n')
                 $(that).val('null')
             }
-        })
+        })*/
     })
 }
 
@@ -47,8 +52,6 @@ const saveTexte = (quill) => {
                 $('.sectionCahier[data-section="'+section+'"]').attr('data-texte', texte)
             }
         })
-
-
     })
 }
 
@@ -66,14 +69,33 @@ const clickOnNav = (quill) => {
     })
 }
 
-const apercu = (quill) => {
-    $(document).on('click', '#apercu', function() {
+const clickOnDefinif = () => {
+    $(document).on('change','#definitif', function() {
+        const definitif = $(this).prop('checked')
         var enfant = $(this).data('enfant')
         var periode = $(this).data('periode')
-        $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
-            quill.setText('');
-            quill.root.innerHTML = data
+        $.get('/enfants/' + enfant + '/cahier/' + periode + '/definitif?state=' + definitif, function (data) {
+
         })
+    })
+}
+
+
+
+const apercu = (quill) => {
+    $(document).on('click', '.nav-link', function() {
+        if ($(this).attr('id') == 'apercu') {
+            var enfant = $(this).data('enfant')
+            var periode = $(this).data('periode')
+            $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
+                $('#editor').css('height', '800px')
+                quill.setText('');
+                quill.root.innerHTML = data
+            })
+        } else {
+            $('#editor').css('height', '400px')
+        }
+
     })
 }
 
@@ -86,7 +108,6 @@ const onload = (quill) => {
             quill.root.innerHTML = data
         })
     })
-
 }
 
-export {choicePhrase, clickOnNav, saveTexte, onload, apercu}
+export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cahier;
 use App\Models\Commentaire;
 use App\Models\Enfant;
+use App\Models\Resultat;
 use App\Models\Section;
 use App\utils\Utils;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class CahierController extends Controller
 {
 
-    private function format_apercu($commentaires) {
+    private function format_apercu($commentaires, $resultats, $enfant) {
         $bloc = '';
         foreach ($commentaires as $key =>$section) {
 
@@ -22,16 +23,30 @@ class CahierController extends Controller
             foreach ($section as $phrase) {
                 $bloc .= $phrase->texte;
             }
+
+            foreach ($resultats[$key] as $resultat) {
+                $bloc .= $resultat->item()->phrase($enfant).PHP_EOL;
+            }
         }
         return $bloc;
 
     }
 
 
+
+
+    public function definitif($id, $periode, Request $request) {
+        dd($request);
+    }
+
+
     public function apercu($id, $periode) {
+        $enfant = Enfant::find($id);
         $commentaire_enfant = Cahier::where('enfant_id', $id)->where('periode', $periode)->orderBy('section_id')->get();
         $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
-        return $this->format_apercu($commentaire_enfant);
+        $resultats = Resultat::where('enfant_id', $id)->orderBy('section_id')->get();
+        $resultats = $resultats->groupBy('section_id');
+        return $this->format_apercu($commentaire_enfant, $resultats, $enfant);
     }
 
     public function index($id, $periode) {
@@ -40,6 +55,10 @@ class CahierController extends Controller
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
             return [$item['section_id'] => $item];
         });
+        $resultats = $enfant->resultats();
+        //$resultats = $resultats->groupBy('section_id');
+        //dd($resultats);
+
 
 
 
@@ -48,6 +67,7 @@ class CahierController extends Controller
 
         return view('cahiers.index')
             ->with('enfant',$enfant)
+            ->with('resultats',$resultats)
             ->with('phrases', $grouped)
             ->with('textes', $textes)
             ->with('periode', $periode)

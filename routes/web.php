@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
     Route::post('/enfants/{id}/cahier/{periode}/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::get('/enfants/{id}/cahier/{periode}/apercu', [CahierController::class, 'apercu'])->name('apercu');
+    Route::get('/enfants/{id}/cahier/{periode}/definitif', [CahierController::class, 'definitif'])->name('definitif');
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');

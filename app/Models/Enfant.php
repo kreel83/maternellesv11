@@ -29,9 +29,12 @@ class Enfant extends Model
 
     public function cahier($periode) {
         return Cahier::where('enfant_id', $this->id)->where('periode', $periode)->pluck('texte','section_id');
+    }
 
-
-
+    public function resultats() {
+        $r = Resultat::where('enfant_id', $this->id)->get();
+        $r = $r->groupBy('section_id');
+        return $r;
 
     }
 

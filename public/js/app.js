@@ -20191,6 +20191,7 @@ window.section_active = null;
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.saveTexte)(quill);
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.onload)(quill);
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.apercu)(quill);
+(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.clickOnDefinif)();
 
 /***/ }),
 
@@ -20241,7 +20242,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "clickOnNav": () => (/* binding */ clickOnNav),
 /* harmony export */   "saveTexte": () => (/* binding */ saveTexte),
 /* harmony export */   "onload": () => (/* binding */ onload),
-/* harmony export */   "apercu": () => (/* binding */ apercu)
+/* harmony export */   "apercu": () => (/* binding */ apercu),
+/* harmony export */   "clickOnDefinif": () => (/* binding */ clickOnDefinif)
 /* harmony export */ });
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window.Quill = __webpack_require__(/*! Quill */ "./node_modules/Quill/dist/quill.js");
@@ -20253,20 +20255,25 @@ var choicePhrase = function choicePhrase(quill) {
     var section = $(this).data('section');
     var enfant = $(this).data('enfant');
     var that = $(this);
-    $.ajax({
-      method: 'POST',
-      url: "/enfants/" + enfant + "/translate",
-      data: {
-        phrase: ph,
-        enfant: enfant
-      },
-      success: function success(data) {
-        console.log(data);
-        var selection = quill.getSelection(true);
-        quill.insertText(selection.index, data + '\n');
-        $(that).val('null');
-      }
-    });
+    var phrase = $(this).find(':selected').text();
+    console.log(phrase);
+    var selection = quill.getSelection(true);
+    quill.insertText(selection.index, phrase + '\n');
+    $(that).val('null');
+    /*$.ajax({
+        method: 'POST',
+        url: "/enfants/"+enfant+"/translate",
+        data: {
+            phrase: ph,
+            enfant: enfant
+        },
+        success: function (data) {
+            console.log(data)
+            var selection = quill.getSelection(true);
+            quill.insertText(selection.index, data+'\n')
+            $(that).val('null')
+        }
+    })*/
   });
 };
 
@@ -20305,14 +20312,28 @@ var clickOnNav = function clickOnNav(quill) {
   });
 };
 
-var apercu = function apercu(quill) {
-  $(document).on('click', '#apercu', function () {
+var clickOnDefinif = function clickOnDefinif() {
+  $(document).on('change', '#definitif', function () {
+    var definitif = $(this).prop('checked');
     var enfant = $(this).data('enfant');
     var periode = $(this).data('periode');
-    $.get('/enfants/' + enfant + '/cahier/' + periode + '/apercu', function (data) {
-      quill.setText('');
-      quill.root.innerHTML = data;
-    });
+    $.get('/enfants/' + enfant + '/cahier/' + periode + '/definitif?state=' + definitif, function (data) {});
+  });
+};
+
+var apercu = function apercu(quill) {
+  $(document).on('click', '.nav-link', function () {
+    if ($(this).attr('id') == 'apercu') {
+      var enfant = $(this).data('enfant');
+      var periode = $(this).data('periode');
+      $.get('/enfants/' + enfant + '/cahier/' + periode + '/apercu', function (data) {
+        $('#editor').css('height', '800px');
+        quill.setText('');
+        quill.root.innerHTML = data;
+      });
+    } else {
+      $('#editor').css('height', '400px');
+    }
   });
 };
 
