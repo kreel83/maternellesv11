@@ -11,7 +11,7 @@ import Alpine from 'alpinejs';
 
 
 import {selectItem, hamburger} from './pages/items';
-import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif} from './pages/cahier';
+import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite} from './pages/cahier';
 
 
 window.Alpine = Alpine;
@@ -61,4 +61,5 @@ clickOnNav(quill)
 saveTexte(quill)
 onload(quill)
 apercu(quill)
-clickOnDefinif()
+clickOnDefinif(quill)
+saveTexteReussite(quill)

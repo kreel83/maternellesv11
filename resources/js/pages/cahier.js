@@ -55,6 +55,26 @@ const saveTexte = (quill) => {
     })
 }
 
+const saveTexteReussite = (quill) => {
+    $(document).on('click','.saveTexteReussite', function() {
+
+        var enfant = $(this).data('enfant')
+        var definitif = $('#definitif').prop('checked')
+        var periode = $(this).data('periode')
+        $.ajax({
+            method: 'POST',
+            url: '/enfants/'+enfant+"/cahier/"+periode+"/saveTexteReussite",
+            data: {
+                quill: quill.root.innerHTML,
+                state: definitif
+            },
+            success: function(data) {
+
+            }
+        })
+    })
+}
+
 const clickOnNav = (quill) => {
     $(document).on('click','.sectionCahier', function() {
         console.log(window.section_active)
@@ -69,13 +89,26 @@ const clickOnNav = (quill) => {
     })
 }
 
-const clickOnDefinif = () => {
+const clickOnDefinif = (quill) => {
     $(document).on('change','#definitif', function() {
         const definitif = $(this).prop('checked')
         var enfant = $(this).data('enfant')
         var periode = $(this).data('periode')
-        $.get('/enfants/' + enfant + '/cahier/' + periode + '/definitif?state=' + definitif, function (data) {
-
+        $.ajax({
+            method: 'POST',
+            url : '/enfants/' + enfant + '/cahier/' + periode + '/definitif',
+            data: {
+                state: definitif,
+                quill: quill.root.innerHTML
+            },
+            success: function(data) {
+                console.log(definitif)
+                if (definitif == true) {
+                    quill.enable(false)
+                } else {
+                    quill.enable(true)
+                }
+            }
         })
     })
 }
@@ -90,7 +123,11 @@ const apercu = (quill) => {
             $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
                 $('#editor').css('height', '800px')
                 quill.setText('');
+                console.log(data)
                 quill.root.innerHTML = data
+                if ($('#definitif').prop('checked')) {
+                    quill.enable(false)
+                }
             })
         } else {
             $('#editor').css('height', '400px')
@@ -110,4 +147,4 @@ const onload = (quill) => {
     })
 }
 
-export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif}
+export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite}

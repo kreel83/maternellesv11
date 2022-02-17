@@ -20191,7 +20191,8 @@ window.section_active = null;
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.saveTexte)(quill);
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.onload)(quill);
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.apercu)(quill);
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.clickOnDefinif)();
+(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.clickOnDefinif)(quill);
+(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.saveTexteReussite)(quill);
 
 /***/ }),
 
@@ -20243,7 +20244,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "saveTexte": () => (/* binding */ saveTexte),
 /* harmony export */   "onload": () => (/* binding */ onload),
 /* harmony export */   "apercu": () => (/* binding */ apercu),
-/* harmony export */   "clickOnDefinif": () => (/* binding */ clickOnDefinif)
+/* harmony export */   "clickOnDefinif": () => (/* binding */ clickOnDefinif),
+/* harmony export */   "saveTexteReussite": () => (/* binding */ saveTexteReussite)
 /* harmony export */ });
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window.Quill = __webpack_require__(/*! Quill */ "./node_modules/Quill/dist/quill.js");
@@ -20297,6 +20299,23 @@ var saveTexte = function saveTexte(quill) {
   });
 };
 
+var saveTexteReussite = function saveTexteReussite(quill) {
+  $(document).on('click', '.saveTexteReussite', function () {
+    var enfant = $(this).data('enfant');
+    var definitif = $('#definitif').prop('checked');
+    var periode = $(this).data('periode');
+    $.ajax({
+      method: 'POST',
+      url: '/enfants/' + enfant + "/cahier/" + periode + "/saveTexteReussite",
+      data: {
+        quill: quill.root.innerHTML,
+        state: definitif
+      },
+      success: function success(data) {}
+    });
+  });
+};
+
 var clickOnNav = function clickOnNav(quill) {
   $(document).on('click', '.sectionCahier', function () {
     console.log(window.section_active);
@@ -20312,12 +20331,28 @@ var clickOnNav = function clickOnNav(quill) {
   });
 };
 
-var clickOnDefinif = function clickOnDefinif() {
+var clickOnDefinif = function clickOnDefinif(quill) {
   $(document).on('change', '#definitif', function () {
     var definitif = $(this).prop('checked');
     var enfant = $(this).data('enfant');
     var periode = $(this).data('periode');
-    $.get('/enfants/' + enfant + '/cahier/' + periode + '/definitif?state=' + definitif, function (data) {});
+    $.ajax({
+      method: 'POST',
+      url: '/enfants/' + enfant + '/cahier/' + periode + '/definitif',
+      data: {
+        state: definitif,
+        quill: quill.root.innerHTML
+      },
+      success: function success(data) {
+        console.log(definitif);
+
+        if (definitif == true) {
+          quill.enable(false);
+        } else {
+          quill.enable(true);
+        }
+      }
+    });
   });
 };
 
@@ -20329,7 +20364,12 @@ var apercu = function apercu(quill) {
       $.get('/enfants/' + enfant + '/cahier/' + periode + '/apercu', function (data) {
         $('#editor').css('height', '800px');
         quill.setText('');
+        console.log(data);
         quill.root.innerHTML = data;
+
+        if ($('#definitif').prop('checked')) {
+          quill.enable(false);
+        }
       });
     } else {
       $('#editor').css('height', '400px');

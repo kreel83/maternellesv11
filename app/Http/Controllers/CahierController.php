@@ -6,6 +6,7 @@ use App\Models\Cahier;
 use App\Models\Commentaire;
 use App\Models\Enfant;
 use App\Models\Resultat;
+use App\Models\Reussite;
 use App\Models\Section;
 use App\utils\Utils;
 use Illuminate\Http\Request;
@@ -35,12 +36,28 @@ class CahierController extends Controller
 
 
 
-    public function definitif($id, $periode, Request $request) {
-        dd($request);
+    public function definitif($id, $periode, Request $request)
+    {
+        $reussite = Reussite::where('enfant_id', $id)->where('periode', $periode)->first();
+        //dd($request);
+        if (!$reussite) {
+            $reussite = new Reussite();
+            $reussite->enfant_id = $id;
+            $reussite->periode = $periode;
+            $reussite->user_id = Auth::id();
+        }
+
+            $reussite->definitif = $request->state == "true" ? true : false;
+            $reussite->texte_integral = $request->quill;
+            $reussite->save();
+            return 'ok';
     }
 
 
     public function apercu($id, $periode) {
+        $reussite = Reussite::where('enfant_id', $id)->where('periode', $periode)->first();
+
+        if ($reussite) return $reussite->texte_integral;
         $enfant = Enfant::find($id);
         $commentaire_enfant = Cahier::where('enfant_id', $id)->where('periode', $periode)->orderBy('section_id')->get();
         $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
@@ -58,7 +75,7 @@ class CahierController extends Controller
         $resultats = $enfant->resultats();
         //$resultats = $resultats->groupBy('section_id');
         //dd($resultats);
-
+        $reussite = Reussite::where('periode', $periode)->where('enfant_id',$id)->first();
 
 
 
@@ -67,6 +84,7 @@ class CahierController extends Controller
 
         return view('cahiers.index')
             ->with('enfant',$enfant)
+            ->with('reussite',$reussite)
             ->with('resultats',$resultats)
             ->with('phrases', $grouped)
             ->with('textes', $textes)

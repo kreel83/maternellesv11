@@ -20,9 +20,11 @@
     <div class="tab-content" id="nav-tabContent" style="margin-bottom: 20px" >
         <div style="margin-bottom: 20px" class="tab-pane fade {{$key == 0 ? 'show active' : null}}" id="nav-apercu" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="d-flex w-100 justify-content-between align-items-center">
-                <button data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="margin-top: 20px" class="btn btn-dark saveTexte">Sauvegarder</button>
+                <button data-section="apercu" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="margin-top: 20px" class="btn btn-dark saveTexteReussite">Sauvegarder</button>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="definitif" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}">
+
+
+                    <input {{($reussite && $reussite->definitif == 1) ? "checked" : null }} class="form-check-input" type="checkbox" id="definitif" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}">
                     <label class="form-check-label" for="definitif">Définitif</label>
                 </div>
             </div>
