@@ -13020,3 +13020,17 @@ h2, .h2 {
   display: flex;
   flex-wrap: wrap;
 }
+
+#tableCommentaireContainer {
+  height: 300px;
+  width: 100%;
+  overflow-y: auto;
+  color: grey;
+}
+#tableCommentaireContainer .controle span {
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}

@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CahierController;
+use App\Http\Controllers\ParametreController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,11 +31,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
     Route::post('/enfants/{id}/cahier/{periode}/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::post('/enfants/{id}/cahier/{periode}/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
+    Route::get('/enfants/{id}/cahier/{periode}/seepdf', [CahierController::class, 'seepdf'])->name('seepdf');
     Route::get('/enfants/{id}/cahier/{periode}/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/{periode}/definitif', [CahierController::class, 'definitif'])->name('definitif');
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
+
+    Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
+    Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
+    Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
 });
 
 

@@ -12,4 +12,12 @@ class Section extends Model
     public function items() {
         return $this->hasmany('App\Models\Item');
     }
+
+    public function commentaires() {
+        return $this->hasMany('App\Models\Commentaire');
+    }
+
+    public function getCommentaires() {
+        return $this->commentaires()->get();
+    }
 }

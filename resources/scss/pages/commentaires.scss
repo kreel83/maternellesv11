@@ -1,0 +1,14 @@
+#tableCommentaireContainer {
+    height: 300px;
+    width: 100%;
+    overflow-y: auto;
+    color: grey;
+    .controle span{
+        cursor: pointer;
+    }
+}
+
+
+.hide {
+    display: none
+}

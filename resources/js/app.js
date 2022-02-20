@@ -12,6 +12,7 @@ import Alpine from 'alpinejs';
 
 import {selectItem, hamburger} from './pages/items';
 import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite} from './pages/cahier';
+import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase} from "./pages/phrase";
 
 
 window.Alpine = Alpine;
@@ -63,3 +64,9 @@ onload(quill)
 apercu(quill)
 clickOnDefinif(quill)
 saveTexteReussite(quill)
+
+selectPhrase()
+editPhrase(quill)
+deletePhrase()
+nouvellePhrase(quill)
+cancelNouvellePhrase(quill)

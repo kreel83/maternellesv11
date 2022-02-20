@@ -11,22 +11,30 @@ use App\Models\Section;
 use App\utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class CahierController extends Controller
 {
 
     private function format_apercu($commentaires, $resultats, $enfant) {
-        $bloc = '';
-        foreach ($commentaires as $key =>$section) {
 
-            $nameSection = ($key == 99) ? 'Commentaire général' : Section::find($key)->name;
+        $bloc = '';
+        $sections = Section::all()->pluck('id')->toArray();
+        //dd($sections, $commentaires, $resultats);
+        foreach ($sections as $section) {
+
+            $nameSection = ($section == 99) ? 'Commentaire général' : Section::find($section)->name;
             $bloc .= "<br><h2>$nameSection</h2><br />";
-            foreach ($section as $phrase) {
-                $bloc .= $phrase->texte;
+            if (isset($commentaires[$section])) {
+                foreach ($commentaires[$section] as $phrase) {
+                    $bloc .= $phrase->texte;
+                }
             }
 
-            foreach ($resultats[$key] as $resultat) {
-                $bloc .= $resultat->item()->phrase($enfant).PHP_EOL;
+            if (isset($resultats[$section])) {
+                foreach ($resultats[$section] as $resultat) {
+                    $bloc .= $resultat->item()->phrase($enfant) . PHP_EOL;
+                }
             }
         }
         return $bloc;
@@ -35,6 +43,15 @@ class CahierController extends Controller
 
 
 
+
+    public function seepdf($id, $periode) {
+
+        $reussite = Reussite::where('enfant_id', $id)->where('periode', $periode)->first()->texte_integral;
+
+        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite]);
+        // download PDF file with download method
+        return $pdf->stream('test_cahier.pdf');
+    }
 
     public function definitif($id, $periode, Request $request)
     {
@@ -63,6 +80,7 @@ class CahierController extends Controller
         $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
         $resultats = Resultat::where('enfant_id', $id)->orderBy('section_id')->get();
         $resultats = $resultats->groupBy('section_id');
+
         return $this->format_apercu($commentaire_enfant, $resultats, $enfant);
     }
 

@@ -21,6 +21,7 @@
         <div style="margin-bottom: 20px" class="tab-pane fade {{$key == 0 ? 'show active' : null}}" id="nav-apercu" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <button data-section="apercu" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="margin-top: 20px" class="btn btn-dark saveTexteReussite">Sauvegarder</button>
+                <a target="_blank" href="/enfants/{{$enfant->id}}/cahier/{{$periode}}/seepdf" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}" class="btn btn-primary" id="pdf">Voir le pdf</a>
                 <div class="form-check form-switch">
 
 

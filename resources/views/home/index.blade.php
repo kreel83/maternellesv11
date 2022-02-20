@@ -2,7 +2,7 @@
 
 @section('content')
 
-<!-- 
+<!--
 
 GRADIENT BANNER DESIGN BY SIMON LURWER ON DRIBBBLE:
 https://dribbble.com/shots/14101951-Banners
@@ -48,10 +48,10 @@ https://dribbble.com/shots/14101951-Banners
         <p class="card__exit"><i class="fas fa-times"></i></p>
         <h2 class="card__title">Mes paramètres</h2>
         <p class="card__apply">
-          <a class="card__link" href="#">C'est parti ! <i class="fas fa-arrow-right"></i></a>
+          <a class="card__link" href="{{route('parametres')}}">C'est parti ! <i class="fas fa-arrow-right"></i></a>
         </p>
       </div>
-     
+
     </div>
   </div>
 

@@ -20143,6 +20143,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 /* harmony import */ var _pages_items__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/items */ "./resources/js/pages/items.js");
 /* harmony import */ var _pages_cahier__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/cahier */ "./resources/js/pages/cahier.js");
+/* harmony import */ var _pages_phrase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/phrase */ "./resources/js/pages/phrase.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
@@ -20150,6 +20151,7 @@ __webpack_require__(/*! ./quill.js */ "./resources/js/quill.js");
 
 window.Quill = __webpack_require__(/*! Quill */ "./node_modules/Quill/dist/quill.js");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Quill);
+
 
 
 
@@ -20193,6 +20195,11 @@ window.section_active = null;
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.apercu)(quill);
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.clickOnDefinif)(quill);
 (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_3__.saveTexteReussite)(quill);
+(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_4__.selectPhrase)();
+(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_4__.editPhrase)(quill);
+(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_4__.deletePhrase)();
+(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_4__.nouvellePhrase)(quill);
+(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_4__.cancelNouvellePhrase)(quill);
 
 /***/ }),
 
@@ -20423,6 +20430,88 @@ var hamburger = function hamburger() {
   $('.hamburger').on('click', function () {
     $(this).css('display', 'none');
     $(this).closest('.card').find('.menu').attr('hidden', false);
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/phrase.js":
+/*!**************************************!*\
+  !*** ./resources/js/pages/phrase.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "selectPhrase": () => (/* binding */ selectPhrase),
+/* harmony export */   "editPhrase": () => (/* binding */ editPhrase),
+/* harmony export */   "deletePhrase": () => (/* binding */ deletePhrase),
+/* harmony export */   "nouvellePhrase": () => (/* binding */ nouvellePhrase),
+/* harmony export */   "cancelNouvellePhrase": () => (/* binding */ cancelNouvellePhrase)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+var selectPhrase = function selectPhrase() {
+  $('#selectPhrase').on('change', function () {
+    var id = $(this).val();
+    window.open('/parametres/phrases?section=' + id, '_self');
+  });
+};
+
+var deletePhrase = function deletePhrase() {
+  $('.deletePhrase').on('click', function () {
+    var id = $(this).closest('.controle').data('id');
+    var el = $(this).closest('tr');
+    $.get('/parametres/phrases/' + id + '/delete', function (data) {
+      $(el).remove();
+    });
+  });
+};
+
+var nouvellePhrase = function nouvellePhrase(quill) {
+  $('#nouvellePhrase').on('click', function () {
+    $('#controleNouvellePhrase').toggleClass('hide');
+    $(this).toggleClass('hide');
+    quill.setText('');
+  });
+};
+
+var cancelNouvellePhrase = function cancelNouvellePhrase(quill) {
+  $('#cancelNouvellePhrase').on('click', function () {
+    $('#controleNouvellePhrase').toggleClass('hide');
+    $('#nouvellePhrase').toggleClass('hide');
+    quill.setText('');
+  });
+};
+
+var saveNouvellePhrase = function saveNouvellePhrase(quill) {
+  $('#saveNouvellePhrase').on('click', function () {
+    var quill = quill.root.innerHTML;
+    var section = $(this).data('section');
+    $.ajax({
+      method: 'POST',
+      url: '/paramestres/phrases/new',
+      data: {
+        section: section,
+        quill: quill
+      },
+      success: function success(data) {
+        $('#tableauDesPhrases').html(data);
+      }
+    });
+    $('#controleNouvellePhrase').toggleClass('hide');
+    $('#nouvellePhrase').toggleClass('hide');
+    quill.setText('');
+  });
+};
+
+var editPhrase = function editPhrase(quill) {
+  $('.editPhrase').on('click', function () {
+    var data = $(this).closest('tr').find('td:first').html();
+    quill.setText('');
+    quill.root.innerHTML = data;
   });
 };
 

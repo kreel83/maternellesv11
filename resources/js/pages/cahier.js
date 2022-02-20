@@ -75,6 +75,8 @@ const saveTexteReussite = (quill) => {
     })
 }
 
+
+
 const clickOnNav = (quill) => {
     $(document).on('click','.sectionCahier', function() {
         console.log(window.section_active)
