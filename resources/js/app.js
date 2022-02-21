@@ -12,7 +12,7 @@ import Alpine from 'alpinejs';
 
 import {selectItem, hamburger} from './pages/items';
 import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite} from './pages/cahier';
-import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase} from "./pages/phrase";
+import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase, setMotCle, saveNouvellePhrase} from "./pages/phrase";
 
 
 window.Alpine = Alpine;
@@ -20,6 +20,7 @@ window.Alpine = Alpine;
 Alpine.start();
 
 $(document).ready(function($) {
+
 
     $('.card__share  a').on('click', function(e){
         var that = $(this).closest('.card')
@@ -52,6 +53,13 @@ var quill = new Quill('#editor', {
     theme: 'snow'
 });
 
+var quill2 = new Quill('#editor2', {
+    modules: {
+        toolbar: false    // Snow includes toolbar by default
+    },
+    theme: 'snow'
+});
+
 window.section_active = null
 
 selectItem()
@@ -66,7 +74,9 @@ clickOnDefinif(quill)
 saveTexteReussite(quill)
 
 selectPhrase()
-editPhrase(quill)
+editPhrase(quill2)
 deletePhrase()
-nouvellePhrase(quill)
-cancelNouvellePhrase(quill)
+nouvellePhrase(quill2)
+cancelNouvellePhrase(quill2)
+setMotCle(quill2)
+saveNouvellePhrase(quill2)

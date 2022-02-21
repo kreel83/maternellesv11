@@ -140,12 +140,21 @@ const apercu = (quill) => {
 
 const onload = (quill) => {
     $(document).ready(function() {
-        var enfant = $('#apercu').data('enfant')
-        var periode = $('#apercu').data('periode')
-        $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
-            quill.setText('');
-            quill.root.innerHTML = data
-        })
+        if ($('#motCle').length) {
+            quill.setText("")
+            quill.enable(false)
+            $('#editor').css('height','200px')
+        }
+        if ($('#apercu').length) {
+
+                var enfant = $('#apercu').data('enfant')
+                var periode = $('#apercu').data('periode')
+                $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
+                    quill.setText('');
+                    quill.root.innerHTML = data
+                })
+
+        }
     })
 }
 

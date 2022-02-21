@@ -1,4 +1,6 @@
 
+
+
 const selectPhrase = () => {
     $('#selectPhrase').on('change', function() {
         var id = $(this).val()
@@ -20,7 +22,9 @@ const nouvellePhrase = (quill) => {
     $('#nouvellePhrase').on('click', function() {
         $('#controleNouvellePhrase').toggleClass('hide')
         $(this).toggleClass('hide')
+        $('#saveNouvellePhrase').attr('data-id', 'new')
         quill.setText('');
+        quill.enable(true)
     })
 }
 
@@ -29,39 +33,59 @@ const cancelNouvellePhrase = (quill) => {
         $('#controleNouvellePhrase').toggleClass('hide')
         $('#nouvellePhrase').toggleClass('hide')
         quill.setText('');
+        quill.enable(false)
     })
 }
 
 const saveNouvellePhrase = (quill) => {
     $('#saveNouvellePhrase').on('click', function() {
-        var quill = quill.root.innerHTML
+
+        var data = quill.root.innerHTML
         var section = $(this).data('section')
+        var id = $(this).data('id')
         $.ajax({
             method: 'POST',
-            url: '/paramestres/phrases/new',
+            url: '/parametres/phrases/save',
             data: {
+                id: id,
                 section: section,
-                quill: quill
+                quill: data
             },
             success: function(data) {
-                $('#tableauDesPhrases').html(data)
+                $('#tableCommentaireContainer').html(data)
+                deletePhrase(quill)
+                editPhrase(quill)
             }
         })
 
         $('#controleNouvellePhrase').toggleClass('hide')
         $('#nouvellePhrase').toggleClass('hide')
         quill.setText('');
+        quill.enable(false)
     })
 }
 
 const editPhrase = (quill) => {
     $('.editPhrase').on('click', function() {
         var data = $(this).closest('tr').find('td:first').html()
+        var id = $(this).closest('td').data('id')
+        $('#saveNouvellePhrase').attr('data-id', id)
         quill.setText('');
+        quill.enable(true)
         quill.root.innerHTML = data
+        $('#controleNouvellePhrase').toggleClass('hide')
+        $('#nouvellePhrase').toggleClass('hide')
 
     })
 }
 
+const setMotCle = (quill) => {
+    $('#motCle td').on('click', function() {
+        var data = $(this).data('reg')
+        var selection = quill.getSelection(true);
+        quill.insertText(selection.index, data);
+    })
+}
 
-export {selectPhrase, editPhrase, deletePhrase, nouvellePhrase, cancelNouvellePhrase}
+
+export {selectPhrase, editPhrase, deletePhrase, nouvellePhrase, cancelNouvellePhrase, setMotCle, saveNouvellePhrase}
