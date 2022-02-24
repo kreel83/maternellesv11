@@ -47,7 +47,16 @@ class User extends Authenticatable
     }
 
     public function notations() {
-        
+
         return $this->hasmany('App\Models\Notation');
+    }
+
+    public function mesfiches($section) {
+        return Item::select('items.*')->join('fiches','fiches.item_id',"items.id")->where('fiches.user_id', $this->id)->where('items.section_id', $section->id)->get();
+    }
+
+    public function autresfiches($section) {
+        $mesfiches = Fiche::where('user_id', $this->id)->pluck('id');
+        return Item::whereNotIn('id', $mesfiches)->where('section_id', $section->id)->get();
     }
 }

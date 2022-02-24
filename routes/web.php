@@ -7,6 +7,7 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CahierController;
 use App\Http\Controllers\ParametreController;
+use App\Http\Controllers\FicheController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');
     Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
+
+    Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
+    Route::get('/fiches/choix', [ficheController::class, 'choix']);
 });
 
 

@@ -8,11 +8,17 @@ export default Quill;
 import 'bootstrap';
 
 import Alpine from 'alpinejs';
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+import 'jquery-ui/ui/widgets/datepicker.js';
+import 'jquery-ui/ui/widgets/sortable.js';
 
 
 import {selectItem, hamburger} from './pages/items';
 import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite} from './pages/cahier';
 import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase, setMotCle, saveNouvellePhrase} from "./pages/phrase";
+import {selectSectionFiche, selectFiche, choixTypeFiches} from './pages/fiche'
 
 
 window.Alpine = Alpine;
@@ -20,6 +26,12 @@ window.Alpine = Alpine;
 Alpine.start();
 
 $(document).ready(function($) {
+
+
+    $( function() {
+        $( "#sortable" ).sortable();
+    } );
+
 
 
     $('.card__share  a').on('click', function(e){
@@ -80,3 +92,7 @@ nouvellePhrase(quill2)
 cancelNouvellePhrase(quill2)
 setMotCle(quill2)
 saveNouvellePhrase(quill2)
+
+selectSectionFiche()
+selectFiche()
+choixTypeFiches()
