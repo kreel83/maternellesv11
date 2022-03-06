@@ -7,8 +7,10 @@ use App\Models\Enfant;
 use App\Models\Section;
 use App\Models\Resultat;
 use App\Models\Item;
+use App\Models\Fiche;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -17,8 +19,18 @@ class ItemController extends Controller
         $sections = Section::all();
 
         $notations = $enfant->user()->notations()->get();
+        $fiches =  Fiche::where('user_id', Auth::id())->orderBy('order')->get();
+        $fiches = $fiches->groupBy('section_id');
 
-        return view('items.index')->with('sections',$sections)->with('enfant', $enfant)->with('notations', $notations);
+
+
+
+        return view('items.index')
+                ->with("user", Auth::user())
+                ->with('fiches', $fiches)
+                ->with('sections',$sections)
+                ->with('enfant', $enfant)
+                ->with('notations', $notations);
     }
 
     public function saveResultat(Request $request) {

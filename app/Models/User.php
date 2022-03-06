@@ -52,11 +52,16 @@ class User extends Authenticatable
     }
 
     public function mesfiches($section) {
-        return Item::select('items.*')->join('fiches','fiches.item_id',"items.id")->where('fiches.user_id', $this->id)->where('items.section_id', $section->id)->get();
+        return Fiche::where('section_id', $section->id)->orderBy('order')->get();
     }
 
     public function autresfiches($section) {
-        $mesfiches = Fiche::where('user_id', $this->id)->pluck('id');
-        return Item::whereNotIn('id', $mesfiches)->where('section_id', $section->id)->get();
+        $mesfiches = Fiche::where('user_id', $this->id)->where('section_id', $section->id)->get();
+        $ll = $mesfiches->pluck('item_id');
+        $items = Item::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
+        $perso = Personnel::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
+        $return =  $items->merge($perso);
+        return $return;
+
     }
 }

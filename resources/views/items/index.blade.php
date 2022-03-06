@@ -15,10 +15,13 @@
          <div id="panelsStayOpen-collapse{{$key}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{$key}}">
             <div class="accordion-body item">
                 <div class="items_container">
-                    @foreach ($section->items()->get() as $item)
+                    @if(isset($fiches[$section->id]))
+                        @foreach ($fiches[$section->id] as $fiche)
 
-                        @include('cards.item')
-                    @endforeach
+                            @include('cards.item')
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
         </div>

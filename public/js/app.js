@@ -20171,9 +20171,6 @@ window.$ = __webpack_provided_window_dot_jQuery = (jquery__WEBPACK_IMPORTED_MODU
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
 jquery__WEBPACK_IMPORTED_MODULE_2___default()(document).ready(function ($) {
-  $(function () {
-    $("#sortable").sortable();
-  });
   $('.card__share  a').on('click', function (e) {
     var that = $(this).closest('.card');
     var $this = $(this);
@@ -20207,6 +20204,13 @@ var quill2 = new Quill('#editor2', {
   },
   theme: 'snow'
 });
+var quill3 = new Quill('#editor3', {
+  modules: {
+    toolbar: false // Snow includes toolbar by default
+
+  },
+  theme: 'snow'
+});
 window.section_active = null;
 (0,_pages_items__WEBPACK_IMPORTED_MODULE_5__.selectItem)();
 (0,_pages_items__WEBPACK_IMPORTED_MODULE_5__.hamburger)();
@@ -20224,9 +20228,17 @@ window.section_active = null;
 (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.cancelNouvellePhrase)(quill2);
 (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.setMotCle)(quill2);
 (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.saveNouvellePhrase)(quill2);
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.jemodifielafiche)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.initFiche)();
 (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.selectSectionFiche)();
 (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.selectFiche)();
 (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.choixTypeFiches)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.choixFiltre)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.jechoisislaselection)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.photoEnfant)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.photoEnfantTrigger)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.editor2change)(quill3);
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.setMotCleFiche)(quill3);
 
 /***/ }),
 
@@ -20443,9 +20455,17 @@ var onload = function onload(quill) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "jemodifielafiche": () => (/* binding */ jemodifielafiche),
+/* harmony export */   "initFiche": () => (/* binding */ initFiche),
 /* harmony export */   "selectSectionFiche": () => (/* binding */ selectSectionFiche),
 /* harmony export */   "selectFiche": () => (/* binding */ selectFiche),
-/* harmony export */   "choixTypeFiches": () => (/* binding */ choixTypeFiches)
+/* harmony export */   "choixTypeFiches": () => (/* binding */ choixTypeFiches),
+/* harmony export */   "choixFiltre": () => (/* binding */ choixFiltre),
+/* harmony export */   "jechoisislaselection": () => (/* binding */ jechoisislaselection),
+/* harmony export */   "photoEnfant": () => (/* binding */ photoEnfant),
+/* harmony export */   "photoEnfantTrigger": () => (/* binding */ photoEnfantTrigger),
+/* harmony export */   "editor2change": () => (/* binding */ editor2change),
+/* harmony export */   "setMotCleFiche": () => (/* binding */ setMotCleFiche)
 /* harmony export */ });
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 var selectSectionFiche = function selectSectionFiche(quill) {
@@ -20458,18 +20478,146 @@ var selectSectionFiche = function selectSectionFiche(quill) {
 var selectFiche = function selectFiche() {
   $(document).on('dblclick', '.card_fiche', function () {
     var id = $(this).data('fiche');
+    var type = $(this).data('type');
+    var table = $(this).data('table');
     var that = $(this);
-    $.get('/fiches/choix?fiche=' + id, function (data) {
+    var section = $('#nav-tabContent').data('section');
+    $.get('/fiches/choix?fiche=' + id + '&section=' + section + '&type=' + type + '&table=' + table, function (data) {
       $(that).remove();
     });
   });
 };
 
 var choixTypeFiches = function choixTypeFiches() {
-  $(document).on('click', '#choixFiche td', function () {
+  $(document).on('click', '#choixFiche button', function () {
     var type = $(this).data('type');
-    var id = $("#choixFiche").data('section');
-    window.open('/fiches?id=' + id + '&type=' + type, '_self');
+    var section = $("#choixFiche").data('section');
+    window.open('/fiches?section=' + section + '&type=' + type, '_self');
+  });
+};
+
+var initFiche = function initFiche() {
+  $(function () {
+    $("#sortable").sortable({
+      start: function start() {},
+      stop: function stop() {
+        var pos = [];
+        $('.card_fiche[data-type="mesfiches"]').each(function (index, el) {
+          console.log(el);
+          pos.push($(el).data('fiche'));
+        });
+        $.ajax({
+          method: 'POST',
+          url: '/fiches/order',
+          data: {
+            pos: pos,
+            secteur: $('#selectSectionFiche').val()
+          },
+          success: function success() {
+            console.log('ok');
+          }
+        });
+      }
+    });
+  });
+};
+
+var choixFiltre = function choixFiltre() {
+  $(document).on('change', '#filtre input', function () {
+    var c = [];
+    $('#filtre input').each(function (index, el) {
+      c.push($(el).is(':checked') ? 1 : 0);
+    });
+    console.log(c);
+    $('.card_fiche').each(function (index, that) {
+      $(that).attr('hidden', true);
+      var lvl = $(that).data('level');
+      var state = false;
+
+      if (!state && lvl[0] == 1 && c[0] == 1) {
+        state = true;
+      }
+
+      if (!state && lvl[1] == 1 && c[1] == 1) {
+        state = true;
+      }
+
+      if (!state && lvl[2] == 1 && c[2] == 1) {
+        state = true;
+      }
+
+      console.log(state);
+      if (state) $(that).attr('hidden', false);
+    });
+  });
+};
+
+var jechoisislaselection = function jechoisislaselection() {
+  $(document).on('click', '#jechoisislaselection', function () {
+    var section = $(this).data('section');
+    var tab = [];
+    $('.card_fiche:visible').each(function (index, that) {
+      var t = {};
+      t['item'] = $(that).data('fiche');
+      t['test'] = $(that).data('table');
+      tab.push(t);
+    });
+    $.ajax({
+      method: 'POST',
+      url: '/fiches/choisirSelection',
+      data: {
+        section: section,
+        tableau: JSON.stringify(tab)
+      },
+      success: function success() {
+        window.open('/fiches?section=' + section + '&type=mesfiches', '_self');
+      }
+    });
+  });
+};
+
+var jemodifielafiche = function jemodifielafiche() {
+  $(document).on('click', '.modifyFiche', function () {
+    var item = $(this).data('id');
+    var section = $(this).data('section');
+    window.open('/fiches?section=' + section + '&type=createfiche&item=' + item, '_self');
+  });
+};
+
+var editor2change = function editor2change(quill) {
+  quill.on('text-change', function (delta, oldDelta, source) {
+    var texte = quill.root.innerHTML;
+    $('#phraseForm').val(texte);
+  });
+};
+
+var photoEnfantTrigger = function photoEnfantTrigger() {
+  $(document).on('click', '#photoEnfantImg', function () {
+    $('#photoEnfantInput').trigger('click');
+  });
+};
+
+var photoEnfant = function photoEnfant() {
+  $(document).on("change", '#photoEnfantInput', function () {
+    var file = $(this).get(0).files[0];
+
+    if (file) {
+      var reader = new FileReader();
+
+      reader.onload = function () {
+        $("#photoEnfantImg").attr("src", reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+};
+
+var setMotCleFiche = function setMotCleFiche(quill) {
+  $('#motCleFiche td').on('click', function () {
+    var data = $(this).data('reg');
+    var selection = quill.getSelection(true);
+    quill.insertText(selection.index, data);
   });
 };
 

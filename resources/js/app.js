@@ -18,7 +18,19 @@ import 'jquery-ui/ui/widgets/sortable.js';
 import {selectItem, hamburger} from './pages/items';
 import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite} from './pages/cahier';
 import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase, setMotCle, saveNouvellePhrase} from "./pages/phrase";
-import {selectSectionFiche, selectFiche, choixTypeFiches} from './pages/fiche'
+import {
+    initFiche,
+    selectSectionFiche,
+    selectFiche,
+    choixTypeFiches,
+    choixFiltre,
+    jechoisislaselection,
+    photoEnfant,
+    photoEnfantTrigger,
+    editor2change,
+    setMotCleFiche,
+    jemodifielafiche
+} from './pages/fiche'
 
 
 window.Alpine = Alpine;
@@ -28,9 +40,7 @@ Alpine.start();
 $(document).ready(function($) {
 
 
-    $( function() {
-        $( "#sortable" ).sortable();
-    } );
+
 
 
 
@@ -72,6 +82,13 @@ var quill2 = new Quill('#editor2', {
     theme: 'snow'
 });
 
+var quill3 = new Quill('#editor3', {
+    modules: {
+        toolbar: false    // Snow includes toolbar by default
+    },
+    theme: 'snow'
+});
+
 window.section_active = null
 
 selectItem()
@@ -93,6 +110,15 @@ cancelNouvellePhrase(quill2)
 setMotCle(quill2)
 saveNouvellePhrase(quill2)
 
+
+jemodifielafiche()
+initFiche()
 selectSectionFiche()
 selectFiche()
 choixTypeFiches()
+choixFiltre()
+jechoisislaselection()
+photoEnfant()
+photoEnfantTrigger()
+editor2change(quill3)
+setMotCleFiche(quill3)

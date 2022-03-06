@@ -140,7 +140,9 @@ const apercu = (quill) => {
 
 const onload = (quill) => {
     $(document).ready(function() {
+
         if ($('#motCle').length) {
+
             quill.setText("")
             quill.enable(false)
             $('#editor').css('height','200px')

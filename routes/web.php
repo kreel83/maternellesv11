@@ -46,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
     Route::get('/fiches/choix', [ficheController::class, 'choix']);
+    Route::post('/fiches/choisirSelection', [ficheController::class, 'choisirSelection']);
+    Route::post('/fiches/save_fiche', [ficheController::class, 'save_fiche'])->name('saveFiche');
+    Route::post('/fiches/order', [ficheController::class, 'orderFiche'])->name('orderFiche');
 });
 
 

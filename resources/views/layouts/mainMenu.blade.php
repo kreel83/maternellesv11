@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
         <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
+        <link href="{{asset('icons/css/all.css')}}" rel="stylesheet">
         <script src="{{asset('js/app.js')}}" defer></script>
         <script src="{{ asset('js/all.min.js') }}" defer></script>
 
