@@ -1,0 +1,116 @@
+#calendrier_scolaire .day.actif:hover {
+    transform: scale(1.1);
+    font-weight: bolder;
+    border: 1px solid grey;
+    border-radius: 50%;
+}
+
+
+#calendrier, #calendrier_scolaire {
+    .month_bloc {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        margin: 10px 0;
+
+    }
+    .month_days {
+        display: flex;
+        width: 300px;
+        div {
+            width:40px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+
+        }
+    }
+
+        .month_dates {
+            display: flex; flex-wrap: wrap;width: 300px;
+        }
+        .day {
+            color: #2C3034;display: flex;justify-content: center;align-items: center;width:40px;height: 40px;font-size:14px;
+            margin: 2px 0;
+            &.actif {
+                cursor: pointer;
+                //&:hover {
+                //    background-color: #0a53be;
+                //    border-radius: 50%;
+                //    color: white;
+                //}
+            }
+            &.p1 {
+                background-color: red;
+                color: white;
+            }
+
+            &.p2 {
+                background-color: blue;
+                color: white;
+            }
+
+            &.p3 {
+                background-color: green;
+                color: white;
+            }
+            &.conges {
+                background-color: #ebd6b1;
+                color: white;
+            }
+            &.anniversaires.feminin {
+                color: deeppink;
+                font-weight: bolder;
+
+            }
+            &.anniversaires.masculin {
+                color: #52a5ff;
+                font-weight: bolder;
+
+            }
+            &.ddj {
+
+                background-color: #16182c;
+                font-weight: bolder;
+
+            }
+            &.start {
+                border-bottom-left-radius: 50%;
+                border-top-left-radius: 50%;
+
+            }
+            &.between {
+
+
+            }
+            &.end {
+                border-bottom-right-radius: 50%;
+                border-top-right-radius: 50%;
+
+            }
+            &.select {
+                border-radius: 50%;
+
+            }
+
+        }
+
+
+}
+
+.btnp1 {
+    background-color: red;
+    color: white;
+}
+
+.btnp2 {
+    background-color: blue;
+    color: white;
+}
+
+.btnp3 {
+    background-color: green;
+    color: white;
+}
+
+

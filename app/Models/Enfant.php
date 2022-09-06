@@ -10,6 +10,16 @@ class Enfant extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    protected $dispatchesEvents = [
+        'retrieved' => \App\Events\EleveEvent::class,
+    ];
+
+
+    public $mail1, $mail2, $photoEleve;
+
+
     public function item() {
           return $this->hasmany('App\Models\Item');
     }

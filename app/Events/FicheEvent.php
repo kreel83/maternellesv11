@@ -25,7 +25,9 @@ class FicheEvent
     public function __construct(Fiche $fiche)
     {
 
+
         if ($fiche->parent_type == 'personnels') {
+
             $item = Personnel::find($fiche->item_id);
             $fiche->item = $item;
             $fiche->user_id = $item->user_id;

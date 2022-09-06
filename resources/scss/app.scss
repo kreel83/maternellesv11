@@ -3,6 +3,7 @@
 @import 'elements/card_home';
 @import 'elements/card_item';
 @import 'elements/card_fiche';
+@import 'elements/calendrier';
 @import 'pages/items';
 @import 'pages/commentaires';
 @import 'pages/fiches';
@@ -17,21 +18,37 @@
 :root {
 
         --blue: #3fbafe;
+        --section0: #3fbafe;
 
 
 
         --pink: #fa99b2;
+        --section1: #fa99b2;
 
 
 
         --night: #b69efe;
+        --section2: #b69efe;
 
 
 
         --green: #58d5c9;
+        --section3: #58d5c9;
 
 
 
         --purple: #c0a3e5;
+        --section4: #c0a3e5;
+
+
+        --brown: #e5dd62;
+        --section5: #e5dd62;
+
+
+        --dark: rgba(86, 88, 84, 0.98);
+        --section6: rgba(86, 88, 84, 0.98);
+
+        --orange: rgba(202, 126, 49, 0.98);
+        --section7: rgba(202, 126, 49, 0.98);
 
 }

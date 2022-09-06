@@ -17,4 +17,6 @@ class Item extends Model
     public function phrase($enfant) {
         return Utils::traitement($this->phrase, $enfant);
     }
+
+
 }

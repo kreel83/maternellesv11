@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -42,6 +44,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+
     public function nom_complet() {
         return $this->prenom.' '.$this->name;
     }
@@ -56,12 +60,28 @@ class User extends Authenticatable
     }
 
     public function autresfiches($section) {
+        $user = Auth::id();
         $mesfiches = Fiche::where('user_id', $this->id)->where('section_id', $section->id)->get();
         $ll = $mesfiches->pluck('item_id');
-        $items = Item::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
-        $perso = Personnel::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
-        $return =  $items->merge($perso);
-        return $return;
+        $items = Item::whereNotIn('id', $ll)->where('section_id', $section->id)->where(function($query) use($user) {
+            $query->whereNull('status')->orWhere('status', $user);
+        })->get();
+//        $perso = Personnel::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
+//        $return =  $items->merge($perso);
+        return $items;
+
+    }
+
+    public function liste() {
+        return Enfant::where('user_id', $this->id)->get();
+    }
+
+    public function calcul_annee_scolaire() {
+
+        $year = (int) Carbon::now()->format('Y');
+        $month = (int) Carbon::now()->format('m');
+        if ($month < 7) return $year - 1;
+        return $year;
 
     }
 }

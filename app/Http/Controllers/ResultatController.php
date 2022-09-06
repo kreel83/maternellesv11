@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Auth;
 class ResultatController extends Controller
 {
     public function setNote(Request $request) {
+        //dd($request);
         if ($request->notation == "null")  return false;
             $resultat = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
             if ($resultat) {
                 $resultat->notation_id = $request->notation;
             } else {
                 $item = Item::find($request->item);
+                
                 $enfant = Enfant::find($request->enfant);
 
                 $resultat = new Resultat();
@@ -25,7 +27,7 @@ class ResultatController extends Controller
                 $resultat->enfant_id = $request->enfant;
                 $resultat->notation_id = $request->notation;
                 $resultat->user_id = Auth::id();
-                $resultat->section_id = $item->section()->id;
+                $resultat->section_id = $item->section_id;
                 $resultat->groupe = $enfant->groupe;
 
             }

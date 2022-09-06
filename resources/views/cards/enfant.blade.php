@@ -24,7 +24,7 @@
 
 <div class="card">
   <div class="card-header banner" style="margin-bottom: 70px">
-    <img src="{{asset($enfant->photo)}}" alt="rover" />
+    <img src="{{asset($enfant->photoEleve)}}" alt="rover" />
   </div>
     <div class="card-body" style="text-align: center">
         <h3 class="name">{{$enfant->prenom}}<br><span style="font-size: 20px"> {{$enfant->nom}}</span></h3>
@@ -35,7 +35,12 @@
   </div>
     <div class="card-footer follow-info" style="display: flex;justify-content: space-around; background-color: transparent">
         <h2><a href="enfants/{{$enfant->id}}/items/" style="text-decoration: none; color: black" ><i class="fad fa-ballot-check"></i></a></h2>
-        <h2><a href="enfants/{{$enfant->id}}/cahier/1" style="text-decoration: none; color: black" ><i class="far fa-book-open"></i></a></h2>
+        @for ($i=1; $i<=$periode; $i++)
+        <div style="position: relative">
+            <div style="position: absolute; top: 3px;left: 5px; font-size: 16px; font-weight: bold;">{{$i}}</div>
+            <a href="enfants/{{$enfant->id}}/cahier/{{$i}}/{{$periode}}" style="text-decoration: none; color: black" ><i style="font-size: 32px" class="far fa-book-open"></i></a>
+        </div>
+        @endfor
     </div>
     <div class="card-footer" style="display: flex;justify-content: space-around">
         {{$enfant->comment}}

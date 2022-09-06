@@ -1,7 +1,7 @@
 const selectSectionFiche = (quill) => {
     $(document).on('change','#selectSectionFiche', function() {
         var id = $(this).val()
-        window.open('/fiches?id='+id,'_self')
+        window.open('/fiches?section='+id,'_self')
     })
 }
 
@@ -110,6 +110,19 @@ const jemodifielafiche = () => {
     })
 }
 
+const jeducpliquelafiche = () => {
+    $(document).on('click','.duplicate_card', function() {
+        var item = $(this).data('id')
+        var section = $(this).data('section')
+        var provenance = $(this).data('provenance')
+        $.get('/fiches/duplicate?section='+section+'&item='+item+'&provenance='+provenance, function(data) {
+            window.open('/fiches?section='+section+'&type=mesfiches&item='+item,'_self')
+        })
+
+
+    })
+}
+
 const editor2change = (quill) => {
     quill.on('text-change', function(delta, oldDelta, source) {
         var texte = quill.root.innerHTML
@@ -147,4 +160,4 @@ const setMotCleFiche= (quill) => {
     })
 }
 
-export {jemodifielafiche, initFiche, selectSectionFiche, selectFiche, choixTypeFiches, choixFiltre, jechoisislaselection, photoEnfant, photoEnfantTrigger, editor2change, setMotCleFiche}
+export {jeducpliquelafiche, jemodifielafiche, initFiche, selectSectionFiche, selectFiche, choixTypeFiches, choixFiltre, jechoisislaselection, photoEnfant, photoEnfantTrigger, editor2change, setMotCleFiche}

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Cahier;
 use App\Models\Commentaire;
 use App\Models\Enfant;
+use App\Models\Myperiode;
 use App\Models\Resultat;
 use App\Models\Reussite;
 use App\Models\Section;
 use App\utils\Utils;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -47,6 +49,7 @@ class CahierController extends Controller
     public function seepdf($id, $periode) {
 
         $reussite = Reussite::where('enfant_id', $id)->where('periode', $periode)->first()->texte_integral;
+        $cahier =
 
         $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite]);
         // download PDF file with download method
@@ -84,7 +87,7 @@ class CahierController extends Controller
         return $this->format_apercu($commentaire_enfant, $resultats, $enfant);
     }
 
-    public function index($id, $periode) {
+    public function index($id, $periode, $nbperiode) {
         $enfant = Enfant::find($id);
         $commentaire = Commentaire::where('user_id', Auth::id())->get();
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
@@ -96,6 +99,31 @@ class CahierController extends Controller
         $reussite = Reussite::where('periode', $periode)->where('enfant_id',$id)->first();
 
 
+        $date = Carbon::now()->format('Ymd');
+        $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode','DESC')->get();
+        $p = 3;
+        foreach ($periodes as $periode) {
+            if ($date < Carbon::parse($periode->date_end)->format('Ymd')) $p = $periode->periode;
+        }
+        $periode = $p;
+        $nbperiode = $periodes->count();
+
+
+
+        switch ($nbperiode) {
+            case 1: $title = 'Année entière';break;
+            case 2:
+                if ($periode == 1) $title = 'Premier semestre';
+                if ($periode == 2) $title = 'Second semestre';
+
+                break;
+            case 3:
+                if ($periode == 1) $title = 'Premier trimestre';
+                if ($periode == 2) $title = 'Deuxième trimestre';
+                if ($periode == 3) $title = 'Troisième trimestre';
+
+                break;
+        }
 
         $textes = $enfant->cahier($periode);
 
@@ -107,6 +135,7 @@ class CahierController extends Controller
             ->with('phrases', $grouped)
             ->with('textes', $textes)
             ->with('periode', $periode)
+            ->with('title', $title)
             ->with('sections', Section::all());
     }
 

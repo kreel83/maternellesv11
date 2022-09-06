@@ -3,6 +3,12 @@
 @section('content')
     <h1>cahier de réussite de {{$enfant->prenom}}</h1>
 
+    <h3>
+       {{$title}}
+
+    </h3>
+
+
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link" id="apercu" data-section="null" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}" data-bs-toggle="tab" data-bs-target="#nav-apercu" type="button" role="tab" aria-controls="nav-home" aria-selected="true">

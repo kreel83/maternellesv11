@@ -55,19 +55,20 @@ use Illuminate\Support\Facades\Auth;
             <a class="nav-link" href="#">Les évenements</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Calendrier</a>
+            <a class="nav-link" href="{{route('calendrier')}}">Calendrier</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Paramêtres</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown06">
               <li><a class="dropdown-item" href="#">Créer des paragraphe de commentaires</a></li>
-              <li><a class="dropdown-item" href="#">Gestion des élèves</a></li>
+              <li><a class="dropdown-item" href="{{route('password')}}">Gestion des mots de passe</a></li>
+              <li><a class="dropdown-item" href="{{route('eleves')}}">Gestion des élèves</a></li>
               <li><a class="dropdown-item" href="#">Définir les items</a></li>
               <li><a class="dropdown-item" href="#">Définir le système de notation</a></li>
               <li><a class="dropdown-item" href="#">Définir les couleurs des sections</a></li>
-              <li><a class="dropdown-item" href="#">Définir les périodes scolaires</a></li>
+              <li><a class="dropdown-item" href="{{route('calendar')}}">Définir les périodes scolaires</a></li>
               <li><a class="dropdown-item" href="#">Définir vos aides maternelles</a></li>
-              <li><a class="dropdown-item" href="#">Définir votre école</a></li>
+              <li><a class="dropdown-item" href="{{route('ecole')}}">Définir votre école</a></li>
             </ul>
           </li>
         </ul>
@@ -91,7 +92,13 @@ use Illuminate\Support\Facades\Auth;
       </div>
     </div>
   </nav>
+    <div id="alerte" class="w-100">
+
+    </div>
 
   <div class="container">
        @yield('content')
   </div>
+
+
+@include('components.modals.confirmation')

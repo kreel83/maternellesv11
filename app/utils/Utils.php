@@ -2,6 +2,7 @@
 namespace App\utils;
 
 use App\Models\Enfant;
+use Carbon\Carbon;
 
 class Utils {
 
@@ -100,6 +101,23 @@ class Utils {
 
     }
 
+    public static function calcul_annee_scolaire() {
+
+        $year = (int) Carbon::now()->format('Y');
+        $month = (int) Carbon::now()->format('m');
+        if ($month < 7) return $year - 1;
+        return $year;
+
+    }
+
+    public static function jour_dans_anneee($date) {
+        $annee_actuelle = self::calcul_annee_scolaire();
+        $annee_reelle = (int) Carbon::parse($date)->format('Y');
+        $nb_jours_dans_annee_reelle = Carbon::parse($annee_actuelle)->daysInYear;
+        $day_of_year = Carbon::parse($date)->dayOfYear;
+        if ($annee_actuelle < $annee_reelle) $day_of_year = $day_of_year + $nb_jours_dans_annee_reelle;
+        return $day_of_year;
+    }
 
 
 }

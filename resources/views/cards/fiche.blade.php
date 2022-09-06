@@ -4,18 +4,25 @@
     $gs = (int) $fiche->item->lvl[2];
     $lvl = json_encode([$ps, $ms, $gs]);
 
+    $color = \App\Models\Section::getColor($fiche->section_id);
+
+
 ?>
 
 
-<li class="card_fiche shadowDepth1 ui-state-default" data-type="{{$type}}" data-level="{{$lvl}}" data-fiche="{{$fiche->id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
+<li class="card_fiche shadowDepth1 ui-state-default" style="background-color: {{$color}}; color: white" data-type="{{$type}}" data-level="{{$lvl}}" data-fiche="{{$fiche->id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
 
 
     <div class="perso_card">
         @if ($fiche->parent_type == 'personnels')
-        <span class="modifyFiche" data-provenance="fiche" data-id="{{$fiche->id}}" data-section="{{$section->id}}"><i class="fas fa-address-card"></i></span>
+        <span class="modifyFiche" data-provenance="fiche" data-id="{{$fiche->item->id}}" data-section="{{$section->id}}"><i class="fas fa-address-card"></i></span>
         @endif
-        <span><i class="fas fa-clone"></i></span>
+            {{--<span class="duplicate_card" data-provenance="fiche" data-id="{{$fiche->item->id}}" data-section="{{$section->id}}"><i class="fas fa-clone"></i></span>--}}
+
     </div>
+
+
+
 
         <div class="card-header" style="padding: 0">
             <table class="table table-bordered m0 tableLevel" >

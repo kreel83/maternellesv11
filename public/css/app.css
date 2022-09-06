@@ -14638,6 +14638,102 @@ h2, .h2 {
   /* "hand" cursor */
 }
 
+#calendrier_scolaire .day.actif:hover {
+  transform: scale(1.1);
+  font-weight: bolder;
+  border: 1px solid grey;
+  border-radius: 50%;
+}
+
+#calendrier .month_bloc, #calendrier_scolaire .month_bloc {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 10px 0;
+}
+#calendrier .month_days, #calendrier_scolaire .month_days {
+  display: flex;
+  width: 300px;
+}
+#calendrier .month_days div, #calendrier_scolaire .month_days div {
+  width: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+#calendrier .month_dates, #calendrier_scolaire .month_dates {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+}
+#calendrier .day, #calendrier_scolaire .day {
+  color: #2C3034;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  margin: 2px 0;
+}
+#calendrier .day.actif, #calendrier_scolaire .day.actif {
+  cursor: pointer;
+}
+#calendrier .day.p1, #calendrier_scolaire .day.p1 {
+  background-color: red;
+  color: white;
+}
+#calendrier .day.p2, #calendrier_scolaire .day.p2 {
+  background-color: blue;
+  color: white;
+}
+#calendrier .day.p3, #calendrier_scolaire .day.p3 {
+  background-color: green;
+  color: white;
+}
+#calendrier .day.conges, #calendrier_scolaire .day.conges {
+  background-color: #ebd6b1;
+  color: white;
+}
+#calendrier .day.anniversaires.feminin, #calendrier_scolaire .day.anniversaires.feminin {
+  color: deeppink;
+  font-weight: bolder;
+}
+#calendrier .day.anniversaires.masculin, #calendrier_scolaire .day.anniversaires.masculin {
+  color: #52a5ff;
+  font-weight: bolder;
+}
+#calendrier .day.ddj, #calendrier_scolaire .day.ddj {
+  background-color: #16182c;
+  font-weight: bolder;
+}
+#calendrier .day.start, #calendrier_scolaire .day.start {
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+}
+#calendrier .day.end, #calendrier_scolaire .day.end {
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+}
+#calendrier .day.select, #calendrier_scolaire .day.select {
+  border-radius: 50%;
+}
+
+.btnp1 {
+  background-color: red;
+  color: white;
+}
+
+.btnp2 {
+  background-color: blue;
+  color: white;
+}
+
+.btnp3 {
+  background-color: green;
+  color: white;
+}
+
 .items_container {
   display: flex;
   flex-wrap: wrap;
@@ -14690,8 +14786,19 @@ h2, .h2 {
 
 :root {
   --blue: #3fbafe;
+  --section0: #3fbafe;
   --pink: #fa99b2;
+  --section1: #fa99b2;
   --night: #b69efe;
+  --section2: #b69efe;
   --green: #58d5c9;
+  --section3: #58d5c9;
   --purple: #c0a3e5;
+  --section4: #c0a3e5;
+  --brown: #e5dd62;
+  --section5: #e5dd62;
+  --dark: rgba(86, 88, 84, 0.98);
+  --section6: rgba(86, 88, 84, 0.98);
+  --orange: rgba(202, 126, 49, 0.98);
+  --section7: rgba(202, 126, 49, 0.98);
 }

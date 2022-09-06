@@ -6,9 +6,12 @@
 <div class="accordion" id="page_items">
 
     @foreach ($sections as $key=>$section)
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="panelsStayOpen-heading{{$key}}">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$key}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$key}}">
+        @php
+            $color = "var(--section".$key.")";
+        @endphp
+    <div class="accordion-item" style="margin: 16px 0">
+        <h2 class="accordion-header" id="panelsStayOpen-heading{{$key}}" >
+            <button style="background-color: {{$color}}; color: white" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$key}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$key}}">
                 {{$section->name}}
             </button>
         </h2>

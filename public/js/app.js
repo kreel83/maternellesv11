@@ -20139,38 +20139,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery-ui/ui/widgets/datepicker.js */ "./node_modules/jquery-ui/ui/widgets/datepicker.js");
-/* harmony import */ var jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var jquery_ui_ui_widgets_sortable_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery-ui/ui/widgets/sortable.js */ "./node_modules/jquery-ui/ui/widgets/sortable.js");
-/* harmony import */ var jquery_ui_ui_widgets_sortable_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery_ui_ui_widgets_sortable_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _pages_items__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/items */ "./resources/js/pages/items.js");
-/* harmony import */ var _pages_cahier__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/cahier */ "./resources/js/pages/cahier.js");
-/* harmony import */ var _pages_phrase__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/phrase */ "./resources/js/pages/phrase.js");
-/* harmony import */ var _pages_fiche__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/fiche */ "./resources/js/pages/fiche.js");
+/* harmony import */ var _pages_ecole__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pages/ecole */ "./resources/js/pages/ecole.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery-ui/ui/widgets/datepicker.js */ "./node_modules/jquery-ui/ui/widgets/datepicker.js");
+/* harmony import */ var jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var jquery_ui_ui_widgets_sortable_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! jquery-ui/ui/widgets/sortable.js */ "./node_modules/jquery-ui/ui/widgets/sortable.js");
+/* harmony import */ var jquery_ui_ui_widgets_sortable_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jquery_ui_ui_widgets_sortable_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _pages_calendrier__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/calendrier */ "./resources/js/pages/calendrier.js");
+/* harmony import */ var _pages_eleve__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/eleve */ "./resources/js/pages/eleve.js");
+/* harmony import */ var _pages_items__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/items */ "./resources/js/pages/items.js");
+/* harmony import */ var _pages_cahier__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/cahier */ "./resources/js/pages/cahier.js");
+/* harmony import */ var _pages_phrase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/phrase */ "./resources/js/pages/phrase.js");
+/* harmony import */ var _pages_fiche__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/fiche */ "./resources/js/pages/fiche.js");
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./quill.js */ "./resources/js/quill.js");
 
+window.bootstrap = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Quill = __webpack_require__(/*! Quill */ "./node_modules/Quill/dist/quill.js");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Quill);
 
 
 
-window.$ = __webpack_provided_window_dot_jQuery = (jquery__WEBPACK_IMPORTED_MODULE_2___default());
+window.$ = __webpack_provided_window_dot_jQuery = (jquery__WEBPACK_IMPORTED_MODULE_3___default());
 
 
 
 
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
-jquery__WEBPACK_IMPORTED_MODULE_2___default()(document).ready(function ($) {
+
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start();
+jquery__WEBPACK_IMPORTED_MODULE_3___default()(document).ready(function ($) {
   $('.card__share  a').on('click', function (e) {
     var that = $(this).closest('.card');
     var $this = $(this);
@@ -20185,60 +20193,86 @@ jquery__WEBPACK_IMPORTED_MODULE_2___default()(document).ready(function ($) {
         $(that).find('.share-toggle').css('background-color', data['color']);
         $(that).find('.share-toggle').toggleClass('share-expanded');
         $(that).find('.share-toggle>i').toggleClass('hide');
+        $(that).find('.card__social').toggleClass('card__social--active');
       }
     });
   });
 });
-jquery__WEBPACK_IMPORTED_MODULE_2___default().ajaxSetup({
+jquery__WEBPACK_IMPORTED_MODULE_3___default().ajaxSetup({
   headers: {
-    'X-CSRF-TOKEN': jquery__WEBPACK_IMPORTED_MODULE_2___default()('meta[name="csrf-token"]').attr('content')
+    'X-CSRF-TOKEN': jquery__WEBPACK_IMPORTED_MODULE_3___default()('meta[name="csrf-token"]').attr('content')
   }
 });
-var quill = new Quill('#editor', {
-  theme: 'snow'
-});
-var quill2 = new Quill('#editor2', {
-  modules: {
-    toolbar: false // Snow includes toolbar by default
 
-  },
-  theme: 'snow'
-});
-var quill3 = new Quill('#editor3', {
-  modules: {
-    toolbar: false // Snow includes toolbar by default
+if (jquery__WEBPACK_IMPORTED_MODULE_3___default()('#editor').length) {
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  });
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.choicePhrase)(quill);
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.clickOnNav)(quill);
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.saveTexte)(quill);
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.onload)(quill);
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.apercu)(quill);
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.clickOnDefinif)(quill);
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.saveTexteReussite)(quill);
+}
 
-  },
-  theme: 'snow'
-});
+if (jquery__WEBPACK_IMPORTED_MODULE_3___default()('#editor2').length) {
+  var quill2 = new Quill('#editor2', {
+    modules: {
+      toolbar: false // Snow includes toolbar by default
+
+    },
+    theme: 'snow'
+  });
+  (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.editPhrase)(quill2);
+  (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.deletePhrase)();
+  (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.nouvellePhrase)(quill2);
+  (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.cancelNouvellePhrase)(quill2);
+  (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.setMotCle)(quill2);
+  (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.saveNouvellePhrase)(quill2);
+}
+
+if (jquery__WEBPACK_IMPORTED_MODULE_3___default()('#editor3').length) {
+  var quill3 = new Quill('#editor3', {
+    modules: {
+      toolbar: false // Snow includes toolbar by default
+
+    },
+    theme: 'snow'
+  });
+  (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.editor2change)(quill3);
+  (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.setMotCleFiche)(quill3);
+}
+
 window.section_active = null;
-(0,_pages_items__WEBPACK_IMPORTED_MODULE_5__.selectItem)();
-(0,_pages_items__WEBPACK_IMPORTED_MODULE_5__.hamburger)();
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_6__.choicePhrase)(quill);
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_6__.clickOnNav)(quill);
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_6__.saveTexte)(quill);
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_6__.onload)(quill);
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_6__.apercu)(quill);
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_6__.clickOnDefinif)(quill);
-(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_6__.saveTexteReussite)(quill);
-(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.selectPhrase)();
-(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.editPhrase)(quill2);
-(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.deletePhrase)();
-(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.nouvellePhrase)(quill2);
-(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.cancelNouvellePhrase)(quill2);
-(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.setMotCle)(quill2);
-(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_7__.saveNouvellePhrase)(quill2);
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.jemodifielafiche)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.initFiche)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.selectSectionFiche)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.selectFiche)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.choixTypeFiches)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.choixFiltre)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.jechoisislaselection)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.photoEnfant)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.photoEnfantTrigger)();
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.editor2change)(quill3);
-(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_8__.setMotCleFiche)(quill3);
+(0,_pages_items__WEBPACK_IMPORTED_MODULE_8__.selectItem)();
+(0,_pages_items__WEBPACK_IMPORTED_MODULE_8__.hamburger)();
+(0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.selectPhrase)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.jeducpliquelafiche)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.jemodifielafiche)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.initFiche)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.selectSectionFiche)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.selectFiche)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.choixTypeFiches)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.choixFiltre)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.jechoisislaselection)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.photoEnfant)();
+(0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.photoEnfantTrigger)();
+(0,_pages_eleve__WEBPACK_IMPORTED_MODULE_7__.choix_eleve)();
+(0,_pages_eleve__WEBPACK_IMPORTED_MODULE_7__.photo_eleve)();
+(0,_pages_eleve__WEBPACK_IMPORTED_MODULE_7__.preview_photo)();
+(0,_pages_eleve__WEBPACK_IMPORTED_MODULE_7__.delete_photo)();
+(0,_pages_eleve__WEBPACK_IMPORTED_MODULE_7__.setDefaultImg)();
+(0,_pages_calendrier__WEBPACK_IMPORTED_MODULE_6__.selection)();
+(0,_pages_calendrier__WEBPACK_IMPORTED_MODULE_6__.hover)();
+(0,_pages_calendrier__WEBPACK_IMPORTED_MODULE_6__.choosePeriode)();
+(0,_pages_calendrier__WEBPACK_IMPORTED_MODULE_6__.savePeriode)();
+(0,_pages_calendrier__WEBPACK_IMPORTED_MODULE_6__.initCalendar)();
+(0,_pages_calendrier__WEBPACK_IMPORTED_MODULE_6__.initCalendrier)();
+(0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.chercheCommune)();
+(0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.chercheEcole)();
+(0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.choixEcole)();
 
 /***/ }),
 
@@ -20446,6 +20480,352 @@ var onload = function onload(quill) {
 
 /***/ }),
 
+/***/ "./resources/js/pages/calendrier.js":
+/*!******************************************!*\
+  !*** ./resources/js/pages/calendrier.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "selection": () => (/* binding */ selection),
+/* harmony export */   "hover": () => (/* binding */ hover),
+/* harmony export */   "choosePeriode": () => (/* binding */ choosePeriode),
+/* harmony export */   "savePeriode": () => (/* binding */ savePeriode),
+/* harmony export */   "initCalendar": () => (/* binding */ initCalendar),
+/* harmony export */   "initCalendrier": () => (/* binding */ initCalendrier)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Periode = function Periode(color, periode) {
+  var start = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  var datestart = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+  var end = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+  var dateend = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+  var complete = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
+
+  _classCallCheck(this, Periode);
+
+  this.color = color;
+  this.start = start;
+  this.datestart = datestart;
+  this.end = end;
+  this.dateend = dateend;
+  this.complete = complete;
+  this.periode = periode;
+};
+
+var p1 = new Periode('red', 'p1');
+var p2 = new Periode('blue', 'p2');
+var p3 = new Periode('green', 'p3');
+var periodeActive = null;
+
+var choosePeriode = function choosePeriode(confirmation_modal) {
+  $('.btnPeriode').on('click', function () {
+    var confirmation_modal = new bootstrap.Modal(document.getElementById('confirmation_modal'), {
+      keyboard: false
+    });
+    confirmation_modal.show();
+    var active = $(this).data('periode');
+
+    switch (active) {
+      case 'p1':
+        periodeActive = p1;
+        break;
+
+      case 'p2':
+        periodeActive = p2;
+        break;
+
+      case 'p3':
+        periodeActive = p3;
+        break;
+    }
+
+    console.log(periodeActive);
+  });
+};
+
+var initCalendrier = function initCalendrier() {
+  if ($('#calendrier_scolaire').length) {
+    var conges = $('#conges').val();
+    conges = JSON.parse(conges);
+    conges.forEach(function (element) {
+      console.log(element);
+      $('.day[data-all="' + element.start + '"]').addClass('start conges');
+      $('.day[data-all="' + element.start + '"]').prop('title', element.libele);
+      $('.day[data-all="' + element.end + '"]').addClass('end conges');
+      $('.day[data-all="' + element.end + '"]').prop('title', element.libele);
+
+      for (var i = element.start + 1; i < element.end; i++) {
+        $('.day[data-all="' + i + '"]').addClass('between conges');
+        $('.day[data-all="' + i + '"]').prop('title', element.libele);
+      }
+    });
+    var anniversaires = $('#anniversaires').val();
+    anniversaires = JSON.parse(anniversaires);
+    anniversaires.forEach(function (element) {
+      console.log(element);
+      $('.day[data-all="' + element.ddn + '"]').addClass('anniversaires ' + element.genre);
+      $('.day[data-all="' + element.ddn + '"]').prop('title', element.nom);
+    });
+    $('.day[data-all="' + $('#ddj').val() + '"]').addClass('ddj');
+
+    if (!$('.day[data-all="' + $('#ddj').val() + '"]').hasClass('anniversaires')) {
+      $('.day[data-all="' + $('#ddj').val() + '"]').css('color', 'white');
+    }
+  }
+};
+
+var initCalendar = function initCalendar() {
+  if ($('#savePeriode').length) {
+    var annee = $('#savePeriode').data('annee');
+    $.get('/calendar/periodes/init?annee=' + annee, function (data) {
+      data.forEach(function (element) {
+        console.log(element);
+        $('.day[data-all="' + element.start + '"]').addClass('start p' + element.periode);
+        $('.day[data-all="' + element.end + '"]').addClass('end p' + element.periode);
+
+        for (var i = element.start + 1; i < element.end; i++) {
+          $('.day[data-all="' + i + '"]').addClass('between p' + element.periode);
+        }
+
+        switch (element.periode) {
+          case 1:
+            p1 = new Periode('red', 'p1', element.start, element.date_start, element.end, element.date_end, true);
+            break;
+
+          case 2:
+            p2 = new Periode('blue', 'p2', element.start, element.date_start, element.end, element.date_end, true);
+            break;
+
+          case 3:
+            p3 = new Periode('green', 'p3', element.start, element.date_start, element.end, element.date_end, true);
+            break;
+        }
+      });
+      $('#alerte').addClass('alert alert-success');
+      $('#alerte').text('les périodes ont bien été récupérées');
+      setTimeout(function () {
+        $('#alerte').fadeOut();
+      }, 1000, function () {
+        $('#alerte').removeAttr('class');
+        $('#alerte').empty();
+      });
+    });
+  }
+};
+
+var selection = function selection() {
+  $('.day.actif').on('click', function () {
+    if (periodeActive) {
+      console.log(periodeActive);
+
+      if (periodeActive.complete) {
+        periodeActive.start = null;
+        periodeActive.datestart = null;
+        periodeActive.end = null;
+        periodeActive.dateend = null;
+        periodeActive.complete = false;
+        $('.day.' + periodeActive.periode).removeClass('start between end select ' + periodeActive.periode);
+      }
+
+      if (!periodeActive.start) {
+        $(this).addClass('start ' + periodeActive.periode);
+        periodeActive.start = parseInt($(this).data('all'));
+        periodeActive.datestart = $(this).data('date');
+      }
+
+      if ($(this).hasClass('end')) {
+        periodeActive.complete = true;
+      }
+    }
+  });
+};
+
+var savePeriode = function savePeriode() {
+  $('#savePeriode').on('click', function () {
+    $.ajax({
+      url: 'calendar/periodes/save',
+      method: 'POST',
+      data: {
+        annee: $(this).data('annee'),
+        periode: {
+          p1: p1.complete ? JSON.stringify(p1) : null,
+          p2: p2.complete ? JSON.stringify(p2) : null,
+          p3: p3.complete ? JSON.stringify(p3) : null
+        }
+      },
+      success: function success() {}
+    });
+  });
+};
+
+var hover = function hover() {
+  $('.day.actif').on('mouseover', function () {
+    console.log(periodeActive);
+
+    if (periodeActive) {
+      if (periodeActive.start && !periodeActive.complete) {
+        console.log('cc');
+        periodeActive.end = parseInt($(this).data('all'));
+        periodeActive.dateend = $(this).data('date');
+        $('.day.' + periodeActive.periode).removeClass('between end select ' + periodeActive.periode);
+
+        if (periodeActive.start == periodeActive.end) {
+          $(this).addClass('select ' + periodeActive.periode);
+        }
+
+        if (periodeActive.start < periodeActive.end) {
+          $('.day[data-all="' + periodeActive.start + '"]').removeClass('select');
+          $('.day[data-all="' + periodeActive.start + '"]').addClass('start ' + periodeActive.periode);
+
+          for (var i = periodeActive.start + 1; i < periodeActive.end; i++) {
+            $('.day[data-all="' + i + '"]').addClass('between ' + periodeActive.periode);
+          }
+
+          $(this).addClass('end ' + periodeActive.periode);
+        }
+      }
+    }
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/ecole.js":
+/*!*************************************!*\
+  !*** ./resources/js/pages/ecole.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "chercheCommune": () => (/* binding */ chercheCommune),
+/* harmony export */   "chercheEcole": () => (/* binding */ chercheEcole),
+/* harmony export */   "choixEcole": () => (/* binding */ choixEcole)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+var chercheCommune = function chercheCommune() {
+  $(document).on('click', '#chercheCommuneBtn', function () {
+    var query = $('#chercheCommune').val();
+    $.get('/ecole/chercheCommune?commune=' + query, function (data) {
+      $('#communeContainer').html(data);
+    });
+  });
+};
+
+var chercheEcole = function chercheEcole() {
+  $(document).on('click', '.commune', function () {
+    var code = $(this).data('codecom');
+    $.get('/ecole/chercheEcoles?commune=' + code, function (data) {
+      $('#ecoleContainer').html(data);
+    });
+  });
+};
+
+var choixEcole = function choixEcole() {
+  $(document).on('click', '.ecole', function () {
+    var code = $(this).data('num');
+    var academie = $(this).data('academie');
+    $.get('/ecole/choixEcole?num=' + code + '&academie=' + academie, function (data) {
+      location.reload();
+    });
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/eleve.js":
+/*!*************************************!*\
+  !*** ./resources/js/pages/eleve.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "choix_eleve": () => (/* binding */ choix_eleve),
+/* harmony export */   "photo_eleve": () => (/* binding */ photo_eleve),
+/* harmony export */   "preview_photo": () => (/* binding */ preview_photo),
+/* harmony export */   "delete_photo": () => (/* binding */ delete_photo),
+/* harmony export */   "setDefaultImg": () => (/* binding */ setDefaultImg)
+/* harmony export */ });
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      save_photo = $('#photo_form').attr('src');
+      $('#photo_form').attr('src', e.target.result);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+var save_photo;
+
+var setDefaultImg = function setDefaultImg(e) {
+  console.log(e);
+};
+
+var preview_photo = function preview_photo(event) {
+  $("#photo_input").change(function () {
+    $('#delete_photo').css('display', '');
+    readURL(this);
+  });
+};
+
+var delete_photo = function delete_photo() {
+  $('#delete_photo').on('click', function () {
+    $('#photo_form').attr('src', save_photo);
+    $('#photo_input').val('');
+    $('#delete_photo').css('display', 'none');
+  });
+};
+
+var photo_eleve = function photo_eleve() {
+  $(document).on('click', '#photo_form', function () {
+    $('#photo_input').trigger('click');
+  });
+};
+
+var choix_eleve = function choix_eleve() {
+  $(document).on('click', '#tableau_eleves tr, #new_eleve', function () {
+    $('#nom_form').val($(this).find('td:eq(1)').data('value'));
+    $('#prenom_form').val($(this).find('td:eq(2)').data('value'));
+    $('#ddn_form').val($(this).find('td:eq(3)').data('value'));
+    $('#genre_form').val($(this).find('td:eq(4)').data('value'));
+    $('#groupe_form').val($(this).find('td:eq(5)').data('value'));
+    $('#mail1_form').val($(this).find('td:eq(6)').data('value1'));
+    $('#mail2_form').val($(this).find('td:eq(6)').data('value2'));
+    $('#eleve_form').val($(this).data('id'));
+    $('#photo_form').attr('src', $(this).data('photo'));
+    console.log($(this).data('id'));
+    $('#commentaire_form').val($(this).data('commentaire'));
+    var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('myModal'), {
+      keyboard: false
+    });
+    myModal.toggle();
+  });
+};
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/fiche.js":
 /*!*************************************!*\
   !*** ./resources/js/pages/fiche.js ***!
@@ -20455,6 +20835,7 @@ var onload = function onload(quill) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "jeducpliquelafiche": () => (/* binding */ jeducpliquelafiche),
 /* harmony export */   "jemodifielafiche": () => (/* binding */ jemodifielafiche),
 /* harmony export */   "initFiche": () => (/* binding */ initFiche),
 /* harmony export */   "selectSectionFiche": () => (/* binding */ selectSectionFiche),
@@ -20471,7 +20852,7 @@ __webpack_require__.r(__webpack_exports__);
 var selectSectionFiche = function selectSectionFiche(quill) {
   $(document).on('change', '#selectSectionFiche', function () {
     var id = $(this).val();
-    window.open('/fiches?id=' + id, '_self');
+    window.open('/fiches?section=' + id, '_self');
   });
 };
 
@@ -20584,6 +20965,17 @@ var jemodifielafiche = function jemodifielafiche() {
   });
 };
 
+var jeducpliquelafiche = function jeducpliquelafiche() {
+  $(document).on('click', '.duplicate_card', function () {
+    var item = $(this).data('id');
+    var section = $(this).data('section');
+    var provenance = $(this).data('provenance');
+    $.get('/fiches/duplicate?section=' + section + '&item=' + item + '&provenance=' + provenance, function (data) {
+      window.open('/fiches?section=' + section + '&type=mesfiches&item=' + item, '_self');
+    });
+  });
+};
+
 var editor2change = function editor2change(quill) {
   quill.on('text-change', function (delta, oldDelta, source) {
     var texte = quill.root.innerHTML;
@@ -20646,9 +21038,7 @@ var selectItem = function selectItem() {
     var item = $(card).data('item');
     var note = $(this).data('note');
     $(card).find('.noteChoisie').css('background-color', color);
-    $.get('/item/saveResultat?enfant=' + enfant + '&item=' + item + '&note=' + note, function (data) {
-      console.log(data);
-    });
+    $.get('/item/saveResultat?enfant=' + enfant + '&item=' + item + '&note=' + note, function (data) {});
   });
 };
 
