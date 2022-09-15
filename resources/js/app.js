@@ -83,13 +83,21 @@ if ($('#editor').length) {
     var quill = new Quill('#editor', {
         theme: 'snow'
     });
+    console.log('1')
     choicePhrase(quill)
+    console.log('2')
     clickOnNav(quill)
+    console.log('3')
     saveTexte(quill)
+    console.log('4')
     onload(quill)
+    console.log('5')
     apercu(quill)
+    console.log('6')
     clickOnDefinif(quill)
+    console.log('7')
     saveTexteReussite(quill)
+    console.log('8')
 }
 
 if ($('#editor2').length) {
@@ -161,4 +169,6 @@ initCalendrier()
 chercheCommune()
 chercheEcole()
 choixEcole()
+
+console.log('9')
 

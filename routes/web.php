@@ -32,13 +32,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
-    Route::get('/enfants/{id}/cahier/{periode}/{nbperiode}', [CahierController::class, 'index'])->name('cahier');
+    Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
     Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
-    Route::post('/enfants/{id}/cahier/{periode}/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
-    Route::post('/enfants/{id}/cahier/{periode}/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
-    Route::get('/enfants/{id}/cahier/{periode}/seepdf', [CahierController::class, 'seepdf'])->name('seepdf');
-    Route::get('/enfants/{id}/cahier/{periode}/apercu', [CahierController::class, 'apercu'])->name('apercu');
-    Route::post('/enfants/{id}/cahier/{periode}/definitif', [CahierController::class, 'definitif'])->name('definitif');
+    Route::post('/enfants/{id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
+    Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
+    Route::get('/enfants/{id}/cahier/seepdf', [CahierController::class, 'seepdf'])->name('seepdf');
+    Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
+    Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
@@ -72,6 +72,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/password',[\App\Http\Controllers\EnfantController::class,'password'])->name('password');
     Route::post('/password_operation',[\App\Http\Controllers\EnfantController::class,'password_operation'])->name('password_operation');
+
+    Route::get('/editerPDF/{enfant}', [CahierController::class, 'editerPDF'])->name('editerPDF');
+    Route::get('/deleteReussite/{enfant}', [CahierController::class, 'deleteReussite'])->name('deleteReussite');
 
 });
 

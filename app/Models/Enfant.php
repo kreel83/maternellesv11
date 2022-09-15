@@ -37,8 +37,8 @@ class Enfant extends Model
         return $r;
     }
 
-    public function cahier($periode) {
-        return Cahier::where('enfant_id', $this->id)->where('periode', $periode)->pluck('texte','section_id');
+    public function cahier() {
+        return Cahier::where('enfant_id', $this->id)->pluck('texte','section_id');
     }
 
     public function resultats() {
@@ -48,4 +48,8 @@ class Enfant extends Model
 
     }
 
+
+    public function hasReussite() {
+        return $this->hasOne('App\Models\Reussite')->first();
+    }
 }

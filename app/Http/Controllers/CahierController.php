@@ -13,16 +13,16 @@ use App\utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class CahierController extends Controller
 {
 
     private function format_apercu($commentaires, $resultats, $enfant) {
-
         $bloc = '';
         $sections = Section::all()->pluck('id')->toArray();
-        //dd($sections, $commentaires, $resultats);
+
         foreach ($sections as $section) {
 
             $nameSection = ($section == 99) ? 'Commentaire général' : Section::find($section)->name;
@@ -33,12 +33,14 @@ class CahierController extends Controller
                 }
             }
 
+
             if (isset($resultats[$section])) {
                 foreach ($resultats[$section] as $resultat) {
-                    $bloc .= $resultat->item()->phrase($enfant) . PHP_EOL;
+                    $bloc .= $resultat->item()->phrase($enfant);
                 }
             }
         }
+
         return $bloc;
 
     }
@@ -46,24 +48,51 @@ class CahierController extends Controller
 
 
 
-    public function seepdf($id, $periode) {
+    public function seepdf($id) {
 
-        $reussite = Reussite::where('enfant_id', $id)->where('periode', $periode)->first()->texte_integral;
-        $cahier =
+        $rep = Auth::user()->repertoire;
+        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
+            ->join('sections','sections.id','resultats.section_id')
+            ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
 
-        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite]);
+        $resultats = $resultats->groupBy('section_id')->toArray();
+//        dd($resultats, $id, $rep);
+        $sections = Section::all();
+        $enfant = Enfant::find($id);
+
+
+
+        $reussite = Reussite::where('enfant_id', $id)->first()->texte_integral;
+
+        //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
+
+//dd($resultats);
+
+
+        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $sections, 'enfant' => $enfant]);
         // download PDF file with download method
         return $pdf->stream('test_cahier.pdf');
+
     }
 
-    public function definitif($id, $periode, Request $request)
+    public function editerPDF($enfant) {
+        $enfant = Enfant::find($enfant);
+        $reussite = $this->apercu($enfant);
+
+        $r = Reussite::where('enfant_id', $enfant->id)->first();
+        $definitif = ($r) ? $r->definitif : null;
+
+
+        return view('cahiers.apercu')->with('enfant', $enfant)->with('reussite', $reussite)->with('definitif', $definitif);
+    }
+
+    public function definitif($id, Request $request)
     {
-        $reussite = Reussite::where('enfant_id', $id)->where('periode', $periode)->first();
+        $reussite = Reussite::where('enfant_id', $id)->first();
         //dd($request);
         if (!$reussite) {
             $reussite = new Reussite();
             $reussite->enfant_id = $id;
-            $reussite->periode = $periode;
             $reussite->user_id = Auth::id();
         }
 
@@ -74,20 +103,20 @@ class CahierController extends Controller
     }
 
 
-    public function apercu($id, $periode) {
-        $reussite = Reussite::where('enfant_id', $id)->where('periode', $periode)->first();
-
+    public function apercu($enfant) {
+        $reussite = Reussite::where('enfant_id', $enfant->id)->first();
         if ($reussite) return $reussite->texte_integral;
-        $enfant = Enfant::find($id);
-        $commentaire_enfant = Cahier::where('enfant_id', $id)->where('periode', $periode)->orderBy('section_id')->get();
+        $commentaire_enfant = Cahier::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
         $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
-        $resultats = Resultat::where('enfant_id', $id)->orderBy('section_id')->get();
+        $resultats = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
+        //dd($resultats, $id);
         $resultats = $resultats->groupBy('section_id');
+
 
         return $this->format_apercu($commentaire_enfant, $resultats, $enfant);
     }
 
-    public function index($id, $periode, $nbperiode) {
+    public function index($id) {
         $enfant = Enfant::find($id);
         $commentaire = Commentaire::where('user_id', Auth::id())->get();
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
@@ -96,7 +125,7 @@ class CahierController extends Controller
         $resultats = $enfant->resultats();
         //$resultats = $resultats->groupBy('section_id');
         //dd($resultats);
-        $reussite = Reussite::where('periode', $periode)->where('enfant_id',$id)->first();
+        $reussite = Reussite::where('enfant_id',$id)->first();
 
 
         $date = Carbon::now()->format('Ymd');
@@ -146,13 +175,19 @@ class CahierController extends Controller
 
     }
 
-    public function saveTexte($enfant, $periode, Request $request) {
-        $cahier = Cahier::where('enfant_id', $enfant)->where('periode', $periode)->where('section_id', $request->section)->first();
+    public function deleteReussite($enfant) {
+        $enfant = Enfant::find($enfant);
+        $reussite = $enfant->hasReussite();
+        $reussite->delete();
+        return $this->index($enfant->id);
+    }
+
+    public function saveTexte($enfant, Request $request) {
+        $cahier = Cahier::where('enfant_id', $enfant)->where('section_id', $request->section)->first();
         if (!$cahier) {
             $cahier = new Cahier();
             $cahier->enfant_id = $enfant;
             $cahier->section_id = $request->section;
-            $cahier->periode = $periode;
             $cahier->user_id = Auth::id();
             $cahier->texte = $request->texte;
 

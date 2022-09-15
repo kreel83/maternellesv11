@@ -40,10 +40,9 @@ const saveTexte = (quill) => {
         var texte = quill.root.innerHTML
         var enfant = $(this).data('enfant')
         var section = $(this).data('section')
-        var periode = $(this).data('periode')
         $.ajax({
             method: 'POST',
-            url: '/enfants/'+enfant+"/cahier/"+periode+"/save",
+            url: '/enfants/'+enfant+"/cahier/save",
             data: {
                 texte: texte,
                 section: section
@@ -60,10 +59,9 @@ const saveTexteReussite = (quill) => {
 
         var enfant = $(this).data('enfant')
         var definitif = $('#definitif').prop('checked')
-        var periode = $(this).data('periode')
         $.ajax({
             method: 'POST',
-            url: '/enfants/'+enfant+"/cahier/"+periode+"/saveTexteReussite",
+            url: '/enfants/'+enfant+"/cahier/saveTexteReussite",
             data: {
                 quill: quill.root.innerHTML,
                 state: definitif
@@ -95,10 +93,9 @@ const clickOnDefinif = (quill) => {
     $(document).on('change','#definitif', function() {
         const definitif = $(this).prop('checked')
         var enfant = $(this).data('enfant')
-        var periode = $(this).data('periode')
         $.ajax({
             method: 'POST',
-            url : '/enfants/' + enfant + '/cahier/' + periode + '/definitif',
+            url : '/enfants/' + enfant + '/cahier/definitif',
             data: {
                 state: definitif,
                 quill: quill.root.innerHTML
@@ -119,7 +116,9 @@ const clickOnDefinif = (quill) => {
 
 const apercu = (quill) => {
     $(document).on('click', '.nav-link', function() {
+        console.log('coucou')
         if ($(this).attr('id') == 'apercu') {
+            console.log('caca')
             var enfant = $(this).data('enfant')
             var periode = $(this).data('periode')
             $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
@@ -147,17 +146,18 @@ const onload = (quill) => {
             quill.enable(false)
             $('#editor').css('height','200px')
         }
-        if ($('#apercu').length) {
-
-                var enfant = $('#apercu').data('enfant')
-                var periode = $('#apercu').data('periode')
-                $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
+        if ($('#nav-apercu').length) {
+            var reussite = $('#nav-apercu').data('reussite')
+            console.log(reussite)
+                    $('#editor').css('height','700px')
                     quill.setText('');
-                    quill.root.innerHTML = data
-                })
+                    quill.root.innerHTML = reussite
+
 
         }
     })
 }
+
+
 
 export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite}

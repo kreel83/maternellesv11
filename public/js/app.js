@@ -20208,13 +20208,21 @@ if (jquery__WEBPACK_IMPORTED_MODULE_3___default()('#editor').length) {
   var quill = new Quill('#editor', {
     theme: 'snow'
   });
+  console.log('1');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.choicePhrase)(quill);
+  console.log('2');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.clickOnNav)(quill);
+  console.log('3');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.saveTexte)(quill);
+  console.log('4');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.onload)(quill);
+  console.log('5');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.apercu)(quill);
+  console.log('6');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.clickOnDefinif)(quill);
+  console.log('7');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.saveTexteReussite)(quill);
+  console.log('8');
 }
 
 if (jquery__WEBPACK_IMPORTED_MODULE_3___default()('#editor2').length) {
@@ -20273,6 +20281,7 @@ window.section_active = null;
 (0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.chercheCommune)();
 (0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.chercheEcole)();
 (0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.choixEcole)();
+console.log('9');
 
 /***/ }),
 
@@ -20364,10 +20373,9 @@ var saveTexte = function saveTexte(quill) {
     var texte = quill.root.innerHTML;
     var enfant = $(this).data('enfant');
     var section = $(this).data('section');
-    var periode = $(this).data('periode');
     $.ajax({
       method: 'POST',
-      url: '/enfants/' + enfant + "/cahier/" + periode + "/save",
+      url: '/enfants/' + enfant + "/cahier/save",
       data: {
         texte: texte,
         section: section
@@ -20383,10 +20391,9 @@ var saveTexteReussite = function saveTexteReussite(quill) {
   $(document).on('click', '.saveTexteReussite', function () {
     var enfant = $(this).data('enfant');
     var definitif = $('#definitif').prop('checked');
-    var periode = $(this).data('periode');
     $.ajax({
       method: 'POST',
-      url: '/enfants/' + enfant + "/cahier/" + periode + "/saveTexteReussite",
+      url: '/enfants/' + enfant + "/cahier/saveTexteReussite",
       data: {
         quill: quill.root.innerHTML,
         state: definitif
@@ -20415,10 +20422,9 @@ var clickOnDefinif = function clickOnDefinif(quill) {
   $(document).on('change', '#definitif', function () {
     var definitif = $(this).prop('checked');
     var enfant = $(this).data('enfant');
-    var periode = $(this).data('periode');
     $.ajax({
       method: 'POST',
-      url: '/enfants/' + enfant + '/cahier/' + periode + '/definitif',
+      url: '/enfants/' + enfant + '/cahier/definitif',
       data: {
         state: definitif,
         quill: quill.root.innerHTML
@@ -20438,7 +20444,10 @@ var clickOnDefinif = function clickOnDefinif(quill) {
 
 var apercu = function apercu(quill) {
   $(document).on('click', '.nav-link', function () {
+    console.log('coucou');
+
     if ($(this).attr('id') == 'apercu') {
+      console.log('caca');
       var enfant = $(this).data('enfant');
       var periode = $(this).data('periode');
       $.get('/enfants/' + enfant + '/cahier/' + periode + '/apercu', function (data) {
@@ -20465,13 +20474,12 @@ var onload = function onload(quill) {
       $('#editor').css('height', '200px');
     }
 
-    if ($('#apercu').length) {
-      var enfant = $('#apercu').data('enfant');
-      var periode = $('#apercu').data('periode');
-      $.get('/enfants/' + enfant + '/cahier/' + periode + '/apercu', function (data) {
-        quill.setText('');
-        quill.root.innerHTML = data;
-      });
+    if ($('#nav-apercu').length) {
+      var reussite = $('#nav-apercu').data('reussite');
+      console.log(reussite);
+      $('#editor').css('height', '700px');
+      quill.setText('');
+      quill.root.innerHTML = reussite;
     }
   });
 };

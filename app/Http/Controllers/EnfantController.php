@@ -33,8 +33,7 @@ class EnfantController extends Controller
 
         $enfants = Enfant::where('user_id', Auth::id())->get();
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
-        $periode = Myperiode::where('user_id', Auth::id())->count();
-        return view('enfants.index')->with('enfants', $enfants)->with('avatar', $avatar)->with('periode', $periode);
+        return view('enfants.index')->with('enfants', $enfants)->with('avatar', $avatar);
     }
 
 
