@@ -1,9 +1,14 @@
 
+<?php
+    $color = "var(--section".$key.")";
+?>
 
-    <div class="card shadowDepth1" data-enfant="{{$enfant->id}}" data-item="{{$item->id}}">
+    <div class="card shadowDepth1" data-enfant="{{$enfant->id}}" data-item="{{$fiche->item_id}}">
+
         <div class="card__image border-tlr-radius">
             <div class="card-body" style="padding: 0; height: 100%">
-                <img src="{{asset($item->image)}}" alt="image" class="border-tlr-radius">
+
+                <img src="{{asset($fiche->item->image)}}" alt="image" class="border-tlr-radius">
                 <div class="card__content">
                     <div class="card__share">
                         <div class="card__social" style="width: {{sizeof($notations) * 55}}px;">
@@ -13,8 +18,8 @@
                         </div>
 
 
-                        @if ($enfant->resultat($item->id))
-                            <a class="share-toggle share-empty" data-notation="null" style="background-color: {{$enfant->resultat($item->id)->color}}" href="#"></a>
+                        @if ($enfant->resultat($fiche->item_id))
+                            <a class="share-toggle share-empty" data-notation="null" style="background-color: {{$enfant->resultat($fiche->item_id)->color}}" href="#"></a>
                         @else
                             <a class="share-toggle share-icon" data-notation="null"  href="#"><i class="fad fa-ballot-check"></i></a>
                         @endif
@@ -22,10 +27,10 @@
                 </div>
             </div>
 
-            <div class="card-footer" style="font-size: 12px">
+            <div class="card-footer" style="font-size: 12px; background-color: {{$color}}; color: white">
 
-                    <div style="font-size: 14px;font-weight: bolder;">{{$item->st}}</div>
-                    <div style="font-size: 16px">{{$item->name}}</div>
+                    <div style="font-size: 14px;font-weight: bolder;">{{$fiche->item->st}}</div>
+                    <div style="font-size: 16px">{{$fiche->item->name}}</div>
 
 
 

@@ -10,6 +10,16 @@ class Enfant extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    protected $dispatchesEvents = [
+        'retrieved' => \App\Events\EleveEvent::class,
+    ];
+
+
+    public $mail1, $mail2, $photoEleve;
+
+
     public function item() {
           return $this->hasmany('App\Models\Item');
     }
@@ -27,12 +37,19 @@ class Enfant extends Model
         return $r;
     }
 
-    public function cahier($periode) {
-        return Cahier::where('enfant_id', $this->id)->where('periode', $periode)->pluck('texte','section_id');
+    public function cahier() {
+        return Cahier::where('enfant_id', $this->id)->pluck('texte','section_id');
+    }
 
-
-
+    public function resultats() {
+        $r = Resultat::where('enfant_id', $this->id)->get();
+        $r = $r->groupBy('section_id');
+        return $r;
 
     }
 
+
+    public function hasReussite() {
+        return $this->hasOne('App\Models\Reussite')->first();
+    }
 }

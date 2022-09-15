@@ -1,0 +1,92 @@
+@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+@import 'https://fonts.googleapis.com/css?family=Roboto:700,400';
+/*
+*  Basic Reset
+*/
+
+
+.fiche_container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+.fiche  {
+
+    .card_fiche {
+        background-color: #fff;
+        padding: 0;
+        width: 500px;
+        height: 72px;
+        display: flex;
+        margin: 10px;
+        position: relative;
+
+        .perso_card {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 72px;
+            span {
+                margin-bottom: 2px;
+            }
+        }
+
+        .tableLevel {
+            margin-right: 5px;
+            font-size: 15px;
+            td {
+                background-color: white;
+                color: red
+            }
+
+        }
+            .card__image {
+                //height: 50px;
+                width: 100px;
+                background-color: #eee;
+            }
+            .card__image img {
+                width: 100%;
+
+                height: 100%;
+                display: block;
+            }
+            .card-footer {
+                width: 400px;
+            }
+    }
+
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+
+.inputfile + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+

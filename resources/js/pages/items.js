@@ -1,7 +1,7 @@
 
 
 const selectItem = () => {
-    
+
     $('.note').on('click', function() {
         const card = $(this).closest('.card')
         const color = $(this).data('color')
@@ -10,7 +10,7 @@ const selectItem = () => {
         const note = $(this).data('note')
         $(card).find('.noteChoisie').css('background-color', color)
         $.get('/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+note, function(data) {
-            console.log(data)
+
         })
     })
 }

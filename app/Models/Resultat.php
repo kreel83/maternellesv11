@@ -13,4 +13,8 @@ class Resultat extends Model
     public function notation() {
         return $this->hasone('App\models\Notation','id','notation_id')->first();
     }
+
+    public function item() {
+        return $this->hasOne('App\Models\Item','id','item_id')->first();
+    }
 }
