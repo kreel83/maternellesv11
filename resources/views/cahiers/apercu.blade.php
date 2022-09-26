@@ -10,7 +10,7 @@
             <button data-section="apercu" data-enfant="{{$enfant->id}}"
                     style="margin-top: 20px" class="btn btn-dark saveTexteReussite">Sauvegarder
             </button>
-            <a target="_blank" href="/enfants/{{$enfant->id}}/cahier/seepdf" data-enfant="{{$enfant->id}}"
+            <a target="_blank" href="{{route('seepdf',['id' => $enfant->id])}}" data-enfant="{{$enfant->id}}"
                class="btn btn-primary" id="pdf">Voir le pdf</a>
             <div class="form-check form-switch">
 

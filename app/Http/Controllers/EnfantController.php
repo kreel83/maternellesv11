@@ -28,6 +28,16 @@ class EnfantController extends Controller
     }
 
 
+    public function parent() {
+        return view('parent.parent');
+    }
+
+
+    public function parent_mdp(Request $request) {
+        $enfant = Enfant::where('mdp', $request->mdp)->first();
+        if ($enfant) return view('parent.pdf');
+        return redirect()->back()->withError('non non non ');
+    }
 
     public function index() {
 

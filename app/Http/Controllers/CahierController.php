@@ -76,6 +76,7 @@ class CahierController extends Controller
     }
 
     public function editerPDF($enfant) {
+
         $enfant = Enfant::find($enfant);
         $reussite = $this->apercu($enfant);
 

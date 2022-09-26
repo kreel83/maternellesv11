@@ -12,6 +12,10 @@ class CalendrierController extends Controller
 {
 
 
+    public function periode() {
+        return view('calendar.periodes');
+    }
+
     public function calendrier() {
         $month = Carbon::parse('9/1/'.Utils::calcul_annee_scolaire());
 

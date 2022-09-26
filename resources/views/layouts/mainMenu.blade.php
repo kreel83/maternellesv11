@@ -69,6 +69,7 @@ use Illuminate\Support\Facades\Auth;
               <li><a class="dropdown-item" href="{{route('calendar')}}">Définir les périodes scolaires</a></li>
               <li><a class="dropdown-item" href="#">Définir vos aides maternelles</a></li>
               <li><a class="dropdown-item" href="{{route('ecole')}}">Définir votre école</a></li>
+              <li><a class="dropdown-item" href="{{route('periode')}}">Définir vos périodes</a></li>
             </ul>
           </li>
         </ul>

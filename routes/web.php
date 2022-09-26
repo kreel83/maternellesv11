@@ -26,7 +26,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-    Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
+Route::get('/parent',[EnfantController::class, 'parent']);
+Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
+Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -66,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/calendar/periodes/init',[\App\Http\Controllers\CalendrierController::class,'init']);
     Route::get('/calendar',[\App\Http\Controllers\CalendrierController::class,'index'])->name('calendar');
+    Route::get('/periode',[\App\Http\Controllers\CalendrierController::class,'periode'])->name('periode');
     Route::post('/calendar/periodes/save',[\App\Http\Controllers\CalendrierController::class,'savePeriode']);
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
