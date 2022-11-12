@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cahier;
 use App\Models\Commentaire;
 use App\Models\Enfant;
+use App\Models\Equipe;
 use App\Models\Myperiode;
 use App\Models\Resultat;
 use App\Models\Reussite;
@@ -26,17 +27,15 @@ class CahierController extends Controller
         foreach ($sections as $section) {
 
             $nameSection = ($section == 99) ? 'Commentaire général' : Section::find($section)->name;
-            $bloc .= "<br><h2>$nameSection</h2><br />";
-            if (isset($commentaires[$section])) {
-                foreach ($commentaires[$section] as $phrase) {
-                    $bloc .= $phrase->texte;
+            if (isset($resultats[$section])) {
+                $bloc .= "<br><h2>$nameSection</h2><br />";
+                foreach ($resultats[$section] as $resultat) {
+                    $bloc .= $resultat->item()->phrase($enfant).'</br>';
                 }
             }
-
-
-            if (isset($resultats[$section])) {
-                foreach ($resultats[$section] as $resultat) {
-                    $bloc .= $resultat->item()->phrase($enfant);
+            if (isset($commentaires[$section])) {
+                foreach ($commentaires[$section] as $phrase) {
+                    $bloc .= $phrase->texte.'</br>';
                 }
             }
         }
@@ -56,11 +55,17 @@ class CahierController extends Controller
             ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
 
         $resultats = $resultats->groupBy('section_id')->toArray();
-//        dd($resultats, $id, $rep);
-        $sections = Section::all();
+        $sections = Section::all()->toArray();
+        $s = array();
+        foreach ($sections as $section) {
+            $s[$section['id']] = $section;
+
+        }
+
+
+
         $enfant = Enfant::find($id);
-
-
+        $equipes = Auth::user()->equipes();
 
         $reussite = Reussite::where('enfant_id', $id)->first()->texte_integral;
 
@@ -69,7 +74,7 @@ class CahierController extends Controller
 //dd($resultats);
 
 
-        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $sections, 'enfant' => $enfant]);
+        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
         // download PDF file with download method
         return $pdf->stream('test_cahier.pdf');
 
@@ -79,12 +84,65 @@ class CahierController extends Controller
 
         $enfant = Enfant::find($enfant);
         $reussite = $this->apercu($enfant);
+        $prenom = $enfant->prenom;
+        $pronom = $enfant->genre == 'F' ? 'elle' : 'il';
+        $mots = explode(' ', $reussite);
+
+        $flag = true;
+        foreach ($mots as $k=>$mot) {
+            if (str_contains($mot, 'h2')) $flag = false;
+
+            if (str_contains($mot, $prenom)) {
+                if ($flag) {
+                    $mots[$k] =  (str_contains($mot, '>')) ? str_replace($prenom,ucfirst($pronom), $mots[$k]) : str_replace($prenom,$pronom, $mots[$k]);
+                } else {
+                    $flag = true;
+
+                }
+            }
+
+        }
+
+
+        $reussite = join(' ', $mots);
+//        dd($mots, $reussite);
 
         $r = Reussite::where('enfant_id', $enfant->id)->first();
         $definitif = ($r) ? $r->definitif : null;
+        return view('cahiers.apercu')->with('enfant', $enfant)->with('reussite', $reussite)->with('definitif', $definitif)->with('isreussite', $r);
+    }
+
+    public function savePDF($id) {
+
+        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
+            ->join('sections','sections.id','resultats.section_id')
+            ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
+
+        $resultats = $resultats->groupBy('section_id')->toArray();
+//        dd($resultats, $id, $rep);
+        $sections = Section::all();
+        $rep = Auth::user()->repertoire;
+        $enfant = Enfant::find($id);
+        $name = $enfant->prenom.' '.$enfant->nom;
+        $n = explode(' ', $name);
+        $n=join('-', $n);
+        $user = Auth::user();
+        $equipes = Auth::user()->equipes();
 
 
-        return view('cahiers.apercu')->with('enfant', $enfant)->with('reussite', $reussite)->with('definitif', $definitif);
+
+        $reussite = Reussite::where('enfant_id', $id)->first()->texte_integral;
+        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $sections, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
+        $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());
+
+        return redirect()->back()->with('success','le fichier a bine été enregistré');
+
+        //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
+
+//dd($resultats);
+
+
+        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $sections, 'enfant' => $enfant]);
     }
 
     public function definitif($id, Request $request)
@@ -120,9 +178,11 @@ class CahierController extends Controller
     public function index($id) {
         $enfant = Enfant::find($id);
         $commentaire = Commentaire::where('user_id', Auth::id())->get();
+
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
             return [$item['section_id'] => $item];
         });
+
         $resultats = $enfant->resultats();
         //$resultats = $resultats->groupBy('section_id');
         //dd($resultats);
@@ -137,6 +197,7 @@ class CahierController extends Controller
         }
         $periode = $p;
         $nbperiode = $periodes->count();
+
 
 
 
@@ -156,6 +217,8 @@ class CahierController extends Controller
         }
 
         $textes = $enfant->cahier($periode);
+
+
 
 
         return view('cahiers.index')

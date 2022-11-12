@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Myperiode;
+use App\Models\User;
 use App\utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,7 +14,58 @@ class CalendrierController extends Controller
 
 
     public function periode() {
-        return view('calendar.periodes');
+        $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode')->get()->toArray();
+
+    $p = [[null, null], [null,null], [null,null]];
+        for ($i = 0; $i<3; $i++) {
+            if (isset($periodes[$i])) {
+                $p[$i][0] = $periodes[$i]['date_start'];
+                $p[$i][1] = $periodes[$i]['date_end'];
+            }
+
+        }
+
+        return view('calendar.periodes')->with('periodes',$p);
+    }
+
+    public  function periode_save(Request $request) {
+        $datas = $request->except('_token');
+
+
+
+
+        $erreur = false;
+
+        for ($i=0; $i<3; $i++) {
+            if ($datas['periode_debut'][$i] && !$datas['periode_fin'][$i]) $erreur = true;
+            if (!$datas['periode_debut'][$i] && $datas['periode_fin'][$i])  $erreur = true;
+        }
+
+
+
+
+        if (!$erreur) {
+            Myperiode::where('user_id', Auth::id())->delete();
+            for ($i=0; $i<3; $i++) {
+                if ($datas['periode_debut'][$i] & $datas['periode_fin'][$i]) {
+                    $new = new Myperiode();
+                    $new->user_id = Auth::id();
+                    $new->annee = (int) Utils::calcul_annee_scolaire();
+                    $new->periode = $i + 1;
+                    $new->date_start = Carbon::parse($datas['periode_debut'][$i]);
+                    $new->date_end = Carbon::parse($datas['periode_fin'][$i]);
+                    $new->save();
+                }
+
+            }
+
+            return redirect()->back()->with('success', 'Les dates ont bien été enregistrées !');;
+        } else {
+            return redirect()->back()->with('error', 'On a un probleme là !');
+        }
+
+
+
     }
 
     public function calendrier() {

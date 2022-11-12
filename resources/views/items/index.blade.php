@@ -1,7 +1,7 @@
 @extends('layouts.mainMenu')
 
 @section('content')
-<h1>Mes items</h1>
+<h1>Les items de {{$enfant->prenom}}</h1>
 
 <div class="accordion" id="page_items">
 

@@ -73,7 +73,7 @@
     </div>
 
     @if ($itemactuel)
-        <button type="submit" class="btn btn-outline-dark">Modifier la fiche</button>
+        <button type="submit" name="submit" value="modif" class="btn btn-outline-dark">Modifier la fiche</button>
     @else
         <button type="submit" name="submit" value="save" class="btn btn-outline-dark">Sauvegarder la nouvelle fiche</button>
         <button type="submit" name="submit" value="save_and_select" class="btn btn-outline-info">Sauvegarder et sélectionner la nouvelle fiche</button>

@@ -40,7 +40,7 @@ const cancelNouvellePhrase = (quill) => {
 const saveNouvellePhrase = (quill) => {
     $('#saveNouvellePhrase').on('click', function() {
 
-        var data = quill.root.innerHTML
+        var data = quill.getText()
         var section = $(this).data('section')
         var id = $(this).data('id')
         $.ajax({

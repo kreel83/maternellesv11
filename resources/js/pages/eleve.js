@@ -35,6 +35,7 @@ const delete_photo = () => {
 
 const photo_eleve = () => {
     $(document).on('click','#photo_form', function() {
+        console.log('photo')
         $('#photo_input').trigger('click')
     })
 }

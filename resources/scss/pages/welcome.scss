@@ -1,0 +1,41 @@
+.anniversaire_texte {
+    font-size: 60px;
+    text-align: center;
+    font-weight: bolder;
+
+}
+
+.anniversaires {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 60px;
+    .anniversaire {
+        display: flex;
+        justify-content: center;
+
+        align-content: center;
+        align-items: center;
+        margin: 15px;
+        width: fit-content;
+        .day {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            color: white;
+            font-weight: bolder;
+            margin-right: 50px;
+        }
+        .name {
+            font-size: 25px;
+            font-weight: bolder;
+        }
+    }
+
+}

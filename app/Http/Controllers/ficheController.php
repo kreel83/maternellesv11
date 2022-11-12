@@ -25,6 +25,7 @@ class ficheController extends Controller
         $fiches = Auth::user()->mesfiches($section);
         $universelles = Auth::user()->autresfiches($section);
 
+
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
         $itemactuel = ($itemactuel) ? $itemactuel : Personnel::find($request->item);
 
@@ -36,6 +37,7 @@ class ficheController extends Controller
             ->with('fiches', $fiches)
             ->with('itemactuel', $itemactuel)
             ->with('universelles', $universelles)
+            ->with('user', Auth::id())
             ->with('sections', Section::all());
     }
 
@@ -105,30 +107,51 @@ class ficheController extends Controller
             return $lvl;
         }
 
+
         $name_file = uniqid().'.jpg';
         $rep = Auth::user()->repertoire;
-        $item = new Item();
-        $item->name = $request->name;
-        if ($request->file) $item->image = 'storage/'.$rep.'/personnels/'.$name_file;
-        $item->section_id = $request->section_id;
-        $item->lvl = set_lvl($request);
-        $item->st = $request->st;
-        $item->status = Auth::id();
-        $item->phrase = $request->phrase;
-        $item->save();
-
-        if ($request->submit == 'save_and_select') {
-            $fiche = new Fiche();
-            $fiche->item_id = $item->id;
-            $fiche->order = Fiche::lastOrder();
-            $fiche->perso = 1;
-            $fiche->user_id = Auth::id();
-            $fiche->section_id = $request->section_id;
-            $fiche->parent_type = "items";
-            $fiche->save();
+        if ($request->submit == 'modif')
+        {
+            $item = Personnel::find($request->personnel_id);
+            $item->name = $request->name;
+            if ($request->file) $item->image = 'storage/'.$rep.'/personnels/'.$name_file;
+            $item->section_id = $request->section_id;
+            $item->lvl = set_lvl($request);
+            $item->st = $request->st;
+            $item->user_id = Auth::id();
+            $item->phrase = $request->phrase;
+            $item->save();
 
 
+        } else {
+            $id = $this->set_last_id();
+
+
+            $item = new Personnel();
+            $item->id = $id;
+            $item->name = $request->name;
+            if ($request->file) $item->image = 'storage/'.$rep.'/personnels/'.$name_file;
+            $item->section_id = $request->section_id;
+            $item->lvl = set_lvl($request);
+            $item->st = $request->st;
+            $item->user_id = Auth::id();
+            $item->phrase = $request->phrase;
+            $item->save();
+
+            if ($request->submit == 'save_and_select') {
+                $fiche = new Fiche();
+                $fiche->item_id = $id;
+                $fiche->order = Fiche::lastOrder();
+                $fiche->perso = 1;
+                $fiche->user_id = Auth::id();
+                $fiche->section_id = $request->section_id;
+                $fiche->parent_type = "personnels";
+                $fiche->save();
+
+
+            }
         }
+
 
 
 
@@ -189,11 +212,12 @@ class ficheController extends Controller
     public function duplicate(Request $request) {
 
         $last_id = $this->set_last_id();
-        $item = Item::find($request->item);
-        $new = $item->replicate();
-        $new->id = $last_id;
-        $new->status = Auth::id();
-        $new->save();
+        $item = Item::find($request->item)->toArray();
+        $item['id'] = $this->set_last_id();
+
+
+        Personnel::create($item);
+
 
 //        if ($request->provenance == "fiche") {
 //            $fiche = new Fiche();

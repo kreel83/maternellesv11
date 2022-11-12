@@ -11,15 +11,33 @@
     box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.5);
   }
   .card .banner {
-    background-image: url("https://images.unsplash.com/photo-1545703549-7bdb1d01b734?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     height: 4rem;
     display: flex;
     align-items: flex-end;
     justify-content: center;
     box-sizing: border-box;
+      position: relative;
+      &.garcon {
+          background-color: #2BD4F8;
+      }
+      &.fille {
+          background-color: #FBBAC8;
+      }
+      .groupe {
+          position: absolute;
+          right: 22px;
+          top: -12px;
+          border: 2px solid white;
+          color: white;
+          background-color: #7098be;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          font-weight: 600;
+      }
   }
   .card .banner img {
     background-color: #fff;

@@ -19,7 +19,7 @@
         <tbody>
 
             @foreach ($eleves as $eleve)
-                <tr data-id="{{$eleve->id}}" data-commentaire="{{$eleve->comment}}" data-photo="{{asset($eleve->photo)}}">
+                <tr data-id="{{$eleve->id}}" data-commentaire="{{$eleve->comment}}" data-photo="{{asset($eleve->photoEleve)}}">
                     <td style="width: 40px"><img src="{{asset($eleve->photoEleve)}}" alt="" width="40px"></td>
                     <td data-value="{{$eleve->nom}}">{{$eleve->nom}}</td>
                     <td data-value="{{$eleve->prenom}}">{{$eleve->prenom}}</td>
@@ -38,10 +38,9 @@
             @endforeach
         </tbody>
     </table>
-web
 
 
-    </div>
+
 
 
     <!-- Modal -->
@@ -116,6 +115,7 @@ web
                         <div class="tab-pane photo_container" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="position: relative">
                             <div style="position: absolute; top: 10px; right: 100px; font-size: 24px;color: red; cursor: pointer;display: none;" id="delete_photo"><i class="fas fa-times-circle"></i></div>
                             <div style="width: 300px;height: 300px; border: 1px solid blue">
+
 
                                 <img src="" alt="" width="100%" id="photo_form" >
                             </div>

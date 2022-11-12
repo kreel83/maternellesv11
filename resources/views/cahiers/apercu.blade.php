@@ -10,8 +10,13 @@
             <button data-section="apercu" data-enfant="{{$enfant->id}}"
                     style="margin-top: 20px" class="btn btn-dark saveTexteReussite">Sauvegarder
             </button>
-            <a target="_blank" href="{{route('seepdf',['id' => $enfant->id])}}" data-enfant="{{$enfant->id}}"
-               class="btn btn-primary" id="pdf">Voir le pdf</a>
+            @if ($isreussite)
+                <a target="_blank" href="{{route('seepdf',['id' => $enfant->id])}}" data-enfant="{{$enfant->id}}"
+                class="btn btn-primary" id="pdf">Voir le PDF</a>
+                <a target="_blank" href="{{route('savepdf',['id' => $enfant->id])}}" data-enfant="{{$enfant->id}}"
+                class="btn btn-primary" id="pdf">Sauvegarder le PDF</a>
+
+
             <div class="form-check form-switch">
 
 
@@ -19,6 +24,7 @@
                        type="checkbox" id="definitif" data-enfant="{{$enfant->id}}" >
                 <label class="form-check-label" for="definitif">Définitif</label>
             </div>
+            @endif
         </div>
         <div id="editor" data-section="" data-enfant="92" style="height: 400px" class="ql-container ql-snow">
 

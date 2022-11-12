@@ -10,8 +10,9 @@
 
     <a class="btn btn-outline-primary" href="{{route('editerPDF',['enfant' => $enfant->id])}}" >Editer le cahier de réussite</a>
     @if ($enfant->hasReussite())
-    <a class="btn btn-outline-danger" href="{{route('deleteReussite',['enfant' => $enfant->id])}}" >Modifier le cahier de réussite</a>
+    <a class="btn btn-outline-danger" href="{{route('deleteReussite',['enfant' => $enfant->id])}}" >Modifier le cahier de réussite (cette opération éffacera les modification)</a>
     @endif
+
 
 
     @if (!$enfant->hasReussite())
@@ -29,6 +30,7 @@
 
         </div>
     </nav>
+
     <div class="tab-content" id="nav-tabContent" style="margin-bottom: 20px" >
         {{--<div style="margin-bottom: 20px" class="tab-pane fade {{$key == 0 ? 'show active' : null}}" id="nav-apercu" role="tabpanel" aria-labelledby="nav-home-tab">--}}
             {{--<div class="d-flex w-100 justify-content-between align-items-center">--}}
@@ -47,6 +49,7 @@
             <div style="margin-bottom: 20px" class="tab-pane fade {{$key == 0 ? 'show active' : null}}" id="nav-{{$section->id}}" role="tabpanel" aria-labelledby="nav-home-tab">
                 <h4 style="margin-bottom: 20px">{{$section->name}}</h4>
 
+
                 <textarea style="margin: 10px 0" name="" id="" class="form-control" rows="10">@include('include.card_phrases')</textarea>
                 <button data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="margin: 20px 0" class="btn btn-dark saveTexte">Sauvegarder</button>
 
@@ -54,9 +57,13 @@
                 <select class="form-control phrase" data-section="{{$section->id}}" data-enfant="{{$enfant->id}}">
                     <option value="null">Veuillez selectionner</option>
 
+
+
+                    @if (!$phrases->isEmpty())
                 @foreach ($phrases[$section->id] as $phrase)
                         <option value="{{$phrase->id}}">{{$phrase->texte($enfant)}}</option>
                 @endforeach
+                        @endif
                 </select>
 
             </div>

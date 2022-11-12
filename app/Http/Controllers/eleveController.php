@@ -32,7 +32,9 @@ class eleveController extends Controller
             $path = Storage::path($folder);
             $photo = $request->file('photo');
             $img = Image::make($photo)->encode('jpg', 75);;
-            $img->resize(300,300);
+            $img->fit(200, 200, function ($constraint) {
+                $constraint->upsize();
+            });
             $img->save($path);
             $datas['photo'] = $folder;
         }

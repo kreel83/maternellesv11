@@ -37,6 +37,7 @@ import {
     setMotCleFiche,
     jemodifielafiche, jeducpliquelafiche
 } from './pages/fiche';
+import {choix_equipe} from "./pages/equipe";
 
 
 window.Alpine = Alpine;
@@ -49,26 +50,34 @@ $(document).ready(function($) {
 
 
 
-    $('.card__share  a').on('click', function(e){
+    $(document).on("click",".card__share  div", function(e){
+            e.preventDefault()
         var that = $(this).closest('.card')
         var $this = $(this)
         var enfant = $(this).closest('.card').data('enfant')
         var item = $(this).closest('.card').data('item')
         var notation = $(this).data('notation')
+        var card = $(this).closest('.card')
         //e.preventDefault() // prevent default action - hash doesn't appear in url
         $(this).parent().find( 'div' ).toggleClass( 'card__social--active' );
         $(this).toggleClass('share-expanded');
-        $.get('/resultat/setNote?enfant='+enfant+'&item='+item+'&notation='+notation, function(data) {
-            if (notation != null) {
+        if (notation != null) {
+            $.get('/resultat/setNote?enfant='+enfant+'&item='+item+'&notation='+notation, function(data) {
+                // if (data == 'raz') {
+                //     $(that).find('.share-toggle').css('background-color','white')
+                // } else {
+                //     $(that).find('.share-toggle').css('background-color',data['color'])
+                // }
+                //
+                // $(that).find('.share-toggle').toggleClass('share-expanded');
+                // $(that).find('.share-toggle>i').toggleClass('hide');
+                // $(that).find('.card__social').toggleClass('card__social--active')
+                $(card).find('.card__content').html(data)
 
 
-                    $(that).find('.share-toggle').css('background-color',data['color'])
-                    $(that).find('.share-toggle').toggleClass('share-expanded');
-                    $(that).find('.share-toggle>i').toggleClass('hide');
-                    $(that).find('.card__social').toggleClass('card__social--active')
-            }
+            })
+        }
 
-        })
     });
 
 });
@@ -170,5 +179,5 @@ chercheCommune()
 chercheEcole()
 choixEcole()
 
-console.log('9')
+choix_equipe()
 

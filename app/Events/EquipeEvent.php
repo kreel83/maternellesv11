@@ -4,7 +4,7 @@ namespace App\Events;
 
 
 use App\Models\Enfant;
-use Carbon\Carbon;
+use App\Models\Equipe;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,7 +14,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 
-class EleveEvent
+class EquipeEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -23,21 +23,13 @@ class EleveEvent
      *
      * @return void
      */
-    public function __construct(Enfant $enfant)
+    public function __construct(Equipe $equipe)
     {
-    $mails = explode(';', $enfant->mail);
-    $enfant->mail1 = isset($mails[0]) ? $mails[0] : null;
-    $enfant->mail2 = isset($mails[1]) ? $mails[1] : null;
-    $enfant->jour = Carbon::parse($enfant->ddn)->format('d');
-    if ($enfant->photo) {
-        $enfant->photoEleve = Storage::url($enfant->photo);
-    } else {
-        $enfant->photoEleve = 'img/avatar/avatar'.$enfant->genre.'.jpg';
-    }
-
-
-
-
+        if ($equipe->photo) {
+            $equipe->photoEquipe = Storage::url($equipe->photo);
+        } else {
+            $equipe->photoEquipe = 'img/avatar/avatarF.jpg';
+        }
     }
 
     /**

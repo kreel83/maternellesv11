@@ -22,15 +22,14 @@ use App\Http\Controllers\EcoleController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/parent',[EnfantController::class, 'parent']);
 Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', [parametreController::class, 'welcome'])->name('depart');
 
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
@@ -39,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/enfants/{id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
     Route::get('/enfants/{id}/cahier/seepdf', [CahierController::class, 'seepdf'])->name('seepdf');
+    Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/calendar/periodes/init',[\App\Http\Controllers\CalendrierController::class,'init']);
     Route::get('/calendar',[\App\Http\Controllers\CalendrierController::class,'index'])->name('calendar');
     Route::get('/periode',[\App\Http\Controllers\CalendrierController::class,'periode'])->name('periode');
+    Route::post('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
     Route::post('/calendar/periodes/save',[\App\Http\Controllers\CalendrierController::class,'savePeriode']);
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
@@ -76,8 +77,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/password',[\App\Http\Controllers\EnfantController::class,'password'])->name('password');
     Route::post('/password_operation',[\App\Http\Controllers\EnfantController::class,'password_operation'])->name('password_operation');
 
+
     Route::get('/editerPDF/{enfant}', [CahierController::class, 'editerPDF'])->name('editerPDF');
     Route::get('/deleteReussite/{enfant}', [CahierController::class, 'deleteReussite'])->name('deleteReussite');
+
+    Route::get('/monprofil', [ParametreController::class, 'monprofil'])->name('monprofil');
+    Route::post('/monprofil', [ParametreController::class, 'savemonprofil'])->name('savemonprofil');
+
+    Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
+    Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle');
+
 
 });
 

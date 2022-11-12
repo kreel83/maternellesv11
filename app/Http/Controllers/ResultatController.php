@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enfant;
+use App\Models\Fiche;
 use App\Models\Item;
 use App\Models\Notation;
 use App\Models\Resultat;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,14 +15,19 @@ class ResultatController extends Controller
 {
     public function setNote(Request $request) {
         //dd($request);
-        if ($request->notation == "null")  return false;
-            $resultat = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
+        $resultat = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
+        $enfant = Enfant::find($request->enfant);
+        $item = Item::find($request->item);
+        if ($request->notation == 'raz') {
+            $resultat->delete();
+
+        } else {
             if ($resultat) {
                 $resultat->notation_id = $request->notation;
             } else {
-                $item = Item::find($request->item);
-                
-                $enfant = Enfant::find($request->enfant);
+
+
+
 
                 $resultat = new Resultat();
                 $resultat->item_id = $request->item;
@@ -33,7 +40,18 @@ class ResultatController extends Controller
             }
             $notation = Notation::find($request->notation)->toArray();
             $resultat->save();
-            return $notation;
+        }
+
+
+
+
+        $fiche = Fiche::where('item_id', $request->item)->where('user_id', Auth::id())->first();
+        $bloc = view('items.notation')
+                ->with('notations', Auth::user()->notations()->get())
+                ->with('enfant', $enfant)
+                ->with('fiche', $fiche);
+
+        return $bloc;
 
 
 

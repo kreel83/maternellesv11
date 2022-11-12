@@ -20154,6 +20154,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_cahier__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/cahier */ "./resources/js/pages/cahier.js");
 /* harmony import */ var _pages_phrase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/phrase */ "./resources/js/pages/phrase.js");
 /* harmony import */ var _pages_fiche__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/fiche */ "./resources/js/pages/fiche.js");
+/* harmony import */ var _pages_equipe__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/equipe */ "./resources/js/pages/equipe.js");
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 
@@ -20176,26 +20177,36 @@ window.$ = __webpack_provided_window_dot_jQuery = (jquery__WEBPACK_IMPORTED_MODU
 
 
 
+
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start();
 jquery__WEBPACK_IMPORTED_MODULE_3___default()(document).ready(function ($) {
-  $('.card__share  a').on('click', function (e) {
+  $(document).on("click", ".card__share  div", function (e) {
+    e.preventDefault();
     var that = $(this).closest('.card');
     var $this = $(this);
     var enfant = $(this).closest('.card').data('enfant');
     var item = $(this).closest('.card').data('item');
-    var notation = $(this).data('notation'); //e.preventDefault() // prevent default action - hash doesn't appear in url
+    var notation = $(this).data('notation');
+    var card = $(this).closest('.card'); //e.preventDefault() // prevent default action - hash doesn't appear in url
 
     $(this).parent().find('div').toggleClass('card__social--active');
     $(this).toggleClass('share-expanded');
-    $.get('/resultat/setNote?enfant=' + enfant + '&item=' + item + '&notation=' + notation, function (data) {
-      if (notation != null) {
-        $(that).find('.share-toggle').css('background-color', data['color']);
-        $(that).find('.share-toggle').toggleClass('share-expanded');
-        $(that).find('.share-toggle>i').toggleClass('hide');
-        $(that).find('.card__social').toggleClass('card__social--active');
-      }
-    });
+
+    if (notation != null) {
+      $.get('/resultat/setNote?enfant=' + enfant + '&item=' + item + '&notation=' + notation, function (data) {
+        // if (data == 'raz') {
+        //     $(that).find('.share-toggle').css('background-color','white')
+        // } else {
+        //     $(that).find('.share-toggle').css('background-color',data['color'])
+        // }
+        //
+        // $(that).find('.share-toggle').toggleClass('share-expanded');
+        // $(that).find('.share-toggle>i').toggleClass('hide');
+        // $(that).find('.card__social').toggleClass('card__social--active')
+        $(card).find('.card__content').html(data);
+      });
+    }
   });
 });
 jquery__WEBPACK_IMPORTED_MODULE_3___default().ajaxSetup({
@@ -20281,7 +20292,7 @@ window.section_active = null;
 (0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.chercheCommune)();
 (0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.chercheEcole)();
 (0,_pages_ecole__WEBPACK_IMPORTED_MODULE_0__.choixEcole)();
-console.log('9');
+(0,_pages_equipe__WEBPACK_IMPORTED_MODULE_12__.choix_equipe)();
 
 /***/ }),
 
@@ -20370,7 +20381,7 @@ var choicePhrase = function choicePhrase(quill) {
 
 var saveTexte = function saveTexte(quill) {
   $(document).on('click', '.saveTexte', function () {
-    var texte = quill.root.innerHTML;
+    var texte = quill.getText();
     var enfant = $(this).data('enfant');
     var section = $(this).data('section');
     $.ajax({
@@ -20398,7 +20409,9 @@ var saveTexteReussite = function saveTexteReussite(quill) {
         quill: quill.root.innerHTML,
         state: definitif
       },
-      success: function success(data) {}
+      success: function success(data) {
+        location.reload();
+      }
     });
   });
 };
@@ -20427,7 +20440,7 @@ var clickOnDefinif = function clickOnDefinif(quill) {
       url: '/enfants/' + enfant + '/cahier/definitif',
       data: {
         state: definitif,
-        quill: quill.root.innerHTML
+        quill: quill.getText()
       },
       success: function success(data) {
         console.log(definitif);
@@ -20806,6 +20819,7 @@ var delete_photo = function delete_photo() {
 
 var photo_eleve = function photo_eleve() {
   $(document).on('click', '#photo_form', function () {
+    console.log('photo');
     $('#photo_input').trigger('click');
   });
 };
@@ -20824,6 +20838,78 @@ var choix_eleve = function choix_eleve() {
     console.log($(this).data('id'));
     $('#commentaire_form').val($(this).data('commentaire'));
     var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('myModal'), {
+      keyboard: false
+    });
+    myModal.toggle();
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/equipe.js":
+/*!**************************************!*\
+  !*** ./resources/js/pages/equipe.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "choix_equipe": () => (/* binding */ choix_equipe)
+/* harmony export */ });
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+ // function readURL(input) {
+//     if (input.files && input.files[0]) {
+//         var reader = new FileReader();
+//         reader.onload = function(e) {
+//             save_photo = $('#photo_form').attr('src')
+//             $('#photo_form').attr('src', e.target.result);
+//         }
+//         reader.readAsDataURL(input.files[0]);
+//     }
+// }
+//
+//
+// let save_photo
+//
+// const setDefaultImg = (e) => {
+//     console.log(e)
+// }
+//
+// const preview_photo = (event) => {
+//     $("#photo_input").change(function() {
+//         $('#delete_photo').css('display','')
+//         readURL(this);
+//     });
+// }
+//
+// const delete_photo = () => {
+//     $('#delete_photo').on('click', function() {
+//         $('#photo_form').attr('src', save_photo);
+//         $('#photo_input').val('')
+//         $('#delete_photo').css('display','none')
+//     })
+// }
+//
+// const photo_eleve = () => {
+//     $(document).on('click','#photo_form', function() {
+//         console.log('photo')
+//         $('#photo_input').trigger('click')
+//     })
+// }
+
+var choix_equipe = function choix_equipe() {
+  $(document).on('click', '#tableau_equipes tr, #new_equipe', function () {
+    $('#nom_form').val($(this).find('td:eq(1)').data('value'));
+    $('#prenom_form').val($(this).find('td:eq(2)').data('value'));
+    $('#fonction_form').val($(this).find('td:eq(3)').data('value'));
+    $('#equipe_form').val($(this).data('id'));
+    $('#photo_form').attr('src', $(this).data('photo'));
+    console.log($(this).data('id'));
+    var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('EquipeModal'), {
       keyboard: false
     });
     myModal.toggle();
@@ -20986,7 +21072,7 @@ var jeducpliquelafiche = function jeducpliquelafiche() {
 
 var editor2change = function editor2change(quill) {
   quill.on('text-change', function (delta, oldDelta, source) {
-    var texte = quill.root.innerHTML;
+    var texte = quill.getText();
     $('#phraseForm').val(texte);
   });
 };
@@ -21117,7 +21203,7 @@ var cancelNouvellePhrase = function cancelNouvellePhrase(quill) {
 
 var saveNouvellePhrase = function saveNouvellePhrase(quill) {
   $('#saveNouvellePhrase').on('click', function () {
-    var data = quill.root.innerHTML;
+    var data = quill.getText();
     var section = $(this).data('section');
     var id = $(this).data('id');
     $.ajax({

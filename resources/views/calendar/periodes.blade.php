@@ -6,15 +6,40 @@
 @endphp
 
 @section('content')
-<h1>coucou</h1>
-
-<div class="selector">
-    <div class="price-slider">
-        <div id="slider-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
-            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+    @if (\Session::has('success'))
+        <div class="alert alert-success">
+            <ul>
+                <li>{!! \Session::get('success') !!}</li>
+            </ul>
         </div>
-        <span id="min-price" data-currency="€" class="slider-price">0</span> <span class="seperator">-</span> <span id="max-price" data-currency="€" data-max="3500"  class="slider-price">3500 +</span>
-    </div> 
-</div>
+    @endif
+    @if (\Session::has('error'))
+        <div class="alert alert-danger">
+            <ul>
+                <li>{!! \Session::get('error') !!}</li>
+            </ul>
+        </div>
+    @endif
+<h1>Gestion des périodes</h1>
+
+<form action="/periode/save" method="post">
+    @csrf
+        @foreach($periodes as $key=>$periode)
+
+            <h4>Période n° {{$key + 1}}</h4>
+            <div class="form-group">
+
+                <label for="">debut</label>
+                <input type="date" class="form-control" name="periode_debut[]" value="{{$periode[0]}}">
+                <label for="">fin</label>
+                <input type="date" class="form-control" name="periode_fin[]" value="{{$periode[1]}}">
+            </div>
+            <hr>
+        @endforeach
+    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+</form>
+
+
+
+
 @endsection

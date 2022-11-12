@@ -104,26 +104,20 @@ h2 {
     }
 
     .card__social {
-        position: absolute;
-        top: 0;
-        right: 0;
-        visibility: hidden;
-
-        transform: translateZ(0);
-        transform: translateX(0px);
-        transition: transform 0.35s ease;
+        display: none;justify-content: space-between;align-items: center; position: absolute;top: 0; right: 65px;
+        cursor: pointer;
     }
     .card__social--active {
-        visibility: visible;
-        /*z-index: 3;*/
-        transform: translateZ(0);
-        transform: translateX(-48px);
-        transition: transform 0.35s ease;
+        display: flex;
     }
 
 
     .share-toggle .hide {
         display: none
+    }
+
+    .share-toggle {
+        cursor: pointer;
     }
 
     .share-empty {

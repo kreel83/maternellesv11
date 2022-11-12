@@ -9,10 +9,14 @@ $color = \App\Models\Section::getColor($fiche->section_id);
 
 <li class="card_fiche shadowDepth1 ui-state-default" style="background-color: {{$color}}; color: white" data-table="{{$fiche->getTable()}}" data-type="{{$type}}" data-level="{{$lvl}}" data-fiche="{{$fiche->id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
     <div class="perso_card">
+
+            <span class="duplicate_card" data-id="{{$fiche->id}}" data-section="{{$section->id}}"><i class="fas fa-clone"></i></span>
+        {{--@php--}}
+        {{--dump($fiche);--}}
+        {{--@endphp--}}
         @if ($fiche->getTable() == 'personnels')
             <span class="modifyFiche" data-provenance="item"  data-id="{{$fiche->id}}" data-section="{{$section->id}}"><i class="fas fa-address-card"></i></span>
         @endif
-            <span class="duplicate_card" data-id="{{$fiche->id}}" data-section="{{$section->id}}"><i class="fas fa-clone"></i></span>
 
     </div>
         <div class="card-header" style="padding: 0">

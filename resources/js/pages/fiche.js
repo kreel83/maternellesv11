@@ -125,7 +125,7 @@ const jeducpliquelafiche = () => {
 
 const editor2change = (quill) => {
     quill.on('text-change', function(delta, oldDelta, source) {
-        var texte = quill.root.innerHTML
+        var texte = quill.getText()
         $('#phraseForm').val(texte)
     })
 }

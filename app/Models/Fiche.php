@@ -26,7 +26,7 @@ class Fiche extends Model
     }
 
     public function item() {
-        return $this->hasOne('Item');
+        return $this->hasOne('App\Models\Item');
     }
     public static function lastOrder() {
         return self::where('user_id', Auth::id())->count() + 1;

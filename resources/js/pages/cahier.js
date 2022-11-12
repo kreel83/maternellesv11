@@ -37,7 +37,7 @@ const choicePhrase = (quill) => {
 
 const saveTexte = (quill) => {
     $(document).on('click','.saveTexte', function() {
-        var texte = quill.root.innerHTML
+        var texte = quill.getText()
         var enfant = $(this).data('enfant')
         var section = $(this).data('section')
         $.ajax({
@@ -67,7 +67,7 @@ const saveTexteReussite = (quill) => {
                 state: definitif
             },
             success: function(data) {
-
+                location.reload()
             }
         })
     })
@@ -98,7 +98,7 @@ const clickOnDefinif = (quill) => {
             url : '/enfants/' + enfant + '/cahier/definitif',
             data: {
                 state: definitif,
-                quill: quill.root.innerHTML
+                quill: quill.getText()
             },
             success: function(data) {
                 console.log(definitif)

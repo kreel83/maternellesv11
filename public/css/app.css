@@ -14185,15 +14185,33 @@ textarea.form-control-lg {
   box-shadow: 0px 1rem 1.5rem rgba(0, 0, 0, 0.5);
 }
 #page_enfants .card .banner {
-  background-image: url("https://images.unsplash.com/photo-1545703549-7bdb1d01b734?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   height: 4rem;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   box-sizing: border-box;
+  position: relative;
+}
+#page_enfants .card .banner.garcon {
+  background-color: #2BD4F8;
+}
+#page_enfants .card .banner.fille {
+  background-color: #FBBAC8;
+}
+#page_enfants .card .banner .groupe {
+  position: absolute;
+  right: 22px;
+  top: -12px;
+  border: 2px solid white;
+  color: white;
+  background-color: #7098be;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: 600;
 }
 #page_enfants .card .banner img {
   background-color: #fff;
@@ -14514,23 +14532,22 @@ h2, .h2 {
   float: right;
 }
 .item .card__social {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
   position: absolute;
   top: 0;
-  right: 0;
-  visibility: hidden;
-  transform: translateZ(0);
-  transform: translateX(0px);
-  transition: transform 0.35s ease;
+  right: 65px;
+  cursor: pointer;
 }
 .item .card__social--active {
-  visibility: visible;
-  /*z-index: 3;*/
-  transform: translateZ(0);
-  transform: translateX(-48px);
-  transition: transform 0.35s ease;
+  display: flex;
 }
 .item .share-toggle .hide {
   display: none;
+}
+.item .share-toggle {
+  cursor: pointer;
 }
 .item .share-empty {
   display: inline-block;
@@ -14755,6 +14772,49 @@ h2, .h2 {
 
 #motCle td {
   width: 33%;
+}
+
+.anniversaire_texte {
+  font-size: 60px;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.anniversaires {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+.anniversaires .anniversaire {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin: 15px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.anniversaires .anniversaire .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  color: white;
+  font-weight: bolder;
+  margin-right: 50px;
+}
+.anniversaires .anniversaire .name {
+  font-size: 25px;
+  font-weight: bolder;
 }
 
 #choixFiche td {

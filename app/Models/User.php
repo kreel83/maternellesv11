@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
 
     public function mesfiches($section) {
-        return Fiche::where('section_id', $section->id)->orderBy('order')->get();
+        return Fiche::where('section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
     }
 
     public function autresfiches($section) {
@@ -66,11 +66,16 @@ class User extends Authenticatable
         $items = Item::whereNotIn('id', $ll)->where('section_id', $section->id)->where(function($query) use($user) {
             $query->whereNull('status')->orWhere('status', $user);
         })->get();
-//        $perso = Personnel::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
-//        $return =  $items->merge($perso);
-        return $items;
+        $perso = Personnel::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
+        $return =  $items->merge($perso);
+        return $return;
 
     }
+
+    public function equipes() {
+        return Equipe::where('user_id', $this->id)->get();
+    }
+
 
     public function liste() {
         return Enfant::where('user_id', $this->id)->get();

@@ -9,21 +9,9 @@
             <div class="card-body" style="padding: 0; height: 100%">
 
                 <img src="{{asset($fiche->item->image)}}" alt="image" class="border-tlr-radius">
-                <div class="card__content">
-                    <div class="card__share">
-                        <div class="card__social" style="width: {{sizeof($notations) * 55}}px;">
-                            @foreach ($notations as $notation)
-                            <a class="share-icon" style="background-color: {{$notation['color']}}" href="#" data-notation="{{$notation->id}}"></a>
-                            @endforeach
-                        </div>
+                <div class="card__content" style="">
+                    @include('items.notation')
 
-
-                        @if ($enfant->resultat($fiche->item_id))
-                            <a class="share-toggle share-empty" data-notation="null" style="background-color: {{$enfant->resultat($fiche->item_id)->color}}" href="#"></a>
-                        @else
-                            <a class="share-toggle share-icon" data-notation="null"  href="#"><i class="fad fa-ballot-check"></i></a>
-                        @endif
-                    </div>
                 </div>
             </div>
 
