@@ -19,6 +19,7 @@
         <tbody>
 
             @foreach ($eleves as $eleve)
+
                 <tr data-id="{{$eleve->id}}" data-commentaire="{{$eleve->comment}}" data-photo="{{asset($eleve->photoEleve)}}">
                     <td style="width: 40px"><img src="{{asset($eleve->photoEleve)}}" alt="" width="40px"></td>
                     <td data-value="{{$eleve->nom}}">{{$eleve->nom}}</td>

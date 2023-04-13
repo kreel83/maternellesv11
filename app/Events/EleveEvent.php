@@ -29,6 +29,7 @@ class EleveEvent
     $enfant->mail1 = isset($mails[0]) ? $mails[0] : null;
     $enfant->mail2 = isset($mails[1]) ? $mails[1] : null;
     $enfant->jour = Carbon::parse($enfant->ddn)->format('d');
+
     if ($enfant->photo) {
         $enfant->photoEleve = Storage::url($enfant->photo);
     } else {

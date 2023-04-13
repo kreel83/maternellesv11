@@ -256,7 +256,7 @@
                     <p class="titre2">{{$resultat['name']}}</p>
                 </div>
             </td>
-            @if ($key != 0 && $key - 3  % 4 == 0)
+            @if ($key != 0 && (($key - 3)  % 4 == 0))
                 </tr>
                 <tr>
             @endif
