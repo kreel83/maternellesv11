@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
+
+    public function mesfiches() {
+        $items = Item::whereNull('user_id')->orWhere('user_id', Auth::id())->orderBy('section_id')->get();
+        $sections = Section::all();
+        return view('mesfiches.index')->with('items', $items)->with('sections', $sections);
+    }
+
     public function index($id) {
         $enfant = Enfant::find($id);
         $sections = Section::all();

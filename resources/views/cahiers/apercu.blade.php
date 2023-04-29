@@ -8,12 +8,12 @@
          >
         <div class="d-flex w-100 justify-content-between align-items-center">
             <button data-section="apercu" data-enfant="{{$enfant->id}}"
-                    style="margin-top: 20px" class="btn btn-dark saveTexteReussite">Sauvegarder
+                    style="margin-top: 20px" class="btn btn-dark " id="saveCommentaireGeneral">Sauvegarder
             </button>
             @if ($isreussite)
-                <a target="_blank" href="{{route('seepdf',['id' => $enfant->id])}}" data-enfant="{{$enfant->id}}"
+                <a target="_blank" href="{{route('seepdf',['id' => $enfant->id,'state' => 'see'])}}" data-enfant="{{$enfant->id}}"
                 class="btn btn-primary" id="pdf">Voir le PDF</a>
-                <a target="_blank" href="{{route('savepdf',['id' => $enfant->id])}}" data-enfant="{{$enfant->id}}"
+                <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"
                 class="btn btn-primary" id="pdf">Sauvegarder le PDF</a>
 
 
@@ -29,5 +29,18 @@
         <div id="editor" data-section="" data-enfant="92" style="height: 400px" class="ql-container ql-snow">
 
         </div>
+        <h4>Commentaire général</h4>
+        <select id="phraseCommentaireGeneral" class="form-control  mb-2" mt-4 data-section="99" data-enfant="{{$enfant->id}}">
+            <option value="null">Veuillez selectionner</option>
+
+            @if (!$commentaires->isEmpty())
+                @foreach ($commentaires as $phrase)
+                        <option value="{{$phrase->texte($enfant)}}">{{$phrase->texte($enfant)}}</option>
+                @endforeach
+                @endif
+        </select>
+        <textarea id="commentaire_general" data-enfant="92" style="width: 100%" rows="10">
+            {{ $isreussite ? $isreussite->commentaire_general : null}}
+        </textarea>
     </div>
 @endsection

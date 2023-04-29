@@ -1,6 +1,6 @@
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 
-require('./bootstrap');
+import './bootstrap';
 require('./quill.js');
 window.bootstrap = require('./bootstrap');
 
@@ -22,7 +22,7 @@ import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendri
 
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
 import {selectItem, hamburger} from './pages/items';
-import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite} from './pages/cahier';
+import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral} from './pages/cahier';
 import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase, setMotCle, saveNouvellePhrase} from "./pages/phrase";
 import {
     initFiche,
@@ -35,7 +35,8 @@ import {
     photoEnfantTrigger,
     editor2change,
     setMotCleFiche,
-    jemodifielafiche, jeducpliquelafiche
+    jemodifielafiche, jeducpliquelafiche,
+    choixSection
 } from './pages/fiche';
 import {choix_equipe} from "./pages/equipe";
 
@@ -45,9 +46,6 @@ window.Alpine = Alpine;
 Alpine.start();
 
 $(document).ready(function($) {
-
-
-
 
 
     $(document).on("click",".card__share  div", function(e){
@@ -107,6 +105,8 @@ if ($('#editor').length) {
     console.log('7')
     saveTexteReussite(quill)
     console.log('8')
+    saveCommentaireGeneral(quill)
+    console.log('8')
 }
 
 if ($('#editor2').length) {
@@ -146,7 +146,7 @@ hamburger()
 
 selectPhrase()
 
-
+phraseCommentaireGeneral()
 
 jeducpliquelafiche()
 jemodifielafiche()
@@ -158,6 +158,7 @@ choixFiltre()
 jechoisislaselection()
 photoEnfant()
 photoEnfantTrigger()
+choixSection()
 
 
 
@@ -180,4 +181,5 @@ chercheEcole()
 choixEcole()
 
 choix_equipe()
+
 

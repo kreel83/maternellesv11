@@ -7,12 +7,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +56,9 @@ class User extends Authenticatable
     }
 
     public function mesfiches($section) {
+        //$items = Item::join('fiches','fiches.item_id','id')->where('fiches.section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
+        //dd($items);
+
         return Fiche::where('section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
     }
 
@@ -66,8 +69,9 @@ class User extends Authenticatable
         $items = Item::whereNotIn('id', $ll)->where('section_id', $section->id)->where(function($query) use($user) {
             $query->whereNull('status')->orWhere('status', $user);
         })->get();
-        $perso = Personnel::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
-        $return =  $items->merge($perso);
+        //$perso = Personnel::whereNotIn('id', $ll)->where('section_id', $section->id)->get();
+        //$return =  $items->merge($perso);
+        $return = $items;
         return $return;
 
     }

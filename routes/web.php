@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnfantController;
 use App\Http\Controllers\ItemController;
-use App\Http\Controllers\homeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CahierController;
 use App\Http\Controllers\ParametreController;
-use App\Http\Controllers\FicheController;
+use App\Http\Controllers\ficheController;
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
@@ -34,10 +34,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
+    Route::post('/enfants/{id}/cahier/saveCommentaireGeneral', [CahierController::class, 'saveCommentaireGeneral'])->name('saveCommentaireGeneral');
     Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
     Route::post('/enfants/{id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
-    Route::get('/enfants/{id}/cahier/seepdf', [CahierController::class, 'seepdf'])->name('seepdf');
+    Route::get('/enfants/{id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
     Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
@@ -88,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle');
 
 
+    Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 });
 
 

@@ -33,7 +33,9 @@ const choicePhrase = (quill) => {
     })
 }
 
+const saveCommentaireDefinitif = (quill, quill2) => {
 
+}
 
 const saveTexte = (quill) => {
     $(document).on('click','.saveTexte', function() {
@@ -88,6 +90,41 @@ const clickOnNav = (quill) => {
         quill.root.innerHTML = texte
     })
 }
+
+const phraseCommentaireGeneral = () => {
+    $(document).on('change','#phraseCommentaireGeneral', function() {
+        let texte = $(this).val();
+        texte = texte + '\n';
+        console.log(texte);
+        $('#commentaire_general').val(function(i, text) {
+            return text + texte;
+        });
+        $('#phraseCommentaireGeneral').val('null')
+    })
+}
+
+const saveCommentaireGeneral = (quill) => {
+    $(document).on('click','#saveCommentaireGeneral', function() {
+        // const definitif = $(this).prop('checked')
+        var enfant = $(this).data('enfant')
+        var reussite = quill.root.innerHTML
+        var commentaireGeneral = $('#commentaire_general').val()
+
+
+        $.ajax({
+            method: 'POST',
+            url : '/enfants/' + enfant + '/cahier/saveCommentaireGeneral',
+            data: {
+                reussite: reussite,
+                commentaireGeneral: commentaireGeneral
+            },
+            success: function(data) {
+                location.reload(true);
+            }
+        })
+    })
+}
+
 
 const clickOnDefinif = (quill) => {
     $(document).on('change','#definitif', function() {
@@ -160,4 +197,4 @@ const onload = (quill) => {
 
 
 
-export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite}
+export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral}

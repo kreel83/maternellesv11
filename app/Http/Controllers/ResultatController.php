@@ -7,6 +7,7 @@ use App\Models\Fiche;
 use App\Models\Item;
 use App\Models\Notation;
 use App\Models\Resultat;
+use App\Models\Personnel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,10 @@ class ResultatController extends Controller
         $resultat = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
         $enfant = Enfant::find($request->enfant);
         $item = Item::find($request->item);
+        if (!$item) {
+            $item = Personnel::find($request->item);
+        }
+        
         if ($request->notation == 'raz') {
             $resultat->delete();
 

@@ -15,6 +15,9 @@ class Resultat extends Model
     }
 
     public function item() {
-        return $this->hasOne('App\Models\Item','id','item_id')->first();
+        $search =  $this->hasOne('App\Models\Item','id','item_id')->first();
+        if ($search) return $search;
+        $search =  $this->hasOne('App\Models\Personnel','id','item_id')->first();
+        return $search;
     }
 }

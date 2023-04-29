@@ -22,9 +22,9 @@ https://dribbble.com/shots/14101951-Banners
       <div class="card card-2">
         <div class="card__icon"><i class="fas fa-bolt"></i></div>
         <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Mes cahiers de progrès</h2>
+        <h2 class="card__title">Mes fiches</h2>
         <p class="card__apply">
-          <a class="card__link" href="#">C'est parti ! <i class="fas fa-arrow-right"></i></a>
+          <a class="card__link" href="{{route('mesfiches')}}">C'est parti ! <i class="fas fa-arrow-right"></i></a>
         </p>
       </div>
       {{--<div class="card card-3">--}}

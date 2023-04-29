@@ -47,12 +47,18 @@ class CahierController extends Controller
 
 
 
-    public function seepdf($id) {
+    public function seepdf($id, $state = 'see') {
+
 
         $rep = Auth::user()->repertoire;
-        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
-            ->join('sections','sections.id','resultats.section_id')
+        $resultats_items = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
+           ->join('sections','sections.id','resultats.section_id')
             ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
+        $resultats_personnels = Resultat::select('personnels.*','resultats.*','sections.name as name_section','sections.color')->join('personnels','personnels.id','resultats.item_id')
+           ->join('sections','sections.id','resultats.section_id')
+            ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
+            $resultats = $resultats_items->merge($resultats_personnels);
+
 
         $resultats = $resultats->groupBy('section_id')->toArray();
         $sections = Section::all()->toArray();
@@ -65,18 +71,36 @@ class CahierController extends Controller
 
 
         $enfant = Enfant::find($id);
+        $name = $enfant->prenom.' '.$enfant->nom;
+        $n = explode(' ', $name);
+        $n=join('-', $n);
         $equipes = Auth::user()->equipes();
 
-        $reussite = Reussite::where('enfant_id', $id)->first()->texte_integral;
+        $r = Reussite::where('enfant_id', $id)->first();
+        $reussite = $r->texte_integral;
+        if ($r->commentaire_general) {
+            $reussite .= '<h2>Commentaire général</h2><p>'.$r->commentaire_general.'</p>';
+
+        }
+        // dd($reussite);
+        $reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
+
 
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
 //dd($resultats);
 
 
-        $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
-        // download PDF file with download method
-        return $pdf->stream('test_cahier.pdf');
+        if ($state == 'see') {
+            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
+            // download PDF file with download method
+            return $pdf->stream('test_cahier.pdf');            
+        } else {
+            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => Auth::user(), 'equipes' => $equipes]);
+            $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
+            return redirect()->back()->with('success','le fichier a bine été enregistré');
+        }
+
 
     }
 
@@ -103,13 +127,35 @@ class CahierController extends Controller
 
         }
 
+        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
+
+
+
 
         $reussite = join(' ', $mots);
 //        dd($mots, $reussite);
 
         $r = Reussite::where('enfant_id', $enfant->id)->first();
         $definitif = ($r) ? $r->definitif : null;
-        return view('cahiers.apercu')->with('enfant', $enfant)->with('reussite', $reussite)->with('definitif', $definitif)->with('isreussite', $r);
+        return view('cahiers.apercu')
+            ->with('enfant', $enfant)
+            ->with('reussite', $reussite)
+            ->with('definitif', $definitif)
+            ->with('commentaires', $commentaires)
+            ->with('isreussite', $r);
+    }
+
+
+    public function saveCommentaireGeneral($id, Request $request) {
+        $r = new Reussite();
+        $r->user_id = Auth::id();
+        $r->enfant_id = $id;
+        $r->texte_integral = $request->reussite;
+        $r->commentaire_general = $request->commentaireGeneral;
+        $r->definitif = true;
+        $r->save();
+
+        return true;
     }
 
     public function savePDF($id) {

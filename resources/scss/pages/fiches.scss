@@ -1,13 +1,16 @@
 
 #choixFiche {
+    color: red;
     td {
         text-align: center;
         width: 50%;
+        &:hover {
+            cursor: pointer;
+            background: #0d6efd;
+            color: white;
+        }
     }
-    td:hover {
-        cursor: pointer;
-        background: #0d6efd;
-        color: white;
 
-    }
 }
+
+

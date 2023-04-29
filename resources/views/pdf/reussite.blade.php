@@ -268,6 +268,7 @@
 {{--<img src="{{public_path('img/deco/Commentaires.png')}}" alt="">--}}
 
 {!! $reussite !!}
+
 <div class="signature">
     <div class="equipe">Les signatures</div>
     <table style="border-spacing: 10px; bordert: 1px solid lightgray">

@@ -160,4 +160,14 @@ const setMotCleFiche= (quill) => {
     })
 }
 
-export {jeducpliquelafiche, jemodifielafiche, initFiche, selectSectionFiche, selectFiche, choixTypeFiches, choixFiltre, jechoisislaselection, photoEnfant, photoEnfantTrigger, editor2change, setMotCleFiche}
+const choixSection = () => {
+    alert('cc')
+    $('.card-section').on('click', function() {
+        var id = $(this).data('id')
+        console.log(id)
+        $('#liste .card').addClass('d-none')
+        $('#liste .card[data-section="'+id+'"]').removeClass('d-none')
+    })
+}
+
+export {choixSection ,jeducpliquelafiche, jemodifielafiche, initFiche, selectSectionFiche, selectFiche, choixTypeFiches, choixFiltre, jechoisislaselection, photoEnfant, photoEnfantTrigger, editor2change, setMotCleFiche}

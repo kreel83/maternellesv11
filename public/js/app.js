@@ -20234,6 +20234,8 @@ if (jquery__WEBPACK_IMPORTED_MODULE_3___default()('#editor').length) {
   console.log('7');
   (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.saveTexteReussite)(quill);
   console.log('8');
+  (0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.saveCommentaireGeneral)(quill);
+  console.log('8');
 }
 
 if (jquery__WEBPACK_IMPORTED_MODULE_3___default()('#editor2').length) {
@@ -20268,6 +20270,7 @@ window.section_active = null;
 (0,_pages_items__WEBPACK_IMPORTED_MODULE_8__.selectItem)();
 (0,_pages_items__WEBPACK_IMPORTED_MODULE_8__.hamburger)();
 (0,_pages_phrase__WEBPACK_IMPORTED_MODULE_10__.selectPhrase)();
+(0,_pages_cahier__WEBPACK_IMPORTED_MODULE_9__.phraseCommentaireGeneral)();
 (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.jeducpliquelafiche)();
 (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.jemodifielafiche)();
 (0,_pages_fiche__WEBPACK_IMPORTED_MODULE_11__.initFiche)();
@@ -20345,7 +20348,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "onload": () => (/* binding */ onload),
 /* harmony export */   "apercu": () => (/* binding */ apercu),
 /* harmony export */   "clickOnDefinif": () => (/* binding */ clickOnDefinif),
-/* harmony export */   "saveTexteReussite": () => (/* binding */ saveTexteReussite)
+/* harmony export */   "saveTexteReussite": () => (/* binding */ saveTexteReussite),
+/* harmony export */   "phraseCommentaireGeneral": () => (/* binding */ phraseCommentaireGeneral),
+/* harmony export */   "saveCommentaireGeneral": () => (/* binding */ saveCommentaireGeneral)
 /* harmony export */ });
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window.Quill = __webpack_require__(/*! Quill */ "./node_modules/Quill/dist/quill.js");
@@ -20378,6 +20383,8 @@ var choicePhrase = function choicePhrase(quill) {
     })*/
   });
 };
+
+var saveCommentaireDefinitif = function saveCommentaireDefinitif(quill, quill2) {};
 
 var saveTexte = function saveTexte(quill) {
   $(document).on('click', '.saveTexte', function () {
@@ -20428,6 +20435,38 @@ var clickOnNav = function clickOnNav(quill) {
     var selection = quill.getSelection(true);
     quill.setText('');
     quill.root.innerHTML = texte;
+  });
+};
+
+var phraseCommentaireGeneral = function phraseCommentaireGeneral() {
+  $(document).on('change', '#phraseCommentaireGeneral', function () {
+    var texte = $(this).val();
+    texte = texte + '\n';
+    console.log(texte);
+    $('#commentaire_general').val(function (i, text) {
+      return text + texte;
+    });
+    $('#phraseCommentaireGeneral').val('null');
+  });
+};
+
+var saveCommentaireGeneral = function saveCommentaireGeneral(quill) {
+  $(document).on('click', '#saveCommentaireGeneral', function () {
+    // const definitif = $(this).prop('checked')
+    var enfant = $(this).data('enfant');
+    var reussite = quill.root.innerHTML;
+    var commentaireGeneral = $('#commentaire_general').val();
+    $.ajax({
+      method: 'POST',
+      url: '/enfants/' + enfant + '/cahier/saveCommentaireGeneral',
+      data: {
+        reussite: reussite,
+        commentaireGeneral: commentaireGeneral
+      },
+      success: function success(data) {
+        location.reload(true);
+      }
+    });
   });
 };
 

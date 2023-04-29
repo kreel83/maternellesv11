@@ -50,7 +50,7 @@
                 <h4 style="margin-bottom: 20px">{{$section->name}}</h4>
 
 
-                <textarea style="margin: 10px 0" name="" id="" class="form-control" rows="10">@include('include.card_phrases')</textarea>
+                <div style="margin: 10px 0; border: 1px solid grey; padding: 4px">@include('include.card_phrases')</div>
                 <button data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="margin: 20px 0" class="btn btn-dark saveTexte">Sauvegarder</button>
 
 

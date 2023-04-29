@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     
         <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
         <link href="{{asset('icons/css/all.css')}}" rel="stylesheet">
-        <script src="{{asset('js/app.js')}}" defer></script>
+        <link href="{{asset('css/app.css')}}" rel="stylesheet">
+  
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/all.min.js') }}" defer></script>
 
         <style>
@@ -26,7 +29,7 @@ use Illuminate\Support\Facades\Auth;
     </head>
 
 
-<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top" aria-label="Sixth navbar example">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{route('depart')}}">Les maternelles</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +100,7 @@ use Illuminate\Support\Facades\Auth;
 
     </div>
 
-  <div class="container">
+  <div class="container" style="margin-top: 70px;">
        @yield('content')
   </div>
 

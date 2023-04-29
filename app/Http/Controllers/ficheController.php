@@ -198,7 +198,9 @@ class ficheController extends Controller
 
         if ($request->file) {
             $image = Image::make($request->file);
-            $image->fit(350,250)->encode('jpg', 75);
+            $image->resize(null,250, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg', 75);
             $t = Storage::put($rep.'/personnels/'.$name_file, $image);
         }
 

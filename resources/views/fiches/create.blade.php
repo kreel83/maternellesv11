@@ -59,8 +59,11 @@
             @endif
         </div>
     </div>
-    <div id="editor3" data-section="" style="height: 100px"></div>
-    <textarea name="phrase" id="phraseForm" cols="30" rows="10" hidden> {{($itemactuel) ? $itemactuel->phrase : null}}</textarea>
+    {{-- @php
+    if($itemactuel) dd($itemactuel->phrase);
+    @endphp --}}
+    {{-- <div id="editor3" data-section="" style="height: 100px"></div> --}}
+    <textarea name="phrase" id="phraseForm" style="width: 100%" rows="5" > {!! ($itemactuel) ? $itemactuel->phrase : null !!}</textarea>
     <div style="margin-top: 20px">
         <table class="table table-bordered table-hover" id="motCleFiche" style="cursor: pointer;">
             <tr style="text-align: center">

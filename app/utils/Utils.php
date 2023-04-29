@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class Utils {
 
 
-    private function array_flatten($array)
+    private static function  array_flatten($array)
     {
         if (!is_array($array)) {
             return false;
@@ -23,7 +23,9 @@ class Utils {
         return $result;
     }
 
-        public static function traitementPronom($comment, $enfant)
+
+
+    public static function traitementPronom($comment, $enfant)
     {
         $enfant = Enfant::find($enfant);
         if ($enfant->genre == 'G') {
@@ -97,7 +99,8 @@ class Utils {
             }
         }
 
-        return $modify;
+
+        return ucfirst($modify);
 
     }
 

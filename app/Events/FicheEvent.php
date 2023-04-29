@@ -36,6 +36,7 @@ class FicheEvent
             $item = Item::find($fiche->item_id);
 
             $fiche->item = $item;
+          
             $fiche->user_id = $item->user_id;
         }
 
