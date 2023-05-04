@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu')
+@extends('layouts.mainMenu',['titre' => 'Ma classe'])
 
 @section('content')
     <button class="btn btn-primary btn-sm" id="new_eleve" data-id="null">Nouvel elève</button>

@@ -35,8 +35,8 @@
 
   </div>
     <div class="card-footer follow-info" style="display: flex;justify-content: space-around; background-color: transparent; height: 50px">
-        <h2><a href="enfants/{{$enfant->id}}/items/" style="text-decoration: none; color: black" ><i class="fad fa-ballot-check"></i></a></h2>
-        <a href="enfants/{{$enfant->id}}/cahier" style="text-decoration: none; color: black" ><i style="font-size: 32px" class="far fa-book-open"></i></a>
+        <h2><a href="enfants/{{$enfant->id}}/items/" style="text-decoration: none; color: black" ><i class="fal fa-edit"></i></a></h2>
+        <a href="enfants/{{$enfant->id}}/cahier" style="text-decoration: none; color: black" ><i style="font-size: 32px" class="fal fa-book-open"></i></a>
 
     </div>
     <div class="card-footer" style="display: flex;justify-content: space-around; font-size: 12px; height: 80px">

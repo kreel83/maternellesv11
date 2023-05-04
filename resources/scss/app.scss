@@ -8,15 +8,37 @@
 @import 'pages/commentaires';
 @import 'pages/welcome';
 @import 'pages/fiches';
-@import '~quill/dist/quill.core.css';
-@import '~quill/dist/quill.snow.css';
+@import  '../../node_modules/quill/dist/quill.snow.css';
 @import './composants';
 //@import "~@fortawesome/fontawesome-pro/scss/fontawesome";
 
-@import '~jquery-ui/themes/base/all.css';
+// Font Awesome
+@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "@fortawesome/fontawesome-free/scss/solid.scss";
+@import "@fortawesome/fontawesome-free/scss/brands.scss";
+@import "@fortawesome/fontawesome-free/scss/regular.scss";
 
+
+
+.titre {
+        font-size: 40px; 
+        position: absolute;       
+        left: 50%;
+        transform: translateX(-50%);
+        top: 100px;
+        
+
+
+}
 
 :root {
+
+        --vert: #8DC53E;
+        --bleu: #16BDFF;
+        --orange: #F16422;
+        --rouge: #E01A1F;
+        --rose: #F96E69;
+
 
         --blue: #3fbafe;
         --section0: #3fbafe;

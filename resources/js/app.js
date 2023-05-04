@@ -1,14 +1,14 @@
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 
-import './bootstrap';
-require('./quill.js');
-window.bootstrap = require('./bootstrap');
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css'
+
+import '../../node_modules/quill/dist/quill';
+
 
 window.Quill = require('Quill');
 export default Quill;
 
-
-import 'bootstrap';
 
 
 import Alpine from 'alpinejs';
