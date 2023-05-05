@@ -2,21 +2,27 @@ import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css'
+import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+import '@fortawesome/fontawesome-free/scss/brands.scss';
+import '@fortawesome/fontawesome-free/scss/regular.scss';
+import '@fortawesome/fontawesome-free/scss/solid.scss';
+import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
 import '../../node_modules/quill/dist/quill';
 
+import $ from 'jquery';
+window.$ = $;
+import("jquery-ui/dist/jquery-ui");
 
-window.Quill = require('Quill');
-export default Quill;
 
 
 
 import Alpine from 'alpinejs';
-import $ from 'jquery';
-window.$ = window.jQuery = $;
+// import $ from 'jquery';
+// window.$ = window.jQuery = $;
 
-import 'jquery-ui/ui/widgets/datepicker.js';
-import 'jquery-ui/ui/widgets/sortable.js';
+// import 'jquery-ui/ui/widgets/datepicker.js';
+// import 'jquery-ui/ui/widgets/sortable.js';
 
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier} from "./pages/calendrier";
 

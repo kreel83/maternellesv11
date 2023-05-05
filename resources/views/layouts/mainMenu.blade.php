@@ -31,37 +31,25 @@ use Illuminate\Support\Facades\Auth;
 
 
 <nav class="navbar navbar-expand-xl  fixed-top" aria-label="Sixth navbar example" style="background-color: #E7FCFF">
-    <div class="container-fluid" style="padding: 0 10rem">
-      <a class="navbar-brand" href="{{route('depart')}}">Les maternelles</a>
+    <div class="container-fluid" style="padding: 0 20rem">
+      <a class="navbar-brand me-5" href="{{route('depart')}}">Les maternelles</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExample06">
+      <div class="collapse navbar-collapse pe-5" id="navbarsExample06">
         <ul class="navbar-nav me-auto mb-2 mb-xl-0">
-          <li class="nav-item">
+          <li class="nav-item me-3 fw-bolder">
             <a class="nav-link" aria-current="page" href="{{route('home')}}" style="color: var(--vert)">Accueil</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-3 fw-bolder">
             <a class="nav-link" aria-current="page" href="{{route('enfants')}}"  style="color: var(--orange)">Ma classe</a>
           </li>
-          {{--<li class="nav-item dropdown">--}}
-            {{--<a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Cahier de progrès</a>--}}
-            {{--<ul class="dropdown-menu" aria-labelledby="dropdown06">--}}
-              {{--<li><a class="dropdown-item" href="#">Elaboration</a></li>--}}
-              {{--<li><a class="dropdown-item" href="#">Suivi</a></li>--}}
-            {{--</ul>--}}
-          {{--</li>--}}
-          {{--<li class="nav-item">--}}
-            {{--<a class="nav-link" href="#">Correspondance</a>--}}
-          {{--</li>--}}
-          {{--<li class="nav-item">--}}
-            {{--<a class="nav-link" href="#">Les évenements</a>--}}
-          {{--</li>--}}
-          <li class="nav-item">
+
+          <li class="nav-item me-3 fw-bolder">
             <a class="nav-link" href="{{route('calendrier')}}"  style="color: var(--rouge)">Calendrier</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown me-3 fw-bolder">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false"  style="color: var(--bleu)">Paramètres</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown06">
               <li><a class="dropdown-item" href="{{route('phrases')}}">Créer des paragraphe de commentaires</a></li>
@@ -78,7 +66,7 @@ use Illuminate\Support\Facades\Auth;
           </li>
         </ul>
 
-        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+        <ul class="navbar-nav mb-2 mb-xl-0 justify-content-center">
             @if (Auth::check())
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">{{Auth::user()->nom_complet()}}</a>

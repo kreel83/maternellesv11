@@ -3,7 +3,7 @@
         @foreach ($notations as $notation)
             <div class="share-icon" style="background-color: {{$notation['color']}}" href="#" data-notation="{{$notation->id}}"></div>
         @endforeach
-        <div class="share-icon" style="background-color: white;color: red;" data-notation="raz"><i class="fad fa-times"></i></div>
+        <div class="share-icon" style="background-color: white;color: red;" data-notation="raz"><i class="fa-solid fa-xmark"></i></div>
     </div>
     <div style="position: absolute; right: 8px; top: 0px;">
         @if ($enfant->resultat($fiche->item_id))

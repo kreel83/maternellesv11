@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu')
+@extends('layouts.mainMenu', ['titre' => 'Mes items'])
 
 @section('content')
 <h1>Les items de {{$enfant->prenom}}</h1>

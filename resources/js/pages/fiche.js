@@ -161,7 +161,7 @@ const setMotCleFiche= (quill) => {
 }
 
 const choixSection = () => {
-    alert('cc')
+
     $('.card-section').on('click', function() {
         var id = $(this).data('id')
         console.log(id)

@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu')
+@extends('layouts.mainMenu', ['titre' => 'Les paramètres'])
 
 @section('content')
 

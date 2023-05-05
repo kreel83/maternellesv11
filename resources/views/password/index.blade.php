@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu')
+@extends('layouts.mainMenu',['titre' => 'Les mots de passe'])
 
 @section('content')
     <h2>Gestion des mots de passe</h2>

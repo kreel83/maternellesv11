@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu')
+@extends('layouts.mainMenu',['titre' => 'Mes aides maternelles'])
 
 @section('content')
     <h1>Mes aides maternelles</h1>

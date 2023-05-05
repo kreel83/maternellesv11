@@ -1,6 +1,4 @@
 
-window.Quill = require('Quill');
-export default Quill;
 
 
 

@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu')
+@extends('layouts.mainMenu', ['titre' => 'Mon cahier de réussite'])
 
 @section('content')
     <h1>Apercu et édition du cahier de réussite</h1>
