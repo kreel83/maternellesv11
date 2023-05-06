@@ -2,7 +2,7 @@
 use App\utils\Google;
 ?>
 
-@extends('layouts.mainMenu')
+@extends('layouts.mainMenu', ['titre' => 'Accueil'])
 
 @section('content')
 
