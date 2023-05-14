@@ -1,13 +1,8 @@
-@extends('layouts.mainMenu', ,['titre' => 'Mes paramètres'])
+@extends('layouts.mainMenu', ['titre' => 'Mes paramètres'])
 
 @section('content')
 
-    <!--
 
-GRADIENT BANNER DESIGN BY SIMON LURWER ON DRIBBBLE:
-https://dribbble.com/shots/14101951-Banners
-
--->
     <div class="main-container">
 
         <div class="cards">

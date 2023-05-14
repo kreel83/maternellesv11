@@ -4,10 +4,12 @@
 @import 'elements/card_item';
 @import 'elements/card_fiche';
 @import 'elements/calendrier';
+
 @import 'pages/items';
 @import 'pages/commentaires';
 @import 'pages/welcome';
 @import 'pages/fiches';
+
 @import  '../../node_modules/quill/dist/quill.snow.css';
 @import './composants';
 //@import "~@fortawesome/fontawesome-pro/scss/fontawesome";
@@ -17,10 +19,13 @@
 @import "@fortawesome/fontawesome-free/scss/solid.scss";
 @import "@fortawesome/fontawesome-free/scss/brands.scss";
 @import "@fortawesome/fontawesome-free/scss/regular.scss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
 
 
 body {
         background-color: #FFF8EB !important;
+        font-family: 'Roboto', sans-serif !important;
 }
 
 

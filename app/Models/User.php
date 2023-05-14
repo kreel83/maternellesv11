@@ -55,11 +55,15 @@ class User extends Authenticatable
         return $this->hasmany('App\Models\Notation');
     }
 
-    public function mesfiches($section) {
+    public function mesfiches() {
         //$items = Item::join('fiches','fiches.item_id','id')->where('fiches.section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
         //dd($items);
+        
 
-        return Fiche::where('section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
+        $fiches = Fiche::where('user_id', Auth::id())->orderBy('order')->pluck('item_id');
+
+        return Item::whereIn('id', $fiches)->get();
+
     }
 
     public function autresfiches($section) {
@@ -92,5 +96,15 @@ class User extends Authenticatable
         if ($month < 7) return $year - 1;
         return $year;
 
+    }
+
+    public function items() {
+        $fiches = Fiche::where('user_id', Auth::id())->orderBy('order')->pluck('item_id');
+
+        $result = Item::where(function($query) {
+            $query->where('user_id', $this->id)->orWhereNull('user_id');
+        })->whereNotIn('id', $fiches)->get();
+        
+        return $result;
     }
 }

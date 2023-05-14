@@ -1,10 +1,13 @@
-@extends('layouts.mainMenu', ['titre' => 'Mes items'])
+@extends('layouts.mainMenu', ['titre' => "les résultats de $enfant->prenom"])
 
 @section('content')
-<h1>Les items de {{$enfant->prenom}}</h1>
 
-<div class="accordion" id="page_items">
 
+<div class="accordion row p-2" id="page_items">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-7">
     @foreach ($sections as $key=>$section)
         @php
             $color = "var(--section".$key.")";
@@ -30,5 +33,9 @@
         </div>
     </div>
     @endforeach
+    </div>
+    <div class="col-md-2"></div>
+
+   
 </div>
 @endsection

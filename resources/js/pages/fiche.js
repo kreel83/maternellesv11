@@ -1,20 +1,42 @@
 const selectSectionFiche = (quill) => {
-    $(document).on('change','#selectSectionFiche', function() {
-        var id = $(this).val()
-        window.open('/fiches?section='+id,'_self')
+    $(document).on('click','.selectSectionFiche', function() {
+        $('.selectSectionFiche').removeClass('selected')
+        $(this).addClass('selected')
+        var id = $(this).data('value')
+        $('.card_fiche').addClass('d-none')
+        $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
     })
 }
 
 const selectFiche = () => {
-    $(document).on('dblclick','.card_fiche', function() {
-        var id = $(this).data('fiche')
-        var type = $(this).data('type')
-        var table = $(this).data('table')
-        var that = $(this)
-
+    $(document).on('click','.selectionner', function() {
+        console.log('coucou')
+        
+        var that = $(this).closest('.card_fiche')
+        var id = $(that).data('fiche')
+        var type = $(that).data('type')
+        var table = $(that).data('table')
         var section = $('#nav-tabContent').data('section')
+
         $.get('/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table, function(data) {
-            $(that).remove()
+            $(that).detach().appendTo('#mesfiches ul')
+            $(that).find('.selectionner').addClass('d-none')
+            $(that).find('.retirer').removeClass('d-none')
+        })
+    })
+
+    $(document).on('click','.retirer', function() {
+        
+        var that = $(this).closest('.card_fiche')
+        var id = $(that).data('fiche')
+        var type = $(that).data('type')
+        var table = $(that).data('table')
+        var section = $('#nav-tabContent').data('section')
+
+        $.get('/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table, function(data) {
+            $(that).detach().appendTo('#autresfiches ul')
+            $(that).find('.selectionner').removeClass('d-none')
+            $(that).find('.retirer').addClass('d-none')
         })
     })
 }
@@ -22,8 +44,8 @@ const selectFiche = () => {
 const choixTypeFiches = () => {
     $(document).on('click','#choixFiche button', function() {
         var type = $(this).data('type')
-        var section = $("#choixFiche").data('section')
-        window.open('/fiches?section='+section+'&type='+type,'_self')
+        $('.listFiches').addClass('d-none')
+        var section = $("#"+type).removeClass('d-none')
     })
 }
 
@@ -56,9 +78,9 @@ const initFiche = () => {
 }
 
 const choixFiltre = () => {
-    $(document).on('change','#filtre input', function() {
+    $(document).on('change','.filtre_input', function() {
         var c = []
-        $('#filtre input').each((index, el) => {
+        $('.filtre_input').each((index, el) => {
             c.push($(el).is(':checked') ? 1 : 0)
         })
         console.log(c)
