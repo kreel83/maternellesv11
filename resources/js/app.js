@@ -12,7 +12,7 @@ import '../../node_modules/quill/dist/quill';
 
 import $ from 'jquery';
 window.$ = $;
-import("jquery-ui/dist/jquery-ui");
+import "jquery-ui";
 
 
 

@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Auth;
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="node_modules/jquery-ui/themes/base/jquery-ui.css" />
+        <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous" defer></script>
         <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
      
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-        <!-- <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
+               <!-- <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
         <link href="{{asset('icons/css/all.css')}}" rel="stylesheet">
         <link href="{{asset('css/app.css')}}" rel="stylesheet"> -->
   
@@ -84,18 +86,20 @@ use Illuminate\Support\Facades\Auth;
 
       </div>
     </div>
-  </nav>
-  <div class="mt-5 position-relative">
+</nav>
+
+
+  <!-- <div class="mt-5 position-relative">
     <img src="{{asset('/img/deco/banierre.jpg')}}" alt="" style="width: 100vw; height: 400px">
     <div class="titre">
     {{ ucfirst($titre) }}
     </div>
-  </div>
+  </div> -->
     <div id="alerte" class="w-100">
 
     </div>
-
-  <div class="container" style="margin-top: 70px;">
+P
+  <div class="container-fluid" style="margin-top: 70px;">
        @yield('content')
   </div>
 

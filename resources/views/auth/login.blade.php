@@ -2,11 +2,12 @@
 use App\utils\Google;
 ?>
 
-@extends('layouts.mainMenu', ['titre' => 'Accueil'])
+@extends('layouts.mainMenu', ['titre' => 'Connexion'])
 
 @section('content')
 
-    <div class="card m-auto mt-5 h-auto" style="height: 400px !important">
+<div class="container">
+<div class="card m-auto mt-5 h-auto" style="height: 400px !important">
         <div class="card-body p-5" >
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -68,4 +69,6 @@ use App\utils\Google;
 
     </div>
 
+</div>
+   
     @endsection

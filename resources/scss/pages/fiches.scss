@@ -1,16 +1,27 @@
 
-#choixFiche {
-    color: red;
-    td {
-        text-align: center;
-        width: 50%;
-        &:hover {
-            cursor: pointer;
-            background: #0d6efd;
-            color: white;
+#fichesView {
+
+
+    .selectSectionFiche {
+        padding: 16px;
+        color: white;
+        height: 70px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.4s ease-in-out;
+        width: 90%;
+        border-radius: 10px;
+        margin: 2px 0;
+        &.selected {
+           margin-left: 30px;
         }
-    }
+        &:hover {
+            margin-left: 30px;
+        }
+      }  
+
 
 }
+
 
 

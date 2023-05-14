@@ -15,4 +15,8 @@ class Personnel extends Model
     public function phrase($enfant) {
         return Utils::traitement($this->phrase, $enfant);
     }
+    public function section() {
+        return $this->hasMany('App\Models\Section','id','section_id')->first();
+    }
+
 }

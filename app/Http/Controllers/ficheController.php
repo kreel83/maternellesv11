@@ -15,22 +15,22 @@ use Intervention\Image\ImageManager;
 class ficheController extends Controller
 {
     public function index(Request $request) {
-        if (!isset($request->section)) {
+        
             $section = Section::first();
-        } else {
-            $section = Section::find($request->section);
-        }
+        
         if (!isset($request->type)) $request->type = "mesfiches";
 
-        $fiches = Auth::user()->mesfiches($section);
-        $universelles = Auth::user()->autresfiches($section);
-
+        $fiches = Auth::user()->mesfiches();
+        $universelles = Auth::user()->items();
+        
 
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
-        $itemactuel = ($itemactuel) ? $itemactuel : Personnel::find($request->item);
+        
 
 
+ 
 
+        
         return view('fiches.index')
             ->with('type', $request->type)
             ->with('section', $section)
