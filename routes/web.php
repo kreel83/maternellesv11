@@ -90,11 +90,19 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
+
+
 });
 
 
 route::get('/resultat/setNote',  [\App\Http\Controllers\ResultatController::class, 'setNote']);
 
+// thyman
 
+
+use App\Http\Controllers\RegistrationController;
+Route::get('/newaccount', [RegistrationController::class, 'create'])->name('Création');
+//Route::get('/newaccount', 'RegistrationController@create');
+//Route::post('newaccount', 'RegistrationController@store');
 
 require __DIR__.'/auth.php';
