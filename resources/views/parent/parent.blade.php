@@ -1,5 +1,4 @@
-
-@extends('layouts.parentLayout')
+@extends('layouts.mainMenu', ['titre' => 'Création'])
 
 @section('content')
 
