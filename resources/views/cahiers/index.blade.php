@@ -8,10 +8,24 @@
 
     </h3>
 
-    <a class="btn btn-outline-primary" href="{{route('editerPDF',['enfant' => $enfant->id])}}" >Editer le cahier de réussite</a>
-    @if ($enfant->hasReussite())
-    <a class="btn btn-outline-danger" href="{{route('deleteReussite',['enfant' => $enfant->id])}}" >Modifier le cahier de réussite (cette opération éffacera les modification)</a>
-    @endif
+    <div id="cahierView" class="row">
+        <div class="col-md-3">
+            <div class="form-group" style="margin-top: 40px">
+
+                @foreach($sections as $sec)
+                    <div data-section="{{$sec->id}}" data-phrases="@include('include.card_phrases',['section' => $sec])" data-texte="{{ isset($textes[$sec->id]) ? $textes[$sec->id] : null  }}"  class='sectionCahier selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
+                    {{$sec->name}}
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+        <div class="col-md-7">
+
+            <a class="btn btn-outline-primary" href="{{route('editerPDF',['enfant' => $enfant->id])}}" >Editer le cahier de réussite</a>
+            @if ($enfant->hasReussite())
+            <a class="btn btn-outline-danger" href="{{route('deleteReussite',['enfant' => $enfant->id])}}" >Modifier le cahier de réussite (cette opération éffacera les modification)</a>
+            @endif
 
 
 
@@ -75,5 +89,7 @@
 
     </div>
     @endif
+</div>
+</div>
 
 @endsection

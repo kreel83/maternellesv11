@@ -25,7 +25,7 @@
             <img src="{{asset($fiche->image_name)}}" alt="image" class="border-tlr-radius">
         </div>
 
-        <div class="card-footer" style="font-size: 12px">
+        <div class="card-footer" style="font-size: 12px;border-color: {{$fiche->section()->color}} !important">
             <div style="font-weight: bolder;">{{$fiche->st}}</div>
             <div>{{$fiche->name}}</div>
         </div>

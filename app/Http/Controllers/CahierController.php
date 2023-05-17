@@ -266,12 +266,15 @@ class CahierController extends Controller
 
 
 
+        
+
 
         return view('cahiers.index')
             ->with('enfant',$enfant)
             ->with('reussite',$reussite)
             ->with('resultats',$resultats)
             ->with('phrases', $grouped)
+            ->with('section', Section::first())
             ->with('textes', $textes)
             ->with('periode', $periode)
             ->with('title', $title)

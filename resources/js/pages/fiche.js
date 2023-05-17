@@ -5,6 +5,9 @@ const selectSectionFiche = (quill) => {
         var id = $(this).data('value')
         $('.card_fiche').addClass('d-none')
         $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
+        var color = $(this).css('background-color')
+        $('.triangle-code').css('border-top-color', color)
+        $('.btnSelection').css('background-color', color)
     })
 }
 
@@ -42,10 +45,14 @@ const selectFiche = () => {
 }
 
 const choixTypeFiches = () => {
-    $(document).on('click','#choixFiche button', function() {
+    $(document).on('click','.btnSelection', function() {
         var type = $(this).data('type')
         $('.listFiches').addClass('d-none')
         var section = $("#"+type).removeClass('d-none')
+        $('.triangle-code').removeClass('deploy')
+        var position = $(this).data('position')
+        $('.triangle-code.'+position).addClass('deploy')
+
     })
 }
 
