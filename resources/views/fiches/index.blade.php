@@ -23,11 +23,13 @@
 
      
 <div class="d-flex" id="choixFiche">
-            <button data-type="autresfiches" class="mx-2 btn btn-primary  w-50 {{$type == "autresfiches" ? 'active' : 'null' }}">Liste des fiches</button>
-            <button data-type="mesfiches" class="btn btn-primary w-50 {{$type == "mesfiches" ? 'active' : 'null' }}">Ma sélection</button>           
-            
-          
+            <button data-type="autresfiches" data-position="left" class="btnSelection mx-2 btn w-50 " style=" background-color: {{$section->color}} !important">Liste des fiches</button>
+            <button data-type="mesfiches"  data-position="right" class="btnSelection btn w-50 " style=" background-color: {{$section->color}} !important">Ma sélection</button>                                
+            <div class="triangle-code left deploy" style="border-top : 50px solid {{$section->color}}"></div>
+            <div class="triangle-code right" style="border-top : 50px solid {{$section->color}}"></div>
+
 </div>
+
 <style>
     /* width */
     .o-container {

@@ -31,9 +31,8 @@ class Enfant extends Model
     }
 
     public function resultat($item) {
-        $r =  Resultat::where('enfant_id', $this->id)->where('item_id', $item)->first();
-        if (!$r) return null;
-        $r->color = ($r->notation() ) ? $r->notation()->color : null;
+        $r =  Resultat::where('enfant_id', $this->id)->where('item_id', $item)->where('notation',2)->first();
+
         return $r;
     }
 
@@ -42,7 +41,7 @@ class Enfant extends Model
     }
 
     public function resultats() {
-        $r = Resultat::where('enfant_id', $this->id)->get();
+        $r = Resultat::where('enfant_id', $this->id)->where('notation',2)->get();
         $r = $r->groupBy('section_id');
         return $r;
 
