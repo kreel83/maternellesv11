@@ -1,95 +1,83 @@
 @extends('layouts.mainMenu', ['titre' => 'Mon cahier de réussite'])
 
 @section('content')
-    <h1>cahier de réussite de {{$enfant->prenom}}</h1>
+    <h1 class="text-center">Cahier de réussite de {{$enfant->prenom}}</h1>
 
-    <h3>
+    <h3 class="text-center">
        {{$title}}
 
     </h3>
 
-    <div id="cahierView" class="row">
+    <div id="cahierView" class="row" data-enfant="{{$enfant->id}}">
         <div class="col-md-3">
-            <div class="form-group" style="margin-top: 40px">
+            <div class="form-group">
 
                 @foreach($sections as $sec)
-                    <div data-section="{{$sec->id}}" data-phrases="@include('include.card_phrases',['section' => $sec])" data-texte="{{ isset($textes[$sec->id]) ? $textes[$sec->id] : null  }}"  class='sectionCahier selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
+                    <div data-section="{{$sec->id}}" data-textes="{{(isset($textes[$sec->id])) ? $textes[$sec->id] : null}}"  data-phrases="@include('include.card_phrases',['section' => $sec])"   class='sectionCahier selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
                     {{$sec->name}}
                     </div>
                 @endforeach
 
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-5">
 
+            @if (!$enfant->hasReussite())
+
+
+            <div class="tab-content" id="nav-tabContent" style="margin-bottom: 20px" >
+
+                @foreach ($sections as $key=>$sec)
+
+                    <div style="margin-bottom: 20px" class="tab-pane fade {{$key == 0 ? 'show active' : null}}" id="nav-{{$sec->id}}" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div style="margin: 10px 0; border: 1px solid grey; padding: 4px; height: 100px; overflow-Y: auto" id="phraseContainer" >
+                            @include('include.card_phrases',['section' => $sec])
+                        </div>
+                    </div>
+
+
+                @endforeach
+
+                <!-- <select class="form-control phrase" data-section="{{$section->id}}" data-enfant="{{$enfant->id}}">
+                <option value="null">Veuillez selectionner</option>
+
+
+
+                @if (!$phrases->isEmpty())
+                    @foreach ($phrases[$section->id] as $phrase)
+                            <option value="{{$phrase->id}}">{{$phrase->texte($enfant)}}</option>
+                    @endforeach
+                @endif
+            </select> -->
+
+                <div class="position-relative w-100">
+                    <button  data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="position: absolute; right: 4px; top: 6px;" class="btn btn-dark btn-sm saveTexte ">Sauvegarder</button>
+                    <div id="editor" data-enfant="{{$enfant->id}}" style="height: 300px; top:0; left:0">
+                     {!! $textes[$section->id] ?? '' !!}
+                    </div>                    
+                </div>
+
+
+
+            </div>
+            @endif
             <a class="btn btn-outline-primary" href="{{route('editerPDF',['enfant' => $enfant->id])}}" >Editer le cahier de réussite</a>
             @if ($enfant->hasReussite())
             <a class="btn btn-outline-danger" href="{{route('deleteReussite',['enfant' => $enfant->id])}}" >Modifier le cahier de réussite (cette opération éffacera les modification)</a>
             @endif
-
-
-
-    @if (!$enfant->hasReussite())
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            {{--<button class="nav-link" id="apercu" data-section="null" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}" data-bs-toggle="tab" data-bs-target="#nav-apercu" type="button" role="tab" aria-controls="nav-home" aria-selected="true">--}}
-                {{--Apercu--}}
-            {{--</button>--}}
-            @foreach ($sections as $key=>$section)
-            <button data-section="{{$section->id}}" data-phrases="@include('include.card_phrases')" data-texte="{{ isset($textes[$section->id]) ? $textes[$section->id] : null  }}" class="sectionCahier nav-link {{$key == 0 ? 'active' : null}}" id="nav-tab-{{$section->id}}" data-bs-toggle="tab" data-bs-target="#nav-{{$section->id}}" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                <img src="{{asset('img/sections/logos/'.$section->logo)}}" width="40px" alt="">
-            </button>
-            @endforeach
-
-
         </div>
-    </nav>
-
-    <div class="tab-content" id="nav-tabContent" style="margin-bottom: 20px" >
-        {{--<div style="margin-bottom: 20px" class="tab-pane fade {{$key == 0 ? 'show active' : null}}" id="nav-apercu" role="tabpanel" aria-labelledby="nav-home-tab">--}}
-            {{--<div class="d-flex w-100 justify-content-between align-items-center">--}}
-                {{--<button data-section="apercu" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="margin-top: 20px" class="btn btn-dark saveTexteReussite">Sauvegarder</button>--}}
-                {{--<a target="_blank" href="/enfants/{{$enfant->id}}/cahier/{{$periode}}/seepdf" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}" class="btn btn-primary" id="pdf">Voir le pdf</a>--}}
-                {{--<div class="form-check form-switch">--}}
-
-
-                    {{--<input {{($reussite && $reussite->definitif == 1) ? "checked" : null }} class="form-check-input" type="checkbox" id="definitif" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}">--}}
-                    {{--<label class="form-check-label" for="definitif">Définitif</label>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        @foreach ($sections as $key=>$section)
-
-            <div style="margin-bottom: 20px" class="tab-pane fade {{$key == 0 ? 'show active' : null}}" id="nav-{{$section->id}}" role="tabpanel" aria-labelledby="nav-home-tab">
-                <h4 style="margin-bottom: 20px">{{$section->name}}</h4>
-
-
-                <div style="margin: 10px 0; border: 1px solid grey; padding: 4px">@include('include.card_phrases')</div>
-                <button data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" data-periode="{{$periode}}"  style="margin: 20px 0" class="btn btn-dark saveTexte">Sauvegarder</button>
-
-
-                <select class="form-control phrase" data-section="{{$section->id}}" data-enfant="{{$enfant->id}}">
-                    <option value="null">Veuillez selectionner</option>
 
 
 
-                    @if (!$phrases->isEmpty())
-                @foreach ($phrases[$section->id] as $phrase)
-                        <option value="{{$phrase->id}}">{{$phrase->texte($enfant)}}</option>
-                @endforeach
-                        @endif
-                </select>
+        <div class="col-md-4">
 
+
+            <div class="badge_phrase_container">
+                @include('cahiers.liste_phrases')              
             </div>
 
 
-        @endforeach
-        <div id="editor" data-section="" data-enfant="{{$enfant->id}}" style="height: 400px"></div>
-
-
-    </div>
-    @endif
-</div>
+        </div>
 </div>
 
 @endsection
