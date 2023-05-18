@@ -4,35 +4,34 @@
 
 
 <div class="accordion row p-2" id="page_items">
+    <input type="hidden" id="enfant" value="{{$enfant->id}}">
     <div class="col-md-3">
+    <div class="form-group" style="margin-top: 40px">
 
+@foreach($sections as $sec)
+    <div class='selectSectionItem {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
+    {{$sec->name}}
+    </div>
+@endforeach
+
+</div>
     </div>
     <div class="col-md-7">
-    @foreach ($sections as $key=>$section)
-        @php
-            $color = "var(--section".$key.")";
-        @endphp
-    <div class="accordion-item" style="margin: 16px 0">
-        <h2 class="accordion-header" id="panelsStayOpen-heading{{$key}}" >
-            <button style="background-color: {{$color}}; color: white" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$key}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$key}}">
-                {{$section->name}}
-            </button>
-        </h2>
-         <div id="panelsStayOpen-collapse{{$key}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{$key}}">
-            <div class="accordion-body item">
-                <div class="items_container">
-                    @if(isset($fiches[$section->id]))
-                        @foreach ($fiches[$section->id] as $fiche)
 
-                            @include('cards.item')
-                        @endforeach
-                    @endif
 
-                </div>
+    <div  data-section="{{ $section->id }}">
+        <div id="mesfiches" class="listItems" >
+            <div class="fiche_container fiches mesitems">
+            @foreach ($fiches as $fiche)
+                @include('cards.item')
+            @endforeach
             </div>
         </div>
-    </div>
-    @endforeach
+
+
+        
+
+        </div>
     </div>
     <div class="col-md-2"></div>
 

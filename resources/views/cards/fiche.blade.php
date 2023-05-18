@@ -11,7 +11,10 @@
 
 
 <li class="card_fiche shadowDepth1 ui-state-default position-relative  {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-type="{{$type}}" data-level="{{$lvl}}" data-section="{{$fiche->section_id}}" data-fiche="{{$fiche->id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
-
+<div class="action">
+    <button class="btn btn-sm btn-primary retirer">Retirer</button>
+    <button class="btn btn-sm btn-primary d-none selectionner">Selectionner</button>
+    </div>
 
         <div class="card__image">
             <img src="{{asset($fiche->image_name)}}" alt="image" class="border-tlr-radius">

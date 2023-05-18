@@ -3,31 +3,13 @@
 
 
 const choicePhrase = (quill) => {
-    $(document).on('change', '.phrase', function () {
-        var ph = $(this).find(':selected').text()
-        var section  = $(this).data('section')
-        var enfant = $(this).data('enfant')
-        var that = $(this)
-        var phrase = $(this).find(':selected').text()
+    $(document).on('click', '.badge_phrase', function () {
+        var phrase = $(this).text()
         console.log(phrase)
         var selection = quill.getSelection(true);
         quill.insertText(selection.index, phrase+'\n')
-        $(that).val('null')
+        $(this).remove()
 
-        /*$.ajax({
-            method: 'POST',
-            url: "/enfants/"+enfant+"/translate",
-            data: {
-                phrase: ph,
-                enfant: enfant
-            },
-            success: function (data) {
-                console.log(data)
-                var selection = quill.getSelection(true);
-                quill.insertText(selection.index, data+'\n')
-                $(that).val('null')
-            }
-        })*/
     })
 }
 
@@ -40,6 +22,7 @@ const saveTexte = (quill) => {
         var texte = quill.getText()
         var enfant = $(this).data('enfant')
         var section = $(this).data('section')
+        $('.sectionCahier[data-section="'+section+'"]').attr('data-textes', texte)
         $.ajax({
             method: 'POST',
             url: '/enfants/'+enfant+"/cahier/save",
@@ -76,16 +59,21 @@ const saveTexteReussite = (quill) => {
 
 
 const clickOnNav = (quill) => {
-    $(document).on('click','.sectionCahier', function() {
-        console.log(window.section_active)
-/*        if (window.section_active && window.active != 'null') {
-            $('.saveTexte[data-section="'+window.section_active+'"]').trigger('click')
-        }*/
-        window.section_active = $(this).data('section')
-        var texte = $(this).attr('data-texte')
+    $(document).on('click','.sectionCahier', function() {        
+        var phrase = $(this).attr('data-phrases')
+        var texte = $(this).attr('data-textes')
+        var section = $(this).attr('data-section')
+        var enfant = $(this).closest('#cahierView').attr('data-enfant')
+        $('#phraseContainer').html(phrase)
+        console.log(phrase)
         var selection = quill.getSelection(true);
         quill.setText('');
-        quill.root.innerHTML = texte
+        quill.root.innerHTML = texte        
+        $('.saveTexte').attr('data-section', section)
+        
+        $.get('/get_liste_phrase/'+section+'/'+enfant, function(data) {
+            $('.badge_phrase_container').html(data)
+        })
     })
 }
 

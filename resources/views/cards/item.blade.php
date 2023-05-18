@@ -1,34 +1,29 @@
+<div class="card_item shadowDepth1 ui-state-default position-relative  {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-section="{{$fiche->section_id}}" data-item="{{$fiche->id}}">
 
-<?php
-    $color = "var(--section".$key.")";
-?>
+<div class="action">
+    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="3">Acquis</button>
+    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="2">Acquis avec aide</button>
+    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="1">En voie d'acquisition</button>
+    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="0">Annuler</button>
+    </div>
+        <div class="card__image">
+            <img src="{{asset($fiche->image_name)}}" alt="image" class="border-tlr-radius">
+        </div>
 
-    <div class="card shadowDepth1" data-enfant="{{$enfant->id}}" data-item="{{$fiche->item_id}}">
+        <div class="card-footer" style="font-size: 12px; border-color: {{$fiche->section()->color}} !important">
+            <div style="font-weight: bolder;">{{$fiche->st}}</div>
+            <div>{{$fiche->name}}</div>
+        </div>
+        <div class="card-footer2" style="padding: 0; background-color: {{$fiche->section()->color}}">
+           
+                    <div class="d-flex justify-content-between px-3 w-100">
+                        <div class="lanote">{{$fiche->textnote}}</div>
 
-        <div class="card__image border-tlr-radius">
-            <div class="card-body" style="padding: 0; height: 100%">
+                        <div class="{{$fiche->notation == 2 ? null : 'd-none'}} autonome autonome_{{$fiche->autonome}}"><i class="fa-solid fa-circle"></i></div>
 
-                <img src="{{asset($fiche->item->image)}}" alt="image" class="border-tlr-radius">
-                <div class="card__content" style="">
-                    @include('items.notation')
-
-                </div>
-            </div>
-
-            <div class="card-footer" style="font-size: 12px; background-color: {{$color}}; color: white">
-
-                    <div style="font-size: 14px;font-weight: bolder;">{{$fiche->item->st}}</div>
-                    <div style="font-size: 16px">{{$fiche->item->name}}</div>
-
-
-
-            </div>
+                        
+                    </div>               
         </div>
 
 
-
-
-    </div>
-
-
-
+</div>

@@ -224,17 +224,11 @@ class CahierController extends Controller
     public function index($id) {
         $enfant = Enfant::find($id);
         $commentaire = Commentaire::where('user_id', Auth::id())->get();
-
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
             return [$item['section_id'] => $item];
         });
-
         $resultats = $enfant->resultats();
-        //$resultats = $resultats->groupBy('section_id');
-        //dd($resultats);
         $reussite = Reussite::where('enfant_id',$id)->first();
-
-
         $date = Carbon::now()->format('Ymd');
         $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode','DESC')->get();
         $p = 3;
@@ -243,10 +237,6 @@ class CahierController extends Controller
         }
         $periode = $p;
         $nbperiode = $periodes->count();
-
-
-
-
         switch ($nbperiode) {
             case 1: $title = 'Année entière';break;
             case 2:
@@ -258,17 +248,12 @@ class CahierController extends Controller
                 if ($periode == 1) $title = 'Premier trimestre';
                 if ($periode == 2) $title = 'Deuxième trimestre';
                 if ($periode == 3) $title = 'Troisième trimestre';
-
                 break;
         }
 
         $textes = $enfant->cahier($periode);
 
-
-
         
-
-
         return view('cahiers.index')
             ->with('enfant',$enfant)
             ->with('reussite',$reussite)
@@ -279,6 +264,16 @@ class CahierController extends Controller
             ->with('periode', $periode)
             ->with('title', $title)
             ->with('sections', Section::all());
+    }
+
+    public function get_liste_phrase($section, $enfant) {
+        $section = Section::find($section);
+        $enfant = Enfant::find($enfant);
+        $commentaire = Commentaire::where('user_id', Auth::id())->get();
+        $grouped = $commentaire->mapToGroups(function ($item, $key) {
+            return [$item['section_id'] => $item];
+        });
+        return view('cahiers.liste_phrases')->with('phrases', $grouped)->with('section', $section)->with('enfant', $enfant);
     }
 
     public function translate(Request $request) {
@@ -297,6 +292,8 @@ class CahierController extends Controller
 
     public function saveTexte($enfant, Request $request) {
         $cahier = Cahier::where('enfant_id', $enfant)->where('section_id', $request->section)->first();
+
+
         if (!$cahier) {
             $cahier = new Cahier();
             $cahier->enfant_id = $enfant;

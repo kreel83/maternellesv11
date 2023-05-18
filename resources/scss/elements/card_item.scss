@@ -6,167 +6,110 @@
 
 
 
-
-.items_container {
-
-}
-a {
-    text-decoration: none;
-    color: #3498db;
-}
-a:hover {
-    color: #2980b9;
-}
-
-h2 {
-    line-height: 1.2;
-    margin-bottom: 1.6rem;
-}
-
-.wrapper {
-    max-width: 400px;
-    margin: 50px auto;
-    padding-left: 1em;
-    padding-right: 1em;
-}
-
-/**
- * Helpers
- */
-.border-tlr-radius {
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-}
-
-.text-center { text-align: center; }
-
-.radius { border-radius: 2px; }
-
-.padding-tb { padding-top: 1.6rem; padding-bottom: 1.6rem;}
-
-.shadowDepth0 { box-shadow: 0 1px 3px rgba(0,0,0, 0.12); }
-
-.shadowDepth1 {
-    box-shadow:
-        0 1px 3px rgba(0,0,0, 0.12),
-        0 1px 2px rgba(0,0,0, 0.24);
-}
+#page_items  {
 
 
-/**
- * Card Styles
- */
-
-.item  {
-    .card {
-        background-color: #fff;
+    .card_item {
         padding: 0;
-        width: 300px;
-        height: 400px;
+        width: 240px;
+        height: 300px;
         display: flex;
         flex-direction: column;
+        background-color: white;
+        margin: 10px;
+        position: relative;
         overflow: hidden;
+        color: purple;
+        border-radius: 25px;;
+
+        &:hover {
+            .action {
+                transition: all 0.5 ease-in-out;
+                top:0;                
+            }
+
+        }
+
+        .notation {
+            width: 100%;
+            padding: 10px 0 !important;
+            border-radius: 15px !important;
+        }
+
+        .action {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);;
+            position: absolute;
+            top: -100%;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 16px;;
+
+        }
+        
+
+        .perso_card {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 72px;
+            span {
+                margin-bottom: 2px;
+            }
+        }
+
+        .card-footer {
+            padding: 8px;;
+            border-top: 5px solid black;
+        }
+
+        
+        .card-footer2 {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;;
+            .autonome_0 {
+                color: red
+            }
+            .autonome_1 {
+                color: green
+            }
+
+        }
+
+        .tableLevel {
+            margin-right: 5px;
+            font-size: 15px;
+            td {
+                background-color: white;
+                color: red
+            }
+
+        }
+            .card__image {
+                //height: 50px;
+                width: 100%;
+                height: 50%;
+                background-color: #eee;
+            }
+            .card__image img {
+                width: 100%;
+
+                height: 100%;
+                display: block;
+            }
+
     }
-
-    .card-footer {
-        height: 100%
-
-    }
-
-    .card__image {
-        height: 250px;
-        width: 100%;
-        background-color: #eee;
-        position: absolute;
-    }
-    .card__image img {
-        width: 100%;
-        max-width: 100%;
-        height: 100%;
-        display: block;
-        border-bottom: 20px solid cadetblue;
-    }
-
-    .card__content {
-        position: relative;
-        bottom: 30px;
-        right: 5px;
-    }
-
-
-    .card__article {
-        bootom: 15px
-    }
-
-    .card__share {
-        position: relative;
-        float: right;
-    }
-
-    .card__social {
-        display: none;justify-content: space-between;align-items: center; position: absolute;top: 0; right: 65px;
-        cursor: pointer;
-    }
-    .card__social--active {
-        display: flex;
-    }
-
-
-    .share-toggle .hide {
-        display: none
-    }
-
-    .share-toggle {
-        cursor: pointer;
-    }
-
-    .share-empty {
-        display: inline-block;
-        width: 48px;
-        height: 48px;
-        line-height: 48px;
-        text-align: center;
-        border-radius: 50%;
-        transition: all 0.3s ease;
-        outline: 0;
-
-        box-shadow:
-            0 2px 4px rgba(0,0,0, 0.12),
-            0 2px 4px rgba(0,0,0, 0.24);
-    }
-
-    .share-icon {
-        display: inline-block;
-        width: 48px;
-        height: 48px;
-        line-height: 48px;
-        text-align: center;
-        border-radius: 50%;
-        background-color: #fff;
-        transition: all 0.3s ease;
-        outline: 0;
-
-        box-shadow:
-            0 2px 4px rgba(0,0,0, 0.12),
-            0 2px 4px rgba(0,0,0, 0.24);
-    }
-
-
-
-    .share-icon:hover,
-    .share-icon:focus {
-        box-shadow:
-            0 3px 6px rgba(0,0,0, 0.12),
-            0 3px 6px rgba(0,0,0, 0.24);
-
-        -webkit-transform: scale(1.2);
-        -moz-transform: scale(1.2);
-        -ms-transform: scale(1.2);
-        -o-transform: scale(1.2);
-        transform: scale(1.2);
-    }
-
-
-
 
 }

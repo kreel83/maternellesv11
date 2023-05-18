@@ -29,6 +29,21 @@
         }        
     }
 
+    .badge_phrase_container {
+        height: 500px;
+        overflow-y: auto;
+        .badge_phrase {
+            padding: 2px;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 5px;;
+            font-size: 0.9rem;
+            cursor: pointer;
+            &:hover {
+               opacity: 0.5;
+            }
+        }       
+    }
 
 
     .selectSectionFiche {

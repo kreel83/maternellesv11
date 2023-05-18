@@ -46,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
 
+    Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
+
 
     Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
