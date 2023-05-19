@@ -21,9 +21,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'prenom',
         'email',
         'password',
     ];
+    /*
+    $guarded avec un tableau vide pour accepter tous les champs
+    ou le nom des champs à exclure
+    */
 
     /**
      * The attributes that should be hidden for serialization.
