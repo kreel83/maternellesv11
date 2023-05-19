@@ -1,6 +1,9 @@
 @extends('layouts.mainMenu',['titre' => 'Mon profil'])
 
 @section('content')
+
+<div class="container">
+
     <h1>Mon profil</h1>
 
     <form action="{{route('monprofil')}}" method="post" enctype="multipart/form-data">
@@ -49,4 +52,7 @@
                 <input type="file" id="photo_input" name="photo" style="display: none">
         <button type="submit" class="btn btn-primary mt-3">Modifier</button>
     </form>
+
+</div>
+
 @endsection

@@ -1,6 +1,9 @@
 @extends('layouts.mainMenu',['titre' => 'Mes aides maternelles'])
 
 @section('content')
+
+<div class="container">
+
     <h1>Mes aides maternelles</h1>
 
     <button class="btn btn-primary btn-sm" id="new_equipe" data-id="null" data-photo="{{$photo}}">Nouvelle aide maternelle</button>
@@ -85,6 +88,6 @@
             </div>
         </div>
     </div>
-
+</div>
 
 @endsection
