@@ -5,8 +5,8 @@ const selectSectionFiche = (quill) => {
         var id = $(this).data('value')
         $('.card_fiche').addClass('d-none')
         $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
-        var color = $(this).css('background-color')
-        $('.triangle-code').css('border-top-color', color)
+        
+
         $('.btnSelection').css('background-color', color)
     })
 }
@@ -19,24 +19,23 @@ const selectFiche = () => {
         var id = $(that).data('fiche')
         var type = $(that).data('type')
         var table = $(that).data('table')
-        var section = $('#nav-tabContent').data('section')
+        var section = $('.selectSectionFiche.selected').attr('data-value')
 
         $.get('/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table, function(data) {
             $(that).detach().appendTo('#mesfiches ul')
             $(that).find('.selectionner').addClass('d-none')
             $(that).find('.retirer').removeClass('d-none')
+            $(that).attr('data-selection', data)
         })
     })
 
     $(document).on('click','.retirer', function() {
         
         var that = $(this).closest('.card_fiche')
-        var id = $(that).data('fiche')
-        var type = $(that).data('type')
-        var table = $(that).data('table')
-        var section = $('#nav-tabContent').data('section')
+        var id = $(that).attr('data-selection')
 
-        $.get('/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table, function(data) {
+
+        $.get('/fiches/retirerChoix?fiche='+id, function(data) {
             $(that).detach().appendTo('#autresfiches ul')
             $(that).find('.selectionner').removeClass('d-none')
             $(that).find('.retirer').addClass('d-none')
@@ -46,6 +45,8 @@ const selectFiche = () => {
 
 const choixTypeFiches = () => {
     $(document).on('click','.btnSelection', function() {
+        $('.btnSelection').removeClass('selected')
+        $(this).addClass('selected')
         var type = $(this).data('type')
         $('.listFiches').addClass('d-none')
         var section = $("#"+type).removeClass('d-none')
@@ -58,22 +59,32 @@ const choixTypeFiches = () => {
 
 const initFiche = () => {
     $( function() {
+        $( "#sortable" ).disableSelection();
         $( "#sortable" ).sortable({
             start: function() {
+                $('#sortable').css('background-color', 'red')
+                $(this).find('.action').addClass('d-none')
 
             },
             stop: function() {
+                $(this).find('.action').removeClass('d-none')
                 let pos = []
-                $('.card_fiche[data-type="mesfiches"]').each((index, el) => {
+                let section = $('.selectSectionFiche.selected').data('value');
+                console.log(section)
+                $('.card_fiche[data-type="mesfiches"][data-section="'+section+'"]').each((index, el) => {
                     console.log(el)
-                    pos.push($(el).data('fiche'))
+                    pos.push($(el).attr('data-selection'))
                 })
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+                });
                 $.ajax({
                     method: 'POST',
                     url: '/fiches/order',
                     data : {
                         pos: pos,
-                        secteur: $('#selectSectionFiche').val()
+                        section: section
                     },
                     success: function() {
                         console.log('ok')

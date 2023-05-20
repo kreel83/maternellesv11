@@ -11,12 +11,11 @@ use Illuminate\Support\Facades\Auth;
         <title>Ma maternelle</title>
 
         <!-- Fonts -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="node_modules/jquery-ui/themes/base/jquery-ui.css" />
-        <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous" defer></script>
-        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-     
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+               <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+     
                <!-- <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
         <link href="{{asset('icons/css/all.css')}}" rel="stylesheet">
         <link href="{{asset('css/app.css')}}" rel="stylesheet"> -->
@@ -58,10 +57,7 @@ use Illuminate\Support\Facades\Auth;
               <li><a class="dropdown-item" href="{{route('password')}}">Gestion des mots de passe</a></li>
               <li><a class="dropdown-item" href="{{route('eleves')}}">Gestion des élèves</a></li>
               <li><a class="dropdown-item" href="{{route('fiches')}}">Définir les items</a></li>
-              {{--<li><a class="dropdown-item" href="#">Définir le système de notation</a></li>--}}
-              {{--<li><a class="dropdown-item" href="#">Définir les couleurs des sections</a></li>--}}
-              {{--<li><a class="dropdown-item" href="{{route('calendar')}}">Définir les périodes scolaires</a></li>--}}
-              <li><a class="dropdown-item" href="{{route('aidematernelle')}}">Définir vos aides maternelles</a></li>
+                           <li><a class="dropdown-item" href="{{route('aidematernelle')}}">Définir vos aides maternelles</a></li>
               <li><a class="dropdown-item" href="{{route('ecole')}}">Définir votre école</a></li>
               <li><a class="dropdown-item" href="{{route('periode')}}">Définir vos périodes scolaires</a></li>
             </ul>
@@ -98,10 +94,19 @@ use Illuminate\Support\Facades\Auth;
     <div id="alerte" class="w-100">
 
     </div>
-P
+
   <div class="container-fluid" style="margin-top: 70px;">
        @yield('content')
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- Include jQuery UI from a CDN -->
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
 
 
 @include('components.modals.confirmation')

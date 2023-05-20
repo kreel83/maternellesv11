@@ -65,7 +65,11 @@ class User extends Authenticatable
         //dd($items);
         
 
-        $fiches = Fiche::where('user_id', Auth::id())->orderBy('order')->pluck('item_id');
+        $fiches = Fiche::where('user_id', Auth::id())->pluck('item_id');
+
+        $mesfiches = Item::selectRaw('items.*, fiches.id as fiche_id, fiches.user_id')->join('fiches','fiches.item_id', 'items.id')->where('fiches.user_id', Auth::id())->orderBy('fiches.order')->get();
+
+        return $mesfiches;
 
         return Item::whereIn('id', $fiches)->get();
 

@@ -23,11 +23,11 @@
 
      
 <div class="d-flex" id="choixFiche">
-            <button data-type="autresfiches" data-position="left" class="btnSelection mx-2 btn w-50 " style=" background-color: {{$section->color}} !important">Liste des fiches</button>
-            <button data-type="mesfiches"  data-position="right" class="btnSelection btn w-50 " style=" background-color: {{$section->color}} !important">Ma sélection</button>                                
-            <div class="triangle-code left deploy" style="border-top : 50px solid {{$section->color}}"></div>
-            <div class="triangle-code right" style="border-top : 50px solid {{$section->color}}"></div>
-
+            <div data-type="autresfiches" data-position="left" class="btnSelection mx-2 btn w-50 selected" style=" background-color: {{$section->color}} !important">Liste des fiches</div>
+            <div data-type="mesfiches"  data-position="right" class="btnSelection btn w-50 " style=" background-color: {{$section->color}} !important">Ma sélection</div>                                
+</div>
+<div class="d-flex" id="pointerFiche">
+        <div id="pointer" class='w-50'></div>
 </div>
 
 <style>
@@ -72,7 +72,7 @@
 
         <div id="autresfiches" class="listFiches">
             
-            <ul class="fiche_container fiches autresfiches" id="sortable">
+            <ul class="fiche_container fiches autresfiches" >
 
                 @foreach ($universelles as $fiche)
                     @include('cards.universelle',['type' => 'autresfiches'])
@@ -97,13 +97,5 @@
     @include('fiches.filtre')
 </div>
 </div>
-
-
-
-
-
-
-
-
 
 @endsection
