@@ -22,15 +22,11 @@ class ficheController extends Controller
 
         $fiches = Auth::user()->mesfiches();
         $universelles = Auth::user()->items();
-        
+
+     
 
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
-        
 
-
- 
-
-        
         return view('fiches.index')
             ->with('type', $request->type)
             ->with('section', $section)
@@ -41,7 +37,8 @@ class ficheController extends Controller
             ->with('sections', Section::all());
     }
 
-    public function orderFiche(Request $request) {
+    public function orderFiche(Request $request) {   
+
         foreach ($request->pos as $key=>$id) {
             $fiche = Fiche::find($id);
             $fiche->order = $key+1;
@@ -52,11 +49,14 @@ class ficheController extends Controller
 
     }
 
+    public function retirerChoix(Request $request) {
+        $fiche = Fiche::find($request->fiche);
+        $fiche->delete();
+        return 'deleted';
+    }
     public function choix(Request $request) {
 
-        if ($request->type == 'mesfiches') {
-            Fiche::find($request->fiche)->delete();
-        } else {
+{
             $fiche = Fiche::where('user_id', Auth::id())->where('section_id',$request->section)->orderBy('order', 'DESC')->first();
             $order =  ($fiche) ? $fiche->order + 1 : 1;
             $fiche = new Fiche();
@@ -66,9 +66,10 @@ class ficheController extends Controller
             $fiche->section_id = $request->section;
             $fiche->user_id = Auth::id();
             $fiche->save();
+            $t = $fiche->id;
         }
 
-        return 'ok';
+        return $t;
     }
 
     public function choisirSelection(Request $request) {

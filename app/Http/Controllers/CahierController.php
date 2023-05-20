@@ -20,6 +20,8 @@ use PDF;
 class CahierController extends Controller
 {
 
+
+
     private function format_apercu($commentaires, $resultats, $enfant) {
         $bloc = '';
         $sections = Section::all()->pluck('id')->toArray();
@@ -45,6 +47,38 @@ class CahierController extends Controller
     }
 
 
+
+    public function __construct() {
+        $this->middleware(function ($request, $next) {
+            $date = Carbon::now()->format('Ymd');
+            $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode','DESC')->get();
+            $p = 3;
+            foreach ($periodes as $periode) {
+                if ($date < Carbon::parse($periode->date_end)->format('Ymd')) $p = $periode->periode;
+            }
+            $periode = $p;
+            $nbperiode = $periodes->count();
+            switch ($nbperiode) {
+                case 1: $title = 'Année entière';break;
+                case 2:
+                    if ($periode == 1) $title = 'Premier semestre';
+                    if ($periode == 2) $title = 'Second semestre';
+    
+                    break;
+                case 3:
+                    if ($periode == 1) $title = 'Premier trimestre';
+                    if ($periode == 2) $title = 'Deuxième trimestre';
+                    if ($periode == 3) $title = 'Troisième trimestre';
+                    break;
+            }
+            $this->periode = $periode;
+            $this->title = $title;         
+            return $next($request);
+        });
+
+
+
+    }
 
 
     public function seepdf($id, $state = 'see') {
@@ -141,6 +175,7 @@ class CahierController extends Controller
             ->with('enfant', $enfant)
             ->with('reussite', $reussite)
             ->with('definitif', $definitif)
+            ->with('title', $this->title)
             ->with('commentaires', $commentaires)
             ->with('isreussite', $r);
     }
@@ -229,29 +264,10 @@ class CahierController extends Controller
         });
         $resultats = $enfant->resultats();
         $reussite = Reussite::where('enfant_id',$id)->first();
-        $date = Carbon::now()->format('Ymd');
-        $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode','DESC')->get();
-        $p = 3;
-        foreach ($periodes as $periode) {
-            if ($date < Carbon::parse($periode->date_end)->format('Ymd')) $p = $periode->periode;
-        }
-        $periode = $p;
-        $nbperiode = $periodes->count();
-        switch ($nbperiode) {
-            case 1: $title = 'Année entière';break;
-            case 2:
-                if ($periode == 1) $title = 'Premier semestre';
-                if ($periode == 2) $title = 'Second semestre';
 
-                break;
-            case 3:
-                if ($periode == 1) $title = 'Premier trimestre';
-                if ($periode == 2) $title = 'Deuxième trimestre';
-                if ($periode == 3) $title = 'Troisième trimestre';
-                break;
-        }
 
-        $textes = $enfant->cahier($periode);
+
+        $textes = $enfant->cahier($this->periode);
 
         
         return view('cahiers.index')
@@ -261,8 +277,8 @@ class CahierController extends Controller
             ->with('phrases', $grouped)
             ->with('section', Section::first())
             ->with('textes', $textes)
-            ->with('periode', $periode)
-            ->with('title', $title)
+            ->with('periode', $this->periode)
+            ->with('title', $this->title)
             ->with('sections', Section::all());
     }
 

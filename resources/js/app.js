@@ -1,5 +1,5 @@
-import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 
+import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css'
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
@@ -10,22 +10,12 @@ import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
 import '../../node_modules/quill/dist/quill';
 
-import $ from 'jquery';
-window.$ = $;
-import "jquery-ui";
-
-
-
 
 import Alpine from 'alpinejs';
-// import $ from 'jquery';
-// window.$ = window.jQuery = $;
 
-// import 'jquery-ui/ui/widgets/datepicker.js';
-// import 'jquery-ui/ui/widgets/sortable.js';
 
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier} from "./pages/calendrier";
-
+import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
 import {selectItem, hamburger} from './pages/items';
 import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral} from './pages/cahier';
@@ -52,6 +42,7 @@ window.Alpine = Alpine;
 Alpine.start();
 
 $(document).ready(function($) {
+
 
 
     $(document).on("click",".card__share  div", function(e){
