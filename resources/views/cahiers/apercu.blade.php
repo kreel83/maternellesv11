@@ -40,7 +40,7 @@
             </div>
 
         <div class="col-md-6">
-            <h4>Commentaire général</h4>
+            <h4>Commentaire général<span class="ms-5" id="record" role="button"><i class="fa-solid fa-microphone-slash"></i></span></h4>
             <select id="phraseCommentaireGeneral" class="form-control  mb-2" mt-4 data-section="99" data-enfant="{{$enfant->id}}">
                 <option value="null">Veuillez selectionner</option>
 
@@ -53,6 +53,7 @@
             <textarea id="commentaire_general" data-enfant="92" style="width: 100%" rows="10">
                 {{ $isreussite ? $isreussite->commentaire_general : null}}
             </textarea>
+            <div class="mt-3" id="instruction"></div>
         </div>
 
 
