@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('test', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->string('nom', 50)->default('0');
-        });
+        if(!Schema::hasTable('test')){
+            Schema::create('test', function (Blueprint $table) {
+                $table->integer('id', true);
+                $table->string('nom', 50)->default('0');          
+            });
+        }
     }
 
     /**

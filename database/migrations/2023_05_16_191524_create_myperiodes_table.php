@@ -13,16 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('myperiodes', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->integer('user_id');
-            $table->integer('annee');
-            $table->integer('periode');
-            $table->date('date_start');
-            $table->date('date_end');
-            $table->dateTime('updated_at');
-            $table->dateTime('created_at');
-        });
+        if(!Schema::hasTable('myperiodes')){
+            Schema::create('myperiodes', function (Blueprint $table) {
+                $table->integer('id', true);
+                $table->integer('user_id');
+                $table->integer('annee');
+                $table->integer('periode');
+                $table->date('date_start');
+                $table->date('date_end');
+                $table->dateTime('updated_at');
+                $table->dateTime('created_at');
+            });
+        }
     }
 
     /**

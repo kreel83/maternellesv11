@@ -13,16 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reussites', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->integer('enfant_id')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->longText('texte_integral')->nullable();
-            $table->longText('commentaire_general')->nullable();
-            $table->boolean('definitif')->nullable();
-            $table->dateTime('updated_at')->nullable();
-            $table->dateTime('created_at')->nullable();
-        });
+        if(!Schema::hasTable('reussites')){
+            Schema::create('reussites', function (Blueprint $table) {
+                $table->integer('id', true);
+                $table->integer('enfant_id')->nullable();
+                $table->integer('user_id')->nullable();
+                $table->longText('texte_integral')->nullable();
+                $table->longText('commentaire_general')->nullable();
+                $table->boolean('definitif')->nullable();
+                $table->dateTime('updated_at')->nullable();
+                $table->dateTime('created_at')->nullable();
+            });
+        }
     }
 
     /**

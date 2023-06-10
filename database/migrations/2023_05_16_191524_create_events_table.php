@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('comment')->nullable();
-            $table->date('date');
-            $table->string('rep');
-            $table->unsignedInteger('user_id')->index('events_user_id_foreign');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('events')){
+            Schema::create('events', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('comment')->nullable();
+                $table->date('date');
+                $table->string('rep');
+                $table->unsignedInteger('user_id')->index('events_user_id_foreign');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

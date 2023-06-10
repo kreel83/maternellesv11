@@ -1,36 +1,46 @@
 
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <table class="table table-bordered table-hover">
-        @if ($maternelles)
 
-            @foreach ($maternelles as $ecole)
+    
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    @php
+        $i = 1;
+    @endphp
+    @foreach ($ecoles as $key=>$liste)
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {{$i == 1 ? 'active' : null}} " id="listetab_{{$i}}" data-bs-toggle="tab" data-bs-target="#tab_{{$i}}" type="button" role="tab" aria-controls="home" aria-selected="true">{{$key}}</button>
+        </li>
+        @php
+            $i++;
+            
+        @endphp
+    @endforeach
+    </ul>
+    <div class="tab-content">
+        @php
+            $i = 1;
+        @endphp
+        @foreach ($ecoles as $key=>$liste)
 
-                <tr>
-                    <td class="ecole" data-academie="{{$ecole->fields->libelle_academie}}" data-num="{{$ecole->fields->numero_uai}}">{{ $ecole->fields->appellation_officielle }}</td>
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td><div class="alert alert-warning">Aucune maternelle trouvée</div></td>
-            </tr>
-        @endif
-        </table>
-    </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <table class="table table-bordered table-hover">
-        @if ($primaires)
-        @foreach ($primaires as $ecole)
-            <tr>
-                <td class="ecole" data-academie="{{$ecole->fields->libelle_academie}}" data-num="{{$ecole->fields->numero_uai}}">{{ $ecole->fields->appellation_officielle }}</td>
-            </tr>
+
+            <div class="tab-pane fade {{$i == 1 ? 'show active' : null}}" id="tab_{{$i}}" role="tabpanel" aria-labelledby="home-tab">
+                <table class="table table-bordered table-hover">
+                    @foreach ($liste as $ecole)                
+                        <tr>
+                            <td class="ecole" data-academie="{{$ecole['code_academie']}}" data-num="{{$ecole['code_etablissement']}}">{{ $ecole['appellation_officielle'] }}</td>
+                        </tr>                                 
+                                        
+                    @endforeach
+                </table>
+            </div>   
+            @php
+                $i++;
+            @endphp 
         @endforeach
-            @else
-                <tr>
-                    <td><div class="alert alert-warning">Aucune école élémentaire trouvée</div></td>
-                </tr>
-            @endif
-        </table>
     </div>
+  
+    
+
+
 
 
 

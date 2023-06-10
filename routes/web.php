@@ -11,10 +11,14 @@ use App\Http\Controllers\ficheController;
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
+
+use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\NewaccountController;
 use App\Http\Controllers\Direction\DashboardProController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +105,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
+    Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
+    Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');
@@ -130,6 +136,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 
+    
+    Route::get('/initClasse', [AdminController::class, 'initClasse'])->name('initClasse');
+    Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
+
+
     Route::get('/subscribe', [SubscriptionController::class, 'index'])->name('subscribe.index');
     Route::get('/subscribe/cardform', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
@@ -140,6 +151,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);
     });
+
 });
 
 

@@ -1,43 +1,42 @@
 @extends('layouts.mainMenu',['titre' => 'Ma classe'])
 
 @section('content')
-    <button class="btn btn-primary btn-sm" id="new_eleve" data-id="null">Nouvel elève</button>
-    <table class="table table-bordered table-hover table-striped mt-5" id="tableau_eleves">
-        <thead>
-        <tr>
-            <td></td>
-            <td>nom</td>
-            <td>prénom</td>
-            <td>age</td>
-            <td>genre</td>
-            <td>groupe</td>
-            <td>mail</td>
 
+<div class="row">
+    <div class="col-md-6">
+        <h4>Ma classe</h4>
+        <button class="btn btn-primary btn-sm" id="new_eleve" data-id="null">Nouvel elève</button>
+        <div style="height: 600px; overflow-y: auto">
+            <table class="table table-bordered table-hover table-striped mt-5" id="tableau_eleves">
+            @include('eleves.include.tableau_eleves')
+            </table>
+        
+        </div>
+    </div>
 
-        </tr>
-        </thead>
-        <tbody>
+    <div class="col-md-1" style="padding-top: 300px">
+        <button class="btn btn-sm btn-primary w-100" id="ajouterEleves" ><i class="fa-light fa-left me-2"></i>ajouter</button>
+    </div>
 
-            @foreach ($eleves as $eleve)
-                <tr data-id="{{$eleve->id}}" data-commentaire="{{$eleve->comment}}" data-photo="{{asset($eleve->photoEleve)}}">
-                    <td style="width: 40px"><img src="{{asset($eleve->photoEleve)}}" alt="" width="40px"></td>
-                    <td data-value="{{$eleve->nom}}">{{$eleve->nom}}</td>
-                    <td data-value="{{$eleve->prenom}}">{{$eleve->prenom}}</td>
-                    <td data-value="{{$eleve->ddn}}">{{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}}</td>
-                    <td data-value="{{$eleve->genre}}">{{ $eleve->genre }}</td>
-                    <td data-value="{{$eleve->groupe}}">{{$eleve->groupe}}</td>
-                    <td data-value1="{{$eleve->mail1}}" data-value2="{{$eleve->mail2}}">
-
-                            <div>{{$eleve->mail1}}</div>
-                            <div>{{$eleve->mail2}}</div>
-
-                    </td>
-
-
-                </tr>
+    <div class="col-md-5">
+    <h4>Les elèves de mon école</h4>
+    <div class="d-flex">
+        <select name="" id="selectProf" class="form-control input-sm" style="font-size: 12px">
+        <option value="null" selected>Tous les enfants</option>
+            @foreach ($profs as $prof)
+            <option value="{{$prof->id}}">{{$prof->nom_complet()}}</option>
             @endforeach
-        </tbody>
-    </table>
+        </select>
+    </div>
+    <div style="height: 600px; overflow-y: auto">
+            <table class="table table-bordered table-hover table-striped mt-5" id="allSelectEleve">
+                @include('eleves.include.tableau_tous')
+            </table>
+        </div>
+    </div>    
+</div>
+
+
 
 
 

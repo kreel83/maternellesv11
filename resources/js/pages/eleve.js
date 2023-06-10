@@ -38,9 +38,82 @@ const photo_eleve = () => {
         console.log('photo')
         $('#photo_input').trigger('click')
     })
+
+    $(document).on('click','#tableau_eleves .remove', function(e) {
+        e.stopImmediatePropagation()
+        var id = $(this).closest('tr').data('id')
+        $(this).closest('tr').remove()
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+        });
+        $.ajax({
+            method: 'POST',
+            url: "/eleves/removeEleve",
+            data: {
+                eleve: id,
+                prof: $('#selectProf').val()
+            },
+            success: function(data) {
+                $('#tableau_tous').html(data)
+            }
+        })
+    })
+
+    $(document).on('click','#ajouterEleves', function() {
+        var arr = []
+        $('#tableau_tous tr input:checked').each((index, el) => {
+            arr.push($(el).closest('tr').data('id'))
+            $(el).closest('tr').remove()
+        })
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+        });
+        $.ajax({
+            method: 'POST',
+            url: "/eleves/ajouterEleves",
+            data: {
+                eleves: arr
+                
+            },
+            success: function(data) {
+                $('#tableau_eleves').html(data)
+            }
+        })
+    })
+
+
+    $(document).on('change','#selectProf', function() {
+        console.log('select')
+        var id = $(this).val()
+        if (id == 'null') {
+            $('#tableau_tous tr').removeClass('d-none')
+        } else {
+            $('#tableau_tous tbody tr').addClass('d-none')
+            $('#tableau_tous tr[data-prof="'+id+'"]').removeClass('d-none')            
+        }
+
+    })
 }
 
 const choix_eleve = () => {
+
+    $(document).on('change','#allSelectEleve', function() {
+        if ($(this).prop('checked') == true) {            
+            $('#tableau_tous tr:visible input').prop('checked', true)
+        } else {
+            $('#tableau_tous tr:visible input').prop('checked', false)
+
+        }
+    })
+
+    $(document).on('click','#recup_mes_eleves', function() {
+        $.get('/recupClasse', function() {
+            location.reload();
+        })
+    })
+
     $(document).on('click', '#tableau_eleves tr, #new_eleve', function() {
         $('#nom_form').val($(this).find('td:eq(1)').data('value'))
         $('#prenom_form').val($(this).find('td:eq(2)').data('value'))

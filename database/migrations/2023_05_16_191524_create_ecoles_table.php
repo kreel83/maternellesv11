@@ -13,21 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ecoles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nom');
-            $table->string('adresse1');
-            $table->string('adresse2')->nullable();
-            $table->string('codepostal');
-            $table->string('ville');
-            $table->string('telephone');
-            $table->string('mail');
-            $table->string('lastname');
-            $table->string('firstname');
-            $table->string('signature')->nullable();
-            $table->timestamps();
-            $table->string('photo')->nullable();
-        });
+        if(!Schema::hasTable('ecoles')){
+            Schema::create('ecoles', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('nom');
+                $table->string('adresse1');
+                $table->string('adresse2')->nullable();
+                $table->string('codepostal');
+                $table->string('ville');
+                $table->string('telephone');
+                $table->string('mail');
+                $table->string('lastname');
+                $table->string('firstname');
+                $table->string('signature')->nullable();
+                $table->timestamps();
+                $table->string('photo')->nullable();
+            });
+        }
     }
 
     /**

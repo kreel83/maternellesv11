@@ -110,6 +110,17 @@ class User extends Authenticatable
         return Enfant::where('user_id', $this->id)->get();
     }
 
+    public function profs() {
+        $ecole = Auth()->user()->ecole_code_etablissement;
+        return User::where('ecole_code_etablissement', $ecole)->get();
+    }
+
+    public function tous() {
+        $ecole = Auth()->user()->ecole_code_etablissement;
+        $users = User::where('ecole_code_etablissement', $ecole)->pluck('id');
+        return Enfant::whereNull('user_id')->whereIn('user_n1_id', $users)->get();
+    }
+
     public function calcul_annee_scolaire() {
 
         $year = (int) Carbon::now()->format('Y');
