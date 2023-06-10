@@ -11,6 +11,11 @@ use App\Http\Controllers\ficheController;
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
+use App\Http\Controllers\NewaccountController;
+use App\Http\Controllers\Direction\DashboardProController;
+use App\Http\Controllers\SubscriptionController;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +27,38 @@ use App\Http\Controllers\EcoleController;
 |
 */
 
+// USER DASHBOARD
+Route::get('/user_dashboard', function () {
+    return view('user_dashboard');
+})->middleware('user')->name('user_dashboard');
+
+// ADMIN DASHBOARD
+Route::middleware(['admin'])->group(function(){
+    Route::get('/admin_dashboard', function () {
+        return view('admin_dashboard');
+    })->name('admin_dashboard');
+});
+
+/*
+Route::get('/admin_dashboard', function () {
+    return view('admin_dashboard');
+})->middleware('admin')->name('admin_dashboard');
+*/
+//Route::get('/admin_dashboard', 'AdminController@index')->name('admin_dashboard')->middleware('admin');
+
+/*
+// USER DASHBOARD
+Route::get('/user_dashboard', function () {
+    return view('user_dashboard');
+})->middleware(['auth', 'user'])->name('user_dashboard');
+// ADMIN DASHBOARD
+Route::get('/admin_dashboard', function () {
+    return view('admin_dashboard');
+})->middleware(['auth', 'admin'])->name('admin_dashboard');
+*/
+
+Route::get('/dashboardpro', [DashboardProController::class, 'index'])->name('dashboardpro')->middleware('auth.direction');
+Route::get('/decodirection', [UserControllerDirection::class, 'decodirection'])->name('decodirection')->middleware('auth.direction');
 
 
 Route::get('/parent',[EnfantController::class, 'parent']);
@@ -29,7 +66,7 @@ Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+    Route::get('/', [parametreController::class, 'welcome'])->name('depart');    
 
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
@@ -91,20 +128,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
     Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle');
 
-
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 
-
+    Route::get('/subscribe', [SubscriptionController::class, 'index'])->name('subscribe.index');
+    Route::get('/subscribe/cardform', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+    Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
+    Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
+    Route::get('subscribe/cancel', [SubscriptionController::class, 'cancel'])->name("subscribe.cancel");
+    Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");
+    Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
+    Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
+        return $request->user()->downloadInvoice($invoiceId);
+    });
 });
 
 
 route::get('/resultat/setNote',  [\App\Http\Controllers\ResultatController::class, 'setNote']);
 
-// thyman
-
-
-use App\Http\Controllers\RegistrationController;
-Route::get('/newaccount', [RegistrationController::class, 'create'])->name('Création');
+Route::get('/newaccount', [NewaccountController::class, 'index'])->name('index');
 //Route::get('/newaccount', 'RegistrationController@create');
 //Route::post('newaccount', 'RegistrationController@store');
 
