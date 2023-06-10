@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('texte', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->longText('commentaire')->nullable();
-        });
+        if(!Schema::hasTable('texte')){
+            Schema::create('texte', function (Blueprint $table) {
+                $table->integer('id', true);
+                $table->longText('commentaire')->nullable();
+            });
+        }
     }
 
     /**

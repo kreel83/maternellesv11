@@ -13,18 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
+        if(!Schema::hasTable('mailings')){
         Schema::create('mailings', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('destinataires');
-            $table->string('validations')->nullable();
-            $table->boolean('ar');
-            $table->string('token');
-            $table->string('sujet');
-            $table->string('body');
-            $table->string('medias')->nullable();
-            $table->unsignedInteger('user_id')->index('mailings_user_id_foreign');
-            $table->timestamps();
-        });
+                $table->increments('id');
+                $table->string('destinataires');
+                $table->string('validations')->nullable();
+                $table->boolean('ar');
+                $table->string('token');
+                $table->string('sujet');
+                $table->string('body');
+                $table->string('medias')->nullable();
+                $table->unsignedInteger('user_id')->index('mailings_user_id_foreign');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

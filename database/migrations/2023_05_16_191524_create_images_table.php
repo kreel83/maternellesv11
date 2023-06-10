@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->string('name', 50);
-        });
+        if(!Schema::hasTable('images')){
+            Schema::create('images', function (Blueprint $table) {
+                $table->integer('id', true);
+                $table->string('name', 50);
+            });
+        }
     }
 
     /**

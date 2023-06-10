@@ -40,7 +40,13 @@
             </div>
 
         <div class="col-md-6">
-            <h4>Commentaire général<span class="ms-5" id="record" role="button"><i class="fa-solid fa-microphone-slash"></i></span></h4>
+            <h4>Commentaire général
+                @if ($isChrome)
+                <span class="ms-5" id="record" role="button">
+                <i class="fa-solid fa-microphone-slash"></i>
+                </span>
+                @endif
+            </h4>
             <select id="phraseCommentaireGeneral" class="form-control  mb-2" mt-4 data-section="99" data-enfant="{{$enfant->id}}">
                 <option value="null">Veuillez selectionner</option>
 

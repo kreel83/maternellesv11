@@ -13,17 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fiches', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->integer('item_id')->nullable();
-            $table->integer('order')->nullable();
-            $table->boolean('perso')->nullable()->default(true);
-            $table->integer('user_id')->nullable();
-            $table->dateTime('updated_at')->nullable();
-            $table->dateTime('created_at')->nullable();
-            $table->integer('section_id')->nullable();
-            $table->string('parent_type', 50)->nullable();
-        });
+        if(!Schema::hasTable('fiches')){
+            Schema::create('fiches', function (Blueprint $table) {
+                $table->integer('id', true);
+                $table->integer('item_id')->nullable();
+                $table->integer('order')->nullable();
+                $table->boolean('perso')->nullable()->default(true);
+                $table->integer('user_id')->nullable();
+                $table->dateTime('updated_at')->nullable();
+                $table->dateTime('created_at')->nullable();
+                $table->integer('section_id')->nullable();
+                $table->string('parent_type', 50)->nullable();
+            });
+        }
     }
 
     /**

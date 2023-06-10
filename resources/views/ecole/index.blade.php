@@ -18,7 +18,8 @@
             <h3>Choisir / Modifier mon établissement scolaire</h3>
             <div class="card">
                 <div class="card-body">
-                    <input type="text" class="form-control" placeholder="entrer une commune" id="chercheCommune">
+                    <input type="text" class="form-control" placeholder="entrer un département" id="chercheDpt">
+                    <input type="text" class="form-control mt-2" placeholder="entrer une ville" id="chercheVille">
                     <button class="btn btn-outline-primary mt-5" id="chercheCommuneBtn">Chercher</button>
 
                 </div>
@@ -37,17 +38,8 @@
 
             </table>
         </div>
-        <div class="col-md-6">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Ecoles maternelles</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Ecoles primaires</button>
-                </li>
+        <div class="col-md-6" id="listeEcoles">
 
-            </ul>
-            <div class="tab-content" id="ecoleContainer"></div>
         </div>
     </div>
 
