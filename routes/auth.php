@@ -10,12 +10,38 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/register/direction', [RegisteredUserController::class, 'createDirection'])
+                ->middleware('guest')
+                ->name('register.direction');
+
+Route::get('/register/prof', [RegisteredUserController::class, 'createProf'])
+                ->middleware('guest')
+                ->name('register.prof');
+
+Route::post('/register/direction', [RegisteredUserController::class, 'storeDirection'])
+                ->middleware('guest')
+                ->name('storeDirection');
+
+Route::post('/register/prof', [RegisteredUserController::class, 'storeProf'])
+                ->middleware('guest')
+                ->name('storeProf');
+
+Route::get('/login/direction', [AuthenticatedSessionController::class, 'createDirection'])
+                ->middleware('guest')
+                ->name('logindirection');
+
+Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])->name('storedirection');
+/*
+                Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])
+                ->middleware('auth.direction')
+                ->name('logindirection');
+*/
 Route::get('/register', [RegisteredUserController::class, 'create'])
                 ->middleware('guest')
                 ->name('register');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest');
+                ->middleware('guest');          
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')

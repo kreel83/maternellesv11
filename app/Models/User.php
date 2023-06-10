@@ -9,10 +9,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    use Billable;
+
+     /**
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->getAttribute('role') === $role;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +31,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'role',
         'name',
         'prenom',
         'email',
