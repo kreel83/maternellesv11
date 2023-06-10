@@ -41,6 +41,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'direction' => [
+            'driver' => 'session',
+            'provider' => 'direction',
+        ],
     ],
 
     /*
@@ -66,10 +70,10 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'direction' => [
+             'driver' => 'eloquent',
+             'model' => App\Models\UserDirection::class,
+         ],
     ],
 
     /*

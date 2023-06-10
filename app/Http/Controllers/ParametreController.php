@@ -89,6 +89,13 @@ class ParametreController extends Controller
     }
 
     public function welcome() {
+        // Check for a subscription and calculate end date
+        if (Auth::user()->subscribed('default')) {
+            $finsouscription = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
+        } else {
+            $finsouscription = null;
+        }
+        // ----
         $date = Carbon::now();
         $mois = $date->locale('fr')->monthName;
         $nb = $date->month;
@@ -103,6 +110,7 @@ class ParametreController extends Controller
 
         $anniversaires = $anniversaires->sortBy('jour');
         return view('welcome')
+            ->with('finsouscription', $finsouscription)
             ->with('anniversaires', $anniversaires)
             ->with('moisActuel', $mois);
     }

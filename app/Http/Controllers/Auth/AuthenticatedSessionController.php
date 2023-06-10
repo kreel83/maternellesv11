@@ -21,6 +21,16 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Display the login view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function createDirection()
+    {
+        return view('auth.login_direction');
+    }
+
+    /**
      * Handle an incoming authentication request.
      *
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
@@ -33,6 +43,23 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * Handle an incoming authentication request.
+     *
+     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeDirection(LoginRequest $request)
+    {
+        //dd($request);
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        //return redirect()->intended(RouteServiceProvider::DASHBOARDPRO);
+        return redirect()->intended(route('user_dashboard'));
     }
 
     /**
