@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Myperiode;
 use App\Models\User;
+use App\Models\Event;
 use App\utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,6 +27,22 @@ class CalendrierController extends Controller
         }
 
         return view('calendar.periodes')->with('periodes',$p);
+    }
+
+    public function saveEvent(Request $request) {
+        if ($request->id == 'new') {
+           $t = new Event(); 
+           $t->created_at = Carbon::now();
+        } else {
+            $t = Event::find($request->id);
+        }
+        $t->name = $request->name;
+        $t->comment = $request->comment;
+        $t->user_id = $request->user_id;
+        $t->date = Carbon::parse($request->date);
+        $t->updated_at = Carbon::now();
+        $t->save();
+        return redirect()->back();
     }
 
     public  function periode_save(Request $request) {
@@ -80,6 +97,7 @@ class CalendrierController extends Controller
         $url = "https://data.education.gouv.fr/api/records/1.0/search/?dataset=fr-en-calendrier-scolaire&q=&facet=description&facet=population&facet=start_date&facet=end_date&facet=location&facet=zones&refine.annee_scolaire=$c&refine.location=$academie";
         $r = file_get_contents($url);
         $r = json_decode($r);
+        
         $conges = array();
 
 
@@ -114,17 +132,40 @@ class CalendrierController extends Controller
         $ddj = Utils::jour_dans_anneee(Carbon::now());
 
 
+        $events = array();
+        $evenements = Auth::user()->evenements();
+        $evenements = $evenements->selectRaw('date, count(date) as nombre')->groupBy('date')->get()->toArray();
+        
 
-
+        
+     
+        $date = Carbon::now()->format('Y-m-d');
+        $events = Event::where('date', $date)->get();
+        
         return view('calendrier.index')
             ->with('month', $month)
             ->with('conges', json_encode($conges))
             ->with('anniversaires', json_encode($anniversaires))
+            ->with('evenements', json_encode($evenements))
+            ->with('events', $events)
             ->with('ddj', $ddj)
             ->with('start_year_nb_days', $start_year_nb_days)
             ->with('start_year', $start_year);
     }
 
+
+    public function deleteEvent($id) {
+        $event = Event::find($id);
+        $event->delete();
+        return 'ok';
+    }
+
+    public function getEvent($date) {
+        
+        $date = Carbon::parse($date)->format('Y-m-d');
+        $events = Event::where('date', $date)->get();
+        return view('calendrier.include.event')->with('events', $events);
+    }
     public function index() {
         $month = Carbon::parse('9/1/'.Utils::calcul_annee_scolaire());
         $start_year = $month->year;

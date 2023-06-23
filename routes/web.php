@@ -37,11 +37,11 @@ Route::get('/user_dashboard', function () {
 })->middleware('user')->name('user_dashboard');
 
 // ADMIN DASHBOARD
-Route::middleware(['admin'])->group(function(){
+
     Route::get('/admin_dashboard', function () {
         return view('admin_dashboard');
-    })->name('admin_dashboard');
-});
+    })->middleware('admin')->name('admin_dashboard');
+
 
 /*
 Route::get('/admin_dashboard', function () {
@@ -112,12 +112,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');
     Route::get('/ecole/chercheEcoles',[\App\Http\Controllers\EcoleController::class,'chercheEcoles'])->name('chercheEcoles');
     Route::get('/ecole/choixEcole',[\App\Http\Controllers\EcoleController::class,'choixEcole'])->name('choixEcole');
+    Route::get('/ecole/confirmation',[\App\Http\Controllers\EcoleController::class,'confirmationEcole'])->name('confirmationEcole');
 
     Route::get('/calendar/periodes/init',[\App\Http\Controllers\CalendrierController::class,'init']);
     Route::get('/calendar',[\App\Http\Controllers\CalendrierController::class,'index'])->name('calendar');
     Route::get('/periode',[\App\Http\Controllers\CalendrierController::class,'periode'])->name('periode');
     Route::post('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
     Route::post('/calendar/periodes/save',[\App\Http\Controllers\CalendrierController::class,'savePeriode']);
+    Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
+    Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
+    Route::get('/calendar/getEvent/{date}',[\App\Http\Controllers\CalendrierController::class,'getEvent'])->name('getEvent');
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
 

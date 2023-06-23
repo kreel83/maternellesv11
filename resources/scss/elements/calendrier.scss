@@ -1,17 +1,46 @@
+#calendrier_view {
+    background: rgb(223,95,150);
+    background: linear-gradient(90deg, rgba(223,95,150,1) 1%, rgba(217,27,58,1) 50%, rgba(168,32,37,1) 100%);    
+}
+
 #calendrier_scolaire .day.actif:hover {
     transform: scale(1.1);
     font-weight: bolder;
     border: 1px solid grey;
     border-radius: 50%;
 }
-
+    .bloc_event {
+        width: 100%;
+        height: 700px;
+        background-color: transparent;
+        margin-top: 30px;
+        padding: 5px;;
+        overflow-y: auto;
+        .event_container {
+            width: 100%;
+            height: 200px;
+            background-color: white;
+            margin: 5px 0;
+            padding: 8px;;
+            font-size: 12px;
+        }
+    }
 
 #calendrier, #calendrier_scolaire {
+
+
     .month_bloc {
         display: flex;
         flex-direction: column;
         width: 300px;
         margin: 10px 0;
+        border-radius: 15px;
+        margin: 10px;
+        background-color: white;
+        .month_name {
+            text-align: center;
+            border-bottom: 2px solid var(--rouge);
+        }
 
     }
     .month_days {
@@ -30,8 +59,16 @@
             display: flex; flex-wrap: wrap;width: 300px;
         }
         .day {
-            color: #2C3034;display: flex;justify-content: center;align-items: center;width:40px;height: 40px;font-size:14px;
-            margin: 2px 0;
+            color: #2C3034;display: flex;justify-content: center;align-items: center;width:39px;height: 39px;font-size:14px;
+            
+            &.event {
+                border-bottom: 2px solid brown;
+            }
+            &.selected {
+                border: 1px solid salmon;
+                background-color: salmon;
+                border-radius: 50%;
+            }
             &.actif {
                 cursor: pointer;
                 //&:hover {
@@ -58,20 +95,21 @@
                 background-color: #ebd6b1;
                 color: white;
             }
-            &.anniversaires.feminin {
+            &.anniversaire.feminin {
                 color: deeppink;
                 font-weight: bolder;
 
             }
-            &.anniversaires.masculin {
+            &.anniversaire.masculin {
                 color: #52a5ff;
                 font-weight: bolder;
 
             }
             &.ddj {
 
-                background-color: #16182c;
+                background-color: var(--vert);
                 font-weight: bolder;
+                border-radius: 50%;
 
             }
             &.start {

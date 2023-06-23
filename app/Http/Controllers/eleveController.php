@@ -35,8 +35,9 @@ class eleveController extends Controller
 
     }
     public function ajouterEleves(Request $request) {
+        $eleves = array_filter($request->eleves);
         
-        foreach ($request->eleves as $eleve) {
+        foreach ($eleves as $eleve) {
             $e = Enfant::find($eleve);
             $e->user_id = Auth::id();
             $e->save();

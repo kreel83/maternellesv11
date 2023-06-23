@@ -23,17 +23,25 @@ class EcoleController extends Controller
     }
 
     public function chercheCommune(Request $request) {
-        $commune = $request->commune ? $request->commune : null;
-        $dpt = ($request->dpt)  ? '0'.$request->dpt : null;
-        $communes = new Ecole();
-        $communes = $communes->selectRaw('commune, code_postal, code_commune');
-        if ($commune) {
-            $communes = $communes->where('commune', 'LIKE', '%'.$commune.'%');
+        
+        
+      
+ 
+       $search = $request->search;
+        if (is_numeric($search)) {
+            
+            switch (strlen($search)) {
+                case 2 :    $communes = Ecole::select('nom_commune', 'adresse_3','code_departement','code_commune')->groupBy('nom_commune')->where('code_departement', '0'.$search );
+                            break;
+                case 5 :    $communes = Ecole::select('nom_commune', 'adresse_3','code_departement','code_commune')->groupBy('nom_commune')->where('code_postal', $search );
+                            break;
+            
+            }
+        } else {
+            $communes = Ecole::select('nom_commune', 'adresse_3','code_departement','code_commune')->groupBy('nom_commune')->where('nom_etablissement','LIKE', '%'.$search.'%' )->orWhere('nom_commune','LIKE','%'.$search.'%');
         }
-        if ($dpt) {
-            $communes = $communes->where('code_departement',  $dpt);
-        }
-        $communes = $communes->distinct('code_commune')->orderBy('code_commune')->get();
+        $communes = $communes->orderBy('nom_commune')->get();
+        
 
         // $communes = $commune->distinct('commune')->selectRaw('commune, code_postal, code_commune')->where('commune', 'LIKE', '%'.$request->commune.'%')->orderBy('commune')->get();
         // dd($communes);
@@ -51,17 +59,29 @@ class EcoleController extends Controller
 
     public function chercheEcoles(Request $request) {
         $commune = $request->commune;
-        $ecoles = Ecole::where('code_commune', $commune)->get();
-        $ecoles = $ecoles->groupBy('nature')->toArray();
+        $ecoles = Ecole::where('code_commune', $commune);
+        $listes['Ecoles Maternelles'] = Ecole::where('code_commune', $commune)->where('ecole_maternelle','1')->where('ecole_elementaire','0')->get()->toArray();
+        $listes['Ecoles Primaires'] = Ecole::where('code_commune', $commune)->where('ecole_elementaire','1')->get()->toArray();
+
         return view('ecole.include.ecoles')
-            ->with('ecoles', $ecoles);
+            ->with('ecoles', $listes);
     }
+
+    public function confirmationEcole(Request $request) {
+        $ecole = Ecole::where('identifiant_de_l_etablissement',$request->ecole)->first();
+        return view('ecole.confirmation')->with('ecole', $ecole);
+    }
+
 
     public function choixEcole(Request $request) {
        $user = Auth::user();
-       $user->ecole_code_etablissement = $request->num;
-       
+       $ecole = Ecole::where('identifiant_de_l_etablissement',$request->ecole)->first();
+
+       $user->ecole_id = $request->ecole;
+       $user->academie = $ecole->code_academie;       
        $user->save();
        return 'ok';
     }
+
+    
 }

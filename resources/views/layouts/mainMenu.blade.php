@@ -13,15 +13,11 @@ use Illuminate\Support\Facades\Auth;
         <!-- Fonts -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-               <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-     
-               <!-- <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
-        <link href="{{asset('icons/css/all.css')}}" rel="stylesheet">
-        <link href="{{asset('css/app.css')}}" rel="stylesheet"> -->
-  
-        <!-- <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="{{ asset('js/all.min.js') }}" defer></script> -->
+
+        <link href="{{asset('fontawesome/css/all.css')}}" rel="stylesheet">
+
 
         <style>
             body {
@@ -52,14 +48,14 @@ use Illuminate\Support\Facades\Auth;
           </li>
           <li class="nav-item dropdown me-3 fw-bolder">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false"  style="color: var(--bleu)">Paramètres</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdown06">
-              <li><a class="dropdown-item" href="{{route('phrases')}}">Créer des paragraphe de commentaires</a></li>
-              <li><a class="dropdown-item" href="{{route('password')}}">Gestion des mots de passe</a></li>
-              <li><a class="dropdown-item" href="{{route('eleves')}}">Gestion des élèves</a></li>
-              <li><a class="dropdown-item" href="{{route('fiches')}}">Définir les items</a></li>
-                           <li><a class="dropdown-item" href="{{route('aidematernelle')}}">Définir vos aides maternelles</a></li>
-              <li><a class="dropdown-item" href="{{route('ecole')}}">Définir votre école</a></li>
-              <li><a class="dropdown-item" href="{{route('periode')}}">Définir vos périodes scolaires</a></li>
+            <ul class="dropdown-menu menu_parametres" aria-labelledby="dropdown06"  style="background-color: var(--bleu)">
+              <li><a class="dropdown-item" style="color: white" href="{{route('phrases')}}">Créer des paragraphe de commentaires</a></li>
+              <li><a class="dropdown-item" style="color: white" href="{{route('password')}}">Gestion des mots de passe</a></li>
+              <li><a class="dropdown-item" style="color: white" href="{{route('eleves')}}">Gestion des élèves</a></li>
+              <li><a class="dropdown-item" style="color: white" href="{{route('fiches')}}">Définir les items</a></li>
+              <li><a class="dropdown-item" style="color: white"href="{{route('aidematernelle')}}">Définir vos aides maternelles</a></li>
+              <li><a class="dropdown-item" style="color: white" href="{{route('ecole')}}">Définir votre école</a></li>
+              <li><a class="dropdown-item" style="color: white" href="{{route('periode')}}">Définir vos périodes scolaires</a></li>
             </ul>
           </li>
         </ul>
@@ -68,7 +64,7 @@ use Illuminate\Support\Facades\Auth;
             @if (Auth::check())
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">{{Auth::user()->nom_complet()}}</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown06">
+                <ul class="dropdown-menu" aria-labelledby="dropdown06" style="background-color: var(--bleu);color: white">
                   <li><a class="dropdown-item" href={{route('monprofil')}}>Mon profil</a></li>
                   <li><a class="dropdown-item" href="{{route('deco')}}">Se deconnecter</a></li>
                 </ul>
@@ -95,7 +91,7 @@ use Illuminate\Support\Facades\Auth;
 
     </div>
 
-  <div class="container-fluid" style="margin-top: 70px;">
+  <div style="margin-top: 63px;">
        @yield('content')
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

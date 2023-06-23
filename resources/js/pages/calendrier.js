@@ -62,13 +62,24 @@ const initCalendrier = () => {
         anniversaires = JSON.parse(anniversaires)
         anniversaires.forEach(function (element) {
             console.log(element)
-            $('.day[data-all="' + element.ddn + '"]').addClass('anniversaires '+element.genre)
+            $('.day[data-all="' + element.ddn + '"]').addClass('anniversaire '+element.genre)
             $('.day[data-all="'+element.ddn+'"]').prop('title', element.nom)
         })
         $('.day[data-all="' + $('#ddj').val() + '"]').addClass('ddj')
-        if ( !$('.day[data-all="' + $('#ddj').val() + '"]').hasClass('anniversaires')) {
+        if ( !$('.day[data-all="' + $('#ddj').val() + '"]').hasClass('anniversaire')) {
             $('.day[data-all="' + $('#ddj').val() + '"]').css('color','white')
         }
+        var evenements = $('#evenements').val()
+        console.log(evenements)
+        evenements = JSON.parse(evenements)
+        evenements.forEach(function (element) {
+            console.log(element)
+            var s = '.'.repeat(element.nombre)
+            console.log(s)
+            $('.day_event[data-js_date="' + element.date + '"]').text(s)
+            $('.day_event[data-js_date="' + element.date + '"]').removeClass('d-none')
+            
+        })
 
     }
 }
@@ -106,6 +117,57 @@ const initCalendar = () => {
 }
 
 const selection = () => {
+    
+    $(document).on('click','.delete_event', function() {
+        var id = $(this).attr('data-id')
+        var date = $(this).attr('data-date_js')
+        console.log('id', id, date)
+        $('#do_delete_event').attr('data-id', id)
+        $('#do_delete_event').attr('data-date', date)
+    })
+
+    $(document).on('click','.editEvent', function() {
+        var id = $(this).attr('data-id')
+        var date = $(this).attr('data-date_js')
+        var name = $(this).attr('data-name')
+        var comment = $(this).attr('data-comment')
+        console.log(name, comment)
+        $('input[name="id"]').val(id)
+        $('input[name="name"]').val(name)
+        $('textarea[name="comment"]').val(comment)
+        $('input[name="date"]').val(date)
+    })
+
+
+ 
+
+    $(document).on('click','#do_delete_event', function() {
+        var id = $(this).attr('data-id')
+        var date = $(this).attr('data-date')
+        var points = $('.day[data-js_date="'+date+'"]').find('.day_event').text()
+        console.log(points)
+        var newPoints = '.'.repeat(points.length - 1)
+        $.get('calendar/event/delete/'+id, function() {
+            $('.event_container[data-id="'+id+'"]').remove()
+            $('.day[data-js_date="'+date+'"]').find('.day_event').text(newPoints)
+        })
+    })
+
+
+    $('.day').on('click', function() {
+        $('.day').removeClass('selected')
+        $(this).addClass('selected')
+        var date = $(this).data('js_date')
+        console.log(date)
+        $('.bloc_event').empty()
+        $.get('/calendar/getEvent/'+date, function(data) {
+            $('.bloc_event').html(data)
+        })
+
+        $('#date_event').val(date)
+ 
+    })
+
     $('.day.actif').on('click', function() {
         if (periodeActive) {
             console.log(periodeActive)

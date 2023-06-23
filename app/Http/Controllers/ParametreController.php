@@ -90,12 +90,14 @@ class ParametreController extends Controller
 
     public function welcome() {
         // Check for a subscription and calculate end date
+        // dd(Auth::user()->subscription('default')->asStripeSubscription());
         if (Auth::user()->subscribed('default')) {
             $finsouscription = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
         } else {
             $finsouscription = null;
         }
         // ----
+
         $date = Carbon::now();
         $mois = $date->locale('fr')->monthName;
         $nb = $date->month;

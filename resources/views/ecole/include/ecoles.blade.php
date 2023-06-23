@@ -20,13 +20,12 @@
             $i = 1;
         @endphp
         @foreach ($ecoles as $key=>$liste)
-
-
+ 
             <div class="tab-pane fade {{$i == 1 ? 'show active' : null}}" id="tab_{{$i}}" role="tabpanel" aria-labelledby="home-tab">
                 <table class="table table-bordered table-hover">
-                    @foreach ($liste as $ecole)                
+                    @foreach ($liste as $ecole)      
                         <tr>
-                            <td class="ecole" data-academie="{{$ecole['code_academie']}}" data-num="{{$ecole['code_etablissement']}}">{{ $ecole['appellation_officielle'] }}</td>
+                            <td class="ecole" data-academie="{{$ecole['code_academie']}}" data-num="{{$ecole['identifiant_de_l_etablissement']}}">{{ $ecole['nom_etablissement'] }}</td>
                         </tr>                                 
                                         
                     @endforeach
