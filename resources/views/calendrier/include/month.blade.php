@@ -41,11 +41,15 @@ $actual_year = $day->year;
         @for ($z=1; $z<=42; $z++)
                     @if ($z < $start)
 
-                        <div class="day" style="color: lightgray">{{$debut_mois_precedent + $z +1}}</div>
+                        <div class="day position-relative" style="color: lightgray">{{$debut_mois_precedent + $z +1}}
+
+                        </div>
                     @endif
 
                     @if ($z >= $start && $z < $end)
-                    <div class="day actif" data-date="{{Carbon::parse($day)->format('d/m/Y')}}" data-all="{{(($actual_year - $start_year ) * $start_year_nb_days) + $day->dayOfYear()}}" data-dayOfYear="{{$day->dayOfYear()}}">{{$z - $start + 1}}</div>
+                    <div class="day actif position-relative" data-js_date="{{Carbon::parse($day)->format('Y-m-d')}}" data-date="{{Carbon::parse($day)->format('d/m/Y')}}" data-all="{{(($actual_year - $start_year ) * $start_year_nb_days) + $day->dayOfYear()}}" data-dayOfYear="{{$day->dayOfYear()}}">
+                        <div class="position-absolute day_event d-none"  data-js_date="{{Carbon::parse($day)->format('Y-m-d')}}" style="color: red; bottom: -5px; left: 50%; transform: translate(-50%); font-size: 30px"></div>
+                        {{$z - $start + 1}}</div>
                         @php
                             $day->addDays(1)
                         @endphp

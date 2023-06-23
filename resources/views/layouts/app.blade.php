@@ -14,7 +14,9 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         {{-- <link rel="stylesheet" href="{{asset('css/all.min.css')}}"> --}}
         {{-- <link rel="stylesheet" href="{{asset('css/fontawesome.min.css')}}"> --}}
-
+        <link href="
+        https://cdn.jsdelivr.net/npm/material-icons@1.13.8/iconfont/material-icons.min.css
+        " rel="stylesheet">
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/all.min.js') }}" defer></script>
