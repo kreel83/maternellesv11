@@ -129,6 +129,7 @@ class AdminLicenceController extends Controller
         }
         $licence = new Licence;
         $licence->assignLicenceToUser($request, $user->id, $status);
+        
     }
 
     public function remove($id)
