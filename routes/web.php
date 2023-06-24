@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\AdminProfilController;
+use App\Http\Controllers\admin\AdminLicenceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnfantController;
 use App\Http\Controllers\ItemController;
@@ -32,38 +35,40 @@ use Illuminate\Http\Request;
 */
 
 // USER DASHBOARD
+/*
 Route::get('/user_dashboard', function () {
     return view('user_dashboard');
 })->middleware('user')->name('user_dashboard');
 
-// ADMIN DASHBOARD
-
-    Route::get('/admin_dashboard', function () {
-        return view('admin_dashboard');
-    })->middleware('admin')->name('admin_dashboard');
-
+*/
+// ADMIN URLs (directeurs) protected by 'admin' Middleware
+Route::middleware(['admin'])->group(function()
+{
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('/admin/profil', [AdminProfilController::class, 'loadAdminProfile'])->name('admin.loadprofile');
+    Route::post('/admin/profil', [AdminProfilController::class, 'saveAdminProfile'])->name('admin.saveprofile');
+    Route::get('/admin/licence', [AdminLicenceController::class, 'index'])->name('admin.licence.index');
+    Route::get('/admin/licence/achat', [AdminLicenceController::class, 'achat'])->name('admin.licence.achat');
+    Route::post('/admin/licence/achat', [AdminLicenceController::class, 'create'])->name('admin.licence.create');
+    Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // utilisé dans subscription.js
+    Route::get('/admin/licence/remove/{id}', [AdminLicenceController::class, 'remove'])->name('admin.licence.remove');
+    Route::get('/admin/licence/invoice', [SubscriptionController::class, 'invoice'])->name('admin.licence.invoice');
+});
+// Admin registration URLs
+Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
+Route::get('/admin/checkcode/{code}', [AdminController::class, 'checkcode'])->name('admin.checkcode');  // utilisé dans admin.js
+// User Validation url from admin creation
+Route::get('/user/validation/password', [UserController::class, 'valideUserFromAdminCreatePassword'])->name('user.valideUserFromAdminCreatePassword');  // utilisé pour valider une adresse mail depuis email
+Route::post('/user/validation', [UserController::class, 'valideUserFromAdminSavePassword'])->name('user.valideUserFromAdminSavePassword');  // sauve le mot de passe et active le compte
+// User Validation url from self registration
+Route::get('/user/validation/self', [UserController::class, 'validUserFromSelfRegistration'])->name('user.validUserFromSelfRegistration');  // utilisé pour valider une adresse mail depuis email
 
 /*
-Route::get('/admin_dashboard', function () {
-    return view('admin_dashboard');
-})->middleware('admin')->name('admin_dashboard');
-*/
-//Route::get('/admin_dashboard', 'AdminController@index')->name('admin_dashboard')->middleware('admin');
-
-/*
-// USER DASHBOARD
-Route::get('/user_dashboard', function () {
-    return view('user_dashboard');
-})->middleware(['auth', 'user'])->name('user_dashboard');
-// ADMIN DASHBOARD
-Route::get('/admin_dashboard', function () {
-    return view('admin_dashboard');
-})->middleware(['auth', 'admin'])->name('admin_dashboard');
-*/
-
+// A supprimer dans le futur
 Route::get('/dashboardpro', [DashboardProController::class, 'index'])->name('dashboardpro')->middleware('auth.direction');
 Route::get('/decodirection', [UserControllerDirection::class, 'decodirection'])->name('decodirection')->middleware('auth.direction');
-
+*/
 
 Route::get('/parent',[EnfantController::class, 'parent']);
 Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');

@@ -1,0 +1,83 @@
+const achatLicences = () => {
+
+    $(document).on('click','#btnAddLicence', function() {
+        var newQuantity = parseInt($('#quantite').val())+1
+        var price = parseFloat($('#prixLicence').val())
+        $('#quantite').val(newQuantity)
+        $('#quantity').val(newQuantity) // in post form to send to card/paypal
+        $('#totalPrice').html((newQuantity * price).toFixed(2))
+    })
+
+    $(document).on('click','#btnRemoveLicence', function() {
+        var newQuantity = parseInt($('#quantite').val())-1
+        var price = parseFloat($('#prixLicence').val())
+        if(newQuantity > 0) {
+            $('#quantite').val(newQuantity)
+            $('#quantity').val(newQuantity) // in post form to send to card/paypal
+            $('#totalPrice').html((newQuantity * price).toFixed(2))
+        }
+    })
+
+    $(document).on('change','#quantite', function() {
+        var newQuantity = parseInt($('#quantite').val())
+        $('#quantity').val(newQuantity) // in post form to send to card/paypal
+        var price = parseFloat($('#prixLicence').val())
+        $('#totalPrice').html((newQuantity * price).toFixed(2))
+    })
+
+}
+
+const assigneLicence = () => {
+
+    $(document).on('click','.assignbtn', function() {
+        var licence_id = $(this).attr('id');
+        var email = $('#assign-'+$(this).attr('id')).val();
+        if(email == '') {
+            return false;
+        }
+        if(confirm("Assigner une licence pour cet utilisateur : "+email+"?")) {
+            console.log(licence_id);
+            $.ajax({
+                method: 'POST',
+                url: '/admin/licence/assign',
+                data: {
+                    licence_id: licence_id,
+                    email: email,
+                    _token: $('input[name="_token"]').val()
+                },
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(data) {
+                    $('#result').html(data)
+                }
+            })
+        }
+    })
+
+    $(document).on('click','.removelnk', function() {
+        if(confirm("Retirer la licence pour cet utilisateur ?")) {
+            var licence_id = $(this).attr('id');
+            var user_id = $('#assign-'+$(this).attr('id')).val();
+            console.log(licence_id);
+            $.ajax({
+                method: 'POST',
+                url: '/admin/licence/assign',
+                data: {
+                    licence_id: licence_id,
+                    user_id: user_id,
+                    _token: $('input[name="_token"]').val()
+                },
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(data) {
+                    $('#result').html(data)
+                }
+            })
+        }
+    })
+
+}
+
+export {achatLicences,assigneLicence}

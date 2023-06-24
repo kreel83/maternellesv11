@@ -17,19 +17,21 @@ class AdminAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        dd('admin');
+
         if( Auth::check() )
         {
             /** @var User $user */
             $user = Auth::user();
 
             // if user is not admin take him to his dashboard
-            if ( $user->hasRole('admin') ) {
-                return redirect(route('admin_dashboard'));
+
+             if ( $user->hasRole('user') ) {
+                return redirect(route('user_dashboard'));
             }
 
             // allow admin to proceed with request
-            else if ( $user->hasRole('user') ) {
+            else if ( $user->hasRole('admin') ) {
+
                 return $next($request);
             }
         }

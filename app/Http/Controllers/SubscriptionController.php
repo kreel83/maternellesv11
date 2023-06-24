@@ -24,7 +24,6 @@ class SubscriptionController extends Controller
      */
     public function cardform()
     {
-        //dd(Auth::user()->subscriptions()->first());
         $intent = auth()->user()->createSetupIntent();
         return view('subscription.cardform', compact("intent"));
     }
@@ -36,11 +35,19 @@ class SubscriptionController extends Controller
      */
     public function subscribe(Request $request)
     {
-        $subscription = $request->user()->newSubscription('default', 'price_1NEXRRF73qwd826kHYATzqgl')
-                        ->create($request->token);
-
+        
+        // abonnement 1 an
+        $request->user()->newSubscription('default', 'price_1NEXRRF73qwd826kHYATzqgl')
+            ->create($request->token);
         return view("subscription.success");
-    }
+        
+        /*
+        // abonnement 1 jour
+        $subscription = $request->user()->newSubscription('default', 'price_1NIyW2F73qwd826koNHgb8fE')
+        ->create($request->token);
+        return view("subscription.success");
+        */
+    } 
 
     /**
      * Write code on Method

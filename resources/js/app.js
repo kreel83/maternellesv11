@@ -35,6 +35,8 @@ import {
     choixSection
 } from './pages/fiche';
 import {choix_equipe} from "./pages/equipe";
+import {adminRegistration} from "./pages/admin";
+import {achatLicences,assigneLicence} from "./pages/subscription";
 
 
 window.Alpine = Alpine;
@@ -179,4 +181,6 @@ choixEcole()
 
 choix_equipe()
 
-
+adminRegistration()
+achatLicences()
+assigneLicence()
