@@ -1,9 +1,8 @@
 @extends('layouts.mainMenu', ['titre' => 'Les paramètres'])
 
 @section('content')
-
-
-    <div class="form-group" style="margin-top: 40px">
+<div class="container">
+<div class="form-group" style="margin-top: 40px">
         <label for="">Choisir une section</label>
         <select name="" id="selectPhrase" class="form-control" >
             @foreach($sections as $sec)
@@ -39,5 +38,8 @@
             </table>
         </div>
 
+</div>
+
+  
 
 @endsection

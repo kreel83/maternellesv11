@@ -10,9 +10,9 @@
         <div class="name">{{$enfant->prenom}}<br><span style="font-size: 14px"> {{$enfant->nom}}</div>
         <div class="title"> {{ Carbon\Carbon::parse($enfant->ddn)->format('d/m/Y')}}</div>
   </div>
-    <div class="footer follow-info p-2 d-fklex flex-column" style="">
-        <a href="enfants/{{$enfant->id}}/items/" style="text-decoration: none; color: white" ><i class="fa-regular fa-pen-to-square me-2"></i>Ajouter une activité</a>
-        <a href="enfants/{{$enfant->id}}/cahier" style="text-decoration: none; color: white" ><i class="fa-regular fa-notebook me-2"></i>Voir le cahier de note</a>
+    <div class="footer follow-info p-2 d-flex justify-item-around" style="">
+        <a href="enfants/{{$enfant->id}}/items/" style="text-decoration: none; color: white" ><span class="material-icons md-48">library_add</span></a>
+        <a href="enfants/{{$enfant->id}}/cahier" style="text-decoration: none; color: white" ><span class="material-icons md-48">note</span></a>
 
     </div>
     <!-- <div class="footer">

@@ -12,19 +12,17 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Intervention\Image\ImageManager;
 
+
 class ficheController extends Controller
 {
     public function index(Request $request) {
         
-            $section = Section::first();
+        $section = Section::first();
         
         if (!isset($request->type)) $request->type = "mesfiches";
 
         $fiches = Auth::user()->mesfiches();
         $universelles = Auth::user()->items();
-
-     
-
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
 
         return view('fiches.index')

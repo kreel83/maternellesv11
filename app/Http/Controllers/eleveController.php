@@ -17,8 +17,35 @@ class eleveController extends Controller
         $user = Auth::user();
 
 
-        return view('eleves.liste')->with('eleves',$user->liste());
+        return view('eleves.liste')
+            ->with('professeur', "null")
+            ->with('profs', $user->profs())
+            ->with('tous', $user->tous())
+            ->with('eleves',$user->liste());
     }
+
+
+    public function removeEleve(Request $request) {
+
+            $e = Enfant::find($request->eleve);
+            $e->user_id = null;
+            $e->save();
+        
+        return view('eleves.include.tableau_tous')->with('tous', Auth::user()->tous())->with('professeur', $request->prof);
+
+    }
+    public function ajouterEleves(Request $request) {
+        $eleves = array_filter($request->eleves);
+        
+        foreach ($eleves as $eleve) {
+            $e = Enfant::find($eleve);
+            $e->user_id = Auth::id();
+            $e->save();
+        }
+        return view('eleves.include.tableau_eleves')->with('eleves', Auth::user()->liste());
+
+    }
+
 
     public function save(Request $request) {
         $user = Auth::user();

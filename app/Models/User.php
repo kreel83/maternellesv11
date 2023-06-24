@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
+use App\Models\Event;
 
 class User extends Authenticatable
 {
@@ -108,9 +109,24 @@ class User extends Authenticatable
         return Equipe::where('user_id', $this->id)->get();
     }
 
+    public function evenements() {
+        return Event::where('user_id', $this->id);
+    }
+
 
     public function liste() {
         return Enfant::where('user_id', $this->id)->get();
+    }
+
+    public function profs() {
+        $ecole = Auth()->user()->ecole_id;
+        return User::where('ecole_id', $ecole)->get();
+    }
+
+    public function tous() {
+        $ecole = Auth()->user()->ecole_id;
+        $users = User::where('ecole_id', $ecole)->pluck('id');
+        return Enfant::whereNull('user_id')->whereIn('user_n1_id', $users)->get();
     }
 
     public function calcul_annee_scolaire() {

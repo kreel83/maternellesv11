@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PDF;
+use Browser;
 
 class CahierController extends Controller
 {
@@ -49,6 +50,7 @@ class CahierController extends Controller
 
 
     public function __construct() {
+
         $this->middleware(function ($request, $next) {
             $date = Carbon::now()->format('Ymd');
             $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode','DESC')->get();
@@ -174,6 +176,7 @@ class CahierController extends Controller
         return view('cahiers.apercu')
             ->with('enfant', $enfant)
             ->with('reussite', $reussite)
+            ->with('isChrome',Browser::isChrome())
             ->with('definitif', $definitif)
             ->with('title', $this->title)
             ->with('commentaires', $commentaires)
@@ -257,6 +260,7 @@ class CahierController extends Controller
     }
 
     public function index($id) {
+
         $enfant = Enfant::find($id);
         $commentaire = Commentaire::where('user_id', Auth::id())->get();
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
@@ -273,7 +277,7 @@ class CahierController extends Controller
         return view('cahiers.index')
             ->with('enfant',$enfant)
             ->with('reussite',$reussite)
-            ->with('resultats',$resultats)
+            ->with('resultats',$resultats)           
             ->with('phrases', $grouped)
             ->with('section', Section::first())
             ->with('textes', $textes)

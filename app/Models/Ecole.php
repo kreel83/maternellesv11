@@ -9,6 +9,7 @@ class Ecole extends Model
 {
     use HasFactory;
 
+
     public function checkcode($code)
     {
         $ecole = $this->where('identifiant_de_l_etablissement', $code)->first();
@@ -38,4 +39,5 @@ class Ecole extends Model
             }
         }
     }
+
 }

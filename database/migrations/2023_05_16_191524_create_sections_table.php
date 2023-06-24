@@ -13,17 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('color');
-            $table->string('image_section')->default('default.jpg');
-            $table->timestamps();
-            $table->string('logo');
-            $table->string('court');
-            $table->string('texte');
-            $table->string('icone')->nullable();
-        });
+        if(!Schema::hasTable('sections')){
+            Schema::create('sections', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('color');
+                $table->string('image_section')->default('default.jpg');
+                $table->timestamps();
+                $table->string('logo');
+                $table->string('court');
+                $table->string('texte');
+                $table->string('icone')->nullable();
+            });
+        }
     }
 
     /**

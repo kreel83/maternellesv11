@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('medias', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('item_id')->index('medias_item_id_foreign');
-            $table->unsignedInteger('enfant_id')->index('medias_enfant_id_foreign');
-            $table->unsignedInteger('user_id')->index('medias_user_id_foreign');
-            $table->string('fichier');
-            $table->string('type');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('medias')){
+            Schema::create('medias', function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedInteger('item_id')->index('medias_item_id_foreign');
+                $table->unsignedInteger('enfant_id')->index('medias_enfant_id_foreign');
+                $table->unsignedInteger('user_id')->index('medias_user_id_foreign');
+                $table->string('fichier');
+                $table->string('type');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

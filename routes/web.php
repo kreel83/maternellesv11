@@ -14,10 +14,14 @@ use App\Http\Controllers\ficheController;
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
+
+use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\NewaccountController;
 use App\Http\Controllers\Direction\DashboardProController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +39,7 @@ use Illuminate\Http\Request;
 Route::get('/user_dashboard', function () {
     return view('user_dashboard');
 })->middleware('user')->name('user_dashboard');
+
 */
 // ADMIN URLs (directeurs) protected by 'admin' Middleware
 Route::middleware(['admin'])->group(function()
@@ -105,17 +110,23 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
+    Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
+    Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');
     Route::get('/ecole/chercheEcoles',[\App\Http\Controllers\EcoleController::class,'chercheEcoles'])->name('chercheEcoles');
     Route::get('/ecole/choixEcole',[\App\Http\Controllers\EcoleController::class,'choixEcole'])->name('choixEcole');
+    Route::get('/ecole/confirmation',[\App\Http\Controllers\EcoleController::class,'confirmationEcole'])->name('confirmationEcole');
 
     Route::get('/calendar/periodes/init',[\App\Http\Controllers\CalendrierController::class,'init']);
     Route::get('/calendar',[\App\Http\Controllers\CalendrierController::class,'index'])->name('calendar');
     Route::get('/periode',[\App\Http\Controllers\CalendrierController::class,'periode'])->name('periode');
     Route::post('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
     Route::post('/calendar/periodes/save',[\App\Http\Controllers\CalendrierController::class,'savePeriode']);
+    Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
+    Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
+    Route::get('/calendar/getEvent/{date}',[\App\Http\Controllers\CalendrierController::class,'getEvent'])->name('getEvent');
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
 
@@ -134,6 +145,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 
+    
+    Route::get('/initClasse', [AdminController::class, 'initClasse'])->name('initClasse');
+    Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
+
+
     Route::get('/subscribe', [SubscriptionController::class, 'index'])->name('subscribe.index');
     Route::get('/subscribe/cardform', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
@@ -144,6 +160,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);
     });
+
 });
 
 

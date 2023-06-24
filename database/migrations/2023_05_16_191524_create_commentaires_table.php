@@ -13,14 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('commentaires', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('user_id')->index('commentaires_user_id_foreign');
-            $table->text('texte');
-            $table->timestamps();
-            $table->string('section_id');
-            $table->string('court');
-        });
+        if(!Schema::hasTable('commentaires')){
+            Schema::create('commentaires', function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedInteger('user_id')->index('commentaires_user_id_foreign');
+                $table->text('texte');
+                $table->timestamps();
+                $table->string('section_id');
+                $table->string('court');
+            });
+        }
     }
 
     /**
