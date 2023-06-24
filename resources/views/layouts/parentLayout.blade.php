@@ -8,10 +8,12 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>Ma maternelle</title>
 
+        @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <!--<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">-->
 
-
+        <!--
         <style>
             body {
                 font-family: 'Nunito', sans-serif;
@@ -26,13 +28,16 @@
                 align-items: center;
             }
         </style>
+        -->
     </head>
+<body>
 
+    <div class="container">
+        @yield('content')
+    </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-  <div class="container">
-       @yield('content')
-  </div>
-
-
+</body>
+</html>

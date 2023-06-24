@@ -1,15 +1,35 @@
-@extends('layouts.mainMenu', ['titre' => 'Abonnement'])
-
-@section('content')
-
-<div class="container mt-5">
-
 {{-- 
     Lien vers cartes de test
     https://stripe.com/docs/testing?locale=fr-FR&testing-method=card-numbers
 --}}        
 
-<div id="displayPaymentMethods">
+<div id="achatLicences">
+
+    <input id="prixLicence" type="hidden" value="{{$price}}">
+
+    <div class="row">
+        <div class="col text-center">
+            <p class="h4 mb-0">{{ $title }}</p>
+            <p class="mb-0"><span class="fw-bold">Service :</span><span class="c-green"> abonnement 1 an au service Les Maternelles (résiliable à tout moment)</span></p>
+            <p class="mb-0">
+                <span class="fw-bold">Prix de la licence :</span>
+                <span class="c-green">{{$price}} €</span>
+            </p>
+            @if($multiple)
+                <p>Nombre de licences souhaitées<br />
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button id="btnRemoveLicence" type="button" class="btn btn-primary fw-bold fs-5">-</button>
+                    <input id="quantite" name="quantite" type="number" min="1" step="1" value="1" size="5" class="text-center fw-bold fs-5">
+                    <button id="btnAddLicence" type="button" class="btn btn-primary fw-bold fs-5">+</button>
+                </div>
+                </p>
+                <p class="mb-0">
+                    <span class="fw-bold">Total :</span>
+                    <span class="c-green"><span id="totalPrice">{{$price}}</span> €</span>
+                </p>
+            @endif
+        </div>
+    </div>
 
     <div class="col-12 mt-4">
         <div class="formcard p-3">
@@ -24,11 +44,14 @@
             Carte bancaire
             </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#paymentMethods">
+        <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#paymentMethods"><!-- show -->
             <div class="accordion-body">
-                <form class="subscription" id="payment-form" action="{{ route('subscribe.create') }}" method="POST">
+                <form class="subscription" id="payment-form" action="{{ $routeCardForm }}" method="POST">
                 @csrf
+                <input id="quantity" name="quantity" type="hidden" value="1">
+
                     <div class="row">
+                        <!--
                         <div class="col-lg-5 mb-lg-0 mb-3">
                             <p class="h4 mb-0">Résumé</p>
                             <p class="mb-0"><span class="fw-bold">Service :</span><span class="c-green"> abonnement 1 an au service Les Maternelles</span>
@@ -39,6 +62,7 @@
                             </p>
                             <p class="mb-0">Abonnement résiliable à tout moment.</p>
                         </div>
+                    -->
                         <div class="col-lg-7">
 
                             <div class="row">
@@ -81,6 +105,7 @@
         <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#paymentMethods">
             <div class="accordion-body">
                 <div class="row">
+                    <!--
                     <div class="col-lg-5 mb-lg-0 mb-3">
                         <p class="h4 mb-0">Résumé</p>
                         <p class="mb-0"><span class="fw-bold">Service :</span><span class="c-green"> abonnement 1 an au service Les Maternelles</span>
@@ -91,6 +116,7 @@
                         </p>
                         <p class="mb-0">Abonnement résiliable à tout moment.</p>
                     </div>
+                -->
                     <div class="col-lg-7">
 
                         <div class="col-12 mt-3">
@@ -146,122 +172,11 @@
 
 </div>
 
-{{--
-    <form class="subscription" id="payment-form" action="{{ route('subscribe.create') }}" method="POST">
-    @csrf
-
-        <div class="row">
-            <div class="col-12 mt-4">
-                <div class="formcard p-3">
-                    <p class="mb-0 fw-bold h4">Méthodes de paiement</p>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="formcard p-3">
-                    
-                    <div class="formcard-body border p-0">
-                        <p>
-                            <a class="btn btn-primary w-100 h-100 d-flex align-items-center justify-content-between"
-                                data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
-                                aria-controls="collapseExample">
-                                <span class="fw-bold">PayPal</span>
-                                <span class="fab fa-cc-paypal">                               </span>
-                            </a>
-                        </p>
-                        <div class="collapse p-3 pt-0" id="collapseExample">
-                            <div class="row">
-                                <div class="col-8">
-                                    <p class="h4 mb-0">Summary</p>
-                                    <p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: Name of
-                                            product</span></p>
-                                    <p class="mb-0"><span class="fw-bold">Price:</span><span
-                                            class="c-green">:$452.90</span></p>
-                                    <p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
-                                        nihil neque
-                                        quisquam aut
-                                        repellendus, dicta vero? Animi dicta cupiditate, facilis provident quibusdam ab
-                                        quis,
-                                        iste harum ipsum hic, nemo qui!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                    <div class="formcard-body border p-0 mt-3">
-                        <p>
-                            <a class="btn btn-primary p-2 w-100 h-100 d-flex align-items-center justify-content-between"
-                                data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
-                                aria-controls="collapseExample">
-                                <span class="fw-bold">Carte bancaire</span>
-                                <span class="">
-                                    <span class="fab fa-cc-visa"></span>
-                                    <span class="fab fa-cc-mastercard"></span>                                                    
-                                    <!--<span class="fab fa-cc-amex"></span>-->
-                                </span>
-                            </a>
-                        </p>
-                        <div class="collapse show p-3 pt-3" id="collapseExample">
-                            <div class="row">
-                                <div class="col-lg-5 mb-lg-0 mb-3">
-                                    <p class="h4 mb-0">Résumé</p>
-                                    <p class="mb-0"><span class="fw-bold">Service :</span><span class="c-green"> abonnement 1 an au service Les Maternelles</span>
-                                    </p>
-                                    <p class="mb-0">
-                                        <span class="fw-bold">Prix :</span>
-                                        <span class="c-green">9,90 €</span>
-                                    </p>
-                                    <p class="mb-0">Abonnement résiliable à tout moment.</p>
-                                </div>
-                                <div class="col-lg-7">
-
-                                    <div class="row">
-                                        <!--<div class="col-xl-4 col-lg-4">-->
-                                        <div>
-                                            <div class="form-group">
-                                                <label class="pb-1" for="">Nom</label>
-                                                <input type="text" name="name" id="card-holder-name" class="form-control" value="" placeholder="Nom du détenteur de la carte">
-                                            </div>
-                                        </div>
-                                    </div>
-                
-                                    <div class="row mt-3">
-                                        <!--<div class="col-xl-4 col-lg-4">-->
-                                        <div>
-                                            <div class="form-group">
-                                                <label class="pb-1" for="">Détails de la carte</label>
-                                                <div id="card-element"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-            
-            <div class="col-12 mt-3">
-
-                <button type="submit" class="btn btn-primary payment" id="card-button" data-secret="{{ $intent->client_secret }}">Payer</button>
-                
-            </div>
-
-        </div>
-
-    </form>
-
---}}
-
-    <div class="col-12 mt-4 text-center">
-        <a href="/">Annuler</a>
-    </div>
-
+<div class="col-12 mt-4 text-center">
+    <a href="/">Annuler</a>
 </div>
+
+
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
@@ -303,5 +218,3 @@
        }
    })
 </script>
-
-@endsection

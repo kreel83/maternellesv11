@@ -31,11 +31,14 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'ecole_id',
         'role',
         'name',
         'prenom',
         'email',
         'password',
+        'validation_key',
+        'licence'
     ];
     /*
     $guarded avec un tableau vide pour accepter tous les champs
@@ -128,4 +131,11 @@ class User extends Authenticatable
         
         return $result;
     }
+    /*
+    public function getSchool() {
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $this->ecole_id)->first();
+        return $ecole;
+    }
+    */
+
 }

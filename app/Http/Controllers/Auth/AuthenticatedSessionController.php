@@ -53,13 +53,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function storeDirection(LoginRequest $request)
     {
-        //dd($request);
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        //return redirect()->intended(RouteServiceProvider::DASHBOARDPRO);
-        return redirect()->intended(route('user_dashboard'));
+        return redirect()->intended(route('admin.index'));
     }
 
     /**

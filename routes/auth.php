@@ -10,6 +10,17 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+// Display admin creation form
+/*
+Route::get('/admin/form', [RegisteredUserController::class, 'adminCreationForm'])
+                ->middleware('guest')
+                ->name('admin.admincreationform');
+*/
+Route::post('/admin/create', [RegisteredUserController::class, 'createAdminUser'])
+                ->middleware('guest')
+                ->name('admin.create');
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'createDirection']);
+
 Route::get('/register/direction', [RegisteredUserController::class, 'createDirection'])
                 ->middleware('guest')
                 ->name('register.direction');
@@ -28,9 +39,11 @@ Route::post('/register/prof', [RegisteredUserController::class, 'storeProf'])
 
 Route::get('/login/direction', [AuthenticatedSessionController::class, 'createDirection'])
                 ->middleware('guest')
-                ->name('logindirection');
+                ->name('admin.login');
 
-Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])->name('storedirection');
+Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])
+                ->name('storedirection');
+
 /*
                 Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])
                 ->middleware('auth.direction')

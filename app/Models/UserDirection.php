@@ -20,6 +20,7 @@ class UserDirection extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'ecole_id',
         'name',
         'prenom',
         'email',

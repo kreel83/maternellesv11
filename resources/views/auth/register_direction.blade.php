@@ -16,6 +16,14 @@
                             @csrf
     
                             <div class="row mt-5 mb-3">
+                              <!-- nom -->
+                              <div class="col">
+                                  <!--<label for="name" class="form-label">{{ __('Nom') }}</label>-->
+                                  <input placeholder="{{ __('Identifiant établissement') }}" id="ecole_id" class="form-control block mt-1 w-full" type="text" name="ecole_id" value="{{ old('ecole_id') }}" required autofocus />
+                              </div>
+                          </div>
+
+                            <div class="row mt-5 mb-3">
     
                                 <!-- nom -->
                                 <div class="col">
