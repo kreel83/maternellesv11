@@ -14,9 +14,6 @@ use App\Http\Controllers\ficheController;
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
-
-use App\Http\Controllers\AdminController;
-
 use App\Http\Controllers\NewaccountController;
 use App\Http\Controllers\Direction\DashboardProController;
 use App\Http\Controllers\SubscriptionController;
