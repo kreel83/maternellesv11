@@ -46,7 +46,17 @@ const assigneLicence = () => {
                     _token: $('input[name="_token"]').val()
                 },
                 success: function(data) {
-                    location.reload();
+                    //location.reload();
+                    //alert(data);
+                    var myjson = JSON.parse(data)
+                    if(myjson.result == '1') {
+                        $('#msg-'+licence_id).html('<div class="alert alert-success" role="alert">'+myjson.msg+' <a href="javascript:location.reload()" class="alert-link">Actualiser</a></div>')
+                        $('#'+licence_id).hide()    // cache le bouton OK
+                        $('#assign-'+licence_id).attr('disabled', true); // desactive le champ email
+                    }
+                    if(myjson.result == '0') {
+                        $('#msg-'+licence_id).html('<div class="alert alert-danger" role="alert">'+myjson.msg+'</div>')
+                    }
                 },
                 error: function(data) {
                     $('#result').html(data)
