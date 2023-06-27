@@ -28,24 +28,19 @@
                     <td>{{ $licence->id }}</td>
                     <td>{{ $licence->internal_name }}</td>
                     <td>
-                        @if(is_null($licence->user_id))
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <input type="email" size="30" id="assign-{{$licence->id}}" class="form-control" placeholder="Mail professionnel de l'enseignant">
-                            <!--
-                            <select id="assign-{{$licence->id}}" class="form-select">
-                                <option value="0" selected>Assigner à un utilisateur</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name.' '.$user->prenom }}</option>
-                                @endforeach
-                            </select>
-                        -->
-                            <button id="{{$licence->id}}" type="button" class="btn btn-primary assignbtn">OK</button>
+                        @if($licence->actif == 0)
+                            {{ $licence->prenom }} {{ $licence->name }}
+                        @elseif(is_null($licence->user_id))
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <input type="email" size="32" id="assign-{{$licence->id}}" class="form-control" placeholder="Mail professionnel de l'enseignant">
+                                <button id="{{$licence->id}}" type="button" class="btn btn-primary assignbtn">OK</button>
                             </div>
-                            <!--<a href="">Assigner à un utilisateur</a>-->
+                            <div id="msg-{{$licence->id}}" class="mt-1"></div>
                         @else
-                        {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['id'=>$licence->id]) }}" class=".removelnk">Retirer</a> ]
+                            {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['id'=>$licence->id]) }}" class=".removelnk">Retirer</a> ]
                         @endif
                     </td>
+                    <!--
                     <td>
                         {{ ucfirst($licence->status) }}
                         {{--
@@ -55,6 +50,10 @@
                             {{ ucfirst($licence->status) }}
                         @endif
                         --}}
+                    </td>
+                    -->
+                    <td>
+                        {{ ($licence->actif == 1) ? 'Active' : 'Inactive' }}
                     </td>
                     <td>{{ Carbon\Carbon::parse($licence->expires_at)->format('d/m/Y H:i:s')}}</td>
                 </tr>
