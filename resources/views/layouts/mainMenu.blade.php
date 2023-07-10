@@ -1,5 +1,6 @@
 <?
 use Illuminate\Support\Facades\Auth;
+
 ?>
 
 <!DOCTYPE html>
@@ -25,8 +26,62 @@ use Illuminate\Support\Facades\Auth;
             }
         </style>
     </head>
+    <div class='dashboard'>
+      <div class="dashboard-nav">
+          <header>
+            <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="{{route('home')}}" class="brand-logo"><i
+                  class="fas fa-anchor"></i> <span>Les Maternelles</span></a></header>
+          <nav class="dashboard-nav-list">
+            <a href="{{route('home')}}" class="dashboard-nav-item {{$menu == 'accueil' ? 'active' : null}}"><i class="fas fa-home"></i>Accueil </a>
+            <a href="#" class="dashboard-nav-item  {{$menu == 'dashboard' ? 'active' : null}}"><i class="fas fa-tachometer-alt"></i> dashboard </a>
+            <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fas fa-file-upload"></i> Ma classe </a>
+            {{-- <div class='dashboard-nav-dropdown'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Disciplines </a>
+              <div class='dashboard-nav-dropdown-menu'>
+                <a href="#" class="dashboard-nav-dropdown-item">All</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
+              </div>
+            </div> --}}
+            <a href="{{route('calendrier')}}" class="dashboard-nav-item {{$menu == 'calendrier' ? 'active' : null}}"><i class="fas fa-cogs"></i> Calendrier </a>
+              @php
+                $params = in_array($menu, ['commentaire','mdp','eleve','item','aide','ecole','periode','groupe']);
+              @endphp
+            <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i> Paramètres </a>      
+              <div class='dashboard-nav-dropdown-menu'>
+                <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
+                <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a>
+                <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Les élèves</a>
+                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Les items</a>
+                <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a>
+                <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a>
+                <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
+                <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes d'élèves</a>
+                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Les photos</a>
+              </div>
+            </div>
+            <a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+            <div class="nav-item-divider"></div>
+            <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+          </nav>
+      </div>
+      <div class='dashboard-app'>
+        <header class='dashboard-toolbar'>
+          <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+        </header>
+        <div id="alerte" class="w-100">
 
+        </div>
+        <div class=''>
 
+            @yield('content')
+        </div>
+    </div>
+
+  </div>
+{{-- 
 <nav class="navbar navbar-expand-xl  fixed-top" aria-label="Sixth navbar example" style="background-color: #E7FCFF">
     <div class="container-fluid" style="padding: 0 20rem">
       <a class="navbar-brand me-5" href="{{route('depart')}}">Les maternelles</a>
@@ -78,7 +133,7 @@ use Illuminate\Support\Facades\Auth;
 
       </div>
     </div>
-</nav>
+</nav> --}}
 
 
   <!-- <div class="mt-5 position-relative">
@@ -87,13 +142,9 @@ use Illuminate\Support\Facades\Auth;
     {{ ucfirst($titre) }}
     </div>
   </div> -->
-    <div id="alerte" class="w-100">
 
-    </div>
 
-  <div style="margin-top: 63px;">
-       @yield('content')
-  </div>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 

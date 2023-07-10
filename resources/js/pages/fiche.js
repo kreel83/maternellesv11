@@ -5,9 +5,7 @@ const selectSectionFiche = (quill) => {
         var id = $(this).data('value')
         $('.card_fiche').addClass('d-none')
         $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
-        
 
-        $('.btnSelection').css('background-color', color)
     })
 }
 
@@ -54,6 +52,13 @@ const choixTypeFiches = () => {
         var position = $(this).data('position')
         $('.triangle-code.'+position).addClass('deploy')
 
+    })
+    $(document).on('click','.selectImage', function() {
+        var image  = $(this).data('image')
+        $('#photoEnfantImg .dlImage').attr('src','/img/items/'+image);
+        $('#photoEnfantImg .dlImage').removeClass('d-none');
+        $('#photoEnfantImg .logoImage').addClass('d-none');
+        $('#imageName').val($(this).data('id'));
     })
 }
 
@@ -148,6 +153,18 @@ const jemodifielafiche = () => {
         window.open('/fiches?section='+section+'&type=createfiche&item='+item,'_self')
 
     })
+
+    $(document).on('click','.createfiche, .modifier, .dupliquer', function() {        
+        var duplicate = ($(this).hasClass('dupliquer')) ? true : false;
+        var section = $('.selectSectionFiche.selected').data('value') 
+        if ($(this).hasClass('modifier') || $(this).hasClass('dupliquer')) {
+            var item = $(this).data('id')
+        } else {
+            var item = "new";
+        }
+        window.open('/fiches/create?section='+section+'&item='+item+'&duplicate='+duplicate,'_self')
+
+    })
 }
 
 const jeducpliquelafiche = () => {
@@ -184,7 +201,9 @@ const photoEnfant = () => {
             var reader = new FileReader();
 
             reader.onload = function(){
-                $("#photoEnfantImg").attr("src", reader.result);
+                $('.logoImage').addClass('d-none')
+                $('.dlImage').removeClass('d-none')
+                $("#photoEnfantImg img").attr("src", reader.result);
             }
 
             reader.readAsDataURL(file);
@@ -193,7 +212,7 @@ const photoEnfant = () => {
 }
 
 const setMotCleFiche= (quill) => {
-    $('#motCleFiche td').on('click', function() {
+    $('.motCleFiche .item').on('click', function() {
         var data = $(this).data('reg')
         var selection = quill.getSelection(true);
         quill.insertText(selection.index, data);

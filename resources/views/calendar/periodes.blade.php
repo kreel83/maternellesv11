@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Mes périodes'])
+@extends('layouts.mainMenu', ['titre' => 'Mes périodes', 'menu' => 'periode'])
 @php
     use Carbon\Carbon;
 

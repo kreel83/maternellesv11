@@ -6,18 +6,25 @@ use App\Models\Fiche;
 use App\Models\Item;
 use App\Models\Personnel;
 use App\Models\Section;
+use App\Models\Image as ImageTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Intervention\Image\ImageManager;
-
+use SebastianBergmann\Type\TrueType;
 
 class ficheController extends Controller
 {
     public function index(Request $request) {
         
-        $section = Section::first();
+        if ($request->section) {
+
+            $section = Section::find($request->section);
+        } else {
+
+            $section = Section::first();
+        }
         
         if (!isset($request->type)) $request->type = "mesfiches";
 
@@ -46,6 +53,38 @@ class ficheController extends Controller
         return 'ok';
 
     }
+
+
+    public function createFiche(Request $request) {
+
+        if ($request->item == 'new') {
+            $fiche = new Item();
+            $new = true;
+        } else {
+            $fiche = Item::find($request->item);            
+            $new = false;
+        }
+
+        if ($request->duplicate == 'true') {
+            $new = false;
+            $fiche->id = null;
+        }
+        
+        
+        
+
+        $images = ImageTable::all();       
+        $section = Section::find($request->section);
+
+        return view('fiches.create')
+            ->with('new', $new)
+            ->with('duplicate', $request->duplicate == "true" ? $request->item : false)
+            ->with('images', $images)
+            ->with('itemactuel', $fiche)
+            ->with('section', $section);
+
+    }
+
 
     public function retirerChoix(Request $request) {
         $fiche = Fiche::find($request->fiche);
@@ -106,30 +145,86 @@ class ficheController extends Controller
             return $lvl;
         }
 
+        
 
-        $name_file = uniqid().'.jpg';
-        $rep = Auth::user()->repertoire;
+
+        // $name_file = uniqid().'.jpg';
+        //dd($request);
+
+        $img = null;
+        if ($request->duplicate) {
+            $item = Item::find($request->duplicate);
+            $img = $item->image_id;
+        }
+        
         if ($request->submit == 'modif')
         {
-            $item = Personnel::find($request->personnel_id);
+            Item::$FIRE_EVENTS = false;
+
+            $item = Item::find($request->fiche_id);
+            Item::$FIRE_EVENTS = true;
+
             $item->name = $request->name;
-            if ($request->file) $item->image = 'storage/'.$rep.'/personnels/'.$name_file;
+            if ($img) {
+                $item->image_id = $img;
+            }
+            if ($request->file) {
+                $image = Image::make($request->file);
+                $image->resize(null,250, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->encode('jpg', 75);
+                $filename = time(). '.jpg';
+                Storage::disk('image')->put($filename, $image);
+                // Storage::move($filename, 'public/img/items/' . $filename);
+                // $image->move(public_path('img/items'), $name_file);
+                $new = new ImageTable();
+                $new->name = $filename;
+                $new->save();
+                $item->image_id = $new->id;
+            } 
+            if ($request->imageName) {
+                $item->image_id = $request->imageName; 
+            }
+            if ($request->imageName) {
+                $item->image_id = $request->imageName; 
+            }
+            
             $item->section_id = $request->section_id;
             $item->lvl = set_lvl($request);
             $item->st = $request->st;
             $item->user_id = Auth::id();
             $item->phrase = $request->phrase;
+
             $item->save();
 
 
-        } else {
-            $id = $this->set_last_id();
+        } 
+        
+        if ($request->submit == 'save') {
+            
 
 
-            $item = new Personnel();
-            $item->id = $id;
+            $item = new Item();
+            
             $item->name = $request->name;
-            if ($request->file) $item->image = 'storage/'.$rep.'/personnels/'.$name_file;
+            if ($request->file) {
+                $image = Image::make($request->file);
+                $image->resize(null,250, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->encode('jpg', 75);
+                $filename = time(). '.jpg';
+                Storage::disk('image')->put($filename, $image);
+                // Storage::move($filename, 'public/img/items/' . $filename);
+                // $image->move(public_path('img/items'), $name_file);
+                $new = new ImageTable();
+                $new->name = $filename;
+                $new->save();
+                $item->image_id = $new->id;
+            } else {
+                $item->image_id = $request->imageName; 
+            }
             $item->section_id = $request->section_id;
             $item->lvl = set_lvl($request);
             $item->st = $request->st;
@@ -139,7 +234,7 @@ class ficheController extends Controller
 
             if ($request->submit == 'save_and_select') {
                 $fiche = new Fiche();
-                $fiche->item_id = $id;
+                $fiche->item_id = $item->id;
                 $fiche->order = Fiche::lastOrder();
                 $fiche->perso = 1;
                 $fiche->user_id = Auth::id();
@@ -163,7 +258,7 @@ class ficheController extends Controller
 
         //$name_file = uniqid().'.jpg';
         //$rep = Auth::user()->repertoire;
-        $last_id = ($request->personnel_id) ? $request->personnel_id : $this->set_last_id();
+        // $last_id = ($request->personnel_id) ? $request->personnel_id : $this->set_last_id();
 
 
 //        $r['lvl'] = set_lvl($request);
@@ -195,15 +290,12 @@ class ficheController extends Controller
 //            $fiche->save();
 //        }
 
-        if ($request->file) {
-            $image = Image::make($request->file);
-            $image->resize(null,250, function ($constraint) {
-                $constraint->aspectRatio();
-            })->encode('jpg', 75);
-            $t = Storage::put($rep.'/personnels/'.$name_file, $image);
-        }
 
-        return redirect()->back();
+        $r = new Request();
+        $r->replace(['section' => $request->section_id]);
+        return $this->index($r);
+        
+        
 
     }
 

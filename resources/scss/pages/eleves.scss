@@ -1,0 +1,48 @@
+.liste_eleves, .import_eleves_container {
+
+    border-radius: 15px;;
+    height: 550px; overflow-y: auto; margin-top: 16px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        .wrapper {
+        font-size: 14px;
+        padding: 15px;
+        border-radius: 8px;;
+        height: auto;
+            .fiche_eleve {
+            &:hover {
+                background-color: #272C34;
+                color: white;
+                cursor: pointer;
+            }
+            .genre_eleve {
+                width : 5%
+            }
+            .nom_eleve {
+                width: 40%;
+            }        
+            .ddn_eleve {
+                width: 25%;
+            }   
+            .prof_eleve {
+                width: 30%
+                
+            }     
+
+        }
+
+    }    
+}
+
+
+
+  #tableau_tous {
+    td {
+        margin: 0;
+        padding: 0;
+ 
+            line-height: 14px;
+            vertical-align: middle;
+           
+        
+    }
+  }

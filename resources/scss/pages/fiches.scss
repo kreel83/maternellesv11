@@ -1,18 +1,62 @@
+.btnCommun{
+    margin-top: 15px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #32363D;
+    border: 1px solid #32363D;
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    transition: all 0.5 ease-in-out;
+    cursor: pointer;
+    &.selected {
+        font-weight: bolder;
+    }
+    &:hover {
+        color: white;
+        background-color: #32363D;
+        
+    }    
+} 
+
+.btnAction {
+    margin-top: 15px;
+    border-radius: 25px;;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #32363D;
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    cursor: pointer;    
+} 
+
 
 #fichesView {
     #choixFiche {
         position: relative;
         padding-bottom: 60px;
         .btnSelection {
-            height: 50px;;
+            margin-top: 15px;
+            border-radius: 25px;;
             z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            background-color: #32363D;
+            font-weight: 400;;
+            width: fit-content;
+            padding: 4px 24px;
             cursor: pointer;
             &.selected {
-               border: 4px solid blue; 
+               font-weight: bolder;
             }
             
         } 
@@ -28,20 +72,27 @@
 
 
     .selectSectionFiche {
-        padding: 16px;
+        
         color: white;
-        height: 70px;
+        height: 36px;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: 12px;
-        transition: all 0.4s ease-in-out;
+        transition: all 0.2s ease-in-out;
         width: 90%;
         border-radius: 10px;
-        margin: 2px 0;
+        margin: 2px 2px;
         &.selected {
-           margin-left: 30px;
+           padding: 10px;
+           font-size: 13px;
+           font-weight: bolder;
         }
         &:hover {
-            margin-left: 30px;
+            padding: 5px;
+            font-weight: bolder;
+            
         }
       }  
 

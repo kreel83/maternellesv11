@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Mon cahier de réussite'])
+@extends('layouts.mainMenu', ['title' => 'Mon cahier de réussite','menu' => 'classe'])
 
 @section('content')
     <h1 class="text-center">Cahier de réussite de {{$enfant->prenom}}</h1>

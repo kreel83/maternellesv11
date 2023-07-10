@@ -13,7 +13,7 @@ import '../../node_modules/quill/dist/quill';
 
 import Alpine from 'alpinejs';
 
-
+import './menu'
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier} from "./pages/calendrier";
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
@@ -124,6 +124,7 @@ if ($('#editor2').length) {
 }
 
 if ($('#editor3').length) {
+
     var quill3 = new Quill('#editor3', {
         modules: {
             toolbar: false    // Snow includes toolbar by default

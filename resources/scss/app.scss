@@ -5,6 +5,8 @@
 @import 'elements/card_fiche';
 @import 'elements/calendrier';
 @import 'elements/menu';
+@import 'elements/boutons';
+@import 'elements/input';
 
 @import 'pages/items';
 @import 'pages/commentaires';
@@ -12,6 +14,7 @@
 @import 'pages/fiches';
 @import 'pages/cahier';
 @import 'pages/subscription';
+@import 'pages/eleves';
 
 @import  '../../node_modules/quill/dist/quill.snow.css';
 @import './composants';
@@ -24,8 +27,7 @@
 
 
 body {
-        background: rgb(53,149,180);
-        background: linear-gradient(90deg, rgba(53,149,180,1) 1%, rgba(9,113,121,1) 37%, rgba(0,212,255,1) 69%);
+
         font-family: 'Roboto', sans-serif !important;
 }
 
