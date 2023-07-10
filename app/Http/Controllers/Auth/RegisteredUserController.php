@@ -188,20 +188,31 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $validationKey = md5(microtime(TRUE)*100000);
+
         $user = User::create([
             'ecole_id' => $request->ecole_id,
             'name' => $request->name,
             'prenom' => $request->prenom,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'validation_key' => $validationKey,
             'role' => 'admin'
         ]);
 
+        // Envoi d'un email de vérification
+        $token = md5($user->id.$validationKey.env('HASH_SECRET'));
+        $url = route('user.validUserFromSelfRegistration').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
+        //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
+        //Mail::to('thierry.thevenoud@gmail.com')->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
+
+        return view('auth.register_user_sendmail')
+            ->with('email', $request->email);
+        /*
         event(new Registered($user));
-
         Auth::login($user);
-
         return redirect(route('admin.index'));
+        */
     }
 
 }
