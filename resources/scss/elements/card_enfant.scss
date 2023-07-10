@@ -1,13 +1,64 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
 
+
+.eleve {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 8px 0;
+  cursor: pointer;
+  color: grey;
+  padding: 2px 8px;
+  
+}
+.eleve:hover {
+  background-color: #f6d365;
+  color: white;
+}
+.degrade, .choixEnfant {
+  border-radius: 50%;
+  
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  
+
+}
+.choixEnfant:hover {
+  outline: 10px solid green;
+}
+.curved-text {
+
+
+  FONT-WEIGHT: 500;
+  top: -3px;
+  left: -16px;
+  bottom: 0;
+  right: 0;
+  transform: rotate(-15deg);
+  z-index: 6000;
+
+}
+.letter {
+  width: 13px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  margin: 0 2px;
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3)
+}
+
 #page_enfants {
   display: flex;;
   flex-wrap: wrap;
+
+
+
+
   .card-enfant {
     background-color: #fff;
    
     width: 240px;;
-    height: 350px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -15,6 +66,7 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin: 8px;
     position: relative;
+
     &:hover {
       .footer {
         bottom: 0;
@@ -23,7 +75,7 @@
     }
     .groupe {
       position: absolute;
-      left: 5px;
+      left: 40px;
       top: 5px;
       box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.5);
       
@@ -34,7 +86,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 1rem;
+      border-radius: 50%;
       font-weight: 600;
       &.garcon {
         background-color: var(--bleu);
@@ -45,13 +97,14 @@
     }
     .card-header {
       height: 50%;
+      padding: 8px;
 
 
       img {
-        background-color: #fff;
-        width: 100%;
-        height: 100%;
-        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
+        border-radius: 50%;
+
+        width: 120px;
+        height: 120px;
 
         display: block;
 
@@ -66,12 +119,21 @@
     }
 
     .footer {
-      display: flex;justify-content: space-around; background-color: purple; height: 50px;
+      display: flex;justify-content: space-around;  height: 50px;
       position: absolute;
       bottom: -100px;;
       left: 0;
       width: 100%;  
-      transition: all 0.5s ease-in-out;    
+      transition: all 0.5s ease-in-out;  
+      a {
+        text-decoration: none; 
+        color: grey;
+        font-size: 20px;
+      }
+      a:hover {
+        color: white;
+        font-weight: bolder;
+      }  
     }
     
 

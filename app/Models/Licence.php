@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Subscription as ModelsSubscription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,31 @@ class Licence extends Model
         }
     }
 
+    public function assignLicenceToUser($request, $user_id)
+    {
+        // on regarde si une licence existe deja pour cet utilistaeur
+        // 1. dans licences :
+        $licenceFromAdmin = Licence::where('user_id', $user_id)
+                                    ->where('parent_id', Auth::id())
+                                    ->where('actif', 1)
+                                    ->first();
+        $licenceFromSelf = ModelsSubscription::where('user_id', $user_id)
+                                            ->where('stripe_status', 'active')
+                                            ->first();
+
+        if(!$licenceFromAdmin && !$licenceFromSelf) {
+            // pas de licence en cours trouvée pour le user, on assigne la licence
+            Licence::where('id', $request->licence_id)
+                ->where('parent_id', Auth::id())
+                ->update(['user_id' => $user_id]);
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /*
     public function assignLicenceToUser($request, $user_id, $status)
     {        
         Licence::where('id', $request->licence_id)
@@ -65,13 +91,8 @@ class Licence extends Model
                     'user_id' => $user_id,
                     'status' => $status
                 ]);
-
-        /*
-        Licence::where('id', $request->licence_id)
-               ->where('parent_id', Auth::id())
-               ->update(['user_id' => $request->user_id]);
-        */
     }
+    */
 
     public function removeLicenceToUser($id)
     {
@@ -81,5 +102,12 @@ class Licence extends Model
                     'user_id' => null,
                     'status' => null
                 ]);
+    }
+
+    public function getLicenceByUserId($user_id)
+    {
+        Licence::where('user_id', $user_id)
+               ->where('parent_id', Auth::id())
+               ->first();
     }
 }

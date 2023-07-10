@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Bienvenue'])
+@extends('layouts.mainMenu', ['titre' => 'Bienvenue', 'menu' => 'accueil'])
 
 @section('content')
 <div class="container mt-5">

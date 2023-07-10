@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class Utils {
 
 
-    private static function  array_flatten($array)
+    private static function array_flatten($array)
     {
         if (!is_array($array)) {
             return false;
@@ -120,6 +120,21 @@ class Utils {
         $day_of_year = Carbon::parse($date)->dayOfYear;
         if ($annee_actuelle < $annee_reelle) $day_of_year = $day_of_year + $nb_jours_dans_annee_reelle;
         return $day_of_year;
+    }
+
+    public static function getNameFromEmail($email) {
+        $tmp = explode('@', $email);
+        $prenomNom = explode('.', $tmp[0]);
+        if(count($prenomNom) == 2) {                
+            $prenom = $prenomNom[0];
+            $name = $prenomNom[1];
+        } else {
+            $prenom = "";
+            $name = $prenomNom[0];
+        }
+        return array(
+            'prenom' => $prenom, 
+            'nom' =>$name);
     }
 
 

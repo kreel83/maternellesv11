@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\UserEmailVerificationFromAdmin;
 use App\Models\Licence;
 use App\Models\User;
+use App\utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravel\Cashier\Exceptions\IncompletePayment;
@@ -14,6 +15,7 @@ use Laravel\Cashier\Subscription;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Validator;
 
 class AdminLicenceController extends Controller
 {
@@ -24,8 +26,8 @@ class AdminLicenceController extends Controller
     public function index():View
     {
         $licences = Licence::select(
-            'licences.status', 'licences.id', 'licences.user_id', 'licences.created_at', 'licences.expires_at',
-            'licences.name as internal_name', 'users.name', 'users.prenom'
+            'licences.actif', 'licences.status', 'licences.id', 'licences.user_id', 'licences.created_at', 
+            'licences.expires_at', 'licences.name as internal_name', 'users.name', 'users.prenom'
         )
         ->where("licences.parent_id", Auth::id())
         ->leftjoin("users", "users.id", "=", "licences.user_id")
@@ -105,31 +107,52 @@ class AdminLicenceController extends Controller
 
     public function assign(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-        $status = (is_null($user)) ? 'attente' : 'active';
-        if(is_null($user)) {
-            // compte utilisateur inexsitant, on le crée + envoi d'un email avec password provisoire
-            //$password = '1234'; //uniqid();
-            // pré-remplissage nom + prénom d'après l'adresse email
-            $tmp = explode('@', $request->email);
-            $prenomNom = explode('.', $tmp[0]);
-            $validationKey = md5(microtime(TRUE)*100000);
-            $user = User::create([
-                'prenom' => $prenomNom[0],
-                'name' => $prenomNom[1],
-                'email' => $request->email,
-                'validation_key' => $validationKey,
-                'licence' => 'admin'
-                //'password' => Hash::make($password),
+        // verifier si compte user existe deja ! (OK)
+        // verifier si pas deja une licence pour ce user !
+        // verfifier validité de l'email
+        // verifier si email a pas de . (OK)
+        $email = filter_var($request->email, FILTER_SANITIZE_EMAIL);
+        $is_email = filter_var($email, FILTER_VALIDATE_EMAIL);
+        if($is_email) {
+            $user = User::where('email', $email)->first();
+            //$status = (is_null($user)) ? 'attente' : 'active';
+            if(!$user) {
+                // compte utilisateur inexistant, on le crée + envoi d'un email pour vérification
+                // pré-remplissage nom + prénom d'après l'adresse email
+                $prenomNom = Utils::getNameFromEmail($email);
+                $validationKey = md5(microtime(TRUE)*100000);
+                $user = User::create([
+                    'prenom' => $prenomNom['prenom'],
+                    'name' => $prenomNom['nom'],
+                    'email' => $email,
+                    'validation_key' => $validationKey,
+                    'licence' => 'admin'
+                ]);
+                // Envoi d'un email de vérification
+                $token = md5($user->id.$request->licence_id.$validationKey.env('HASH_SECRET'));
+                $url = route('user.valideUserFromAdminCreatePassword').'?'.'uID='.$user->id.'&lID='.$request->licence_id.'&key='.$validationKey.'&token='.$token;
+                //Mail::to($email)->send(new UserEmailVerificationFromAdmin($url));
+            }
+            $licence = new Licence;
+            if($licence->assignLicenceToUser($request, $user->id)){
+                return json_encode([
+                    'result' => '1',
+                    'msg' => 'Licence activée !'
+                ]);
+            } else {
+                return json_encode([
+                    'result' => '0',
+                    'msg' => 'Une licence est déjà active pour cet utilisateur !'
+                ]);
+            }
+            //$licence->assignLicenceToUser($request, $user->id, $status);
+            
+        } else {
+            return json_encode([
+                'result' => '0',
+                'msg' => 'Adresse email incorrecte !'
             ]);
-            // Envoi d'un email de vérification
-            $token = md5($user->id.$request->licence_id.$validationKey.env('HASH_SECRET'));
-            $url = route('user.valideUserFromAdminCreatePassword').'?'.'uID='.$user->id.'&lID='.$request->licence_id.'&key='.$validationKey.'&token='.$token;
-            Mail::mailer('sendmail')->to($request->email)->send(new UserEmailVerificationFromAdmin($url));
-        }
-        $licence = new Licence;
-        $licence->assignLicenceToUser($request, $user->id, $status);
-        
+        }  
     }
 
     public function remove($id)
