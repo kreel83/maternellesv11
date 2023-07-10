@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnfantController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GroupeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CahierController;
 use App\Http\Controllers\ParametreController;
@@ -15,7 +16,7 @@ use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
 
-use App\Http\Controllers\AdminController;
+
 
 use App\Http\Controllers\NewaccountController;
 use App\Http\Controllers\Direction\DashboardProController;
@@ -107,11 +108,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fiches/retirerChoix', [ficheController::class, 'retirerChoix']);
     Route::post('/fiches/save_fiche', [ficheController::class, 'save_fiche'])->name('saveFiche');
     Route::post('/fiches/order', [ficheController::class, 'orderFiche'])->name('orderFiche');
+    Route::get('/fiches/create', [ficheController::class, 'createFiche'])->name('createFiche');
+
+    Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
 
     Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
     Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
-    Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
+    Route::get('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
+    Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');
@@ -148,6 +153,8 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/initClasse', [AdminController::class, 'initClasse'])->name('initClasse');
     Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
+
+    Route::get('/photos', [EleveController::class, 'photos'])->name('photos');
 
 
     Route::get('/subscribe', [SubscriptionController::class, 'index'])->name('subscribe.index');

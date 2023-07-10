@@ -1,13 +1,15 @@
-@extends('layouts.mainMenu', ['titre' => 'Mes fiches'])
+@extends('layouts.mainMenu', ['titre' => 'Mes fiches', 'menu' => 'item'])
 
 @section('content')
+
+
 
 <style>
 
 </style>
 
 <div id="fichesView" class="row">
-<div class="col-md-3">
+{{-- <div class="col-md-3">
         <div class="form-group" style="margin-top: 40px">
 
                 @foreach($sections as $sec)
@@ -17,14 +19,32 @@
                 @endforeach
 
         </div>
+</div> --}}
+<div  data-section="{{ $section->id }}" class="liste_section">
+    @foreach($sections as $sec)
+        <div class='selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
+        {{$sec->court}}
+        </div>
+    @endforeach
 </div>
-<div class="col-md-7">
+<div class="col-md-12">
+
+                    
+        
+   
         
 
      
-<div class="d-flex" id="choixFiche">
-            <div data-type="autresfiches" data-position="left" class="btnSelection mx-2 btn w-50 selected" style=" background-color: {{$section->color}} !important">Liste des fiches</div>
-            <div data-type="mesfiches"  data-position="right" class="btnSelection btn w-50 " style=" background-color: {{$section->color}} !important">Ma sélection</div>                                
+<div class="d-flex justify-content-between align-items-center" id="choixFiche">
+    <div class="d-flex">
+        <button data-type="" class="createfiche mx-2 btnSelection btn {{$type == "createfiche" ? 'active' : 'null' }}" >Création de fiche</button>
+
+        <div data-type="autresfiches" data-position="left" class="btnSelection mx-2 btn selected">Liste des fiches</div>
+        <div data-type="mesfiches"  data-position="right" class="btnSelection btn">Ma sélection</div>                                
+
+    </div>
+
+            @include('fiches.filtre')
 </div>
 <div class="d-flex" id="pointerFiche">
         <div id="pointer" class='w-50'></div>
@@ -84,18 +104,11 @@
         </div>
 
 
-        <div class="tab-pane fade {{$type == "createfiche" ? 'show active' : 'null' }}" id="nav-2" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-            @include('fiches.create')
-        </div>
 
     </div>
 </div>
 
-<div class="col-md-2">
-<button data-type="createfiche" class="mx-2 btn btn-primary  {{$type == "createfiche" ? 'active' : 'null' }}" >Création de fiche</button>
-    @include('fiches.filtre')
-</div>
-</div>
+
 
 @endsection

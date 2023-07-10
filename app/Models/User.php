@@ -115,7 +115,7 @@ class User extends Authenticatable
 
 
     public function liste() {
-        return Enfant::where('user_id', $this->id)->get();
+        return Enfant::where('user_id', $this->id)->orderby('prenom')->get();
     }
 
     public function profs() {

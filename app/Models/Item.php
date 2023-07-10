@@ -10,7 +10,9 @@ use App\Models\resultat;
 
 class Item extends Model
 {
-    use HasFactory;
+    public static $FIRE_EVENTS = true;
+
+
 
     protected $dispatchesEvents = [
         'retrieved' => ItemEvent::class,

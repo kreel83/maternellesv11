@@ -48,18 +48,22 @@ class CahierController extends Controller
     }
 
 
+    protected $title;
+    protected $periode;
 
     public function __construct() {
 
         $this->middleware(function ($request, $next) {
             $date = Carbon::now()->format('Ymd');
             $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode','DESC')->get();
+
             $p = 3;
             foreach ($periodes as $periode) {
                 if ($date < Carbon::parse($periode->date_end)->format('Ymd')) $p = $periode->periode;
             }
             $periode = $p;
             $nbperiode = $periodes->count();
+
             switch ($nbperiode) {
                 case 1: $title = 'Année entière';break;
                 case 2:
@@ -275,6 +279,7 @@ class CahierController extends Controller
 
         
         return view('cahiers.index')
+            ->with('titre','Cahier')
             ->with('enfant',$enfant)
             ->with('reussite',$reussite)
             ->with('resultats',$resultats)           

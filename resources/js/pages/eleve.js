@@ -78,9 +78,117 @@ const photo_eleve = () => {
                 
             },
             success: function(data) {
-                $('#tableau_eleves').html(data)
+                console.log(data)
+                $('.liste_eleves').html(data)
             }
         })
+    })
+
+    $(document).on('click','.prenom', function() {
+        function updateCurvedText($curvedText, radius, prenom) {
+            
+            // $curvedText.css("min-width", "initial");
+            // $curvedText.css("min-height", "initial");
+            var w = $curvedText.width(),
+              h = $curvedText.height();
+            // $curvedText.css("min-width", w + "px");
+            // $curvedText.css("min-height", h + "px");
+            var text = prenom;
+            var html = "";
+          Array.from(text).forEach(function (letter) {
+              html += `<span class="letter">${letter}</span>`;
+            });
+            $curvedText.html(html);
+          var $letters = $curvedText.find("span");
+            $letters.css({
+              position: "absolute",
+              height:`${radius}px`,
+              // backgroundColor:"orange",
+              transformOrigin:"bottom center"
+            });
+            
+            var circleLength = 2 * Math.PI * radius;
+            var angleRad = w/(2*radius);
+            var angle = 2 * angleRad * 180/Math.PI/text.length;
+            
+            
+            $letters.each(function(idx,el){
+              $(el).css({
+                  transform:`translate(${w/2}px,0px) rotate(${idx * angle - text.length*angle/2.5}deg)`
+              })
+            });
+          }
+           $('.letter').css('all','unset')
+          var $curvedText = $(".curved-text");
+          var prenom = $(this).data('prenom')
+          var enfant = $(this).data('enfant')
+          $('.choixEnfant').attr('data-enfant', enfant)
+          console.log($curvedText)
+          updateCurvedText($curvedText,60, prenom);
+
+    })
+
+    $(document).on('click','.choixEnfant', function() {
+        var enfant = $(this).attr('data-enfant')
+        var background = $(this).attr('data-degrade')
+        var animaux = $(this).attr('data-animaux')
+        $.get('/eleves/setAnimaux?background='+background+'&enfant='+enfant+'&animaux='+animaux, function(data) {
+            console.log(data)
+        })  
+    })
+        
+    $(document).on('click','.choixDegrade', function() {
+        var css = $(this).css('background')
+        var id = $(this).data('id')
+        $('.choixEnfant').css('background', css)
+        $('.choixEnfant').attr('data-degrade', id)
+
+    })
+
+    $(document).on('click','.animaux', function() {
+        var html = $(this).html()
+        var animaux = $(this).data('animaux')
+        $('.choixEnfant .imageAnimaux').html(html)
+        $('.choixEnfant').attr('data-animaux', animaux)
+    })
+
+    $(document).on('click','.delete', function() {
+        var prof = $(this).attr('data-id')
+        var id = $('#eleve_form').val()
+        $.get('/eleves/removeEleve?prof='+prof+'&eleve='+id, function(data) {
+            $('.fiche_eleve[data-id="'+id+'"]').remove()
+            $('#new_eleve').addClass('d-none')
+            $('#import_eleves').removeClass('d-none')
+            $('#tableau_tous').html(data)
+        })
+    })
+
+    $(document).on('click','.fiche_eleve', function() {
+        var data = $(this).data('donnees')
+        var mails = data.mail.split(';')
+        console.log(data)
+        $('#nom_form').val(data.nom)
+        $('#prenom_form').val(data.prenom)
+        $('#ddn_form').val(data.ddn)
+        $('#genre_form').val(data.genre)
+        $('#groupe_form').val(data.groupe)
+        $('#mail1_form').val(mails[0])
+        $('#mail2_form').val(mails[1])
+        $('#eleve_form').val(data.id)
+        $('#photo_form').attr('src',data.photo)
+        $('.delete').attr('data-id', data.user_n1_id ?? 'null')
+        $('.delete').removeClass('d-none')
+        if (data.user_n1_id) {
+            $('.delete').text("Retirer l'élève de ma classe")
+        } else {
+            $('.delete').text('Supprimer la fiche')
+        }
+        console.log($(this).data('id'))
+        $('#commentaire_form').val(data.comment)
+
+
+        $('.bloc_droite_classe').addClass('d-none')
+        $('#new_eleve').removeClass('d-none')
     })
 
 
@@ -98,6 +206,14 @@ const photo_eleve = () => {
 }
 
 const choix_eleve = () => {
+    
+
+    $(document).on('click','.tab_button', function() {
+        var tab = $(this).data('tab')
+        console.log(tab)
+        $('.bloc_droite_classe').addClass('d-none')
+        $('#'+tab).removeClass('d-none')
+    })
 
     $(document).on('change','#allSelectEleve', function() {
         if ($(this).prop('checked') == true) {            
@@ -114,27 +230,7 @@ const choix_eleve = () => {
         })
     })
 
-    $(document).on('click', '#tableau_eleves tr, #new_eleve', function() {
-        $('#nom_form').val($(this).find('td:eq(1)').data('value'))
-        $('#prenom_form').val($(this).find('td:eq(2)').data('value'))
-        $('#ddn_form').val($(this).find('td:eq(3)').data('value'))
-        $('#genre_form').val($(this).find('td:eq(4)').data('value'))
-        $('#groupe_form').val($(this).find('td:eq(5)').data('value'))
-        $('#mail1_form').val($(this).find('td:eq(6)').data('value1'))
-        $('#mail2_form').val($(this).find('td:eq(6)').data('value2'))
-        $('#eleve_form').val($(this).data('id'))
-        $('#photo_form').attr('src',$(this).data('photo'))
-        console.log($(this).data('id'))
-        $('#commentaire_form').val($(this).data('commentaire'))
 
-        var myModal = new Modal(document.getElementById('myModal'), {
-            keyboard: false
-        })
-        myModal.toggle()
-
-
-
-    })
 }
 
 export {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg}

@@ -25,13 +25,16 @@ class ItemEvent
     public function __construct(Item $item)
     {
 
-        if ($item->image) {
-            $item->image_name = '/img/items/'.$item->image->name;
+        if(Item::$FIRE_EVENTS) {
+            if ($item->image) {
+                $item->image_name = 'storage/items/'.$item->image->name;
 
-        } else {
-            $item->image_name = '';
+            } else {
+                $item->image_name = '';
 
+            }            
         }
+
         
 
 
