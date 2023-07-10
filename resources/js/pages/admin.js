@@ -36,10 +36,15 @@ const adminRegistration = () => {
         $('#result_mail').html($('#result_mail_memo').val())
     });
 
-    //$(document).on('click','#btncheckcode', function() {
+    //$(document).on('click','#btn-checkcode', function() {
     $(document).on('change','#ecole_id', function() {
 
         var ecole_id = $('#ecole_id').val()
+        if(ecole_id == "") {
+            $('#result_msg').html('<div class="alert alert-danger" role="alert">Veuillez saisir un identifiant</div>')
+            $('#ecole_id').focus()
+            return false
+        }
         //alert(codeEtablissement)
         
         $.ajax({
