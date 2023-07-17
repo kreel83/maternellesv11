@@ -8,15 +8,15 @@
 
 @section('content')
 
-<div id="calendrier_view" class="p-0 m-0">
+<div id="calendrier_view" class="p-0 m-0 position-relative">
 
 
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-1">
             <div class="d-flex justify-item-end">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EventModal">
-                    Add Event
+                <button type="button" class="btn btn-primary position-fixed"  style="bottom: 30px; right: 30px" data-bs-toggle="modal" data-bs-target="#EventModal">
+                  <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
             <div class="bloc_event">
@@ -24,7 +24,7 @@
                 
             </div>
         </div>
-        <div class="col-md-9 d-flex flex-wrap " id="calendrier_scolaire" style="height: 800px; overflow-y: auto">
+        <div class="col-md-11 d-flex flex-wrap " id="calendrier_scolaire" style="height: 800px; overflow-y: auto">
            
                 <input type="hidden" value="{{$conges}}" id="conges">
                 <input type="hidden" value="{{$anniversaires}}" id="anniversaires">

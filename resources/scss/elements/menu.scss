@@ -141,7 +141,6 @@ h1, .h1 {
     top: 0;
     bottom: 0;
     overflow: auto;
-    background-color: #272C34;
 }
 
 .dashboard-compact .dashboard-nav {
@@ -179,11 +178,15 @@ h1, .h1 {
 }
 
 .dashboard-nav {
-    background-color: #272C34;
+    background-color: #7769FE;
 }
 
 .dashboard-nav a {
     color: #fff;
+}
+
+.dashboard-nav i {
+    color: #16C1BC;
 }
 
 .brand-logo {

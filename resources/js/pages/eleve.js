@@ -1,4 +1,5 @@
-import { Modal } from 'bootstrap'
+
+import * as bootstrap from 'bootstrap';
 
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -18,11 +19,108 @@ const setDefaultImg = (e) => {
     console.log(e)
 }
 
+
+
 const preview_photo = (event) => {
     $("#photo_input").change(function() {
         $('#delete_photo').css('display','')
         readURL(this);
     });
+
+    $(document).on('click',".color_rond",function() {
+        var id = $(this).closest('.card-eleve').data('eleve')
+        var order = $(this).data('id') 
+        var color =  $(this).data('color')
+        console.log('color', color, id, order)
+        $(this).closest('.card-eleve').css('border-color', color)
+        $.get('/groupe/affectation?eleve='+id+'&order='+order, function(data) {
+            console.log(data)
+        })
+
+    })
+
+    $(document).on('click',"#saveTermes",function() {
+        var termes = $('#termes').val();
+       
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+        });
+        $.ajax({
+            url : '/groupe/saveTermes',
+            method: 'POST',
+            data: {
+                'tableau': termes.trim()
+            },
+            success: function(data) {
+                console.log(data)
+            }
+        })
+
+    })
+    
+    $(document).on('click',"#saveColor",function() {
+
+        const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
+
+        var nb = $('.rond_couleur.active').length;
+        var liste = $('.rond_couleur.active');
+        console.log('nb', nb)
+        if (nb > 1) {
+            var arr = [];
+            $('.rond_couleur.active').each((index, el) => {
+                var r = {};
+                var c = $(el).css('background-color')
+                r['color'] = rgb2hex(c)
+                r['order'] = $(el).find('.order').text()
+                arr.push(r)
+            })
+
+        }
+        console.log('arr',arr)
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+        });
+        $.ajax({
+            url : '/groupe/saveColor',
+            method: 'POST',
+            data: {
+                'tableau': JSON.stringify(arr)
+            },
+            success: function(data) {
+                console.log(data)
+            }
+        })
+
+    });
+
+    $('.rond_couleur').on('click', function() {
+
+        if ($(this).hasClass('active')) {
+            var nb = parseInt($(this).find('.order').text())
+            $('.rond_couleur.active').each((index, el) => {
+                var i = parseInt($(el).find('.order').text())
+                console.log(nb, i)
+                if (i == nb) {
+                    $(el).find('.order').text('')
+                    $(el).removeClass('active')
+                    nb++;
+                }
+                i++;
+            })
+
+        } else {
+            var nb = $('.rond_couleur.active').length;
+            if (nb < 4) {
+                $(this).addClass('active')
+                $(this).find('.order').text(nb + 1)                
+            }
+
+
+        }
+
+    })
 }
 
 const delete_photo = () => {
@@ -128,13 +226,29 @@ const photo_eleve = () => {
 
     })
 
+    $(document).on('change','#choix_enfant_select', function() {
+        var name = $('#choix_enfant_select').find(':selected').data('prenom')
+        $('#eleve_choisi').text(name)
+        
+ 
+    })
     $(document).on('click','.choixEnfant', function() {
-        var enfant = $(this).attr('data-enfant')
+        if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
+
+        var enfant = $('#choix_enfant_select').val()
+        console.log(enfant)
         var background = $(this).attr('data-degrade')
         var animaux = $(this).attr('data-animaux')
         $.get('/eleves/setAnimaux?background='+background+'&enfant='+enfant+'&animaux='+animaux, function(data) {
-            console.log(data)
-        })  
+
+
+            toast.show()
+            setTimeout(function() {
+                toast.dispose()
+                $('#choix_enfant_select').val('null')
+
+            },3000)
+        })
     })
         
     $(document).on('click','.choixDegrade', function() {
@@ -149,6 +263,7 @@ const photo_eleve = () => {
         var html = $(this).html()
         var animaux = $(this).data('animaux')
         $('.choixEnfant .imageAnimaux').html(html)
+        $('.choixEnfant .imageAnimaux img').attr('width','250px')
         $('.choixEnfant').attr('data-animaux', animaux)
     })
 

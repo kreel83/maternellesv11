@@ -44,9 +44,21 @@ use Illuminate\Support\Facades\Auth;
                 <a href="#" class="dashboard-nav-dropdown-item">Video</a>
               </div>
             </div> --}}
-            <a href="{{route('calendrier')}}" class="dashboard-nav-item {{$menu == 'calendrier' ? 'active' : null}}"><i class="fas fa-cogs"></i> Calendrier </a>
+            {{-- <a href="{{route('calendrier')}}" class="dashboard-nav-item {{$menu == 'calendrier' ? 'active' : null}}"><i class="fas fa-cogs"></i> Calendrier </a> --}}
+            @php
+            $params = in_array($menu, ['calendrier','event','periode']);
+          @endphp
+            <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i> Calendrier </a>      
+              <div class='dashboard-nav-dropdown-menu'>
+                <a href="{{route('calendrier')}}" class="dashboard-nav-dropdown-item {{$menu == 'calendrier' ? 'active' : null}}">Voir le calendrier</a>
+                <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a>
+                <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
+
+              </div>
+            </div>
               @php
-                $params = in_array($menu, ['commentaire','mdp','eleve','item','aide','ecole','periode','groupe']);
+                $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i> Paramètres </a>      
@@ -57,8 +69,8 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Les items</a>
                 <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a>
                 <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a>
-                <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes d'élèves</a>
+                <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
                 <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Les photos</a>
               </div>
             </div>
@@ -68,9 +80,9 @@ use Illuminate\Support\Facades\Auth;
           </nav>
       </div>
       <div class='dashboard-app'>
-        <header class='dashboard-toolbar'>
+        {{-- <header class='dashboard-toolbar'>
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-        </header>
+        </header> --}}
         <div id="alerte" class="w-100">
 
         </div>
