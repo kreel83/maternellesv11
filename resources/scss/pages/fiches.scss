@@ -22,6 +22,46 @@
     }    
 } 
 
+.btnSelection {
+    margin-top: 15px;
+    border-radius: 25px;;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    color: white !important;
+    border: none !important;
+    outline: none !important;
+    
+    cursor: pointer;
+    &.vert {
+        background-color: #16C1BC;
+        &:hover, &.selected {
+            color:  #16C1BC !important;
+            background-color: white !important;
+            border: 1px solid #16C1BC !important;
+        }
+
+    }
+    &.violet {
+        background-color: #7769FE;
+        &:hover, &.selected {
+            color:  #7769FE !important;
+            background-color: white !important;
+            border: 1px solid #7769FE !important;
+        }
+
+    }
+    &.selected {
+       font-weight: bolder;
+    }
+    
+} 
+
 .btnAction {
     margin-top: 15px;
     border-radius: 25px;;
@@ -42,24 +82,7 @@
     #choixFiche {
         position: relative;
         padding-bottom: 60px;
-        .btnSelection {
-            margin-top: 15px;
-            border-radius: 25px;;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            background-color: #32363D;
-            font-weight: 400;;
-            width: fit-content;
-            padding: 4px 24px;
-            cursor: pointer;
-            &.selected {
-               font-weight: bolder;
-            }
-            
-        } 
+
     #pointerFiche {
         #pointer {
             height: 20px;

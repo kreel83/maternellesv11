@@ -1,38 +1,78 @@
 @extends('layouts.mainMenu', ['titre' => "Les groupes d'élèves",'menu' => 'groupe'])
 
 @section('content')
-<div id="page_groupes" class="row p-2">
+
+<style>
+    .rond_couleur {
+        width: 80px; height: 80px; 
+        border-radius: 50%;
+        margin: 4px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: grey;
+        font-size: 60px
+
+    }
+    .rond_couleur:hover, .rond_couleur.active {
+        outline: 3px solid gray;
+    }
+</style>
+<div class="container">
+    <div id="page_groupes" class="row p-2 ">
+        <div class="container">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="couleur-tab" data-bs-toggle="tab" data-bs-target="#couleur-tab-pane" type="button" role="tab" aria-controls="couleur-tab-pane" aria-selected="true">Par couleurs</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="termes-tab" data-bs-toggle="tab" data-bs-target="#termes-tab-pane" type="button" role="tab" aria-controls="termes-tab-pane" aria-selected="false">Par termes</button>
+                </li>
+    
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="couleur-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <div class="d-flex flex-wrap w-100 pt-5">
+                        @foreach(App\Models\Enfant::GROUPE_COLORS as $key => $color)
+                            <div class="rond_couleur" style="background-color: {{$color}}">
+                                <span class="order"></span>
+                            </div>
+                        @endforeach                
+                    </div>
+                    <div>
+                        <button class="btn btn-primary mt-5" id="saveColor">Sauvegarder</button>
+                    </div>
+                    
+                    
+                </div>
+                <div class="tab-pane fade mt-5" id="termes-tab-pane" role="tabpanel" aria-labelledby="termes-tab" tabindex="0">
+                    <textarea  class="form-control" name="" id="termes" cols="10" rows="5">
+                        
+                    </textarea>
+                    <div>
+                        <button class="btn btn-primary mt-5" id="saveTermes">Sauvegarder</button>
+                    </div>
+
         
-<h1>les groupes</h1>
-
-
-
-<div class="form-group">
-    <label for="">Methode</label>
-    <select name="" id="" class="form-select">
-        <option value="null" selected disabled>Veuillez selectionner</option>
-        <option value="couleur">Par couleur</option>
-        <option value="couleur">Par mot</option>
-    </select>
-    <button class="btn btn-primary mt-5">Ajouter un groupe</button>
-    <div class="mt-3">
-        <div>
-            <div>1er groupe</div>
-            <div><button class="btn btn-success btn-sm">Choisir une couleur</button></div>
-            <div>
-                @foreach(App\Models\Enfant::GROUPE_COLORS as $key => $color)
-                    <div style="width: 80px; height: 40px; background-color: {{$color}}; margin: 12px 0"></div>
-                @endforeach                
-            </div>
-
-        </div>
-    </div>
-</div>
-
+                </div>
+    
+              </div>
 
 
  
+
+    
+        </div>
+            
+
+
+
+
+    
+    </div>    
 </div>
+
 
 
 @endsection

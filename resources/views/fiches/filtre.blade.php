@@ -20,5 +20,5 @@
             </div>        
     </div>
 
-    <button class="btnSelection btn" id="jechoisislaselection" data-section="{{$section->id}}">Choisir les fiches de la sélection</button>
+    <button class="btnSelection violet" id="jechoisislaselection" data-section="{{$section->id}}">Choisir les fiches de la sélection</button>
 </div>

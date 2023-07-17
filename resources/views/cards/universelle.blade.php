@@ -10,10 +10,10 @@
 
 <li class="card_fiche shadowDepth1 ui-state-default position-relative {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-table="{{$fiche->getTable()}}" data-section="{{$fiche->section_id}}" data-type="{{$type}}" data-level="{{$lvl}}" data-fiche="{{$fiche->id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
 <div class="action">
-    <button class="btn btn-sm btn-primary d-none retirer my-1">Retirer</button>
-    <button class="btn btn-sm btn-primary selectionner my-1">Selectionner</button>
-    <button data-id="{{$fiche->id ?? null}}" class="btn btn-sm btn-primary dupliquer my-1">Dupliquer</button>
-    <button data-id="{{$fiche->id ?? null}}" class="btn btn-sm btn-primary {{$fiche->user_id ? null : 'd-none'}} modifier my-1">Modifier</button>
+    <button class="btnSelection violet  d-none retirer my-1">Retirer</button>
+    <button class="btnSelection vert  selectionner my-1">Selectionner</button>
+    <button data-id="{{$fiche->id ?? null}}" class="btnSelection vert dupliquer my-1">Dupliquer</button>
+    <button data-id="{{$fiche->id ?? null}}" class="btnSelection vert  {{$fiche->user_id ? null : 'd-none'}} modifier my-1">Modifier</button>
     </div>
     <div class="perso_card">
             @if ($fiche->user_id)

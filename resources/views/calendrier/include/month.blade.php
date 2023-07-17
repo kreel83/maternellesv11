@@ -2,6 +2,7 @@
 use Carbon\Carbon;
 $m = $month->locale('fr')->monthName;
 $nb = $month->month;
+$annee = $month->year;
 
 
 $start = $month->dayOfWeek;
@@ -24,7 +25,7 @@ $actual_year = $day->year;
 
 
         <div class="month_bloc" >
-            <div class="month_name">{{$m}}</div>
+            <div class="month_name">{{$m}} {{$annee}}</div>
             <div class="month_days d-flex">
                 <div>lu</div>
                 <div>ma</div>
