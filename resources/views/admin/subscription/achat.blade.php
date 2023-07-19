@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['titre' => 'Gestion des licences'])
+@extends('layouts.admin', ['titre' => 'Gestion des licences', 'menu' => 'licence'])
 
 @section('content')
 

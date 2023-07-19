@@ -162,9 +162,18 @@ class AdminLicenceController extends Controller
         return redirect()->route('admin.licence.index');
     }
 
+    /*
     public function invoice(): View
     {
         return view('admin.licence.invoice');
+    }
+    */
+
+    public function invoice(): View
+    {
+        $invoices = Auth::user()->invoices();
+        return view("admin.invoice")
+            ->with('invoices', $invoices);
     }
     
 }

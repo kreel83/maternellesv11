@@ -1,5 +1,37 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VitrineController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', [VitrineController::class, 'index'])->name('vitrine.index');
+Route::get('/cahier', [VitrineController::class, 'cahier'])->name('vitrine.cahier');
+Route::get('/eleves', [VitrineController::class, 'eleves'])->name('vitrine.eleves');
+Route::get('/fiches', [VitrineController::class, 'fiches'])->name('vitrine.fiches');
+Route::get('/calendrier', [VitrineController::class, 'calendrier'])->name('vitrine.calendrier');
+Route::get('/parametrage', [VitrineController::class, 'parametrage'])->name('vitrine.parametrage');
+Route::get('/compagnon', [VitrineController::class, 'compagnon'])->name('vitrine.compagnon');
+Route::get('/tarif', [VitrineController::class, 'tarif'])->name('vitrine.tarif');
+Route::get('/conditions', [VitrineController::class, 'conditions'])->name('vitrine.conditions');
+Route::get('/mentions', [VitrineController::class, 'mentions'])->name('vitrine.mentions');
+Route::get('/confidentialite', [VitrineController::class, 'confidentialite'])->name('vitrine.confidentialite');
+Route::get('/cookies', [VitrineController::class, 'cookies'])->name('vitrine.cookies');
+
+Route::get('/contact', [VitrineController::class, 'contact'])->name('vitrine.contact');
+Route::post('/contact', [VitrineController::class, 'contactSend'])->name('vitrine.contact.send');
+
+
+/*
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminProfilController;
 use App\Http\Controllers\admin\AdminLicenceController;
@@ -15,31 +47,14 @@ use App\Http\Controllers\ficheController;
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RegisteredUserController;
 
 use App\Http\Controllers\NewaccountController;
 use App\Http\Controllers\Direction\DashboardProController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// USER DASHBOARD
-/*
-Route::get('/user_dashboard', function () {
-    return view('user_dashboard');
-})->middleware('user')->name('user_dashboard');
-
-*/
 // ADMIN URLs (directeurs) protected by 'admin' Middleware
 Route::middleware(['admin'])->group(function()
 {
@@ -52,7 +67,12 @@ Route::middleware(['admin'])->group(function()
     Route::post('/admin/licence/achat', [AdminLicenceController::class, 'create'])->name('admin.licence.create');
     Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // utilisé dans subscription.js
     Route::get('/admin/licence/remove/{id}', [AdminLicenceController::class, 'remove'])->name('admin.licence.remove');
-    Route::get('/admin/licence/invoice', [SubscriptionController::class, 'invoice'])->name('admin.licence.invoice');
+    Route::get('/admin/licence/invoice', [AdminLicenceController::class, 'invoice'])->name('admin.licence.invoice');
+    Route::get('/admin/contact', [AdminController::class, 'contact'])->name('admin.contact');
+    //Route::post('/admin/contact/store', [ContactController::class, 'store'])->name('admin.contact.store');
+    Route::get('/admin/invoice/{invoice}', function (Request $request, string $invoiceId) {
+        return $request->user()->downloadInvoice($invoiceId);
+    });
 });
 // Admin registration URLs
 Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
@@ -62,19 +82,25 @@ Route::get('/user/validation/password', [UserController::class, 'valideUserFromA
 Route::post('/user/validation', [UserController::class, 'valideUserFromAdminSavePassword'])->name('user.valideUserFromAdminSavePassword');  // sauve le mot de passe et active le compte
 // User Validation url from self registration
 Route::get('/user/validation/self', [UserController::class, 'validUserFromSelfRegistration'])->name('user.validUserFromSelfRegistration');  // utilisé pour valider une adresse mail depuis email
+Route::get('/deleteuser', [UserController::class, 'deleteinactiveuser'])->name('user.deleteinactive');
 
-/*
+// Contact form (utilisé dans contact.js seulement)
+Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
+
+
 // A supprimer dans le futur
-Route::get('/dashboardpro', [DashboardProController::class, 'index'])->name('dashboardpro')->middleware('auth.direction');
-Route::get('/decodirection', [UserControllerDirection::class, 'decodirection'])->name('decodirection')->middleware('auth.direction');
-*/
+//Route::get('/dashboardpro', [DashboardProController::class, 'index'])->name('dashboardpro')->middleware('auth.direction');
+//Route::get('/decodirection', [UserControllerDirection::class, 'decodirection'])->name('decodirection')->middleware('auth.direction');
+
 
 Route::get('/parent',[EnfantController::class, 'parent']);
 Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [parametreController::class, 'welcome'])->name('depart');    
+    Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+
+    Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
@@ -176,3 +202,4 @@ Route::get('/newaccount', [NewaccountController::class, 'index'])->name('index')
 //Route::post('newaccount', 'RegistrationController@store');
 
 require __DIR__.'/auth.php';
+*/

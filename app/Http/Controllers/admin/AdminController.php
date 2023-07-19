@@ -36,4 +36,10 @@ class AdminController extends Controller
         return $ecole->checkcode($code);
     }
 
+    public function contact(): View
+    {
+        return view('contact.admin')
+            ->with('route', '');
+    }
+
 }

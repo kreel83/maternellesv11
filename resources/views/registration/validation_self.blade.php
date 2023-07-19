@@ -9,8 +9,8 @@
 
 @else
 
-    <h2>Validation confirmée</h2>
-    <p>Vous pouvez maintenant vous connecter à votre compte en <a href="{{ route('login') }}">cliquant ici</a>.</p>
+    <h2>Votre compte est maintenant activé !</h2>
+    <p>Vous pouvez vous connecter dès à présent en <a href="{{ route('login') }}">cliquant ici</a>.</p>
 
 @endif
 

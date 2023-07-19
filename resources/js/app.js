@@ -37,6 +37,7 @@ import {
 import {choix_equipe} from "./pages/equipe";
 import {adminRegistration} from "./pages/admin";
 import {achatLicences,assigneLicence} from "./pages/subscription";
+import {contactform} from "./pages/contact";
 
 
 window.Alpine = Alpine;
@@ -185,3 +186,5 @@ choix_equipe()
 adminRegistration()
 achatLicences()
 assigneLicence()
+
+contactform()
