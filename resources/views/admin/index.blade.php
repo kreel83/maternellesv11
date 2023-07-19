@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['titre' => 'Bienvenue sur votre espace administration'])
+@extends('layouts.admin', ['titre' => 'Bienvenue sur votre espace administration', 'menu' => 'dashboard'])
 
 @section('content')
 

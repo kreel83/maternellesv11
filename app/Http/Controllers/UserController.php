@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -96,4 +97,26 @@ class UserController extends Controller
         return view("registration.validation_self")
             ->with('user', $user);
     }
+
+    /**
+     * Delete innactive users
+     *
+     * @return \Illuminate\View\Void
+     */
+    public function deleteInactiveUser(): void
+    {
+        $enddate = Carbon::now()->subMinutes(30)->toDateTimeString();
+        //dd($enddate);
+        $deleted = User::where('actif', 0)
+            ->where('created_at', '<=', $enddate)
+            ->get();
+        dd($deleted);
+    }
+
+    public function contact(): View
+    {
+        return view('contact.user')
+            ->with('route', '');
+    }
+
 }

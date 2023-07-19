@@ -16,6 +16,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserEmailVerificationSelfRegistration;
+use Illuminate\Support\Arr;
 
 class RegisteredUserController extends Controller
 {
@@ -214,5 +215,214 @@ class RegisteredUserController extends Controller
         return redirect(route('admin.index'));
         */
     }
+
+    /** ----------------------------------------- */
+    /** Fonctions création de compte Admin / User */
+    /** ----------------------------------------- */
+
+    public function registrationStart(): View
+    {
+        return view('registration.start');
+    }
+
+    public function registrationStep1($role)
+    {
+        if(!in_array($role, ['admin', 'user'])) {
+            return redirect()->route('registration.start');
+        }
+        return view('registration.step1')
+            ->with('role', $role);
+    }
+
+    public function registrationStep1Post(Request $request)
+    {
+        $rules = ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'];
+
+        $msg = array(
+            'ecole_id.required' => 'Veuillez indiquer un identifiant.',
+            'ecole_id.min' => 'L\'identifiant doit avoir 8 caractères minimum.',
+            'ecole_id.max' => 'L\'identifiant doit avoir 8 caractères maximum.',
+            'ecole_id.exists' => 'Identifiant introuvable. Vérifiez votre saisie.',
+        );
+
+        if($request->role == 'admin') {
+            array_push($rules, 'unique:users,ecole_id');
+            $msg = Arr::add($msg, 'ecole_id.unique', 'Un compte existe déjà pour cet identifiant.');
+        }
+
+        $request->validate([
+            'ecole_id' => $rules,
+        ], $msg);
+
+        /*
+        $request->validate([
+            'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
+            'role' => ['required', 'string', Rule::in(['admin', 'user'])],
+        ], [
+            'ecole_id.required' => 'Veuillez indiquer un identifiant.',
+            'ecole_id.min' => 'L\'identifiant doit avoir 8 caractères minimum.',
+            'ecole_id.max' => 'L\'identifiant doit avoir 8 caractères maximum.',
+            'ecole_id.exists' => 'Identifiant introuvable. Vérifiez votre saisie.',
+            'role.in' => 'Fonction non reconnue.',
+        ]);
+        */
+
+        /*
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
+        return view('registration.step2')
+            ->with('role', $request->role)
+            ->with('ecole', $ecole);
+        */
+
+        $token = md5($request->role.$request->ecole_id.env('HASH_SECRET'));
+        return redirect()->route('registration.step2', [
+            'role' => $request->role, 
+            'ecole_id' => $request->ecole_id,
+            'token' => $token,
+        ]);
+    }
+    
+    public function registrationStep2($role, $ecole_id, $token)
+    {
+        // verification Token
+        if($token != md5($role.$ecole_id.env('HASH_SECRET'))) {
+            return redirect()->route('registration.start');
+        }
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $ecole_id)->first();
+        return view('registration.step2')
+            ->with('role', $role)
+            ->with('ecole', $ecole)
+            ->with('token', $token);
+    }
+
+    public function registrationStep3(Request $request)
+    {
+        // verification Token
+        if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
+            return redirect()->route('registration.start');
+        }
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
+        return view('registration.step3')
+            ->with('role', $request->role)
+            ->with('ecole_id', $request->ecole_id)
+            ->with('email', $ecole->mail)
+            ->with('token', $request->token);
+    }
+    
+    public function registrationStep3Post(Request $request)
+    {
+        // verification Token
+        if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
+            return redirect()->route('registration.start');
+        }     
+           
+        $request->validate([
+            'role' => ['required', 'string', 'in:admin,user'],
+            'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
+            'name' => ['required', 'string', 'max:255'],
+            'prenom' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'role.required' => 'Fonction manquante.',
+            'role.in' => 'Fonction invalide.',
+            'ecole_id.required' => 'Identifiant établissement manquant.',
+            'ecole_id.exists' => 'Identifiant établissement introuvable.',
+            'name.required' => 'Le nom est obligatoire.',
+            'name.max' => 'Le nom est limité à 255 caractères.',
+            'prenom.required' => 'Le prénom est obligatoire.',
+            'prenom.max' => 'Le prénom est limité à 255 caractères.',
+            'email.required' => 'Adresse mail obligatoire.',
+            'email.max' => 'Adresse mail limitée à 255 caractères.',
+            'email.unique' => 'Un compte existe déjà pour cette adresse mail.',
+            'password.required' => 'Mot de passe obligatoire.',
+            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+
+        ]);
+
+        $validationKey = md5(microtime(TRUE)*100000);
+
+        $user = User::create([
+            'role' => $request->role,
+            'ecole_id' => $request->ecole_id,
+            'name' => $request->name,
+            'prenom' => $request->prenom,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'validation_key' => $validationKey,
+            //'licence' => 'self'
+        ]);
+
+        // Envoi d'un email de vérification
+        $token = md5($user->id.$validationKey.env('HASH_SECRET'));
+        $url = route('registration.validation').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
+        if($request->role == 'user') {
+            Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
+        }
+        //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
+        
+        // php artisan tinker   test email
+        // Mail::raw('hello world',function($msg) {$msg->to('thierry.thevenoud@gmail.com')->subject('test depsui local'); });
+
+        // si probleme envoi mail
+        // php artisan config:cache
+        // php artisan config:clear
+        // php artisan cache:clear
+
+
+        return view('registration.step4')
+            ->with('email', $request->email);
+
+        /*
+        return redirect()->route('registration.step4', [
+            'role' => $request->role, 
+            'ecole_id' => $request->ecole_id,
+            'token' => $request->token,
+        ]);
+        */
+
+        /*
+        event(new Registered($user));
+        Auth::login($user);
+        return redirect(RouteServiceProvider::HOME);
+        */
+    }
+
+    /*
+    public function registrationStep4(Request $request)
+    {
+        // verification Token
+        if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
+            return redirect()->route('registration.start');
+        }
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
+        return view('registration.step4')
+            ->with('email', $ecole->mail);
+    }
+    */
+
+    public function valideUser(Request $request): View
+    {
+        // appelé depuis lien dans email
+        $token = md5($request->uID.$request->key.env('HASH_SECRET'));
+        if($token != $request->token) {
+            $user = null;
+        } else {
+            $user = User::where([
+                ['id', $request->uID],
+                ['validation_key' , $request->key]
+                ])->first();
+            if(!is_null($user)) {
+                $user->actif = 1;
+                $user->save();
+                // Auth::login($user);  // A VOIR si on log automatiquement à la validation
+            }
+        }
+        return view("registration.validation_self")
+            ->with('user', $user);
+    }
+
+    /** Fin fonctions création de compte Admin / User */
 
 }

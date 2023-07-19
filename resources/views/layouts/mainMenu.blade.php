@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="#" class="dashboard-nav-dropdown-item">Video</a>
               </div>
             </div> --}}
-            {{-- <a href="{{route('calendrier')}}" class="dashboard-nav-item {{$menu == 'calendrier' ? 'active' : null}}"><i class="fas fa-cogs"></i> Calendrier </a> --}}
+
             @php
             $params = in_array($menu, ['calendrier','event','periode']);
           @endphp
@@ -59,11 +59,14 @@ use Illuminate\Support\Facades\Auth;
 
               </div>
             </div>
+
               @php
                 $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-cog"></i> Paramètres </a>      
+
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
                 <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a>
@@ -76,9 +79,12 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Les photos</a>
               </div>
             </div>
-            <a href="#" class="dashboard-nav-item"><i class="fal fa-user"></i> Profile </a>
+
+            <a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>
+            <a class="dashboard-nav-item  {{ $menu == 'contact' ? 'active' : null }}" href="{{route('contact')}}"><i class="fa-regular fa-envelope"></i> Nous contacter</a>
             <div class="nav-item-divider"></div>
-            <a href="#" class="dashboard-nav-item"><i class="fal fa-sign-out-alt"></i> Logout </a>
+            <a href="{{route('deco')}}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+
           </nav>
       </div>
       <div class='dashboard-app'>
@@ -89,7 +95,6 @@ use Illuminate\Support\Facades\Auth;
 
         </div>
         <div class=''>
-
             @yield('content')
         </div>
     </div>
