@@ -3,6 +3,8 @@ const selectSectionFiche = (quill) => {
         $('.selectSectionFiche').removeClass('selected')
         $(this).addClass('selected')
         var id = $(this).data('value')
+        $('.tiret_selection').addClass('d-none')
+        $('.tiret_selection[data-id="'+id+'"]').removeClass('d-none')
         $('.card_fiche').addClass('d-none')
         $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
 

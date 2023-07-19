@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\UserEvent;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -62,8 +63,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime'
     ];
+
+
+    protected $dispatchesEvents = [
+        'retrieved' => UserEvent::class,
+    ];
+
+    public $type_groupe;
+    public $groupe;
 
 
 

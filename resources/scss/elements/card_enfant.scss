@@ -1,6 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
 
 
+
+.choixEnfant:hover {
+  outline: 10px solid #00C853;
+}
+
 .eleve {
   font-size: 20px;
   font-weight: bold;
@@ -14,18 +19,36 @@
   background-color: #f6d365;
   color: white;
 }
-.degrade, .choixEnfant {
-  border-radius: 50%;
-  
+.degrade {
+  border-radius: 50%;  
+  width: 80px;
+  height: 80px;
+  cursor: pointer; 
+}
+.degrade_card_enfant {
+  border-radius: 50%;  
   width: 120px;
   height: 120px;
+  cursor: pointer; 
+}
+
+.choixEnfant {
+  border-radius: 50%;  
+  width: 250px;
+  height: 250px;
   cursor: pointer;
   
 
 }
-.choixEnfant:hover {
-  outline: 10px solid green;
+
+#eleve_choisi {
+  font-family: 'Style Script', cursive;
+  font-size: 60px;;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
 .curved-text {
 
 
@@ -58,7 +81,7 @@
     background-color: #fff;
    
     width: 240px;;
-    height: 300px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -66,6 +89,12 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin: 8px;
     position: relative;
+    .name {
+      color: #7769FE;
+    }
+    .title {
+      color: #16C1BC;
+    }
 
     &:hover {
       .footer {
@@ -112,8 +141,8 @@
     }
     .card-body {
       .name {
-        color: purple;
-        font-size: 1.2rem;
+        font-family: "Style Script", cursive;
+        font-size: 1.8rem;
         font-weight: bolder;
       }
     }

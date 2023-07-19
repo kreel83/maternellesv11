@@ -18,6 +18,15 @@ class EleveEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+
+    private function convertDate($d) {
+        $d = str_replace([' years', ' year'], ' ans', $d);
+        $d = str_replace([' months', ' month'], ' mois', $d);
+        $d = str_replace([' weeks', ' week'], ' semaine(s)', $d);
+        $d = str_replace([' ago'], '', $d);
+        return $d;
+    }
+    
     /**
      * Create a new event instance.
      *
@@ -29,6 +38,7 @@ class EleveEvent
     $enfant->mail1 = isset($mails[0]) ? $mails[0] : null;
     $enfant->mail2 = isset($mails[1]) ? $mails[1] : null;
     $enfant->jour = Carbon::parse($enfant->ddn)->format('d');
+    $enfant->age = $this->convertDate(Carbon::parse($enfant->ddn)->diffForHumans([ 'parts'=>2, 'short'=>false, ]));
     if ($enfant->photo) {
         $enfant->photoEleve = Storage::url($enfant->photo);
     } else {
