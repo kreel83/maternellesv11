@@ -22,11 +22,18 @@
             </div>
     </div> --}}
     <div  data-section="{{ $section->id }}" class="liste_section">
-        @foreach($sections as $sec)
-            <div class='selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
-            {{$sec->court}}
+        <div class="section_container">
+            @foreach($sections as $sec)
+            <div class="d-flex flex-column align-items-center">
+                    <div class='selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
+                        <img src="{{asset('img/illustrations/'.$sec->logo)}}" alt="" width="45px" height="45px">
+                    </div>
+                    <div class="tiret_selection {{$sec->id == $section->id ? null : "d-none"}}" data-id="{{$sec->id}}" style="background-color: {{$sec->color}}"></div>            
             </div>
-        @endforeach
+
+            @endforeach           
+        </div>
+
     </div>
     <div class="col-md-12">
 
@@ -81,17 +88,7 @@
 
 
         <div  data-section="{{ $section->id }}">
-            <div id="mesfiches" class="d-none listFiches" >
-                <ul class="fiche_container fiches mesfiches" id="sortable">
-                @foreach ($fiches as $fiche)
-                    @include('cards.fiche',['type' => 'mesfiches'])
-                @endforeach
-                </ul>
-            </div>
-
-
-
-            <div id="autresfiches" class="listFiches">
+            <div id="autresfiches" class="listFiches d-flex justify-content-center">
                 
                 <ul class="fiche_container fiches autresfiches" >
 
@@ -100,6 +97,17 @@
                     @endforeach
                 </ul>
             </div>
+
+            <div id="mesfiches" class="d-none listFiches justify-content-center" >
+                <ul class="fiche_container fiches mesfiches" id="sortable" style="width: calc((240px * 4) + 120px)">
+                @foreach ($fiches as $fiche)
+                    @include('cards.fiche',['type' => 'mesfiches'])
+                @endforeach
+                </ul>
+            </div>
+
+
+
             
 
             </div>
