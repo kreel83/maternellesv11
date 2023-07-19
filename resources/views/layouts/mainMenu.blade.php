@@ -29,12 +29,14 @@ use Illuminate\Support\Facades\Auth;
     <div class='dashboard'>
       <div class="dashboard-nav">
           <header>
-            <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="{{route('home')}}" class="brand-logo"><i
-                  class="fas fa-anchor"></i> <span>Les Maternelles</span></a></header>
+            <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+            <a href="{{route('home')}}" class="brand-logo">
+                <img src="{{asset('img/deco/les_maternelles.png')}}" alt="" width="200">
+            </a></header>
           <nav class="dashboard-nav-list">
-            <a href="{{route('home')}}" class="dashboard-nav-item {{$menu == 'accueil' ? 'active' : null}}"><i class="fas fa-home"></i>Accueil </a>
-            <a href="#" class="dashboard-nav-item  {{$menu == 'dashboard' ? 'active' : null}}"><i class="fas fa-tachometer-alt"></i> dashboard </a>
-            <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fas fa-file-upload"></i> Ma classe </a>
+            <a href="{{route('home')}}" class="dashboard-nav-item {{$menu == 'accueil' ? 'active' : null}}"><i class="fal fa-home"></i>Accueil </a>
+            <a href="#" class="dashboard-nav-item  {{$menu == 'dashboard' ? 'active' : null}}"><i class="fal fa-columns"></i> dashboard </a>
+            <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fal fa-users"></i> Ma classe </a>
             {{-- <div class='dashboard-nav-dropdown'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Disciplines </a>
               <div class='dashboard-nav-dropdown-menu'>
@@ -49,7 +51,7 @@ use Illuminate\Support\Facades\Auth;
             $params = in_array($menu, ['calendrier','event','periode']);
           @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i> Calendrier </a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-calendar"></i> Calendrier </a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('calendrier')}}" class="dashboard-nav-dropdown-item {{$menu == 'calendrier' ? 'active' : null}}">Voir le calendrier</a>
                 <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a>
@@ -61,7 +63,7 @@ use Illuminate\Support\Facades\Auth;
                 $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i> Paramètres </a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-cog"></i> Paramètres </a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
                 <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a>
@@ -74,9 +76,9 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Les photos</a>
               </div>
             </div>
-            <a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+            <a href="#" class="dashboard-nav-item"><i class="fal fa-user"></i> Profile </a>
             <div class="nav-item-divider"></div>
-            <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+            <a href="#" class="dashboard-nav-item"><i class="fal fa-sign-out-alt"></i> Logout </a>
           </nav>
       </div>
       <div class='dashboard-app'>
