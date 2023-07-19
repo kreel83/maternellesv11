@@ -26,13 +26,14 @@ class Enfant extends Model
     ];
     
     const GROUPE_COLORS = [
-        '#rouge' => '#FF4D26',
-        '#jaune' => '#FAC364',
-        '#vert' => '#7CDB3A',
-        '#bleu' => '#0562F0',             
-        '#orange' => '#FA9163',
-        '#violet' => '#B907D9',
-        '#marron' => '#A52A2A',            
+        '#c1' => '#fd5959',
+        '#c2' => '#ff9c6d',
+        '#c3' => '#fcff82',
+        '#c4' => '#afc5ff',             
+        '#c5' => '#a1c45a',
+        '#c6' => '#fff9e0',
+        '#c7' => '#f1c550',            
+        '#c8' => '#ea4c4c',            
         
 
     ];
@@ -42,7 +43,7 @@ class Enfant extends Model
     ];
 
 
-    public $mail1, $mail2, $photoEleve, $jour;
+    public $mail1, $mail2, $photoEleve, $jour, $age;
 
 
     public function item() {

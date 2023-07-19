@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\utils\Utils;
 use App\Events\ItemEvent;
-use App\Models\resultat;
+use App\Models\Resultat;
 
 class Item extends Model
 {
     public static $FIRE_EVENTS = true;
+
+
 
 
 

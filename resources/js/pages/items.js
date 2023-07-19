@@ -14,9 +14,16 @@ const selectItem = () => {
     })
 
     $('.selectSectionItem').on('click', function() {
+        $('.noFiche').addClass('d-none') 
         const section = $(this).data('value');
         $('.card_item').addClass('d-none')
         $('.card_item[data-section="'+section+'"]').removeClass('d-none')
+        if ($('.card_item:visible').length == 0) {
+           $('.noFiche').removeClass('d-none') 
+           $('.linkNoFiche').attr('href','/fiches?section='+section) 
+
+        }
+        
     })
 
     $('.notation').on('click', function() {

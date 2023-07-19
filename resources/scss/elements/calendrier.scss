@@ -1,8 +1,7 @@
-#calendrier_view {
-    background: rgb(223,95,150);
-    background: linear-gradient(90deg, rgba(223,95,150,1) 1%, rgba(217,27,58,1) 50%, rgba(168,32,37,1) 100%);    
-}
 
+body {
+    background-color: #F4F9FF !important;
+}
 #calendrier_scolaire .day.actif:hover {
     transform: scale(1.1);
     font-weight: bolder;
@@ -34,12 +33,16 @@
         flex-direction: column;
         width: 300px;
         margin: 10px 0;
-        border-radius: 15px;
+        border-radius: 25px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
         margin: 10px;
         background-color: white;
+
+        overflow: hidden;
         .month_name {
+            color: white;
+            background-color: #7769FE;
             text-align: center;
-            border-bottom: 2px solid var(--rouge);
         }
 
     }
