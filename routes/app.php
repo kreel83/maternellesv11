@@ -106,7 +106,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
 
-
     Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
     Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');

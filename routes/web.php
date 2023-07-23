@@ -134,11 +134,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/fiches/order', [ficheController::class, 'orderFiche'])->name('orderFiche');
     Route::get('/fiches/create', [ficheController::class, 'createFiche'])->name('createFiche');
 
-    Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
-    Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');
-    Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
-    Route::post('/groupe/saveColor',[GroupeController::class,'saveColor'])->name('saveColor');
-    Route::post('/groupe/saveTermes',[GroupeController::class,'saveTermes'])->name('saveTermes');
 
     Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
