@@ -14,8 +14,14 @@
     }
 </style>
 
-<div class="row" id="page_items">
+<div class="row position-relative" id="page_items">
+
     <input type="hidden" id="enfant" value="{{$enfant->id}}">
+
+
+
+
+
 
     <div class="col-md-12 position-relative">
         <div class="noFiche d-none ">
@@ -24,14 +30,47 @@
         </div>
 
 
-    <div  data-section="{{ $section->id }}" class="liste_section">
-        @foreach($sections as $sec)
+   {{-- <div  data-section="{{ $section->id }}" class="liste_section">
+         @foreach($sections as $sec)
             <div class='selectSectionItem {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
             {{$sec->court}}
             </div>
-        @endforeach
-    </div>
-    <div id="mesfiches" class="listItems" >
+        @endforeach 
+    </div>--}}
+
+    <div class="d-flex justify-content-between container">
+
+            <div class="d-flex align-items-center" style="width: 250px; height: 60px; border-radius: 40px; border: 1px solid grey; " >
+                <div style="border-radius: 50%; overflow: hidden; width: 60px; height: 60px ">            
+                    <img src="https://lesmaternelles.kreel.fr//storage/MOLMAG47/photos/639f4f4c28802.jpg" alt="rover" width="60">           
+                </div>
+                <div class="ms-3">
+                    <div>{{$enfant->prenom}}</div>
+                    <div>{{$enfant->nom}}</div>
+                </div>      
+            </div>
+            <div  data-section="{{ $section->id }}" class="liste_section">
+                <div class="section_container">
+                    @foreach($sections as $sec)
+                    <div class="d-flex flex-column align-items-center">
+                        <div class='selectSectionFiche selectSectionItem {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
+                            <img src="{{asset('img/illustrations/'.$sec->logo)}}" alt="" width="45px" height="45px">
+                        </div>
+                        <div class="tiret_selection {{$sec->id == $section->id ? null : "d-none"}}" data-id="{{$sec->id}}" style="background-color: {{$sec->color}}"></div>            
+                    </div>
+                    
+                    @endforeach           
+                </div>
+                
+            </div>
+            <div class="d-flex align-items-center" style="width: fit-content; padding: 0 16px;  height: 60px; border-radius: 40px; border: 1px solid grey; " >
+                
+                
+                <a href="{{route('enfants')}}">Retour à la classe</a>
+                
+            </div>
+        </div>
+    <div id="mesfiches" class="listItems px-5" >
         <div class="fiche_container fiches mesitems">
         @foreach ($fiches as $fiche)
             @include('cards.item')

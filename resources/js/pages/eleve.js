@@ -29,11 +29,11 @@ const preview_photo = (event) => {
 
     $(document).on('click',".color_rond",function() {
         var id = $(this).closest('.card-eleve').data('eleve')
-        var order = $(this).data('id') 
         var color =  $(this).data('color')
-        console.log('color', color, id, order)
+        var order =  $(this).data('order')
+        console.log('color', color, id)
         $(this).closest('.card-eleve').css('border-color', color)
-        $.get('/groupe/affectation?eleve='+id+'&order='+order, function(data) {
+        $.get('/app/groupe/affectation?eleve='+id+'&order='+order, function(data) {
             console.log(data)
         })
 
@@ -47,7 +47,7 @@ const preview_photo = (event) => {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
         });
         $.ajax({
-            url : '/groupe/saveTermes',
+            url : '/app/groupe/saveTermes',
             method: 'POST',
             data: {
                 'tableau': termes.trim()
@@ -63,6 +63,7 @@ const preview_photo = (event) => {
 
         const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
 
+        
         var nb = $('.rond_couleur.active').length;
         var liste = $('.rond_couleur.active');
         console.log('nb', nb)
@@ -94,6 +95,20 @@ const preview_photo = (event) => {
         })
 
     });
+    $(document).on('click','.badge_termes', function() {
+        console.log('dfdf')
+        var el = $(this).closest('.card-eleve')
+        $(el).find('.badge_termes').removeClass('active')
+        $(this).addClass('active')
+        var id = $(this).closest('.card-eleve').data('eleve')
+
+        var order =  $(this).data('order')
+
+
+        $.get('/app/groupe/affectation?eleve='+id+'&order='+order, function(data) {
+            console.log(data)
+        })
+    })
 
     $('.rond_couleur').on('click', function() {
 
@@ -239,7 +254,7 @@ const photo_eleve = () => {
         console.log(enfant)
         var background = $(this).attr('data-degrade')
         var animaux = $(this).attr('data-animaux')
-        $.get('/eleves/setAnimaux?background='+background+'&enfant='+enfant+'&animaux='+animaux, function(data) {
+        $.get('/app/eleves/setAnimaux?background='+background+'&enfant='+enfant+'&animaux='+animaux, function(data) {
 
 
             toast.show()
@@ -270,7 +285,7 @@ const photo_eleve = () => {
     $(document).on('click','.delete', function() {
         var prof = $(this).attr('data-id')
         var id = $('#eleve_form').val()
-        $.get('/eleves/removeEleve?prof='+prof+'&eleve='+id, function(data) {
+        $.get('/App/eleves/removeEleve?prof='+prof+'&eleve='+id, function(data) {
             $('.fiche_eleve[data-id="'+id+'"]').remove()
             $('#new_eleve').addClass('d-none')
             $('#import_eleves').removeClass('d-none')
@@ -340,7 +355,7 @@ const choix_eleve = () => {
     })
 
     $(document).on('click','#recup_mes_eleves', function() {
-        $.get('/recupClasse', function() {
+        $.get('/app/recupClasse', function() {
             location.reload();
         })
     })

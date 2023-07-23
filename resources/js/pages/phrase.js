@@ -89,7 +89,7 @@ const deletePhrase = () => {
     $('.deletePhrase').on('click', function() {
         var id = $(this).closest('.controle').data('id')
         var el = $(this).closest('tr')
-        $.get('/parametres/phrases/'+id+'/delete', function(data) {
+        $.get('/app/parametres/phrases/'+id+'/delete', function(data) {
             $(el).remove()
         })
     })

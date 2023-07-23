@@ -8,8 +8,22 @@
 
     </h3>
 
-    <div id="cahierView" class="row" data-enfant="{{$enfant->id}}">
-        <div class="col-md-3">
+    <div id="cahierView" class="row px-5" data-enfant="{{$enfant->id}}">
+        <div  data-section="{{ $section->id }}" class="liste_section">
+            <div class="section_container">
+                @foreach($sections as $sec)
+                <div class="d-flex flex-column align-items-center">
+                        <div class='sectionCahier selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" data-section="{{$sec->id}}" data-textes="{{(isset($textes[$sec->id])) ? $textes[$sec->id] : null}}"  data-phrases="@include('include.card_phrases',['section' => $sec])"   c data-value="{{$sec->id}}"  style="background-color: {{$sec->color}}">
+                            <img src="{{asset('img/illustrations/'.$sec->logo)}}" alt="" width="45px" height="45px">
+                        </div>
+                        <div class="tiret_selection {{$sec->id == $section->id ? null : "d-none"}}" data-id="{{$sec->id}}" style="background-color: {{$sec->color}}"></div>            
+                </div>
+    
+                @endforeach           
+            </div>
+    
+        </div>
+        {{-- <div class="col-md-3">
             <div class="form-group">
 
                 @foreach($sections as $sec)
@@ -19,8 +33,8 @@
                 @endforeach
 
             </div>
-        </div>
-        <div class="col-md-5">
+        </div> --}}
+        <div class="col-md-6">
 
             @if (!$enfant->hasReussite())
 
@@ -69,7 +83,7 @@
 
 
 
-        <div class="col-md-4">
+        <div class="col-md-6">
 
 
             <div class="badge_phrase_container">

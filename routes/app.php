@@ -111,7 +111,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::post('/groupe/saveColor',[GroupeController::class,'saveColor'])->name('saveColor');
     Route::post('/groupe/saveTermes',[GroupeController::class,'saveTermes'])->name('saveTermes');
-    
+
     Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');

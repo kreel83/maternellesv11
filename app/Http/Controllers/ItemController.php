@@ -69,7 +69,6 @@ class ItemController extends Controller
             $search->notation = $request->note;
             $search->autonome = $autonome;
             $search->section_id = $item->section()->id;
-            $search->groupe = $enfant->groupe;
             $search->user_id = Auth::id();
 
 

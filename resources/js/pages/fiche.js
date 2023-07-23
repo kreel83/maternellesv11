@@ -21,7 +21,8 @@ const selectFiche = () => {
         var table = $(that).data('table')
         var section = $('.selectSectionFiche.selected').attr('data-value')
 
-        $.get('/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table, function(data) {
+        $.get('/app/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table, function(data) {
+            console.log('data', data, that)
             $(that).detach().appendTo('#mesfiches ul')
             $(that).find('.selectionner').addClass('d-none')
             $(that).find('.retirer').removeClass('d-none')
@@ -35,7 +36,7 @@ const selectFiche = () => {
         var id = $(that).attr('data-selection')
 
 
-        $.get('/fiches/retirerChoix?fiche='+id, function(data) {
+        $.get('/app/fiches/retirerChoix?fiche='+id, function(data) {
             $(that).detach().appendTo('#autresfiches ul')
             $(that).find('.selectionner').removeClass('d-none')
             $(that).find('.retirer').addClass('d-none')
@@ -44,7 +45,7 @@ const selectFiche = () => {
 }
 
 const choixTypeFiches = () => {
-    $(document).on('click','.btnSelection', function() {
+    $(document).on('click','.btnSelectionType', function() {
         $('.btnSelection').removeClass('selected')
         $(this).addClass('selected')
         var type = $(this).data('type')
@@ -164,7 +165,7 @@ const jemodifielafiche = () => {
         } else {
             var item = "new";
         }
-        window.open('/fiches/create?section='+section+'&item='+item+'&duplicate='+duplicate,'_self')
+        window.open('/app/fiches/create?section='+section+'&item='+item+'&duplicate='+duplicate,'_self')
 
     })
 }
@@ -174,8 +175,8 @@ const jeducpliquelafiche = () => {
         var item = $(this).data('id')
         var section = $(this).data('section')
         var provenance = $(this).data('provenance')
-        $.get('/fiches/duplicate?section='+section+'&item='+item+'&provenance='+provenance, function(data) {
-            window.open('/fiches?section='+section+'&type=mesfiches&item='+item,'_self')
+        $.get('/app/fiches/duplicate?section='+section+'&item='+item+'&provenance='+provenance, function(data) {
+            window.open('/app/fiches?section='+section+'&type=mesfiches&item='+item,'_self')
         })
 
 

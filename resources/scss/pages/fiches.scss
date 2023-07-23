@@ -5,8 +5,8 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-    color: #32363D;
-    border: 1px solid #32363D;
+    color: #7769FE;
+    border: 1px solid #7769FE;
     font-weight: 400;;
     width: fit-content;
     padding: 4px 24px;
@@ -17,7 +17,7 @@
     }
     &:hover {
         color: white;
-        background-color: #32363D;
+        background-color: #7769FE;
         
     }    
 } 
@@ -26,8 +26,19 @@
     color: red;
 }
 
+#editor3:hover {
+    border-color: #7769FE;
+}
+
+.label_create_fiche {
+    color: #7769FE;
+    font-size: 24px;
+    font-weight: bolder;
+    border-bottom: 4px solid #7769FE;
+}
+
 //ceci est un commentaire 
-.btnSelection {
+.btnSelection, .btnSelectionType {
     margin-top: 15px;
     border-radius: 25px;;
     z-index: 10;
@@ -52,6 +63,9 @@
         }
 
     }
+    &.droit {
+        border-radius: 0 !important;
+    }
     &.violet {
         background-color: #7769FE;
         &:hover, &.selected {
@@ -67,6 +81,11 @@
     
 } 
 
+.controle {
+    border-bottom: 5px solid #7769FE;
+    margin-bottom: 20px;
+}
+
 .btnAction {
     margin-top: 15px;
     border-radius: 25px;;
@@ -75,18 +94,26 @@
     align-items: center;
     justify-content: center;
     color: white;
-    background-color: #32363D;
+    background-color: #7769FE;
     font-weight: 400;;
     width: fit-content;
     padding: 4px 24px;
+    border: none;
+    outline: none;
     cursor: pointer;    
 } 
 
 
-#fichesView {
+
+.selectImage {
+    cursor: pointer; width: 78px; height: 70px; margin: 2px 2px; overflow: hidden;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#fichesView, #page_items, #cahierView {
     #choixFiche {
         position: relative;
-        padding-bottom: 60px;
+        padding-bottom: 20px;
 
     #pointerFiche {
         #pointer {

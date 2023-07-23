@@ -31,9 +31,17 @@
         }
 
         .notation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
-            padding: 10px 0 !important;
+            line-height: 35x;; 
             border-radius: 15px !important;
+            border: none;
+            outline: none;
+            height: 25px;
+            font-size: 14px;;
+            color: white;
         }
 
         .action {
