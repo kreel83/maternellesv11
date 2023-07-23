@@ -95,8 +95,13 @@ const preview_photo = (event) => {
         })
 
     });
+
+
+    //commentaire
+
+
     $(document).on('click','.badge_termes', function() {
-        console.log('dfdf')
+        
         var el = $(this).closest('.card-eleve')
         $(el).find('.badge_termes').removeClass('active')
         $(this).addClass('active')
