@@ -8,7 +8,7 @@ const selectItem = () => {
         const item = $(card).data('item')
         const note = $(this).data('notation')
         $(card).find('.noteChoisie').css('background-color', color)
-        $.get('/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+note, function(data) {
+        $.get('/App/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+note, function(data) {
 
         })
     })
@@ -48,7 +48,7 @@ const selectItem = () => {
                      break;   
 
         }
-        $.get('/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+notation, function(data) {
+        $.get('/app/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+notation, function(data) {
             console.log(data)
         })
     })

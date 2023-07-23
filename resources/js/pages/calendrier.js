@@ -88,7 +88,7 @@ const initCalendar = () => {
     if ($('#savePeriode').length) {
 
         var annee = $('#savePeriode').data('annee')
-        $.get('/calendar/periodes/init?annee='+annee, function(data) {
+        $.get('/app/calendar/periodes/init?annee='+annee, function(data) {
             data.forEach(function(element) {console.log(element)
                 $('.day[data-all="'+element.start+'"]').addClass('start p'+element.periode)
                 $('.day[data-all="'+element.end+'"]').addClass('end p'+element.periode)
@@ -147,7 +147,7 @@ const selection = () => {
         var points = $('.day[data-js_date="'+date+'"]').find('.day_event').text()
         console.log(points)
         var newPoints = '.'.repeat(points.length - 1)
-        $.get('calendar/event/delete/'+id, function() {
+        $.get('/app/calendar/event/delete/'+id, function() {
             $('.event_container[data-id="'+id+'"]').remove()
             $('.day[data-js_date="'+date+'"]').find('.day_event').text(newPoints)
         })
@@ -160,7 +160,7 @@ const selection = () => {
         var date = $(this).data('js_date')
         console.log(date)
         $('.bloc_event').empty()
-        $.get('/calendar/getEvent/'+date, function(data) {
+        $.get('/app/calendar/getEvent/'+date, function(data) {
             $('.bloc_event').html(data)
         })
 

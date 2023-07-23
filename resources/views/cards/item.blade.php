@@ -1,10 +1,10 @@
 <div class="card_item shadowDepth1 ui-state-default position-relative  {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-section="{{$fiche->section_id}}" data-item="{{$fiche->id}}">
 
 <div class="action">
-    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="3">Acquis</button>
-    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="2">Acquis avec aide</button>
-    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="1">En voie d'acquisition</button>
-    <button class="my-1 btn btn-sm btn-primary notation"  data-notation="0">Annuler</button>
+    <button class="my-1 btn notation" style="background-color: {{$fiche->section()->color}}" data-notation="3">Acquis</button>
+    <button class="my-1 btn notation" style="background-color: {{$fiche->section()->color}}"  data-notation="2">Acquis avec aide</button>
+    <button class="my-1 btn notation" style="background-color: {{$fiche->section()->color}}"  data-notation="1">En voie d'acquisition</button>
+    <button class="my-1 btn notation" style="background-color: {{$fiche->section()->color}}"  data-notation="0">Annuler</button>
     </div>
         <div class="card__image">
             <img src="{{asset($fiche->image_name)}}" alt="image" class="border-tlr-radius">

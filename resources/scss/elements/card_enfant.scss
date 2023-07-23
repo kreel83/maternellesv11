@@ -124,6 +124,29 @@
           background-color: var(--rose);
       }
     }
+
+    .groupe-terme {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+      bottom: 25px;
+      box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.5);
+      background-color: purple;
+      padding: 4px 24px;
+      color: white;
+      width: fit-content;
+      height: 20px;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+      font-weight: 600;
+
+    }
+
+
+
     .card-header {
       height: 50%;
       padding: 8px;
@@ -141,9 +164,13 @@
     }
     .card-body {
       .name {
-        font-family: "Style Script", cursive;
-        font-size: 1.8rem;
-        font-weight: bolder;
+        // font-family: "Style Script", cursive;
+        font-size: 1.4rem;
+        font-weight: 600;
+        span {
+          font-size: 1rem !important;
+          font-weight: 400;
+        }
       }
     }
 

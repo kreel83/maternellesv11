@@ -4,8 +4,18 @@
 
 </style>
 
+
+@php
+    // dd(Auth::user()->groupe, $enfant->groupe, $enfant, Auth::user()->type_groupe);
+@endphp
+
 <div class="card-enfant">
-  <div class="groupe {{$enfant->genre == 'G' ? 'garcon' : 'fille'}}">{{$enfant->groupe}}</div>
+  @if (Auth::user()->groupe_type == 'colors' && $enfant->groupe != null)
+    <div class="groupe" style="background-color: {{ Auth::user()->groupe[$enfant->groupe]}}"></div>
+  @endif
+  @if (Auth::user()->type_groupe == 'termes' && $enfant->groupe != null)
+    <div class="groupe-terme">{{Auth::user()->groupe[$enfant->groupe]}}</div>
+  @endif
   <div class="card-header d-flex justify-content-center">
     @if ($enfant->background)
     <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}">

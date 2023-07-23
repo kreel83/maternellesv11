@@ -45,14 +45,11 @@
         
     <div class="d-flex justify-content-between align-items-center" id="choixFiche">
         <div class="d-flex">
-            <button data-type="" class="createfiche mx-2 btnSelection  violet {{$type == "createfiche" ? 'active' : 'null' }}" >Création de fiche</button>
-
-            <div data-type="autresfiches" data-position="left" class="btnSelection vert mx-2 selected">Liste des fiches</div>
-            <div data-type="mesfiches"  data-position="right" class="btnSelection vert ">Ma sélection</div>                                
-
+           
+           
         </div>
 
-                @include('fiches.filtre')
+                
     </div>
     <div class="d-flex" id="pointerFiche">
             <div id="pointer" class='w-50'></div>
@@ -67,14 +64,14 @@
             }
 
             /* Track */
-            ::-webkit-scrollbar-track {
-                box-shadow: inset 0 0 5px grey;
+            ::-webkit-bar-track {
+                box-shadow: inset 0 0 5px #7769FE;
                 border-radius: 10px;
             }
 
             /* Handle */
             ::-webkit-scrollbar-thumb {
-                background: #4d95ff;
+                background: #7769FE;
                 border-radius: 20px;
             }
         }
@@ -83,8 +80,22 @@
     /* Handle */
 
     </style>
-    <div class="o-container" style="height: 80vh; width: 100%; overflow-y: auto;">
 
+        <div class="d-flex controle justify-content-between" style="width: 1080px">
+
+            <div class="d-flex ">
+
+                <div data-type="autresfiches" data-position="left" class="btnSelectionType violet droit selected">Liste des fiches</div>
+                <div data-type="mesfiches"  data-position="right" class="btnSelectionType violet droit">Ma sélection</div>                                
+            </div>
+            <div class="d-flex pb-3">
+                <div>
+                    @include('fiches.filtre')
+                </div>
+                <button data-type="" class="createfiche mx-2 btnSelection  violet {{$type == "createfiche" ? 'active' : 'null' }}" >+</button>
+            </div>
+        </div>
+    <div class="o-container" style="height: 80vh; width: 1080px; overflow-y: auto;">
 
 
         <div  data-section="{{ $section->id }}">

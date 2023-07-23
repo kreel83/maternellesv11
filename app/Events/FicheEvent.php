@@ -26,21 +26,21 @@ class FicheEvent
     {
 
 
-        if ($fiche->parent_type == 'personnels') {
+        // if ($fiche->parent_type == 'personnels') {
 
-            $item = Personnel::find($fiche->item_id);
-            $fiche->item = $item;
-            $fiche->user_id = $item->user_id;
-        } else {
+        //     $item = Personnel::find($fiche->item_id);
+        //     $fiche->item = $item;
+        //     $fiche->user_id = $item->user_id;
+        // } else {
 
-            $item = Item::find($fiche->item_id);
+        //     $item = Item::find($fiche->item_id);
 
-            $fiche->item = $item;
+        //     $fiche->item = $item;
           
-            $fiche->user_id = $item->user_id;
-        }
+        //     $fiche->user_id = $item->user_id;
+        // }
 
-        $fiche->user_id = $fiche->item->user_id;
+        // $fiche->user_id = $fiche->item->user_id;
 
     }
 

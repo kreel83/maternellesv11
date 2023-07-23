@@ -48,7 +48,7 @@
                 </div>
                 <div class="tab-pane fade mt-5" id="termes-tab-pane" role="tabpanel" aria-labelledby="termes-tab" tabindex="0">
                     <textarea  class="form-control" name="" id="termes" cols="10" rows="5">
-                        
+                        {{ $type == 'termes' ? $groupe : null}}
                     </textarea>
                     <div>
                         <button class="btn btn-primary mt-5" id="saveTermes">Sauvegarder</button>

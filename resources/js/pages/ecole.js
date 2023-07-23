@@ -4,7 +4,7 @@ import * as bootstrap from 'bootstrap';
 const chercheCommune = () => {
     $(document).on('click','#chercheCommuneBtn', function() {
         var search = $('#chercheDpt').val()
-        $.get('/ecole/chercheCommune?search='+search, function(data) {
+        $.get('/app//ecole/chercheCommune?search='+search, function(data) {
             $('#communeContainer').html(data)
         })
     })
@@ -13,7 +13,7 @@ const chercheCommune = () => {
 const chercheEcole = () => {
     $(document).on('click','.commune', function() {
         var code = $(this).data('codecom')
-        $.get('/ecole/chercheEcoles?commune='+code, function(data) {
+        $.get('/app/ecole/chercheEcoles?commune='+code, function(data) {
             $('#listeEcoles').html(data)
         })
     })
@@ -27,7 +27,7 @@ const choixEcole = () => {
 
     $(document).on('click','.ecole', function() {
                 var choixEcole = $(this).data('num')
-        $.get('/ecole/confirmation?ecole='+choixEcole, function(data) {
+        $.get('/app/ecole/confirmation?ecole='+choixEcole, function(data) {
             $('#confirmationEcole .modal-body').html(data)
             $('#confirmeEcole').attr('data-id',choixEcole)
             myModal.show()            
@@ -37,7 +37,7 @@ const choixEcole = () => {
     $(document).on('click','#confirmeEcole', function() {
         var choixEcole = $(this).data('id') 
  
-        $.get('/ecole/choixEcole?ecole='+choixEcole, function(data) {
+        $.get('/app/ecole/choixEcole?ecole='+choixEcole, function(data) {
             myModal.hide()  
             console.log(data)
             // var myToastEl = document.getElementById('myToast')

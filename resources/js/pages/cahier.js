@@ -23,9 +23,14 @@ const saveTexte = (quill) => {
         var enfant = $(this).data('enfant')
         var section = $(this).data('section')
         $('.sectionCahier[data-section="'+section+'"]').attr('data-textes', texte)
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $.ajax({
             method: 'POST',
-            url: '/enfants/'+enfant+"/cahier/save",
+            url: '/app/enfants/'+enfant+"/cahier/save",
             data: {
                 texte: texte,
                 section: section
@@ -42,6 +47,11 @@ const saveTexteReussite = (quill) => {
 
         var enfant = $(this).data('enfant')
         var definitif = $('#definitif').prop('checked')
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $.ajax({
             method: 'POST',
             url: '/enfants/'+enfant+"/cahier/saveTexteReussite",
@@ -71,7 +81,7 @@ const clickOnNav = (quill) => {
         quill.root.innerHTML = texte        
         $('.saveTexte').attr('data-section', section)
         
-        $.get('/get_liste_phrase/'+section+'/'+enfant, function(data) {
+        $.get('/app/get_liste_phrase/'+section+'/'+enfant, function(data) {
             $('.badge_phrase_container').html(data)
         })
     })
@@ -99,7 +109,7 @@ const saveCommentaireGeneral = (quill) => {
 
         $.ajax({
             method: 'POST',
-            url : '/enfants/' + enfant + '/cahier/saveCommentaireGeneral',
+            url : '/app/enfants/' + enfant + '/cahier/saveCommentaireGeneral',
             data: {
                 reussite: reussite,
                 commentaireGeneral: commentaireGeneral
@@ -116,6 +126,11 @@ const clickOnDefinif = (quill) => {
     $(document).on('change','#definitif', function() {
         const definitif = $(this).prop('checked')
         var enfant = $(this).data('enfant')
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $.ajax({
             method: 'POST',
             url : '/enfants/' + enfant + '/cahier/definitif',
@@ -144,7 +159,7 @@ const apercu = (quill) => {
             console.log('caca')
             var enfant = $(this).data('enfant')
             var periode = $(this).data('periode')
-            $.get('/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
+            $.get('/app/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
                 $('#editor').css('height', '800px')
                 quill.setText('');
                 console.log(data)

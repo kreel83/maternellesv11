@@ -93,7 +93,8 @@ class ficheController extends Controller
     }
     public function choix(Request $request) {
 
-{
+
+  
             $fiche = Fiche::where('user_id', Auth::id())->where('section_id',$request->section)->orderBy('order', 'DESC')->first();
             $order =  ($fiche) ? $fiche->order + 1 : 1;
             $fiche = new Fiche();
@@ -104,7 +105,7 @@ class ficheController extends Controller
             $fiche->user_id = Auth::id();
             $fiche->save();
             $t = $fiche->id;
-        }
+        
 
         return $t;
     }

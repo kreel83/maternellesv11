@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Mon cahier de réussite'])
+@extends('layouts.mainMenu', ['titre' => 'Mon cahier de réussite', 'menu' => 'item' ])
 
 @section('content')
 <div class="container-fluid row">

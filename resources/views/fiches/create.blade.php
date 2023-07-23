@@ -7,10 +7,10 @@
 
 
 <div class="container-fluid row">
-    <div class="col-md-6">
+    <div class="col-md-6" style="padding: 0 5rem">
         @if ($new)
         
-        <h2>creation de fiche</h2>
+        <div class="label_create_fiche">Création de fiche</div>
         @else
         <h2>modification de la fiche {{$itemactuel->name}}</h2>
         @endif
@@ -93,7 +93,7 @@
                         
                         <div id="photoEnfantImg">
                             <input type="hidden" name="imageName" id="imageName">
-                            <i style="font-size: 200px; z-index: 4000" class="fa-light fa-image logoImage {{$new ? null : 'd-none'}}"></i>
+                            <i style="cursor: pointer;font-size: 200px; z-index: 4000; color: lightgray" class="fa-light fa-image logoImage {{$new ? null : 'd-none'}}"></i>
                             <img class="dlImage {{$new ? 'd-none' : null}}"  alt="your image" src="{{asset($itemactuel->image_name)}}" width="250px" height="150" style="cursor: pointer; z-index: 6000" />
                         </div>
 
@@ -102,7 +102,7 @@
                 {{-- @php
                 if($itemactuel) dd($itemactuel->phrase);
                 @endphp --}}
-                <div id="editor3" class="mt-3" data-section="" style="height: 100px">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
+                <div id="editor3" class="mt-3" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
                 <textarea class="mt-3 d-none" name="phrase" id="phraseForm" style="width: 100%" rows="5" > {!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</textarea>
 
                 <style>
@@ -125,16 +125,19 @@
             
                     </table> --}}
                 </div>
+                <div class="d-flex justify-content-between">
+                    @if ($new || $duplicate)
+                        <button type="submit" name="submit" value="save" class="btnAction">Sauvegarder</button>
+                        <button type="submit" name="submit" value="save_and_select" class="btnAction">Sauvegarder et sélectionner</button>
+                    @else
+
+                        <button type="submit" name="submit" value="modif" class="btnAction">Modifier</button>
+
+                    @endif
+                    <button type="button" class="btnAction">Annuler</button>                    
+                </div>
             
-                @if ($new || $duplicate)
-                    <button type="submit" name="submit" value="save" class="btnAction">Sauvegarder la nouvelle fiche</button>
-                    <button type="submit" name="submit" value="save_and_select" class="btnAction">Sauvegarder et sélectionner la nouvelle fiche</button>
-                @else
 
-                    <button type="submit" name="submit" value="modif" class="btnAction">Modifier la fiche</button>
-
-                @endif
-                <button type="button" class="btnAction">Annuler</button>
             
             
             
@@ -142,9 +145,9 @@
             
         </div>
         <div class="col-md-6">
-            <div class="d-flex flex-wrap" style="height: 80vh; overflow-y: auto">
+            <div class="d-flex flex-wrap" style="height: 80vh; overflow-y: auto; background-color: #7769FE;">
                 @foreach ($images as $image)
-                <div class="selectImage" data-id="{{$image->id}}" data-image="{{$image->name}}" style="cursor: pointer; width: 80px; height: 80px; margin: 2px; border: 1px solid grey; overflow: hidden">
+                <div class="selectImage" data-id="{{$image->id}}" data-image="{{$image->name}}" >
                     <img src="{{asset('img/items/'.$image->name)}}" alt="" width="80">
 
                 </div>

@@ -10,7 +10,17 @@ use Illuminate\Support\Facades\Auth;
 class GroupeController extends Controller
 {
     public function index() {
-        return view('groupes.index');
+        $type = Auth::user()->type_groupe;
+        $groupe = Auth::user()->groupe;
+        if ($type == 'termes') {
+            $groupe = join(PHP_EOL, $groupe );
+        } else {
+
+        }
+        
+        return view('groupes.index')
+            ->with('type', $type)
+            ->with('groupe', $groupe);
     }
 
     public function affectation_groupe() {
@@ -41,6 +51,9 @@ class GroupeController extends Controller
 
     public function saveTermes(Request $request) {
         $user = Auth::user();
+        Enfant::where('user_id', $user->id)->update([
+            'groupe' => null
+        ]);
 
         $r = $request->tableau;
         $liste = explode(PHP_EOL, $r);

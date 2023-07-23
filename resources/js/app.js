@@ -60,7 +60,7 @@ $(document).ready(function($) {
         $(this).parent().find( 'div' ).toggleClass( 'card__social--active' );
         $(this).toggleClass('share-expanded');
         if (notation != null) {
-            $.get('/resultat/setNote?enfant='+enfant+'&item='+item+'&notation='+notation, function(data) {
+            $.get('/app/resultat/setNote?enfant='+enfant+'&item='+item+'&notation='+notation, function(data) {
                 // if (data == 'raz') {
                 //     $(that).find('.share-toggle').css('background-color','white')
                 // } else {

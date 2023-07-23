@@ -107,6 +107,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
 
 
+    Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
+    Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');
+    Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
+    Route::post('/groupe/saveColor',[GroupeController::class,'saveColor'])->name('saveColor');
+    Route::post('/groupe/saveTermes',[GroupeController::class,'saveTermes'])->name('saveTermes');
+
     Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');

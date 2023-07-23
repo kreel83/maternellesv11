@@ -26,14 +26,14 @@ class Enfant extends Model
     ];
     
     const GROUPE_COLORS = [
-        '#c1' => '#fd5959',
-        '#c2' => '#ff9c6d',
-        '#c3' => '#fcff82',
-        '#c4' => '#afc5ff',             
-        '#c5' => '#a1c45a',
-        '#c6' => '#fff9e0',
-        '#c7' => '#f1c550',            
-        '#c8' => '#ea4c4c',            
+        '1' => '#fd5959',
+        '2' => '#ff9c6d',
+        '3' => '#fcff82',
+        '4' => '#afc5ff',             
+        '5' => '#a1c45a',
+        '6' => '#fff9e0',
+        '7' => '#f1c550',            
+        '8' => '#ea4c4c',            
         
 
     ];
