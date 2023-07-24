@@ -39,12 +39,12 @@
     "css": [
       "assets/app-7c897cab.css"
     ],
-    "file": "assets/app-b769dbb5.js",
+    "file": "assets/app-6c8ef7f2.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-ae55bc3d.css",
+    "file": "assets/app-7ea7aef9.css",
     "isEntry": true,
     "src": "resources/scss/app.scss"
   }

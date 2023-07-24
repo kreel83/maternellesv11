@@ -56,6 +56,13 @@
     </div>
 
     <style>
+                    .createfiche {
+                width: 34px !important;
+                height: 34px !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         /* width */
         .o-container {
             /* width */
@@ -74,6 +81,8 @@
                 background: #7769FE;
                 border-radius: 20px;
             }
+
+
         }
 
 
@@ -81,7 +90,7 @@
 
     </style>
 
-        <div class="d-flex controle justify-content-between" style="width: 1080px">
+        <div class="d-flex controle justify-content-between" >
 
             <div class="d-flex ">
 
@@ -92,16 +101,18 @@
                 <div>
                     @include('fiches.filtre')
                 </div>
-                <button data-type="" class="createfiche mx-2 btnSelection  violet {{$type == "createfiche" ? 'active' : 'null' }}" >+</button>
+                <button data-type="" class="createfiche mx-2 btnSelection  p-0 violet {{$type == "createfiche" ? 'active' : 'null' }}" >
+                    <i class="fa-solid fa-plus"></i>
+                </button>
             </div>
         </div>
-    <div class="o-container" style="height: 80vh; width: 1080px; overflow-y: auto;">
+    <div class="o-container" style="height: 80vh; overflow-y: auto;">
 
 
         <div  data-section="{{ $section->id }}">
             <div id="autresfiches" class="listFiches d-flex justify-content-center">
                 
-                <ul class="fiche_container fiches autresfiches" >
+                <ul class="fiche_container fiches autresfiches m-0 p-0" >
 
                     @foreach ($universelles as $fiche)
                         @include('cards.universelle',['type' => 'autresfiches'])
@@ -110,7 +121,7 @@
             </div>
 
             <div id="mesfiches" class="d-none listFiches justify-content-center" >
-                <ul class="fiche_container fiches mesfiches" id="sortable" style="width: calc((240px * 4) + 120px)">
+                <ul class="fiche_container fiches mesfiches p-0 m-0" id="sortable" >
                 @foreach ($fiches as $fiche)
                     @include('cards.fiche',['type' => 'mesfiches'])
                 @endforeach

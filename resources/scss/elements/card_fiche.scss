@@ -22,11 +22,11 @@
         display: flex;
         flex-direction: column;
         background-color: white;
-        margin: 10px;
+        margin: 5px;
         position: relative;
         overflow: hidden;
         color: #6759FF;
-        border-radius: 25px;;
+        border-radius: 25px 0 25px 0;
 
         &:hover {
             .action {
