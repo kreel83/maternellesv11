@@ -20,8 +20,16 @@
 
 
 
+    <style>
+        .arrowLeft a{
+            font-size: 35px;
+            color: purple;
+        }
+    </style>
 
-
+@php
+    $degrades = App\Models\Enfant::DEGRADE;
+@endphp
 
     <div class="col-md-12 position-relative">
         <div class="noFiche d-none ">
@@ -38,9 +46,14 @@
         @endforeach 
     </div>--}}
 
-    <div class="d-flex justify-content-between container">
+    <div class="d-flex justify-content-between container align-items-center mb-5">
+            <div class="arrowLeft">
+                <a href="{{route('enfants')}}">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            </div>
 
-            <div class="d-flex align-items-center" style="width: 250px; height: 60px; border-radius: 40px; border: 1px solid grey; " >
+            {{-- <div class="d-flex align-items-center" style="width: 250px; height: 60px; border-radius: 40px; border: 1px solid grey; " >
                 <div style="border-radius: 50%; overflow: hidden; width: 60px; height: 60px ">            
                     <img src="https://lesmaternelles.kreel.fr//storage/MOLMAG47/photos/639f4f4c28802.jpg" alt="rover" width="60">           
                 </div>
@@ -48,9 +61,21 @@
                     <div>{{$enfant->prenom}}</div>
                     <div>{{$enfant->nom}}</div>
                 </div>      
-            </div>
+            </div> --}}
             <div  data-section="{{ $section->id }}" class="liste_section">
                 <div class="section_container">
+                    @if ($enfant->background)
+                    <div class="m-2 degrade_card_enfant animaux little"  style="background-image: {{$degrades[$enfant->background]}}">
+                        <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="60">
+                    
+                    </div>
+                    @else
+                      <img src="{{asset($enfant->photoEleve)}}" alt="rover"  width="60" />
+                    @endif
+                    <div class="mx-3">
+                        <div>{{$enfant->prenom}}</div>
+                        <div>{{$enfant->nom}}</div>
+                    </div>   
                     @foreach($sections as $sec)
                     <div class="d-flex flex-column align-items-center">
                         <div class='selectSectionFiche selectSectionItem {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
@@ -63,10 +88,10 @@
                 </div>
                 
             </div>
-            <div class="d-flex align-items-center" style="width: fit-content; padding: 0 16px;  height: 60px; border-radius: 40px; border: 1px solid grey; " >
+            <div class="d-flex align-items-center" >
                 
                 
-                <a href="{{route('enfants')}}">Retour à la classe</a>
+              
                 
             </div>
         </div>

@@ -1,16 +1,28 @@
 @extends('layouts.mainMenu', ['title' => 'Mon cahier de réussite','menu' => 'classe'])
 
 @section('content')
-    <h1 class="text-center">Cahier de réussite de {{$enfant->prenom}}</h1>
 
-    <h3 class="text-center">
-       {{$title}}
 
-    </h3>
+    @php
+    $degrades = App\Models\Enfant::DEGRADE;
+@endphp
 
     <div id="cahierView" class="row px-5" data-enfant="{{$enfant->id}}">
-        <div  data-section="{{ $section->id }}" class="liste_section">
+        <div  data-section="{{ $section->id }}" class="liste_section mb-5">
             <div class="section_container">
+                @if ($enfant->background)
+                <div class="m-2 degrade_card_enfant animaux little"  style="background-image: {{$degrades[$enfant->background]}}">
+                    <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="60">
+                
+                </div>
+                @else
+                  <img src="{{asset($enfant->photoEleve)}}" alt="rover"  width="60" />
+                @endif
+                <div class="ms-1 me-5 pt-2" style="font-size: 14px">
+                    <div>{{$enfant->prenom}} {{substr($enfant->nom,0,1)}}</div>
+                    <div>Cahier de réussite</div>
+                    <div> {{$title}}</div>
+                </div> 
                 @foreach($sections as $sec)
                 <div class="d-flex flex-column align-items-center">
                         <div class='sectionCahier selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" data-section="{{$sec->id}}" data-textes="{{(isset($textes[$sec->id])) ? $textes[$sec->id] : null}}"  data-phrases="@include('include.card_phrases',['section' => $sec])"   c data-value="{{$sec->id}}"  style="background-color: {{$sec->color}}">

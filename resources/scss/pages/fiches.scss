@@ -14,10 +14,12 @@
     cursor: pointer;
     &.selected {
         font-weight: bolder;
-    }
-    &:hover {
         color: white;
         background-color: #7769FE;
+    }
+    &:hover {
+        color: #6559FF;
+        background-color: #E5E3FF;
         
     }    
 } 
@@ -38,7 +40,7 @@
 }
 
 //ceci est un commentaire 
-.btnSelection, .btnSelectionType {
+.btnSelectionType {
     margin-top: 15px;
     border-radius: 25px;;
     z-index: 10;
@@ -49,13 +51,50 @@
     font-weight: 400;;
     width: fit-content;
     padding: 4px 24px;
-    color: white !important;
+    background-color: white !important;
+    border: none !important;
+    outline: none !important;    
+    cursor: pointer;
+
+    &.droit {
+        border-radius: 0 !important;
+    }
+    &.violet {
+        color: #7769FE;
+        border: 1px solid #7769FE !important;
+        &:hover {
+            color: #6559FF !important;
+            background-color: #E5E3FF;
+            
+        }
+        &.selected {
+            background-color: #6559FF !important;
+            color: #E5E3FF !important;
+            
+        }
+
+    }
+
+    
+} 
+.btnSelection {
+    margin-top: 15px;
+    border-radius: 25px;;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
     border: none !important;
     outline: none !important;
     
     cursor: pointer;
     &.vert {
-        background-color: #16C1BC;
+        color: #16C1BC;
+        border: 1px solid #16C1BC;
         &:hover, &.selected {
             color:  #16C1BC !important;
             background-color: white !important;
@@ -63,21 +102,26 @@
         }
 
     }
-    &.droit {
-        border-radius: 0 !important;
-    }
+
     &.violet {
         background-color: #7769FE;
-        &:hover, &.selected {
-            color:  #7769FE !important;
-            background-color: white !important;
-            border: 1px solid #7769FE !important;
+        color: white;
+        border: 1px solid #7769FE !important;
+        &:hover {
+            color: #6559FF !important;
+            background-color: #E5E3FF !important;
+            border-color: #E5E3FF !important;
+
+            
+        }
+        &.selected {
+            background-color: #6559FF !important;
+            color: #E5E3FF !important;
+            
         }
 
     }
-    &.selected {
-       font-weight: bolder;
-    }
+
     
 } 
 

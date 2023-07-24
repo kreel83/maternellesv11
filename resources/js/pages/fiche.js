@@ -46,7 +46,7 @@ const selectFiche = () => {
 
 const choixTypeFiches = () => {
     $(document).on('click','.btnSelectionType', function() {
-        $('.btnSelection').removeClass('selected')
+        $('.btnSelectionType').removeClass('selected')
         $(this).addClass('selected')
         var type = $(this).data('type')
         $('.listFiches').addClass('d-none')
