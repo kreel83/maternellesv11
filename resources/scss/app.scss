@@ -7,6 +7,7 @@
 @import 'elements/menu';
 @import 'elements/boutons';
 @import 'elements/input';
+@import './elements/composants';
 
 @import 'pages/items';
 @import 'pages/commentaires';
@@ -29,7 +30,7 @@
 @import 'vitrine/temoignage';
 
 @import  '../../node_modules/quill/dist/quill.snow.css';
-@import './composants';
+
 //@import "~@fortawesome/fontawesome-pro/scss/fontawesome";
 
 // Font Awesome

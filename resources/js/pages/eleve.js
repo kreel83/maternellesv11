@@ -27,6 +27,12 @@ const preview_photo = (event) => {
         readURL(this);
     });
 
+    $(document).on('click',".avatar_form",function() {
+        $('.avatar_form').removeClass('selected')
+        $(this).addClass('selected')
+        $('#genre').val($(this).data('genre'))
+    })
+
     $(document).on('click',".color_rond",function() {
         var id = $(this).closest('.card-eleve').data('eleve')
         var color =  $(this).data('color')
@@ -38,6 +44,15 @@ const preview_photo = (event) => {
         })
 
     })
+
+    $(document).on('click',".table-cours tr",function() {
+        var state = $(this).find('input').attr('checked')
+        console.log(state, !state)
+        $(this).find('input').attr('checked', !state)
+        $(this).toggleClass('selected')
+
+    })
+
 
     $(document).on('click',"#saveTermes",function() {
         var termes = $('#termes').val();
@@ -157,20 +172,21 @@ const photo_eleve = () => {
         $('#photo_input').trigger('click')
     })
 
-    $(document).on('click','#tableau_eleves .remove', function(e) {
+    $(document).on('click','.liste_classe .remove_eleve', function(e) {
         e.stopImmediatePropagation()
-        var id = $(this).closest('tr').data('id')
-        $(this).closest('tr').remove()
+        var id = $(this).closest('.fiche_eleve_div').data('id')
+        var prof = $(this).closest('.fiche_eleve_div').data('prof')
+        $(this).closest('.fiche_eleve_div').remove()
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
         });
         $.ajax({
             method: 'POST',
-            url: "/eleves/removeEleve",
+            url: "/app/eleves/removeEleve",
             data: {
                 eleve: id,
-                prof: $('#selectProf').val()
+                prof: prof
             },
             success: function(data) {
                 $('#tableau_tous').html(data)

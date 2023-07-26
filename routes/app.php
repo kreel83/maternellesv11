@@ -131,7 +131,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
     Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
-    Route::get('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
+    Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
     Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
