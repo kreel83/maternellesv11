@@ -59,6 +59,7 @@ class eleveController extends Controller
 
 
     public function removeEleve(Request $request) {
+        
             $e = Enfant::find($request->eleve);
             if ($request->prof == 'null') {
                 $e->delete();

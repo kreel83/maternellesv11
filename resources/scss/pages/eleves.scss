@@ -1,7 +1,8 @@
 .liste_eleves, .import_eleves_container {
 
+    height: calc(100vh - 100px);
     border-radius: 15px;;
-    height: 550px; overflow-y: auto; margin-top: 16px;
+    overflow-y: auto; margin-top: 16px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
         .wrapper {
         font-size: 14px;
@@ -34,6 +35,43 @@
 }
 
 
+.table-cours {
+    tr {
+        cursor: pointer;
+        background-color: white;
+        color: #6559FF;
+        border-radius: 12px;
+        .custom-badge {
+            color: white;
+            background-color: #6559FF;
+            font-size: 10px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4px 0;
+        }
+        &.selected {
+            background-color: #6559FF;
+            color: white;
+            .custom-badge {
+                color: #6559FF;
+                background-color: white;
+                border: 1px solid white;
+
+            }
+
+
+        }
+        &:hover {
+            background-color: #a7a2ec;
+            color: white;
+
+        }
+    }
+}
 
   #tableau_tous {
     td {

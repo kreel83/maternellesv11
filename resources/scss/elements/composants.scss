@@ -1,0 +1,71 @@
+/* Définir la classe pour l'icône dans la balise <i> */
+.icone-input {
+    position: relative;
+    color: #545454;
+    font-size: 16px;;
+        i {
+            position: absolute;
+            top: 15px;
+            color: #545454;
+            left: 20px; /* Ajustez la valeur selon vos besoins pour positionner l'icône horizontalement */
+
+        }
+        
+        /* Style supplémentaire pour le champ de saisie */
+        input {
+            width: 100%;;
+            font-size: 16px;;
+            padding: 10px; /* Ajustez la valeur selon vos besoins */
+            padding-left: 50px; /* Ajustez cette valeur pour laisser de l'espace à l'icône */
+            border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */
+            border-radius: 8px; /* Ajustez selon le style souhaité */
+            &:focus {
+                outline: 1px solid #6759FF;
+            }
+        }
+ 
+  }
+
+.custom-area {
+    color: #545454;
+    font-size: 16px;;
+
+        
+        /* Style supplémentaire pour le champ de saisie */
+        textarea {
+            width: 100%;;
+            font-size: 16px;;
+            padding: 5px; /* Ajustez la valeur selon vos besoins */
+            /* Ajustez cette valeur pour laisser de l'espace à l'icône */
+            border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */
+            border-radius: 8px; /* Ajustez selon le style souhaité */
+            height: 120px ;
+            &:focus {
+                outline: 1px solid #6759FF;
+            }
+        }
+ 
+  }
+  
+.custom-select{
+    color: #545454;
+    font-size: 16px;;
+
+        
+        /* Style supplémentaire pour le champ de saisie */
+       
+            width: 100%;;
+            font-size: 16px;;
+            padding: 5px; /* Ajustez la valeur selon vos besoins */
+            /* Ajustez cette valeur pour laisser de l'espace à l'icône */
+            border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */
+            border-radius: 8px; /* Ajustez selon le style souhaité */
+           
+            &:focus {
+                outline: 1px solid #6759FF;
+            }
+       
+ 
+  }
+
+  

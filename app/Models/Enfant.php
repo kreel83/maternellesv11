@@ -51,10 +51,14 @@ class Enfant extends Model
     }
 
 
-    public function lastUser() {
+    public function lastUser($l = false) {
         $user = User::find($this->user_n1_id);
-        if ($user) return $user->name.' '.$user->prenom;
+        if ($user) return !$l ? $user->name.' '.$user->prenom : substr($user->name,0,1).substr($user->prenom,0,1);
         return 'nouvel élève';
+    }
+
+    public function lastProfId() {
+        return $this->user_n1_id;
     }
 
     public function user() {

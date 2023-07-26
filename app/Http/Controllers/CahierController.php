@@ -6,6 +6,7 @@ use App\Models\Cahier;
 use App\Models\Commentaire;
 use App\Models\Enfant;
 use App\Models\Equipe;
+use App\Models\Image;
 use App\Models\Myperiode;
 use App\Models\Resultat;
 use App\Models\Reussite;
@@ -91,24 +92,31 @@ class CahierController extends Controller
 
 
         $rep = Auth::user()->repertoire;
-        $resultats_items = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
+        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
            ->join('sections','sections.id','resultats.section_id')
             ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
-        $resultats_personnels = Resultat::select('personnels.*','resultats.*','sections.name as name_section','sections.color')->join('personnels','personnels.id','resultats.item_id')
-           ->join('sections','sections.id','resultats.section_id')
-            ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
-            $resultats = $resultats_items->merge($resultats_personnels);
+         
 
+        // $resultats_personnels = Resultat::select('personnels.*','resultats.*','sections.name as name_section','sections.color')->join('personnels','personnels.id','resultats.item_id')
+        //    ->join('sections','sections.id','resultats.section_id')
+        //     ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
+        //     $resultats = $resultats_items->merge($resultats_personnels);
+
+        foreach ($resultats as $resultat) {
+            $p = Image::find($resultat->image_id);
+            $resultat->image = null;
+            if ($p) {
+                $resultat->image = 'storage/items/'.$p->name;
+            }
+        }
 
         $resultats = $resultats->groupBy('section_id')->toArray();
+ 
         $sections = Section::all()->toArray();
         $s = array();
         foreach ($sections as $section) {
             $s[$section['id']] = $section;
-
         }
-
-
 
         $enfant = Enfant::find($id);
         $name = $enfant->prenom.' '.$enfant->nom;
@@ -129,6 +137,7 @@ class CahierController extends Controller
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
 //dd($resultats);
+
 
 
         if ($state == 'see') {
@@ -189,7 +198,12 @@ class CahierController extends Controller
 
 
     public function saveCommentaireGeneral($id, Request $request) {
-        $r = new Reussite();
+
+        $r = Reussite::where('enfant_id', $id)->where('user_id', Auth::id())->first();
+        if (!$r) {
+            $r = new Reussite();
+            
+        } 
         $r->user_id = Auth::id();
         $r->enfant_id = $id;
         $r->texte_integral = $request->reussite;

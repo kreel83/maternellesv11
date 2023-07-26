@@ -13,13 +13,13 @@
 
         <div class="col-md-6" style="margin-bottom: 20px" id="nav-apercu" data-reussite="{{$reussite}}">
         
-                <div class="d-flex w-100 justify-content-between align-items-center">
+                <div class="d-flex w-100 justify-content-between align-items-center pb-2">
 
                     @if ($isreussite)
                         <a target="_blank" href="{{route('seepdf',['id' => $enfant->id,'state' => 'see'])}}" data-enfant="{{$enfant->id}}"
                         class="btn btn-primary" id="pdf">Voir le PDF</a>
-                        <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"
-                        class="btn btn-primary" id="pdf">Sauvegarder le PDF</a>
+                        {{-- <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"
+                        class="btn btn-primary" id="pdf">Sauvegarder le PDF</a> --}}
 
 
                         <div class="form-check form-switch">
@@ -30,9 +30,7 @@
                     @endif
                 </div>
                 <div class="position-relative">
-                    <button data-section="apercu" data-enfant="{{$enfant->id}}"
-                                style="top: 6px; right: 6px" class="btn btn-dark btn-sm position-absolute" id="saveCommentaireGeneral">Sauvegarder
-                        </button>
+
                     <div id="editor" data-section="" data-enfant="92" style="height: 400px" class="ql-container ql-snow">
 
                     </div>                
@@ -56,10 +54,11 @@
                     @endforeach
                     @endif
             </select>
-            <textarea id="commentaire_general" data-enfant="92" style="width: 100%" rows="10">
-                {{ $isreussite ? $isreussite->commentaire_general : null}}
-            </textarea>
+            <textarea id="commentaire_general" data-enfant="92" style="width: 100%" rows="10">{{ $isreussite ? $isreussite->commentaire_general : null}}</textarea>
             <div class="mt-3" id="instruction"></div>
+            <button data-section="apercu" data-enfant="{{$enfant->id}}"
+                class="btnSelection violet btn-sm" id="saveCommentaireGeneral">Sauvegarder
+            </button>
         </div>
 
 

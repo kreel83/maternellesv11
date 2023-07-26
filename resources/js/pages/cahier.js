@@ -19,7 +19,7 @@ const saveCommentaireDefinitif = (quill, quill2) => {
 
 const saveTexte = (quill) => {
     $(document).on('click','.saveTexte', function() {
-        var texte = quill.getText()
+        var texte = quill.root.innerHTML
         var enfant = $(this).data('enfant')
         var section = $(this).data('section')
         $('.sectionCahier[data-section="'+section+'"]').attr('data-textes', texte)
@@ -106,7 +106,11 @@ const saveCommentaireGeneral = (quill) => {
         var reussite = quill.root.innerHTML
         var commentaireGeneral = $('#commentaire_general').val()
 
-
+       
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+        });
         $.ajax({
             method: 'POST',
             url : '/app/enfants/' + enfant + '/cahier/saveCommentaireGeneral',
@@ -133,7 +137,7 @@ const clickOnDefinif = (quill) => {
         });
         $.ajax({
             method: 'POST',
-            url : '/enfants/' + enfant + '/cahier/definitif',
+            url : '/app/enfants/' + enfant + '/cahier/definitif',
             data: {
                 state: definitif,
                 quill: quill.getText()
