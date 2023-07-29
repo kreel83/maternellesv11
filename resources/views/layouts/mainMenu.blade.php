@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Auth;
             </a></header>
           <nav class="dashboard-nav-list">
             <a href="{{route('home')}}" class="dashboard-nav-item {{$menu == 'accueil' ? 'active' : null}}"><i class="fal fa-home"></i>Accueil </a>
-            <a href="#" class="dashboard-nav-item  {{$menu == 'dashboard' ? 'active' : null}}"><i class="fal fa-columns"></i> dashboard </a>
+            <a href="{{route('depart')}}" class="dashboard-nav-item  {{$menu == 'dashboard' ? 'active' : null}}"><i class="fal fa-columns"></i> dashboard </a>
             <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fal fa-users"></i> Ma classe </a>
             {{-- <div class='dashboard-nav-dropdown'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Disciplines </a>
@@ -81,6 +81,20 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
             <a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>
+
+            @php
+              $params = in_array($menu, ['souscrire','resilier','reactiver','facture']);
+            @endphp
+            <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon abonnement</a>      
+              <div class='dashboard-nav-dropdown-menu'>
+                <a href="{{route('subscribe.cardform')}}" class="dashboard-nav-dropdown-item {{$menu == 'souscrire' ? 'active' : null}}">Souscrire un abonnement</a>
+                <a href="{{route('subscribe.cancel')}}" class="dashboard-nav-dropdown-item {{$menu == 'resilier' ? 'active' : null}}">Résilier mon abonnement</a>
+                <a href="{{route('subscribe.resume')}}" class="dashboard-nav-dropdown-item {{$menu == 'reactiver' ? 'active' : null}}">Réactiver mon abonnement</a>
+                <a href="{{route('subscribe.invoice')}}" class="dashboard-nav-dropdown-item {{$menu == 'facture' ? 'active' : null}}">Mes factures</a>
+              </div>
+            </div>
+
             <a class="dashboard-nav-item  {{ $menu == 'contact' ? 'active' : null }}" href="{{route('contact')}}"><i class="fa-regular fa-envelope"></i> Nous contacter</a>
             <div class="nav-item-divider"></div>
             <a href="{{route('deco')}}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>

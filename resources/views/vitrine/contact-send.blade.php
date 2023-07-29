@@ -1,5 +1,10 @@
 @extends('layouts.vitrine')
 
+@section('seo')
+    <title>Nous contacter</title>
+    <meta name="description" content="">
+@endsection
+
 @section('content')
 
 <section class="bg_img padding-bottom padding-top">

@@ -1,5 +1,10 @@
 @extends('layouts.vitrine')
 
+@section('seo')
+    <title>Conditions d'utilisation du service Les Maternelles</title>
+    <meta name="description" content="">
+@endsection
+
 @section('content')
 
 <div class="padding-top padding-bottom about-bottom">

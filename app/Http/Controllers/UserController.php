@@ -11,12 +11,18 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-    public function deco() {
+
+    public function deco(Request $request) : RedirectResponse
+    {
         Auth::logout();
-        return redirect()->route('enfants');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+        //return redirect()->route('enfants');
     }
 
     /**
@@ -54,6 +60,10 @@ class UserController extends Controller
     {
         $request->validate([
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'password.required' => 'Mot de passe obligatoire.',
+            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
         ]);
 
         $user = User::find($request->uID);
@@ -68,8 +78,12 @@ class UserController extends Controller
                 $licence->save();
             }
         }
-        Auth::login($user);
-        return redirect(RouteServiceProvider::HOME);
+        //Auth::login($user);
+        //return redirect(RouteServiceProvider::HOME);
+        //return redirect()->route('login');
+
+        return view("registration.validation_self")
+            ->with('user', $user);
     }
 
     /**
@@ -109,6 +123,7 @@ class UserController extends Controller
         //dd($enddate);
         $deleted = User::where('actif', 0)
             ->where('created_at', '<=', $enddate)
+            ->where('password', '<>', '')   // pour ne pas supprimer les Users crées depuis admin/licence
             ->get();
         dd($deleted);
     }

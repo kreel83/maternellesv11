@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Mes factures', 'menu' => 'invoice'])
+@extends('layouts.mainMenu', ['titre' => 'Mes factures', 'menu' => 'facture'])
 
 @section('content')
 <div class="container mt-5">
@@ -20,7 +20,7 @@
                         <td>{{ $invoice->number }}</td>
                         <td>{{ $invoice->date()->format('d/m/Y') }}</td>
                         <td>{{ $invoice->total() }}</td>
-                        <td><a href="/user/invoice/{{ $invoice->id }}"><span class="fa fa-download"></span></a></td>
+                        <td><a href="/app/user/invoice/{{ $invoice->id }}"><span class="fa fa-download"></span></a></td>
                     </tr>
                 @endforeach
             </table>

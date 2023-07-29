@@ -2,6 +2,8 @@
 namespace App\utils;
 
 use App\Models\Enfant;
+use App\Models\Licence;
+use App\Models\Subscription;
 use Carbon\Carbon;
 
 class Utils {
@@ -136,6 +138,5 @@ class Utils {
             'prenom' => $prenom, 
             'nom' =>$name);
     }
-
 
 }

@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Models\Subscription as ModelsSubscription;
+use App\utils\Utils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Subscription;
 
 class Licence extends Model
@@ -19,15 +22,20 @@ class Licence extends Model
      */
     protected $fillable = [
         'parent_id',
-        'stripe_id',
+        'produit_id',
         'expires_at',
-        'name'
+        'name',
     ];
 
     protected $casts = [
         'expires_at' => 'datetime',
     ];
 
+    /**
+     * Revoi un nom aléatoire unique pour une licence / souscription. Associé à la fonction internalNameExists()
+     * 
+     * @return string $name
+     */
     private function getInternalName()
     {
         $name = uniqid();
@@ -37,6 +45,12 @@ class Licence extends Model
         return $name;
     }
 
+    /**
+     * Vérifie que le nom en paramètre soit unique dans les licences / souscriptions. Associé à la fonction getInternalName()
+     * 
+     * @param string $name
+     * @return bool
+     */
     private function internalNameExists($name) {
         $existsInLicences = Licence::where('name', $name)->exists();
         $existsInSubscriptions = Subscription::where('name', $name)->exists();
@@ -46,6 +60,58 @@ class Licence extends Model
         return false;
     }
 
+    /**
+     * Crée les licences pour les utilisateurs après un paiement réussi de l'Admin
+     *
+     * @param Request $request
+     * @param Transaction $transaction
+     * @param Produit $product
+     * @return void
+     */
+    public function createUserLicence(Request $request, Transaction $transaction, Produit $product)
+    {
+        for($i = 0; $i < $request->quantity; $i++) {
+            $licence = Licence::create([
+                'parent_id' => Auth::id(),
+                'produit_id' => $product->id,
+                'name' => $this->getInternalName(),
+                'expires_at' => $product->active_to,
+            ]);
+            // enregistrement dans la table relation transaction/licence
+            TransactionLicence::create([
+                'transaction_id' => $transaction->id,
+                'licence_id' => $licence->id,
+            ]);
+        }
+    }
+
+    /**
+     * Renouvelle les licences pour les utilisateurs après un paiement réussi de l'Admin
+     *
+     * @param Request $request
+     * @param Transaction $transaction
+     * @param Produit $product
+     * @return void
+     */
+    public function renewUserLicence(Request $request, Transaction $transaction, Produit $product)
+    {
+        foreach (json_decode($request->licenceSelection) as $licence_id)
+        {
+            $licence = Licence::find($licence_id);
+            $licence->transaction_id = $transaction->id;
+            $licence->produit_id = $product->id;
+            $licence->actif = 1;
+            $licence->expires_at = $product->active_to;
+            $licence->save();
+            // enregistrement dans la table relation transaction/licence
+            TransactionLicence::create([
+                'transaction_id' => $transaction->id,
+                'licence_id' => $licence->id,
+            ]);
+        }
+    }
+
+    /*
     public function createUserLicence($quantity, $stripe_id, $expires_at)
     {
         for($i = 0; $i < $quantity; $i++) {
@@ -58,18 +124,41 @@ class Licence extends Model
         }
     }
 
-    public function assignLicenceToUser($request, $user_id)
+    public function renewUserLicence($quantity, $stripe_id, $expires_at, $licenceSelection)
     {
-        // on regarde si une licence existe deja pour cet utilistaeur
+        foreach (json_decode($licenceSelection) as $licence_id)
+        {
+            $licence = Licence::find($licence_id);
+            $licence->stripe_id = $stripe_id;
+            $licence->actif = 1;
+            $licence->expires_at = $expires_at; // avoir si on ajoute +1 an a la date actuelle
+            $licence->save();
+        }
+    }
+    */
+
+    /**
+     * Assigne une licence pour un utilisateur
+     *
+     * @param Request $request
+     * @param int $user_id
+     * @return bool
+     */
+    public function assignLicenceToUser(Request $request, $user_id)
+    {
+        // on regarde si une licence existe deja pour cet utilisateur :
         // 1. dans licences :
         $licenceFromAdmin = Licence::where('user_id', $user_id)
                                     ->where('parent_id', Auth::id())
                                     ->where('actif', 1)
                                     ->first();
+        //Log::debug($licenceFromAdmin);
+        // 2. dans subscriptions
         $licenceFromSelf = ModelsSubscription::where('user_id', $user_id)
                                             ->where('stripe_status', 'active')
                                             ->first();
-
+        //Log::debug($licenceFromSelf);
+        
         if(!$licenceFromAdmin && !$licenceFromSelf) {
             // pas de licence en cours trouvée pour le user, on assigne la licence
             Licence::where('id', $request->licence_id)
@@ -89,25 +178,52 @@ class Licence extends Model
                ->where('parent_id', Auth::id())
                ->update([
                     'user_id' => $user_id,
-                    'status' => $status
                 ]);
     }
     */
 
+    /**
+     * Détache un utilisateur de sa licence
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function removeLicenceToUser($id)
     {
         Licence::where('id', $id)
                ->where('parent_id', Auth::id())
                ->update([
                     'user_id' => null,
-                    'status' => null
                 ]);
     }
 
+    /**
+     * Renvoi une licence pour un utilisateur
+     *
+     * @param [type] $user_id
+     * @return void
+     */
     public function getLicenceByUserId($user_id)
     {
         Licence::where('user_id', $user_id)
                ->where('parent_id', Auth::id())
                ->first();
+    }
+
+    /**
+     * Renvoi la liste des licences pour un Admin
+     *
+     * @return void
+     */
+    public static function listeDesLicencesPourUnAdmin()
+    {
+        $licences = Licence::select(
+            'licences.produit_id', 'licences.actif', 'licences.id', 'licences.user_id', 'licences.created_at', 
+            'licences.expires_at', 'licences.name as internal_name', 'users.name', 'users.prenom'
+        )
+        ->where("licences.parent_id", Auth::id())
+        ->leftjoin("users", "users.id", "=", "licences.user_id")
+        ->orderByDesc('licences.id')->get();
+        return $licences;
     }
 }

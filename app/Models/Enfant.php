@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Resultat;
+use Illuminate\Support\Facades\Auth;
 
 class Enfant extends Model
 {
@@ -78,8 +79,13 @@ class Enfant extends Model
 
     }
 
-
     public function hasReussite() {
         return $this->hasOne('App\Models\Reussite')->first();
     }
+
+    public static function listeDesEleves() {
+        $liste = self::where('user_id', Auth::id())->get();
+        return $liste;
+    }
+
 }

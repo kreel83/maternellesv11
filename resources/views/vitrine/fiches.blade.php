@@ -1,5 +1,10 @@
 @extends('layouts.vitrine')
 
+@section('seo')
+    <title>Fiches scolaires</title>
+    <meta name="description" content="">
+@endsection
+
 @section('content')
 
 <div class="padding-top padding-bottom about-bottom">

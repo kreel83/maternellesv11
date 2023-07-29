@@ -1,5 +1,10 @@
 @extends('layouts.vitrine')
 
+@section('seo')
+    <title>Politique de cookies</title>
+    <meta name="description" content="">
+@endsection
+
 @section('content')
 
 {{-- https://www.cookiepolicygenerator.com/live.php?token=sd5pgoaRFSIeOtkmxsHNYrZheEgndGtd --}}

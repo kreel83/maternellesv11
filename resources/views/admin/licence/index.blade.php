@@ -2,9 +2,14 @@
 
 @section('content')
 
-<h1>Bienvenue sur la gestion de vos licences</h1>
-
-<a href="{{ route('admin.licence.achat') }}" class="btn btn-primary">Commander des licences</a>
+<div class="row">
+    <div class="col">
+    <h1>Gestion des licences</h1>
+    </div>
+    <div class="col">
+    <a href="{{ route('admin.licence.achat') }}" class="btn btn-primary">Commander des licences</a>
+    </div>
+</div>
 
 <div id="assigneLicence">
 
@@ -14,22 +19,41 @@
 
             <div id="result"></div>
 
+            <!-- Validation Errors -->
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <form action="{{ route('admin.licence.renew') }}" method="POST">
             @csrf
 
+                <button class="btn btn-primary mb-3">Renouveler la sélection</button>
+
                 <table class="table mx-auto">
-                <tr>
-                    <th></th>
+                <tr style="background-color:#dddddd">
+                    <th><input type="checkbox" id="selectAll"></th>
                     <th>ID</th>
-                    <th>Référence</th>
+                    <th>Numéro</th>
                     <th>Utilisateur</th>
                     <th>Statut</th>
                     <th>Expires le</th>
                 </tr>
 
                 @foreach ($licences as $licence)
-                <tr class="text-center">
-                    <td><input type="checkbox" name="licenceSelection[]" value="{{ $licence->id }}"></td>
+                <tr>
+                    <td>
+                    @if($product->id == $licence->produit_id)
+                        A jour
+                    @else
+                        <input type="checkbox" id="licenceSelection" name="licenceSelection[]" value="{{ $licence->id }}">
+                    @endif
+                    </td>
                     <td>{{ $licence->id }}</td>
                     <td>{{ $licence->internal_name }}</td>
                     <td>
@@ -45,18 +69,6 @@
                             {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['id'=>$licence->id]) }}" class=".removelnk">Retirer</a> ]
                         @endif
                     </td>
-                    <!--
-                    <td>
-                        {{ ucfirst($licence->status) }}
-                        {{--
-                        @if($licence->status == "attente")
-                            En attente de confirmation par l'utilisateur
-                        @else
-                            {{ ucfirst($licence->status) }}
-                        @endif
-                        --}}
-                    </td>
-                    -->
                     <td>
                         {{ ($licence->actif == 1) ? 'Active' : 'Expirée' }}
                     </td>
@@ -66,7 +78,7 @@
                     
                 </table>
 
-                <button class="btn btn-primary">Renouveler sélection</button>
+                
             </form>
 
             {{--

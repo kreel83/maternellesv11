@@ -1,5 +1,10 @@
 @extends('layouts.vitrine')
 
+@section('seo')
+    <title>Paramétrage</title>
+    <meta name="description" content="">
+@endsection
+
 @section('content')
 
 <section class="faqs-single-section padding-top padding-bottom">
