@@ -60,12 +60,14 @@ class EleveController extends Controller
 
     public function removeEleve(Request $request) {
         
+        
             $e = Enfant::find($request->eleve);
-            if ($request->prof == 'null') {
-                $e->delete();
-            } else {
+            $prof = $e->user_n1_id;
+            if ($prof) {
                 $e->user_id = null;
                 $e->save();
+            } else {
+                $e->delete();
 
             }
 
@@ -90,26 +92,14 @@ class EleveController extends Controller
 
 
     public function save(Request $request) {
-        $user = Auth::user();
+
         $datas = $request->except(['_token']);
-        $datas['mail'] = join(';', $datas['mail']);
+        
+        $datas['mail'] = join(';', array_filter($datas['mail']));
         $datas['user_id'] = Auth::id();
         $datas['nom'] = mb_strtoupper($datas['nom']);
         $datas['prenom'] = ucfirst($datas['prenom']);
-        if ($request->file('photo')) {
-            $folder = $user->repertoire.'/photos/'.uniqid().'.jpg';
-            $path = Storage::path($folder);
-            $photo = $request->file('photo');
-            $img = Image::make($photo)->encode('jpg', 75);;
-            $img->fit(200, 200, function ($constraint) {
-                $constraint->upsize();
-            });
-            $img->save($path);
-            $datas['photo'] = $folder;
-        }
-
         $datas['annee_scolaire'] = Auth::user()->calcul_annee_scolaire();
-
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
         return redirect()->back();
     }

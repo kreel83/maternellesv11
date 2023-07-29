@@ -69,7 +69,7 @@
                 @endforeach
             </div>
             @else
-            <div style="width: 20%" class="d-flex flex-column">
+            <div style="width: 40%" class="d-flex flex-column align-items-end">
                 @foreach ($user->groupe as $key=>$terme)
                 <div class="badge_termes {{ $eleve->groupe != null && $key == $eleve->groupe ? 'active' : null}}" data-order="{{$key}}">{{$terme}}</div>
                 @endforeach

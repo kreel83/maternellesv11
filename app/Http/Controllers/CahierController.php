@@ -197,6 +197,15 @@ class CahierController extends Controller
     }
 
 
+    public function pdfview($id) {
+        $enfant = Enfant::find($id);
+        return view('cahiers.pdfview')
+            ->with('sections', Section::all())
+            ->with('title', "coucou")
+            ->with('section', Section::first())
+            ->with('enfant', $enfant) ;
+    }
+
     public function saveCommentaireGeneral($id, Request $request) {
 
         $r = Reussite::where('enfant_id', $id)->where('user_id', Auth::id())->first();
@@ -288,14 +297,21 @@ class CahierController extends Controller
         $reussite = Reussite::where('enfant_id',$id)->first();
 
 
-
+        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
         $textes = $enfant->cahier($this->periode);
-
+        $r = Reussite::where('enfant_id', $enfant->id)->first();
+       
+        $textes['carnet'] = $r ? $r->commentaire_general : null;
+        $definitif = ($r) ? $r->definitif : null;
         
         return view('cahiers.index')
             ->with('titre','Cahier')
+            ->with('isChrome',Browser::isChrome())
             ->with('enfant',$enfant)
+            ->with('commentaires',$commentaires)
             ->with('reussite',$reussite)
+            ->with('definitif',$definitif)
+            ->with('isreussite',$r)
             ->with('resultats',$resultats)           
             ->with('phrases', $grouped)
             ->with('section', Section::first())
@@ -306,13 +322,20 @@ class CahierController extends Controller
     }
 
     public function get_liste_phrase($section, $enfant) {
-        $section = Section::find($section);
         $enfant = Enfant::find($enfant);
-        $commentaire = Commentaire::where('user_id', Auth::id())->get();
-        $grouped = $commentaire->mapToGroups(function ($item, $key) {
-            return [$item['section_id'] => $item];
-        });
-        return view('cahiers.liste_phrases')->with('phrases', $grouped)->with('section', $section)->with('enfant', $enfant);
+        if ($section == "carnet") {
+            
+            $phrases = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
+            return view('cahiers.liste_phrases')->with('phrases', $phrases)->with('section', $section)->with('enfant', $enfant)->with('type','carnet'); 
+        } else {
+            $section = Section::find($section);
+            $commentaire = Commentaire::where('user_id', Auth::id())->get();
+            $grouped = $commentaire->mapToGroups(function ($item, $key) {
+                return [$item['section_id'] => $item];
+            });
+            return view('cahiers.liste_phrases')->with('phrases', $grouped)->with('section', $section)->with('enfant', $enfant)->with('type','sections');            
+        }
+
     }
 
     public function translate(Request $request) {
@@ -330,23 +353,42 @@ class CahierController extends Controller
     }
 
     public function saveTexte($enfant, Request $request) {
-        $cahier = Cahier::where('enfant_id', $enfant)->where('section_id', $request->section)->first();
+        if ($request->section == 'carnet') {
+            $enfant = Enfant::find($enfant);
+            $reussite = $enfant->hasReussite();
+            if ($reussite) {
+                $reussite->commentaire_general = $request->texte;
+                $reussite->save();
+            } else {
+                $reussite = new Reussite();
+                $reussite->commentaire_general = $request->texte;
+                $reussite->enfant_id = $enfant->id;
+                $reussite->user_id = Auth::id();
+                $reussite->definitif = 0;
+                $reussite->save();
 
 
-        if (!$cahier) {
-            $cahier = new Cahier();
-            $cahier->enfant_id = $enfant;
-            $cahier->section_id = $request->section;
-            $cahier->user_id = Auth::id();
-            $cahier->texte = $request->texte;
-
-            $cahier->definitif = 0;
+            }
         } else {
-            $cahier->texte = $request->texte;
+            $cahier = Cahier::where('enfant_id', $enfant)->where('section_id', $request->section)->first();
+
+
+            if (!$cahier) {
+                $cahier = new Cahier();
+                $cahier->enfant_id = $enfant;
+                $cahier->section_id = $request->section;
+                $cahier->user_id = Auth::id();
+                $cahier->texte = $request->texte;
+
+                $cahier->definitif = 0;
+            } else {
+                $cahier->texte = $request->texte;
+            }
+            $cahier->save();
+
+
         }
-        $cahier->save();
+        return 'ok';            
 
-
-        return 'ok';
     }
 }

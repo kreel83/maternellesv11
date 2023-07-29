@@ -6,11 +6,11 @@
 
 
 @php
-    // dd(Auth::user()->groupe, $enfant->groupe, $enfant, Auth::user()->type_groupe);
+  // dd(Auth::user()->groupe, $enfant->groupe, $enfant, Auth::user()->type_groupe, Auth::user()->groupe[$enfant->groupe]);
 @endphp
 
 <div class="card-enfant">
-  @if (Auth::user()->groupe_type == 'colors' && $enfant->groupe != null)
+  @if (Auth::user()->type_groupe == 'colors' && $enfant->groupe != null)
     <div class="groupe" style="background-color: {{ Auth::user()->groupe[$enfant->groupe]}}"></div>
   @endif
   @if (Auth::user()->type_groupe == 'termes' && $enfant->groupe != null)

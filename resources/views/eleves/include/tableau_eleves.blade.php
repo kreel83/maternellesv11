@@ -2,13 +2,19 @@
 <style>
 .fiche_eleve_div {
     width: 200px;
-    height: 100px;
+    height: 80px;
     border-radius: 15px;
     margin: 4px;
     color: white;
     padding: 5px;
     color: grey;
     font-size: 12px;
+}
+
+.fiche_eleve_div:hover {
+    border-radius: 10px;
+    border: 1px solid #6759FF;
+    cursor: pointer;
 }
 
 
@@ -35,7 +41,7 @@
     padding: 2px 4px;
     border-radius: 15px;
 }
-.remove_eleve {
+.new_eleve {
     top: -5px; left: 5px;
     font-size: 18px;
     color: purple;
@@ -45,14 +51,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%
+    border-radius: 50%;
 }
-.remove_eleve:hover {
 
-    background-color: purple;
-    color: white;
-
-}
 </style>
             
             <div class="wrapper">
@@ -60,9 +61,11 @@
                 @foreach ($eleves as $eleve)
                 
                 <div class="fiche_eleve_div d-flex position-relative"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-donnees="{{json_encode($eleve->toArray())}}">
-                    <div class="position-relative remove_eleve" style="">
-                        <i class="fa-sharp fa-regular fa-circle-xmark"></i>
+                    @if (!$eleve->lastProfId())
+                    <div class="position-relative new_eleve" style="">
+                        N
                      </div>
+                     @endif
 
                     <div class="me-2">
                         @if ($eleve->genre == 'F')
