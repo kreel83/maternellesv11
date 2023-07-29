@@ -105,6 +105,7 @@ const initFiche = () => {
 
 const choixFiltre = () => {
     $(document).on('change','.filtre_input', function() {
+        $(this).next().toggleClass('selected')
         var c = []
         $('.filtre_input').each((index, el) => {
             c.push($(el).is(':checked') ? 1 : 0)

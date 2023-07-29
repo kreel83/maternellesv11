@@ -1,20 +1,44 @@
+<style>
+    #filtre label {
+        display: block;
+        width: 34px;
+        height: 34px;
+        background-color: #E5E3FF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #7769FE;
+        font-weight: 500;
+        font-size: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    #filtre label.selected {
+        font-weight: 700;
+
+        background-color: #7769FE;
+        color: #E5E3FF;
+        border-radius: 1px solid #7769FE;
+    }
+</style>
+
 <div class="d-flex justify-content-between align-items-center " id="filtre">
     <div class="pt-3 d-flex me-2" >
             <div class="form-check me-2">
-                <input class="form-check-input filtre_input" type="checkbox" value="" id="ps_filter" checked>
-                <label class="form-check-label" for="flexCheckChecked">
+                <input class="form-check-input filtre_input invisible" type="checkbox" value="" id="ps_filter" checked>
+                <label class="form-check-label selected" for="ps_filter">
                     PS
                 </label>
             </div>
             <div class="form-check me-2">
-                <input class="form-check-input filtre_input" type="checkbox" value="" id="ms_filter" checked>
-                <label class="form-check-label" for="flexCheckChecked">
+                <input class="form-check-input filtre_input invisible" type="checkbox" value="" id="ms_filter" checked>
+                <label class="form-check-label selected" for="ms_filter">
                     MS
                 </label>
             </div>
             <div class="form-check me-2">
-                <input class="form-check-input filtre_input" type="checkbox" value="" id="gs_filter" checked>
-                <label class="form-check-label" for="flexCheckChecked">
+                <input class="form-check-input filtre_input invisible" type="checkbox" value="" id="gs_filter" checked>
+                <label class="form-check-label selected" for="gs_filter">
                     GS
                 </label>
             </div>        

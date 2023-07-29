@@ -99,7 +99,7 @@ const preview_photo = (event) => {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
         });
         $.ajax({
-            url : '/groupe/saveColor',
+            url : '/app/groupe/saveColor',
             method: 'POST',
             data: {
                 'tableau': JSON.stringify(arr)
@@ -172,11 +172,42 @@ const photo_eleve = () => {
         $('#photo_input').trigger('click')
     })
 
-    $(document).on('click','.liste_classe .remove_eleve', function(e) {
+    $(document).on('click','#import-tab', function() {
+        window.location.reload()
+    })
+
+    $(document).on('click', '.fiche_eleve_div', function() {
+        $('#create-tab').trigger('click')
+        $('#create-tab').text('Modifier une fiche')
+        var data = $(this).data('donnees')
+        var mails = data.mail.split(';')
+        console.log(mails)
+        var prof = $(this).data('prof')
+        console.log(prof)
+        if (!prof) {
+            $('.delete').text('Supprimer')
+        } else {
+            $('.delete').text('Retirer')
+
+        }
+        $('.avatar_form').removeClass('selected')
+        $('.avatar_form[data-genre="'+data.genre+'"]').addClass('selected')
+
+        $('#nom_form').val(data.nom)
+        $('#prenom_form').val(data.prenom)
+        $('#ddn_form').val(data.ddn)
+        $('#commentaire_form').val(data.comment)
+        $('#mail1_form').val(mails[0])
+        $('#mail2_form').val(mails[1])
+        $('#eleve_form').val(data.id)
+        console.log(data)
+    })
+
+    $(document).on('click','.remove_eleve', function(e) {
         e.stopImmediatePropagation()
-        var id = $(this).closest('.fiche_eleve_div').data('id')
-        var prof = $(this).closest('.fiche_eleve_div').data('prof')
-        $(this).closest('.fiche_eleve_div').remove()
+        var id = $('#eleve_form').val()
+        
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
@@ -186,10 +217,9 @@ const photo_eleve = () => {
             url: "/app/eleves/removeEleve",
             data: {
                 eleve: id,
-                prof: prof
             },
             success: function(data) {
-                $('#tableau_tous').html(data)
+                window.location.reload()
             }
         })
     })
@@ -206,7 +236,7 @@ const photo_eleve = () => {
         });
         $.ajax({
             method: 'POST',
-            url: "/eleves/ajouterEleves",
+            url: "/app/eleves/ajouterEleves",
             data: {
                 eleves: arr
                 
@@ -306,7 +336,7 @@ const photo_eleve = () => {
     $(document).on('click','.delete', function() {
         var prof = $(this).attr('data-id')
         var id = $('#eleve_form').val()
-        $.get('/App/eleves/removeEleve?prof='+prof+'&eleve='+id, function(data) {
+        $.get('/app/eleves/removeEleve?prof='+prof+'&eleve='+id, function(data) {
             $('.fiche_eleve[data-id="'+id+'"]').remove()
             $('#new_eleve').addClass('d-none')
             $('#import_eleves').removeClass('d-none')

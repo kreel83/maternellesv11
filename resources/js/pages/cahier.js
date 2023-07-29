@@ -69,11 +69,17 @@ const saveTexteReussite = (quill) => {
 
 
 const clickOnNav = (quill) => {
-    $(document).on('click','.sectionCahier', function() {        
+    $(document).on('click','.sectionCahier', function() {   
+             
         var phrase = $(this).attr('data-phrases')
         var texte = $(this).attr('data-textes')
         var section = $(this).attr('data-section')
         var enfant = $(this).closest('#cahierView').attr('data-enfant')
+
+        $('.tab-pane').removeClass('show active')
+        $('.tab-pane[data-id="nav-'+section+'"]').addClass('show active')
+
+
         $('#phraseContainer').html(phrase)
         console.log(phrase)
         var selection = quill.getSelection(true);

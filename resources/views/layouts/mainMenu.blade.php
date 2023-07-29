@@ -155,12 +155,7 @@ use Illuminate\Support\Facades\Auth;
 </nav> --}}
 
 
-  <!-- <div class="mt-5 position-relative">
-    <img src="{{asset('/img/deco/banierre.jpg')}}" alt="" style="width: 100vw; height: 400px">
-    <div class="titre">
-    {{ ucfirst($titre) }}
-    </div>
-  </div> -->
+
 
 
 

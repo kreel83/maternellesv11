@@ -37,16 +37,16 @@
         </div>
         <div class="col-md-4">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                <button class="nav-link active btnSelectionType violet droit selected" id="create-tab" data-bs-toggle="tab" data-bs-target="#create-tab-pane" type="button" role="tab" aria-controls="create-tab-pane" aria-selected="true">La cours de l'école</button>
+                <li class="nav-item w-50" role="presentation">
+                <button class="w-100 nav-link active btnSelectionType violet droit selected" id="import-tab" data-bs-toggle="tab" data-bs-target="#import-tab-pane" type="button" role="tab" aria-controls="import-tab-pane" aria-selected="true">La cours de l'école</button>
                 </li>
-                <li class="nav-item" role="presentation">
-                <button class="nav-link btnSelectionType violet droit" id="import-tab" data-bs-toggle="tab" data-bs-target="#import-tab-pane" type="button" role="tab" aria-controls="import-tab-pane" aria-selected="false">Nouvel élève</button>
+                <li class="nav-item w-50" role="presentation">
+                <button class="w-100 nav-link btnSelectionType violet droit" id="create-tab" data-bs-toggle="tab" data-bs-target="#create-tab-pane" type="button" role="tab" aria-controls="create-tab-pane" aria-selected="false">Nouvel élève</button>
                 </li>
 
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active pt-3" id="create-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div class="tab-pane fade show active pt-3" id="import-tab-pane" role="tabpanel" aria-labelledby="import-tab" tabindex="0">
 
                     <div class="d-flex flex-column">
                         <label for="">La classe du maitre ou la maitresse de l'année dernière</label>
@@ -58,18 +58,16 @@
                         </select>
                     </div>
                     <div class="import_eleves_container"   id="tableau_tous">
-                        @include('eleves.include.tableau_tous')
-                            
+                        @include('eleves.include.tableau_tous')                            
                     </div>
-
                 </div>
-                <div class="tab-pane fade" id="import-tab-pane" role="tabpanel" aria-labelledby="import-tab" tabindex="0">
+                <div class="tab-pane fade" id="create-tab-pane" role="tabpanel" aria-labelledby="import-tab" tabindex="0">
                     <form action="{{route('save_eleve')}}" method="post" enctype="multipart/form-data" style="font-size: 12px; padding-top: 10px;">
                         @csrf
             
             
             
-                                <input type="hidden" id="eleve_form" name="id" />
+                                <input type="hidden" id="eleve_form" name="id" value="new" />
                                 <input type="hidden" id="genre" name="genre" value="F" />
                                 <div class="d-flex justify-content-center">
                                     <div class="avatar avatar_form pink me-5 selected" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
@@ -100,15 +98,7 @@
                                     <div class="custom-area">                                       
                                         <textarea type="date" class="custom-input" id="commentaire_form" name="comment" placeholder="Commentaire"></textarea>
                                     </div>
-                                {{-- <div class="form-group">
-                                    <label for="">groupe</label>
-                                    <select id="groupe_form" name="groupe" class="form-control">
-                                        <option value="A">Groupe A</option>
-                                        <option value="B">Groupe B</option>
-                                        <option value="C">Groupe C</option>
-                                        <option value="null">Non dféfini</option>
-                                    </select>
-                                </div> --}}
+
                                 <div class="icone-input my-4">
                                     <i class="fa-sharp fa-solid fa-envelope"></i>
                                     <input type="email" class="custom-input" id="mail1_form" name="mail[]" value="" placeholder="Mail principal" />
@@ -123,10 +113,12 @@
             
             
                 
-                
-                        <button type="submit" class="custom_button big mt-3">Sauvegarder</button>
-            
-                        <button type="button" data-id="new" class="custom_button delete mt-3 d-none">Retirer</button>
+                                <di class="d-flex">
+                                    <button type="submit" class="custom_button big submit">Sauvegarder</button>
+                        
+                                    <button type="button" data-id="new" class="custom_button submit remove_eleve delete ms-1">Retirer</button>                                    
+                                </div>
+
                         
                 
                     </form>
