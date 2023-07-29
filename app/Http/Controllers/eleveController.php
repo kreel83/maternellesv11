@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use File;
 
-class eleveController extends Controller
+class EleveController extends Controller
 {
 
 

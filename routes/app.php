@@ -47,12 +47,13 @@ Route::middleware(['admin'])->group(function()
 {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-    Route::get('/admin/profil', [AdminProfilController::class, 'loadAdminProfile'])->name('admin.loadprofile');
-    Route::post('/admin/profil', [AdminProfilController::class, 'saveAdminProfile'])->name('admin.saveprofile');
+    Route::get('/admin/profil', [AdminController::class, 'loadAdminProfile'])->name('admin.loadprofile');
+    Route::post('/admin/profil', [AdminController::class, 'saveAdminProfile'])->name('admin.saveprofile');
     Route::get('/admin/licence', [AdminLicenceController::class, 'index'])->name('admin.licence.index');
+    Route::post('/admin/licence', [AdminLicenceController::class, 'renew'])->name('admin.licence.renew');
     Route::get('/admin/licence/achat', [AdminLicenceController::class, 'achat'])->name('admin.licence.achat');
     Route::post('/admin/licence/achat', [AdminLicenceController::class, 'create'])->name('admin.licence.create');
-    Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // utilisé dans subscription.js
+    Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // dans subscription.js prefixé par /app
     Route::get('/admin/licence/remove/{id}', [AdminLicenceController::class, 'remove'])->name('admin.licence.remove');
     Route::get('/admin/licence/invoice', [AdminLicenceController::class, 'invoice'])->name('admin.licence.invoice');
     Route::get('/admin/contact', [AdminController::class, 'contact'])->name('admin.contact');
@@ -60,6 +61,7 @@ Route::middleware(['admin'])->group(function()
     Route::get('/admin/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);
     });
+    // Warning: Dans la vue admin.invoice un chemin en dur : /app/admin/invoice/{{ $invoice->id }}
 });
 // Admin registration URLs
 Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
@@ -69,9 +71,11 @@ Route::get('/user/validation/password', [UserController::class, 'valideUserFromA
 Route::post('/user/validation', [UserController::class, 'valideUserFromAdminSavePassword'])->name('user.valideUserFromAdminSavePassword');  // sauve le mot de passe et active le compte
 // User Validation url from self registration
 Route::get('/user/validation/self', [UserController::class, 'validUserFromSelfRegistration'])->name('user.validUserFromSelfRegistration');  // utilisé pour valider une adresse mail depuis email
+
+// CRON routes
 Route::get('/deleteuser', [UserController::class, 'deleteinactiveuser'])->name('user.deleteinactive');
 
-// Contact form (utilisé dans contact.js seulement)
+// Contact form (utilisé dans contact.js seulement avec prefix /app )
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
 /*
@@ -162,7 +166,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/monprofil', [ParametreController::class, 'savemonprofil'])->name('savemonprofil');
 
     Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
-    Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle');
+    Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle.post');
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 
@@ -172,9 +176,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/photos', [EleveController::class, 'photos'])->name('photos');
 
-
-    Route::get('/subscribe', [SubscriptionController::class, 'index'])->name('subscribe.index');
-    Route::get('/subscribe/cardform', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+    Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
     Route::get('subscribe/cancel', [SubscriptionController::class, 'cancel'])->name("subscribe.cancel");

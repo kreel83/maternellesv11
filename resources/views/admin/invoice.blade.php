@@ -19,7 +19,7 @@
                     <td>{{ $invoice->number }}</td>
                     <td>{{ $invoice->date()->format('d/m/Y') }}</td>
                     <td>{{ $invoice->total() }}</td>
-                    <td><a href="/admin/invoice/{{ $invoice->id }}"><span class="fa fa-download"></span></a></td>
+                    <td><a href="/app/admin/invoice/{{ $invoice->id }}"><span class="fa fa-download"></span></a></td>
                 </tr>
             @endforeach
         </table>

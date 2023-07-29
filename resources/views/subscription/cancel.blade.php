@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Abonnement'])
+@extends('layouts.mainMenu', ['titre' => 'Abonnement', 'menu' => 'resilier'])
 
 @section('content')
 <div class="container mt-5">

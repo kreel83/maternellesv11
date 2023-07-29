@@ -1,5 +1,10 @@
 @extends('layouts.vitrine')
 
+@section('seo')
+    <title>Gestion de votre classe de maternnelle en ligne</title>
+    <meta name="description" content="Les Maternelles est un service en ligne pour optimiser la gestion d'une classe de maternelle">
+@endsection
+
 @section('content')
 
 <!-- ==========Banner Section Starts Here========== -->

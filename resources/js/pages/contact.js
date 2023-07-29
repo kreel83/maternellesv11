@@ -20,7 +20,7 @@ const contactform = () => {
 
         $.ajax({
             method: 'POST',
-            url: '/contact/store',
+            url: '/app/contact/store',
             data: formData,
             success: function(data) {
                 if(data == 'success') {

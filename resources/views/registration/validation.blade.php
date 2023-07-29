@@ -14,11 +14,19 @@
 
 @else
 
-    <h2>Validation confirmée</h2>
+    <h2>Création de votre compte Les Maternelles</h2>
     <p>Pour terminer la création de votre compte veuillez choisir un mot de passe :</p>
 
     <!-- Validation Errors -->
-    <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <form method="POST" action="{{ route('user.valideUserFromAdminSavePassword') }}">
         {{ csrf_field() }}
@@ -30,7 +38,7 @@
             <input placeholder="{{ __('Choisissez un mot de passe') }}" id="password" class="form-control block mt-1 w-full"
                             type="password"
                             name="password"
-                            required autocomplete="new-password" />
+                            required autocomplete="new-password" autofocus />
         </div>
 
         <!-- confirm password -->

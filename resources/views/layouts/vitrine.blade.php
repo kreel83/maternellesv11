@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Les Maternelles : Gestion de votre classe de maternnelle en ligne</title>
-    <meta name="description" content="Les Maternelles est un service en ligne pour optimiser la gestion d'une classe de maternelle">
+    @yield('seo')
     <link rel="stylesheet" href="assets/css/app.css">
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
-<body id="vitrineView">
+<body>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav id="vitrineTopMenu" class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('vitrine.index') }}"><img src="{{ asset('img/vitrine/logo/logoV2.png') }}" alt="logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,8 +43,11 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link-red" href="{{ route('vitrine.contact') }}"><i class="fa-solid fa-paper-plane"></i> Nous contacter</a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-primary" href="#"><i class="bi bi-person-circle"></i> Mon compte</a>
+                <li class="nav-item ms-2">
+                    <a class="btn btn-outline-primary" href="{{ route('login') }}">Connectez-vous</a>
+                </li>
+                <li class="nav-item ms-3">
+                    <a class="btn btn-primary" href="{{ route('registration.start') }}">Créer un compte</a>
                 </li>
                 
             </ul>
@@ -53,6 +55,8 @@
             </div>
         </div>
     </nav>
+
+    <div id="vitrineView">
     
     @yield('content')
     
@@ -152,6 +156,8 @@
             </div>
         </div>
     </footer>
+
+    </div>
 
     {{-- https://cookie.eurowebpage.com/ --}}
     {{-- https://www.cnil.fr/fr/cookies-et-autres-traceurs/regles/cookies/comment-mettre-mon-site-web-en-conformite --}}

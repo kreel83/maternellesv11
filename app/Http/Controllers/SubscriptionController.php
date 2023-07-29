@@ -1,60 +1,84 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Produit;
+use App\Models\Transaction;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Laravel\Cashier\Exceptions\IncompletePayment;
 
 class SubscriptionController extends Controller
 {
     /**
-     * Write code on Method
+     * affiche l'écran de paiement
      *
-     * @return response()
+     * @return View
      */
-    public function index()
-    {        
-        return view('subscription.index');
-    }
-
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function cardform()
+    public function cardform(): View
     {
         $intent = auth()->user()->createSetupIntent();
         return view('subscription.cardform', compact("intent"));
     }
 
     /**
-     * Write code on Method
+     * achat d'un abonnement par un User
      *
-     * @return response()
+     * @param Request $request
+     * @return View
      */
-    public function subscribe(Request $request)
+    public function subscribe(Request $request): View
     {
-        
-        // abonnement 1 an
-        $request->user()->newSubscription('default', 'price_1NEXRRF73qwd826kHYATzqgl')
-            ->create($request->token);
-        return view("subscription.success");
-        
+        $product = Produit::produitAbonnementUser();
+        try {
+            // ***************************************************
+            // Utiliser un webhook pour gérer un failed peut etre mieux. A voir en production
+            // ***************************************************
+            $subscription = $request->user()->newSubscription('default', $product->stripe_product_id)
+                ->create($request->token);
+            // enregistrement de la transaction
+            Transaction::ajouterUneTransactionAbonnementUser($request, $subscription, $product);
+            return view("subscription.result")
+                ->with('result', 'success');
+        } catch (IncompletePayment $exception) {
+            $message = $exception->payment->last_payment_error->message.' ('.$exception->payment->last_payment_error->type.')';
+            //dd($exception->payment->last_payment_error->message);
+            return view("subscription.result")
+                ->with('result', $message);
+            /*
+            return redirect()->route(
+                'cashier.payment',
+                [$exception->payment->id, 'redirect' => route('home')]
+            );
+            */
+        }
         /*
-        // abonnement 1 jour
-        $subscription = $request->user()->newSubscription('default', 'price_1NIyW2F73qwd826koNHgb8fE')
-        ->create($request->token);
-        return view("subscription.success");
+        // retour $subscription
+         #attributes: array:11 [▼
+            "name" => "64c2c7e5da1cb"
+            "stripe_id" => "sub_1NYa1rF73qwd826kfBytARcN"
+            "stripe_status" => "active"
+            "stripe_price" => "price_1NEXRRF73qwd826kHYATzqgl"
+            "quantity" => 1
+            "trial_ends_at" => null
+            "ends_at" => null
+            "user_id" => 47
+            "updated_at" => "2023-07-27 19:39:22"
+            "created_at" => "2023-07-27 19:39:20"
+            "id" => 49
+        ]
         */
     } 
 
     /**
-     * Write code on Method
+     * affiche l'écran pour annuler un abonnement et demande confirmation
      *
-     * @return response()
+     * @return View
      */
-    public function cancel()
+    public function cancel(): View
     {
         $finsouscription = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
         return view("subscription.cancel")
@@ -63,11 +87,11 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Write code on Method
+     * annule un abonnement après confirmation
      *
-     * @return response()
+     * @return View
      */
-    public function cancelsubscription()
+    public function cancelsubscription(): View
     {
         Auth::user()->subscription('default')->cancel();
         $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
@@ -78,13 +102,12 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Write code on Method
+     * Réactive un abonnement
      *
-     * @return response()
+     * @return View
      */
-    public function resume()
+    public function resume(): View
     {
-
         $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
         if ($onGracePeriode) {
             Auth::user()->subscription('default')->resume();
@@ -94,14 +117,13 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Write code on Method
+     * Affiche la liste des factures
      *
-     * @return response()
+     * @return View
      */
-    public function invoice()
+    public function invoice(): View
     {
         $invoices = Auth::user()->invoices();
-        //dd($invoices);
         return view("subscription.invoice")
             ->with('invoices', $invoices);
     }

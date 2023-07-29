@@ -25,6 +25,18 @@ const achatLicences = () => {
         $('#totalPrice').html((newQuantity * price).toFixed(2))
     })
 
+    $(document).on('click','#selectAll', function() {
+        if(this.checked) {
+            $(':checkbox').each(function() {
+                this.checked = true;                        
+            });
+        } else {
+            $(':checkbox').each(function() {
+                this.checked = false;                       
+            });
+        }
+    })
+
 }
 
 const assigneLicence = () => {
@@ -39,7 +51,7 @@ const assigneLicence = () => {
             console.log(licence_id);
             $.ajax({
                 method: 'POST',
-                url: '/admin/licence/assign',
+                url: '/app/admin/licence/assign',
                 data: {
                     licence_id: licence_id,
                     email: email,
