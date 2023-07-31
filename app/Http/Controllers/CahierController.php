@@ -175,14 +175,8 @@ class CahierController extends Controller
             }
 
         }
-
         $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
-
-
-
-
         $reussite = join(' ', $mots);
-//        dd($mots, $reussite);
 
         $r = Reussite::where('enfant_id', $enfant->id)->first();
         $definitif = ($r) ? $r->definitif : null;
@@ -273,9 +267,68 @@ class CahierController extends Controller
     }
 
 
+    public function get_apercu($id) {
+
+        function str_replace_first($search, $replace, $subject) {
+            $pos = strpos($subject, $search);
+            if ($pos !== false) {
+                // dd($subject, $replace, $pos, strlen($search));
+                return substr_replace($subject, $replace, $pos, strlen($search));
+            }
+            return $subject;
+        }
+
+        
+        $enfant = Enfant::find($id);
+        $reussite = $this->apercu($enfant);
+        $prenom = $enfant->prenom;
+        $pronom = $enfant->genre == 'F' ? 'elle' : 'il';
+        $mots = explode(' ', $reussite);
+
+        $flag = true;
+        foreach ($mots as $k=>$mot) {
+            if (str_contains($mot, 'h2')) $flag = false;
+            if (str_contains($mot, $prenom)) {
+                if ($flag) {
+                    $mots[$k] =  (str_contains($mot, '>')) ? str_replace($prenom,ucfirst($pronom), $mots[$k]) : str_replace($prenom,$pronom, $mots[$k]);
+                } else {
+                    $flag = true;
+                }
+            }
+        }
+
+        $reussite = join(' ', $mots);
+
+        $reussite .= '</br><h2>Commentaire général</h2>';
+        $comm = Reussite::where('enfant_id', $enfant->id)->where('user_id', Auth::id())->first();
+        if ($comm) {
+            $c = $comm->commentaire_general ?? '';
+            $c =  str_replace($prenom,ucfirst($pronom), $c);
+            $c = str_replace_first(ucfirst($pronom), $prenom, $c);
+            
+
+        }
+        $reussite .= '<br><br>'.$c;
+
+
+       
+        return $reussite;
+
+        $r = Reussite::where('enfant_id', $enfant->id)->first();
+        $definitif = ($r) ? $r->definitif : null;
+        
+
+        $corps = $this->apercu($enfant);
+      
+        dd($corps);
+       
+        return $this->apercu($enfant);
+
+    }
+
     public function apercu($enfant) {
         $reussite = Reussite::where('enfant_id', $enfant->id)->first();
-        if ($reussite) return $reussite->texte_integral;
+
         $commentaire_enfant = Cahier::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
         $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
         $resultats = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
@@ -295,6 +348,7 @@ class CahierController extends Controller
         });
         $resultats = $enfant->resultats();
         $reussite = Reussite::where('enfant_id',$id)->first();
+        //dd($resultats);
 
 
         $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();

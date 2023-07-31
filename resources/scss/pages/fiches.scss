@@ -55,9 +55,10 @@
     border: none !important;
     outline: none !important;    
     cursor: pointer;
-
+    
     &.droit {
-        border-radius: 0 !important;
+        border-radius: 15px 15px 0 0 !important;
+        
     }
     &.violet {
         color: #7769FE;
