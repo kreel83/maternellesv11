@@ -293,12 +293,15 @@ const photo_eleve = () => {
     })
 
     $(document).on('change','#choix_enfant_select', function() {
-        var name = $('#choix_enfant_select').find(':selected').data('prenom')
-        $('#eleve_choisi').text(name)
+        var id = $('#choix_enfant_select').val()
+        $.get('/app/choix_enfant_select?id='+id, function(data) {
+           $('#eleveCard').html(data) 
+        })
+        
         
  
     })
-    $(document).on('click','.choixEnfant', function() {
+    $(document).on('click','.degrade_card_enfant', function() {
         if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
 
         var enfant = $('#choix_enfant_select').val()
@@ -320,17 +323,18 @@ const photo_eleve = () => {
     $(document).on('click','.choixDegrade', function() {
         var css = $(this).css('background')
         var id = $(this).data('id')
-        $('.choixEnfant').css('background', css)
-        $('.choixEnfant').attr('data-degrade', id)
+        console.log('id', id)
+        $('.degrade_card_enfant').attr('data-degrade', id)
+        $('.degrade_card_enfant, .footer').css('background', css)
 
     })
 
     $(document).on('click','.animaux', function() {
         var html = $(this).html()
         var animaux = $(this).data('animaux')
-        $('.choixEnfant .imageAnimaux').html(html)
-        $('.choixEnfant .imageAnimaux img').attr('width','250px')
-        $('.choixEnfant').attr('data-animaux', animaux)
+
+        $('.degrade_card_enfant').attr('data-animaux', animaux)
+        $('.degrade_card_enfant').html(html)
     })
 
     $(document).on('click','.delete', function() {

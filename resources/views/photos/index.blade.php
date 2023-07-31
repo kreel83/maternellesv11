@@ -3,7 +3,7 @@
 
 
 @section('content')
-<div class="row">
+<div class="row" id="photos">
     <div class="col-md-6">
         <select class="form-select w-50 " id="choix_enfant_select" style="margin: 0 auto">
             <option value="null">Selectionnez un élève</option>
@@ -12,14 +12,17 @@
             @endforeach
         </select>
         <div style="height: 65vh;" class="d-flex mt-3  flex-column justify-content-center align-items-center">
-            <div data-degrade="b1" class="choixEnfant position-relative border-gradient border-gradient-green" style="background-image: {{$degrades['b1']}}">
+            {{-- <div data-degrade="b1" class="choixEnfant position-relative border-gradient border-gradient-green" style="background-image: {{$degrades['b1']}}">
                 <div class="curved-text position-absolute" ></div>
                 <div class="imageAnimaux position-absolute" style="top:0;left:0;right:0;bottom:0; z-index:5000"></div>
 
-            </div>
-            <div id="eleve_choisi" class="mt-3" style="color: {{$degrades['b1']}}">
+            </div> --}}
+            <div id="eleveCard" style="transform: scale(1.5)">
 
             </div>
+            {{-- <div id="eleve_choisi" class="mt-3" style="color: {{$degrades['b1']}}">
+
+            </div> --}}
         </div>
     </div>
     <div class="col-md-6">

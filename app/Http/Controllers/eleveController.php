@@ -58,6 +58,15 @@ class EleveController extends Controller
     }
 
 
+    public function choix_enfant_select(Request $request) {
+        $enfant = Enfant::find($request->id);
+        $degrades = Enfant::DEGRADE;
+        return view('cards.enfant')
+            ->with('degrades', $degrades)
+            ->with('enfant', $enfant);
+
+    }
+
     public function removeEleve(Request $request) {
         
         

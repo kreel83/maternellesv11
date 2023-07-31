@@ -8,7 +8,7 @@ import '@fortawesome/fontawesome-free/scss/regular.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
-import '../../node_modules/quill/dist/quill';
+import '/node_modules/quill/dist/quill';
 
 
 import Alpine from 'alpinejs';
@@ -18,7 +18,7 @@ import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendri
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
 import {selectItem, hamburger} from './pages/items';
-import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral} from './pages/cahier';
+import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral, clickOnCahier} from './pages/cahier';
 import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase, setMotCle, saveNouvellePhrase} from "./pages/phrase";
 import {
     initFiche,
@@ -85,6 +85,19 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
+
+
+
+if ($('#editorApercu').length) {
+    var quillApercu = new Quill('#editorApercu', {
+        theme: 'snow'
+    });
+
+    console.log('2')
+    clickOnCahier(quillApercu)
+
+}
 
 if ($('#editor').length) {
     var quill = new Quill('#editor', {
