@@ -165,14 +165,26 @@ class ParametreController extends Controller
     }
 
     public function phrases(Request $request) {
+
+        $com = null;
         if ($request->section) {
-            $section = Section::find($request->section);
+            if ($request->section == 99) {
+                $section = 99;               
+            } else {   
+                 $section = Section::find($request->section)->id;
+               
+            } 
         } else {
-            $section = Section::first();
+            $section = Section::first()->id;
         }
+        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id',$section)->get();
         $sections = Section::all();
 
-        return view('parametres.phrases.index')->with('sections', $sections)->with('section', $section);
+        return view('parametres.phrases.index')
+            ->with('sections', $sections)
+            ->with('section', $section)
+            ->with('commentaires', $commentaires);
+            
     }
 
     public function savePhrases(Request $request) {
@@ -186,6 +198,7 @@ class ParametreController extends Controller
         }
         $phrase->texte = strip_tags($request->quill);
         $phrase->save();
-        return view('parametres.phrases.__tableau_des_phrases')->with('section', Section::find($request->section));
+        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', $request->section)->get();
+        return view('parametres.phrases.__tableau_des_phrases')->with('commentaires', $commentaires);
     }
 }

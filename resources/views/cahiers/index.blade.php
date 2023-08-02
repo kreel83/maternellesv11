@@ -65,7 +65,7 @@
 
                 @if ($isreussite)
                     <a target="_blank" href="{{route('seepdf',['id' => $enfant->id,'state' => 'see'])}}" data-enfant="{{$enfant->id}}"
-                    class="btn btn-primary" id="pdf">Voir le PDF</a>
+                    class="btn btn-primary {{$definitif == 0 ? 'd-none' : null}}" id="pdf" >Voir le PDF</a>
                     {{-- <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"
                     class="btn btn-primary" id="pdf">Sauvegarder le PDF</a> --}}
 

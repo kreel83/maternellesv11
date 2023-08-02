@@ -123,6 +123,11 @@ class User extends Authenticatable
     }
 
 
+    public function name_ecole() {
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $this->code_ecole)->first();
+        return $ecole;
+    }
+
     public function liste() {
         return Enfant::where('user_id', $this->id)->orderby('prenom')->get();
     }

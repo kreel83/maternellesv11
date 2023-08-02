@@ -181,13 +181,15 @@ const clickOnDefinif = (quill) => {
             url : '/app/enfants/' + enfant + '/cahier/definitif',
             data: {
                 state: definitif,
-                quill: quill.getText()
+                quill: quill.root.innerHTML
             },
             success: function(data) {
                 console.log(definitif)
                 if (definitif == true) {
                     quill.enable(false)
+                    $('#pdf').removeClass('d-none')
                 } else {
+                    $('#pdf').addClass('d-none')
                     quill.enable(true)
                 }
             }

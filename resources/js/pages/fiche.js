@@ -135,15 +135,20 @@ const jechoisislaselection = () => {
              t['test'] = $(that).data('table')
             tab.push(t)
          })
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $.ajax({
             method: 'POST',
-            url: '/fiches/choisirSelection',
+            url: '/app/fiches/choisirSelection',
             data: {
                 section: section,
                 tableau: JSON.stringify(tab)
             },
             success: function() {
-                window.open('/fiches?section='+section+'&type=mesfiches','_self')
+                window.open('/app/fiches?section='+section+'&type=mesfiches','_self')
             }
 
         })
@@ -154,7 +159,7 @@ const jemodifielafiche = () => {
     $(document).on('click','.modifyFiche', function() {
         var item = $(this).data('id')
         var section = $(this).data('section')
-        window.open('/fiches?section='+section+'&type=createfiche&item='+item,'_self')
+        window.open('/app/fiches?section='+section+'&type=createfiche&item='+item,'_self')
 
     })
 
