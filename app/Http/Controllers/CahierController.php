@@ -91,6 +91,8 @@ class CahierController extends Controller
     public function seepdf($id, $state = 'see') {
 
 
+
+
         $rep = Auth::user()->repertoire;
         $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
            ->join('sections','sections.id','resultats.section_id')
@@ -126,10 +128,8 @@ class CahierController extends Controller
 
         $r = Reussite::where('enfant_id', $id)->first();
         $reussite = $r->texte_integral;
-        if ($r->commentaire_general) {
-            $reussite .= '<h2>Commentaire général</h2><p>'.$r->commentaire_general.'</p>';
+        
 
-        }
         // dd($reussite);
         $reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
 
@@ -260,6 +260,7 @@ class CahierController extends Controller
             $reussite->user_id = Auth::id();
         }
 
+       
             $reussite->definitif = $request->state == "true" ? true : false;
             $reussite->texte_integral = $request->quill;
             $reussite->save();

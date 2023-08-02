@@ -89,13 +89,18 @@ $.ajaxSetup({
 
 
 
+
+
+
+
 if ($('#editorApercu').length) {
-    var quillApercu = new Quill('#editorApercu', {
+    var quill = new Quill('#editorApercu', {
         theme: 'snow'
     });
-
     console.log('2')
-    clickOnCahier(quillApercu)
+    clickOnCahier(quill)
+    clickOnDefinif(quill)
+    console.log('def')
 
 }
 
@@ -114,8 +119,7 @@ if ($('#editor').length) {
     console.log('5')
     apercu(quill)
     console.log('6')
-    clickOnDefinif(quill)
-    console.log('7')
+
     saveTexteReussite(quill)
     console.log('8')
     saveCommentaireGeneral(quill)

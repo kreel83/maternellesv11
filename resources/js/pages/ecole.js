@@ -48,7 +48,7 @@ const choixEcole = () => {
             toast.show()
             setTimeout(function() {
                 toast.dispose()
-                window.open('/home','_self')
+                window.open('/app/home','_self')
 
             },3000)
         })
