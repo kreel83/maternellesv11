@@ -6,27 +6,32 @@ use App\Models\Enfant;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class GroupeController extends Controller
 {
     public function index() {
         $type = Auth::user()->type_groupe;
-        $groupe = Auth::user()->groupe;
-        if ($type == 'termes') {
-            $groupe = join(PHP_EOL, $groupe );
-        } else {
+        $groupes = Auth::user()->groupes;
+        $groupes = json_decode($groupes, true);
+        $nbGroupe = sizeof($groupes);
 
-        }
+
+        
         
         return view('groupes.index')
-            ->with('type', $type)
-            ->with('groupe', $groupe);
+            ->with('nbGroupe', $nbGroupe)
+            ->with('groupes', $groupes);
     }
 
     public function affectation_groupe() {
         $eleves = Auth::user()->liste();
+        
+        $groupes = json_decode(Auth::user()->groupes, true);
+        
         return view('groupes.affectation_groupe')
             ->with('eleves', $eleves)
+            ->with('groupes', $groupes)
             ->with('user', Auth::user());
     }
 
@@ -50,17 +55,21 @@ class GroupeController extends Controller
     }
 
     public function saveTermes(Request $request) {
-        $user = Auth::user();
-        Enfant::where('user_id', $user->id)->update([
-            'groupe' => null
-        ]);
+        $arr = array();
+        for ($i = 0; $i<$request->nbGroupe; $i++) {
+            $arr[$i][] = $request->termes[$i];
+            $arr[$i][] = $request->back[$i];
+            $arr[$i][] = $request->font[$i];
+        }
+        
 
-        $r = $request->tableau;
-        $liste = explode(PHP_EOL, $r);
-        $liste = join('/', $liste);
-        $user->groupes = $liste;
+        $user = Auth::user();
+
+
+
+        $user->groupes = $arr;
         $user->save();
 
-        return 'ok';
+        return Redirect::back();
     }
 }

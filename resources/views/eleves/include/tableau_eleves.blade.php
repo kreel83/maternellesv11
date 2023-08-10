@@ -44,7 +44,7 @@
 .new_eleve {
     top: -5px; left: 5px;
     font-size: 18px;
-    color: purple;
+    color: #7769FE;
     cursor: pointer;
     width: 20px;
     height: 20px;;

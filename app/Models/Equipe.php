@@ -14,4 +14,6 @@ class Equipe extends Model
     ];
 
     public $photoEquipe;
+
+    const FONCTIONS = ['Aide maternelle (ATSEM)','AESH'];
 }

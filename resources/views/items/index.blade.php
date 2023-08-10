@@ -23,7 +23,7 @@
     <style>
         .arrowLeft a{
             font-size: 35px;
-            color: purple;
+            color: #7769FE;
         }
     </style>
 

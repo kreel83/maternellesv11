@@ -26,6 +26,14 @@ class Enfant extends Model
                      
     ];
     
+    const GROUPE_COLORS_FONT = [
+        '1' => '#FFFFFF',
+        '2' => '#000000',
+        '3' => '#C2C2C2',
+          
+        
+
+    ];
     const GROUPE_COLORS = [
         '1' => '#fd5959',
         '2' => '#ff9c6d',

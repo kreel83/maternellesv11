@@ -11,7 +11,47 @@ const choicePhrase = (quill) => {
         $(this).remove()
 
     })
+
+    var debounce = null;
+    // $(document).on('keydown', '#editor', function (e) {
+    //     clearTimeout(debounce);
+    //     debounce = setTimeout(function(){
+    //         $('.saveTexte').trigger('click')
+    //         console.log('saving')
+    //     }, 3000);
+    // });
+
+    // $(document).on('keydown', '#editor', function (e) {
+    //     clearTimeout(debounce);
+    //     debounce = setTimeout(function(){
+    //         $('.saveTexte').trigger('click')
+    //         console.log('saving')
+    //     }, 3000);
+    // });
+
+    // $(document).on('text-change','#editor', function() {
+    //     alert('cvc')
+    //     clearTimeout(debounce);
+    //     debounce = setTimeout(function(){
+    //         $('.saveTexte').trigger('click')
+    //         console.log('saving')
+    //     }, 3000);
+    // });
+
+   
+    quill.on('text-change', function(delta, source) {
+        clearTimeout(debounce);
+        $('.saveTexte').addClass('saving').removeClass('saved')
+        debounce = setTimeout(function(){
+            $('.saveTexte').trigger('click')
+            $('.saveTexte').addClass('saved').removeClass('saving')
+        }, 5000);
+      });
 }
+
+
+    
+
 
 const saveCommentaireDefinitif = (quill, quill2) => {
 
@@ -37,6 +77,7 @@ const saveTexte = (quill) => {
             },
             success: function(data) {
                 $('.sectionCahier[data-section="'+section+'"]').attr('data-texte', texte)
+                $('.saveTexte').addClass('saved').removeClass('saving')
             }
         })
     })

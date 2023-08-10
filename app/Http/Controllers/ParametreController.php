@@ -53,7 +53,7 @@ class ParametreController extends Controller
             $equipe->photo = $folder;
         }
         $equipe->save();
-        return redirect()->back();
+        return $this->aidematernelle();
     }
 
 
