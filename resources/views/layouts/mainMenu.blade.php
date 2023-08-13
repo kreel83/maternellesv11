@@ -1,6 +1,7 @@
 <?
 use Illuminate\Support\Facades\Auth;
 
+
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +28,7 @@ use Illuminate\Support\Facades\Auth;
         </style>
     </head>
     <div class='dashboard'>
+      @if (!isset($log))
       <div class="dashboard-nav">
           <header>
             <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
@@ -106,11 +108,16 @@ use Illuminate\Support\Facades\Auth;
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
         </header> --}}
         <div id="alerte" class="w-100">
-
+          
         </div>
         <div class=''>
-            @yield('content')
+          @yield('content')
         </div>
+        @else
+        <div class=''>
+          @yield('content')
+        </div>
+        @endif
     </div>
 
   </div>
