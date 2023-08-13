@@ -13,7 +13,8 @@
     }
     .card-eleve {
         width: 300px;
-        height: 100px;
+        height: auto;
+        min-height: 100px
         font-size: 14px;
         padding: 5px;
         border: 4px solid transparent;
@@ -30,6 +31,8 @@
         color: purple;
         background-color: white;
         width: fit-content;
+        min-width: 25px;
+        min-height: 25px;
         margin: 4px 0;
         cursor: pointer;
     }
