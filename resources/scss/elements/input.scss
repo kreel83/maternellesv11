@@ -4,6 +4,15 @@ HELPERS
 =====
 */
 
+#photo_form {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 30px;
+  border: 4px solid white;;
+}
+
 .ha-screen-reader{
     width: var(--ha-screen-reader-width, 1px);
     height: var(--ha-screen-reader-height, 1px);

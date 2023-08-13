@@ -31,8 +31,11 @@ class CahierController extends Controller
         foreach ($sections as $section) {
 
             $nameSection = ($section == 99) ? 'Commentaire général' : Section::find($section)->name;
+            if ((isset($resultats[$section])) || (isset($commentaires[$section]))) {
+                $bloc .= "<br><h2 contenteditable='false'>$nameSection</h2><br />";
+
+            }
             if (isset($resultats[$section])) {
-                $bloc .= "<br><h2>$nameSection</h2><br />";
                 foreach ($resultats[$section] as $resultat) {
                     $bloc .= $resultat->item()->phrase($enfant).'</br>';
                 }
@@ -300,7 +303,7 @@ class CahierController extends Controller
 
         $reussite = join(' ', $mots);
 
-        $reussite .= '</br><h2>Commentaire général</h2>';
+        $reussite .= '</br><h2 contenteditable="false">Commentaire général</h2>';
         $comm = Reussite::where('enfant_id', $enfant->id)->where('user_id', Auth::id())->first();
         if ($comm) {
             $c = $comm->commentaire_general ?? '';

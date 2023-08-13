@@ -1,11 +1,15 @@
 @if (!isset($type) || ($type == 'sections'))    
                 @if (!$phrases->isEmpty())
+                <ul>
                     @foreach ($phrases[$section->id] as $phrase)
-                            <div class="badge_phrase" style="background-color: {{$section->color}}" data-value="{{$phrase->id}}">{{$phrase->texte($enfant)}}</div>
+                            <li class="badge_phrase"  data-value="{{$phrase->id}}">{{$phrase->texte($enfant)}}</li>
                     @endforeach
+                </ul>
                     @endif   
                     @else
+                    <ul>
                     @foreach ($phrases as $phrase)
-                            <div class="badge_phrase" style="background-color: grey" data-value="{{$phrase->id}}">{{$phrase->texte($enfant)}}</div>
+                            <li class="badge_phrase"  data-value="{{$phrase->id}}">{{$phrase->texte($enfant)}}</li>
                     @endforeach
+                    </ul>
 @endif

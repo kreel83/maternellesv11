@@ -8,7 +8,8 @@ import '@fortawesome/fontawesome-free/scss/regular.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
-import '/node_modules/quill/dist/quill';
+
+import '../../node_modules/quill/dist/quill';
 
 
 import Alpine from 'alpinejs';

@@ -41,22 +41,34 @@ import { Modal } from 'bootstrap'
 // }
 
 const choix_equipe = () => {
-    $(document).on('click', '#tableau_equipes tr, #new_equipe', function() {
-        $('#nom_form').val($(this).find('td:eq(1)').data('value'))
-        $('#prenom_form').val($(this).find('td:eq(2)').data('value'))
-        $('#fonction_form').val($(this).find('td:eq(3)').data('value'))
-        $('#equipe_form').val($(this).data('id'))
-        $('#photo_form').attr('src',$(this).data('photo'))
+    $(document).on('click', '#new_equipe', function() {
+        // $('#nom_form').val($(this).find('td:eq(1)').data('value'))
+        // $('#prenom_form').val($(this).find('td:eq(2)').data('value'))
+        // $('#fonction_form').val($(this).find('td:eq(3)').data('value'))
+        // $('#equipe_form').val($(this).data('id'))
+        // $('#photo_form').attr('src',$(this).data('photo'))
+        // console.log($(this).data('id'))
+        $('.aideLeft').removeClass('d-none')
+        $(this).addClass('d-none')
+    })
+    $(document).on('click', '.delete_aide', function() {
+        console.log('deleting')
+    })
+    $(document).on('click', '.card_aides .modif', function() {
+        var data = $(this).closest('.card_aides').data('donnees')
+        var domain = window.location.hostname
+        console.log(data)
+
+        $('#titreAide').text('Mofification')
+        $('#nom_form').val(data.name)
+        $('#prenom_form').val(data.prenom)
+        $('#fonction_form').val(data.fonction)
+        $('#equipe_form').val(data.id)
+        $('#photo_form').attr('src',$(this).closest('.card_aides').data('photo'))
         console.log($(this).data('id'))
-
-
-        var myModal = new Modal(document.getElementById('EquipeModal'), {
-            keyboard: false
-        })
-        myModal.toggle()
-
-
-
+        $('.aideLeft').removeClass('d-none')
+        $('#new_equipe').addClass('d-none')
+        
     })
 }
 

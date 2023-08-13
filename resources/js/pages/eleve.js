@@ -54,6 +54,11 @@ const preview_photo = (event) => {
     })
 
 
+    $(document).on('click',".terme",function() {
+        $('.terme').removeClass('selected')
+        $(this).addClass('selected')
+
+    })
     $(document).on('click',"#saveTermes",function() {
         var termes = $('#termes').val();
        
@@ -123,6 +128,7 @@ const preview_photo = (event) => {
         var id = $(this).closest('.card-eleve').data('eleve')
 
         var order =  $(this).data('order')
+        $(el).css('border-color', $(this).data('color'))
 
 
         $.get('/app/groupe/affectation?eleve='+id+'&order='+order, function(data) {
@@ -130,30 +136,46 @@ const preview_photo = (event) => {
         })
     })
 
-    $('.rond_couleur').on('click', function() {
-
-        if ($(this).hasClass('active')) {
-            var nb = parseInt($(this).find('.order').text())
-            $('.rond_couleur.active').each((index, el) => {
-                var i = parseInt($(el).find('.order').text())
-                console.log(nb, i)
-                if (i == nb) {
-                    $(el).find('.order').text('')
-                    $(el).removeClass('active')
-                    nb++;
-                }
-                i++;
-            })
-
-        } else {
-            var nb = $('.rond_couleur.active').length;
-            if (nb < 4) {
-                $(this).addClass('active')
-                $(this).find('.order').text(nb + 1)                
+    $(document).on('change','#nbGroupe', function() {
+        var nb = parseInt($(this).val())
+        if (nb >1 && nb <5) {
+            $('.terme').addClass('d-none')
+            for(var i = 1; i<=nb; i++) {
+                $('#terme'+i).removeClass('d-none')
             }
-
-
         }
+    })
+    $(document).on('focus','.br-40', function() {
+        $('.terme').removeClass('selected')
+        $(this).closest('.terme').addClass('selected')
+    })
+    $(document).on('click','.rond_couleur_font', function() {
+        var el = $('.terme.selected')
+        var color = $(this).data('color')
+        console.log(color)
+        $(el).find('.badge_terme').css('color', color  )
+        $(el).find('.policeColor').val(color)
+    })
+    $(document).on('click','.rond_couleur', function() {
+        var el = $('.terme.selected')
+        var color = $(this).data('color')
+        console.log(color)
+        $(el).find('.badge_terme').css('background-color', color  )
+        $(el).find('.fondColor').val(color)
+    })
+    $(document).on('keyup','.br-40', function(e) {
+        if (e.key == "tab") {
+            $(this).trigger('focus')
+            return false;
+        }
+        var el = $(this).closest('.selected')
+        console.log(e.key, e.typeof)
+        
+
+            var text = $(this).val()
+            $(el).find('.badge_terme').text(text)
+
+       
 
     })
 }

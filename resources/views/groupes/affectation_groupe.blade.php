@@ -30,15 +30,14 @@
         color: purple;
         background-color: white;
         width: fit-content;
-        margin: 2px 0;
+        margin: 4px 0;
         cursor: pointer;
     }
 
     .badge_termes.active {
 
-        border: 1px solid white;
-        color: white;
-        background-color: purple;
+        border: 2px solid black;
+
 
     }
 
@@ -50,10 +49,12 @@
 @foreach ($eleves as $eleve)
     @php
         if ($eleve->groupe != null) {
-            $c = $user->groupe[$eleve->groupe];
+            $c = $groupes[$eleve->groupe][1];
         } else {
             $c = 'transparent';
         }
+        
+      
     @endphp
     <div class="d-flex card-eleve" data-eleve="{{$eleve->id}}" style="border-color:{{$c}}">
         <div class="d-flex flex-column w-75">
@@ -62,19 +63,15 @@
             <div>{{$eleve->ddn}}</div>            
         </div>
         
-            @if ($user->type_groupe == 'colors')
-            <div style="width: 20%" class="d-flex flex-column">
-                @foreach ($user->groupe as $key=>$color)
-                <div class="color_rond" data-color="{{$color}}"  data-order="{{$key}}" style="background-color: {{$color}}"></div>
-                @endforeach
-            </div>
-            @else
+
             <div style="width: 40%" class="d-flex flex-column align-items-end">
-                @foreach ($user->groupe as $key=>$terme)
-                <div class="badge_termes {{ $eleve->groupe != null && $key == $eleve->groupe ? 'active' : null}}" data-order="{{$key}}">{{$terme}}</div>
+                @foreach ($groupes as $key=>$terme)
+
+
+                <div class="badge_termes {{ $eleve->groupe != null && $key == $eleve->groupe ? 'active' : null}}" data-color="{{$terme[1]}}" style="background-color: {{$terme[1]}}; color: {{$terme[2]}}" data-order="{{$key}}">{{$terme[0]}}</div>
                 @endforeach
             </div>
-            @endif
+           
         
 
 
