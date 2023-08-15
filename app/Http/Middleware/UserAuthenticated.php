@@ -19,20 +19,17 @@ class UserAuthenticated
     {
         if( Auth::check() )
         {
-            /** @var User $user */
-            $user = Auth::user();
-
-            // if user is not admin take him to his dashboard
-            if ( $user->hasRole('admin') ) {
-                return redirect(route('admin.index'));
-            }
-
-            // allow admin to proceed with request
-            else if ( $user->hasRole('user') ) {
-                return $next($request);
+            switch(Auth::user()->role) {
+                case('admin'):
+                    // Si l'utilisateur n'est pas un user on le renvoi sur son dashboard
+                    return redirect(route('admin.index'));
+                    break;
+                case('user'):
+                    // Sinon on redirige le user sur son dashboard
+                    return $next($request);
+                    break;
             }
         }
-
         abort(403);  // permission denied error
     }
 }
