@@ -4,7 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+
     "content-hash": "7ceda7e4aa5e7329b0a91245bf568af1",
+
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -3398,6 +3400,7 @@
         },
         {
             "name": "openai-php/laravel",
+
             "version": "v0.6.3",
             "source": {
                 "type": "git",
@@ -3423,6 +3426,7 @@
                 "pestphp/pest-plugin-mock": "^2.0.0",
                 "phpstan/phpstan": "^1.10.25",
                 "symfony/var-dumper": "^6.3.1"
+
             },
             "type": "library",
             "extra": {
@@ -3464,7 +3468,9 @@
             ],
             "support": {
                 "issues": "https://github.com/openai-php/laravel/issues",
+
                 "source": "https://github.com/openai-php/laravel/tree/v0.6.3"
+
             },
             "funding": [
                 {
@@ -3480,7 +3486,9 @@
                     "type": "patreon"
                 }
             ],
+
             "time": "2023-07-10T10:23:41+00:00"
+
         },
         {
             "name": "phenx/php-font-lib",

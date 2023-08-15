@@ -9,6 +9,21 @@ class Resultat extends Model
 {
     use HasFactory;
 
+	/**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'item_id',
+        'enfant_id',
+        'notation',
+        'section_id',
+        'user_id',
+        'groupe',
+        'autonome',
+    ];
+
 
     public function notation() {
         return $this->hasone('App\models\Notation','id','notation_id')->first();
@@ -55,6 +70,17 @@ class Resultat extends Model
         ->orderBy('total')
         ->limit(5)
         ->get();
+    }
+
+    public static function resultatsPourUnEleve($id) {
+        $resultats = Resultat::select('autonome','items.name as itemName','sections.name as sectionName','resultats.section_id',
+            'sections.logo as sectionLogo')
+            ->where('enfant_id', $id)
+            ->leftJoin('items', 'item_id', '=', 'items.id')
+            ->leftJoin('sections', 'resultats.section_id', '=', 'sections.id')
+            ->orderBy('resultats.section_id')
+            ->get();
+        return $resultats;
     }
 
 }

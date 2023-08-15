@@ -12,12 +12,16 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 use App\Models\Event;
+
 use App\Notifications\ResetPassword;
+
+use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    use Billable;
+    use Billable, HasApiTokens;
 
      /**
      * @param string $role

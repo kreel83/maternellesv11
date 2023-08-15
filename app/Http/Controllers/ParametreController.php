@@ -11,10 +11,12 @@ use App\Models\Section;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use OpenAI\Laravel\Facades\OpenAI;
+
 
 class ParametreController extends Controller
 {
@@ -222,5 +224,31 @@ class ParametreController extends Controller
         $phrase->save();
         $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', $request->section)->get();
         return view('parametres.phrases.__tableau_des_phrases')->with('commentaires', $commentaires);
+    }
+
+    /**
+     * Changer le mot de passe de l'adminsitrateur
+     *
+     * @return View
+     */
+    function changerLeMotDePasse(): View
+    {
+        return view('monprofil.motdepasse');
+    }
+
+    public function sauverLeMotDePasse(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'password.required' => 'Mot de passe obligatoire.',
+            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+        ]);
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back()->with('result', 'success');
     }
 }

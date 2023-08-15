@@ -4,18 +4,41 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ecole;
+use App\Models\Enfant;
+use App\Models\Resultat;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules;
 
 class AdminController extends Controller
 {
     public function index(): View
     {
-        return view('admin.index');
+        $enseignants = User::where([
+            ['ecole_id', Auth::user()->ecole_id],
+            ['id', '<>', Auth::id()],
+        ])->get();
+        return view('admin.index')
+            -> with('enseignants', $enseignants);
+    }
+
+    public function voirClasse($id): View
+    {
+        $enseignants = User::where([
+            ['ecole_id', Auth::user()->ecole_id],
+            ['id', '<>', Auth::id()],
+        ])->get();
+        $listeDesEleves = Enfant::where('user_id', $id)->get();
+        $prof = User::find($id);
+        return view('admin.index')
+            ->with('prof', $prof)
+            ->with('listeDesEleves', $listeDesEleves)
+            -> with('enseignants', $enseignants);
     }
 
     public function logout(Request $request) : RedirectResponse
@@ -94,6 +117,66 @@ class AdminController extends Controller
         $user->mobile = $request->mobile;
         $user->save();
         return redirect()->back()->with('result', 'success');
+    }
+
+    /**
+     * Changer le mot de passe de l'adminsitrateur
+     *
+     * @return View
+     */
+    function changerLeMotDePasse(): View
+    {
+        return view('admin.motdepasse');
+    }
+
+    public function sauverLeMotDePasse(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'password.required' => 'Mot de passe obligatoire.',
+            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+        ]);
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back()->with('result', 'success');
+    }
+
+    public function chercherUnEleve(Request $request)
+    {
+        $request->validate([
+            'search' => ['required', 'string'],
+        ], [
+            'search.required' => 'Le champ de recherche ne peut pas être vide',
+            'search.string' => 'Le format de recherche est invalide.',
+        ]);
+
+        $result = Enfant::select('enfants.id', 'enfants.nom as eleveNom','enfants.prenom as elevePrenom',
+            'users.name as userNom','users.prenom as userPrenom','enfants.genre','enfants.background','enfants.photo')
+            ->where(function ($query) use ($request) {
+                $query->where('enfants.nom', 'LIKE', '%'.$request->search.'%')
+                      ->orWhere('enfants.prenom', 'LIKE', '%'.$request->search.'%');
+            })
+            ->leftJoin('users', 'user_id', '=', 'users.id')
+            ->where('users.ecole_id', Auth::user()->ecole_id)
+            ->get();
+        return redirect()->back()->with('result', $result);
+    }
+
+
+
+    public function voirEleve($user_id, $id)
+    {        
+        $eleve = Enfant::find($id);
+        $resultats = Resultat::resultatsPourUnEleve($id);
+        return view('admin.voir_eleve')
+            ->with('user_id', $user_id)     // id du prof pour retour sur le dashboard et reafficher la classe si besoin
+            ->with('role', Auth::user()->role)
+            ->with('resultats', $resultats)
+            ->with('eleve', $eleve);
     }
 
 }

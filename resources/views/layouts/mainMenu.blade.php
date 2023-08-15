@@ -82,7 +82,17 @@ use Illuminate\Support\Facades\Auth;
               </div>
             </div>
 
-            <a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>
+            @php
+              $params = in_array($menu, ['monprofil','monpasse']);
+            @endphp
+            <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon compte</a>      
+              <div class='dashboard-nav-dropdown-menu'>
+                <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
+                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Mot de passe</a>
+              </div>
+            </div>
+            <!--<a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>-->
 
             @php
               $params = in_array($menu, ['souscrire','resilier','reactiver','facture']);
