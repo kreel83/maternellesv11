@@ -92,9 +92,9 @@ grid-row-gap: 0px;
         <tbody class="table-group-divider">
             @foreach($listeDesEleves as $eleve)
             <tr>
-                <td><a href="#">{{ $eleve->prenom.' '.$eleve->nom }}</a></td>
+                <td><a href="{{ route('voirEleve', ['id' => $eleve->id]) }}">{{ $eleve->prenom.' '.$eleve->nom }}</a></td>
                 <td>{{ $eleve->genre }}</td>
-                <td>{{ $eleve->ddn }}</td>
+                <td>{{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}} <small>({{ $eleve->age }})</small></td>
                 <td>{{ $eleve->groupe }}</td>
             </tr>
             @endforeach

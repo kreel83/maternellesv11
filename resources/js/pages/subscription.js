@@ -84,7 +84,7 @@ const assigneLicence = () => {
             console.log(licence_id);
             $.ajax({
                 method: 'POST',
-                url: '/admin/licence/assign',
+                url: '/app/admin/licence/assign',
                 data: {
                     licence_id: licence_id,
                     user_id: user_id,

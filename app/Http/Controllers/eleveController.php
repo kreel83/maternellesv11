@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Enfant;
 use App\Models\Resultat;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use File;
+use Illuminate\View\View;
 
 class EleveController extends Controller
 {
-
-
     public function photos() {
         $user = Auth::user();
 
@@ -29,6 +29,7 @@ class EleveController extends Controller
             ->with('degrades',$degrades)
             ->with('files', $liste);
     }
+
     public function liste() {
         $user = Auth::user();
         $files = File::files(public_path('img/animaux'));
@@ -36,10 +37,6 @@ class EleveController extends Controller
         foreach ($files as $file) {
             $liste[] = $file->getFileName();
         }
-
-
-
-
         return view('eleves.liste')
             ->with('files', $liste)
             ->with('professeur', "null")
@@ -57,10 +54,8 @@ class EleveController extends Controller
 
     }
 
-
     public function removeEleve(Request $request) {
-        
-        
+               
             $e = Enfant::find($request->eleve);
             $prof = $e->user_n1_id;
             if ($prof) {
@@ -78,6 +73,7 @@ class EleveController extends Controller
             ->with('prof', $request->prof);
 
     }
+
     public function ajouterEleves(Request $request) {
         $eleves = array_filter($request->eleves);
         
@@ -90,9 +86,7 @@ class EleveController extends Controller
 
     }
 
-
     public function save(Request $request) {
-
         $datas = $request->except(['_token']);
         
         $datas['mail'] = join(';', array_filter($datas['mail']));
@@ -103,4 +97,26 @@ class EleveController extends Controller
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
         return redirect()->back();
     }
+
+    public function voirEleve($id) {
+        $user = Auth::user();
+        $files = File::files(public_path('img/animaux'));
+        $liste = array();
+        foreach ($files as $file) {
+            $liste[] = $file->getFileName();
+        }
+        $eleve = Enfant::find($id);
+        $resultats = Resultat::resultatsPourUnEleve($id);
+        return view('eleves.voir_eleve')        
+            ->with('files', $liste)
+            ->with('professeur', "null")
+            ->with('profs', $user->profs())
+            ->with('tous', $user->tous())
+            ->with('role', Auth::user()->role)
+            ->with('resultats', $resultats)
+            //->with('sections', $sections)
+            ->with('eleve',$eleve)
+            ->with('eleves',$user->liste());
+    }
+
 }

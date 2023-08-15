@@ -20,15 +20,6 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/app';
 
     /**
-     * The path to the "dashboard" route for direction users.
-     *
-     * This is used by Laravel authentication to redirect users after pro registration.
-     *
-     * @var string
-     */
-    public const DASHBOARDPRO = '/dashboardpro';
-
-    /**
      * The controller namespace for the application.
      *
      * When present, controller route declarations will automatically be prefixed with this namespace.

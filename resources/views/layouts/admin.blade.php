@@ -36,23 +36,39 @@ use Illuminate\Support\Facades\Auth;
     <div class='dashboard'>
         <div class="dashboard-nav">
           <header>
-            <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="{{route('home')}}" class="brand-logo"><i
-                  class="fas fa-anchor"></i> <span>Les Maternelles</span></a>
-          </header>
+            <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+            <a href="{{route('admin.index')}}" class="brand-logo">
+                <img src="{{asset('img/deco/les_maternelles.png')}}" alt="" width="200">
+            </a></header>
           <nav class="dashboard-nav-list">
             <a href="{{route('admin.index')}}" class="dashboard-nav-item  {{ $menu == 'dashboard' ? 'active' : null }}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
             <a href="{{route('admin.licence.index')}}" class="dashboard-nav-item  {{ $menu == 'licence' ? 'active' : null }}"><i class="fa-regular fa-id-badge"></i> Mes licences</a>
             <a href="{{route('admin.licence.invoice')}}" class="dashboard-nav-item  {{ $menu == 'invoice' ? 'active' : null }}"><i class="fal fa-file-invoice"></i> Mes factures</a>
-            <a href="{{route('admin.loadprofile')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
+
+            @php
+              $params = in_array($menu, ['monprofil','monpasse']);
+            @endphp
+            <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon compte</a>      
+              <div class='dashboard-nav-dropdown-menu'>
+                <a href="{{route('admin.loadprofile')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
+                <a href="{{route('admin.changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Mot de passe</a>
+              </div>
+            </div>
+
+
+            <!--<a href="{{route('admin.loadprofile')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>-->
             <a href="{{route('admin.contact')}}" class="dashboard-nav-item  {{ $menu == 'contact' ? 'active' : null }}"><i class="fa-regular fa-envelope"></i> Nous contacter</a>
             <div class="nav-item-divider"></div>
             <a href="{{route('admin.logout')}}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
           </nav>
         </div>
         <div class='dashboard-app'>
+          {{--
           <header class='dashboard-toolbar'>
             <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
           </header>
+          --}}
           <div id="alerte" class="w-100">
   
           </div>

@@ -17,25 +17,19 @@ class AdminAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         if( Auth::check() )
         {
-            /** @var User $user */
-            $user = Auth::user();
-
-            // if user is not admin take him to his dashboard
-
-             if ( $user->hasRole('user') ) {
-                return redirect(route('user_dashboard')); // A VOIR !!!!!!!!!!!!!!!!!
-            }
-
-            // allow admin to proceed with request
-            else if ( $user->hasRole('admin') ) {
-
-                return $next($request);
+            switch(Auth::user()->role) {
+                case('user'):
+                    // Si l'utilisateur n'est pas un admin on le renvoi sur son dashboard
+                    return redirect(route('depart'));
+                    break;
+                case('admin'):
+                    // Sinon on redirige l'admin sur son dashboard
+                    return $next($request);
+                    break;
             }
         }
-
         abort(403);  // permission denied error
     }
 }

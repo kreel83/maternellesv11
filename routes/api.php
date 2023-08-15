@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::apiResource('posts', AuthController::class)->middleware('auth:sanctum');
+Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::post('/auth/logout', [AuthController::class, 'logout']);
+Route::post('/classe', [DataController::class, 'chargerLaClasse']);
+Route::post('/resultat/store', [DataController::class, 'ajouterUnResultat']);
+Route::post('/section', [DataController::class, 'chargerLesSections']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
