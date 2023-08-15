@@ -122,8 +122,9 @@ class ficheController extends Controller
             $new->user_id = Auth::id();
             $new->order = $order;
             $new->section_id = $request->section;
-            $new->parent_type = $fiche->test;
+            $new->parent_type = null;
             $new->save();
+            $order++;
         }
         return 'ok';
     }

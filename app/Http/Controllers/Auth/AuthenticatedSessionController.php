@@ -44,6 +44,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+
         switch(Auth::user()->role) {
             case ('admin'):
                 return redirect()->intended(route('admin.index'));
@@ -52,6 +53,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(route('depart'));
                 break;
         }
+
     }
 
     /**

@@ -4,8 +4,16 @@
 const selectPhrase = () => {
     $('#selectPhrase').on('change', function() {
         var id = $(this).val()
-        window.open('/parametres/phrases?section='+id,'_self')
+        window.open('/app/parametres/phrases?section='+id,'_self')
     })
+
+    $(document).on('click','.sectionPhrase', function() {   
+        var id = $(this).data('section')
+        window.open('/app/parametres/phrases?section='+id,'_self')
+    })
+
+
+
 
     $('#record').on('click', function() {
         window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -97,8 +105,8 @@ const deletePhrase = () => {
 
 const nouvellePhrase = (quill) => {
     $('#nouvellePhrase').on('click', function() {
-        $('#controleNouvellePhrase').toggleClass('hide')
-        $(this).toggleClass('hide')
+        $('#controleNouvellePhrase').toggleClass('d-none')
+        $(this).toggleClass('d-none')
         $('#saveNouvellePhrase').attr('data-id', 'new')
         quill.setText('');
         quill.enable(true)
@@ -107,8 +115,8 @@ const nouvellePhrase = (quill) => {
 
 const cancelNouvellePhrase = (quill) => {
     $('#cancelNouvellePhrase').on('click', function() {
-        $('#controleNouvellePhrase').toggleClass('hide')
-        $('#nouvellePhrase').toggleClass('hide')
+        $('#controleNouvellePhrase').toggleClass('d-none')
+        $('#nouvellePhrase').toggleClass('d-none')
         quill.setText('');
         quill.enable(false)
     })
@@ -120,9 +128,13 @@ const saveNouvellePhrase = (quill) => {
         var data = quill.getText()
         var section = $(this).data('section')
         var id = $(this).data('id')
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+        });
         $.ajax({
             method: 'POST',
-            url: '/parametres/phrases/save',
+            url: '/app/parametres/phrases/save',
             data: {
                 id: id,
                 section: section,
@@ -130,15 +142,14 @@ const saveNouvellePhrase = (quill) => {
             },
             success: function(data) {
                 $('#tableCommentaireContainer').html(data)
+                $('#controleNouvellePhrase').addClass("d-none")
                 deletePhrase(quill)
                 editPhrase(quill)
+                quill.setText('');
             }
         })
 
-        $('#controleNouvellePhrase').toggleClass('hide')
-        $('#nouvellePhrase').toggleClass('hide')
-        quill.setText('');
-        quill.enable(false)
+       
     })
 }
 
@@ -150,8 +161,8 @@ const editPhrase = (quill) => {
         quill.setText('');
         quill.enable(true)
         quill.root.innerHTML = data
-        $('#controleNouvellePhrase').toggleClass('hide')
-        $('#nouvellePhrase').toggleClass('hide')
+        $('#controleNouvellePhrase').toggleClass('d-none')
+        $('#nouvellePhrase').toggleClass('d-none')
 
     })
 }

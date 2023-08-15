@@ -1,0 +1,45 @@
+/* Définir la classe pour l'icône dans la balise <i> */
+.icone-input {
+    position: relative;
+    color: #545454;
+    font-size: 16px;;
+}
+
+.icone-input i {
+            position: absolute;
+            top: 15px;
+            color: #545454;
+            left: 20px; /* Ajustez la valeur selon vos besoins pour positionner l'icône horizontalement */
+
+        }
+.icone-input div {
+
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 5px;
+            height: 37px;
+            border-radius: 40px;
+            min-width: 37px;;
+            border:1px solid grey;
+            font-size: 16px;
+            right: 5px; 
+            padding: 2px 16px;/* Ajustez la valeur selon vos besoins pour positionner l'icône horizontalement */
+
+        }
+        
+        /* Style supplémentaire pour le champ de saisie */
+.icone-input input {
+            width: 100%;;
+            font-size: 16px;;
+            padding: 10px; /* Ajustez la valeur selon vos besoins */
+            padding-left: 50px; /* Ajustez cette valeur pour laisser de l'espace à l'icône */
+            border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */
+            border-radius: 8px; /* Ajustez selon le style souhaité */
+}
+.icone-input input:focus {
+                outline: 1px solid #6759FF;
+            }
+        
+ 

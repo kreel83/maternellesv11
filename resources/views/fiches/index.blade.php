@@ -112,7 +112,7 @@
         <div  data-section="{{ $section->id }}">
             <div id="autresfiches" class="listFiches d-flex justify-content-center">
                 
-                <ul class="fiche_container fiches autresfiches m-0 p-0" >
+                <ul class="fiche_container fiches autresfiches m-0 p-0 justify-content-center" >
 
                     @foreach ($universelles as $fiche)
                         @include('cards.universelle',['type' => 'autresfiches'])

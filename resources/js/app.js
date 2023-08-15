@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/scss/regular.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
+
 import '../../node_modules/quill/dist/quill';
 
 
@@ -18,7 +19,7 @@ import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendri
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
 import {selectItem, hamburger} from './pages/items';
-import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral} from './pages/cahier';
+import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral, clickOnCahier} from './pages/cahier';
 import {selectPhrase, deletePhrase, editPhrase, nouvellePhrase, cancelNouvellePhrase, setMotCle, saveNouvellePhrase} from "./pages/phrase";
 import {
     initFiche,
@@ -86,6 +87,24 @@ $.ajaxSetup({
     }
 });
 
+
+
+
+
+
+
+
+if ($('#editorApercu').length) {
+    var quill = new Quill('#editorApercu', {
+        theme: 'snow'
+    });
+    console.log('2')
+    clickOnCahier(quill)
+    clickOnDefinif(quill)
+    console.log('def')
+
+}
+
 if ($('#editor').length) {
     var quill = new Quill('#editor', {
         theme: 'snow'
@@ -101,8 +120,7 @@ if ($('#editor').length) {
     console.log('5')
     apercu(quill)
     console.log('6')
-    clickOnDefinif(quill)
-    console.log('7')
+
     saveTexteReussite(quill)
     console.log('8')
     saveCommentaireGeneral(quill)

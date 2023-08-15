@@ -11,7 +11,47 @@ const choicePhrase = (quill) => {
         $(this).remove()
 
     })
+
+    var debounce = null;
+    // $(document).on('keydown', '#editor', function (e) {
+    //     clearTimeout(debounce);
+    //     debounce = setTimeout(function(){
+    //         $('.saveTexte').trigger('click')
+    //         console.log('saving')
+    //     }, 3000);
+    // });
+
+    // $(document).on('keydown', '#editor', function (e) {
+    //     clearTimeout(debounce);
+    //     debounce = setTimeout(function(){
+    //         $('.saveTexte').trigger('click')
+    //         console.log('saving')
+    //     }, 3000);
+    // });
+
+    // $(document).on('text-change','#editor', function() {
+    //     alert('cvc')
+    //     clearTimeout(debounce);
+    //     debounce = setTimeout(function(){
+    //         $('.saveTexte').trigger('click')
+    //         console.log('saving')
+    //     }, 3000);
+    // });
+
+   
+    quill.on('text-change', function(delta, source) {
+        clearTimeout(debounce);
+        $('.saveTexte').addClass('saving').removeClass('saved')
+        debounce = setTimeout(function(){
+            $('.saveTexte').trigger('click')
+            $('.saveTexte').addClass('saved').removeClass('saving')
+        }, 5000);
+      });
 }
+
+
+    
+
 
 const saveCommentaireDefinitif = (quill, quill2) => {
 
@@ -37,6 +77,7 @@ const saveTexte = (quill) => {
             },
             success: function(data) {
                 $('.sectionCahier[data-section="'+section+'"]').attr('data-texte', texte)
+                $('.saveTexte').addClass('saved').removeClass('saving')
             }
         })
     })
@@ -68,9 +109,42 @@ const saveTexteReussite = (quill) => {
 
 
 
+const clickOnCahier = (quill) => {
+    $(document).on('click','.sectionApercu', function() {   
+        $('.blocApercu').removeClass('d-none')     
+        $('.blocSelectFiche').addClass('d-none')   
+        var enfant = $(this).closest('#cahierView').attr('data-enfant')
+        $.get('/app/cahiers/get_apercu/'+enfant, function(data) {
+            var selection = quill.getSelection(true);
+            quill.setText('');
+            quill.root.innerHTML = data   
+
+        })
+        // var phrase = $(this).attr('data-phrases')
+        // var texte = $(this).attr('data-textes')
+        // var section = $(this).attr('data-section')
+
+        // $('.tab-pane').removeClass('show active')
+        // $('.tab-pane[data-id="nav-'+section+'"]').addClass('show active')
+
+
+        // $('#phraseContainer').html(phrase)
+        // console.log(phrase)
+        // var selection = quill.getSelection(true);
+        // quill.setText('');
+        // quill.root.innerHTML = texte        
+        // $('.saveTexte').attr('data-section', section)
+        
+        // $.get('/app/get_liste_phrase/'+section+'/'+enfant, function(data) {
+        //     $('.badge_phrase_container').html(data)
+        // })
+    })
+}
+
 const clickOnNav = (quill) => {
     $(document).on('click','.sectionCahier', function() {   
-             
+        $('.blocApercu').addClass('d-none')     
+        $('.blocSelectFiche').removeClass('d-none')     
         var phrase = $(this).attr('data-phrases')
         var texte = $(this).attr('data-textes')
         var section = $(this).attr('data-section')
@@ -91,6 +165,8 @@ const clickOnNav = (quill) => {
             $('.badge_phrase_container').html(data)
         })
     })
+
+
 }
 
 const phraseCommentaireGeneral = () => {
@@ -146,13 +222,15 @@ const clickOnDefinif = (quill) => {
             url : '/app/enfants/' + enfant + '/cahier/definitif',
             data: {
                 state: definitif,
-                quill: quill.getText()
+                quill: quill.root.innerHTML
             },
             success: function(data) {
                 console.log(definitif)
                 if (definitif == true) {
                     quill.enable(false)
+                    $('#pdf').removeClass('d-none')
                 } else {
+                    $('#pdf').addClass('d-none')
                     quill.enable(true)
                 }
             }
@@ -208,4 +286,4 @@ const onload = (quill) => {
 
 
 
-export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral}
+export {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral, clickOnCahier}

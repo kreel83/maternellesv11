@@ -1,6 +1,7 @@
 <?
 use Illuminate\Support\Facades\Auth;
 
+
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +28,7 @@ use Illuminate\Support\Facades\Auth;
         </style>
     </head>
     <div class='dashboard'>
+      @if (!isset($log))
       <div class="dashboard-nav">
           <header>
             <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
@@ -69,11 +71,11 @@ use Illuminate\Support\Facades\Auth;
 
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
-                <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a>
+                {{-- <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a> --}}
                 <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Les élèves</a>
                 <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Les items</a>
                 <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a>
-                <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a>
+                {{-- <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a> --}}
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes d'élèves</a>
                 <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
                 <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Les photos</a>
@@ -116,11 +118,16 @@ use Illuminate\Support\Facades\Auth;
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
         </header> --}}
         <div id="alerte" class="w-100">
-
+          
         </div>
         <div class=''>
-            @yield('content')
+          @yield('content')
         </div>
+        @else
+        <div class=''>
+          @yield('content')
+        </div>
+        @endif
     </div>
 
   </div>

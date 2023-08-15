@@ -1,0 +1,95 @@
+#aides {
+    position: relative;
+    height: 100vh;
+
+    #titreAide {
+        color:white;
+        font-size: 20px;
+        text-align: center;
+
+    }
+    .aideLeft {
+        label {
+            color: white !important;
+        }
+    }
+
+    .addAide {
+        border: 1px solid #7769FE;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        border-radius: 50%;
+        background-color: #7769FE;
+        bottom: 130px;
+        right: 130px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 60px;
+        color: white;
+        cursor: pointer;
+    }
+    .card_aides {
+        width: 400px;
+        height: 200px;
+        margin: 16px;
+        border: 1px solid #7769FE;
+        padding: 16px;
+        border-radius: 15px;
+        display: flex;
+        position: relative;
+        .left {
+            .img_aides_div {
+                width: 120px;;
+                height: 120px;
+                border-radius: 50%;
+                overflow: hidden;
+                img {
+                    width: 120px;
+                }
+            }
+        }
+        .right {
+            text-align: end;
+            .nom {
+                font-size: 18px;
+                color: pink;
+                font-weight: 400;
+            }
+            .prenom {
+                font-size: 26px;
+                color: #7769FE;
+                font-weight: 700;
+            }
+            .fonction {
+                font-size: 18px;
+                color: orangered;
+                font-weight: 400;
+            }
+        }
+        .controle {
+            position: absolute;
+            bottom: 0px;
+            right: 10px;
+            display: flex;
+            .modif, .delete {
+                width: 35px;
+                border: none;
+                outline: none;
+                margin: 0 8px;
+                height: 35px;
+                background-color: #7769FE;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: 14px;
+                border-radius: 50%;
+            }
+        }
+    
+    
+    }
+
+}

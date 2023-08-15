@@ -55,9 +55,10 @@
     border: none !important;
     outline: none !important;    
     cursor: pointer;
-
+    
     &.droit {
-        border-radius: 0 !important;
+        border-radius: 15px 15px 0 0 !important;
+        
     }
     &.violet {
         color: #7769FE;
@@ -78,6 +79,7 @@
     
 } 
 .btnSelection {
+    text-decoration: none;
     margin-top: 15px;
     border-radius: 25px;;
     z-index: 10;
@@ -154,7 +156,7 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-#fichesView, #page_items, #cahierView {
+#fichesView, #page_items, #cahierView, #phrasesView {
     #choixFiche {
         position: relative;
         padding-bottom: 20px;
