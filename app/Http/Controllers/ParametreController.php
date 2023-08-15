@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class ParametreController extends Controller
 {
@@ -58,6 +59,27 @@ class ParametreController extends Controller
 
 
     public function monprofil() {
+
+        // $variable = "<h2>titre 1</h2>
+        // Magali prend la <b>parole</b> et s'exprime de manière claire.
+        // Magali a des difficulté à s'exprimer par lui-meme.        
+        // MAgali utilise des formes verbales adaptées.        
+        // MAgali s'exprime dans un langage syntaxiquement correct.
+        // <h2>titre 2</h2>
+        // Magali est super.
+        // Magali sais bien chanter.
+        // Magali ecrit pas mal.";
+
+        // $result = OpenAI::chat()->create([
+        //     'model' => 'gpt-3.5-turbo',
+        //     'messages' => [
+        //         ['role' => 'user', 'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable, peux-tu me reformuler le texte suivant en utilisant le prénom qu'en début de texte: ".$variable],
+        //     ],
+           
+        // ]);
+         
+        // dd($result['choices']);
+
         $user = Auth::user();
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
             ->where('identifiant_de_l_etablissement', $user->ecole_id)

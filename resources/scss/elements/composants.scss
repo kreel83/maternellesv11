@@ -28,6 +28,9 @@ input[type='email']::placeholder {
     position: relative;
     color: #545454;
     font-size: 16px;;
+    &.little {
+        font-size: 13px !important;
+    }
         i {
             position: absolute;
             top: 15px;
@@ -55,7 +58,6 @@ input[type='email']::placeholder {
         /* Style supplémentaire pour le champ de saisie */
         input {
             width: 100%;;
-            font-size: 16px;;
             padding: 10px; /* Ajustez la valeur selon vos besoins */
             padding-left: 50px; /* Ajustez cette valeur pour laisser de l'espace à l'icône */
             border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */
@@ -121,6 +123,8 @@ input[type='email']::placeholder {
     font-weight: 800;
     line-height: 40px;
     border-radius: 8px;
+    border: none;
+    outline: none;
 
 }
 
@@ -149,12 +153,13 @@ input[type='email']::placeholder {
     color: #545454;
     font-size: 16px;;
     height: 46px;
-
+    &.little {
+        font-size: 13px !important;
+    }
         
         /* Style supplémentaire pour le champ de saisie */
        
             width: 100%;;
-            font-size: 16px;;
             padding: 5px; /* Ajustez la valeur selon vos besoins */
             /* Ajustez cette valeur pour laisser de l'espace à l'icône */
             border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */

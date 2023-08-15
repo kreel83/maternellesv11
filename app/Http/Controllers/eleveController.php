@@ -24,7 +24,7 @@ class EleveController extends Controller
         foreach ($files as $file) {
             $liste[] = $file->getFileName();
         }
-        dd($user->liste());
+
         return view('photos.index')
             ->with('eleves',$user->liste())
             ->with('degrades',$degrades)

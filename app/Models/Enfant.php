@@ -14,16 +14,16 @@ class Enfant extends Model
     protected $guarded = [];
 
     const DEGRADE = [
-        'b1' => 'linear-gradient(120deg, #f6d365 0%, #fda085 100%)',
-        'b2' => 'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);',
-        'b3' => 'linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%);',
+        'b1' => 'linear-gradient(to top, #f6d365 0%, #fda085 100%)',
+        'b2' => 'linear-gradient(to top, #b721ff 0%, #21d4fd 100%);',
+        'b3' => 'linear-gradient(to top, #b8cbb8 0%, #ee609c 100%);',
         'b4' => 'linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);',             
         'b5' => 'linear-gradient(to top, #30cfd0 0%, #330867 100%);',
         'b6' => 'linear-gradient(to top, #fddb92 0%, #d1fdff 100%);',             
-        'b7' => 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);',
-        'b8' => 'linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);',
-        'b9' => 'linear-gradient(to top, #0ba360 0%, #3cba92 100%);'
-                     
+        'b7' => 'linear-gradient(to top, #d4fc79 0%, #96e6a1 100%);',
+        'b8' => 'linear-gradient(to top, #ff758c 0%, #ff7eb3 100%);',
+        'b9' => 'linear-gradient(to top, #0ba360 0%, #3cba92 100%);',
+        // 'b10' => '0ba360:0ba360'    // ligne degradé à créer dans eventEnfant                 
     ];
     
     const GROUPE_COLORS_FONT = [

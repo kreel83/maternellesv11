@@ -1,5 +1,6 @@
 @extends('layouts.mainMenu', ['titre' => 'Mes aides maternelles', 'menu' => 'aide'])
 
+@
 @section('content')
     <div class="" id="aides">
 
