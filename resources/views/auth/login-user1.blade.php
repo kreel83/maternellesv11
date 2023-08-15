@@ -39,7 +39,7 @@
                       <i class="fa-solid fa-key"></i>
                       <input type="password" class="custom-input" id="password" name="password" value="" placeholder="Mot de passe" />
                     </div> 
-                    <small>Mot de passe oublié ?</small>
+                    <small><a href="{{route('password.request')}}">Mot de passe oublié ?</a></small>
 
                     
                     <div class="pt-1 mb-4">

@@ -7,6 +7,7 @@
 
 @php
 $lesgroupes = json_decode(Auth::user()->groupes, true);
+$groupe = null;
 if ($enfant->groupe != null){
 
   $groupe = $lesgroupes[$enfant->groupe];
@@ -21,7 +22,7 @@ if ($enfant->groupe != null){
     <img src="{{asset('img/bandeaux/'.$enfant->genre.'.png')}}" alt="" width="100">
   </div>
 
-  @if (strlen($groupe[0]) <2)
+  @if ($groupe && strlen($groupe[0]) <2)
     <div class="groupe" style="background-color: {{ $groupe[1] }}; color:{{ $groupe[2]}}">{{ $groupe[0]}}</div>
   @endif
 
@@ -39,7 +40,7 @@ if ($enfant->groupe != null){
         <div class="name">{{$enfant->prenom}}<span style="font-size: 1.8rem" class="ms-2"> {{substr($enfant->nom,0,1)}}.</span></div>
         <div class="title"> {{ $enfant->age}}</div>
   </div>
-  @if (strlen($groupe[0]) >= 2)
+  @if ($groupe && strlen($groupe[0]) >= 2)
     <div class="groupe-terme my-3 mx-auto"  style="background-color: {{ $groupe[1] }}; color:{{ $groupe[2]}}">{{$groupe[0]}}</div>
   @endif
     <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">

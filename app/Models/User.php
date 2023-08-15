@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 use App\Models\Event;
+
+use App\Notifications\ResetPassword;
+
 use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
@@ -75,6 +79,12 @@ class User extends Authenticatable
     public $type_groupe;
     public $groupe;
 
+    public function sendPasswordResetNotification($token): void
+        {
+            $url = 'https://example.com/reset-password?token='.$token;
+        
+            $this->notify(new ResetPassword($this));
+        }
 
 
     public function nom_complet() {
@@ -127,6 +137,10 @@ class User extends Authenticatable
     public function name_ecole() {
         $ecole = Ecole::where('identifiant_de_l_etablissement', $this->code_ecole)->first();
         return $ecole;
+    }
+
+    public function ecole() {
+        return $this->hasOne('App\Models\Ecole','identifiant_de_l_etablissement','ecole_id');
     }
 
     public function liste() {

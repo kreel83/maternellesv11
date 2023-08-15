@@ -105,7 +105,7 @@ grid-row-gap: 0px;
     @if (!$finsouscription)
         <h4 class="text-center">
             <div class="alert alert-warning" role="alert">
-                Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.index') }}">Cliquez ici</a> pour vous abonner
+                Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.cardform') }}">Cliquez ici</a> pour vous abonner
             </div>
         </h4>
     @else
