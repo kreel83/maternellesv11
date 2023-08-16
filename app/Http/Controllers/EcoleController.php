@@ -77,7 +77,7 @@ class EcoleController extends Controller
        $user = Auth::user();
        $ecole = Ecole::where('identifiant_de_l_etablissement',$request->ecole)->first();
 
-       $user->ecole_id = $request->ecole;
+       $user->ecole_identifiant_de_l_etablissement = $request->ecole;
        $user->academie = $ecole->code_academie;       
        $user->save();
        return 'ok';

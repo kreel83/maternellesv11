@@ -149,6 +149,15 @@ input[type='email']::placeholder {
  
   }
   
+
+ .error_message {
+    font-size: 12px;
+    font-weight: 700;
+    color: red;
+    width: 100%;
+    text-align: center;
+    margin-top: 6px
+ } 
 .custom-select{
     color: #545454;
     font-size: 16px;;

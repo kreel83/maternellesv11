@@ -30,17 +30,25 @@ class ParametreController extends Controller
 
     public function saveaidematernelle(Request $request) {
 
-        
-        $liste = array();
-        for($i=0; $i<4; $i++) {
+        $aide = array();
 
-            if ($request->prenom[$i] && $request->name[$i]) {
-                $arr = array();
-                $arr[] = $request->prenom[$i];
-                $arr[] = $request->name[$i];
-                $arr[] = $request->fonction[$i];
-                $liste[$i] = $arr;
+        for($i=0; $i<4; $i++) {   
+            
+            $aide[$i] = array_filter($request->aide[$i]);
+
+            if (sizeof($aide[$i]) > 0) {
+                if (sizeof($aide[$i]) == 3) {
+                    $arr = array();
+                    $arr[] = ucfirst($aide[$i]['prenom']);
+                    $arr[] = strtoupper($aide[$i]['name']);
+                    $arr[] = $aide[$i]['fonction'];
+                    $liste[$i] = $arr;
+                } else {
+                   session()->flash('error'.$i, 'Les 3 champs sont obligatoires');
+                   return redirect()->back()->withInput();
+                }                
             }
+
 
         }
         $liste = json_encode($liste);
@@ -48,6 +56,7 @@ class ParametreController extends Controller
 
         $user = Auth::user();
         $user->equipes = $liste;
+        $user->save();
         // if ($request->id) {
         //     $equipe = Equipe::find($request->id);
 
@@ -96,17 +105,36 @@ class ParametreController extends Controller
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
             ->where('identifiant_de_l_etablissement', $user->ecole_identifiant_de_l_etablissement)
             ->first();
-        $adresseEcole = $ecole->nom_etablissement;
-        if($ecole->adresse_1 != '') { $adresseEcole .= ', '.$ecole->adresse_1; }
-        if($ecole->adresse_2 != '') { $adresseEcole .= ', '.$ecole->adresse_2; }
-        if($ecole->adresse_3 != '') { $adresseEcole .= ', '.$ecole->adresse_3; }
+        $adresseEcole[] = $ecole->nom_etablissement;
+        if($ecole->adresse_1 != '') { $adresseEcole[] = $ecole->adresse_1; }
+        if($ecole->adresse_2 != '') { $adresseEcole[] = $ecole->adresse_2; }
+        if($ecole->adresse_3 != '') { $adresseEcole[] = $ecole->adresse_3; }
         $user->photo = Storage::url($user->photo);
         return view('monprofil.index')
             ->with('user', $user)
             ->with('equipes', $equipes)
-            ->with('adresseEcole', $adresseEcole);
+            ->with('adresseEcole', join(PHP_EOL,$adresseEcole));
     }
 
+
+    public function savedirecteur(Request $request) {
+
+        $validated = $request->validate([
+            'directeur_prenom' => 'required',
+            'directeur_nom' => 'required',
+        ],[
+            'directeur_prenom.required' => 'Le prénom est obligatoire.',
+            'directeur_nom.required' => 'Le nom est obligatoire.'
+        ]);
+
+        
+        $user = Auth::user();
+        $user->directeur_prenom = ucfirst($request->directeur_prenom);
+        $user->directeur_nom = strtoupper($request->directeur_nom);
+        $user->directeur_civilite = $request->directeur_civilite;
+        $user->save();
+        return redirect()->back()->withInput();
+    }
 
     public function savemonprofil(Request $request) {
 

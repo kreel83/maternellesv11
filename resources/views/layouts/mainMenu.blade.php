@@ -16,6 +16,16 @@ use Illuminate\Support\Facades\Auth;
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
+        <script src="//cdn.quilljs.com/1.3.6/quill.js" defer></script>
+        <script src="//cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
+        
+        <!-- Theme included stylesheets -->
+        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+        
+
+
+
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
         <link href="{{asset('fontawesome/css/all.css')}}" rel="stylesheet">
