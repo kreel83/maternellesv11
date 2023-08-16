@@ -32,6 +32,9 @@ class User extends Authenticatable
         return $this->getAttribute('role') === $role;
     }
 
+    const FONCTIONS = ['Aide maternelle (ATSEM)','AESH'];
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -68,7 +71,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
     ];
 
 
@@ -85,6 +88,7 @@ class User extends Authenticatable
         
             $this->notify(new ResetPassword($this));
         }
+
 
 
     public function nom_complet() {
@@ -140,8 +144,16 @@ class User extends Authenticatable
     }
 
     public function ecole() {
-        return $this->hasOne('App\Models\Ecole','identifiant_de_l_etablissement','ecole_id');
+        return $this->hasOne('App\Models\Ecole','identifiant_de_l_etablissement','ecole_identifiant_de_l_etablissement');
     }
+
+    public function config() {
+        return $this->hasOne('App\Models\Config','user_id','id');
+    }
+
+    // $user->config->groupes;
+    // $user->config->periodes;
+    // $user->config->aides;
 
     public function liste() {
         return Enfant::where('user_id', $this->id)->orderby('prenom')->get();

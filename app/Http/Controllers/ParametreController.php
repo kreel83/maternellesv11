@@ -30,33 +30,40 @@ class ParametreController extends Controller
 
     public function saveaidematernelle(Request $request) {
 
+        
+        $liste = array();
+        for($i=0; $i<4; $i++) {
+
+            if ($request->prenom[$i] && $request->name[$i]) {
+                $arr = array();
+                $arr[] = $request->prenom[$i];
+                $arr[] = $request->name[$i];
+                $arr[] = $request->fonction[$i];
+                $liste[$i] = $arr;
+            }
+
+        }
+        $liste = json_encode($liste);
+        
+
         $user = Auth::user();
-        if ($request->id) {
-            $equipe = Equipe::find($request->id);
+        $user->equipes = $liste;
+        // if ($request->id) {
+        //     $equipe = Equipe::find($request->id);
 
-        } else {
-            $equipe = new Equipe();
-            $equipe->user_id = $user->id;
-            $equipe->created_at = Carbon::now();
-            $equipe->updated_at = Carbon::now();
-        }
-        $equipe->prenom = ucfirst($request->prenom);
-        $equipe->name = strtoupper($request->nom);
-        $equipe->fonction = ucfirst($request->fonction);
+        // } else {
+        //     $equipe = new Equipe();
+        //     $equipe->user_id = $user->id;
+        //     $equipe->created_at = Carbon::now();
+        //     $equipe->updated_at = Carbon::now();
+        // }
+        // $equipe->prenom = ucfirst($request->prenom);
+        // $equipe->name = strtoupper($request->nom);
+        // $equipe->fonction = ucfirst($request->fonction);
 
-        if ($request->file('photo')) {
-            $folder = $user->repertoire.'/equipe/'.uniqid().'.jpg';
-            $path = Storage::path($folder);
-            $photo = $request->file('photo');
-            $img = Image::make($photo)->encode('jpg', 75);;
-            $img->fit(200,200, function ($constraints) {
-                $constraints->upsize();
-            });
-            $img->save($path);
-            $equipe->photo = $folder;
-        }
-        $equipe->save();
-        return $this->aidematernelle();
+
+        // $equipe->save();
+        return redirect()->back()->withInput();
     }
 
 
@@ -83,8 +90,11 @@ class ParametreController extends Controller
         // dd($result['choices']);
 
         $user = Auth::user();
+        $equipes = json_decode($user->equipes, true);
+        
+        
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
-            ->where('identifiant_de_l_etablissement', $user->ecole_id)
+            ->where('identifiant_de_l_etablissement', $user->ecole_identifiant_de_l_etablissement)
             ->first();
         $adresseEcole = $ecole->nom_etablissement;
         if($ecole->adresse_1 != '') { $adresseEcole .= ', '.$ecole->adresse_1; }
@@ -93,47 +103,38 @@ class ParametreController extends Controller
         $user->photo = Storage::url($user->photo);
         return view('monprofil.index')
             ->with('user', $user)
-            ->with('adresseEcole', $adresseEcole)
-            ->with('telephoneEcole', $ecole->telephone);
+            ->with('equipes', $equipes)
+            ->with('adresseEcole', $adresseEcole);
     }
 
 
     public function savemonprofil(Request $request) {
 
         $request->validate([
-            'nom' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
-            'mobile' => ['max:20'],
+            'phone' => ['max:10'],
         ], [
-            'nom.required' => 'Le nom est obligatoire.',
-            'nom.max' => 'Le nom est limité à 255 caractères.',
+            'name.required' => 'Le nom est obligatoire.',
+            'name.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
             'prenom.max' => 'Le prénom est limité à 255 caractères.',
-            'mobile.max' => 'Le numéro de mobile est limité à 20 caractères.',
+            'phone.max' => 'Le numéro de mobile est limité à 10 caractères.',
         ]);
 
+
         $user = Auth::user();
-        $user->name = strtoupper($request->nom);
+        $user->name = strtoupper($request->name);
         $user->prenom = strtoupper($request->prenom);
-        $user->mobile = $request->mobile;
+        $user->phone = $request->phone;
         //$user->nom_ecole = ucfirst($request->nom_ecole);
         //$user->adresse_ecole = ucfirst($request->adresse_ecole);
-        $user->nom_directeur = ucfirst($request->nom_directeur);
-        $user->directeur = (int) $request->directeur;
+        // $user->nom_directeur = ucfirst($request->nom_directeur);
+        // $user->directeur = (int) $request->directeur;
 
-        if ($request->file('photo')) {
-            $folder = $user->repertoire.'/equipe/'.uniqid().'.jpg';
-            $path = Storage::path($folder);
-            $photo = $request->file('photo');
-            $img = Image::make($photo)->encode('jpg', 75);;
-            $img->fit(300,300, function ($constraint) {
-                $constraint->upsize();
-            });
-            $img->save($path);
-            $user->photo = $folder;
-        }
+
         $user->save();
-        return redirect()->back()->with('result', 'success');
+        return redirect()->back()->withInput();
 
     }
 
