@@ -179,6 +179,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
     Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle.post');
+    Route::get('/directeur', [ParametreController::class, 'directeur'])->name('directeur');
+    Route::post('/directeur', [ParametreController::class, 'savedirecteur'])->name('directeur.post');
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 

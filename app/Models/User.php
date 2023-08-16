@@ -32,7 +32,10 @@ class User extends Authenticatable
         return $this->getAttribute('role') === $role;
     }
 
-    const FONCTIONS = ['Aide maternelle (ATSEM)','AESH'];
+    const FONCTIONS = [
+        'am' => 'Aide maternelle (ATSEM)',
+        'aesh' =>'AESH'
+    ];
 
 
     /**
@@ -41,7 +44,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'ecole_id',
+        'ecole_identifiant_de_l_etablissement',
         'role',
         'name',
         'prenom',
@@ -160,13 +163,13 @@ class User extends Authenticatable
     }
 
     public function profs() {
-        $ecole = Auth()->user()->ecole_id;
-        return User::where('ecole_id', $ecole)->get();
+        $ecole = Auth()->user()->ecole_identifiant_de_l_etablissement;
+        return User::where('ecole_identifiant_de_l_etablissement', $ecole)->get();
     }
 
     public function tous() {
-        $ecole = Auth()->user()->ecole_id;
-        $users = User::where('ecole_id', $ecole)->pluck('id');
+        $ecole = Auth()->user()->ecole_identifiant_de_l_etablissement;
+        $users = User::where('ecole_identifiant_de_l_etablissement', $ecole)->pluck('id');
         return Enfant::whereNull('user_id')->whereIn('user_n1_id', $users)->get();
     }
 

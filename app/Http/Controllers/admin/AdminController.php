@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function index(): View
     {
         $enseignants = User::where([
-            ['ecole_id', Auth::user()->ecole_id],
+            ['ecole_id', Auth::user()->ecole_identifiant_de_l_etablissement],
             ['id', '<>', Auth::id()],
         ])->get();
         return view('admin.index')
@@ -30,7 +30,7 @@ class AdminController extends Controller
     public function voirClasse($id): View
     {
         $enseignants = User::where([
-            ['ecole_id', Auth::user()->ecole_id],
+            ['ecole_id', Auth::user()->ecole_identifiant_de_l_etablissement],
             ['id', '<>', Auth::id()],
         ])->get();
         $listeDesEleves = Enfant::where('user_id', $id)->get();
@@ -161,7 +161,7 @@ class AdminController extends Controller
                       ->orWhere('enfants.prenom', 'LIKE', '%'.$request->search.'%');
             })
             ->leftJoin('users', 'user_id', '=', 'users.id')
-            ->where('users.ecole_id', Auth::user()->ecole_id)
+            ->where('users.ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)
             ->get();
         return redirect()->back()->with('result', $result);
     }
