@@ -69,25 +69,25 @@ class ParametreController extends Controller
 
     public function monprofil() {
 
-        $variable = "<h2>titre 1</h2>
-        Magali prend la <b>parole</b> et s'exprime de manière claire.
-        Magali a des difficulté à s'exprimer par lui-meme.        
-        MAgali utilise des formes verbales adaptées.        
-        MAgali s'exprime dans un langage syntaxiquement correct.
-        <h2>titre 2</h2>
-        Magali est super.
-        Magali sais bien chanter.
-        Magali ecrit pas mal.";
+        // $variable = "<h2>titre 1</h2>
+        // Magali prend la <b>parole</b> et s'exprime de manière claire.
+        // Magali a des difficulté à s'exprimer par lui-meme.        
+        // MAgali utilise des formes verbales adaptées.        
+        // MAgali s'exprime dans un langage syntaxiquement correct.
+        // <h2>titre 2</h2>
+        // Magali est super.
+        // Magali sais bien chanter.
+        // Magali ecrit pas mal.";
 
-        $result = OpenAI::chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable, peux-tu me reformuler le texte suivant en utilisant le prénom qu'en début de pargraphe: ".$variable],
-            ],
+        // $result = OpenAI::chat()->create([
+        //     'model' => 'gpt-3.5-turbo',
+        //     'messages' => [
+        //         ['role' => 'user', 'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable, peux-tu me reformuler le texte suivant en utilisant le prénom qu'en début de texte: ".$variable],
+        //     ],
            
-        ]);
+        // ]);
          
-        dd($result['choices']);
+        // dd($result['choices']);
 
         $user = Auth::user();
         $equipes = json_decode($user->equipes, true);
