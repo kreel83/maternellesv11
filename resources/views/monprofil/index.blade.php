@@ -10,16 +10,7 @@
         <div class="alert alert-success">Votre profil a été mis à jour.</div>
     @endif
 
-    <!-- Validation Errors -->
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+
 
     <style>
         .grid_profil {
@@ -116,112 +107,100 @@
                     <i class="fa-solid fa-phone"></i>
                     <input type="text" class="custom-input" name="email" value="{{$user->ecole->telephone}}" disabled/>
                 </div>
-            </div>
-        
-
-
+            </div>       
         </div>
-        <div class="gridcadre grid3 d-flex justify-content-between ">
+
+        <div class="gridcadre grid3 d-flex justify-content-between w-100">
             <div class="gridTitre">Mes aides maternelles</div>
-            <form action="{{route('aidematernelle.post')}}" method="post" class="d-flex justify-content-between">
+            <form action="{{route('aidematernelle.post')}}" method="post" class="d-flex justify-content-between w-100">
                 @csrf
-            <div class="groupesAide d-flex flex-wrap">
-                @for ($i = 0; $i<=3; $i++)
-                <div class="groupeAide">
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="prenom[]" value="{{$equipes[$i][0] ?? null}}" placeholder="Prénom" />
-                    </div> 
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="name[]" value="{{$equipes[$i][1] ?? null}}" placeholder="Nom" />
+                <div class="groupesAide d-flex flex-wrap justify-content-between w-100">
+                    <div class="d-flex justify-content-between">
+                        @for ($i = 0; $i<=3; $i++)
+                        <div class="groupeAide">
+                            <div class="icone-input my-2 little">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" class="custom-input" name="aide[{{$i}}][prenom]" value="{{$equipes[$i][0] ?? null}}" placeholder="Prénom" />
+                            </div> 
+                            <div class="icone-input my-2 little">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" class="custom-input" name="aide[{{$i}}][name]" value="{{$equipes[$i][1] ?? null}}" placeholder="Nom" />
+                            </div>
+                            <div class="form-group">            
+                                <select class="custom-select little" name="aide[{{$i}}][fonction]">
+                                    <option value="">Choisissez</option>
+                                    @foreach(App\Models\User::FONCTIONS as $key=>$fonction)
+                                        <option value="{{$key}}" {{(isset($equipes[$i][2]) && ($key == $equipes[$i][2])) ? 'selected' : null }}>{{$fonction}}</option>
+                                    @endforeach                                
+                                </select>
+                                @if(Session::has('error'.$i))
+                                <p class="error_message">{{ Session::get('error'.$i) }}</p>
+                                @endif
+                            </div>               
+                        </div>
+                        @endfor
                     </div>
-                    <div class="form-group">            
-                        <select class="custom-select little" name="fonction[]">
-                            <option value="null">Choisissez</option>
-                            @foreach(App\Models\User::FONCTIONS as $key=>$fonction)
-                                <option value="{{$key}}" {{(isset($equipes[$i][2]) && ($key == $equipes[$i][2])) ? 'selected' : null }}>{{$fonction}}</option>
-                            @endforeach                                
-                        </select>
-                    </div>                
+                    <div class="d-flex align-items-end mb-4">
+                        <button type="submit" class="btnAction" style="height: 34px">Sauvegarder</button>
+                    </div>
                 </div>
-                @endfor
-
-
-                {{-- <div class="groupeAide">
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="prenom[]" value="{{$user->prenom}}" placeholder="Prénom" />
-                    </div> 
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="name[]" value="{{$user->name}}" placeholder="Nom" />
-                    </div>
-                    <div class="form-group">            
-                        <select class="custom-select little" name="fonction[]">
-                                <option value="0">Aide maternelle (ATSEM)</option>
-                                <option value="1">AESH</option>
-                        </select>
-                    </div>                
-                </div>
-                <div class="groupeAide">
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="prenom[]" value="{{$user->prenom}}" placeholder="Prénom" />
-                    </div> 
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="name[]" value="{{$user->name}}" placeholder="Nom" />
-                    </div>
-                    <div class="form-group">            
-                        <select class="custom-select little" name="fonction[]">
-                                <option value="0">Aide maternelle (ATSEM)</option>
-                                <option value="1">AESH</option>
-                        </select>
-                    </div>                
-                </div>
-                <div class="groupeAide">
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="prenom[]" value="{{$user->prenom}}" placeholder="Prénom" />
-                    </div> 
-                    <div class="icone-input my-2 little">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" class="custom-input" name="name[]" value="{{$user->name}}" placeholder="Nom" />
-                    </div>
-                    <div class="form-group">            
-                        <select class="custom-select little" name="fonction[]">
-                                <option value="0">Aide maternelle (ATSEM)</option>
-                                <option value="1">AESH</option>
-                        </select>
-                    </div>                
-                </div>                 --}}
-            </div>
-
-            <button type="submit" class="btnAction" style="height: 34px; margin-top: 120px">Sauvegarder</button>
             </form>
+
+
+            
+
+
         </div>
+
+
+
+
+
+
         <div class="gridcadre grid4 d-flex justify-content-between align-items-center">
             <div class="gridTitre">Direction</div>
-            <div class="d-flex w-75">
-                <div class="form-group m-4">            
-                    <select class="custom-select little" name="fonction[]">
-                            <option value="mlle">Mademoiselle</option>
-                            <option value="mme">Madame</option>
-                            <option value="mrs">Monsieur</option>
-                    </select>
-                </div> 
-                <div class="icone-input m-4 little">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" class="custom-input" name="prenom" value="{{$user->prenom}}" placeholder="Prénom" />
-                </div> 
-                <div class="icone-input m-4 little w-25">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" class="custom-input" name="name" value="{{$user->name}}" placeholder="Nom" />
-                </div>                
+
+            <div class="d-flex flex-column w-100">
+                <div>
+                    <form action="{{route('directeur.post')}}" method="POST" class="w-100 d-flex justify-content-between align-items-center">
+                        @csrf
+                        <div class="d-flex w-100 justify-content-around align-items-center">
+
+                            <div class="form-group m-4">            
+                                <select style="width: 220px" class="custom-select little" name="directeur_civilite">
+
+                                    <option value="mlle" {{ $user->directeur_civilite == 'mlle' ? 'selected' : null}}>Mademoiselle</option>
+                                    <option value="mme" {{ $user->directeur_civilite == 'mme' ? 'selected' : null}}>Madame</option>
+                                    <option value="mrs" {{ $user->directeur_civilite == 'mrs' ? 'selected' : null}}>Monsieur</option>
+                                </select>
+                            </div> 
+                            <div class="icone-input m-4 little">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" class="custom-input" name="directeur_prenom" value="{{$user->directeur_prenom}}" placeholder="Prénom" />
+                            </div> 
+                            <div class="icone-input m-4 little w-25">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" class="custom-input" name="directeur_nom" value="{{$user->directeur_nom}}" placeholder="Nom" />
+                            </div>                
+
+                        </div>
+                        
+                        <button type="submit" style="" class="btnAction m-0">Sauvegarder</button>
+                    </form>
+                </div>
+                <div>
+                    @if ($errors->any())
+                    <div class="error_message">                               
+                        
+                                {{ $errors->first() }}
+                        
+                    
+                    </div>
+                @endif
+                </div>
+
             </div>
 
-            <button type="submit" style="" class="btnAction">Sauvegarder</button>
 
         </div>
 

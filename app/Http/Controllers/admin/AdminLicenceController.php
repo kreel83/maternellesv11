@@ -226,7 +226,7 @@ class AdminLicenceController extends Controller
                     'prenom' => $prenomNom['prenom'],
                     'name' => $prenomNom['nom'],
                     'email' => $email,
-                    'ecole_id' => Auth::user()->ecole_id,
+                    'ecole_identifiant_de_l_etablissement' => Auth::user()->ecole_identifiant_de_l_etablissement,
                     'validation_key' => $validationKey,
                     'licence' => 'admin'
                 ]);
