@@ -1,9 +1,5 @@
 @extends('layouts.mainMenu', ['titre' => 'Mes périodes', 'menu' => 'periode'])
-@php
-    use Carbon\Carbon;
 
-
-@endphp
 
 @section('content')
     @if (\Session::has('success'))
@@ -22,22 +18,30 @@
     @endif
 <h1>Gestion des périodes</h1>
 
-<form action="/periode/save" method="post">
-    @csrf
-        @foreach($periodes as $key=>$periode)
+<div class="row">
 
-            <h4>Période n° {{$key + 1}}</h4>
-            <div class="form-group">
+    <div class="col-md-9 d-flex flex-wrap " id="calendrier_periodes" style="overflow-y: auto">
+               
+        <input type="hidden" value="{{$conges}}" id="conges">
+        <input type="hidden" value="{{$start}}" id="start">
+        <input type="hidden" value="{{$end}}" id="end">
+        
+    
+        @for ($j=1; $j<=12;$j++)
+            @include('calendrier.include.month',['month', $month])
+        @endfor
+     
+    </div>
+    <div class="col-md-3 d-flex flex-column" id="formulaire_periodes">
+      
+            @include('calendar.include.periodes_form')
+          
+    </div>
+</div>
 
-                <label for="">debut</label>
-                <input type="date" class="form-control" name="periode_debut[]" value="{{$periode[0]}}">
-                <label for="">fin</label>
-                <input type="date" class="form-control" name="periode_fin[]" value="{{$periode[1]}}">
-            </div>
-            <hr>
-        @endforeach
-    <button type="submit" class="btn btn-primary">Sauvegarder</button>
-</form>
+
+
+
 
 
 

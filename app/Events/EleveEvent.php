@@ -13,6 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class EleveEvent
 {
@@ -34,20 +35,19 @@ class EleveEvent
      */
     public function __construct(Enfant $enfant)
     {
-    $mails = explode(';', $enfant->mail);
-    $enfant->mail1 = isset($mails[0]) ? $mails[0] : null;
-    $enfant->mail2 = isset($mails[1]) ? $mails[1] : null;
-    $enfant->jour = Carbon::parse($enfant->ddn)->format('d');
-    $enfant->age = $this->convertDate(Carbon::parse($enfant->ddn)->diffForHumans([ 'parts'=>2, 'short'=>false, ]));
-    if ($enfant->photo) {
-        $enfant->photoEleve = Storage::url($enfant->photo);
-    } else {
-        $enfant->photoEleve = 'img/avatar/avatar'.$enfant->genre.'.jpg';
-    }
-
-
-
-
+        $mails = explode(';', $enfant->mail);
+        $enfant->mail1 = isset($mails[0]) ? $mails[0] : null;
+        $enfant->mail2 = isset($mails[1]) ? $mails[1] : null;
+        $enfant->jour = Carbon::parse($enfant->ddn)->format('d');
+        $enfant->age = $this->convertDate(Carbon::parse($enfant->ddn)->diffForHumans([ 'parts'=>2, 'short'=>false, ]));
+        if ($enfant->photo) {
+            $enfant->photoEleve = Storage::url($enfant->photo);
+        } else {
+            $enfant->photoEleve = 'img/avatar/avatar'.$enfant->genre.'.jpg';
+        }
+        
+        $lesgroupes = json_decode(Auth::user()->groupes, true);
+        $enfant->groupeFormatted = $enfant->groupe ? $lesgroupes[$enfant->groupe] : null;
     }
 
     /**

@@ -26,8 +26,8 @@ class UserEvent
      */
     public function __construct(User $user)
     {
-
-        
-
+        $user->groupes = $user->configuration->groupes;
+        $user->equipes = $user->configuration->equipes;
+        $user->periodes = $user->configuration->periodes;
     }
 }
