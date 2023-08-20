@@ -9,8 +9,9 @@
 $lesgroupes = json_decode(Auth::user()->groupes, true);
 $groupe = null;
 if ($enfant->groupe != null){
-
+  
   $groupe = $lesgroupes[$enfant->groupe];
+
 
   
 }
@@ -20,9 +21,9 @@ if ($enfant->groupe != null){
 <div class="card-enfant position-relative">
 
 
-  @if ($groupe && strlen($groupe[0]) <2)
+  {{-- @if ($groupe && strlen($groupe[0]) <2)
     <div class="groupe" style="background-color: {{ $groupe[1] }}; color:{{ $groupe[2]}}">{{ $groupe[0]}}</div>
-  @endif
+  @endif --}}
 
   <div class="card-header d-flex justify-content-center">
     @if ($enfant->background)
@@ -53,8 +54,8 @@ if ($enfant->groupe != null){
            {{ $enfant->age}}
         </div>
   </div>
-  @if ($groupe && strlen($groupe[0]) >= 2)
-    <div class="groupe-terme"  style="background-color: {{ $groupe[1] }}; color:{{ $groupe[2]}}">{{$groupe[0]}}</div>
+  @if ($groupe)
+    <div class="groupe-terme"  style="background-color: {{ $groupe["backgroundColor"] }}; color:{{ $groupe["textColor"]}}">{{$groupe["name"]}}</div>
   @endif
     <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">
         <a href="enfants/{{$enfant->id}}/items/"  ><i class="fa-light fa-book-open-cover"></i></a>

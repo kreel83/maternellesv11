@@ -14,7 +14,7 @@
     .card-eleve {
         width: 300px;
         height: auto;
-        min-height: 100px
+        min-height: 100px;
         font-size: 14px;
         padding: 5px;
         border: 4px solid transparent;
@@ -52,10 +52,11 @@
 @foreach ($eleves as $eleve)
     @php
         if ($eleve->groupe != null) {
-            $c = $groupes[$eleve->groupe][1];
+            $c = $groupes[$eleve->groupe]['backgroundColor'];
         } else {
             $c = 'transparent';
         }
+     
         
       
     @endphp
@@ -69,9 +70,7 @@
 
             <div style="width: 40%" class="d-flex flex-column align-items-end">
                 @foreach ($groupes as $key=>$terme)
-
-
-                <div class="badge_termes {{ $eleve->groupe != null && $key == $eleve->groupe ? 'active' : null}}" data-color="{{$terme[1]}}" style="background-color: {{$terme[1]}}; color: {{$terme[2]}}" data-order="{{$key}}">{{$terme[0]}}</div>
+                    <div class="badge_termes {{ $eleve->groupe != null && $key == $eleve->groupe ? 'active' : null}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
                 @endforeach
             </div>
            

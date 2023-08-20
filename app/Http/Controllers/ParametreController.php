@@ -7,6 +7,7 @@ use App\Models\Ecole;
 use App\Models\Enfant;
 use App\Models\Equipe;
 use App\Models\Resultat;
+use App\Models\Configuration;
 use App\Models\Section;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class ParametreController extends Controller
 {
 
     public function aidematernelle() {
-        $equipes = Auth::user()->equipes();
+        $equipes = Auth::user()->configuration->equipes;
         $photo = asset('img/avatar/avatarF.jpg');
 
         return view('aidematernelle.index')->with('equipes', $equipes)->with('photo', $photo);
@@ -55,8 +56,15 @@ class ParametreController extends Controller
         
 
         $user = Auth::user();
-        $user->equipes = $liste;
-        $user->save();
+        $config = Configuration::where('user_id', $user->id)->first();
+        if (!$config) {
+            $config = new Configuration();
+            $config->user_id = $user->id;            
+        }
+
+
+        $config->equipes = $liste;
+        $config->save();
         // if ($request->id) {
         //     $equipe = Equipe::find($request->id);
 
