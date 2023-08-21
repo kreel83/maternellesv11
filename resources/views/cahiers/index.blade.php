@@ -64,7 +64,7 @@
             <div class="d-flex w-50 justify-content-between align-items-center mb-4">
 
 
-                @if ($isreussite)
+               
                 <div class="form-check form-switch position-relative">
                     <input {{($definitif == 1) ? "checked" : null }} class="form-check-input"
                         type="checkbox" id="definitif" data-enfant="{{$enfant->id}}" >
@@ -72,11 +72,12 @@
                 </div>
                     <a target="_blank" href="{{route('seepdf',['id' => $enfant->id,'state' => 'see'])}}" data-enfant="{{$enfant->id}}"
                     class="btnSelection violet {{$definitif == 0 ? 'd-none' : null}}" id="pdf" style="margin-top: 0 !important">Voir le PDF</a>
+                    <button data-enfant="{{$enfant->id}}" class="btn btn-sm btn-primary" id="reformuler">Reformuler</button>
                     {{-- <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"
                     class="btn btn-primary" id="pdf">Sauvegarder le PDF</a> --}}
 
 
-                @endif
+               
             </div>
             <div class="position-relative">
 
