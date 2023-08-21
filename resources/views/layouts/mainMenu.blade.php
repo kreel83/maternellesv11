@@ -67,7 +67,7 @@ use Illuminate\Support\Facades\Auth;
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('calendrier')}}" class="dashboard-nav-dropdown-item {{$menu == 'calendrier' ? 'active' : null}}">Voir le calendrier</a>
                 <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a>
-                <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
+
 
               </div>
             </div>
@@ -82,12 +82,13 @@ use Illuminate\Support\Facades\Auth;
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
                 {{-- <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a> --}}
-                <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Je créé ma classe</a>
-                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Je choisis mes activités</a>
+                <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Ma classe</a>
+                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Mes activités</a>
                 {{-- <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a> --}}
                 {{-- <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a> --}}
-                <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Je choisis mes groupes</a>
+                <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
                 <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
+                                <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
                 <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Je choisis les avatars</a>
               </div>
             </div>

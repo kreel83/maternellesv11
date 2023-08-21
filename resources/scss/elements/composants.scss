@@ -149,20 +149,23 @@ input[type='email']::placeholder {
  
   }
 
+
+
   .periode1 {
     font-size: 20px;
     font-weight: bolder;
-    color: red !important;
+    border-bottom: 3px solid green !important;
   }
+
   .periode2 {
     font-size: 20px;
     font-weight: bolder;
-    color: brown !important;
+    border-bottom: 3px solid blue !important;
   }
   .periode3 {
     font-size: 20px;
     font-weight: bolder;
-    color: orange !important;
+    border-bottom: 3px solid orange !important;
   }
   .periodeCadre1 {
     border-radius: 16px;

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use Browser;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class CahierController extends Controller
 {
@@ -32,17 +33,17 @@ class CahierController extends Controller
 
             $nameSection = ($section == 99) ? 'Commentaire général' : Section::find($section)->name;
             if ((isset($resultats[$section])) || (isset($commentaires[$section]))) {
-                $bloc .= "<br><h2 contenteditable='false'>$nameSection</h2><br />";
+                $bloc .= "<h2 contenteditable='false'>$nameSection</h2><br>";
 
             }
             if (isset($resultats[$section])) {
                 foreach ($resultats[$section] as $resultat) {
-                    $bloc .= $resultat->item()->phrase($enfant).'</br>';
+                    $bloc .= $resultat->item()->phrase($enfant);
                 }
             }
             if (isset($commentaires[$section])) {
                 foreach ($commentaires[$section] as $phrase) {
-                    $bloc .= $phrase->texte.'</br>';
+                    $bloc .= $phrase->texte;
                 }
             }
         }
@@ -90,6 +91,21 @@ class CahierController extends Controller
 
     }
 
+
+    public function reformuler(Request $request) {
+        $variable = $request->quill;
+        $result = OpenAI::chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'user', 'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable, peux-tu me reformuler le texte suivant en utilisant le prénom qu'en début de texte: ".$variable],
+            ],
+           
+        ]);
+        return $result['choices'][0]['message']['content'];
+        
+         
+        // return $result['choices'][0]->message->content;
+    }
 
     public function seepdf($id, $state = 'see') {
 
@@ -284,27 +300,32 @@ class CahierController extends Controller
 
         
         $enfant = Enfant::find($id);
+        $reussite = Reussite::where('enfant_id', $id)->first();
+
+        if ($reussite && $reussite->texte_integral != null) {
+            return $reussite->texte_integral;
+        }
         $reussite = $this->apercu($enfant);
         $prenom = $enfant->prenom;
         $pronom = $enfant->genre == 'F' ? 'elle' : 'il';
         $mots = explode(' ', $reussite);
 
-        $flag = true;
-        foreach ($mots as $k=>$mot) {
-            if (str_contains($mot, 'h2')) $flag = false;
-            if (str_contains($mot, $prenom)) {
-                if ($flag) {
-                    $mots[$k] =  (str_contains($mot, '>')) ? str_replace($prenom,ucfirst($pronom), $mots[$k]) : str_replace($prenom,$pronom, $mots[$k]);
-                } else {
-                    $flag = true;
-                }
-            }
-        }
+        // $flag = true;
+        // foreach ($mots as $k=>$mot) {
+        //     if (str_contains($mot, 'h2')) $flag = false;
+        //     if (str_contains($mot, $prenom)) {
+        //         if ($flag) {
+        //             $mots[$k] =  (str_contains($mot, '>')) ? str_replace($prenom,ucfirst($pronom), $mots[$k]) : str_replace($prenom,$pronom, $mots[$k]);
+        //         } else {
+        //             $flag = true;
+        //         }
+        //     }
+        // }
 
         $reussite = join(' ', $mots);
         $c= "";
 
-        $reussite .= '</br><h2 contenteditable="false">Commentaire général</h2>';
+        $reussite .= '<h2 contenteditable="false">Commentaire général</h2>';
         $comm = Reussite::where('enfant_id', $enfant->id)->where('user_id', Auth::id())->first();
         if ($comm) {
             $c = $comm->commentaire_general ?? '';
@@ -314,6 +335,7 @@ class CahierController extends Controller
 
         }
         $reussite .= '<br><br>'.$c;
+       
 
 
        
