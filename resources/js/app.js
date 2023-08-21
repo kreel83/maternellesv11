@@ -15,7 +15,7 @@ import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 import Alpine from 'alpinejs';
 
 import './menu'
-import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier} from "./pages/calendrier";
+import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
 import {selectItem, hamburger} from './pages/items';
@@ -194,6 +194,7 @@ choosePeriode()
 savePeriode()
 initCalendar()
 initCalendrier()
+initCalendrierPeriodes()
 
 chercheCommune()
 chercheEcole()

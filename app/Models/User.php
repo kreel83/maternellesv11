@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 use App\Models\Event;
+use App\Models\Configuration;
 
 use App\Notifications\ResetPassword;
 
@@ -84,6 +85,9 @@ class User extends Authenticatable
 
     public $type_groupe;
     public $groupe;
+    public $groupes;
+    public $periodes;
+    public $equipes;
 
     public function sendPasswordResetNotification($token): void
         {
@@ -150,8 +154,8 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Ecole','identifiant_de_l_etablissement','ecole_identifiant_de_l_etablissement');
     }
 
-    public function config() {
-        return $this->hasOne('App\Models\Config','user_id','id');
+    public function configuration() {
+        return $this->hasOne('App\Models\Configuration','user_id','id');
     }
 
     // $user->config->groupes;
@@ -159,7 +163,7 @@ class User extends Authenticatable
     // $user->config->aides;
 
     public function liste() {
-        return Enfant::where('user_id', $this->id)->orderby('prenom')->get();
+        return Enfant::where('user_id', $this->id)->orderBy('prenom')->get();
     }
 
     public function profs() {

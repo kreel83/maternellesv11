@@ -162,6 +162,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
     Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
     Route::get('/calendar/getEvent/{date}',[\App\Http\Controllers\CalendrierController::class,'getEvent'])->name('getEvent');
+    Route::get('/calendar/getPeriodes',[\App\Http\Controllers\CalendrierController::class,'getPeriodes'])->name('getPeriodes');
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
 

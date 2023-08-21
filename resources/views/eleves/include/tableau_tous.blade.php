@@ -8,7 +8,7 @@
 
 
 
-                <tr data-prof="{{$eleve->user_n1_id}}" data-id="{{$eleve->id}}" data-commentaire="{{$eleve->comment}}" data-photo="{{asset($eleve->photoEleve)}}" {{ ( ($professeur== 'null') || ($prof == $eleve->user_n1_id)) ?  null : 'd-none' }}>
+                <tr data-nomcomplet="{{$eleve->nom}} {{$eleve->prenom}}" data-prof="{{$eleve->user_n1_id}}" data-id="{{$eleve->id}}" data-commentaire="{{$eleve->comment}}" {{ ( ($professeur== 'null') || ($prof == $eleve->user_n1_id)) ?  null : 'd-none' }}>
                     <td data-value="{{$eleve->genre}}" style="color: {{$eleve->genre == 'F' ? 'pink' : 'blue'}}">
                         <div class="form-check">
                             @if ($eleve->genre == 'F')

@@ -148,6 +148,37 @@ input[type='email']::placeholder {
         }
  
   }
+
+  .periode1 {
+    font-size: 20px;
+    font-weight: bolder;
+    color: red !important;
+  }
+  .periode2 {
+    font-size: 20px;
+    font-weight: bolder;
+    color: brown !important;
+  }
+  .periode3 {
+    font-size: 20px;
+    font-weight: bolder;
+    color: orange !important;
+  }
+  .periodeCadre1 {
+    border-radius: 16px;
+    
+    background-color: red !important;
+}
+.periodeCadre2 {
+      border-radius: 16px;
+      
+      background-color: brown !important;
+    }
+    .periodeCadre3 {
+      border-radius: 16px;
+
+    background-color: orange !important;
+  }
   
 
  .error_message {
