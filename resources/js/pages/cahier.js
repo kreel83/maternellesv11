@@ -45,7 +45,7 @@ const choicePhrase = (quill) => {
         debounce = setTimeout(function(){
             $('.saveTexte').trigger('click')
             $('.saveTexte').addClass('saved').removeClass('saving')
-        }, 5000);
+        }, 500);
       });
 }
 
@@ -84,10 +84,18 @@ const saveTexte = (quill) => {
 }
 
 const saveTexteReussite = (quill) => {
-    $(document).on('click','.saveTexteReussite', function() {
 
+
+
+}
+
+
+
+const clickOnCahier = (quill) => {
+    $(document).on('click','#reformuler', function() {
+        var texte = quill.root.innerHTML
         var enfant = $(this).data('enfant')
-        var definitif = $('#definitif').prop('checked')
+        console.log(texte)
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -95,21 +103,15 @@ const saveTexteReussite = (quill) => {
         });
         $.ajax({
             method: 'POST',
-            url: '/enfants/'+enfant+"/cahier/saveTexteReussite",
+            url: '/app/enfants/'+enfant+'/cahier/reformuler',
             data: {
-                quill: quill.root.innerHTML,
-                state: definitif
+                quill: texte,
             },
             success: function(data) {
-                location.reload()
+                quill.root.innerHTML = data
             }
         })
     })
-}
-
-
-
-const clickOnCahier = (quill) => {
     $(document).on('click','.sectionApercu', function() {   
         $('.blocApercu').removeClass('d-none')     
         $('.blocSelectFiche').addClass('d-none')   
