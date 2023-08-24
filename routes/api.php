@@ -21,6 +21,7 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 Route::post('/classe', [DataController::class, 'chargerLaClasse']);
 Route::post('/resultat/store', [DataController::class, 'ajouterUnResultat']);
+Route::post('/resultat/update', [DataController::class, 'modifierUnResultat']);
 Route::post('/section', [DataController::class, 'chargerLesSections']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -23,12 +23,177 @@
     "file": "assets/fa-solid-900-7152a693.woff2",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
   },
+  "node_modules/quill/assets/icons/align-center.svg": {
+    "file": "assets/align-center-590f51b0.svg",
+    "src": "node_modules/quill/assets/icons/align-center.svg"
+  },
+  "node_modules/quill/assets/icons/align-justify.svg": {
+    "file": "assets/align-justify-6964eaef.svg",
+    "src": "node_modules/quill/assets/icons/align-justify.svg"
+  },
+  "node_modules/quill/assets/icons/align-left.svg": {
+    "file": "assets/align-left-05a0a8ff.svg",
+    "src": "node_modules/quill/assets/icons/align-left.svg"
+  },
+  "node_modules/quill/assets/icons/align-right.svg": {
+    "file": "assets/align-right-89d87eef.svg",
+    "src": "node_modules/quill/assets/icons/align-right.svg"
+  },
+  "node_modules/quill/assets/icons/background.svg": {
+    "file": "assets/background-348f5b5b.svg",
+    "src": "node_modules/quill/assets/icons/background.svg"
+  },
+  "node_modules/quill/assets/icons/blockquote.svg": {
+    "file": "assets/blockquote-09d3836a.svg",
+    "src": "node_modules/quill/assets/icons/blockquote.svg"
+  },
+  "node_modules/quill/assets/icons/bold.svg": {
+    "file": "assets/bold-5a1a03db.svg",
+    "src": "node_modules/quill/assets/icons/bold.svg"
+  },
+  "node_modules/quill/assets/icons/clean.svg": {
+    "file": "assets/clean-b98ad7f0.svg",
+    "src": "node_modules/quill/assets/icons/clean.svg"
+  },
+  "node_modules/quill/assets/icons/code.svg": {
+    "file": "assets/code-d413cee8.svg",
+    "src": "node_modules/quill/assets/icons/code.svg"
+  },
+  "node_modules/quill/assets/icons/color.svg": {
+    "file": "assets/color-4f4ffae3.svg",
+    "src": "node_modules/quill/assets/icons/color.svg"
+  },
+  "node_modules/quill/assets/icons/direction-ltr.svg": {
+    "file": "assets/direction-ltr-8296a3bc.svg",
+    "src": "node_modules/quill/assets/icons/direction-ltr.svg"
+  },
+  "node_modules/quill/assets/icons/direction-rtl.svg": {
+    "file": "assets/direction-rtl-e81747d2.svg",
+    "src": "node_modules/quill/assets/icons/direction-rtl.svg"
+  },
+  "node_modules/quill/assets/icons/dropdown.svg": {
+    "file": "assets/dropdown-75462ba0.svg",
+    "src": "node_modules/quill/assets/icons/dropdown.svg"
+  },
+  "node_modules/quill/assets/icons/float-center.svg": {
+    "file": "assets/float-center-1fd4429f.svg",
+    "src": "node_modules/quill/assets/icons/float-center.svg"
+  },
+  "node_modules/quill/assets/icons/float-full.svg": {
+    "file": "assets/float-full-381757da.svg",
+    "src": "node_modules/quill/assets/icons/float-full.svg"
+  },
+  "node_modules/quill/assets/icons/float-left.svg": {
+    "file": "assets/float-left-a4c0057b.svg",
+    "src": "node_modules/quill/assets/icons/float-left.svg"
+  },
+  "node_modules/quill/assets/icons/float-right.svg": {
+    "file": "assets/float-right-1e77d9c4.svg",
+    "src": "node_modules/quill/assets/icons/float-right.svg"
+  },
+  "node_modules/quill/assets/icons/formula.svg": {
+    "file": "assets/formula-f002c21b.svg",
+    "src": "node_modules/quill/assets/icons/formula.svg"
+  },
+  "node_modules/quill/assets/icons/header-2.svg": {
+    "file": "assets/header-2-ac07724d.svg",
+    "src": "node_modules/quill/assets/icons/header-2.svg"
+  },
+  "node_modules/quill/assets/icons/header.svg": {
+    "file": "assets/header-56886cbe.svg",
+    "src": "node_modules/quill/assets/icons/header.svg"
+  },
+  "node_modules/quill/assets/icons/image.svg": {
+    "file": "assets/image-103e3f19.svg",
+    "src": "node_modules/quill/assets/icons/image.svg"
+  },
+  "node_modules/quill/assets/icons/indent.svg": {
+    "file": "assets/indent-e44187b6.svg",
+    "src": "node_modules/quill/assets/icons/indent.svg"
+  },
+  "node_modules/quill/assets/icons/italic.svg": {
+    "file": "assets/italic-ba87e98f.svg",
+    "src": "node_modules/quill/assets/icons/italic.svg"
+  },
+  "node_modules/quill/assets/icons/link.svg": {
+    "file": "assets/link-44572e51.svg",
+    "src": "node_modules/quill/assets/icons/link.svg"
+  },
+  "node_modules/quill/assets/icons/list-bullet.svg": {
+    "file": "assets/list-bullet-8824b572.svg",
+    "src": "node_modules/quill/assets/icons/list-bullet.svg"
+  },
+  "node_modules/quill/assets/icons/list-check.svg": {
+    "file": "assets/list-check-57ba448c.svg",
+    "src": "node_modules/quill/assets/icons/list-check.svg"
+  },
+  "node_modules/quill/assets/icons/list-ordered.svg": {
+    "file": "assets/list-ordered-14a18422.svg",
+    "src": "node_modules/quill/assets/icons/list-ordered.svg"
+  },
+  "node_modules/quill/assets/icons/outdent.svg": {
+    "file": "assets/outdent-fecfb8b0.svg",
+    "src": "node_modules/quill/assets/icons/outdent.svg"
+  },
+  "node_modules/quill/assets/icons/strike.svg": {
+    "file": "assets/strike-71b73a71.svg",
+    "src": "node_modules/quill/assets/icons/strike.svg"
+  },
+  "node_modules/quill/assets/icons/subscript.svg": {
+    "file": "assets/subscript-77a05888.svg",
+    "src": "node_modules/quill/assets/icons/subscript.svg"
+  },
+  "node_modules/quill/assets/icons/superscript.svg": {
+    "file": "assets/superscript-e537ea2e.svg",
+    "src": "node_modules/quill/assets/icons/superscript.svg"
+  },
+  "node_modules/quill/assets/icons/underline.svg": {
+    "file": "assets/underline-340e6fc1.svg",
+    "src": "node_modules/quill/assets/icons/underline.svg"
+  },
+  "node_modules/quill/assets/icons/video.svg": {
+    "file": "assets/video-36f1ccc4.svg",
+    "src": "node_modules/quill/assets/icons/video.svg"
+  },
   "resources/js/app.css": {
     "file": "assets/app-7c897cab.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "assets": [
+      "assets/align-left-05a0a8ff.svg",
+      "assets/align-center-590f51b0.svg",
+      "assets/align-right-89d87eef.svg",
+      "assets/align-justify-6964eaef.svg",
+      "assets/background-348f5b5b.svg",
+      "assets/blockquote-09d3836a.svg",
+      "assets/bold-5a1a03db.svg",
+      "assets/clean-b98ad7f0.svg",
+      "assets/code-d413cee8.svg",
+      "assets/color-4f4ffae3.svg",
+      "assets/direction-ltr-8296a3bc.svg",
+      "assets/direction-rtl-e81747d2.svg",
+      "assets/float-center-1fd4429f.svg",
+      "assets/float-full-381757da.svg",
+      "assets/float-left-a4c0057b.svg",
+      "assets/float-right-1e77d9c4.svg",
+      "assets/formula-f002c21b.svg",
+      "assets/header-56886cbe.svg",
+      "assets/header-2-ac07724d.svg",
+      "assets/italic-ba87e98f.svg",
+      "assets/image-103e3f19.svg",
+      "assets/indent-e44187b6.svg",
+      "assets/outdent-fecfb8b0.svg",
+      "assets/link-44572e51.svg",
+      "assets/list-ordered-14a18422.svg",
+      "assets/list-bullet-8824b572.svg",
+      "assets/list-check-57ba448c.svg",
+      "assets/subscript-77a05888.svg",
+      "assets/superscript-e537ea2e.svg",
+      "assets/strike-71b73a71.svg",
+      "assets/underline-340e6fc1.svg",
+      "assets/video-36f1ccc4.svg",
+      "assets/dropdown-75462ba0.svg",
       "assets/fa-brands-400-74833209.woff2",
       "assets/fa-brands-400-20c4a58b.ttf",
       "assets/fa-regular-400-8e7e5ea1.woff2",
@@ -39,16 +204,12 @@
     "css": [
       "assets/app-7c897cab.css"
     ],
-
-    "file": "assets/app-7b5f653f.js",
-
+    "file": "assets/app-fb59c730.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
   "resources/scss/app.scss": {
-
-    "file": "assets/app-f49a18c0.css",
-
+    "file": "assets/app-b1e472e5.css",
     "isEntry": true,
     "src": "resources/scss/app.scss"
   }

@@ -89,6 +89,12 @@ class User extends Authenticatable
     public $periodes;
     public $equipes;
 
+
+    public function configuration() {
+        return $this->hasOne('App\Models\Configuration','user_id','id');
+    }
+
+
     public function sendPasswordResetNotification($token): void
         {
             $url = 'https://example.com/reset-password?token='.$token;
