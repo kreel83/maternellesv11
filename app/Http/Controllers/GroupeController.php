@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enfant;
+use App\Models\Configuration;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +20,6 @@ class GroupeController extends Controller
         $nbGroupe = sizeof($groupes);           
         }
 
-
-
-        
-        
         return view('groupes.index')
             ->with('nbGroupe', $nbGroupe)
             ->with('groupes', $groupes);
@@ -32,6 +29,7 @@ class GroupeController extends Controller
         $eleves = Auth::user()->liste();
         
         $groupes = json_decode(Auth::user()->groupes, true);
+   
         
         return view('groupes.affectation_groupe')
             ->with('eleves', $eleves)
@@ -53,27 +51,41 @@ class GroupeController extends Controller
        
         $coll = new Collection($liste);
         $n = $coll->sortBy('order')->pluck('color')->toArray();
-        $user->groupes = join('/', $n);
-        $user->save();
+
+        $config = Configuration::where('user_id', $user)->first();
+        if (!$config) {
+            $config = new Configuration();
+            $config->user_id = $user;            
+        }
+
+        $config->groupes = join('/', $n);
+        $config->save();
         return 'ok';
     }
 
     public function saveTermes(Request $request) {
         $arr = array();
         for ($i = 0; $i<$request->nbGroupe; $i++) {
-            $arr[$i][] = $request->termes[$i];
-            $arr[$i][] = $request->back[$i];
-            $arr[$i][] = $request->font[$i];
+            $arr[$i]['name'] = $request->termes[$i];
+            $arr[$i]['backgroundColor'] = $request->back[$i];
+            $arr[$i]['textColor'] = $request->font[$i];
         }
+
         
 
         $user = Auth::user();
 
 
+        $config = Configuration::where('user_id', $user->id)->first();
+        if (!$config) {
+            $config = new Configuration();
+            $config->user_id = $user->id;            
+        }
 
-        $user->groupes = $arr;
-        $user->save();
-
+        $config->groupes = json_encode($arr);
+        $config->save();
         return Redirect::back();
+
+
     }
 }

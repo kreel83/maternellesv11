@@ -21,7 +21,14 @@ class ItemController extends Controller
         return view('mesfiches.index')->with('items', $items)->with('sections', $sections);
     }
 
-    public function index($id) {
+    public function index($id, Request $request) {
+
+        if($request->sectionID) {
+            $section = Section::skip((int)$request->sectionID)->take(1)->first();
+        } else {
+            $section = Section::first();
+        }
+        
         $enfant = Enfant::find($id);
         $sections = Section::all();
         $fiches = Auth::user()->mesfiches();
@@ -43,7 +50,7 @@ class ItemController extends Controller
                 ->with('fiches', $fiches)
                 ->with('sections',$sections)
                 ->with('enfant', $enfant)
-                ->with('section', Section::first());
+                ->with('section', $section);
     }
 
     public function saveResultat(Request $request) {

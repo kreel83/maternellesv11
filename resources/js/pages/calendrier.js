@@ -44,7 +44,7 @@ console.log(periodeActive)
 
 
 const initCalendrier = () => {
-    if ($('#calendrier_scolaire').length) {
+    if ($('#calendrier_scolaire').length ) {
         var conges = $('#conges').val()
         conges = JSON.parse(conges)
         conges.forEach(function (element) {
@@ -80,6 +80,42 @@ const initCalendrier = () => {
             $('.day_event[data-js_date="' + element.date + '"]').removeClass('d-none')
             
         })
+
+    }
+}
+
+const initCalendrierPeriodes = () => {
+    if ($('#calendrier_periodes').length ) {
+        var conges = $('#conges').val()
+        var start = $('#start').val()
+        var end = $('#end').val()
+        var periodes = $('#periodes').val()
+        periodes = JSON.parse(periodes);
+        conges = JSON.parse(conges)
+        conges.forEach(function (element) {
+            $('.day[data-all="' + element.start + '"]').addClass('start conges')
+            $('.day[data-all="' + element.start + '"]').prop('title', element.libele)
+            $('.day[data-all="' + element.end + '"]').addClass('end conges')
+            $('.day[data-all="' + element.end + '"]').prop('title', element.libele)
+            for (var i = element.start + 1; i < element.end; i++) {
+                $('.day[data-all="' + i + '"]').addClass('between conges')
+                $('.day[data-all="'+i+'"]').prop('title', element.libele)
+            }
+        })
+        $('.day[data-js_date="'+start+'"]').addClass('selected').addClass('limite')
+        $('.day[data-js_date="'+end+'"]').addClass('selected').addClass('limite')
+
+        for (var i =0; i < periodes.length; i++ ) {
+            var now = new Date(periodes[i]['fin']);
+            var s = new Date(now).getFullYear()+'-'+('0' +(new Date(now).getMonth()+1)).slice(-2)+'-'+('0' + new Date(now).getDate()).slice(-2); 
+            $('.day[data-js_date="'+s+'"]').addClass('selected')
+            for (var d = new Date(periodes[i]['debut']); d <= now; d.setDate(d.getDate() + 1)) {
+                var select = new Date(d).getFullYear()+'-'+('0' +(new Date(d).getMonth()+1)).slice(-2)+'-'+('0' + new Date(d).getDate()).slice(-2);
+                $('.day[data-js_date="'+select+'"]').addClass(periodes[i]['classe'])
+            }            
+        }
+
+
 
     }
 }
@@ -154,7 +190,8 @@ const selection = () => {
     })
 
 
-    $('.day').on('click', function() {
+    $('#calendrier_scolaire .day').on('click', function() {
+        console.log('coucou')
         $('.day').removeClass('selected')
         $(this).addClass('selected')
         var date = $(this).data('js_date')
@@ -165,6 +202,39 @@ const selection = () => {
         })
 
         $('#date_event').val(date)
+ 
+    })
+
+    $('#calendrier_periodes .day').on('click', function() {
+        
+        
+        if ($('.day.selected').length == 4 && !$(this).hasClass('selected')) return false;
+        $(this).toggleClass('selected')
+        var date = $(this).data('js_date')
+        console.log(date)
+        var date = [];
+        $('.day.selected').each((index, el) => {
+            date.push($(el).data('js_date'))
+        })
+        console.log(date)
+        
+        $.get('/app/calendar/getPeriodes/?dates='+JSON.stringify(date), function(data) {
+            $('#formulaire_periodes').html(data)
+            var periodes = $('#periodes').val()
+            $('.day').removeClass('periode1 periode2 periode3')
+            periodes = JSON.parse(periodes);
+            console.log('new periodes : '+periodes.length)
+            for (var i =0; i < periodes.length; i++ ) {
+                var now = new Date(periodes[i]['fin']); 
+                for (var d = new Date(periodes[i]['debut']); d <= now; d.setDate(d.getDate() + 1)) {
+                    var select = new Date(d).getFullYear()+'-'+('0' +(new Date(d).getMonth()+1)).slice(-2)+'-'+('0' + new Date(d).getDate()).slice(-2);
+                    
+                    $('.day[data-js_date="'+select+'"]').addClass(periodes[i]['classe'])
+                }            
+            }
+        })
+
+        
  
     })
 
@@ -218,7 +288,6 @@ const savePeriode = () => {
 const hover = () => {
 
         $('.day.actif').on('mouseover', function() {
-            console.log(periodeActive)
             if (periodeActive) {
                 if (periodeActive.start && !periodeActive.complete) {
                     console.log('cc')
@@ -250,4 +319,4 @@ const hover = () => {
 
 }
 
-export {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier}
+export {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes}

@@ -148,7 +148,50 @@ input[type='email']::placeholder {
         }
  
   }
+
+
+
+  .periode1 {
+    font-size: 20px;
+    font-weight: bolder;
+    border-bottom: 3px solid green !important;
+  }
+
+  .periode2 {
+    font-size: 20px;
+    font-weight: bolder;
+    border-bottom: 3px solid blue !important;
+  }
+  .periode3 {
+    font-size: 20px;
+    font-weight: bolder;
+    border-bottom: 3px solid orange !important;
+  }
+  .periodeCadre1 {
+    border-radius: 16px;
+    
+    background-color: red !important;
+}
+.periodeCadre2 {
+      border-radius: 16px;
+      
+      background-color: brown !important;
+    }
+    .periodeCadre3 {
+      border-radius: 16px;
+
+    background-color: orange !important;
+  }
   
+
+ .error_message {
+    font-size: 12px;
+    font-weight: 700;
+    color: red;
+    width: 100%;
+    text-align: center;
+    margin-top: 6px
+ } 
 .custom-select{
     color: #545454;
     font-size: 16px;;

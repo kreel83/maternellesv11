@@ -1,6 +1,7 @@
 
 import $ from 'jquery';
 import 'bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.css'
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 import '@fortawesome/fontawesome-free/scss/brands.scss';
@@ -13,10 +14,11 @@ import '../../node_modules/quill/dist/quill';
 //import Quill from 'quill/quill';
 //window.Quill = Quill;
 
+
 import Alpine from 'alpinejs';
 
 import './menu'
-import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier} from "./pages/calendrier";
+import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
 import {selectItem, hamburger} from './pages/items';
@@ -195,6 +197,7 @@ choosePeriode()
 savePeriode()
 initCalendar()
 initCalendrier()
+initCalendrierPeriodes()
 
 chercheCommune()
 chercheEcole()

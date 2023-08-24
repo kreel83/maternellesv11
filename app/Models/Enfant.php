@@ -52,12 +52,14 @@ class Enfant extends Model
     ];
 
 
-    public $mail1, $mail2, $photoEleve, $jour, $age;
+    public $mail1, $mail2, $photoEleve, $jour, $age, $groupeFormatted;
 
 
     public function item() {
           return $this->hasmany('App\Models\Item');
     }
+
+
 
 
     public function lastUser($l = false) {

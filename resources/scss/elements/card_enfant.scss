@@ -85,18 +85,30 @@
     background-color: #fff;
    
     width: 240px;;
-    height: 320px;
+    height: 277px;
     display: flex;
     flex-direction: column;
     border-radius: 1rem;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 8px;
+   
+    margin: 16px;
     position: relative;
+    padding-top: 20px;
+
+    .icone_avatar {
+      font-size: 18px;
+      &.garcon {
+        color: var(--bleu)
+      }
+      &.fille {
+        color: var(--pink)
+      }
+    }
     .name {
       color: #7769FE;
     }
     .title {
-      color: #16C1BC;
+      color: grey;
     }
 
     &:hover {
@@ -107,13 +119,12 @@
     }
     .groupe {
       position: absolute;
-      left: 40px;
+      left: 6px;
       top: 5px;
-      box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.5);
       
       color: white;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       font-size: 20px;
       display: flex;
       justify-content: center;
@@ -129,8 +140,10 @@
     }
 
     .groupe-terme {
-
-      box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.5);
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      transform: translate(-50%);
       background-color: #7769FE;
       padding: 4px 24px;
       color: white;
@@ -142,6 +155,7 @@
       align-items: center;
       border-radius: 30px;
       font-weight: 600;
+      min-width: 120px;
 
     }
 
@@ -154,15 +168,14 @@
 
       img {
         border-radius: 50%;
-
         width: 120px;
         height: 120px;
-
         display: block;
-
       }
+      
     }
     .card-body {
+      
       .name {
         // font-family: "Style Script", cursive;
         font-size: 1.4rem;
@@ -176,6 +189,8 @@
 
     .footer {
       display: flex;justify-content: space-around;  height: 50px;
+      border-bottom-right-radius: 1rem;
+      border-bottom-left-radius: 1rem;
 
       width: 100%;  
      

@@ -56,6 +56,12 @@
                             <option value="{{$prof->id}}">{{$prof->nom_complet()}}</option>
                             @endforeach
                         </select>
+                        <div class="input-group my-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text" class="form-control" id="search_eleve" placeholder="Chercher un élève" aria-label="Chercher un élève" aria-describedby="basic-addon1">
+                            <span class="input-group-text" id="raz_search_eleve" style="cursor: pointer"><i class="fa-sharp fa-solid fa-xmark"></i></span>
+                          </div>
+                        
                     </div>
                     <div class="import_eleves_container"   id="tableau_tous">
                         @include('eleves.include.tableau_tous')                            
@@ -72,7 +78,10 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="avatar avatar_form pink me-5 selected" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
                                     <div class="avatar avatar_form blue" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
-                                    
+                                    <div class="form-check mt-4 ms-4">
+                                        <input type="checkbox" name="sh" class="form-check-input" id="sh">
+                                        <label class="form-sh-label" for="exampleCheck1">Situation de handicap ?</label>
+                                      </div>
 
                                 </div>
                                 {{-- <div class="form-group">
@@ -113,7 +122,7 @@
             
             
                 
-                                <di class="d-flex">
+                                <div class="d-flex">
                                     <button type="submit" class="custom_button big submit">Sauvegarder</button>
                         
                                     <button type="button" data-id="new" class="custom_button submit remove_eleve delete ms-1">Retirer</button>                                    

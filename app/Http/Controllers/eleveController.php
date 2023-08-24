@@ -104,7 +104,18 @@ class EleveController extends Controller
         
         $datas['mail'] = join(';', array_filter($datas['mail']));
         $datas['user_id'] = Auth::id();
+        $datas['sh'] = isset($datas['sh']) ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
+        $degrade = Enfant::DEGRADE;
+        $datas['background'] = array_rand($degrade);
+        $files = File::files(public_path('img/animaux'));
+        $liste = array();
+        foreach ($files as $file) {
+            $liste[] = $file->getFileName();
+        }
+        $k = array_rand($liste);
+        
+        $datas['photo'] = $liste[$k];
         $datas['prenom'] = ucfirst($datas['prenom']);
         $datas['annee_scolaire'] = Auth::user()->calcul_annee_scolaire();
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);

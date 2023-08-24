@@ -120,6 +120,26 @@ const preview_photo = (event) => {
     //commentaire
 
 
+    $(document).on('click','#raz_search_eleve', function(e) {
+        $('#search_eleve').val('')
+        $('.table-cours tr').removeClass('d-none') 
+
+    })
+
+    $(document).on('keyup','#search_eleve', function(e) {
+        var input = $(this).val().toUpperCase()
+        if (input == '') {
+            $('.table-cours tr').removeClass('d-none') 
+        }
+        $('.table-cours tr:visible').each((index, el) => {
+            console.log(input, $(el).data('nomcomplet').toUpperCase)
+            if (!$(el).data('nomcomplet').toUpperCase().includes(input)) {
+                $(el).addClass('d-none')
+            }
+        })
+
+    })
+
     $(document).on('click','.badge_termes', function() {
         
         var el = $(this).closest('.card-eleve')

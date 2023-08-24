@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 
+    Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
@@ -107,6 +108,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
     Route::post('/enfants/{id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
+    Route::post('/enfants/{id}/cahier/reformuler', [CahierController::class, 'reformuler'])->name('reformuler');
     Route::get('/enfants/{id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
     Route::get('/cahiers/get_apercu/{id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
@@ -162,6 +164,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
     Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
     Route::get('/calendar/getEvent/{date}',[\App\Http\Controllers\CalendrierController::class,'getEvent'])->name('getEvent');
+    Route::get('/calendar/getPeriodes',[\App\Http\Controllers\CalendrierController::class,'getPeriodes'])->name('getPeriodes');
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
 
@@ -179,6 +182,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
     Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle.post');
+    Route::get('/directeur', [ParametreController::class, 'directeur'])->name('directeur');
+    Route::post('/directeur', [ParametreController::class, 'savedirecteur'])->name('directeur.post');
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 

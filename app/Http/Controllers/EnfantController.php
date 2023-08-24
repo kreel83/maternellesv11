@@ -7,6 +7,7 @@ use PDF;
 use Illuminate\Http\Request;
 use App\Models\Enfant;
 use Illuminate\Support\Facades\Auth;
+use File;
 
 class EnfantController extends Controller
 
@@ -39,10 +40,38 @@ class EnfantController extends Controller
         return redirect()->back()->withError('non non non ');
     }
 
+    public function reussite() {
+
+        $enfants = Enfant::where('user_id', Auth::id())->get();
+
+    // foreach ($enfants as $enfant) {
+    //     $degrade = Enfant::DEGRADE;
+    //     $enfant->background = array_rand($degrade);
+    //     $files = File::files(public_path('img/animaux'));
+    //     $liste = array();
+    //     foreach ($files as $file) {
+    //         $liste[] = $file->getFileName();
+    //     }
+    //     $k = array_rand($liste);
+        
+    //     $enfant->photo = $liste[$k];
+    //     $enfant->save();
+    // }
+
+      
+
+        $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
+        
+        return view('reussite.index')->with('enfants', $enfants)->with('avatar', $avatar);
+    }
+
     public function index() {
 
         $enfants = Enfant::where('user_id', Auth::id())->get();
+      
+
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
+        
         return view('enfants.index')->with('enfants', $enfants)->with('avatar', $avatar);
     }
 
