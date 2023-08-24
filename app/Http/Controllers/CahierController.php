@@ -300,7 +300,7 @@ class CahierController extends Controller
 
         $reussite = join(' ', $mots);
 
-        $reussite .= '</br><h2>Commentaire général</h2>';
+        $reussite .= '</br><h2 contenteditable="false" color="red">Commentaire général</h2>';
         $comm = Reussite::where('enfant_id', $enfant->id)->where('user_id', Auth::id())->first();
         if ($comm) {
             $c = $comm->commentaire_general ?? '';
