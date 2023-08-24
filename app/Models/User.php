@@ -78,6 +78,13 @@ class User extends Authenticatable
 
     public $type_groupe;
     public $groupe;
+    public $groupes;
+    public $periodes;
+    public $equipes;
+
+    public function configuration() {
+        return $this->hasOne('App\Models\Configuration','user_id','id');
+    }
 
     public function sendPasswordResetNotification($token): void
         {

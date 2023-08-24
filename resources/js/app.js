@@ -10,7 +10,8 @@ import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
 
 import '../../node_modules/quill/dist/quill';
-
+//import Quill from 'quill/quill';
+//window.Quill = Quill;
 
 import Alpine from 'alpinejs';
 
