@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Myperiode;
+use App\Models\Configuration;
 use App\Models\User;
 use App\Models\Event;
 use App\utils\Utils;
@@ -15,18 +16,63 @@ class CalendrierController extends Controller
 
 
     public function periode() {
-        $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode')->get()->toArray();
+        //$periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode')->get()->toArray();
+        $periodes = Auth::user()->configuration->periodes;
+  
+        
 
-    $p = [[null, null], [null,null], [null,null]];
-        for ($i = 0; $i<3; $i++) {
-            if (isset($periodes[$i])) {
-                $p[$i][0] = $periodes[$i]['date_start'];
-                $p[$i][1] = $periodes[$i]['date_end'];
+        
+    // $p = [[null, null], [null,null], [null,null]];
+    //     $p[0] = $periodes->first()->date_start;
+    //     for ($i = 0; $i<3; $i++) {
+    //         if (isset($periodes[$i])) {
+    //             $p[$i][0] = $periodes[$i]['date_start'];
+    //             $p[$i][1] = $periodes[$i]['date_end'];
+    //         }
+
+    //     }
+        $month = Carbon::parse('9/1/'.Utils::calcul_annee_scolaire());
+
+        
+        $start_year = $month->year;
+        $start_year_nb_days = $month->daysInYear;
+        $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
+        $academie = Auth::user()->ecole->libelle_academie;
+
+        $url = "https://data.education.gouv.fr/api/records/1.0/search/?dataset=fr-en-calendrier-scolaire&q=&facet=description&facet=population&facet=start_date&facet=end_date&facet=location&facet=zones&refine.annee_scolaire=$c&refine.location=$academie";
+        $r = file_get_contents($url);
+        $r = json_decode($r);
+        
+
+        $conges = array();
+        $dates = json_decode($periodes);
+
+        $p = $this->build_periodes($dates);
+
+        foreach ($r->records as $key=>$record) {
+            Utils::jour_dans_anneee($record->fields->end_date);
+            $conges[$key]['end_date'] = $record->fields->end_date;
+            $conges[$key]['start_date'] = $record->fields->start_date;
+            $conges[$key]['end'] = Utils::jour_dans_anneee($record->fields->end_date);
+            $conges[$key]['start'] = Utils::jour_dans_anneee($record->fields->start_date);
+            $conges[$key]['libele'] = $record->fields->description;
+            if ($conges[$key]['end'] == $conges[$key]['start']) {
+                $r = Carbon::parse($conges[$key]['end_date'])->addMonths(1)->endOfMonth()->format('Y-m-dT22:00:00+00:00');
+                $conges[$key]['end_date'] = $r;
+                $conges[$key]['end'] = Utils::jour_dans_anneee($r);
             }
 
         }
 
-        return view('calendar.periodes')->with('periodes',$p);
+        return view('calendar.periodes')
+            ->with('periodes',$p)
+            ->with('periodes_json', json_encode($p))
+            ->with('conges',json_encode($conges))
+            ->with('start_year_nb_days', $start_year_nb_days)
+            ->with('start_year', $start_year)
+            ->with('start', $start_year.'-09-01')
+            ->with('end', ($start_year+1).'-07-01')
+            ->with('month', $month);
     }
 
     public function saveEvent(Request $request) {
@@ -46,6 +92,7 @@ class CalendrierController extends Controller
     }
 
     public  function periode_save(Request $request) {
+        dd($request);
         $datas = $request->except('_token');
 
 
@@ -160,6 +207,63 @@ class CalendrierController extends Controller
         return 'ok';
     }
 
+    private function build_periodes($dates) {
+        $p = array();
+        if (sizeof($dates) == 2) {
+            $p[0]['label'] = "Année entière";
+            $p[0]['debut'] = Carbon::parse($dates[0]);
+            $p[0]['fin'] = Carbon::parse($dates[1]);
+            $p[0]['classe'] = 'periode1';
+        }
+
+        if (sizeof($dates) == 3) {
+            $p[0]['label'] = "1er semestre";
+            $p[0]['debut'] = Carbon::parse($dates[0]);
+            $p[0]['fin'] = Carbon::parse($dates[1]);
+            $p[0]['classe'] = 'periode1';
+            $p[1]['label'] = "2eme semestre";
+            $p[1]['debut'] = Carbon::parse($dates[1])->addDays(1);
+            $p[1]['fin'] = Carbon::parse($dates[2]);
+            $p[1]['classe'] = 'periode2';
+        }
+        if (sizeof($dates) == 4) {
+            $p[0]['label'] = "1er trimestre";
+            $p[0]['debut'] = Carbon::parse($dates[0]);
+            $p[0]['fin'] = Carbon::parse($dates[1]);
+            $p[0]['classe'] = 'periode1';
+            $p[1]['label'] = "2eme trimestre";
+            $p[1]['debut'] = Carbon::parse($dates[1])->addDays(1);
+            $p[1]['fin'] = Carbon::parse($dates[2]);
+            $p[1]['classe'] = 'periode2';
+            $p[2]['label'] = "3eme trimestre";
+            $p[2]['debut'] = Carbon::parse($dates[2])->addDays(1);
+            $p[2]['fin'] = Carbon::parse($dates[3]);
+            $p[2]['classe'] = 'periode3';
+        }
+        return $p;
+    }
+
+    public function getPeriodes(Request $request) {
+        $dates = json_decode($request->dates);
+        
+        $p = $this->build_periodes($dates);
+
+        $config = Configuration::where('user_id', Auth::id())->first();
+        if (!$config) {
+            $config = new Configuration();
+            $config->user_id = Auth::id();
+
+        }
+        $config->periodes = $request->dates;
+        $config->save();
+       
+        
+
+        return view('calendar.include.periodes_form')
+            ->with('periodes_json', json_encode($p))
+            ->with('periodes', $p);
+    }
+
     public function getEvent($date) {
         
         $date = Carbon::parse($date)->format('Y-m-d');
@@ -188,6 +292,7 @@ class CalendrierController extends Controller
     }
 
     public function savePeriode(Request $request) {
+        dd($request);
 
         $user = Auth::id();
         Myperiode::where('user_id', $user)->where('annee', $request->annee)->delete();

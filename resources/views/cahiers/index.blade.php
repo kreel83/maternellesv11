@@ -61,21 +61,23 @@
 
 
         <div class="bas d-flex flex-column blocApercu d-none">
-            <div class="d-flex w-100 justify-content-between align-items-center pb-2">
+            <div class="d-flex w-50 justify-content-between align-items-center mb-4">
 
-                @if ($isreussite)
+
+               
+                <div class="form-check form-switch position-relative">
+                    <input {{($definitif == 1) ? "checked" : null }} class="form-check-input"
+                        type="checkbox" id="definitif" data-enfant="{{$enfant->id}}" >
+                    <div class="form-check-label labelDefinitif" for="definitif">Définitif</div>
+                </div>
                     <a target="_blank" href="{{route('seepdf',['id' => $enfant->id,'state' => 'see'])}}" data-enfant="{{$enfant->id}}"
-                    class="btn btn-primary {{$definitif == 0 ? 'd-none' : null}}" id="pdf" >Voir le PDF</a>
+                    class="btnSelection violet {{$definitif == 0 ? 'd-none' : null}}" id="pdf" style="margin-top: 0 !important">Voir le PDF</a>
+                    <button data-enfant="{{$enfant->id}}" class="btn btn-sm btn-primary" id="reformuler">Reformuler</button>
                     {{-- <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"
                     class="btn btn-primary" id="pdf">Sauvegarder le PDF</a> --}}
 
 
-                    <div class="form-check form-switch">
-                        <input {{($definitif == 1) ? "checked" : null }} class="form-check-input"
-                            type="checkbox" id="definitif" data-enfant="{{$enfant->id}}" >
-                        <label class="form-check-label" for="definitif">Définitif</label>
-                    </div>
-                @endif
+               
             </div>
             <div class="position-relative">
 
@@ -87,13 +89,19 @@
         <div class="bas d-flex blocSelectFiche">
             <div class="col-md-6 pe-3">
 
+                <style>
+                    .cadre_activitees_acquises {
+                        margin: 10px 0; border-radius: 15px;border: 3px solid #7769FE; padding: 4px; height: 100px; overflow-Y: auto;
+                    }
+                </style>
                 <div class="tab-content" id="nav-tabContent" style="margin-bottom: 20px">
 
                     @foreach ($sections as $key => $sec)
                         <div style="margin-bottom: 20px" class="tab-pane fade {{ $key == 0 ? 'show active' : null }}"
                             data-id="nav-{{ $sec->id }}" id="nav-{{ $sec->id }}" role="tabpanel"
                             aria-labelledby="nav-home-tab">
-                            <div style="margin: 10px 0; border: 1px solid grey; padding: 4px; height: 100px; overflow-Y: auto">
+                            <small>Les activitées acquises</small>
+                            <div class="cadre_activitees_acquises">
                                 @include('include.card_phrases', ['section' => $sec])
                             </div>
                         </div>
@@ -112,11 +120,32 @@
                         </div>
                     </div>
 
+                    <style>
+                        .saved {
+                            color:green;
+                        }
+                        .saving {
+                            color:grey;
+                        }
+                        #btnSaveEditor {
+                            position: absolute; right: 8px; top: 30px;
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            background-color: white;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 20px;
+                            
+                        }
+                    </style>
 
                     <div class="position-relative w-100">
                         <button data-section="{{ $section->id }}" data-enfant="{{ $enfant->id }}"
-                            data-periode="{{ $periode }}" style="position: absolute; right: 4px; top: 6px;"
-                            class="btn btn-dark btn-sm saveTexte ">Sauvegarder</button>
+                            data-periode="{{ $periode }}" id="btnSaveEditor" style=""
+                            class="btn saveTexte saved"><i class="fa-solid fa-floppy-disk"></i></button>
+                            <small>Commentaires complémentaires</small>
                         <div id="editor" data-enfant="{{ $enfant->id }}" style="height: 300px; top:0; left:0">
                             {!! $textes[$section->id] ?? '' !!}
                         </div>
@@ -126,8 +155,8 @@
 
                 </div>
 
-                <a class="btn btn-outline-primary" href="{{ route('editerPDF', ['enfant' => $enfant->id]) }}">Editer le cahier
-                    de réussite</a>
+                {{-- <a class="btn btn-outline-primary" href="{{ route('editerPDF', ['enfant' => $enfant->id]) }}">Editer le cahier
+                    de réussite</a> --}}
                 
             </div>
 

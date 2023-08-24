@@ -190,11 +190,15 @@ class Licence extends Model
      */
     public function removeLicenceToUser($id)
     {
-        Licence::where('id', $id)
-               ->where('parent_id', Auth::id())
-               ->update([
-                    'user_id' => null,
-                ]);
+        // get the license
+        $licence = Licence::where('id', $id)->where('parent_id', Auth::id())->first();
+        if($licence) {
+            // met le champ licence a null dans users
+            User::where('id', $licence->user_id)->update(['licence' => null]);
+            // met le champ user_id a null dans licences
+            $licence->user_id = null;
+            $licence->save();
+        }
     }
 
     /**

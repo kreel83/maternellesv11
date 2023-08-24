@@ -46,15 +46,21 @@ Route::get('/user_dashboard', function () {
 Route::middleware(['admin'])->group(function()
 {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/admin/dashboard', [AdminController::class, 'chercherUnEleve'])->name('admin.chercherUnEleve');
+    Route::get('/admin/dashboard/{id}', [AdminController::class, 'voirClasse'])->name('admin.voirClasse');
+    Route::get('/admin/eleve/view/{user_id}/{id}', [AdminController::class, 'voirEleve'])->name('admin.voirEleve');
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
     Route::get('/admin/profil', [AdminController::class, 'loadAdminProfile'])->name('admin.loadprofile');
     Route::post('/admin/profil', [AdminController::class, 'saveAdminProfile'])->name('admin.saveprofile');
+    Route::get('/admin/pwd', [AdminController::class, 'changerLeMotDePasse'])->name('admin.changerLeMotDePasse');
+    Route::post('/admin/pwd', [AdminController::class, 'sauverLeMotDePasse'])->name('admin.sauverLeMotDePasse');
     Route::get('/admin/licence', [AdminLicenceController::class, 'index'])->name('admin.licence.index');
     Route::post('/admin/licence', [AdminLicenceController::class, 'renew'])->name('admin.licence.renew');
     Route::get('/admin/licence/achat', [AdminLicenceController::class, 'achat'])->name('admin.licence.achat');
     Route::post('/admin/licence/achat', [AdminLicenceController::class, 'create'])->name('admin.licence.create');
     Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // dans subscription.js prefixé par /app
-    Route::get('/admin/licence/remove/{id}', [AdminLicenceController::class, 'remove'])->name('admin.licence.remove');
+    Route::get('/admin/licence/remove/{id}', [AdminLicenceController::class, 'confirmationRetraitLicence'])->name('admin.licence.remove');
+    Route::post('/admin/licence/remove', [AdminLicenceController::class, 'retraitLicence'])->name('admin.licence.remove.post');
     Route::get('/admin/licence/invoice', [AdminLicenceController::class, 'invoice'])->name('admin.licence.invoice');
     Route::get('/admin/contact', [AdminController::class, 'contact'])->name('admin.contact');
     //Route::post('/admin/contact/store', [ContactController::class, 'store'])->name('admin.contact.store');
@@ -101,6 +107,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
     Route::post('/enfants/{id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
+    Route::post('/enfants/{id}/cahier/reformuler', [CahierController::class, 'reformuler'])->name('reformuler');
     Route::get('/enfants/{id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
     Route::get('/cahiers/get_apercu/{id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
@@ -140,6 +147,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
     Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
     Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
+    Route::get('eleves/view/{id}',[EleveController::class,'voirEleve'])->name('voirEleve');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');
@@ -155,6 +163,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
     Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
     Route::get('/calendar/getEvent/{date}',[\App\Http\Controllers\CalendrierController::class,'getEvent'])->name('getEvent');
+    Route::get('/calendar/getPeriodes',[\App\Http\Controllers\CalendrierController::class,'getPeriodes'])->name('getPeriodes');
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
 
@@ -167,9 +176,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/monprofil', [ParametreController::class, 'monprofil'])->name('monprofil');
     Route::post('/monprofil', [ParametreController::class, 'savemonprofil'])->name('savemonprofil');
+    Route::get('/pwd', [ParametreController::class, 'changerLeMotDePasse'])->name('changerLeMotDePasse');
+    Route::post('/pwd', [ParametreController::class, 'sauverLeMotDePasse'])->name('sauverLeMotDePasse');
 
     Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
     Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle.post');
+    Route::get('/directeur', [ParametreController::class, 'directeur'])->name('directeur');
+    Route::post('/directeur', [ParametreController::class, 'savedirecteur'])->name('directeur.post');
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
 
@@ -191,6 +204,9 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+// un middleware 'abo'  qui est come le auth
+//middleware['auth','abo']  pour le reste
+// dans abon  mettre fonction qui verifie la licence et redirige sur une vue pour dire non abonné
 
 route::get('/resultat/setNote',  [\App\Http\Controllers\ResultatController::class, 'setNote']);
 

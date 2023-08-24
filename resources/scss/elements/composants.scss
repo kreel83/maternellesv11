@@ -1,8 +1,36 @@
 /* Définir la classe pour l'icône dans la balise <i> */
+input[type='email']::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  input[type='email']::-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: white;
+  }
+  
+  input[type='email']::-ms-input-placeholder { /* Microsoft Edge */
+   color: white;
+  }
+  input[type='password']::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  input[type='password']::-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: white;
+  }
+  
+  input[type='password']::-ms-input-placeholder { /* Microsoft Edge */
+   color: white;
+  }
+
 .icone-input {
     position: relative;
     color: #545454;
     font-size: 16px;;
+    &.little {
+        font-size: 13px !important;
+    }
         i {
             position: absolute;
             top: 15px;
@@ -10,11 +38,26 @@
             left: 20px; /* Ajustez la valeur selon vos besoins pour positionner l'icône horizontalement */
 
         }
+        div {
+
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 5px;
+            height: 37px;
+            border-radius: 40px;
+            min-width: 37px;;
+            border:1px solid grey;
+            font-size: 16px;
+            right: 5px; 
+            padding: 2px 16px;/* Ajustez la valeur selon vos besoins pour positionner l'icône horizontalement */
+
+        }
         
         /* Style supplémentaire pour le champ de saisie */
         input {
             width: 100%;;
-            font-size: 16px;;
             padding: 10px; /* Ajustez la valeur selon vos besoins */
             padding-left: 50px; /* Ajustez cette valeur pour laisser de l'espace à l'icône */
             border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */
@@ -25,6 +68,65 @@
         }
  
   }
+
+.icone-input-login {
+    position: relative;
+    color: white;
+    font-size: 16px;;
+        i {
+            position: absolute;
+            top: 15px;
+            color: white;
+            left: 20px; /* Ajustez la valeur selon vos besoins pour positionner l'icône horizontalement */
+
+        }
+        div {
+
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 5px;
+            height: 37px;
+            border-radius: 40px;
+            min-width: 37px;;
+            border:1px solid grey;
+            font-size: 16px;
+            right: 5px; 
+            padding: 2px 16px;/* Ajustez la valeur selon vos besoins pour positionner l'icône horizontalement */
+
+        }
+        
+        /* Style supplémentaire pour le champ de saisie */
+        input {
+            width: 100%;;
+            background-color: transparent !important;
+            font-size: 16px;;
+            color: white !important;
+            padding: 10px; /* Ajustez la valeur selon vos besoins */
+            padding-left: 50px; /* Ajustez cette valeur pour laisser de l'espace à l'icône */
+            border: 1px solid white; /* Ajustez la couleur de la bordure si nécessaire */
+            border-radius: 8px; /* Ajustez selon le style souhaité */
+            &:focus {
+                outline: 1px solid #6759FF;
+            }
+
+        }
+ 
+  }
+
+  .btnLogin {
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    color: #6759FF;;
+    font-weight: 800;
+    line-height: 40px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+
+}
 
 .custom-area {
     color: #545454;
@@ -46,16 +148,61 @@
         }
  
   }
+
+
+
+  .periode1 {
+    font-size: 20px;
+    font-weight: bolder;
+    border-bottom: 3px solid green !important;
+  }
+
+  .periode2 {
+    font-size: 20px;
+    font-weight: bolder;
+    border-bottom: 3px solid blue !important;
+  }
+  .periode3 {
+    font-size: 20px;
+    font-weight: bolder;
+    border-bottom: 3px solid orange !important;
+  }
+  .periodeCadre1 {
+    border-radius: 16px;
+    
+    background-color: red !important;
+}
+.periodeCadre2 {
+      border-radius: 16px;
+      
+      background-color: brown !important;
+    }
+    .periodeCadre3 {
+      border-radius: 16px;
+
+    background-color: orange !important;
+  }
   
+
+ .error_message {
+    font-size: 12px;
+    font-weight: 700;
+    color: red;
+    width: 100%;
+    text-align: center;
+    margin-top: 6px
+ } 
 .custom-select{
     color: #545454;
     font-size: 16px;;
-
+    height: 46px;
+    &.little {
+        font-size: 13px !important;
+    }
         
         /* Style supplémentaire pour le champ de saisie */
        
             width: 100%;;
-            font-size: 16px;;
             padding: 5px; /* Ajustez la valeur selon vos besoins */
             /* Ajustez cette valeur pour laisser de l'espace à l'icône */
             border: 1px solid #545454; /* Ajustez la couleur de la bordure si nécessaire */

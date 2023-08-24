@@ -7,19 +7,23 @@ use App\Models\Ecole;
 use App\Models\Enfant;
 use App\Models\Equipe;
 use App\Models\Resultat;
+use App\Models\Configuration;
 use App\Models\Section;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
+use OpenAI\Laravel\Facades\OpenAI;
+
 
 class ParametreController extends Controller
 {
 
     public function aidematernelle() {
-        $equipes = Auth::user()->equipes();
+        $equipes = Auth::user()->configuration->equipes;
         $photo = asset('img/avatar/avatarF.jpg');
 
         return view('aidematernelle.index')->with('equipes', $equipes)->with('photo', $photo);
@@ -27,89 +31,128 @@ class ParametreController extends Controller
 
     public function saveaidematernelle(Request $request) {
 
+        $aide = array();
+
+        for($i=0; $i<4; $i++) {   
+            
+            $aide[$i] = array_filter($request->aide[$i]);
+
+            if (sizeof($aide[$i]) > 0) {
+                if (sizeof($aide[$i]) == 3) {
+                    $arr = array();
+                    $arr[] = ucfirst($aide[$i]['prenom']);
+                    $arr[] = strtoupper($aide[$i]['name']);
+                    $arr[] = $aide[$i]['fonction'];
+                    $liste[$i] = $arr;
+                } else {
+                   session()->flash('error'.$i, 'Les 3 champs sont obligatoires');
+                   return redirect()->back()->withInput();
+                }                
+            }
+
+
+        }
+        $liste = json_encode($liste);
+        
+
         $user = Auth::user();
-        if ($request->id) {
-            $equipe = Equipe::find($request->id);
-
-        } else {
-            $equipe = new Equipe();
-            $equipe->user_id = $user->id;
-            $equipe->created_at = Carbon::now();
-            $equipe->updated_at = Carbon::now();
+        $config = Configuration::where('user_id', $user->id)->first();
+        if (!$config) {
+            $config = new Configuration();
+            $config->user_id = $user->id;            
         }
-        $equipe->prenom = ucfirst($request->prenom);
-        $equipe->name = strtoupper($request->nom);
-        $equipe->fonction = ucfirst($request->fonction);
 
-        if ($request->file('photo')) {
-            $folder = $user->repertoire.'/equipe/'.uniqid().'.jpg';
-            $path = Storage::path($folder);
-            $photo = $request->file('photo');
-            $img = Image::make($photo)->encode('jpg', 75);;
-            $img->fit(200,200, function ($constraints) {
-                $constraints->upsize();
-            });
-            $img->save($path);
-            $equipe->photo = $folder;
-        }
-        $equipe->save();
-        return redirect()->back();
+
+        $config->equipes = $liste;
+        $config->save();
+        // if ($request->id) {
+        //     $equipe = Equipe::find($request->id);
+
+        // } else {
+        //     $equipe = new Equipe();
+        //     $equipe->user_id = $user->id;
+        //     $equipe->created_at = Carbon::now();
+        //     $equipe->updated_at = Carbon::now();
+        // }
+        // $equipe->prenom = ucfirst($request->prenom);
+        // $equipe->name = strtoupper($request->nom);
+        // $equipe->fonction = ucfirst($request->fonction);
+
+
+        // $equipe->save();
+        return redirect()->back()->withInput();
     }
 
 
     public function monprofil() {
+
+
+
         $user = Auth::user();
+        $equipes = json_decode($user->equipes, true);
+        
+        
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
-            ->where('identifiant_de_l_etablissement', $user->ecole_id)
+            ->where('identifiant_de_l_etablissement', $user->ecole_identifiant_de_l_etablissement)
             ->first();
-        $adresseEcole = $ecole->nom_etablissement;
-        if($ecole->adresse_1 != '') { $adresseEcole .= ', '.$ecole->adresse_1; }
-        if($ecole->adresse_2 != '') { $adresseEcole .= ', '.$ecole->adresse_2; }
-        if($ecole->adresse_3 != '') { $adresseEcole .= ', '.$ecole->adresse_3; }
+        $adresseEcole[] = $ecole->nom_etablissement;
+        if($ecole->adresse_1 != '') { $adresseEcole[] = $ecole->adresse_1; }
+        if($ecole->adresse_2 != '') { $adresseEcole[] = $ecole->adresse_2; }
+        if($ecole->adresse_3 != '') { $adresseEcole[] = $ecole->adresse_3; }
         $user->photo = Storage::url($user->photo);
         return view('monprofil.index')
             ->with('user', $user)
-            ->with('adresseEcole', $adresseEcole)
-            ->with('telephoneEcole', $ecole->telephone);
+            ->with('equipes', $equipes)
+            ->with('adresseEcole', join(PHP_EOL,$adresseEcole));
     }
 
+
+    public function savedirecteur(Request $request) {
+
+        $validated = $request->validate([
+            'directeur_prenom' => 'required',
+            'directeur_nom' => 'required',
+        ],[
+            'directeur_prenom.required' => 'Le prénom est obligatoire.',
+            'directeur_nom.required' => 'Le nom est obligatoire.'
+        ]);
+
+        
+        $user = Auth::user();
+        $user->directeur_prenom = ucfirst($request->directeur_prenom);
+        $user->directeur_nom = strtoupper($request->directeur_nom);
+        $user->directeur_civilite = $request->directeur_civilite;
+        $user->save();
+        return redirect()->back()->withInput();
+    }
 
     public function savemonprofil(Request $request) {
 
         $request->validate([
-            'nom' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
-            'mobile' => ['max:20'],
+            'phone' => ['max:10'],
         ], [
-            'nom.required' => 'Le nom est obligatoire.',
-            'nom.max' => 'Le nom est limité à 255 caractères.',
+            'name.required' => 'Le nom est obligatoire.',
+            'name.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
             'prenom.max' => 'Le prénom est limité à 255 caractères.',
-            'mobile.max' => 'Le numéro de mobile est limité à 20 caractères.',
+            'phone.max' => 'Le numéro de mobile est limité à 10 caractères.',
         ]);
 
+
         $user = Auth::user();
-        $user->name = strtoupper($request->nom);
+        $user->name = strtoupper($request->name);
         $user->prenom = strtoupper($request->prenom);
-        $user->mobile = $request->mobile;
+        $user->phone = $request->phone;
         //$user->nom_ecole = ucfirst($request->nom_ecole);
         //$user->adresse_ecole = ucfirst($request->adresse_ecole);
-        $user->nom_directeur = ucfirst($request->nom_directeur);
-        $user->directeur = (int) $request->directeur;
+        // $user->nom_directeur = ucfirst($request->nom_directeur);
+        // $user->directeur = (int) $request->directeur;
 
-        if ($request->file('photo')) {
-            $folder = $user->repertoire.'/equipe/'.uniqid().'.jpg';
-            $path = Storage::path($folder);
-            $photo = $request->file('photo');
-            $img = Image::make($photo)->encode('jpg', 75);;
-            $img->fit(300,300, function ($constraint) {
-                $constraint->upsize();
-            });
-            $img->save($path);
-            $user->photo = $folder;
-        }
+
         $user->save();
-        return redirect()->back()->with('result', 'success');
+        return redirect()->back()->withInput();
 
     }
 
@@ -200,5 +243,31 @@ class ParametreController extends Controller
         $phrase->save();
         $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', $request->section)->get();
         return view('parametres.phrases.__tableau_des_phrases')->with('commentaires', $commentaires);
+    }
+
+    /**
+     * Changer le mot de passe de l'adminsitrateur
+     *
+     * @return View
+     */
+    function changerLeMotDePasse(): View
+    {
+        return view('monprofil.motdepasse');
+    }
+
+    public function sauverLeMotDePasse(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'password.required' => 'Mot de passe obligatoire.',
+            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+        ]);
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back()->with('result', 'success');
     }
 }

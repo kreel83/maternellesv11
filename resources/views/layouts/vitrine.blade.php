@@ -38,7 +38,7 @@
                     <a class="nav-link menu-link-green" href="{{ route('vitrine.compagnon') }}"><i class="fa-solid fa-mobile"></i> Le Compagnon</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link-purple" href="{{ route('vitrine.tarif') }}"><i class="fa-solid fa-tag"></i> Tarif</a>
+                    <a class="nav-link menu-link-#7769FE" href="{{ route('vitrine.tarif') }}"><i class="fa-solid fa-tag"></i> Tarif</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link-red" href="{{ route('vitrine.contact') }}"><i class="fa-solid fa-paper-plane"></i> Nous contacter</a>

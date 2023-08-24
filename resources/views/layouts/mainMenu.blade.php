@@ -1,6 +1,7 @@
 <?
 use Illuminate\Support\Facades\Auth;
 
+
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +16,16 @@ use Illuminate\Support\Facades\Auth;
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
+        <script src="//cdn.quilljs.com/1.3.6/quill.js" defer></script>
+        <script src="//cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
+        
+        <!-- Theme included stylesheets -->
+        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+        
+
+
+
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
         <link href="{{asset('fontawesome/css/all.css')}}" rel="stylesheet">
@@ -27,6 +38,7 @@ use Illuminate\Support\Facades\Auth;
         </style>
     </head>
     <div class='dashboard'>
+      @if (!isset($log))
       <div class="dashboard-nav">
           <header>
             <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
@@ -55,7 +67,7 @@ use Illuminate\Support\Facades\Auth;
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('calendrier')}}" class="dashboard-nav-dropdown-item {{$menu == 'calendrier' ? 'active' : null}}">Voir le calendrier</a>
                 <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a>
-                <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
+
 
               </div>
             </div>
@@ -69,18 +81,29 @@ use Illuminate\Support\Facades\Auth;
 
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
-                <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a>
-                <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Les élèves</a>
-                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Les items</a>
-                <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a>
-                <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a>
-                <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes d'élèves</a>
+                {{-- <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a> --}}
+                <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Ma classe</a>
+                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Mes activités</a>
+                {{-- <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a> --}}
+                {{-- <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a> --}}
+                <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
                 <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
-                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Les photos</a>
+                                <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
+                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Je choisis les avatars</a>
               </div>
             </div>
 
-            <a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>
+            @php
+              $params = in_array($menu, ['monprofil','monpasse']);
+            @endphp
+            <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon compte</a>      
+              <div class='dashboard-nav-dropdown-menu'>
+                <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
+                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Mot de passe</a>
+              </div>
+            </div>
+            <!--<a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>-->
 
             @php
               $params = in_array($menu, ['souscrire','resilier','reactiver','facture']);
@@ -106,11 +129,16 @@ use Illuminate\Support\Facades\Auth;
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
         </header> --}}
         <div id="alerte" class="w-100">
-
+          
         </div>
         <div class=''>
-            @yield('content')
+          @yield('content')
         </div>
+        @else
+        <div class=''>
+          @yield('content')
+        </div>
+        @endif
     </div>
 
   </div>

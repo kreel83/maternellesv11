@@ -1,3 +1,64 @@
+
+#pdf {
+    height: 36px;
+    &:focus, &:active {
+        text-decoration: none;
+    }
+}
+.ql-toolbar {
+    background-color: #7769FE;
+    .ql-stroke {
+        stroke: white;
+    }
+    .ql-picker-label {
+        color: white;
+        &.hover {
+            color: red;
+        }
+    }
+
+}
+
+.ql-formats button {
+    color: white;
+}
+
+#definitif {
+    width: 80px;
+    height: 34px;
+    z-index: 6000;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 40px;
+    border-color: #7769FE;
+
+}
+
+#definitif:checked {
+    background-color: #7769FE;
+    color: white;
+    border-color: #7769FE;
+  }
+
+  .labelDefinitif {
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    width: 200px;
+    height: 34px;
+    
+    color: #7769FE;
+    font-weight: 700;
+    padding-top: 2px;;
+    font-size: 20px;
+    z-index: 4;
+
+    border: 2px solid #7769FE;
+    border-radius: 40px;
+    padding-left: 100px;
+  }
+
 #cahierView {
     #choixFiche {
         position: relative;
@@ -34,7 +95,7 @@
         overflow-y: auto;
         .badge_phrase {
             padding: 2px;
-            color: white;
+            color: #7769FE;
             border-radius: 5px;
             margin-bottom: 5px;;
             font-size: 0.9rem;

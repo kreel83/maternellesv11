@@ -1,9 +1,11 @@
 
 @if (!$resultats->isEmpty())
     @if (isset($resultats[$section->id]))
+    <ul>
         @foreach($resultats[$section->id] as $resultat)
-            {{$resultat->item()->phrase($enfant)}}
-            <br>
+            <li>{{$resultat->item()->phrase($enfant)}}</li>
+           
         @endforeach
+    </ul>
     @endif
 @endif

@@ -25,7 +25,7 @@ body {
         }
     }
 
-#calendrier, #calendrier_scolaire {
+#calendrier, #calendrier_scolaire, #calendrier_periodes {
 
 
     .month_bloc {
@@ -70,6 +70,11 @@ body {
             &.selected {
                 border: 1px solid salmon;
                 background-color: salmon;
+                border-radius: 50%;
+            }
+            &.selected.limite {
+                border: 1px solid rgb(118, 160, 118);;
+                background-color: rgb(118, 160, 118);
                 border-radius: 50%;
             }
             &.actif {

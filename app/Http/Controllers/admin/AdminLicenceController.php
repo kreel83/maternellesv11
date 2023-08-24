@@ -226,7 +226,7 @@ class AdminLicenceController extends Controller
                     'prenom' => $prenomNom['prenom'],
                     'name' => $prenomNom['nom'],
                     'email' => $email,
-                    'ecole_id' => Auth::user()->ecole_id,
+                    'ecole_identifiant_de_l_etablissement' => Auth::user()->ecole_identifiant_de_l_etablissement,
                     'validation_key' => $validationKey,
                     'licence' => 'admin'
                 ]);
@@ -234,6 +234,9 @@ class AdminLicenceController extends Controller
                 $token = md5($user->id.$request->licence_id.$validationKey.env('HASH_SECRET'));
                 $url = route('user.valideUserFromAdminCreatePassword').'?'.'uID='.$user->id.'&lID='.$request->licence_id.'&key='.$validationKey.'&token='.$token;
                 Mail::to($email)->send(new UserEmailVerificationFromAdmin($url));
+            } else {
+                $user->licence = 'admin';
+                $user->save();
             }
             $licence = new Licence;
             if($licence->assignLicenceToUser($request, $user->id)){
@@ -257,10 +260,25 @@ class AdminLicenceController extends Controller
         }  
     }
 
-    public function remove($id)
+    public function confirmationRetraitLicence($id)
+    {
+        $licence = Licence::select('licences.id', 'licences.name as licenceName', 'users.name as nom', 'users.prenom as prenom')
+            ->where('licences.id', $id)
+            ->where('licences.parent_id', Auth::id())
+            ->leftJoin('users', 'licences.user_id', '=', 'users.id')
+            ->first();
+        //$licence = Licence::find($id);
+        //$user = User::find($licence->user_id);
+        return view("admin.licence.remove")
+            ->with('licence', $licence);
+            //->with('user', $user);
+    }
+
+    
+    public function retraitLicence(Request $request)
     {
         $licence = new Licence;
-        $licence->removeLicenceToUser($id);
+        $licence->removeLicenceToUser($request->id);
         return redirect()->route('admin.licence.index');
     }
 

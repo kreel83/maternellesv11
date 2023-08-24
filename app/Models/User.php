@@ -12,11 +12,17 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 use App\Models\Event;
+use App\Models\Configuration;
+
+use App\Notifications\ResetPassword;
+
+use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    use Billable;
+    use Billable, HasApiTokens;
 
      /**
      * @param string $role
@@ -27,13 +33,19 @@ class User extends Authenticatable
         return $this->getAttribute('role') === $role;
     }
 
+    const FONCTIONS = [
+        'am' => 'Aide maternelle (ATSEM)',
+        'aesh' =>'AESH'
+    ];
+
+
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'ecole_id',
+        'ecole_identifiant_de_l_etablissement',
         'role',
         'name',
         'prenom',
@@ -63,7 +75,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
     ];
 
 
@@ -73,6 +85,16 @@ class User extends Authenticatable
 
     public $type_groupe;
     public $groupe;
+    public $groupes;
+    public $periodes;
+    public $equipes;
+
+    public function sendPasswordResetNotification($token): void
+        {
+            $url = 'https://example.com/reset-password?token='.$token;
+        
+            $this->notify(new ResetPassword($this));
+        }
 
 
 
@@ -128,18 +150,30 @@ class User extends Authenticatable
         return $ecole;
     }
 
+    public function ecole() {
+        return $this->hasOne('App\Models\Ecole','identifiant_de_l_etablissement','ecole_identifiant_de_l_etablissement');
+    }
+
+    public function configuration() {
+        return $this->hasOne('App\Models\Configuration','user_id','id');
+    }
+
+    // $user->config->groupes;
+    // $user->config->periodes;
+    // $user->config->aides;
+
     public function liste() {
-        return Enfant::where('user_id', $this->id)->orderby('prenom')->get();
+        return Enfant::where('user_id', $this->id)->orderBy('prenom')->get();
     }
 
     public function profs() {
-        $ecole = Auth()->user()->ecole_id;
-        return User::where('ecole_id', $ecole)->get();
+        $ecole = Auth()->user()->ecole_identifiant_de_l_etablissement;
+        return User::where('ecole_identifiant_de_l_etablissement', $ecole)->get();
     }
 
     public function tous() {
-        $ecole = Auth()->user()->ecole_id;
-        $users = User::where('ecole_id', $ecole)->pluck('id');
+        $ecole = Auth()->user()->ecole_identifiant_de_l_etablissement;
+        $users = User::where('ecole_identifiant_de_l_etablissement', $ecole)->pluck('id');
         return Enfant::whereNull('user_id')->whereIn('user_n1_id', $users)->get();
     }
 

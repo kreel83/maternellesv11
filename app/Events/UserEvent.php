@@ -26,16 +26,8 @@ class UserEvent
      */
     public function __construct(User $user)
     {
-
-        
-        $first = $user->groupes;
-        if (!$first) $user->type_groupe = null;
-        if (substr($first,0,1) == '#') {
-            $user->type_groupe = 'colors';  
-            $user->groupe = explode('/', $user->groupes)      ;
-        } else {
-            $user->type_groupe = 'termes';
-            $user->groupe = explode('/', $user->groupes)      ;
-        }
+        $user->groupes = $user->configuration->groupes;
+        $user->equipes = $user->configuration->equipes;
+        $user->periodes = $user->configuration->periodes;
     }
 }
