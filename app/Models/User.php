@@ -89,6 +89,12 @@ class User extends Authenticatable
     public $periodes;
     public $equipes;
 
+
+    public function configuration() {
+        return $this->hasOne('App\Models\Configuration','user_id','id');
+    }
+
+
     public function sendPasswordResetNotification($token): void
         {
             $url = 'https://example.com/reset-password?token='.$token;
@@ -154,9 +160,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Ecole','identifiant_de_l_etablissement','ecole_identifiant_de_l_etablissement');
     }
 
-    public function configuration() {
-        return $this->hasOne('App\Models\Configuration','user_id','id');
-    }
+
 
     // $user->config->groupes;
     // $user->config->periodes;
