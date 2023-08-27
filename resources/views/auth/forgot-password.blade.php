@@ -66,7 +66,7 @@
                   -->
                 </div>
             
-              <div class="col-md-7 col-lg-7 d-flex align-items-center p-5" style="background-color: #6759FF; color: white !important">
+              <div class="col-md-7 col-lg-7 d-flex align-items-center p-5" style="background-color: var(--main-color); color: white !important">
                 <div class="card-body p-4 p-lg-5"  >
   
                   <x-auth-session-status class="mb-4" :status="session('status')" />

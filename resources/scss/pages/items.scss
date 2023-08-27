@@ -1,7 +1,26 @@
 
+
+#SectionName {
+    font-weight: bolder;
+    font-size: 14px;
+    text-align: center;
+    color: var(--main-color);
+    &.big {
+       font-size: 30px; 
+       margin-top: 25px;
+    }
+}
+
+
     .liste_section {
         display: flex;
         justify-content: center;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: fit-content !important;
+     
   
         
         .section_container {

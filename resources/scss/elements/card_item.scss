@@ -21,14 +21,15 @@
         overflow: hidden;
         color: #6759FF;
         border-radius: 15px;;
+        cursor: pointer;
 
-        &:hover {
-            .action {
-                transition: all 0.5 ease-in-out;
-                top:0;                
-            }
+        // &:hover {
+        //     .action {
+        //         transition: all 0.5 ease-in-out;
+        //         top:0;                
+        //     }
 
-        }
+        // }
 
         .notation {
             display: flex;

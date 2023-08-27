@@ -14,7 +14,7 @@
     }
 </style>
 
-<div class="row position-relative" id="page_items">
+<div class="row position-relative gx-0" id="page_items">
 
     <input type="hidden" id="enfant" value="{{$enfant->id}}">
 
@@ -86,7 +86,9 @@
                     
                     @endforeach           
                 </div>
-                
+                <div id="SectionName">
+                    {{$sections[0]->name}}
+                </div>
             </div>
             <div class="d-flex align-items-center" >
                 

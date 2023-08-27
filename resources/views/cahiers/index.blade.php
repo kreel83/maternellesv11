@@ -5,7 +5,7 @@
         $degrades = App\Models\Enfant::DEGRADE;
     @endphp
 
-    <div id="cahierView" class="row px-5" data-enfant="{{ $enfant->id }}">
+    <div id="cahierView" class="row px-5 gx-0" data-enfant="{{ $enfant->id }}">
         <div data-section="{{ $section->id }}" class="liste_section mb-5">
             <div class="section_container">
                 @if ($enfant->background)
@@ -25,7 +25,7 @@
                 @foreach ($sections as $sec)
                     <div class="d-flex flex-column align-items-center">
                         <div class='sectionCahier selectSectionFiche {{ $sec->id == $section->id ? 'selected' : null }}'
-                            data-value="{{ $sec->id }}" data-section="{{ $sec->id }}"
+                            data-value="{{ $sec->id }}" data-section="{{ $sec->id }}" data-titre="{{$sec->name}}"
                             data-textes="{{ isset($textes[$sec->id]) ? $textes[$sec->id] : null }}"
                             data-phrases="@include('include.card_phrases', ['section' => $sec])" style="background-color: {{ $sec->color }}">
                             <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
@@ -53,7 +53,9 @@
                     <div class="tiret_selection d-none" data-id="cahier" style="background-color: brown"></div>
                 </div>
             </div>
-
+            <div id="SectionName">
+                {{$sections[0]->name}}
+            </div>
 
         </div>
 
@@ -86,6 +88,12 @@
                 </div>                
             </div>  
         </div>
+
+        <style>
+            .tab-content {
+                min-height: calc(100vh-200px)
+            }
+        </style>
         <div class="bas d-flex blocSelectFiche">
             <div class="col-md-6 pe-3">
 

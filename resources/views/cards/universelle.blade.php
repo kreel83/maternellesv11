@@ -17,7 +17,7 @@
     </div>
     <div class="perso_card">
             @if ($fiche->user_id)
-            <span class="duplicate_card" data-id="{{$fiche->id}}" data-section="{{$section->id}}"><i class="fas fa-clone" style="color: #6759FF"></i></span>
+            <span class="duplicate_card" data-id="{{$fiche->id}}" data-section="{{$section->id}}"><i class="fas fa-clone" style="color: var(--main-color)"></i></span>
             @endif
 
 
