@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VitrineController;
 
@@ -29,6 +30,11 @@ Route::get('/cookies', [VitrineController::class, 'cookies'])->name('vitrine.coo
 
 Route::get('/contact', [VitrineController::class, 'contact'])->name('vitrine.contact');
 Route::post('/contact', [VitrineController::class, 'contactSend'])->name('vitrine.contact.send');
+
+Route::get('/download/pdf/{id}/{token}', [PdfController::class, 'telechargementDuCahierParLesParents'])->name('cahier.predownload');
+Route::post('/download/pdf', [PdfController::class, 'telechargementDuCahierParLesParentsPost'])->name('cahier.predownload.post');
+Route::get('/download/link/{id}', [PdfController::class, 'genereLienVersCahierEnPdf']);
+Route::get('/download/pdf/see/{id}', [PdfController::class, 'telechargeLeCahier'])->name('cahier.download');
 
 
 /*

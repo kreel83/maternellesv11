@@ -61,7 +61,14 @@ grid-gap: 30px;
 }
 </style>
 
-<div class="container mt-5">
+<div class="container mt-3">
+
+    {{-- depuis le midlleware 'abo' --}}
+    @if (session('nolicence'))
+        <div class="alert alert-danger">
+            Cette page n'est pas autorisée. <a href="{{ route('subscribe.cardform') }}" class="alert-link">Cliquez ici</a> pour souscrire un abonnement et profiter de toute la puissance de cette application.
+        </div>
+    @endif
 
     <div class="parent">
         <div class="div1 cadre_welcome"> 
