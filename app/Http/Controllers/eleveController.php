@@ -15,8 +15,9 @@ use Illuminate\View\View;
 
 class EleveController extends Controller
 {
-    public function photos() {
+    public function avatarEleve($id) {
         $user = Auth::user();
+        $enfant = Enfant::find($id);
 
         $degrades = Enfant::DEGRADE;
         $files = File::files(public_path('img/animaux'));
@@ -26,7 +27,22 @@ class EleveController extends Controller
         }
 
         return view('photos.index')
-            ->with('eleves',$user->liste())
+            ->with('enfant',$enfant)
+            ->with('degrades',$degrades)
+            ->with('files', $liste);
+    }
+    public function avatar() {
+        $user = Auth::user();
+
+        $degrades = Enfant::DEGRADE;
+        $files = File::files(public_path('img/animaux'));
+        $liste = array();
+        foreach ($files as $file) {
+            $liste[] = $file->getFileName();
+        }
+
+        return view('avatar.index')
+            ->with('enfants',$user->liste())
             ->with('degrades',$degrades)
             ->with('files', $liste);
     }

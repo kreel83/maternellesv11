@@ -51,7 +51,7 @@ use Illuminate\Support\Facades\Auth;
             {{-- <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fal fa-users"></i> Ma classe </a> --}}
 
             @php
-            $params = in_array($menu, ['evaluation','cahier','affectation_groupe']);
+            $params = in_array($menu, ['evaluation','cahier','affectation_groupe','avatar']);
           @endphp
 
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
@@ -64,7 +64,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('reussite')}}" class="dashboard-nav-dropdown-item {{$menu == 'cahier' ? 'active' : null}}">Cahiers de réussite</a>
                 <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
 
-                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Je choisis les avatars</a>
+                <a href="{{route('avatar')}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a>
               </div>
             </div>
             {{-- <div class='dashboard-nav-dropdown'>
@@ -91,7 +91,7 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
               @php
-                $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe']);
+                $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe','avatar']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
@@ -107,7 +107,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
                 <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
                                 <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
-                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Je choisis les avatars</a>
+                {{-- <a href="{{route('avatar')}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a> --}}
               </div>
             </div>
 

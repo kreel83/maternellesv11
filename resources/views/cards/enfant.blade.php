@@ -81,7 +81,21 @@ if ($enfant->groupe != null){
         <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-file-pdf"></i></a>
         <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-notes"></i></a>
     </div>
-    @endif
+  @endif
+  @if ($type == "avatar")
+    <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">
+        
+        <a href="enfants/{{$enfant->id}}/avatar"  ><i class="fa-light fa-rabbit"></i></a>
+
+    </div>
+  @endif
+  @if ($type == "none")
+    <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">
+        
+        <button id="valideAvatar" class="custom_button" style="font-size: 12px; width: fit-content; height: 16px; line-height: 1px; margin-top: 7px; background-color: transparent;text-shadow: black 2px 2px;">Selectionner</button>
+
+    </div>
+  @endif
 
 
 

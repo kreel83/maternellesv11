@@ -112,6 +112,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
     Route::get('/cahiers/get_apercu/{id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
+    Route::get('/enfants/{id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
@@ -191,7 +192,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/initClasse', [AdminController::class, 'initClasse'])->name('initClasse');
     Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
 
-    Route::get('/photos', [EleveController::class, 'photos'])->name('photos');
+    Route::get('/avatar', [EleveController::class, 'avatar'])->name('avatar');
 
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");

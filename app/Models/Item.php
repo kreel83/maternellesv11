@@ -13,7 +13,7 @@ class Item extends Model
     public static $FIRE_EVENTS = true;
 
 
-
+    public $image_name;
 
 
     protected $dispatchesEvents = [

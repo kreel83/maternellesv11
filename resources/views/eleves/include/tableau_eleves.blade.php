@@ -14,7 +14,7 @@
 
 .fiche_eleve_div:hover {
     border-radius: 10px;
-    border: 1px solid #6759FF;
+    border: 1px solid var(--main-color);
     cursor: pointer;
 }
 

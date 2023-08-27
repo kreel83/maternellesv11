@@ -9,6 +9,7 @@ use App\Models\Equipe;
 use App\Models\Resultat;
 use App\Models\Configuration;
 use App\Models\Section;
+use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,6 +88,14 @@ class ParametreController extends Controller
     public function monprofil() {
 
 
+        // $cs = Item::all();
+        // foreach($cs as $item) {
+        //     $r = $item->phrase;
+        //     $r = str_replace("@pronom@","il", $r);
+            
+        //     $item->phrase = $r;
+        //     $item->save();
+        // }
 
         $user = Auth::user();
         $equipes = json_decode($user->equipes, true);

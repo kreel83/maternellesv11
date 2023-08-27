@@ -38,7 +38,7 @@ class CahierController extends Controller
             }
             if (isset($resultats[$section])) {
                 foreach ($resultats[$section] as $resultat) {
-                    $bloc .= $resultat->item()->phrase($enfant);
+                    $bloc .= $resultat->item()->phrase($enfant).PHP_EOL;
                 }
             }
             if (isset($commentaires[$section])) {
@@ -92,12 +92,16 @@ class CahierController extends Controller
     }
 
 
-    public function reformuler(Request $request) {
+    public function reformuler($id, Request $request) {
+        $enfant = Enfant::find($id);
+        
+        $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
         $variable = $request->quill;
         $result = OpenAI::chat()->create([
             'model' => 'gpt-3.5-turbo',
             'messages' => [
-                ['role' => 'user', 'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable, peux-tu me reformuler le texte suivant en utilisant le prénom qu'en début de texte: ".$variable],
+                ['role' => 'user', 
+                'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable et sachant que ".$enfant->prenom." est ".$genre.", peux-tu me récrire le texte suivant en utilisant le prénom de l'élève qu'en début de texte. l'élève est '.$genre.'. le texte : ".$variable.'"'],
             ],
            
         ]);
@@ -306,6 +310,7 @@ class CahierController extends Controller
             return $reussite->texte_integral;
         }
         $reussite = $this->apercu($enfant);
+
         $prenom = $enfant->prenom;
         $pronom = $enfant->genre == 'F' ? 'elle' : 'il';
         $mots = explode(' ', $reussite);
@@ -336,6 +341,22 @@ class CahierController extends Controller
         }
         $reussite .= '<br><br>'.$c;
        
+
+        $enfant = Enfant::find($id);
+        
+        $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
+
+        $result = OpenAI::chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'user', 
+                'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable et sachant que ".$enfant->prenom." est ".$genre.", peux-tu me récrire le texte suivant en utilisant le prénom de l'élève qu'en début de texte. l'élève est '.$genre.'. le texte : ".$reussite.'"'],
+            ],
+           
+        ]);
+        return $result['choices'][0]['message']['content'];
+
+
 
 
        
