@@ -78,5 +78,6 @@ class Kernel extends HttpKernel
 
         'user' => \App\Http\Middleware\UserAuthenticated::class,
         'admin' => \App\Http\Middleware\AdminAuthenticated::class,
+        'abo' => \App\Http\Middleware\ActiveSubscription::class,
     ];
 }

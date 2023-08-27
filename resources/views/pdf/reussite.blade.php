@@ -229,6 +229,7 @@
             @endforeach
     </div>
 
+    {{--
     <div>
         <div class="nom_ecole">{{$user->name_ecole()->nom_etablissement}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_1}}</div>
@@ -236,6 +237,7 @@
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_3}}</div>
         <div class="texte_directeur">{{$user->directeur == 0 ? 'Directeur ' : 'Directrice '}} : <span class="nom_directeur">{{$user->directeur == 0 ? 'Monsieur ' : 'Madame '}}{{$user->nom_directeur}}</span></div>
     </div>
+    --}}
 </div>
 
 <div class="page-break"></div>

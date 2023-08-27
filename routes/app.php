@@ -95,9 +95,21 @@ Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
 Route::middleware(['auth'])->group(function () {
+    //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+    Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+    Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
-
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/deco', [UserController::class, 'deco'])->name('deco');
+});
+
+//Route::middleware(['auth'])->group(function () {
+// Les URLs ci-dessous nécessitent authentification + abonnement en cours
+Route::middleware(['auth','abo'])->group(function () {
+    //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+
+    //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
@@ -115,8 +127,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/deco', [UserController::class, 'deco'])->name('deco');
+    //Route::get('/home', [HomeController::class, 'index'])->name('home');
+    //Route::get('/deco', [UserController::class, 'deco'])->name('deco');
     Route::get('/choix_enfant_select', [EleveController::class, 'choix_enfant_select'])->name('choix_enfant_select');
 
     Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
@@ -193,8 +205,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/photos', [EleveController::class, 'photos'])->name('photos');
 
-    Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
-    Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
+    //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+    //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
     Route::get('subscribe/cancel', [SubscriptionController::class, 'cancel'])->name("subscribe.cancel");
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");
