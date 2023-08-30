@@ -12,7 +12,7 @@
 
 
 
-    <div class="row">
+    <div class="row gx-0">
         <div class="col-md-1">
             <div class="d-flex justify-item-end">
                 <button type="button" class="btn btn-primary position-fixed"  style="bottom: 30px; right: 30px" data-bs-toggle="modal" data-bs-target="#EventModal">

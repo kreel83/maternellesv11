@@ -7,7 +7,7 @@
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: 200px 250px 400px;
-grid-gap: 15px;
+grid-gap: 30px;
 }
 
 .div1 { 
@@ -46,6 +46,9 @@ grid-gap: 15px;
     padding: 24px 8px 8px 8px;
     position: relative;
     font-size: 14px;
+    background-color: var(--back-color);
+    color: var(--main-color)
+
 }
 .titre_welcome {
     position: absolute;
@@ -53,10 +56,19 @@ grid-gap: 15px;
     left: 30px;
     padding: 2px 16px;
     background-color: #F4F9FF;
+    border-radius: 15px;
+    border: 1px solid grey;
 }
 </style>
 
-<div class="container mt-5">
+<div class="container mt-3">
+
+    {{-- depuis le midlleware 'abo' --}}
+    @if (session('nolicence'))
+        <div class="alert alert-danger">
+            Cette page n'est pas autorisée. <a href="{{ route('subscribe.cardform') }}" class="alert-link">Cliquez ici</a> pour souscrire un abonnement et profiter de toute la puissance de cette application.
+        </div>
+    @endif
 
     <div class="parent">
         <div class="div1 cadre_welcome"> 

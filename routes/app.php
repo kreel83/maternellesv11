@@ -95,10 +95,23 @@ Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
 Route::middleware(['auth'])->group(function () {
+    //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+    Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+    Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
-
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/deco', [UserController::class, 'deco'])->name('deco');
+});
 
+//Route::middleware(['auth'])->group(function () {
+// Les URLs ci-dessous nécessitent authentification + abonnement en cours
+Route::middleware(['auth','abo'])->group(function () {
+    //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+
+    //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+
+    Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
@@ -109,13 +122,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
     Route::post('/enfants/{id}/cahier/reformuler', [CahierController::class, 'reformuler'])->name('reformuler');
     Route::get('/enfants/{id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
+    Route::get('/enfants/{id}/add_phrase/{phrase}', [CahierController::class, 'add_phrase'])->name('add_phrase');
+    Route::get('/enfants/{id}/remove_phrase/{phrase}', [CahierController::class, 'remove_phrase'])->name('remove_phrase');
     Route::get('/cahiers/get_apercu/{id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
+    Route::get('/enfants/{id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/deco', [UserController::class, 'deco'])->name('deco');
+    //Route::get('/home', [HomeController::class, 'index'])->name('home');
+    //Route::get('/deco', [UserController::class, 'deco'])->name('deco');
     Route::get('/choix_enfant_select', [EleveController::class, 'choix_enfant_select'])->name('choix_enfant_select');
 
     Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
@@ -190,10 +206,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/initClasse', [AdminController::class, 'initClasse'])->name('initClasse');
     Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
 
-    Route::get('/photos', [EleveController::class, 'photos'])->name('photos');
+    Route::get('/avatar', [EleveController::class, 'avatar'])->name('avatar');
 
-    Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
-    Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
+    //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+    //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
     Route::get('subscribe/cancel', [SubscriptionController::class, 'cancel'])->name("subscribe.cancel");
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");

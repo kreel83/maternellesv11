@@ -242,6 +242,17 @@ const photo_eleve = () => {
         $('#mail1_form').val(mails[0])
         $('#mail2_form').val(mails[1])
         $('#eleve_form').val(data.id)
+        if (data.sh == 1 ) {
+            $('#sh').attr('checked',true)
+        }  else {
+            $('#sh').attr('checked',false)
+        }
+        if (data.reussite == 1 ) {
+            $('#reussite').attr('checked',true)
+        }  else {
+            $('#reussite').attr('checked',false)
+        }
+      
         console.log(data)
     })
 
@@ -343,13 +354,14 @@ const photo_eleve = () => {
         
  
     })
-    $(document).on('click','.degrade_card_enfant', function() {
+    $(document).on('click','#valideAvatar', function() {
+
         if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
 
-        var enfant = $('#choix_enfant_select').val()
+        var enfant = $('#eleveCard').data('enfant')
         console.log(enfant)
-        var background = $(this).attr('data-degrade')
-        var animaux = $(this).attr('data-animaux')
+        var background = $('.degrade_card_enfant').attr('data-degrade')
+        var animaux = $('.degrade_card_enfant').attr('data-animaux')
         $.get('/app/eleves/setAnimaux?background='+background+'&enfant='+enfant+'&animaux='+animaux, function(data) {
 
 
@@ -371,7 +383,7 @@ const photo_eleve = () => {
 
     })
 
-    $(document).on('click','.animaux', function() {
+    $(document).on('click','#photos .animaux', function() {
         var html = $(this).html()
         var animaux = $(this).data('animaux')
 

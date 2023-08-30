@@ -15,8 +15,9 @@ use Illuminate\View\View;
 
 class EleveController extends Controller
 {
-    public function photos() {
+    public function avatarEleve($id) {
         $user = Auth::user();
+        $enfant = Enfant::find($id);
 
         $degrades = Enfant::DEGRADE;
         $files = File::files(public_path('img/animaux'));
@@ -26,7 +27,22 @@ class EleveController extends Controller
         }
 
         return view('photos.index')
-            ->with('eleves',$user->liste())
+            ->with('enfant',$enfant)
+            ->with('degrades',$degrades)
+            ->with('files', $liste);
+    }
+    public function avatar() {
+        $user = Auth::user();
+
+        $degrades = Enfant::DEGRADE;
+        $files = File::files(public_path('img/animaux'));
+        $liste = array();
+        foreach ($files as $file) {
+            $liste[] = $file->getFileName();
+        }
+
+        return view('avatar.index')
+            ->with('enfants',$user->liste())
             ->with('degrades',$degrades)
             ->with('files', $liste);
     }
@@ -101,12 +117,22 @@ class EleveController extends Controller
 
     public function save(Request $request) {
         $datas = $request->except(['_token']);
-
         
         $datas['mail'] = join(';', array_filter($datas['mail']));
         $datas['user_id'] = Auth::id();
         $datas['sh'] = isset($datas['sh']) ? 1 : 0;
+        $datas['reussite'] = isset($datas['reussite']) ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
+        $degrade = Enfant::DEGRADE;
+        $datas['background'] = array_rand($degrade);
+        $files = File::files(public_path('img/animaux'));
+        $liste = array();
+        foreach ($files as $file) {
+            $liste[] = $file->getFileName();
+        }
+        $k = array_rand($liste);
+        
+        $datas['photo'] = $liste[$k];
         $datas['prenom'] = ucfirst($datas['prenom']);
         $datas['annee_scolaire'] = Auth::user()->calcul_annee_scolaire();
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);

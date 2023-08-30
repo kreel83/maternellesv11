@@ -104,6 +104,22 @@ const deletePhrase = () => {
 }
 
 const nouvellePhrase = (quill) => {
+    // quill.on('text-change', function() {
+    //     alert('cc')
+    // })
+
+    $('#editor2').on('keyup',function(e) {
+        console.log(e.key, e.ctrlKey, e.altKey)
+        if (e.key == 'p' && e.altKey ) {
+            var data = "L'élève ";
+            var selection = quill.getSelection(true);
+            quill.insertText(selection.index, data);
+            
+
+            
+        }
+    })
+
     $('#nouvellePhrase').on('click', function() {
         $('#controleNouvellePhrase').toggleClass('d-none')
         $(this).toggleClass('d-none')

@@ -50,12 +50,6 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        /*
-        'admin' => [
-            \App\Http\Middleware\AdminAuthenticated::class,
-        ],
-        */
-
         'api' => [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
@@ -84,5 +78,6 @@ class Kernel extends HttpKernel
 
         'user' => \App\Http\Middleware\UserAuthenticated::class,
         'admin' => \App\Http\Middleware\AdminAuthenticated::class,
+        'abo' => \App\Http\Middleware\ActiveSubscription::class,
     ];
 }

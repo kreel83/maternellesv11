@@ -57,14 +57,48 @@ if ($enfant->groupe != null){
   @if ($groupe)
     <div class="groupe-terme"  style="background-color: {{ $groupe["backgroundColor"] }}; color:{{ $groupe["textColor"]}}">{{$groupe["name"]}}</div>
   @endif
+
+
+  @if ($type == "evaluation")
     <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">
-        <a href="enfants/{{$enfant->id}}/items/"  ><i class="fa-light fa-book-open-cover"></i></a>
+
+      <a href="enfants/{{$enfant->id}}/items?sectionID=0"  ><i style="font-size: 18px" class="fa-light fa-comment"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=1"  ><i style="font-size: 18px" class="fa-light fa-pen"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=2"  ><i style="font-size: 18px" class="fa-light fa-volleyball"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=3"  ><i style="font-size: 18px" class="fa-light fa-paintbrush-pencil"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=4"  ><i style="font-size: 18px" class="fa-light fa-font-case"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=5"  ><i style="font-size: 18px" class="fa-light fa-shapes"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=6"  ><i style="font-size: 18px" class="fa-light fa-globe"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=7"  ><i style="font-size: 18px" class="fa-light fa-child-reaching"></i></a>
+        
+    </div>
+
+  @endif  
+  @if ($type == "reussite")
+    <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">
+        
+        <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-paper-plane-top"></i></a>
+        <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-file-pdf"></i></a>
         <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-notes"></i></a>
+    </div>
+  @endif
+  @if ($type == "avatar")
+    <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">
+        
+        <a href="enfants/{{$enfant->id}}/avatar"  ><i class="fa-light fa-rabbit"></i></a>
 
     </div>
-    <!-- <div class="footer">
-        {{$enfant->comment}}
-    </div> -->
+  @endif
+  @if ($type == "none")
+    <div class="footer p-2 d-flex justify-item-around"  style="background-image: {{$degrades[$enfant->background] ?? $degrades['b1']}}">
+        
+        <button id="valideAvatar" class="custom_button" style="font-size: 12px; width: fit-content; height: 16px; line-height: 1px; margin-top: 7px; background-color: transparent;text-shadow: black 2px 2px;">Selectionner</button>
+
+    </div>
+  @endif
+
+
+
 
 </div>
 

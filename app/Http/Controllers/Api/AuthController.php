@@ -40,25 +40,10 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-            /*
-            $sections = Section::select('id','court',)->get();
-            $resultats = Resultat::select('id','item_id','enfant_id','notation','section_id','autonome')
-                ->where('user_id', $user->id)
-                ->get();
-            $items = Item::select('id','name','section_id','lvl','st')
-                ->where('user_id', null)
-                ->orWhere('user_id', $user->id)
-                ->get();
-            */
-
             return response()->json([
                 'success' => true,
-                //'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("auth_token")->plainTextToken,
 	            'user' => $user,
-                //'sections' => $sections,
-                //'resultats' => $resultats,
-                //'items' => $items,
             ], 200);
 
         } catch (\Throwable $th) {

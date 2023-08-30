@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Ma classe', 'menu' => 'evaluation'])
+@extends('layouts.mainMenu', ['titre' => 'Ma classe', 'menu' => 'avatar'])
 @php
     $degrades = App\Models\Enfant::DEGRADE;
 @endphp
@@ -7,7 +7,7 @@
         
         <div class="col-md-12 d-flex flex-wrap">
                 @foreach ($enfants as $enfant)
-                @include('cards.enfant',['type' => 'evaluation'])
+                @include('cards.enfant',['type' => 'avatar'])
                 @endforeach                
         </div>
 

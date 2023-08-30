@@ -17,12 +17,9 @@ use Illuminate\Support\Facades\Auth;
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <script src="//cdn.quilljs.com/1.3.6/quill.js" defer></script>
-        <script src="//cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
         
         <!-- Theme included stylesheets -->
         <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
-        
 
 
 
@@ -48,7 +45,25 @@ use Illuminate\Support\Facades\Auth;
           <nav class="dashboard-nav-list">
             <a href="{{route('home')}}" class="dashboard-nav-item {{$menu == 'accueil' ? 'active' : null}}"><i class="fal fa-home"></i>Accueil </a>
             <a href="{{route('depart')}}" class="dashboard-nav-item  {{$menu == 'dashboard' ? 'active' : null}}"><i class="fal fa-columns"></i> dashboard </a>
-            <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fal fa-users"></i> Ma classe </a>
+            {{-- <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fal fa-users"></i> Ma classe </a> --}}
+
+            @php
+            $params = in_array($menu, ['evaluation','cahier','affectation_groupe','avatar']);
+          @endphp
+
+            <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
+
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-cog"></i> Ma classe </a>      
+
+              <div class='dashboard-nav-dropdown-menu'>
+
+                <a href="{{route('enfants')}} " class="dashboard-nav-dropdown-item {{$menu == 'evaluation' ? 'active' : null}}">Evaluations</a>
+                <a href="{{route('reussite')}}" class="dashboard-nav-dropdown-item {{$menu == 'cahier' ? 'active' : null}}">Cahiers de réussite</a>
+                <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
+
+                <a href="{{route('avatar')}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a>
+              </div>
+            </div>
             {{-- <div class='dashboard-nav-dropdown'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Disciplines </a>
               <div class='dashboard-nav-dropdown-menu'>
@@ -73,7 +88,7 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
               @php
-                $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe']);
+                $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe','avatar']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
@@ -89,7 +104,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
                 <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
                                 <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
-                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Je choisis les avatars</a>
+                {{-- <a href="{{route('avatar')}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a> --}}
               </div>
             </div>
 
