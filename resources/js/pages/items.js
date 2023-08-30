@@ -33,18 +33,23 @@ const selectItem = () => {
         const item = $(el).data('item')
         const enfant = $('#enfant').val()
         $(el).find('.lanote').text(text)
+        $(el).find('.card-footer2').removeClass('niveau_0 niveau_3 niveau_2 niveau_1')
         switch (notation) {
             case 0 : $(el).find('.autonome').addClass('d-none')
                      $(el).find('.lanote').text('')
+                     $(el).find('.card-footer2').addClass('niveau_0')
                      break;   
             case 1 : $(el).find('.autonome').addClass('d-none')
                      $(el).find('.lanote').text(text)
+                     $(el).find('.card-footer2').addClass('niveau_1')
                      break;   
             case 2 : $(el).find('.autonome').removeClass('d-none').addClass('autonome_0').removeClass('autonome_1')
-                     $(el).find('.lanote').text('Acquis')
+                     $(el).find('.lanote').text(text)
+                     $(el).find('.card-footer2').addClass('niveau_2')
                      break;   
             case 3 : $(el).find('.autonome').removeClass('d-none').addClass('autonome_1').removeClass('autonome_0')
-                     $(el).find('.lanote').text('Acquis')
+                     $(el).find('.lanote').text(text)
+                     $(el).find('.card-footer2').addClass('niveau_3')
                      break;   
 
         }

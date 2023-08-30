@@ -8,6 +8,7 @@ use App\Models\Enfant;
 use App\Models\Equipe;
 use App\Models\Image;
 use App\Models\Myperiode;
+use App\Models\Phrase;
 use App\Models\Resultat;
 use App\Models\Reussite;
 use App\Models\Section;
@@ -25,7 +26,7 @@ class CahierController extends Controller
 
 
 
-    private function format_apercu($commentaires, $resultats, $enfant) {
+    private function format_apercu($resultats, $enfant) {
         $bloc = '';
         $sections = Section::all()->pluck('id')->toArray();
 
@@ -37,15 +38,11 @@ class CahierController extends Controller
 
             }
             if (isset($resultats[$section])) {
-                foreach ($resultats[$section] as $resultat) {
-                    $bloc .= $resultat->item()->phrase($enfant).PHP_EOL;
-                }
+                
+                    $bloc .= $resultats[$section].PHP_EOL;
+               
             }
-            if (isset($commentaires[$section])) {
-                foreach ($commentaires[$section] as $phrase) {
-                    $bloc .= $phrase->texte;
-                }
-            }
+
         }
 
         return $bloc;
@@ -306,14 +303,16 @@ class CahierController extends Controller
         $enfant = Enfant::find($id);
         $reussite = Reussite::where('enfant_id', $id)->first();
 
+
         if ($reussite && $reussite->texte_integral != null) {
             return $reussite->texte_integral;
         }
         $reussite = $this->apercu($enfant);
+        // dd($reussite);
 
-        $prenom = $enfant->prenom;
-        $pronom = $enfant->genre == 'F' ? 'elle' : 'il';
-        $mots = explode(' ', $reussite);
+        // $prenom = $enfant->prenom;
+        // $pronom = $enfant->genre == 'F' ? 'elle' : 'il';
+        // $mots = explode(' ', $reussite);
 
         // $flag = true;
         // foreach ($mots as $k=>$mot) {
@@ -327,38 +326,36 @@ class CahierController extends Controller
         //     }
         // }
 
-        $reussite = join(' ', $mots);
-        $c= "";
+        // $reussite = join(' ', $mots);
+        // $c= "";
 
-<<<<<<< HEAD
-        $reussite .= '</br><h2 contenteditable="false" color="red">Commentaire général</h2>';
-=======
-        $reussite .= '<h2 contenteditable="false">Commentaire général</h2>';
->>>>>>> 49b56f31a37eb18d0e576ec91f2f6f3335d14de6
-        $comm = Reussite::where('enfant_id', $enfant->id)->where('user_id', Auth::id())->first();
-        if ($comm) {
-            $c = $comm->commentaire_general ?? '';
-            $c =  str_replace($prenom,ucfirst($pronom), $c);
-            $c = str_replace_first(ucfirst($pronom), $prenom, $c);
+        // $reussite .= '</br><h2 contenteditable="false" color="red">Commentaire général</h2>';
+        // $comm = Reussite::where('enfant_id', $enfant->id)->where('user_id', Auth::id())->first();
+        // if ($comm) {
+        //     $c = $comm->commentaire_general ?? '';
+        //     $c =  str_replace($prenom,ucfirst($pronom), $c);
+        //     $c = str_replace_first(ucfirst($pronom), $prenom, $c);
             
 
-        }
-        $reussite .= '<br><br>'.$c;
+        // }
+        // $reussite .= '<br><br>'.$c;
        
 
-        $enfant = Enfant::find($id);
+        // $enfant = Enfant::find($id);
         
-        $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
+        // $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
 
-        $result = OpenAI::chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 
-                'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable et sachant que ".$enfant->prenom." est ".$genre.", peux-tu me récrire le texte suivant en utilisant le prénom de l'élève qu'en début de texte. l'élève est '.$genre.'. le texte : ".$reussite.'"'],
-            ],
+        // $result = OpenAI::chat()->create([
+        //     'model' => 'gpt-3.5-turbo',
+        //     'messages' => [
+        //         ['role' => 'user', 
+        //         'content' => 'Sachant que les tags "h2" ne sont pas modifiables et qu\'ils correspondent chacun à un début de paragraphe, change le terme "élève" par le pronom de '.$enfant->prenom.' qui est '.$genre." dans chaque phrase. 
+
+        //         Dans la premiere phrase de chaque paragraphe, remplace le pronom par le prénom. Le texte à traiter est : ".$reussite],
+        //     ],
            
-        ]);
-        return $result['choices'][0]['message']['content'];
+        // ]);
+        // return $result['choices'][0]['message']['content'];
 
 
 
@@ -381,23 +378,65 @@ class CahierController extends Controller
     public function apercu($enfant) {
         $reussite = Reussite::where('enfant_id', $enfant->id)->first();
 
-        $commentaire_enfant = Cahier::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
-        $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
-        $resultats = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
-        //dd($resultats, $id);
-        $resultats = $resultats->groupBy('section_id');
+        $phrases = Phrase::where('enfant_id', $enfant->id)->get();
+        $phrases = $phrases->groupBy('section_id');
+        $resultats = array();
+        foreach ($phrases as $key=>$liste) {
+            $resultats[$key] = '';
+            foreach ($liste as $phrase) {                               
+                $resultats[$key] .= $phrase->commentaire()->texte.PHP_EOL;                
+            }
+
+        }
+       
+
+        // $commentaire_enfant = Cahier::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
+        // $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
+        // $resultats = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
+        // dd($resultats, $id);
+        // $resultats = $resultats->groupBy('section_id');
 
 
-        return $this->format_apercu($commentaire_enfant, $resultats, $enfant);
+        return $this->format_apercu($resultats, $enfant);
+    }
+
+
+    public function add_phrase($id, $phrase) {
+        $commentaire = Commentaire::find($phrase);
+        $phrase = Phrase::create([
+           'commentaire_id' => $phrase,
+           'enfant_id' => $id,
+           'order' => 1,
+           'section_id' => $commentaire->section_id,
+        ]);
+        return '<li class="badge_phrase_selected" data-phrase="'.$phrase->id.'">'.$commentaire->texte.'</li>' ;       
+    }
+
+    public function remove_phrase($id, $phrase) {
+        
+        $phrase = Phrase::find($phrase);
+        $commentaire = Commentaire::find($phrase->commentaire_id);
+        $phrase->delete();        
+        return '<li class="badge_phrase" data-value="'.$commentaire->id.'">'.$commentaire->texte.'</li>' ;       
     }
 
     public function index($id) {
 
         $enfant = Enfant::find($id);
-        $commentaire = Commentaire::where('user_id', Auth::id())->get();
+
+        $phrases = Phrase::where('enfant_id', $id)->get();
+        $exclusion = $phrases->pluck('commentaire_id');
+        
+        $phrases_selection = $phrases->mapToGroups(function ($item, $key) {
+            return [$item['section_id'] => $item];
+        });
+
+        $commentaire = Commentaire::where('user_id', Auth::id())->whereNotIn('id', $exclusion)->get();
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
             return [$item['section_id'] => $item];
         });
+
+
         $resultats = $enfant->resultats();
         $reussite = Reussite::where('enfant_id',$id)->first();
         //dd($resultats);
@@ -409,6 +448,25 @@ class CahierController extends Controller
        
         $textes['carnet'] = $r ? $r->commentaire_general : null;
         $definitif = ($r) ? $r->definitif : null;
+
+        $phrases = Phrase::where('enfant_id', $id)->get();        
+        $phrases_selection = $phrases->mapToGroups(function ($item, $key) {
+            return [$item['section_id'] => $item];
+        });
+
+        $sections = Section::all();
+
+        $s = array();
+        $s = new Section();
+        $s->id = 99;
+        $s->color = "red";
+        $s->name = "Commentaire général";
+        $s->logo = "99.png";
+        $sections->push($s);
+
+
+
+        
         
         return view('cahiers.index')
             ->with('titre','Cahier')
@@ -418,13 +476,14 @@ class CahierController extends Controller
             ->with('reussite',$reussite)
             ->with('definitif',$definitif)
             ->with('isreussite',$r)
+            ->with('phrases_selection',$phrases_selection)
             ->with('resultats',$resultats)           
             ->with('phrases', $grouped)
             ->with('section', Section::first())
             ->with('textes', $textes)
             ->with('periode', $this->periode)
             ->with('title', $this->title)
-            ->with('sections', Section::all());
+            ->with('sections', $sections);
     }
 
     public function get_liste_phrase($section, $enfant) {

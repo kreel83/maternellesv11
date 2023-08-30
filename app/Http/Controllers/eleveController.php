@@ -121,6 +121,7 @@ class EleveController extends Controller
         $datas['mail'] = join(';', array_filter($datas['mail']));
         $datas['user_id'] = Auth::id();
         $datas['sh'] = isset($datas['sh']) ? 1 : 0;
+        $datas['reussite'] = isset($datas['reussite']) ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
         $degrade = Enfant::DEGRADE;
         $datas['background'] = array_rand($degrade);

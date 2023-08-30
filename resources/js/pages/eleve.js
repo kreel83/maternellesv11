@@ -242,6 +242,17 @@ const photo_eleve = () => {
         $('#mail1_form').val(mails[0])
         $('#mail2_form').val(mails[1])
         $('#eleve_form').val(data.id)
+        if (data.sh == 1 ) {
+            $('#sh').attr('checked',true)
+        }  else {
+            $('#sh').attr('checked',false)
+        }
+        if (data.reussite == 1 ) {
+            $('#reussite').attr('checked',true)
+        }  else {
+            $('#reussite').attr('checked',false)
+        }
+      
         console.log(data)
     })
 

@@ -3,16 +3,49 @@
 
 
 const choicePhrase = (quill) => {
-    $(document).on('click', '.badge_phrase', function () {
-        var phrase = $(this).text()
-        console.log(phrase)
-        var selection = quill.getSelection(true);
-        quill.insertText(selection.index, phrase+'\n')
-        $(this).remove()
+    $(document).on('keyup', '.searchPhrase', function (e) {
+        var text = $(this).val()
+        var element = $(this).closest('.partieDroite')
+        $('.badge_phrase_container li').removeClass('d-none')
+        $(element).find('.badge_phrase_container li').each((index, el) => {
+            var phrase = $(el).text()
+            console.log(phrase, text)
+            if (!phrase.includes(text)) {
+                $(el).addClass('d-none')
+            }
+        })
+    })
+
+    $(document).on('click','.raz_search_phrase', function(e) {
+        $('.searchPhrase').val('')
+        var element = $(this).closest('.partieDroite')
+        $(element).find('.badge_phrase_container li').removeClass('d-none') 
 
     })
 
-    var debounce = null;
+    $(document).on('click', '.badge_phrase', function () {
+        $('.searchPhrase').val('')
+        var el = $(this).closest('.section_container')
+        var phrase = $(this).data('value')
+        var id = $(this).closest('.badge_phrase_container').data('id')
+        $(this).remove()
+        $.get('/app/enfants/'+id+'/add_phrase/'+phrase, function(data) {
+            console.log(data)
+            $(el).find('.cadre_commentaire_complementaire ul').append(data)
+        })
+    })
+
+    $(document).on('click', '.badge_phrase_selected', function () {
+        var el = $(this).closest('.section_container')
+        var phrase = $(this).data('phrase')
+        var id = $(this).closest('.cadre_commentaire_complementaire').data('enfant')
+        $(this).remove()
+        $.get('/app/enfants/'+id+'/remove_phrase/'+phrase, function(data) {
+            console.log(data)
+            $(el).find('.badge_phrase_container ul').append(data)
+        })
+    })
+    //var debounce = null;
     // $(document).on('keydown', '#editor', function (e) {
     //     clearTimeout(debounce);
     //     debounce = setTimeout(function(){
@@ -39,14 +72,14 @@ const choicePhrase = (quill) => {
     // });
 
    
-    quill.on('text-change', function(delta, source) {
-        clearTimeout(debounce);
-        $('.saveTexte').addClass('saving').removeClass('saved')
-        debounce = setTimeout(function(){
-            $('.saveTexte').trigger('click')
-            $('.saveTexte').addClass('saved').removeClass('saving')
-        }, 500);
-      });
+    // quill.on('text-change', function(delta, source) {
+    //     clearTimeout(debounce);
+    //     $('.saveTexte').addClass('saving').removeClass('saved')
+    //     debounce = setTimeout(function(){
+    //         $('.saveTexte').trigger('click')
+    //         $('.saveTexte').addClass('saved').removeClass('saving')
+    //     }, 500);
+    //   });
 }
 
 
@@ -91,7 +124,7 @@ const saveTexteReussite = (quill) => {
 
 
 
-const clickOnCahier = (quill) => {
+const clickOnCahier = (quill, myModal) => {
     $(document).on('click','#reformuler', function() {
         var texte = quill.root.innerHTML
         var enfant = $(this).data('enfant')
@@ -112,16 +145,38 @@ const clickOnCahier = (quill) => {
             }
         })
     })
-    $(document).on('click','.sectionApercu', function() {   
+    $(document).on('click','#CommitGeneratePDF', function() {
+        myModal.hide();
+        $('#titreSection').text('Génération du cahier de réussite')
         $('.blocApercu').removeClass('d-none')     
         $('.blocSelectFiche').addClass('d-none')   
-        var enfant = $(this).closest('#cahierView').attr('data-enfant')
+        var enfant = $('.degrade_card_enfant').attr('data-enfant')
         $.get('/app/cahiers/get_apercu/'+enfant, function(data) {
+            console.log(data)
             var selection = quill.getSelection(true);
             quill.setText('');
             quill.root.innerHTML = data   
 
         })
+     })
+
+    $(document).on('mouseenter','.sectionApercu', function() {
+        $('#SectionName').text('Génération du cahier de réussite')
+     })
+    $(document).on('click','.sectionApercu', function() { 
+        
+        myModal.show();
+
+        // $('.blocApercu').removeClass('d-none')     
+        // $('.blocSelectFiche').addClass('d-none')   
+        // var enfant = $(this).closest('#cahierView').attr('data-enfant')
+        // $.get('/app/cahiers/get_apercu/'+enfant, function(data) {
+        //     console.log(data)
+        //     var selection = quill.getSelection(true);
+        //     quill.setText('');
+        //     quill.root.innerHTML = data   
+
+        // })
         // var phrase = $(this).attr('data-phrases')
         // var texte = $(this).attr('data-textes')
         // var section = $(this).attr('data-section')
@@ -143,25 +198,30 @@ const clickOnCahier = (quill) => {
     })
 }
 
-const clickOnNav = (quill) => {
-    $(document).on('click','.sectionCahier', function() {   
+const clickOnNav = () => {
+    $(document).on('click','.sectionCahier', function() { 
+        $('.searchPhrase').val('')  
         $('.blocApercu').addClass('d-none')     
         $('.blocSelectFiche').removeClass('d-none')     
         var phrase = $(this).attr('data-phrases')
         var texte = $(this).attr('data-textes')
+        var titre = $(this).attr('data-titre')
         var section = $(this).attr('data-section')
         var enfant = $(this).closest('#cahierView').attr('data-enfant')
+        console.log(section, enfant)
 
         $('.tab-pane').removeClass('show active')
         $('.tab-pane[data-id="nav-'+section+'"]').addClass('show active')
 
+        $('#titreSection').text(titre)
 
-        $('#phraseContainer').html(phrase)
-        console.log(phrase)
-        var selection = quill.getSelection(true);
-        quill.setText('');
-        quill.root.innerHTML = texte        
-        $('.saveTexte').attr('data-section', section)
+
+        // $('#phraseContainer').html(phrase)
+        // console.log(phrase)
+        // var selection = quill.getSelection(true);
+        // quill.setText('');
+        // quill.root.innerHTML = texte        
+        // $('.saveTexte').attr('data-section', section)
         
         $.get('/app/get_liste_phrase/'+section+'/'+enfant, function(data) {
             $('.badge_phrase_container').html(data)
@@ -213,6 +273,13 @@ const saveCommentaireGeneral = (quill) => {
 const clickOnDefinif = (quill) => {
     $(document).on('change','#definitif', function() {
         const definitif = $(this).prop('checked')
+        console.log(definitif)
+        $('.labelDefinitif').removeClass('active')
+        if (definitif) {
+            $('.labelDefinitifDroit').addClass('active')
+        } else {
+            $('.labelDefinitifGauche').addClass('active')
+        }
         var enfant = $(this).data('enfant')
         $.ajaxSetup({
             headers: {

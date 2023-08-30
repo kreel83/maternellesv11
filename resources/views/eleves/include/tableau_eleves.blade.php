@@ -77,6 +77,24 @@
 
 }
 
+.reussite {
+
+    font-size: 10px;
+    background-color: #761d6e;
+    color: white;
+    padding: 2px 16px;
+    border-radius: 8px;
+
+    font-weight: 700;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .param_eleve {
     display: flex;
 }
@@ -112,8 +130,13 @@
                              </div>
                             @endif
                             @if ($eleve->sh == 1)
-                            <div class="sh" style="">
+                            <div class="sh me-2" style="">
                                 SH
+                             </div>
+                            @endif
+                            @if ($eleve->reussite == 0)
+                            <div class="reussite" style="">
+                                Inactif
                              </div>
                             @endif
                         </div>

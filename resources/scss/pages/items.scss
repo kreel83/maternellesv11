@@ -5,10 +5,13 @@
     font-size: 14px;
     text-align: center;
     color: var(--main-color);
-    &.big {
-       font-size: 30px; 
-       margin-top: 25px;
-    }
+   
+}
+#titreSection {
+    text-align: center;
+    font-size: 24px;
+    color:  var(--main-color);
+    font-weight: bolder;
 }
 
 
