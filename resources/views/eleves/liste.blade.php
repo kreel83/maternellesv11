@@ -78,10 +78,17 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="avatar avatar_form pink me-5 selected" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
                                     <div class="avatar avatar_form blue" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
-                                    <div class="form-check mt-4 ms-4">
-                                        <input type="checkbox" name="sh" class="form-check-input" id="sh">
-                                        <label class="form-sh-label" for="exampleCheck1">Situation de handicap ?</label>
-                                      </div>
+                                    <div class="d-flex flex-column ms-3 mt-2" >
+                                        <div class="form-check " style="height: 15px">
+                                            <input type="checkbox" name="sh" class="form-check-input" id="sh">
+                                            <label class="form-sh-label" for="sh">Situation de handicap ?</label>
+                                        </div>
+                                        <div class="form-check"  style="height: 15px">
+                                            <input type="checkbox" name="reussite" class="form-check-input" id="reussite" checked>
+                                            <label class="form-sh-label" for="reussite">Cahier de réussite</label>
+                                        </div>                                        
+                                    </div>
+
 
                                 </div>
                                 {{-- <div class="form-group">

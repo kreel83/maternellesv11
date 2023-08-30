@@ -1,6 +1,7 @@
 
 import $ from 'jquery';
 import 'bootstrap';
+import { Modal } from 'bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
@@ -50,7 +51,7 @@ Alpine.start();
 
 $(document).ready(function($) {
 
-
+    
 
     $(document).on("click",".card__share  div", function(e){
             e.preventDefault()
@@ -98,24 +99,31 @@ $.ajaxSetup({
 
 
 if ($('#editorApercu').length) {
+    var ColorClass = Quill.import('attributors/class/color');
+    var SizeStyle = Quill.import('attributors/style/size');
+    Quill.register(ColorClass, true);
+    Quill.register(SizeStyle, true);
+    var toolbarOptions = ['bold', 'italic', 'underline', 'strike','image'];
     var quill = new Quill('#editorApercu', {
-        theme: 'snow'
+        modules: {
+            'toolbar': toolbarOptions,
+          },
+          theme: 'snow'
     });
     console.log('2')
-    clickOnCahier(quill)
+    const myModal = new Modal('#informationPDF', {})
+    clickOnCahier(quill, myModal)
     clickOnDefinif(quill)
     console.log('def')
 
 }
-
-if ($('#editor').length) {
-    var quill = new Quill('#editor', {
-        theme: 'snow'
-    });
     console.log('1')
-    choicePhrase(quill)
+    choicePhrase()
+
+
+
     console.log('2')
-    clickOnNav(quill)
+    clickOnNav()
     console.log('3')
     saveTexte(quill)
     console.log('4')
@@ -128,7 +136,7 @@ if ($('#editor').length) {
     console.log('8')
     saveCommentaireGeneral(quill)
     console.log('8')
-}
+
 
 if ($('#editor2').length) {
         var quill2 = new Quill('#editor2', {

@@ -1,38 +1,54 @@
 
 #pdf {
+    position: absolute;
+    top:0;
+    right:0;
     height: 36px;
     &:focus, &:active {
         text-decoration: none;
     }
 }
-.ql-toolbar {
-    background-color: var(--main-color);
-    .ql-stroke {
-        stroke: white;
-    }
-    .ql-picker-label {
-        color: white;
-        &.hover {
-            color: red;
-        }
-    }
 
-}
-
-.ql-formats button {
-    color: white;
-}
 
 #definitif {
     width: 80px;
-    height: 34px;
+    height: 28px;
     z-index: 6000;
     cursor: pointer;
     position: absolute;
-    top: 0;
+    top: 3px;
     left: 40px;
     border-color: var(--main-color);
+    border: 2px solid white;;;
+    outline: 2px solid white;;;
 
+    &:focus, &:active {
+        border: 2px solid white;
+        border-inline: none;
+        outline: 2px solid white;;
+        box-shadow: none;
+    }
+
+}
+
+
+.cadre_activites_acquises {
+    margin: 10px 0; border-radius: 15px;border: 3px solid #7769FE; padding: 4px; height: 100px; overflow-Y: auto;
+}
+
+.cadre_commentaire_complementaire {
+    margin: 10px 0; border-radius: 15px;border: 3px solid #7769FE; padding: 4px; height: 400px; overflow-Y: auto;
+    .badge_phrase_selected {
+        padding: 2px;
+        color: var(--main-color);
+        border-radius: 5px;
+        margin-bottom: 5px;;
+        font-size: 0.9rem;
+        cursor: pointer;
+        &:hover {
+           opacity: 0.5;
+        }
+    }
 }
 
 #definitif:checked {
@@ -43,21 +59,39 @@
 
   .labelDefinitif {
     position: absolute;
-    top: 4px;
-    left: 0px;
-    width: 200px;
+
+    width: 300px;
     height: 34px;
     
     color: var(--main-color);
     font-weight: 700;
     padding-top: 2px;;
-    font-size: 20px;
+    font-size: 14px;
     z-index: 4;
+    line-height: 30px;
 
     border: 2px solid var(--main-color);
     border-radius: 40px;
-    padding-left: 100px;
+    &.labelDefinitifDroit {
+        top: 4px;
+        left: 0px;
+        padding-left: 180px;    
+        &.active {
+            background-color: var(--main-color);   
+            color: white;
+        }
+    }
+    &.labelDefinitifGauche {
+        top: 4px;
+        left: -216px;
+        padding-left: 15px;    
+      &.active {
+          background-color: var(--main-color);   
+          color: white;
+      }
+    }
   }
+
 
 #cahierView {
     #choixFiche {
@@ -104,6 +138,7 @@
                opacity: 0.5;
             }
         }       
+       
     }
 
 

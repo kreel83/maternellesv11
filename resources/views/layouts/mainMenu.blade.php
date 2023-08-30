@@ -17,12 +17,9 @@ use Illuminate\Support\Facades\Auth;
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <script src="//cdn.quilljs.com/1.3.6/quill.js" defer></script>
-        <script src="//cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
         
         <!-- Theme included stylesheets -->
         <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
-        
 
 
 
