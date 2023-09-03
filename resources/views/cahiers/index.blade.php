@@ -88,7 +88,7 @@
         </div>
 
         <div class="bas d-flex flex-column blocApercu d-none">
-            <div id="titreSection" class="mb-4"></div>
+            <div class="mb-4 titreSection"></div>
             <div class="d-flex w-50 justify-content-center align-items-center mb-4 w-100 position-relative">
 
 
@@ -115,7 +115,7 @@
             </div>
             <div class="position-relative">
 
-                <div id="editorApercu" data-section="" data-enfant="92" style="height: 400px" class="ql-container ql-snow">
+                <div id="editorApercu" data-section="" data-enfant="{{$enfant->id}}" style="height: 400px" class="ql-container ql-snow">
 
                 </div>
             </div>
@@ -128,7 +128,7 @@
         </style>
 
         <div class="bas blocSelectFiche w-100">
-            <div id="titreSection" class="mb-4">Mobiliser le langage dans toutes les dimensions : l'oral</div>
+            <div  class="mb-4 titreSection">Mobiliser le langage dans toutes les dimensions : l'oral</div>
             <div class="tab-content" id="nav-tabContent" style="margin-bottom: 20px">
 
                         @foreach ($sections as $key => $sec)

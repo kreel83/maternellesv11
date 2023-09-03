@@ -57,13 +57,6 @@ const choicePhrase = (quill) => {
     //     }, 3000);
     // });
 
-    // $(document).on('text-change','#editor', function() {
-    //     alert('cvc')
-    //     clearTimeout(debounce);
-    //     debounce = setTimeout(function(){
-    //         $('.saveTexte').trigger('click')
-    //     }, 3000);
-    // });
 
    
     // quill.on('text-change', function(delta, source) {
@@ -193,8 +186,6 @@ const clickOnNav = () => {
         $('.searchPhrase').val('')  
         $('.blocApercu').addClass('d-none')     
         $('.blocSelectFiche').removeClass('d-none')     
-        var phrase = $(this).attr('data-phrases')
-        var texte = $(this).attr('data-textes')
         var titre = $(this).attr('data-titre')
         var section = $(this).attr('data-section')
         var enfant = $(this).closest('#cahierView').attr('data-enfant')
@@ -202,7 +193,7 @@ const clickOnNav = () => {
         $('.tab-pane').removeClass('show active')
         $('.tab-pane[data-id="nav-'+section+'"]').addClass('show active')
 
-        $('#titreSection').text(titre)
+        $('.titreSection').text(titre)
 
 
         // $('#phraseContainer').html(phrase)
@@ -258,6 +249,36 @@ const saveCommentaireGeneral = (quill) => {
 
 
 const clickOnDefinif = (quill) => {
+
+    var debounce = null
+
+    $(document).on('text-change focusout','#editorApercu', function() {
+
+        clearTimeout(debounce);
+        debounce = setTimeout(function(){
+            var texte = quill.root.innerHTML
+            var enfant = $('#editorApercu').data('enfant')
+            console.log('done')
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                method: 'POST',
+                url: '/app/enfants/'+enfant+"/cahier/save",
+                data: {
+                    texte: texte,                    
+                },
+                success: function(data) {
+                    console.log(data)
+
+                }
+            })
+        }, 5000);
+    });
+
     
 
     $(document).on('click','#reactualiser', function() {

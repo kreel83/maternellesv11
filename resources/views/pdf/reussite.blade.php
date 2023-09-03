@@ -91,7 +91,7 @@
     }
     .card-equipe {
         position: relative;
-        height: 300px;
+        height: 100px;
         width: 230px;
         float: left;
     }
@@ -108,26 +108,14 @@
     }
     .card-equipe .fonction {
         position: absolute;
-        top: 230px;
+        top: 60px;
         left: 10px;
         width: 230px;
         text-align: center;
 
     }
-    .card-equipe .photo{
-        position: absolute;
-        top: 60px;
-        left: 50px;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        overflow: hidden;
 
-    }
-    .card-equipe .photo img{
-        width: 150px;
-        height: 150px;
-    }
+
 
     .enfant {
         font-size: 40px;
@@ -146,9 +134,10 @@
         text-align: center;
         margin: 0 auto;
         margin-bottom: 80px;
-        border: 4px solid grey;
+        border: 4px solid #6759FF;
         padding: 10px;
         border-radius: 50%;
+        background-color: white;
 
         overflow: hidden;
 
@@ -171,7 +160,7 @@
     }
 
     .initiale {
-        color: grey;
+        color:#6759FF;
     }
     .nom_ecole {
         font-size: 16px;
@@ -195,49 +184,62 @@
 
     {{--</div>--}}
 {{--</div>--}}
+@php
+$degrades = App\Models\Enfant::DEGRADE;
+@endphp
 
 <div>
     <div class="enfant">Cahier de réussites <br> de <br>
         <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
     </div>
-    @if ($enfant->photo)
+
     <div class="photo_enfant">
-        <img src="{{public_path('storage/'.$enfant->photo)}}" alt="">
+        @if ($enfant->background)
+        <div class="m-2 degrade_card_enfant animaux little" data-enfant="{{$enfant->id}}"
+            >
+            <img src="{{ public_path('/img/animaux/' . $enfant->photo) }}" alt="" width="150">
+        </div>
+
     </div>
     @endif
     <div class="equipes">
         <div class="equipe" >L'équipe pédagogigue</div>
         <div class="card-equipe">
-            <div class="nom">{{$user->prenom}}<br><span>{{$user->nom}}</span></div>
-            <div class="photo">
-                <img src="{{public_path('storage/'.$user->photo)}}" alt="">
-            </div>
             <div class="fonction">~ La maitresse ~</div>
+            <div class="nom">{{$user->prenom}}<br><span>{{$user->name}}</span></div>
+
         </div>
 
 
             @foreach ($equipes as $equipe)
-                <div class="card-equipe">
-                    <div class="nom">{{$equipe->prenom}}<br><span>{{$equipe->name}}</span></div>
-                    <div class="photo">
-                        <img src="{{public_path('storage/'.$equipe->photo)}}" alt="">
+                @if ($equipe->fonction == 1 )
+                    @if ($enfant->sh == 1) 
+                    <div class="card-equipe">
+                        <div class="nom">{{$equipe->prenom}}</div>
+                        <div class="fonction">~ {{$equipe->fonction()}} ~</div>
                     </div>
-                    <div class="fonction">~ {{$equipe->fonction}} ~</div>
+                    @endif
+                @else
+                <div class="card-equipe">
+                    <div class="fonction">~ {{$equipe->fonction()}} ~</div>
+                    <div class="nom">{{$equipe->prenom}}</div>
                 </div>
+                @endif
 
 
             @endforeach
     </div>
+    <hr style="margin: 70px 0 70px 0">
 
-    {{--
+
     <div>
         <div class="nom_ecole">{{$user->name_ecole()->nom_etablissement}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_1}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_2}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_3}}</div>
-        <div class="texte_directeur">{{$user->directeur == 0 ? 'Directeur ' : 'Directrice '}} : <span class="nom_directeur">{{$user->directeur == 0 ? 'Monsieur ' : 'Madame '}}{{$user->nom_directeur}}</span></div>
+        {{-- <div class="texte_directeur">{{$user->directeur == 0 ? 'Directeur ' : 'Directrice '}} : <span class="nom_directeur">{{$user->directeur == 0 ? 'Monsieur ' : 'Madame '}}{{$user->nom_directeur}}</span></div> --}}
     </div>
-    --}}
+
 </div>
 
 <div class="page-break"></div>

@@ -30,6 +30,8 @@ class CahierController extends Controller
     private function format_apercu($resultats, $enfant) {
         $bloc = '';
         $sections = Section::all()->pluck('id')->toArray();
+        
+        $sections[] = 99;
 
         foreach ($sections as $section) {
 
@@ -369,14 +371,7 @@ class CahierController extends Controller
 
     public function get_apercu($id) {
 
-        function str_replace_first($search, $replace, $subject) {
-            $pos = strpos($subject, $search);
-            if ($pos !== false) {
-                // dd($subject, $replace, $pos, strlen($search));
-                return substr_replace($subject, $replace, $pos, strlen($search));
-            }
-            return $subject;
-        }
+
 
         
         $enfant = Enfant::find($id);
@@ -387,60 +382,17 @@ class CahierController extends Controller
             return $reussite->texte_integral;
         }
         $reussite = $this->apercu($enfant);
-        // dd($reussite);
-
-        // $prenom = $enfant->prenom;
-        // $pronom = $enfant->genre == 'F' ? 'elle' : 'il';
-        // $mots = explode(' ', $reussite);
-
-        // $flag = true;
-        // foreach ($mots as $k=>$mot) {
-        //     if (str_contains($mot, 'h2')) $flag = false;
-        //     if (str_contains($mot, $prenom)) {
-        //         if ($flag) {
-        //             $mots[$k] =  (str_contains($mot, '>')) ? str_replace($prenom,ucfirst($pronom), $mots[$k]) : str_replace($prenom,$pronom, $mots[$k]);
-        //         } else {
-        //             $flag = true;
-        //         }
-        //     }
-        // }
-
-        // $reussite = join(' ', $mots);
-        // $c= "";
-
-        // $reussite .= '</br><h2 contenteditable="false" color="red">Commentaire général</h2>';
-        // $comm = Reussite::where('enfant_id', $enfant->id)->where('user_id', Auth::id())->first();
-        // if ($comm) {
-        //     $c = $comm->commentaire_general ?? '';
-        //     $c =  str_replace($prenom,ucfirst($pronom), $c);
-        //     $c = str_replace_first(ucfirst($pronom), $prenom, $c);
-            
-
-        // }
-        // $reussite .= '<br><br>'.$c;
-       
-
-        // $enfant = Enfant::find($id);
-        
-        // $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
-
-        // $result = OpenAI::chat()->create([
-        //     'model' => 'gpt-3.5-turbo',
-        //     'messages' => [
-        //         ['role' => 'user', 
-        //         'content' => 'Sachant que les tags "h2" ne sont pas modifiables et qu\'ils correspondent chacun à un début de paragraphe, change le terme "élève" par le pronom de '.$enfant->prenom.' qui est '.$genre." dans chaque phrase. 
-
-        //         Dans la premiere phrase de chaque paragraphe, remplace le pronom par le prénom. Le texte à traiter est : ".$reussite],
-        //     ],
-           
-        // ]);
-        // return $result['choices'][0]['message']['content'];
-
-
-
-
-       
+        $r = Reussite::where('enfant_id', $id)->first();
+        if (!$r) {
+            $r = new Reussite();
+            $r->enfant_id = $id;
+            $r->user_id = Auth::id();
+            $r->definitif = 0;
+        }
+        $r->texte_integral = $reussite;
+        $r->save();
         return $reussite;
+
 
 
     }
@@ -590,7 +542,7 @@ class CahierController extends Controller
 
     public function get_liste_phrase($section, $enfant) {
         $enfant = Enfant::find($enfant);
-        if ($section == "carnet") {
+        if ($section == 99) {
             
             $phrases = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
             return view('cahiers.liste_phrases')->with('phrases', $phrases)->with('section', $section)->with('enfant', $enfant)->with('type','carnet'); 
@@ -619,42 +571,21 @@ class CahierController extends Controller
         return $this->index($enfant->id);
     }
 
+
     public function saveTexte($enfant, Request $request) {
-        if ($request->section == 'carnet') {
+       
             $enfant = Enfant::find($enfant);
             $reussite = $enfant->hasReussite();
             if ($reussite) {
-                $reussite->commentaire_general = $request->texte;
+                $reussite->texte_integral = $request->texte;
                 $reussite->save();
             } else {
                 $reussite = new Reussite();
-                $reussite->commentaire_general = $request->texte;
+                $reussite->texte_integral = $request->texte;
                 $reussite->enfant_id = $enfant->id;
                 $reussite->user_id = Auth::id();
                 $reussite->definitif = 0;
-                $reussite->save();
-
-
-            }
-        } else {
-            $cahier = Cahier::where('enfant_id', $enfant)->where('section_id', $request->section)->first();
-
-
-            if (!$cahier) {
-                $cahier = new Cahier();
-                $cahier->enfant_id = $enfant;
-                $cahier->section_id = $request->section;
-                $cahier->user_id = Auth::id();
-                $cahier->texte = $request->texte;
-
-                $cahier->definitif = 0;
-            } else {
-                $cahier->texte = $request->texte;
-            }
-            $cahier->save();
-
-
-        }
+                $reussite->save();            }        
         return 'ok';            
 
     }
