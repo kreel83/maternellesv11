@@ -7,6 +7,7 @@ use App\Models\Commentaire;
 use App\Models\Enfant;
 use App\Models\Equipe;
 use App\Models\Image;
+use App\Models\Item;
 use App\Models\Myperiode;
 use App\Models\Phrase;
 use App\Models\Resultat;
@@ -34,16 +35,16 @@ class CahierController extends Controller
 
             $nameSection = ($section == 99) ? 'Commentaire général' : Section::find($section)->name;
             if ((isset($resultats[$section])) || (isset($commentaires[$section]))) {
-                $bloc .= "<h2 contenteditable='false'>$nameSection</h2><br>";
+                $bloc .= "<h2 contenteditable='false'>$nameSection</h2>".PHP_EOL;
 
             }
-            if (isset($resultats[$section])) {
-                
-                    $bloc .= $resultats[$section].PHP_EOL;
-               
+            if (isset($resultats[$section])) {                
+                    $bloc .= $resultats[$section].PHP_EOL.PHP_EOL;               
             }
+
 
         }
+      
 
         return $bloc;
 
@@ -85,6 +86,76 @@ class CahierController extends Controller
         });
 
 
+
+    }
+
+
+    private function garcon($reussite, $enfant) {
+        $prenom = $enfant->prenom;
+        $reussite = str_replace("L'élève", 'Il', $reussite);
+        $reussite = str_replace("l'élève", 'il', $reussite);
+        $r = explode(PHP_EOL, $reussite);
+        if (isset($r[0])) {
+            
+            $r[0] = str_replace(['il', 'Il'], [$prenom, $prenom], $r[0]); 
+        }
+        $result = join(PHP_EOL, $r);
+       
+        
+        return $result;
+    }
+
+    private function fille($reussite, $enfant) {
+        $prenom = $enfant->prenom;
+        $reussite = str_replace("L'élève ", 'Elle ', $reussite);
+        $reussite = str_replace("l'élève ", $prenom.' ', $reussite);
+        $r = explode(PHP_EOL, $reussite);
+
+        if (isset($r[0])) {
+            
+            $r[0] = str_replace(['elle', 'Elle'], [$prenom, $prenom], $r[0]); 
+        }
+        $result = join(PHP_EOL, $r);
+       
+        
+        return $result;
+    }
+
+
+
+
+    private function chatpht($reussite, $enfant) {
+        $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
+        $content = 'Remplace le terme "élève" par "il" ou "elle" de '.$enfant->prenom.' qui est '.$genre.". Le texte à traiter est : ".$reussite;
+        $result = OpenAI::chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'user', 
+                'content' => $content],
+            ],
+           
+        ]);
+        
+        return $result['choices'][0]['message']['content'];
+    }
+
+    public function reactualiser($id, Request $request) {
+
+        
+        $enfant = Enfant::find($id);
+        $reussite = $this->apercu($enfant);  
+       
+        
+        $r = Reussite::where('enfant_id', $id)->first();
+        if (!$r) {
+            $r = new Reussite();
+            $r->enfant_id = $id;
+            $r->user_id = Auth::id();
+            $r->definitif = 0;
+        }
+        $r->texte_integral = $reussite;
+        $r->save();
+        return $reussite;
 
     }
 
@@ -211,6 +282,14 @@ class CahierController extends Controller
     }
 
 
+    public function redoPdf($id) {
+        $enfant = Enfant::find($id);
+        return view('cahiers.pdfview')
+            ->with('sections', Section::all())
+            ->with('title', "coucou")
+            ->with('section', Section::first())
+            ->with('enfant', $enfant) ;
+    }
     public function pdfview($id) {
         $enfant = Enfant::find($id);
         return view('cahiers.pdfview')
@@ -363,42 +442,65 @@ class CahierController extends Controller
        
         return $reussite;
 
-        $r = Reussite::where('enfant_id', $enfant->id)->first();
-        $definitif = ($r) ? $r->definitif : null;
-        
-
-        $corps = $this->apercu($enfant);
-      
-        dd($corps);
-       
-        return $this->apercu($enfant);
 
     }
 
-    public function apercu($enfant) {
+    public function apercu($enfant, $calcul = true) {
         $reussite = Reussite::where('enfant_id', $enfant->id)->first();
 
+        $resultats = array();
+        $r = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
+        $r = $r->groupBy('section_id');
+       
+
+        foreach ($r as $key=>$fiches) {
+            $resultats[$key] = '';
+            foreach ($fiches as $fiche) {                               
+                $resultats[$key] .= Item::find($fiche->item_id)->phrase_masculin.PHP_EOL;;            
+            }    
+            $resultats[$key] .= PHP_EOL;
+        }
+        
+        
         $phrases = Phrase::where('enfant_id', $enfant->id)->get();
         $phrases = $phrases->groupBy('section_id');
-        $resultats = array();
         foreach ($phrases as $key=>$liste) {
-            $resultats[$key] = '';
+            $resultats[$key] =  isset($resultats[$key]) ? $resultats[$key] : '' ;
             foreach ($liste as $phrase) {                               
-                $resultats[$key] .= $phrase->commentaire()->texte.PHP_EOL;                
+                $resultats[$key] .= $phrase->commentaire()->phrase_masculin.PHP_EOL;                
             }
 
         }
-       
+        if (!$calcul) return strlen(join('',$resultats));
+
+        
+        if ($enfant->genre == "F") {
+            $r = array();
+            foreach ($resultats as $key=>$resultat) {
+                $r[$key] = $this->fille($resultat, $enfant);
+            } 
+
+        } else {
+            $r = array();
+            foreach ($resultats as $key=>$resultat) {
+                $r[$key] = $this->garcon($resultat, $enfant);
+            }   
+        }
+
+
+        
+
+      
 
         // $commentaire_enfant = Cahier::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
         // $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
-        // $resultats = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
-        // dd($resultats, $id);
-        // $resultats = $resultats->groupBy('section_id');
 
+        
 
-        return $this->format_apercu($resultats, $enfant);
+        return $this->format_apercu($r, $enfant);
     }
+
+
 
 
     public function add_phrase($id, $phrase) {
@@ -409,7 +511,7 @@ class CahierController extends Controller
            'order' => 1,
            'section_id' => $commentaire->section_id,
         ]);
-        return '<li class="badge_phrase_selected" data-phrase="'.$phrase->id.'">'.$commentaire->texte.'</li>' ;       
+        return '<li class="badge_phrase_selected" data-phrase="'.$phrase->id.'">'.$commentaire->phrase_masculin.'</li>' ;       
     }
 
     public function remove_phrase($id, $phrase) {
@@ -417,7 +519,7 @@ class CahierController extends Controller
         $phrase = Phrase::find($phrase);
         $commentaire = Commentaire::find($phrase->commentaire_id);
         $phrase->delete();        
-        return '<li class="badge_phrase" data-value="'.$commentaire->id.'">'.$commentaire->texte.'</li>' ;       
+        return '<li class="badge_phrase" data-value="'.$commentaire->id.'">'.$commentaire->phrase_masculin.'</li>' ;       
     }
 
     public function index($id) {

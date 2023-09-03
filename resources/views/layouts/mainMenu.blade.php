@@ -88,7 +88,7 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
               @php
-                $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe','avatar']);
+                $params = in_array($menu, ['affectation_groupe','commentaire','periode','eleve','item','aide','ecole','groupe','avatar']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 

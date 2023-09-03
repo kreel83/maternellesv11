@@ -68,6 +68,19 @@
         </div>
 
         <div id="editor2" data-section="" style="height: 100px"></div>
+
+        {{-- <div class="row" >
+        <div class="col-md-6">
+            <label for="">Phrase pour les garcons</label>
+            <textarea class="form-control masculin_area" style="font-size: 16px" rows="10"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label for="">Phrase pour les filles</label>
+            <textarea class="form-control feminin_area" style="width: 100%" rows="10"></textarea>
+
+        </div>
+        </div> --}}
+        
         <div style="margin-top: 20px">
             <table class="table table-bordered table-hover" id="motCle" style="cursor: pointer;">
                 <tr style="text-align: center">

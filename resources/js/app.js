@@ -146,7 +146,7 @@ if ($('#editor2').length) {
             theme: 'snow'
         });
     editPhrase(quill2)
-    deletePhrase()
+    deletePhrase(quill2)
     nouvellePhrase(quill2)
     cancelNouvellePhrase(quill2)
     setMotCle(quill2)
