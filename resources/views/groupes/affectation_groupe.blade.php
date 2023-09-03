@@ -48,7 +48,7 @@
 </style>
 
 
-<div class="d-flex flex-wrap container">
+<div class="d-flex flex-wrap container mt-5">
 @foreach ($eleves as $eleve)
     @php
         if ($eleve->groupe != null) {

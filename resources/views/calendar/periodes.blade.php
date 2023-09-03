@@ -16,11 +16,11 @@
             </ul>
         </div>
     @endif
-<h1>Gestion des périodes</h1>
-
-<div class="row">
-
-    <div class="col-md-9 d-flex flex-wrap " id="calendrier_periodes" style="overflow-y: auto">
+    
+    <div class="row gx-0 mt-5">
+        
+        <h1>Gestion des périodes</h1>
+        <div class="col-md-9 d-flex flex-wrap " id="calendrier_periodes" style="overflow-y: auto">
                
         <input type="hidden" value="{{$conges}}" id="conges">
         <input type="hidden" value="{{$start}}" id="start">

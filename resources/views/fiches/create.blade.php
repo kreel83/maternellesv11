@@ -102,7 +102,7 @@
                 {{-- @php
                 if($itemactuel) dd($itemactuel->phrase);
                 @endphp --}}
-                <div id="editor3" class="mt-3" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
+                <div id="editor3" class="mt-3" data-phrase="{{$itemactuel->phrase_masculin}}" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
                 <textarea class="mt-3 d-none" name="phrase" id="phraseForm" style="width: 100%" rows="5" > {!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</textarea>
 
                 <style>

@@ -228,6 +228,10 @@ const photoEnfant = () => {
 }
 
 const setMotCleFiche= (quill) => {
+    if ($('#editor3').length) {
+        quill.setText($('#editor3').data('phrase'));
+    }
+
     $('.motCleFiche .item').on('click', function() {
         var data = $(this).data('reg')
         var selection = quill.getSelection(true);

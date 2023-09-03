@@ -9,7 +9,6 @@ const choicePhrase = (quill) => {
         $('.badge_phrase_container li').removeClass('d-none')
         $(element).find('.badge_phrase_container li').each((index, el) => {
             var phrase = $(el).text()
-            console.log(phrase, text)
             if (!phrase.includes(text)) {
                 $(el).addClass('d-none')
             }
@@ -30,7 +29,6 @@ const choicePhrase = (quill) => {
         var id = $(this).closest('.badge_phrase_container').data('id')
         $(this).remove()
         $.get('/app/enfants/'+id+'/add_phrase/'+phrase, function(data) {
-            console.log(data)
             $(el).find('.cadre_commentaire_complementaire ul').append(data)
         })
     })
@@ -41,7 +39,6 @@ const choicePhrase = (quill) => {
         var id = $(this).closest('.cadre_commentaire_complementaire').data('enfant')
         $(this).remove()
         $.get('/app/enfants/'+id+'/remove_phrase/'+phrase, function(data) {
-            console.log(data)
             $(el).find('.badge_phrase_container ul').append(data)
         })
     })
@@ -50,7 +47,6 @@ const choicePhrase = (quill) => {
     //     clearTimeout(debounce);
     //     debounce = setTimeout(function(){
     //         $('.saveTexte').trigger('click')
-    //         console.log('saving')
     //     }, 3000);
     // });
 
@@ -58,7 +54,6 @@ const choicePhrase = (quill) => {
     //     clearTimeout(debounce);
     //     debounce = setTimeout(function(){
     //         $('.saveTexte').trigger('click')
-    //         console.log('saving')
     //     }, 3000);
     // });
 
@@ -67,7 +62,6 @@ const choicePhrase = (quill) => {
     //     clearTimeout(debounce);
     //     debounce = setTimeout(function(){
     //         $('.saveTexte').trigger('click')
-    //         console.log('saving')
     //     }, 3000);
     // });
 
@@ -128,7 +122,6 @@ const clickOnCahier = (quill, myModal) => {
     $(document).on('click','#reformuler', function() {
         var texte = quill.root.innerHTML
         var enfant = $(this).data('enfant')
-        console.log(texte)
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -152,7 +145,6 @@ const clickOnCahier = (quill, myModal) => {
         $('.blocSelectFiche').addClass('d-none')   
         var enfant = $('.degrade_card_enfant').attr('data-enfant')
         $.get('/app/cahiers/get_apercu/'+enfant, function(data) {
-            console.log(data)
             var selection = quill.getSelection(true);
             quill.setText('');
             quill.root.innerHTML = data   
@@ -171,7 +163,6 @@ const clickOnCahier = (quill, myModal) => {
         // $('.blocSelectFiche').addClass('d-none')   
         // var enfant = $(this).closest('#cahierView').attr('data-enfant')
         // $.get('/app/cahiers/get_apercu/'+enfant, function(data) {
-        //     console.log(data)
         //     var selection = quill.getSelection(true);
         //     quill.setText('');
         //     quill.root.innerHTML = data   
@@ -185,8 +176,7 @@ const clickOnCahier = (quill, myModal) => {
         // $('.tab-pane[data-id="nav-'+section+'"]').addClass('show active')
 
 
-        // $('#phraseContainer').html(phrase)
-        // console.log(phrase)
+        // $('#phraseContainer').html(phrase)  
         // var selection = quill.getSelection(true);
         // quill.setText('');
         // quill.root.innerHTML = texte        
@@ -208,7 +198,6 @@ const clickOnNav = () => {
         var titre = $(this).attr('data-titre')
         var section = $(this).attr('data-section')
         var enfant = $(this).closest('#cahierView').attr('data-enfant')
-        console.log(section, enfant)
 
         $('.tab-pane').removeClass('show active')
         $('.tab-pane[data-id="nav-'+section+'"]').addClass('show active')
@@ -217,7 +206,6 @@ const clickOnNav = () => {
 
 
         // $('#phraseContainer').html(phrase)
-        // console.log(phrase)
         // var selection = quill.getSelection(true);
         // quill.setText('');
         // quill.root.innerHTML = texte        
@@ -235,7 +223,6 @@ const phraseCommentaireGeneral = () => {
     $(document).on('change','#phraseCommentaireGeneral', function() {
         let texte = $(this).val();
         texte = texte + '\n';
-        console.log(texte);
         $('#commentaire_general').val(function(i, text) {
             return text + texte;
         });
@@ -271,9 +258,25 @@ const saveCommentaireGeneral = (quill) => {
 
 
 const clickOnDefinif = (quill) => {
+    
+
+    $(document).on('click','#reactualiser', function() {
+        var enfant = $(this).data('enfant')
+        quill.setText('');
+
+            
+            $.get('/app/enfants/'+enfant+'/cahier/reactualiser', function(data) {
+                var selection = quill.getSelection(true);
+                quill.root.innerHTML = data               
+                $('.progress-container').addClass('d-none')                          
+            })
+      
+
+
+    })
+
     $(document).on('change','#definitif', function() {
         const definitif = $(this).prop('checked')
-        console.log(definitif)
         $('.labelDefinitif').removeClass('active')
         if (definitif) {
             $('.labelDefinitifDroit').addClass('active')
@@ -294,11 +297,12 @@ const clickOnDefinif = (quill) => {
                 quill: quill.root.innerHTML
             },
             success: function(data) {
-                console.log(definitif)
                 if (definitif == true) {
                     quill.enable(false)
+                    $('#reactualiser').addClass('d-none')
                     $('#pdf').removeClass('d-none')
                 } else {
+                    $('#reactualiser').removeClass('d-none')
                     $('#pdf').addClass('d-none')
                     quill.enable(true)
                 }
@@ -311,15 +315,12 @@ const clickOnDefinif = (quill) => {
 
 const apercu = (quill) => {
     $(document).on('click', '.nav-link', function() {
-        console.log('coucou')
         if ($(this).attr('id') == 'apercu') {
-            console.log('caca')
             var enfant = $(this).data('enfant')
             var periode = $(this).data('periode')
             $.get('/app/enfants/'+enfant+'/cahier/'+periode+'/apercu', function(data) {
                 $('#editor').css('height', '800px')
                 quill.setText('');
-                console.log(data)
                 quill.root.innerHTML = data
                 if ($('#definitif').prop('checked')) {
                     quill.enable(false)
@@ -343,7 +344,6 @@ const onload = (quill) => {
         }
         if ($('#nav-apercu').length) {
             var reussite = $('#nav-apercu').data('reussite')
-            console.log(reussite)
                     $('#editor').css('height','700px')
                     quill.setText('');
                     quill.root.innerHTML = reussite

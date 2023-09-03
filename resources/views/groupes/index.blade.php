@@ -6,10 +6,10 @@
 @endphp
     <style>
         #myTabContent {
-            background-color: purple;
+            background-color: var(--second-color);
         }
         .terme.selected {
-            outline: 2px solid purple;
+            outline: 2px solid  var(--second-color);
             border-radius: 40px;
         }
 
@@ -44,7 +44,7 @@
         }
     </style>
 
-    <div id="page_groupes" class="row vh-100">
+    <div id="page_groupes" class="row gx-0 vh-100">
         <div class="col-md-6 p-5" id="termes-tab-pane">
             <form action="{{ route('saveTermes') }}" method="POST">
                 @csrf

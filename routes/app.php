@@ -116,11 +116,14 @@ Route::middleware(['auth','abo'])->group(function () {
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
     Route::get('/enfants/{id}/pdfview', [CahierController::class, 'pdfview'])->name('pdfview');
+    Route::get('/enfants/{id}/redoPdf', [CahierController::class, 'redoPdf'])->name('redoPdf');
     Route::post('/enfants/{id}/cahier/saveCommentaireGeneral', [CahierController::class, 'saveCommentaireGeneral'])->name('saveCommentaireGeneral');
     Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
     Route::post('/enfants/{id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
     Route::post('/enfants/{id}/cahier/reformuler', [CahierController::class, 'reformuler'])->name('reformuler');
+    Route::get('/enfants/{id}/cahier/reactualiser', [CahierController::class, 'reactualiser'])->name('reactualiser');
+    Route::get('/enfants/{id}/cahier/calcul_duration', [CahierController::class, 'calcul_duration'])->name('calcul_duration');
     Route::get('/enfants/{id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
     Route::get('/enfants/{id}/add_phrase/{phrase}', [CahierController::class, 'add_phrase'])->name('add_phrase');
     Route::get('/enfants/{id}/remove_phrase/{phrase}', [CahierController::class, 'remove_phrase'])->name('remove_phrase');

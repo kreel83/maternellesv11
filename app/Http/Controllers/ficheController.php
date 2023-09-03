@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Intervention\Image\ImageManager;
 use SebastianBergmann\Type\TrueType;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class ficheController extends Controller
 {
@@ -75,6 +76,7 @@ class ficheController extends Controller
 
         $images = ImageTable::all();       
         $section = Section::find($request->section);
+        
 
         return view('fiches.create')
             ->with('new', $new)
@@ -147,6 +149,20 @@ class ficheController extends Controller
             return $lvl;
         }
 
+        function chatpht($reussite) {            
+            $content = "Met au féminin la phrase suivante : ".$reussite;
+            $result = OpenAI::chat()->create([
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [
+                    ['role' => 'user', 
+                    'content' => $content],
+                ],
+               
+            ]);
+            
+            return $result['choices'][0]['message']['content'];
+        }
+
         
 
 
@@ -196,7 +212,9 @@ class ficheController extends Controller
             $item->lvl = set_lvl($request);
             $item->st = $request->st;
             $item->user_id = Auth::id();
-            $item->phrase = $request->phrase;
+            $item->phrase_masculin = $request->phrase;
+            $item->phrase_feminin = chatpht($item->phrase_masculin);
+
 
             $item->save();
 
@@ -231,7 +249,8 @@ class ficheController extends Controller
             $item->lvl = set_lvl($request);
             $item->st = $request->st;
             $item->user_id = Auth::id();
-            $item->phrase = $request->phrase;
+            $item->phrase_masculin = $request->phrase;
+            $item->phrase_feminin = chatpht($item->phrase_masculin);
             $item->save();
 
             if ($request->submit == 'save_and_select') {
