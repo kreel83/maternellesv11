@@ -48,7 +48,7 @@ use Illuminate\Support\Facades\Auth;
             {{-- <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fal fa-users"></i> Ma classe </a> --}}
 
             @php
-            $params = in_array($menu, ['evaluation','cahier','affectation_groupe','avatar']);
+            $params = in_array($menu, ['evaluation','reussite','affectation_groupe','avatar']);
           @endphp
 
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
@@ -57,11 +57,11 @@ use Illuminate\Support\Facades\Auth;
 
               <div class='dashboard-nav-dropdown-menu'>
 
-                <a href="{{route('enfants')}} " class="dashboard-nav-dropdown-item {{$menu == 'evaluation' ? 'active' : null}}">Evaluations</a>
-                <a href="{{route('reussite')}}" class="dashboard-nav-dropdown-item {{$menu == 'cahier' ? 'active' : null}}">Cahiers de réussite</a>
-                <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
+                <a href="{{route('enfants',["type" => "evaluation"])}} " class="dashboard-nav-dropdown-item {{$menu == 'evaluation' ? 'active' : null}}">Evaluations</a>
+                <a href="{{route('enfants',["type" => "reussite"])}}" class="dashboard-nav-dropdown-item {{$menu == 'reussite' ? 'active' : null}}">Cahiers de réussite</a>
+                <a href="{{route('enfants',["type" => "avatar"])}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a>
+                <a href="{{route('enfants',["type" => "affectation_groupe"])}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
 
-                <a href="{{route('avatar')}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a>
               </div>
             </div>
             {{-- <div class='dashboard-nav-dropdown'>

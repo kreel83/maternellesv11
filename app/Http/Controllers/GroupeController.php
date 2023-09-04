@@ -13,10 +13,11 @@ class GroupeController extends Controller
 {
     public function index() {
         $type = Auth::user()->type_groupe;
-        $groupes = Auth::user()->groupes;
+        $groupes = Auth::user()->configuration->groupes;
         $nbGroupe = 2;           
+       
         if ($groupes) {
-         $groupes = json_decode($groupes, true);
+            $groupes = json_decode($groupes, true);
         $nbGroupe = sizeof($groupes);           
         }
 
