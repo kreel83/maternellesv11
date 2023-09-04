@@ -152,7 +152,7 @@ class User extends Authenticatable
 
 
     public function name_ecole() {
-        $ecole = Ecole::where('identifiant_de_l_etablissement', $this->code_ecole)->first();
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $this->ecole_identifiant_de_l_etablissement)->first();
         return $ecole;
     }
 

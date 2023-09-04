@@ -3,7 +3,7 @@
     @if (isset($resultats[$section->id]))
     <ul>
         @foreach($resultats[$section->id] as $resultat)
-            <li>{{$resultat->item()->phrase($enfant)}}</li>
+            <li>{{$resultat->item()->phrase_masculin}}</li>
            
         @endforeach
     </ul>

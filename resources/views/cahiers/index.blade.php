@@ -5,7 +5,35 @@
         $degrades = App\Models\Enfant::DEGRADE;
     @endphp
 
-    <div id="cahierView" class="row px-5 gx-0" data-enfant="{{ $enfant->id }}">
+    <style>
+        .progress-container {
+            width: 600px;
+            height: 150px;
+           
+            display: flex;
+            justify-content: start;
+            
+            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            z-index: 6000;
+            padding: 0 25px;                      
+
+        }
+
+    </style>
+
+    <div id="cahierView" class="row px-5 gx-0 position-relative" data-enfant="{{ $enfant->id }}">
+        @if ($enfant->genre == 'F')
+        <div class="progress-container position-absolute d-none">
+            <div class="progress" style="width: 100%">
+                <div class="progress-bar  bg-success active" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>            
+        </div>
+        @endif
+
         <div data-section="{{ $section->id }}" class="liste_section mb-5">
 
             <div class="section_container">
@@ -60,7 +88,7 @@
         </div>
 
         <div class="bas d-flex flex-column blocApercu d-none">
-            <div id="titreSection" class="mb-4"></div>
+            <div class="mb-4 titreSection"></div>
             <div class="d-flex w-50 justify-content-center align-items-center mb-4 w-100 position-relative">
 
 
@@ -74,6 +102,9 @@
                 <a target="_blank" href="{{ route('seepdf', ['id' => $enfant->id, 'state' => 'see']) }}"
                     data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $definitif == 0 ? 'd-none' : null }}"
                     id="pdf" style="margin-top: 0 !important">Voir le PDF</a>
+                <div 
+                    data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $definitif == 1 ? 'd-none' : null }}"
+                    id="reactualiser" style="margin-top: 0 !important">Réactualiser le texte</div>
                 {{-- <button data-enfant="{{ $enfant->id }}" class="btn btn-sm btn-primary"
                     id="reformuler">Reformuler</button> --}}
                 {{-- <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"
@@ -84,7 +115,7 @@
             </div>
             <div class="position-relative">
 
-                <div id="editorApercu" data-section="" data-enfant="92" style="height: 400px" class="ql-container ql-snow">
+                <div id="editorApercu" data-section="" data-enfant="{{$enfant->id}}" style="height: 400px" class="ql-container ql-snow">
 
                 </div>
             </div>
@@ -97,7 +128,7 @@
         </style>
 
         <div class="bas blocSelectFiche w-100">
-            <div id="titreSection" class="mb-4">Mobiliser le langage dans toutes les dimensions : l'oral</div>
+            <div  class="mb-4 titreSection">Mobiliser le langage dans toutes les dimensions : l'oral</div>
             <div class="tab-content" id="nav-tabContent" style="margin-bottom: 20px">
 
                         @foreach ($sections as $key => $sec)

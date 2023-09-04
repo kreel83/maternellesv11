@@ -1,12 +1,14 @@
 
-#pdf {
+#pdf, #reactualiser {
     position: absolute;
     top:0;
     right:0;
     height: 36px;
+    text-decoration: none;
     &:focus, &:active {
         text-decoration: none;
     }
+
 }
 
 

@@ -35,9 +35,7 @@ class Item extends Model
         return $this->belongsTo('App\Models\Image');
     }
 
-    public function phrase($enfant) {
-        return Utils::traitement($this->phrase, $enfant);
-    }
+
 
     public function resultat($enfant) {
         $arr = [0 => null, 1 => "En voie d'acquisition", 2 => "Acquis avec aide"];
