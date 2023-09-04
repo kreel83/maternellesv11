@@ -142,17 +142,24 @@ const preview_photo = (event) => {
 
     $(document).on('click','.badge_termes', function() {
         
-        var el = $(this).closest('.card-eleve')
+        var el = $(this).closest('.footer')
         $(el).find('.badge_termes').removeClass('active')
-        $(this).addClass('active')
-        var id = $(this).closest('.card-eleve').data('eleve')
+        //$(this).addClass('active')
+        var id = $(el).data('enfant')
+        var ordre = $('#ordre').val()
 
         var order =  $(this).data('order')
-        $(el).css('border-color', $(this).data('color'))
+        var card = $(this).closest('.card-enfant')
+
+        $(card).find('.groupe-terme').css('background-color', $(this).data('color'))
+        $(card).find('.groupe-terme').text($(this).text())
+        $(card).find('.groupe-terme').removeClass('d-none')
 
 
         $.get('/app/groupe/affectation?eleve='+id+'&order='+order, function(data) {
-            console.log(data)
+            if (ordre == 'groupe') {
+                window.location.reload()
+            }
         })
     })
 
