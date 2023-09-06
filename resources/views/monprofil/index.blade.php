@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container my-5">
 
 
 
@@ -17,7 +17,7 @@
             display: grid;
             grid-template-columns:1fr 1fr; 
             grid-template-rows: 370px 220px 220px;
-            grid-gap: 20px; 
+            grid-gap: 35px; 
         }
         .grid1 {
             grid-column: 1;
@@ -38,19 +38,21 @@
         }
         .gridcadre {
             width: 100%;
-            border: 1px solid grey;
             border-radius: 40px;
             position: relative;
             padding: 10px 40px;
+            background-color: white;
         }
         .gridTitre {
             position: absolute;
             top: -16px;
             left: 30px;
-            font-weight: bold;
+            font-weight: 400;
             font-size: 16px;
             padding: 4px 16px;
-            background-color: #F4F9FF;
+            background-color: white;
+            border-radius: 14px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
         }
         .groupeAide {
@@ -114,7 +116,7 @@
             <div class="gridTitre">Mes aides maternelles</div>
             <form action="{{route('aidematernelle.post')}}" method="post" class="d-flex justify-content-between w-100">
                 @csrf
-                <div class="groupesAide d-flex flex-wrap justify-content-between w-100">
+                <div class="groupesAide d-flex flex-wrap justify-content-between w-100 pt-3">
                     <div class="d-flex justify-content-between">
                         @for ($i = 0; $i<=3; $i++)
                         <div class="groupeAide">

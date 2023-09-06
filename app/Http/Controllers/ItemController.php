@@ -36,14 +36,12 @@ class ItemController extends Controller
         foreach ($fiches as $fiche) {
             $resultat = $fiche->resultat($enfant->id);
             if ($resultat) {
+                // dd($fiche->resultat($enfant->id));
                 $fiche->notation = $fiche->resultat($enfant->id)[0];
                 $fiche->autonome = $fiche->resultat($enfant->id)[1];
                 $fiche->textnote = $fiche->resultat($enfant->id)[2];
-            }
-            
+            }            
         }
-
-
 
         return view('items.index')
                 ->with("user", Auth::user())
