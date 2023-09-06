@@ -34,10 +34,7 @@
            
                     <div class="d-flex justify-content-between px-3 w-100">
                         <div class="lanote">{{$fiche->textnote}}</div>
-
-                        <div class="{{in_array($fiche->notation,[2,3]) ? null : 'd-none'}} autonome autonome_{{$fiche->autonome}}"><i class="fa-solid fa-circle"></i></div>
-
-                        
+                        <div class="{{in_array($fiche->notation,[2,3]) ? null : 'd-none'}} autonome autonome_{{$fiche->autonome}}"><i class="fa-solid fa-circle"></i></div>                       
                     </div>               
         </div>
 

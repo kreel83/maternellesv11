@@ -53,7 +53,7 @@ use Illuminate\Support\Facades\Auth;
 
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-cog"></i> Ma classe </a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-users"></i> Ma classe </a>      
 
               <div class='dashboard-nav-dropdown-menu'>
 
@@ -102,7 +102,7 @@ use Illuminate\Support\Facades\Auth;
                 {{-- <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a> --}}
                 {{-- <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a> --}}
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
-                <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
+                {{-- <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a> --}}
                                 <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
                 {{-- <a href="{{route('avatar')}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a> --}}
               </div>
@@ -112,10 +112,10 @@ use Illuminate\Support\Facades\Auth;
               $params = in_array($menu, ['monprofil','monpasse']);
             @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon compte</a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-user"></i> Mon compte</a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
-                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Mot de passe</a>
+                {{-- <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Mot de passe</a> --}}
               </div>
             </div>
             <!--<a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>-->
@@ -124,7 +124,7 @@ use Illuminate\Support\Facades\Auth;
               $params = in_array($menu, ['souscrire','resilier','reactiver','facture']);
             @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon abonnement</a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-dove"></i> Mon abonnement</a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('subscribe.cardform')}}" class="dashboard-nav-dropdown-item {{$menu == 'souscrire' ? 'active' : null}}">Souscrire un abonnement</a>
                 <a href="{{route('subscribe.cancel')}}" class="dashboard-nav-dropdown-item {{$menu == 'resilier' ? 'active' : null}}">Résilier mon abonnement</a>
@@ -135,7 +135,7 @@ use Illuminate\Support\Facades\Auth;
 
             <a class="dashboard-nav-item  {{ $menu == 'contact' ? 'active' : null }}" href="{{route('contact')}}"><i class="fa-regular fa-envelope"></i> Nous contacter</a>
             <div class="nav-item-divider"></div>
-            <a href="{{route('deco')}}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+            <a href="{{route('deco')}}" class="dashboard-nav-item"><i class="fal fa-sign-out-alt"></i> Se déconnecter</a>
 
           </nav>
       </div>

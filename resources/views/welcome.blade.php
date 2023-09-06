@@ -41,12 +41,12 @@ grid-gap: 30px;
 
 
 .cadre_welcome {
-    border: 1px solid grey;
-    border-radius: 8px;
+    /* //border: 1px solid grey; */
+    border-radius: 14px;
     padding: 24px 8px 8px 8px;
     position: relative;
     font-size: 14px;
-    background-color: var(--back-color);
+    background-color: white;
     color: var(--main-color)
 
 }
@@ -55,13 +55,14 @@ grid-gap: 30px;
     top: -14px;
     left: 30px;
     padding: 2px 16px;
-    background-color: #F4F9FF;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    background-color: white;
     border-radius: 15px;
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
 }
 </style>
 
-<div class="container mt-3">
+<div class="container mt-5">
 
     {{-- depuis le midlleware 'abo' --}}
     @if (session('nolicence'))
