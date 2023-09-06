@@ -20,7 +20,6 @@
 <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('cahier.predownload.post') }}" method="POST">
 @csrf
 <input type="hidden" name="token" value="{{ $token }}">
-<input type="hidden" name="id" value="{{ $id }}">
 
   <div class="col-12">
     <div class="input-group">
@@ -48,7 +47,7 @@
 
 @if (session('success'))
     <div class="alert alert-success">
-      <p><a href="{{ route('cahier.download', ['id' => $id]) }}">Télécharger le cahier de progrès</a></p>
+      <p><a href="{{ route('cahier.download', ['token' => session('token')]) }}">Télécharger le cahier de progrès</a></p>
     </div>
 @endif
 

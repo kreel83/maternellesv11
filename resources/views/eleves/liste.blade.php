@@ -68,6 +68,18 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="create-tab-pane" role="tabpanel" aria-labelledby="import-tab" tabindex="0">
+
+                    <!-- Validation Errors -->
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <form action="{{route('save_eleve')}}" method="post" enctype="multipart/form-data" style="font-size: 12px; padding-top: 10px;">
                         @csrf
             

@@ -113,5 +113,7 @@ Route::get('/register/step2/{role}/{ecole_id}/{token}', [RegisteredUserControlle
 Route::post('/register/step2', [RegisteredUserController::class, 'registrationStep2Post'])->name('registration.step2.post');
 Route::get('/register/step3/{role}/{ecole_id}/{token}', [RegisteredUserController::class, 'registrationStep3'])->name('registration.step3');
 Route::post('/register/step3', [RegisteredUserController::class, 'registrationStep3Post'])->name('registration.step3.post');
+Route::get('/register/step4', [RegisteredUserController::class, 'registrationStep4'])->name('registration.step4');
 //Route::get('/register/step4/{role}/{ecole_id}/{token}', [RegisteredUserController::class, 'registrationStep4'])->name('registration.step4');
-Route::get('/register/validation', [RegisteredUserController::class, 'valideUser'])->name('registration.validation');  // utilisé pour valider une adresse mail depuis email
+//Route::get('/register/validation', [RegisteredUserController::class, 'valideUser'])->name('registration.validation');  // utilisé pour valider une adresse mail depuis email
+Route::get('/register/validation/{token}', [RegisteredUserController::class, 'valideUser'])->name('registration.validation');  // utilisé pour valider une adresse mail depuis email

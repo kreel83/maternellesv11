@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use Browser;
+use Illuminate\Support\Facades\Redirect;
 use OpenAI\Laravel\Facades\OpenAI;
+use Illuminate\Support\Str;
 
 class CahierController extends Controller
 {
@@ -472,4 +474,48 @@ class CahierController extends Controller
         return 'ok';            
 
     }
+
+    public function envoiCahier() {
+        $enfants = Enfant::where([
+            ['user_id', Auth::id()],
+            ['reussite', 1]
+        ])->get();
+        $badEmails = [];
+        foreach ($enfants as $enfant) {
+            if (!filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL) && !filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
+                $badEmails[] = $enfant->prenom.' '.$enfant->nom;
+            }
+        }
+        return view('cahiers.envoi_parents')
+        ->with('badEmails', $badEmails);
+    }
+
+    public function envoiCahierPost(Request $request) {
+        $request->validate([
+            'valider' => ['required', 'string'],
+        ], [
+            'valider.required' => 'La saisie du mot VALIDER est obligatoire',
+            'valider.string' => 'Format incorrecte',
+        ]);
+
+        if(Str::lower($request->valider) != 'valider') {
+            return Redirect::back()->withInput()->withErrors(['msg' => 'Saisie incorrecte']);
+        }
+
+        $enfants = Enfant::where([
+            ['user_id', Auth::id()],
+            ['reussite', 1]
+        ])->get();
+        
+        foreach ($enfants as $enfant) {
+            PdfController::genereLienVersCahierEnPdf($enfant);
+            //dd($enfant->mail1);
+        }
+
+        return view('cahiers.envoi_parents_result');
+        
+        //dd($enfants);
+       
+    }
+
 }

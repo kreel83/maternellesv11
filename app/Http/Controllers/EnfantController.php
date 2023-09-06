@@ -6,6 +6,7 @@ use App\Models\Myperiode;
 use PDF;
 use Illuminate\Http\Request;
 use App\Models\Enfant;
+use App\Models\Reussite;
 use Illuminate\Support\Facades\Auth;
 use File;
 
@@ -44,6 +45,20 @@ class EnfantController extends Controller
 
         $enfants = Enfant::where('user_id', Auth::id())->get();
 
+        // Verifie les cahiers de reussite pour savoir si ils sont tous faits
+        // non existant dans la table / definitif = 0
+        // Ok si nombre de cahiers avec defintif = 1 est égal au nombre d'enfants dans la classe
+        $nbEnfants = Enfant::where([
+            ['user_id', Auth::id()],
+            ['reussite', 1]
+        ])->count();
+        $nbReussite = Reussite::where([
+            ['user_id', Auth::id()],
+            ['definitif', 1],
+        ])->count();
+        // bool flag pour autoriser l'envoi des PDFs
+        $canSendPDF = ($nbEnfants == $nbReussite);
+
     // foreach ($enfants as $enfant) {
     //     $degrade = Enfant::DEGRADE;
     //     $enfant->background = array_rand($degrade);
@@ -58,11 +73,12 @@ class EnfantController extends Controller
     //     $enfant->save();
     // }
 
-      
-
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
         
-        return view('reussite.index')->with('enfants', $enfants)->with('avatar', $avatar);
+        return view('reussite.index')
+            ->with('canSendPDF', $canSendPDF)
+            ->with('enfants', $enfants)
+            ->with('avatar', $avatar);
     }
 
     public function index() {

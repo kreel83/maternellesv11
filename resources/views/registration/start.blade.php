@@ -1,30 +1,26 @@
-@extends('layouts.parentLayout')
+@extends('layouts.createAccount')
 
 @section('content')
-    
-<p class="mt-3 text-center h1">Votre fonction au sein de l'établissement</p>
 
 <div class="row">
-    <div class="col-sm-6 mb-3 mb-sm-0">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Directrice / Directeur</h5>
-          <p class="card-text">Avec ou sans fonction d'enseignement.</p>
-          <a href="{{ route('registration.step1', ['role' => 'admin']) }}" class="btn btn-primary">Je m'inscrit</a>
-        </div>
+  <div class="d-inline-flex p-0">
+    <div class="card" style="width: 18rem;">
+      <img src="{{asset('img/account/compte-enseignant.jpg')}}" class="card-img-top img-fluid" alt="Création d'un compte enseignant">
+      <div class="card-body">
+        <h5 class="card-title">Enseignant(e)</h5>
+        <p class="card-text">Gestion de votre classe de maternelle et des cahiers de réussite.</p>
+        <a href="{{ route('registration.step1', ['role' => 'user']) }}" class="btn btn-primary">Je m'inscrit</a>
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Enseignant(e)</h5>
-          <p class="card-text">Utilisation du service pour gérer votre classe de maternelle.</p>
-          <a href="{{ route('registration.step1', ['role' => 'user']) }}" class="btn btn-primary">Je m'inscrit</a>
-        </div>
+    <div class="card" style="width: 18rem;">
+      <img src="{{asset('img/account/compte-admin.jpg')}}" class="card-img-top img-fluid" alt="Création d'un compte directeur">
+      <div class="card-body">
+        <h5 class="card-title">Directeur / Directrice</h5>
+        <p class="card-text">Administration des licences pour les enseignant(e)s de votre établissement.</p>
+        <a href="{{ route('registration.step1', ['role' => 'admin']) }}" class="btn btn-primary">Je m'inscrit</a>
       </div>
     </div>
+  </div>
 </div>
-
-<!--<p class="text-center mt-4"><a href="/">Accueil</a></p>-->
 
 @endsection  

@@ -17,6 +17,8 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserEmailVerificationSelfRegistration;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -246,8 +248,8 @@ class RegisteredUserController extends Controller
         );
 
         if($request->role == 'admin') {
-            array_push($rules, 'unique:users,ecole_id');
-            $msg = Arr::add($msg, 'ecole_id.unique', 'Un compte existe déjà pour cet identifiant.');
+            array_push($rules, 'unique:users,ecole_identifiant_de_l_etablissement');
+            $msg = Arr::add($msg, 'ecole_id.unique', 'Un compte administrateur existe déjà pour cet établissement.');
         }
 
         $request->validate([
@@ -302,7 +304,13 @@ class RegisteredUserController extends Controller
             return redirect()->route('registration.start');
         }
         $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
+        // test si l'email de l'ecole est sur un domaine académique
+        //$academique = Str::contains($ecole->mail, '@ac-');
+        $academique = Str::containsAll($ecole->mail, ['@ac-', '.fr']);
+        $domain = Str::after($ecole->mail, '@');
         return view('registration.step3')
+            ->with('academique', $academique)
+            ->with('domain', $domain)
             ->with('role', $request->role)
             ->with('ecole_id', $request->ecole_id)
             ->with('email', $ecole->mail)
@@ -317,6 +325,7 @@ class RegisteredUserController extends Controller
         }     
            
         $request->validate([
+            'emailondomain' => ['exclude_if:role,admin', 'required'],
             'role' => ['required', 'string', 'in:admin,user'],
             'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
             'name' => ['required', 'string', 'max:255'],
@@ -324,6 +333,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
+            'emailondomain.required' => 'Veuillez indiquer si votre adresse de courrier électronique est sur le domaine académique ou un service tiers.',
             'role.required' => 'Fonction manquante.',
             'role.in' => 'Fonction invalide.',
             'ecole_id.required' => 'Identifiant établissement manquant.',
@@ -341,24 +351,39 @@ class RegisteredUserController extends Controller
 
         ]);
 
-        $validationKey = md5(microtime(TRUE)*100000);
+        // test si email sur domaine académique dans le cas d'un user
+        if($request->role == 'user') {
+            if($request->emailondomain == '1') {                
+                $domain = Str::after($request->email, '@');
+                if($domain != $request->domain) {
+                    return Redirect::back()->withInput()->withErrors(['msg' => "L'adresse email ne correspond pas au domain académique : $domain"]);
+                }
+            }
+        }
+
+        $token = md5(microtime(TRUE)*100000);
 
         $user = User::create([
             'role' => $request->role,
-            'ecole_id' => $request->ecole_id,
+            'ecole_identifiant_de_l_etablissement' => $request->ecole_id,
             'name' => $request->name,
             'prenom' => $request->prenom,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'validation_key' => $validationKey,
+            'validation_key' => $token,
             //'licence' => 'self'
         ]);
 
         // Envoi d'un email de vérification
-        $token = md5($user->id.$validationKey.env('HASH_SECRET'));
-        $url = route('registration.validation').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
+        //$token = md5($user->id.$validationKey.env('HASH_SECRET'));
+        //$url = route('registration.validation').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
+        //$token = md5(microtime(TRUE)*100000);
+        $url = route('registration.validation', ['token' => $token]);
         if($request->role == 'user') {
             Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
+        }
+        if($request->role == 'admin') {
+            Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
         }
         //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
         
@@ -370,9 +395,12 @@ class RegisteredUserController extends Controller
         // php artisan config:clear
         // php artisan cache:clear
 
-
+        /*
         return view('registration.step4')
             ->with('email', $request->email);
+        */
+
+        return redirect()->route('registration.step4')->with('email', $request->email);
 
         /*
         return redirect()->route('registration.step4', [
@@ -387,6 +415,11 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         return redirect(RouteServiceProvider::HOME);
         */
+    }
+
+    public function registrationStep4()
+    {
+        return view('registration.step4');
     }
 
     /*
@@ -405,19 +438,12 @@ class RegisteredUserController extends Controller
     public function valideUser(Request $request): View
     {
         // appelé depuis lien dans email
-        $token = md5($request->uID.$request->key.env('HASH_SECRET'));
-        if($token != $request->token) {
-            $user = null;
-        } else {
-            $user = User::where([
-                ['id', $request->uID],
-                ['validation_key' , $request->key]
-                ])->first();
-            if(!is_null($user)) {
-                $user->actif = 1;
-                $user->save();
-                // Auth::login($user);  // A VOIR si on log automatiquement à la validation
-            }
+        $user = User::where('validation_key', $request->token)->first();
+        if(!is_null($user)) {
+            $user->actif = 1;
+            $user->validation_key = null;
+            $user->save();
+            // Auth::login($user);  // A VOIR si on log automatiquement à la validation
         }
         return view("registration.validation_self")
             ->with('user', $user);

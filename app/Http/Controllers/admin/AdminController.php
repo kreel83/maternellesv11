@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function index(): View
     {
         $enseignants = User::where([
-            ['ecole_id', Auth::user()->ecole_identifiant_de_l_etablissement],
+            ['ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement],
             ['id', '<>', Auth::id()],
         ])->get();
         return view('admin.index')
@@ -30,7 +30,7 @@ class AdminController extends Controller
     public function voirClasse($id): View
     {
         $enseignants = User::where([
-            ['ecole_id', Auth::user()->ecole_identifiant_de_l_etablissement],
+            ['ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement],
             ['id', '<>', Auth::id()],
         ])->get();
         $listeDesEleves = Enfant::where('user_id', $id)->get();
@@ -76,7 +76,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();        
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
-            ->where('identifiant_de_l_etablissement', $user->ecole_id)
+            ->where('identifiant_de_l_etablissement', $user->ecole_identifiant_de_l_etablissement)
             ->first();
         $adresseEcole = $ecole->nom_etablissement;
         if($ecole->adresse_1 != '') { $adresseEcole .= ', '.$ecole->adresse_1; }
