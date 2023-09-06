@@ -14,7 +14,6 @@ class Commentaire extends Model
 
 
 
-    public function texte($enfant) {
-        return Utils::traitement($this->texte, $enfant);
-    }
+
+
 }

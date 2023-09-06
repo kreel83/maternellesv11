@@ -9,6 +9,7 @@ use App\Models\Equipe;
 use App\Models\Resultat;
 use App\Models\Configuration;
 use App\Models\Section;
+use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,9 +85,41 @@ class ParametreController extends Controller
     }
 
 
+    private function chatpht($reussite) {            
+        $content = "Met au féminin la phrase suivante : ".$reussite;
+        $result = OpenAI::chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'user', 
+                'content' => $content],
+            ],
+           
+        ]);
+        
+        return $result['choices'][0]['message']['content'];
+    }
+
     public function monprofil() {
 
 
+        // $coms = Item::all();
+        // foreach ($coms as $com) {
+        //     if (($com->phrase_feminin == null) && ($com->phrase_masculin != null)) {
+        //         $com->phrase_feminin = $com->phrase_masculin;
+        //         $com->save();
+
+        //     }
+        // }
+
+
+        // $cs = Item::all();
+        // foreach($cs as $item) {
+        //     $r = $item->phrase;
+        //     $r = str_replace("@pronom@","il", $r);
+            
+        //     $item->phrase = $r;
+        //     $item->save();
+        // }
 
         $user = Auth::user();
         $equipes = json_decode($user->equipes, true);
@@ -239,7 +272,9 @@ class ParametreController extends Controller
         } else {
             $phrase = Commentaire::find($request->id);
         }
-        $phrase->texte = strip_tags($request->quill);
+        $phrase->phrase_masculin = strip_tags($request->quill);
+        $phrase->phrase_feminin = $this->chatpht($phrase->phrase_masculin);
+
         $phrase->save();
         $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', $request->section)->get();
         return view('parametres.phrases.__tableau_des_phrases')->with('commentaires', $commentaires);

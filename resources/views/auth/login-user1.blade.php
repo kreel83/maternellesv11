@@ -16,7 +16,7 @@
         
           <div class="card_login" style="border-radius: 1rem; overflow: hidden">
             <div class="row g-0 h-100">
-              <div class="col-md-5 col-lg-5 d-flex align-items-center p-5" style="background-color: #6759FF; color: white !important">
+              <div class="col-md-5 col-lg-5 d-flex align-items-center p-5" style="background-color: var(--main-color); color: white !important">
                 <div class="card-body p-4 p-lg-5"  >
   
                   <x-auth-session-status class="mb-4" :status="session('status')" />

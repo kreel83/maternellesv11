@@ -17,12 +17,9 @@ use Illuminate\Support\Facades\Auth;
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <script src="//cdn.quilljs.com/1.3.6/quill.js" defer></script>
-        <script src="//cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
         
         <!-- Theme included stylesheets -->
         <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
-        
 
 
 
@@ -51,20 +48,20 @@ use Illuminate\Support\Facades\Auth;
             {{-- <a href="{{route('enfants')}} " class="dashboard-nav-item {{$menu == 'classe' ? 'active' : null}}"><i class="fal fa-users"></i> Ma classe </a> --}}
 
             @php
-            $params = in_array($menu, ['evaluation','cahier','affectation_groupe']);
+            $params = in_array($menu, ['evaluation','reussite','affectation_groupe','avatar']);
           @endphp
 
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-cog"></i> Ma classe </a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-users"></i> Ma classe </a>      
 
               <div class='dashboard-nav-dropdown-menu'>
 
-                <a href="{{route('enfants')}} " class="dashboard-nav-dropdown-item {{$menu == 'evaluation' ? 'active' : null}}">Evaluations</a>
-                <a href="{{route('reussite')}}" class="dashboard-nav-dropdown-item {{$menu == 'cahier' ? 'active' : null}}">Cahiers de réussite</a>
-                <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
+                <a href="{{route('enfants',["type" => "evaluation"])}} " class="dashboard-nav-dropdown-item {{$menu == 'evaluation' ? 'active' : null}}">Evaluations</a>
+                <a href="{{route('enfants',["type" => "reussite"])}}" class="dashboard-nav-dropdown-item {{$menu == 'reussite' ? 'active' : null}}">Cahiers de réussite</a>
+                <a href="{{route('enfants',["type" => "avatar"])}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a>
+                <a href="{{route('enfants',["type" => "affectation_groupe"])}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
 
-                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Je choisis les avatars</a>
               </div>
             </div>
             {{-- <div class='dashboard-nav-dropdown'>
@@ -91,7 +88,7 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
               @php
-                $params = in_array($menu, ['affectation_groupe','commentaire','mdp','eleve','item','aide','ecole','groupe']);
+                $params = in_array($menu, ['affectation_groupe','commentaire','periode','eleve','item','aide','ecole','groupe','avatar']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
@@ -105,9 +102,9 @@ use Illuminate\Support\Facades\Auth;
                 {{-- <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a> --}}
                 {{-- <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a> --}}
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
-                <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a>
+                {{-- <a href="{{route('affectation_groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'affectation_groupe' ? 'active' : null}}">Affectation des groupes</a> --}}
                                 <a href="{{route('periode')}}" class="dashboard-nav-dropdown-item {{$menu == 'periode' ? 'active' : null}}">Mes périodes scolaires</a>
-                <a href="{{route('photos')}}" class="dashboard-nav-dropdown-item {{$menu == 'photos' ? 'active' : null}}">Je choisis les avatars</a>
+                {{-- <a href="{{route('avatar')}}" class="dashboard-nav-dropdown-item {{$menu == 'avatar' ? 'active' : null}}">Je choisis les avatars</a> --}}
               </div>
             </div>
 
@@ -115,10 +112,10 @@ use Illuminate\Support\Facades\Auth;
               $params = in_array($menu, ['monprofil','monpasse']);
             @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon compte</a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-user"></i> Mon compte</a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
-                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Mot de passe</a>
+                {{-- <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Mot de passe</a> --}}
               </div>
             </div>
             <!--<a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>-->
@@ -127,7 +124,7 @@ use Illuminate\Support\Facades\Auth;
               $params = in_array($menu, ['souscrire','resilier','reactiver','facture']);
             @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
-              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-solid fa-dove"></i> Mon abonnement</a>      
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-dove"></i> Mon abonnement</a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('subscribe.cardform')}}" class="dashboard-nav-dropdown-item {{$menu == 'souscrire' ? 'active' : null}}">Souscrire un abonnement</a>
                 <a href="{{route('subscribe.cancel')}}" class="dashboard-nav-dropdown-item {{$menu == 'resilier' ? 'active' : null}}">Résilier mon abonnement</a>
@@ -138,7 +135,7 @@ use Illuminate\Support\Facades\Auth;
 
             <a class="dashboard-nav-item  {{ $menu == 'contact' ? 'active' : null }}" href="{{route('contact')}}"><i class="fa-regular fa-envelope"></i> Nous contacter</a>
             <div class="nav-item-divider"></div>
-            <a href="{{route('deco')}}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+            <a href="{{route('deco')}}" class="dashboard-nav-item"><i class="fal fa-sign-out-alt"></i> Se déconnecter</a>
 
           </nav>
       </div>

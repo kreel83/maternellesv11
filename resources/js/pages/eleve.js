@@ -142,17 +142,24 @@ const preview_photo = (event) => {
 
     $(document).on('click','.badge_termes', function() {
         
-        var el = $(this).closest('.card-eleve')
+        var el = $(this).closest('.footer')
         $(el).find('.badge_termes').removeClass('active')
-        $(this).addClass('active')
-        var id = $(this).closest('.card-eleve').data('eleve')
+        //$(this).addClass('active')
+        var id = $(el).data('enfant')
+        var ordre = $('#ordre').val()
 
         var order =  $(this).data('order')
-        $(el).css('border-color', $(this).data('color'))
+        var card = $(this).closest('.card-enfant')
+
+        $(card).find('.groupe-terme').css('background-color', $(this).data('color'))
+        $(card).find('.groupe-terme').text($(this).text())
+        $(card).find('.groupe-terme').removeClass('d-none')
 
 
         $.get('/app/groupe/affectation?eleve='+id+'&order='+order, function(data) {
-            console.log(data)
+            if (ordre == 'groupe') {
+                window.location.reload()
+            }
         })
     })
 
@@ -242,6 +249,17 @@ const photo_eleve = () => {
         $('#mail1_form').val(mails[0])
         $('#mail2_form').val(mails[1])
         $('#eleve_form').val(data.id)
+        if (data.sh == 1 ) {
+            $('#sh').attr('checked',true)
+        }  else {
+            $('#sh').attr('checked',false)
+        }
+        if (data.reussite == 1 ) {
+            $('#reussite').attr('checked',true)
+        }  else {
+            $('#reussite').attr('checked',false)
+        }
+      
         console.log(data)
     })
 
@@ -343,13 +361,14 @@ const photo_eleve = () => {
         
  
     })
-    $(document).on('click','.degrade_card_enfant', function() {
+    $(document).on('click','#valideAvatar', function() {
+
         if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
 
-        var enfant = $('#choix_enfant_select').val()
+        var enfant = $('#eleveCard').data('enfant')
         console.log(enfant)
-        var background = $(this).attr('data-degrade')
-        var animaux = $(this).attr('data-animaux')
+        var background = $('.degrade_card_enfant').attr('data-degrade')
+        var animaux = $('.degrade_card_enfant').attr('data-animaux')
         $.get('/app/eleves/setAnimaux?background='+background+'&enfant='+enfant+'&animaux='+animaux, function(data) {
 
 
@@ -371,7 +390,7 @@ const photo_eleve = () => {
 
     })
 
-    $(document).on('click','.animaux', function() {
+    $(document).on('click','#photos .animaux', function() {
         var html = $(this).html()
         var animaux = $(this).data('animaux')
 

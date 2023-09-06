@@ -13,7 +13,14 @@ class Item extends Model
     public static $FIRE_EVENTS = true;
 
 
+    public $image_name;
 
+    // const NOTATION = [
+    //     "0" => ["backgroundColor" => "rgb(105,240,174)",'textColor' => 'black'],
+    //     "1" => ["backgroundColor" => "rgb(68,138,174)",'textColor' => 'white'],
+    //     "2" => ["backgroundColor" => "rgb(105,240,174)",'textColor' => 'black'],
+    //     "3" => ["backgroundColor" => "rgb(105,240,174)",'textColor' => 'black'],
+    // ];
 
 
     protected $dispatchesEvents = [
@@ -28,14 +35,13 @@ class Item extends Model
         return $this->belongsTo('App\Models\Image');
     }
 
-    public function phrase($enfant) {
-        return Utils::traitement($this->phrase, $enfant);
-    }
+
 
     public function resultat($enfant) {
         $arr = [0 => null, 1 => "En voie d'acquisition", 2 => "Acquis"];
         $r = Resultat::where('enfant_id', $enfant)->where('item_id', $this->id)->first();
         if (!$r) return null;
+        if ($r->autonome == 0 && $r->notation == 2) $arr[$r->notation] = $arr[$r->notation].' avec aide';
         return [$r->notation, $r->autonome, $arr[$r->notation ?? null]];
     }
 

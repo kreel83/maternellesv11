@@ -1,63 +1,138 @@
 
-#pdf {
+#pdf, #reactualiser {
+    position: absolute;
+    top:0;
+    right:0;
     height: 36px;
+    text-decoration: none;
     &:focus, &:active {
         text-decoration: none;
     }
-}
-.ql-toolbar {
-    background-color: #7769FE;
-    .ql-stroke {
-        stroke: white;
-    }
-    .ql-picker-label {
-        color: white;
-        &.hover {
-            color: red;
-        }
-    }
 
 }
 
-.ql-formats button {
-    color: white;
-}
 
 #definitif {
     width: 80px;
-    height: 34px;
+    height: 28px;
     z-index: 6000;
     cursor: pointer;
     position: absolute;
-    top: 0;
+    top: 3px;
     left: 40px;
-    border-color: #7769FE;
+    border-color: var(--main-color);
+    border: 2px solid white;;;
+    outline: 2px solid white;;;
+
+    &:focus, &:active {
+        border: 2px solid white;
+        border-inline: none;
+        outline: 2px solid white;;
+        box-shadow: none;
+    }
 
 }
 
-#definitif:checked {
-    background-color: #7769FE;
+
+.cadre_activites_acquises {
+    .titreInsideCahier {
+        top: -14px; left: 30px;
+        padding: 4px 8px;
+        border-radius: 14px;
+        background-color: white;
+        color: var(--main-color);
+        border : 1px solid var(--main-color)
+    }
+    .phraseInsideCahier {
+        overflow-Y: auto;
+        height: 200px;
+        padding-top: 50px;
+        padding: 4px; 
+    }
+    margin: 10px 0; 
+    border-radius: 15px;
+    background-color: var(--main-color);
     color: white;
-    border-color: #7769FE;
+    padding-top: 30px;
+    font-size: 0.9rem;
+    height: 250px; 
+    
+}
+
+.cadre_commentaire_complementaire {
+    .titreInsideCahier {
+        top: -14px; left: 30px;
+        padding: 4px 8px;
+        border-radius: 14px;
+        background-color: white;
+        color: var(--main-color);
+        border : 1px solid var(--main-color);
+        padding: 4px; 
+    }
+    .phraseInsideCahier {
+        overflow-Y: auto;
+        height: 200px;
+        padding-top: 30px;
+    }
+    margin: 10px 0; 
+    border-radius: 15px; 
+    height: 250px; 
+    padding-top: 30px;
+    background-color: white;
+    .badge_phrase_selected {
+        padding: 2px;
+        color: var(--main-color);
+        border-radius: 5px;
+        margin-bottom: 5px;;
+        font-size: 0.9rem;
+        cursor: pointer;
+        &:hover {
+           opacity: 0.5;
+        }
+    }
+}
+
+#definitif:checked {
+    background-color: var(--main-color);
+    color: white;
+    border-color: var(--main-color);
   }
 
   .labelDefinitif {
     position: absolute;
-    top: 4px;
-    left: 0px;
-    width: 200px;
+
+    width: 300px;
     height: 34px;
     
-    color: #7769FE;
+    color: var(--main-color);
     font-weight: 700;
     padding-top: 2px;;
-    font-size: 20px;
+    font-size: 14px;
     z-index: 4;
+    line-height: 30px;
 
-    border: 2px solid #7769FE;
+    border: 2px solid var(--main-color);
     border-radius: 40px;
-    padding-left: 100px;
+    &.labelDefinitifDroit {
+        top: 4px;
+        left: 0px;
+        padding-left: 180px;    
+        &.active {
+            background-color: var(--main-color);   
+            color: white;
+        }
+    }
+    &.labelDefinitifGauche {
+        top: 4px;
+        left: -216px;
+        padding-left: 15px;    
+      &.active {
+          background-color: var(--main-color);   
+          color: white;
+      }
+    }
   }
+
 
 #cahierView {
     #choixFiche {
@@ -95,7 +170,7 @@
         overflow-y: auto;
         .badge_phrase {
             padding: 2px;
-            color: #7769FE;
+            color: var(--main-color);
             border-radius: 5px;
             margin-bottom: 5px;;
             font-size: 0.9rem;
@@ -104,6 +179,7 @@
                opacity: 0.5;
             }
         }       
+       
     }
 
 

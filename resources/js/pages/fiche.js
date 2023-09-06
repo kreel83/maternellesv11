@@ -7,6 +7,13 @@ const selectSectionFiche = (quill) => {
         $('.tiret_selection[data-id="'+id+'"]').removeClass('d-none')
         $('.card_fiche').addClass('d-none')
         $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
+        $('#SectionName').addClass('big')
+
+    })
+    $(document).on('mouseenter','.selectSectionFiche', function() {
+        var titre = $(this).data('titre')
+        $('#SectionName').html(titre)
+        $('#SectionName').removeClass('big')
 
     })
 }
@@ -221,6 +228,10 @@ const photoEnfant = () => {
 }
 
 const setMotCleFiche= (quill) => {
+    if ($('#editor3').length) {
+        quill.setText($('#editor3').data('phrase'));
+    }
+
     $('.motCleFiche .item').on('click', function() {
         var data = $(this).data('reg')
         var selection = quill.getSelection(true);

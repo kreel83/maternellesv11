@@ -48,13 +48,13 @@
 </style>
 
 
-<div class="d-flex flex-wrap container">
+<div class="d-flex flex-wrap container mt-5">
 @foreach ($eleves as $eleve)
     @php
-        if ($eleve->groupe != null) {
-            $c = $groupes[$eleve->groupe]['backgroundColor'];
-        } else {
+        if (is_null($eleve->groupe)) {
             $c = 'transparent';
+        } else {
+            $c = $groupes[$eleve->groupe]['backgroundColor'];
         }
      
         

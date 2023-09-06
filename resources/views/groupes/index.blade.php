@@ -6,10 +6,10 @@
 @endphp
     <style>
         #myTabContent {
-            background-color: purple;
+            background-color: var(--second-color);
         }
         .terme.selected {
-            outline: 2px solid purple;
+            outline: 2px solid  var(--second-color);
             border-radius: 40px;
         }
 
@@ -44,23 +44,23 @@
         }
     </style>
 
-    <div id="page_groupes" class="row vh-100">
+    <div id="page_groupes" class="row gx-0 vh-100">
         <div class="col-md-6 p-5" id="termes-tab-pane">
             <form action="{{ route('saveTermes') }}" method="POST">
                 @csrf
                 <label for="">Nombre de groupes</label>
                 <input type="number" value="{{$nbGroupe ?? 2}}"  min="2" max="4" class="form-control" id="nbGroupe" name="nbGroupe">
 
-                @foreach($groupes as $key=>$groupe)
-                <div class="icone-input my-4 terme {{$key == 0 ? 'selected' : null}}" id="terme{{$key+1}}">
-                    <div class="badge_terme"  style="background-color:{{$groupe['backgroundColor'] ?? Enfant::GROUPE_COLORS["1"]}}; color: {{$groupe['textColor'] ?? '#FFFFFF'}}">{{ $groupe['name'] ?? null }}</div>
-                    <input type="hidden" class="policeColor" name="font[]"   value="{{$groupe['textColor'] ?? '#FFFFFF'}}">
-                    <input type="hidden" class="fondColor" name="back[]"   value="{{$groupe['backgroundColor'] ??Enfant::GROUPE_COLORS["1"]}}">
+               
+                <div class="icone-input my-4 terme " id="terme1">
+                    <div class="badge_terme"  style="background-color:{{$groupes[0]['backroundColor'] ?? Enfant::GROUPE_COLORS["1"]}}; color: {{$groupes[0]['textColor'] ?? '#FFFFFF'}}">{{ $groupes[0]['name'] ?? null }}</div>
+                    <input type="hidden" class="policeColor" name="font[]"   value="{{$groupes[0]['textColor'] ?? '#FFFFFF'}}">
+                    <input type="hidden" class="fondColor" name="back[]"   value="{{$groupes[0]['backroundColor'] ??Enfant::GROUPE_COLORS["1"]}}">
                     <input type="text" class="custom-input  br-40" name="termes[]"
-                    value="{{ $groupe['name'] ?? null }}" placeholder="Terme n°{{$key + 1}}" />
+                    value="{{ $groupes[0]['name'] ?? null }}" placeholder="Terme n°1" />
                 </div>
-                @endforeach
-                {{-- <div class="icone-input my-4 terme " id="terme2">
+            
+                <div class="icone-input my-4 terme " id="terme2">
                     <div class="badge_terme"  style="background-color:{{$groupes[1]['backroundColor'] ?? Enfant::GROUPE_COLORS["2"]}}; color: {{$groupes[1]['textColor'] ?? '#FFFFFF'}}">{{ $groupes[1]['name'] ?? null }}</div>
                     <input type="hidden" class="policeColor" name="font[]"   value="{{$groupes[1]['textColor'] ?? '#FFFFFF'}}">
                     <input type="hidden" class="fondColor" name="back[]"   value="{{$groupes[1]['backroundColor'] ??Enfant::GROUPE_COLORS["2"]}}">
@@ -80,7 +80,7 @@
                     <input type="hidden" class="fondColor" name="back[]"   value="{{$groupes[3]['backroundColor'] ??Enfant::GROUPE_COLORS["4"]}}">
                     <input type="text" class="custom-input  br-40" name="termes[]"
                     value="{{ $groupes[3]['name'] ?? null }}" placeholder="Terme n°4" />
-                </div> --}}
+                </div>
 
 
 

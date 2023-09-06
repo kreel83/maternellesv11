@@ -3,14 +3,14 @@
 @section('content')
 <div class="container" id="phrasesView">
 <div class="form-group" style="margin-top: 40px">
-    <div data-section="{{ $section }}" class="liste_section mb-5">
+    <div data-section="{{ $section }}" class="liste_section">
         <div class="section_container">
 
 
             @foreach ($sections as $sec)
                 <div class="d-flex flex-column align-items-center">
                     <div class='sectionPhrase selectSectionFiche {{ $sec->id == $section ? 'selected' : null }}'
-                        data-value="{{ $sec->id }}" data-section="{{ $sec->id }}"                        
+                        data-value="{{ $sec->id }}" data-section="{{ $sec->id }}" data-titre="{{$sec->name}}"                        
                          style="background-color: {{ $sec->color }}">
                         <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
                             height="45px">
@@ -31,6 +31,12 @@
         </div>
 
 
+        <div id="SectionName">
+            {{$sections[0]->name}}
+        </div>
+
+
+
     </div>
 
 
@@ -43,9 +49,9 @@
                 <option value="99" {{$section == 99 ? "selected" : null}}>Commentaire général</option>
         </select> --}}
     </div>
-    <div class="form-group" style="margin: 20px 0">
+    <div class="form-group">
         <label for="">Liste des phrases de cette discipline</label>
-        <div id="tableCommentaireContainer">
+        <div id="tableCommentaireContainer" class="my-4">
             
             @include('parametres.phrases.__tableau_des_phrases')
 
@@ -62,12 +68,24 @@
         </div>
 
         <div id="editor2" data-section="" style="height: 100px"></div>
+
+        {{-- <div class="row" >
+        <div class="col-md-6">
+            <label for="">Phrase pour les garcons</label>
+            <textarea class="form-control masculin_area" style="font-size: 16px" rows="10"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label for="">Phrase pour les filles</label>
+            <textarea class="form-control feminin_area" style="width: 100%" rows="10"></textarea>
+
+        </div>
+        </div> --}}
+        
         <div style="margin-top: 20px">
             <table class="table table-bordered table-hover" id="motCle" style="cursor: pointer;">
                 <tr style="text-align: center">
-                    <td data-reg="@name@">prénom</td>
-                    <td data-reg="@ilelle@">pronom personnel</td>
-                    <td data-reg="*e*">feminin / masculin</td>
+                    <td data-reg="L'élève ">prénom</td>
+
                 </tr>
 
             </table>

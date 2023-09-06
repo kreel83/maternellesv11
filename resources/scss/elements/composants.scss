@@ -149,23 +149,34 @@ input[type='email']::placeholder {
  
   }
 
+  .custom-container {
+    margin: 0 8rem;
+  }
 
 
   .periode1 {
     font-size: 20px;
     font-weight: bolder;
-    border-bottom: 3px solid green !important;
+    background-color:rgb(179, 209, 179);
+    &.start {
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+    }
+    &.end {
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+    }
   }
 
   .periode2 {
     font-size: 20px;
     font-weight: bolder;
-    border-bottom: 3px solid blue !important;
+    background-color:  rgb(174, 174, 240) !important;
   }
   .periode3 {
     font-size: 20px;
     font-weight: bolder;
-    border-bottom: 3px solid orange !important;
+    background-color:  rgba(247, 172, 33, 0.669) !important;
   }
   .periodeCadre1 {
     border-radius: 16px;

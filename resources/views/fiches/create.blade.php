@@ -102,7 +102,7 @@
                 {{-- @php
                 if($itemactuel) dd($itemactuel->phrase);
                 @endphp --}}
-                <div id="editor3" class="mt-3" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
+                <div id="editor3" class="mt-3" data-phrase="{{$itemactuel->phrase_masculin}}" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
                 <textarea class="mt-3 d-none" name="phrase" id="phraseForm" style="width: 100%" rows="5" > {!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</textarea>
 
                 <style>
@@ -113,9 +113,9 @@
                         }
                 </style>
                 <div class="d-flex mb-5 motCleFiche">
-                    <div data-reg="@name@" class="item btnCommun me-2">prénom</div>
-                    <div data-reg="@ilelle@" class="item btnCommun me-2">pronom personnel</div>
-                    <div data-reg="*e*" class="item btnCommun">feminin / masculin</div>
+                    <div data-reg="L'élève " class="item btnCommun me-2">prénom</div>
+                    {{-- <div data-reg="@ilelle@" class="item btnCommun me-2">pronom personnel</div>
+                    <div data-reg="*e*" class="item btnCommun">feminin / masculin</div> --}}
                     {{-- <table class="table table-bordered table-hover" id="motCleFiche" style="cursor: pointer;">
                         <tr style="text-align: center">
                             <td data-reg="@name@">prénom</td>
@@ -148,7 +148,7 @@
             <div class="d-flex flex-wrap" style="height: 80vh; overflow-y: auto; background-color: #7769FE;">
                 @foreach ($images as $image)
                 <div class="selectImage" data-id="{{$image->id}}" data-image="{{$image->name}}" >
-                    <img src="{{asset('img/items/'.$image->name)}}" alt="" width="80">
+                    <img src="{{asset('img/items/'.$image->name)}}" alt="" width="100%">
 
                 </div>
                 @endforeach

@@ -41,9 +41,16 @@ class EnfantController extends Controller
         return redirect()->back()->withError('non non non ');
     }
 
-    public function reussite() {
+    public function reussite(Request $request) {
 
         $enfants = Enfant::where('user_id', Auth::id())->get();
+        $ordre = $request->ordre ?? 'alpha';
+        switch($ordre) {
+            case 'age' : $enfants = Enfant::where('user_id', Auth::id())->orderBy('ddn','DESC')->get();break;
+            case 'alpha' : $enfants = Enfant::where('user_id', Auth::id())->orderBy('prenom')->get();break;
+            case 'groupe' : $enfants = Enfant::where('user_id', Auth::id())->get();$enfants = $enfants->groupBy('groupe');break;
+        }
+        
 
         // Verifie les cahiers de reussite pour savoir si ils sont tous faits
         // non existant dans la table / definitif = 0
@@ -77,18 +84,27 @@ class EnfantController extends Controller
         
         return view('reussite.index')
             ->with('canSendPDF', $canSendPDF)
+            ->with('ordre', $ordre )
             ->with('enfants', $enfants)
             ->with('avatar', $avatar);
     }
 
-    public function index() {
-
+    public function index(Request $request) {
         $enfants = Enfant::where('user_id', Auth::id())->get();
-      
+        $ordre = $request->ordre ?? 'alpha';
+        switch($ordre) {
+            case 'age' : $enfants = Enfant::where('user_id', Auth::id())->orderBy('ddn','DESC')->get();break;
+            case 'alpha' : $enfants = Enfant::where('user_id', Auth::id())->orderBy('prenom')->get();break;
+            case 'groupe' : $enfants = Enfant::where('user_id', Auth::id())->get();$enfants = $enfants->groupBy('groupe');break;
+        }
 
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
         
-        return view('enfants.index')->with('enfants', $enfants)->with('avatar', $avatar);
+        return view('enfants.index')
+            ->with('type', $request->type)
+            ->with('ordre', $ordre)
+            ->with('enfants', $enfants)
+            ->with('avatar', $avatar);
     }
 
 

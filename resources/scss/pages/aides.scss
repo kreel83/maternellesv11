@@ -15,12 +15,12 @@
     }
 
     .addAide {
-        border: 1px solid #7769FE;
+        border: 1px solid var(--main-color);
         width: 100px;
         height: 100px;
         position: absolute;
         border-radius: 50%;
-        background-color: #7769FE;
+        background-color: var(--main-color);
         bottom: 130px;
         right: 130px;
         display: flex;
@@ -34,7 +34,7 @@
         width: 400px;
         height: 200px;
         margin: 16px;
-        border: 1px solid #7769FE;
+        border: 1px solid var(--main-color);
         padding: 16px;
         border-radius: 15px;
         display: flex;
@@ -59,7 +59,7 @@
             }
             .prenom {
                 font-size: 26px;
-                color: #7769FE;
+                color: var(--main-color);
                 font-weight: 700;
             }
             .fonction {
@@ -79,7 +79,7 @@
                 outline: none;
                 margin: 0 8px;
                 height: 35px;
-                background-color: #7769FE;
+                background-color: var(--main-color);
                 display: flex;
                 justify-content: center;
                 align-items: center;
