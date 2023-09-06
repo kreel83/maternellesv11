@@ -136,6 +136,8 @@ Route::middleware(['auth','abo'])->group(function () {
     //Route::get('/home', [HomeController::class, 'index'])->name('home');
     //Route::get('/deco', [UserController::class, 'deco'])->name('deco');
     Route::get('/choix_enfant_select', [EleveController::class, 'choix_enfant_select'])->name('choix_enfant_select');
+    Route::get('/enfants/cahier/envoi', [CahierController::class, 'envoiCahier'])->name('envoiCahier');
+    Route::post('/enfants/cahier/envoi', [CahierController::class, 'envoiCahierPost'])->name('envoiCahier.post');
 
     Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
 

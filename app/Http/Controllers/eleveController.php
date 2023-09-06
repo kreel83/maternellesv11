@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class EleveController extends Controller
@@ -116,8 +117,25 @@ class EleveController extends Controller
     }
 
     public function save(Request $request) {
+
+        /*
+        $request->validate([
+            'nom' => ['required', 'string', 'max:255'],
+            'prenom' => ['required', 'string', 'max:255'],
+            'mail' => ['required', 'string', 'email', 'max:255'],
+        ], [
+            'nom.required' => 'Le nom est obligatoire.',
+            'nom.max' => 'Le nom est limité à 255 caractères.',
+            'prenom.required' => 'Le prénom est obligatoire.',
+            'prenom.max' => 'Le prénom est limité à 255 caractères.',
+            'email.required' => 'Adresse mail obligatoire.',
+            'email.max' => 'Adresse mail limitée à 255 caractères.',
+            'email.unique' => 'Un compte existe déjà pour cette adresse mail.',
+        ]);
+        */
+
         $datas = $request->except(['_token']);
-        
+
         $datas['mail'] = join(';', array_filter($datas['mail']));
         $datas['user_id'] = Auth::id();
         $datas['sh'] = isset($datas['sh']) ? 1 : 0;

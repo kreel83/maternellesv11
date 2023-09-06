@@ -17,7 +17,6 @@ class DataController extends Controller
     public function chargerLaClasse() {
         try {
             $user = auth('sanctum')->user();
-	        
             $groupes = $user->configuration->groupes;
             $groupes = json_decode($groupes);
             foreach ($groupes as $key=>$groupe) {
@@ -29,10 +28,14 @@ class DataController extends Controller
             $all['textColor'] = '#000000';
             $all['id'] = -1;
             $groupes[$key+1] = json_decode(json_encode($all));
-       
-	        $user->setVisible(['id','name','prenom']);
 
+	        $user->setVisible(['id','name','prenom']);
+            
+            $dispatcher = Enfant::getEventDispatcher();
+            Enfant::unsetEventDispatcher();
             $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('user_id', $user->id)->get();
+            Enfant::setEventDispatcher($dispatcher);
+
             $sections = Section::select('id','court')->get();
             $resultats = Resultat::select('id','item_id','enfant_id','notation','section_id','autonome')
                 ->where('user_id', $user->id)
@@ -42,7 +45,7 @@ class DataController extends Controller
 	            ->join('fiches', 'fiches.item_id', '=', 'items.id')
                 ->where('fiches.user_id', $user->id)
                 ->get();
-
+                
             return response()->json([
                 'success' => true,
 	            'groupes' => $groupes,
@@ -54,6 +57,7 @@ class DataController extends Controller
             ], 200);
 
         } catch (\Throwable $th) {
+            dd($th);
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage()
@@ -73,6 +77,7 @@ class DataController extends Controller
                 'user_id' => $user->id,
                 'groupe' => $request->groupe,
                 'autonome' => $request->autonome,
+                'periode' => $user->configuration->periode,
             ]);
 
             return response()->json([

@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 use App\Models\Event;
 use App\Models\Configuration;
-
 use App\Notifications\ResetPassword;
-
+use Illuminate\Support\Facades\Log as FacadesLog;
 use Laravel\Sanctum\HasApiTokens;
 
 
@@ -23,6 +22,22 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
     use Billable, HasApiTokens;
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($user) {
+	        //FacadesLog::info('User Created Event:'.$user);
+            Configuration::create(['user_id' => $user->id]);
+	    });
+
+        static::deleted(function($user) {
+	        //FacadesLog::info('User Deleted Event:'.$user);
+            Configuration::where('user_id', $user->id)->delete();
+	    });
+	    
+	}
 
      /**
      * @param string $role

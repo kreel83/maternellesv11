@@ -20,7 +20,7 @@ class DeleteInactiveUsers extends Command
      *
      * @var string
      */
-    protected $description = 'Supprime les utilisateurs non actif au bout de 30 minutes';
+    protected $description = 'Supprime les utilisateurs non actifs au bout de 30 minutes';
 
     /**
      * Execute the console command.
