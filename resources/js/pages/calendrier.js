@@ -49,9 +49,9 @@ const initCalendrier = () => {
         conges = JSON.parse(conges)
         conges.forEach(function (element) {
             console.log(element)
-            $('.day[data-all="' + element.start + '"]').addClass('start conges')
+            $('.day[data-all="' + element.start + '"]').addClass('conges')
             $('.day[data-all="' + element.start + '"]').prop('title', element.libele)
-            $('.day[data-all="' + element.end + '"]').addClass('end conges')
+            $('.day[data-all="' + element.end + '"]').addClass('conges')
             $('.day[data-all="' + element.end + '"]').prop('title', element.libele)
             for (var i = element.start + 1; i < element.end; i++) {
                 $('.day[data-all="' + i + '"]').addClass('between conges')
@@ -93,9 +93,9 @@ const initCalendrierPeriodes = () => {
         periodes = JSON.parse(periodes);
         conges = JSON.parse(conges)
         conges.forEach(function (element) {
-            $('.day[data-all="' + element.start + '"]').addClass('start conges')
+            $('.day[data-all="' + element.start + '"]').addClass('conges')
             $('.day[data-all="' + element.start + '"]').prop('title', element.libele)
-            $('.day[data-all="' + element.end + '"]').addClass('end conges')
+            $('.day[data-all="' + element.end + '"]').addClass('conges')
             $('.day[data-all="' + element.end + '"]').prop('title', element.libele)
             for (var i = element.start + 1; i < element.end; i++) {
                 $('.day[data-all="' + i + '"]').addClass('between conges')
@@ -230,6 +230,12 @@ const selection = () => {
                     var select = new Date(d).getFullYear()+'-'+('0' +(new Date(d).getMonth()+1)).slice(-2)+'-'+('0' + new Date(d).getDate()).slice(-2);
                     
                     $('.day[data-js_date="'+select+'"]').addClass(periodes[i]['classe'])
+                    if (d == new Date(periodes[i]['debut'])) {
+                        $('.day[data-js_date="'+select+'"]').addClass('start')
+                    }
+                    if (d == now) {
+                        $('.day[data-js_date="'+select+'"]').addClass('end')
+                    }
                 }            
             }
         })

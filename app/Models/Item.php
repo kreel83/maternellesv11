@@ -38,9 +38,10 @@ class Item extends Model
 
 
     public function resultat($enfant) {
-        $arr = [0 => null, 1 => "En voie d'acquisition", 2 => "Acquis avec aide"];
+        $arr = [0 => null, 1 => "En voie d'acquisition", 2 => "Acquis"];
         $r = Resultat::where('enfant_id', $enfant)->where('item_id', $this->id)->first();
         if (!$r) return null;
+        if ($r->autonome == 0 && $r->notation == 2) $arr[$r->notation] = $arr[$r->notation].' avec aide';
         return [$r->notation, $r->autonome, $arr[$r->notation ?? null]];
     }
 

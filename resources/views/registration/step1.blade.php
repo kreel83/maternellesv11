@@ -1,19 +1,18 @@
-@extends('layouts.parentLayout')
+@extends('layouts.createAccount')
 
 @section('content')
 
-<h3 class="mt-3">Création de votre compte sur Les Maternelles</h3>
-<p>Bienvenue dans notre assistant !</p>
-
+{{--
 <div class="mt-3">
     {{__('J\'ai déjà un compte : ') }}
     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
         {{ __('se connecter') }}
     </a>
 </div>
+--}}
 
-<div class="mt-3">
-    <h5>Etape 1 / 3</h5>
+<div class="mt-3 mb-4">
+    <h5>Etape 1 / 3 : choix de l'établissement</h5>
 </div>
 
 <!-- Validation Errors -->

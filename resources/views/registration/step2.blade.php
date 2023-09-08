@@ -1,11 +1,10 @@
-@extends('layouts.parentLayout')
+@extends('layouts.createAccount')
 
 @section('content')
 
-
-<h1 class="mt-3">Création de votre compte sur Les Maternelles</h1>
-<p>Bienvenue dans notre assistant !</p>
-<p>Etape 2 / 3</p>
+<div class="mt-3 mb-4">
+    <h5>Etape 2 / 3 : validation de l'établissement</h5>
+</div>
 
 <p>Etablissement trouvé :</p>
 

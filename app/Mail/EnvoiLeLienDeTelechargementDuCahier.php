@@ -8,20 +8,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Mail\Mailables\Address;
 
 class EnvoiLeLienDeTelechargementDuCahier extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $url;
-
     /**
      * Create a new message instance.
      */
-    public function __construct($url)
-    {
-        $this->url = $url;
-    }
+    public function __construct(
+        public $url)
+    {}
 
     /**
      * Get the message envelope.
@@ -29,7 +28,8 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Téléchargement du cahier de progrès de votre enfant',
+            from: new Address(Auth::user()->email, Auth::user()->prenom.' '.Auth::user()->name),
+            subject: '[école] Téléchargement du cahier de progrès de votre enfant',
         );
     }
 
