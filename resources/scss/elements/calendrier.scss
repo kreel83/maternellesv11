@@ -1,6 +1,6 @@
 
 body {
-    background-color: #F4F9FF !important;
+    background-color: var(--back-color) !important;
 }
 #calendrier_scolaire .day.actif:hover {
 
