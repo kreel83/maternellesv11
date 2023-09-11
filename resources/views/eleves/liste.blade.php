@@ -80,7 +80,7 @@
                     </div>
                     @endif
 
-                    <form action="{{route('save_eleve')}}" method="post" enctype="multipart/form-data" style="font-size: 12px; padding-top: 10px;">
+                    <form action="{{route('save_eleve')}}" method="post" id="elevePost" style="font-size: 12px; padding-top: 10px;">
                         @csrf
             
             
@@ -92,11 +92,11 @@
                                     <div class="avatar avatar_form blue" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
                                     <div class="d-flex flex-column ms-3 mt-2" >
                                         <div class="form-check " style="height: 15px">
-                                            <input type="checkbox" name="sh" class="form-check-input" id="sh">
+                                            <input type="checkbox" name="sh" class="form-check-input" id="sh" value="true">
                                             <label class="form-sh-label" for="sh">Situation de handicap ?</label>
                                         </div>
                                         <div class="form-check"  style="height: 15px">
-                                            <input type="checkbox" name="reussite" class="form-check-input" id="reussite" checked>
+                                            <input type="checkbox" name="reussite" class="form-check-input" id="reussite" checked value="true">
                                             <label class="form-sh-label" for="reussite">Cahier de réussite</label>
                                         </div>                                        
                                     </div>
@@ -129,12 +129,13 @@
 
                                 <div class="icone-input my-4">
                                     <i class="fa-sharp fa-solid fa-envelope"></i>
-                                    <input type="email" class="custom-input" id="mail1_form" name="mail[]" value="" placeholder="Mail principal" />
+                                    <input type="email" class="custom-input" id="mail1_form" name="mail1" value="" placeholder="Mail principal" />
                                 </div>    
                                 <div class="icone-input my-4">
                                     <i class="fa-sharp fa-solid fa-envelope"></i>
-                                    <input type="email" class="custom-input" id="mail2_form" name="mail[]" value="" placeholder="Mail secondaire" />
+                                    <input type="email" class="custom-input" id="mail2_form" name="mail2" value="" placeholder="Mail secondaire" />
                                 </div>    
+  
 
                         
             
@@ -142,7 +143,7 @@
             
                 
                                 <div class="d-flex">
-                                    <button type="submit" class="custom_button big submit">Sauvegarder</button>
+                                    <button type="button" class="custom_button big submit">Sauvegarder</button>
                         
                                     <button type="button" data-id="new" class="custom_button submit remove_eleve delete ms-1">Retirer</button>                                    
                                 </div>
@@ -165,7 +166,19 @@
 </div>
 
 
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false" id="myToast">
+        <div class="toast-header">
 
+            <strong class="me-auto">Yes !</strong>
+
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            L'élève a bien été créé
+        </div>
+    </div>
+</div>
 
 
 

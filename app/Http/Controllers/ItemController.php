@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Enfant;
+use App\Models\Configuration;
 use App\Models\Section;
 use App\Models\Resultat;
 use App\Models\Item;
@@ -14,6 +15,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
+
+    public $periode_actuelle;
+    public function __construct() {
+        $this->middleware(function ($request, $next) {
+            $conf = Configuration::where('user_id', Auth::id())->first();
+            $this->periode_actuelle = $conf->periode;    
+            return $next($request);
+        });
+
+    }
 
     public function mesfiches() {
         $items = Item::whereNull('user_id')->orWhere('user_id', Auth::id())->orderBy('section_id')->get();
@@ -75,6 +86,7 @@ class ItemController extends Controller
             $search->autonome = $autonome;
             $search->section_id = $item->section()->id;
             $search->user_id = Auth::id();
+            $search->periode = $this->periode_actuelle;
 
 
         }

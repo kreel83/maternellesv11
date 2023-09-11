@@ -4,6 +4,28 @@
 @endphp
 @section('content')
 <div id="page_enfants" class="" >
+        @if ($type == "reussite")
+                @if($canSendPDF)
+                <div class="alert alert-success" role="alert">
+                        <div class="row d-flex">
+                                <div class="col">
+                                                Tous les cahiers de réussite sont prêts. 
+                                </div>
+                                <div class="col">
+                                                <a href="{{ route('envoiCahier') }}" class="btn btn-success text-right">Envoyer aux parents</a>
+                                </div>
+                        </div>
+                </div>
+                @else
+                        <div class="alert alert-warning" role="alert">
+                                <div class="row d-flex">
+                                        <div class="col">
+                                                        Tous les cahiers de réussite ne sont pas prêts. 
+                                        </div>		
+                                </div>
+                        </div>
+                @endif
+        @endif
         <div class="d-flex justify-content-center w-100">
                 <form action="{{route('enfants')}}">
                         <input type="hidden" value="{{$type}}" name="type">

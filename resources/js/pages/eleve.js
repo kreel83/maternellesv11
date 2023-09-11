@@ -263,6 +263,55 @@ const photo_eleve = () => {
         console.log(data)
     })
 
+
+
+
+
+    $(document).on('click','.submit', function(e) {
+        var form = {}
+        $('#elevePost input').each(function(index, element){
+            var name = $(this).attr('name');
+            if ($(this).is(':checkbox')) {
+                form[name] = $(this).prop('checked');
+            } else {
+                form[name] = $(this).val();
+            }
+        });
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+            }
+        });
+        $.ajax({
+            method: 'POST',
+            url: '/app/eleves/save',
+            data: form,
+            success: function(data) {
+                $('.error_input,br').remove();
+                if(data.state){
+                    if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
+                    toast.show()
+                    var texte = $('#eleve_form').val() == 'new' ? "L'élève a bien été créé et ajouter à votre classe" : "L'élève a bien été modifié";
+                    $('#myToast').find('.toast-body').text(texte)
+                        setTimeout(function() {
+                            toast.dispose()
+                            $('#import-tab').trigger('click')                             
+                        },3000)
+                } else {
+                    console.log(data.errors)
+                    $.each(data.errors,function(input_name,input_errors){
+                        $.each(input_errors,function(i,error){
+                            $('<small class="error_input">'+error+'</small><br>').insertAfter('#elevePost input[name="'+input_name+'"]');
+                        });
+                    });
+                }
+            }
+        })
+
+
+    })
+
     $(document).on('click','.remove_eleve', function(e) {
         e.stopImmediatePropagation()
         var id = $('#eleve_form').val()
@@ -279,13 +328,22 @@ const photo_eleve = () => {
                 eleve: id,
             },
             success: function(data) {
-                window.location.reload()
+                if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
+                toast.show()
+                var texte = "L'élève a bien été retiré de votre classe";
+                $('#myToast').find('.toast-body').text(texte)
+                    setTimeout(function() {
+                        toast.dispose()
+                        window.location.reload()                            
+                    },3000)
+                
             }
         })
     })
 
     $(document).on('click','#ajouterEleves', function() {
         var arr = []
+        var nb = $('#tableau_tous tr input:checked').length
         $('#tableau_tous tr input:checked').each((index, el) => {
             arr.push($(el).closest('tr').data('id'))
             $(el).closest('tr').remove()
@@ -302,8 +360,15 @@ const photo_eleve = () => {
                 
             },
             success: function(data) {
-                console.log(data)
+                if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
+                toast.show()
                 $('.liste_eleves').html(data)
+                var texte =  (nb > 1) ?  nb+" élèves ont bien été ajoutés à votre classe" : "L'élève a bien été ajouté à votre classe";
+                $('#myToast').find('.toast-body').text(texte)
+                    setTimeout(function() {
+                        toast.dispose()                            
+                    },3000)
+                
             }
         })
     })

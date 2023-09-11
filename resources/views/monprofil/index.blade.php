@@ -33,7 +33,11 @@
 
         }
         .grid4 {
-            grid-column: 1/3;
+            grid-column: 1;
+            grid-row: 3
+        }
+        .grid5 {
+            grid-column: 2;
             grid-row: 3
         }
         .gridcadre {
@@ -159,16 +163,16 @@
 
 
 
-        <div class="gridcadre grid4 d-flex justify-content-between align-items-center">
+        <div class="gridcadre grid4 d-flex flex-column justify-content-between align-items-center">
             <div class="gridTitre">Direction</div>
 
-            <div class="d-flex flex-column w-100">
+            <div class="d-flex flex-column w-100 pt-4">
                 <div>
                     <form action="{{route('directeur.post')}}" method="POST" class="w-100 d-flex justify-content-between align-items-center">
                         @csrf
-                        <div class="d-flex w-100 justify-content-around align-items-center">
+                        <div class="d-flex flex-column w-100 justify-content-end align-items-center">
 
-                            <div class="form-group m-4">            
+                            <div class="form-group my-1 ">            
                                 <select style="width: 220px" class="custom-select little" name="directeur_civilite">
 
                                     <option value="mlle" {{ $user->directeur_civilite == 'mlle' ? 'selected' : null}}>Mademoiselle</option>
@@ -176,18 +180,18 @@
                                     <option value="mrs" {{ $user->directeur_civilite == 'mrs' ? 'selected' : null}}>Monsieur</option>
                                 </select>
                             </div> 
-                            <div class="icone-input m-4 little">
+                            <div class="icone-input little my-1">
                                 <i class="fa-solid fa-user"></i>
                                 <input type="text" class="custom-input" name="directeur_prenom" value="{{$user->directeur_prenom}}" placeholder="Prénom" />
                             </div> 
-                            <div class="icone-input m-4 little w-25">
+                            <div class="icone-input little" my-1>
                                 <i class="fa-solid fa-user"></i>
                                 <input type="text" class="custom-input" name="directeur_nom" value="{{$user->directeur_nom}}" placeholder="Nom" />
                             </div>                
 
                         </div>
                         
-                        <button type="submit" style="" class="btnAction m-0">Sauvegarder</button>
+                        <button type="submit" style="" class="btnAction ">Sauvegarder</button>
                     </form>
                 </div>
                 <div>
@@ -204,6 +208,17 @@
             </div>
 
 
+        </div>
+        <div class="gridcadre grid5 d-flex justify-content-center align-items-center">
+            <div class="gridTitre">Périodocité</div>
+            <form action="{{route('periode_save')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
+                <select name="periode" class="custom-select">
+                    <option value="1" {{$periodes == 1 ? 'selected' : null}}>Année entère</option>
+                    <option value="2" {{$periodes == 2 ? 'selected' : null}}>Par semestre</option>
+                    <option value="3" {{$periodes == 3 ? 'selected' : null}}>Par trimestre</option>
+                </select>
+                <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
+            </form>    
         </div>
 
     </div>

@@ -179,7 +179,7 @@ Route::middleware(['auth','abo'])->group(function () {
     Route::get('/calendar/periodes/init',[\App\Http\Controllers\CalendrierController::class,'init']);
     Route::get('/calendar',[\App\Http\Controllers\CalendrierController::class,'index'])->name('calendar');
     Route::get('/periode',[\App\Http\Controllers\CalendrierController::class,'periode'])->name('periode');
-    Route::post('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
+    Route::get('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
     Route::post('/calendar/periodes/save',[\App\Http\Controllers\CalendrierController::class,'savePeriode']);
     Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
     Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');

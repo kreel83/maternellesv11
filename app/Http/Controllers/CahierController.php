@@ -6,6 +6,7 @@ use App\Models\Cahier;
 use App\Models\Commentaire;
 use App\Models\Enfant;
 use App\Models\Equipe;
+use App\Models\Configuration;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Myperiode;
@@ -58,33 +59,33 @@ class CahierController extends Controller
     protected $title;
     protected $periode;
 
+    public $periode_actuelle;
+
+
     public function __construct() {
 
         $this->middleware(function ($request, $next) {
+            $conf = Configuration::where('user_id', Auth::id())->first();
+            $periode_actuelle = $conf->periode;  
             $date = Carbon::now()->format('Ymd');
-            $periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode','DESC')->get();
+            $periodes = $conf->periodes;
 
-            $p = 3;
-            foreach ($periodes as $periode) {
-                if ($date < Carbon::parse($periode->date_end)->format('Ymd')) $p = $periode->periode;
-            }
-            $periode = $p;
-            $nbperiode = $periodes->count();
 
-            switch ($nbperiode) {
+
+            switch ($periodes) {
                 case 1: $title = 'Année entière';break;
                 case 2:
-                    if ($periode == 1) $title = 'Premier semestre';
-                    if ($periode == 2) $title = 'Second semestre';
+                    if ($periode_actuelle == 1) $title = 'Premier semestre';
+                    if ($periode_actuelle == 2) $title = 'Second semestre';
     
                     break;
                 case 3:
-                    if ($periode == 1) $title = 'Premier trimestre';
-                    if ($periode == 2) $title = 'Deuxième trimestre';
-                    if ($periode == 3) $title = 'Troisième trimestre';
+                    if ($periode_actuelle == 1) $title = 'Premier trimestre';
+                    if ($periode_actuelle == 2) $title = 'Deuxième trimestre';
+                    if ($periode_actuelle == 3) $title = 'Troisième trimestre';
                     break;
             }
-            $this->periode = $periode;
+            $this->periode_actuelle = $periode_actuelle;            
             $this->title = $title;         
             return $next($request);
         });
@@ -157,6 +158,7 @@ class CahierController extends Controller
             $r->user_id = Auth::id();
             $r->definitif = 0;
         }
+        $r->periode = $this->periode_actuelle;
         $r->texte_integral = $reussite;
         $r->save();
         return $reussite;
@@ -391,6 +393,7 @@ class CahierController extends Controller
             $r->user_id = Auth::id();
             $r->definitif = 0;
         }
+        $r->periode = $this->periode_actuelle;
         $r->texte_integral = $reussite;
         $r->save();
         return $reussite;

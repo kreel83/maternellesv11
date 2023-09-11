@@ -92,41 +92,45 @@ class CalendrierController extends Controller
     }
 
     public  function periode_save(Request $request) {
-        dd($request);
-        $datas = $request->except('_token');
+        $conf = Configuration::where('user_id', Auth::id())->first();
+        $conf->periodes = (int) $request->periode;
+        $conf->save();
+        return redirect()->back()->withInput();
+        // dd($request);
+        // $datas = $request->except('_token');
 
 
 
 
-        $erreur = false;
+        // $erreur = false;
 
-        for ($i=0; $i<3; $i++) {
-            if ($datas['periode_debut'][$i] && !$datas['periode_fin'][$i]) $erreur = true;
-            if (!$datas['periode_debut'][$i] && $datas['periode_fin'][$i])  $erreur = true;
-        }
-
-
+        // for ($i=0; $i<3; $i++) {
+        //     if ($datas['periode_debut'][$i] && !$datas['periode_fin'][$i]) $erreur = true;
+        //     if (!$datas['periode_debut'][$i] && $datas['periode_fin'][$i])  $erreur = true;
+        // }
 
 
-        if (!$erreur) {
-            Myperiode::where('user_id', Auth::id())->delete();
-            for ($i=0; $i<3; $i++) {
-                if ($datas['periode_debut'][$i] & $datas['periode_fin'][$i]) {
-                    $new = new Myperiode();
-                    $new->user_id = Auth::id();
-                    $new->annee = (int) Utils::calcul_annee_scolaire();
-                    $new->periode = $i + 1;
-                    $new->date_start = Carbon::parse($datas['periode_debut'][$i]);
-                    $new->date_end = Carbon::parse($datas['periode_fin'][$i]);
-                    $new->save();
-                }
 
-            }
 
-            return redirect()->back()->with('success', 'Les dates ont bien été enregistrées !');;
-        } else {
-            return redirect()->back()->with('error', 'On a un probleme là !');
-        }
+        // if (!$erreur) {
+        //     Myperiode::where('user_id', Auth::id())->delete();
+        //     for ($i=0; $i<3; $i++) {
+        //         if ($datas['periode_debut'][$i] & $datas['periode_fin'][$i]) {
+        //             $new = new Myperiode();
+        //             $new->user_id = Auth::id();
+        //             $new->annee = (int) Utils::calcul_annee_scolaire();
+        //             $new->periode = $i + 1;
+        //             $new->date_start = Carbon::parse($datas['periode_debut'][$i]);
+        //             $new->date_end = Carbon::parse($datas['periode_fin'][$i]);
+        //             $new->save();
+        //         }
+
+        //     }
+
+        //     return redirect()->back()->with('success', 'Les dates ont bien été enregistrées !');;
+        // } else {
+        //     return redirect()->back()->with('error', 'On a un probleme là !');
+        // }
 
 
 

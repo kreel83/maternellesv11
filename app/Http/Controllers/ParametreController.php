@@ -133,7 +133,9 @@ class ParametreController extends Controller
         if($ecole->adresse_2 != '') { $adresseEcole[] = $ecole->adresse_2; }
         if($ecole->adresse_3 != '') { $adresseEcole[] = $ecole->adresse_3; }
         $user->photo = Storage::url($user->photo);
+        $conf = Configuration::where('user_id', Auth::id())->first();
         return view('monprofil.index')
+            ->with('periodes', $conf->periodes)
             ->with('user', $user)
             ->with('equipes', $equipes)
             ->with('adresseEcole', join(PHP_EOL,$adresseEcole));
@@ -287,7 +289,9 @@ class ParametreController extends Controller
      */
     function changerLeMotDePasse(): View
     {
-        return view('monprofil.motdepasse');
+        
+        return view('auth.reset-password');
+        // return view('monprofil.motdepasse');
     }
 
     public function sauverLeMotDePasse(Request $request)
