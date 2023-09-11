@@ -83,7 +83,7 @@
   
                   <x-auth-session-status class="mb-4" :status="session('status')" />
   
-                  <form method="POST" action="{{ route('password.update') }}">
+                  <form action="{{ route('admin.sauverLeMotDePasse') }}" method="post">
                   @csrf
                   @if ($errors->any())
                   <div class="alert alert-danger">
@@ -94,7 +94,7 @@
                       </ul>
                   </div>
                   @endif
-                  <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                  {{-- <input type="hidden" name="token" value="{{ $request->route('token') }}"> --}}
                     {{-- <div class="d-flex align-items-center mb-3 pb-1">
                         <img src="{{ asset('img/vitrine/logo/logoV2.png') }}"
                         style="width: 150px;" alt="logo">
@@ -103,10 +103,7 @@
                     <h2 class="mb-3 pb-3" style="letter-spacing: 1px;font-size: 36px; color: white; font-weight: bolder">Réinitialisation du mot de passe</h2>
   
 
-                    <div class="icone-input-login my-4">
-                      <i class="fa-solid fa-key"></i>
-                      <input type="email" class="custom-input" id="email" name="email" value="{{old('email', $request->email)}}" placeholder="Entrez votre identifiant" />
-                    </div> 
+ 
                     
                     <div class="icone-input-login my-4">
                       <i class="fa-solid fa-key"></i>
