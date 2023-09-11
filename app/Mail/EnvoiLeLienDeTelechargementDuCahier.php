@@ -39,7 +39,7 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.EnvoiLeLienDeTelechargementDuCahier',
+            view: 'emails.envoiLeLienDeTelechargementDuCahier',
         );
     }
 

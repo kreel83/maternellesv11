@@ -11,15 +11,15 @@
 
 <div id="achatLicences">
 
-    <input id="prixLicence" type="hidden" value="9.90">
+    {{--<input id="prixLicence" type="hidden" value="{{ $product->price }}">--}}
 
     <div class="row">
         <div class="col text-center">
             <p class="h4 mb-0">Achat d'une licence</p>
-            <p class="mb-0"><span class="fw-bold">Service :</span><span class="c-green"> abonnement de 1 an au service Les Maternelles (résiliable à tout moment)</span></p>
+            <p class="mb-0"><span class="fw-bold">Service :</span><span class="c-green"> {{ $product->name }}</span></p>
             <p class="mb-0">
                 <span class="fw-bold">Prix de la licence :</span>
-                <span class="c-green">9.90 €</span>
+                <span class="c-green">{{ number_format($product->price,2) }} €</span>
             </p>
             {{--
             <p>Nombre de licences souhaitées<br />
@@ -49,7 +49,7 @@
         <div class="accordion-item mb-2">
         <h2 class="accordion-header">
             <button class="title accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Règlement par carte bancaire
+                Règlement par carte bancaire
             </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#paymentMethods"><!-- show -->
@@ -93,8 +93,16 @@
                             </div>
 
                             <div class="col-12 mt-3">
-                                <button type="submit" class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">Payer</button>
+                                <button type="submit" class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">Souscrire mon abonnement</button>
                             </div>
+
+                        </div>
+                            
+                        <div class="mt-4">
+                            Paiement sécurisé via <i>Stripe</i><br>
+                            <img src="{{ asset('/img/licence/visa.png') }}" height="25"> 
+                            <img src="{{ asset('/img/licence/mc.png') }}" height="25">
+                        </div>
 
                         </div>                        
                     </div>
@@ -291,9 +299,11 @@
 
 --}}
 
+    {{--
     <div class="col-12 mt-4 text-center">
         <a href="{{ route('depart') }}">Annuler</a>
     </div>
+    --}}
 
 </div>
 

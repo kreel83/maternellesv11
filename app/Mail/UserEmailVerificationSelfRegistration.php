@@ -13,13 +13,14 @@ class UserEmailVerificationSelfRegistration extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $verificationLink, $prenom;
+    public $logo, $verificationLink, $prenom;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($url, $prenom)
+    public function __construct($logo, $url, $prenom)
     {
+        $this->logo = $logo;
         $this->verificationLink = $url;
         $this->prenom = $prenom;
     }
@@ -40,8 +41,8 @@ class UserEmailVerificationSelfRegistration extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.UserEmailVerificationSelfRegistration',
-            text: 'emails.UserEmailVerificationSelfRegistration-text'
+            view: 'emails.userEmailVerificationSelfRegistration',
+            text: 'emails.userEmailVerificationSelfRegistration-text'
         );
     }
 

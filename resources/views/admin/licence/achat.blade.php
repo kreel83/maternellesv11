@@ -104,6 +104,12 @@
                                 <button type="button" class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">Payer</button>
                             </div>
 
+                            <div class="mt-4">
+                                Paiement sécurisé via <i>Stripe</i><br>
+                                <img src="{{ asset('/img/licence/visa.png') }}" height="25"> 
+                                <img src="{{ asset('/img/licence/mc.png') }}" height="25">
+                            </div>
+
                         </div>                        
                     </div>
                 </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -44,12 +45,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-
         switch(Auth::user()->role) {
             case ('admin'):
                 return redirect()->intended(route('admin.index'));
                 break;
             case ('user'):
+                UserController::setMenuAbonnement();
+                //dd(session('menuAbonnement')['subMenu']);
                 return redirect()->intended(route('depart'));
                 break;
         }

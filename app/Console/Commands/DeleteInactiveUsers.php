@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class DeleteInactiveUsers extends Command
 {
@@ -27,6 +28,7 @@ class DeleteInactiveUsers extends Command
      */
     public function handle()
     {
+        Log::info('Cron: delete-inactive-users {id}', ['id' => Carbon::now()->subMinutes(30)->toDateTimeString()]);
         User::where('actif', 0)
         ->where('created_at', '<=', Carbon::now()->subMinutes(30)->toDateTimeString())
         ->delete();
