@@ -39,8 +39,8 @@ class UserEmailVerificationFromAdmin extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.UserEmailVerificationFromAdmin',
-            text: 'emails.UserEmailVerificationFromAdmin-text'
+            view: 'emails.userEmailVerificationFromAdmin',
+            text: 'emails.userEmailVerificationFromAdmin-text'
         );
     }
 
