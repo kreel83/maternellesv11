@@ -74,6 +74,27 @@
   text-shadow: 2px 4px 3px rgba(0,0,0,0.3)
 }
 
+.classe_dashboard {
+  .groupe-terme {
+
+
+    background-color: var(--main-color);
+    padding: 4px 24px;
+    color: white;
+    width: fit-content;
+    height: 20px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    font-weight: 600;
+    min-width: 120px;
+
+  }
+}
+
+
 #page_enfants, #photos {
   display: flex;;
   flex-wrap: wrap;

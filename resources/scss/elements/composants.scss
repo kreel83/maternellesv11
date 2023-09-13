@@ -119,14 +119,20 @@ input[type='email']::placeholder {
     width: 100%;
     background-color: white;
     text-align: center;
-    color: #6759FF;;
+    color: var(--main-color);;
     font-weight: 800;
     line-height: 40px;
     border-radius: 8px;
-    border: none;
+    border: 1px solid white;
     outline: none;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+        &:hover {
+            background-color: var(--main-color);
+            color: white;  
+        }
+    }
 
-}
 
 .custom-area {
     color: #545454;

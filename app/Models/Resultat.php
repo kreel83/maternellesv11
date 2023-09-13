@@ -37,7 +37,7 @@ class Resultat extends Model
     }
 
     public function top5ElevesLesPlusAvances() {
-        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom')
+        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
         ->groupBy('enfant_id')
         ->orderByDesc('total')
@@ -46,7 +46,7 @@ class Resultat extends Model
     }
 
     public function top5ElevesLesMoinsAvances() {
-        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom')
+        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
         ->groupBy('enfant_id')
         ->orderBy('total')
@@ -55,8 +55,9 @@ class Resultat extends Model
     }
 
     public function top5DisciplinesLesPlusAvances() {
-        return self::selectRaw('count(*) as total, items.name')
+        return self::selectRaw('count(*) as total, items.name, sections.logo')
         ->join('items', 'items.id', '=', 'item_id')
+        ->join('sections', 'sections.id', '=', 'items.section_id')
         ->groupBy('item_id')
         ->orderByDesc('total')
         ->limit(5)
@@ -64,8 +65,9 @@ class Resultat extends Model
     }
 
     public function top5DisciplinesLesMoinsAvances() {
-        return self::selectRaw('count(*) as total, items.name')
+        return self::selectRaw('count(*) as total, items.name, sections.logo')
         ->join('items', 'items.id', '=', 'item_id')
+        ->join('sections', 'sections.id', '=', 'items.section_id')
         ->groupBy('item_id')
         ->orderBy('total')
         ->limit(5)

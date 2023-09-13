@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use OpenAI\Laravel\Facades\OpenAI;
+use Illuminate\Validation\Rules;
 
 
 class ParametreController extends Controller
@@ -215,6 +216,7 @@ class ParametreController extends Controller
 
         $resultat = new Resultat;
         $top5ElevesLesPlusAvances = $resultat->top5ElevesLesPlusAvances();
+        // dd($top5ElevesLesPlusAvances);
         $top5ElevesLesMoinsAvances = $resultat->top5ElevesLesMoinsAvances();
         $top5DisciplinesLesPlusAvances = $resultat->top5DisciplinesLesPlusAvances();
         $top5DisciplinesLesMoinsAvances = $resultat->top5DisciplinesLesMoinsAvances();
@@ -289,12 +291,42 @@ class ParametreController extends Controller
      */
     function changerLeMotDePasse(): View
     {
-        
-        return view('auth.reset-password');
+
+        return view('parametres.reset-password');
         // return view('monprofil.motdepasse');
     }
 
     public function sauverLeMotDePasse(Request $request)
+    {
+
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'password.required' => 'Mot de passe obligatoire.',
+            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+        ]);
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back()->with('result', 'success');
+    }
+
+
+
+        /**
+     * Changer le mot de passe de l'adminsitrateur
+     *
+     * @return View
+     */
+    function password_change(): View
+    {
+
+        return view('parametres.motdepasse');
+    }
+
+    public function password_save(Request $request)
     {
         $request->validate([
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -303,6 +335,7 @@ class ParametreController extends Controller
             'password.confirmed' => 'La confirmation du mot de passe a échouée.',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
         ]);
+ 
 
         $user = Auth::user();
         $user->password = Hash::make($request->password);
