@@ -1,7 +1,7 @@
 
 <style>
 .fiche_eleve_div {
-    width: 200px;
+    width: 215px;
     height: 80px;
     border-radius: 15px;
     margin: 4px;
@@ -10,6 +10,7 @@
     color: grey;
     font-size: 12px;
     position: relative;
+    background-color: var(--back-color);
 }
 
 .fiche_eleve_div:hover {

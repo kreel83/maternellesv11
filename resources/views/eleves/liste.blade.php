@@ -25,7 +25,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7">
-            <h4>Ma classe</h4>
+            <h4 class="text-center pt-2" style="color: var(--main-color)">Ma classe</h4>
             {{-- <button class="custom_button tab_button" data-tab="new_eleve" data-id="null">Nouvel elève</button>
             <button class="custom_button tab_button" data-tab="import_eleves" id="import_eleve" data-id="null">importer des élèves</button> --}}
             <div class="liste_eleves ps-4" style="margin-top: 20px;">
@@ -35,7 +35,7 @@
             
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5 ps-5">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item w-50" role="presentation">
                 <button class="w-100 nav-link active btnSelectionType violet droit selected" id="import-tab" data-bs-toggle="tab" data-bs-target="#import-tab-pane" type="button" role="tab" aria-controls="import-tab-pane" aria-selected="true">La cours de l'école</button>
