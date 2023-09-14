@@ -134,4 +134,22 @@ class UserController extends Controller
             ->with('route', '');
     }
 
+    public static function setMenuAbonnement() {
+        $user = AUTH::user();
+        switch($user->licence) {
+            case 'admin':
+                session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => false]]);
+                break;
+            case 'self':
+                if (Auth::user()->subscribed('default')) {
+                    session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => true]]);
+                } else {
+                    session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => false]]);
+                }
+                break;
+            default:
+                session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => false]]);
+        }
+    }
+
 }

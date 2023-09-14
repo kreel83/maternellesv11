@@ -47,29 +47,33 @@
     </x-auth-card>
 </x-guest-layout> --}}
 
-@extends('layouts.mainMenu', ['titre' => 'Mes fiches', 'menu' => 'item', 'log' => true])
+
+
+
+@extends('layouts.mainMenu', ['titre' => 'Mes fiches', 'menu' => 'item'])
 
 @section('content')
 
 <style>
   .card_login {
-    width: 75%;
+    width: 900px;
     height: 75vh;
     background-color: white;
   }
 </style>
 
-<section class="vh-100 vw-100">
+<section class="vh-100 ">
+
     
       <div class="d-flex justify-content-center align-items-center h-100">
         
           <div class="card_login" style="border-radius: 1rem; overflow: hidden">
             <div class="row g-0 h-100">
                 <div class="col-md-5 col-lg-5 d-none d-md-block h-100">
-                    <div style="width: 700px; height: 100%; position: relative">
+                    <div style="height: 100%; position: relative; padding-top: 87px">
 
-                        <img src="{{ asset('img/log/img_reset_password.png') }}"
-                        alt="login form" width="100%" height="100%" style="border-radius: 1rem 0 0 1rem;" />
+                        <img src="{{ asset('img/log/lock.png') }}"
+                        alt="login form" width="450px" height="450px" style="border-radius: 1rem 0 0 1rem;" />
                     </div>
                   
                   <!--
@@ -78,15 +82,15 @@
                   -->
                 </div>
             
-              <div class="col-md-7 col-lg-7 d-flex align-items-center p-5" style="background-color: var(--main-color); color: white !important">
+              <div class="col-md-7 col-lg-7 d-flex align-items-center p-5" style="padding-left: 85px !important;background-color: var(--main-color); color: white !important">
                 <div class="card-body p-4 p-lg-5"  >
   
                   <x-auth-session-status class="mb-4" :status="session('status')" />
   
-                  <form action="{{ route('admin.sauverLeMotDePasse') }}" method="post">
+                  <form action="{{ route('sauverLeMotDePasse') }}" method="post">
                   @csrf
                   @if ($errors->any())
-                  <div class="alert alert-danger">
+                  <div class="alert alert-danger" style="font-size: 12px">
                       <ul>
                           @foreach ($errors->all() as $error)
                               <li>{{ $error }}</li>
@@ -111,12 +115,12 @@
                     </div> 
                     <div class="icone-input-login my-4">
                       <i class="fa-solid fa-key"></i>
-                      <input type="password" class="custom-input" id="password_confirmation" name="password_confirmation" value="" placeholder="Confirmation du nouveau mot de passe" />
+                      <input type="password" class="custom-input" id="password_confirmation" name="password_confirmation" value="" placeholder="Confirmation du mot de passe" />
                     </div> 
 
                     
                     <div class="pt-1 mb-4">
-                      <button class="btnLogin btn-block">Envoyer</button>
+                      <button type="submit" class="btnLogin">Envoyer</button>
                     </div>
 
   

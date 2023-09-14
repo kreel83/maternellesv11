@@ -179,7 +179,7 @@ Route::middleware(['auth','abo'])->group(function () {
     Route::get('/calendar/periodes/init',[\App\Http\Controllers\CalendrierController::class,'init']);
     Route::get('/calendar',[\App\Http\Controllers\CalendrierController::class,'index'])->name('calendar');
     Route::get('/periode',[\App\Http\Controllers\CalendrierController::class,'periode'])->name('periode');
-    Route::post('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
+    Route::get('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
     Route::post('/calendar/periodes/save',[\App\Http\Controllers\CalendrierController::class,'savePeriode']);
     Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
     Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
@@ -188,6 +188,8 @@ Route::middleware(['auth','abo'])->group(function () {
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
 
+    Route::get('/password/change',[\App\Http\Controllers\ParametreController::class,'password_change'])->name('password_change');
+    Route::post('/password/change',[\App\Http\Controllers\ParametreController::class,'password_save'])->name('password_save');
     Route::get('/password',[\App\Http\Controllers\EnfantController::class,'password'])->name('password');
     Route::post('/password_operation',[\App\Http\Controllers\EnfantController::class,'password_operation'])->name('password_operation');
 

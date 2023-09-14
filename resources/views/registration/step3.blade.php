@@ -48,6 +48,8 @@
                 J'utilise un autre service de courrier électronique (Gmail, Yahoo, Hotmail...)
                 </label>
             </div>
+        @else
+            <input type="hidden" name="emailondomain" value="0">
         @endif
         <div class="mt-3 mb-3">
             <label for="email" class="form-label">Votre adresse e-mail professionnelle</label>

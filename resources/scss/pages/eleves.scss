@@ -2,6 +2,11 @@
     height: calc(100vh - 273px) !important;
 
 }
+
+.error_input {
+    color: var(--main-color);
+    font-weight: bold;
+}
 .liste_eleves, .import_eleves_container {
 
     height: calc(100vh - 100px);

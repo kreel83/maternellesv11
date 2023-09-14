@@ -97,12 +97,21 @@ class EnfantController extends Controller
             case 'alpha' : $enfants = Enfant::where('user_id', Auth::id())->orderBy('prenom')->get();break;
             case 'groupe' : $enfants = Enfant::where('user_id', Auth::id())->get();$enfants = $enfants->groupBy('groupe');break;
         }
-
+        $nbEnfants = Enfant::where([
+            ['user_id', Auth::id()],
+            ['reussite', 1]
+        ])->count();
+        $nbReussite = Reussite::where([
+            ['user_id', Auth::id()],
+            ['definitif', 1],
+        ])->count();
+        $canSendPDF = ($nbEnfants == $nbReussite);
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
         
         return view('enfants.index')
             ->with('type', $request->type)
             ->with('ordre', $ordre)
+            ->with('canSendPDF', $canSendPDF)
             ->with('enfants', $enfants)
             ->with('avatar', $avatar);
     }

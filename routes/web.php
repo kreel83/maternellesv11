@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VitrineController;
@@ -36,7 +37,7 @@ Route::post('/download/pdf', [PdfController::class, 'telechargementDuCahierParLe
 Route::get('/download/link/{id}', [PdfController::class, 'genereLienVersCahierEnPdf']);
 Route::get('/download/pdf/see/{token}', [PdfController::class, 'telechargeLeCahier'])->name('cahier.download');
 
-
+Route::get('/testemail', [RegisteredUserController::class, 'testemaillogo']);
 /*
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminProfilController;

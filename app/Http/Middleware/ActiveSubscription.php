@@ -48,6 +48,8 @@ class ActiveSubscription
                         $request->session()->put('isAuthenticated', true);
                     }
                     break;
+                default:
+                    return redirect(route('depart'))->with('nolicence', true);
             }
         }
         return $next($request);

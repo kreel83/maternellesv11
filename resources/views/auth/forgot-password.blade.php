@@ -41,7 +41,7 @@
 
 <style>
   .card_login {
-    width: 75%;
+    width: 1200px;
     height: 75vh;
     background-color: white;
   }
@@ -54,10 +54,10 @@
           <div class="card_login" style="border-radius: 1rem; overflow: hidden">
             <div class="row g-0 h-100">
                 <div class="col-md-5 col-lg-5 d-none d-md-block h-100">
-                    <div style="width: 700px; height: 100%; position: relative">
+                    <div style="width: 700px; height: 100%; position: relative; padding-top: 60px">
 
                         <img src="{{ asset('img/log/lock.png') }}"
-                        alt="login form" width="100%" height="100%" style="border-radius: 1rem 0 0 1rem;" />
+                        alt="login form" width="500px" height="500px" style="border-radius: 1rem 0 0 1rem;" />
                     </div>
                   
                   <!--

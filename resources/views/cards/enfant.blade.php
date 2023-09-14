@@ -53,13 +53,13 @@ if (!is_null($enfant->groupe)){
   </div>
     <div class="card-body p-0 mt-2" style="text-align: center">
         <div class="name d-flex justify-content-center align-items-center" style="color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
-          <span class="me-2 mt-1">
+          {{-- <span class="me-2 mt-1">
             @if ($enfant->genre == 'G')
             <i class="icone_avatar garcon fa-duotone fa-user-tie-hair"></i>
             @else
             <i class="icone_avatar fille fa-duotone fa-user-tie-hair-long"></i>
             @endif
-          </span>
+          </span> --}}
           
           {{$enfant->prenom}}
           <span style="font-size: 1.8rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 ">{{substr($enfant->nom,0,1)}}.</span>

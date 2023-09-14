@@ -20,8 +20,9 @@ class SubscriptionController extends Controller
      */
     public function cardform(): View
     {
+        $product = Produit::produitAbonnementUser();
         $intent = auth()->user()->createSetupIntent();
-        return view('subscription.cardform', compact("intent"));
+        return view('subscription.cardform', compact("intent","product"));
     }
 
     /**

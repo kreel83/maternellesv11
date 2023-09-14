@@ -4,7 +4,7 @@
 
 <style>
   .card_login {
-    width: 75%;
+    width: 1200px;
     height: 75vh;
     background-color: white;
   }
