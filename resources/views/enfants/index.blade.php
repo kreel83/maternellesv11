@@ -52,7 +52,7 @@
                         @endforeach
                 </div>
                 @else
-                        <div class="col-md-12 d-flex flex-wrap">
+                        <div class="col-md-12 d-flex flex-wrap ps-5">
                                 @foreach ($enfants as $enfant)
                                 @include('cards.enfant',['type' => $type])
                                 @endforeach                

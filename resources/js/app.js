@@ -94,6 +94,11 @@ $.ajaxSetup({
 
 
 
+if ($('.alerteMessage').length) {
+    setTimeout(() => {
+        $('.alerteMessage').remove()
+    }, 3000);
+}
 
 
 

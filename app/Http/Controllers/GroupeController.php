@@ -18,8 +18,9 @@ class GroupeController extends Controller
        
         if ($groupes) {
             $groupes = json_decode($groupes, true);
-        $nbGroupe = sizeof($groupes);           
+            $nbGroupe = sizeof($groupes);           
         }
+
 
         return view('groupes.index')
             ->with('nbGroupe', $nbGroupe)
@@ -72,20 +73,17 @@ class GroupeController extends Controller
             $arr[$i]['textColor'] = $request->font[$i];
         }
 
-        
-
-        $user = Auth::user();
-
-
+        $user = Auth::user();      
         $config = Configuration::where('user_id', $user->id)->first();
         if (!$config) {
             $config = new Configuration();
             $config->user_id = $user->id;            
-        }
-
+        }        
         $config->groupes = json_encode($arr);
         $config->save();
-        return Redirect::back();
+
+        session()->flash('success','Les groupes ont bien été enregistrés');
+        return redirect()->back();
 
 
     }
