@@ -6,6 +6,26 @@
 
 @endphp
 
+
+<style>
+  .btnEvent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    font-size: 30px;
+    color: white;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    top: 30px;
+    left: 30px;
+    position: absolute;
+    border: none;
+    outline: none;
+  }
+</style>
+
 @section('content')
 
 <div id="calendrier_view" class="p-0 m-0 position-relative">
@@ -13,9 +33,9 @@
 
 
     <div class="row gx-0">
-        <div class="col-md-1">
+        <div class="col-md-2 postion-relative">
             <div class="d-flex justify-item-end">
-                <button type="button" class="btn btn-primary position-fixed"  style="bottom: 30px; right: 30px" data-bs-toggle="modal" data-bs-target="#EventModal">
+                <button type="button" class="btnEvent"  data-bs-toggle="modal" data-bs-target="#EventModal">
                   <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
@@ -24,7 +44,7 @@
                 
             </div>
         </div>
-        <div class="col-md-11 d-flex flex-wrap " id="calendrier_scolaire" style="height: 800px; overflow-y: auto">
+        <div class="col-md-10 d-flex flex-wrap " id="calendrier_scolaire">
            
                 <input type="hidden" value="{{$conges}}" id="conges">
                 <input type="hidden" value="{{$anniversaires}}" id="anniversaires">

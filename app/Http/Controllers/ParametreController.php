@@ -21,6 +21,7 @@ use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Validation\Rules;
 
 
+
 class ParametreController extends Controller
 {
 
@@ -310,7 +311,10 @@ class ParametreController extends Controller
         $user = Auth::user();
         $user->password = Hash::make($request->password);
         $user->save();
-        return redirect()->back()->with('result', 'success');
+        // session()->flash('success', 'Le mot de passe a bien été réinitalisé');
+        session()->flash('message', 'Le mot de passe a bien été réinitalisé'); 
+        session()->flash('alert-class', 'alert-success'); 
+        return redirect()->route('depart');
     }
 
 

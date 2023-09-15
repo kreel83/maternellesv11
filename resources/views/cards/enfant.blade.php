@@ -16,6 +16,22 @@
         line-height: 25px;
     }
 
+    .btn_modif_avatar {
+      font-size: 14px !important;
+      border-radius: 25px;
+      border: 1px solid white;
+      padding: 8px 24px !important;
+      line-height: 16px !important;
+
+    }
+
+    .btn_modif_avatar:hover {
+      background-color: white;
+      color: var(--main-color) !important;
+
+
+    }
+
 
 </style>
 
@@ -100,7 +116,7 @@ if (!is_null($enfant->groupe)){
   @endif
   @if ($type == "avatar")
     <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">        
-        <a href="enfants/{{$enfant->id}}/avatar"  ><i class="fa-light fa-rabbit"></i></a>
+        <a href="enfants/{{$enfant->id}}/avatar"  class="btn_modif_avatar" >Modifier mon avatar</a>
     </div>
   @endif
   @if ($type == "affectation_groupe")

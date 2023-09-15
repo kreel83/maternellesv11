@@ -109,13 +109,13 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
             @php
-              $params = in_array($menu, ['monprofil','monpasse']);
+              $params = in_array($menu, ['monprofil','lock']);
             @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-user"></i> Mon compte</a>      
               <div class='dashboard-nav-dropdown-menu'>
-                <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
-                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Changer le mot de passe</a>
+                <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fal fa-user"></i> Mon profil</a>
+                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'lock' ? 'active' : null }}"><i class="fal fa-lock"></i> Changer le mot de passe</a>
               </div>
             </div>
             <!--<a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>-->
@@ -143,9 +143,9 @@ use Illuminate\Support\Facades\Auth;
         {{-- <header class='dashboard-toolbar'>
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
         </header> --}}
-        <div id="alerte" class="w-100">
-          
-        </div>
+        @if(Session::has('message'))
+        <p class="alerteMessage alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+        @endif
         <div class=''>
           @yield('content')
         </div>

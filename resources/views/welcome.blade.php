@@ -11,7 +11,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
 .parent {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-grid-template-rows: 250px 280px 400px;
+grid-template-rows: 300px 320px 430px;
 grid-gap: 30px;
 }
 
@@ -49,19 +49,20 @@ grid-gap: 30px;
 .cadre_welcome {
     /* //border: 1px solid grey; */
     border-radius: 14px;
-    padding: 24px 8px 8px 8px;
+    padding: 15px 8px 8px 8px;
     position: relative;
     font-size: 14px;
     background-color: white;
-    color: var(--main-color)
-
+    color: grey;
+    
 }
 .titre_welcome {
-    position: absolute;
-    top: -14px;
-    left: 30px;
+    margin-bottom: 20px;
+    color: var(--main-color);
+
     padding: 2px 16px;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    font-size: 18px;
+    font-weight: bolder;
     background-color: white;
     border-radius: 15px;
     /* border: 1px solid grey; */
@@ -70,6 +71,7 @@ grid-gap: 30px;
     font-size: 20px;
     color: green;
     font-weight: bolder;
+    text-align: center
 }
 .anniversaire {
     font-size: 20px;
@@ -92,9 +94,8 @@ grid-gap: 30px;
         <div class="div1 cadre_welcome"> 
             <div class="titre_welcome">Les anniversaires du mois</div>
             @if ($anniversaires->isEmpty())
-            <div class="anniversaire d-flex justify-content-center align-items-center h-100">
+            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
                 Aucun anniversaire ce mois ci.
-
             </div>
             @else
                 <div class="text-center fs-2">{{$moisActuel}}</div>
@@ -115,8 +116,6 @@ grid-gap: 30px;
             <div class="titre_welcome">Les 5 élèves les plus avancés</div>
             <div class="">
                 <ul>
-                    
-
                     @foreach($top5ElevesLesPlusAvances as $enfant)
 
                     @php
@@ -166,21 +165,24 @@ grid-gap: 30px;
 
             </div>
         </div>
-        <div class="div4 cadre_welcome d-flex justify-content-center align-items-center">
-            <div class="titre_welcome">Votre abonnement</div>  
+        <div class="div4 cadre_welcome">
+            <div class="titre_welcome">Votre abonnement</div> 
+            <div class="d-flex justify-content-center align-items-center pt-5">
             @if (!$finsouscription)
-            <h4 class="text-center">
-                <div class="abonnement">
-                    Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.cardform') }}">Cliquez ici</a> pour vous abonner
-                </div>
-            </h4>
-        @else
-            <h4 class="text-center">
-                <div class="abonnement">
-                    Votre abonnement <br> se termine le <br>{{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}
-                </div>
-            </h4>
-        @endif
+  
+                    <div class="abonnement">
+                        Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.cardform') }}">Cliquez ici</a> pour vous abonner
+                    </div>
+
+            @else
+ 
+                    <div class="abonnement">
+                        Votre abonnement <br> se termine le <br>{{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}
+                    </div>
+        
+            @endif                
+            </div> 
+
         </div>
         <div class="div5 cadre_welcome"> 
             <div class="titre_welcome">Les 5 activités les plus acquises</div>
