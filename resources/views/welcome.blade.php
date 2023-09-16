@@ -267,7 +267,7 @@ grid-gap: 30px;
                     @endphp 
                     <tr class="">
                         <td>
-                            <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background]}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
+                            <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background] ?? $degrades['b1']}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
                                 <img src="{{asset('/img/animaux/'.$eleve->photo)}}" alt="" width="30">    
                             </div>
                         </td>

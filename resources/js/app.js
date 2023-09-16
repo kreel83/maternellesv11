@@ -148,8 +148,10 @@ if ($('#editor2').length) {
             modules: {
                 toolbar: false    // Snow includes toolbar by default
             },
-            theme: 'snow'
+            theme: 'snow',
+            
         });
+    quill2.enable(false)
     editPhrase(quill2)
     deletePhrase(quill2)
     nouvellePhrase(quill2)

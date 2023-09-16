@@ -258,7 +258,10 @@ class ParametreController extends Controller
         } else {
             $section = Section::first()->id;
         }
-        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id',$section)->get();
+        $user = Auth::id();
+        $commentaires = Commentaire::where(function($query) use($user) {
+            $query->where('user_id', $user)->orWhereNull('user_id');
+        })->where('section_id',$section)->get();
         $sections = Section::all();
 
         return view('parametres.phrases.index')
@@ -269,6 +272,7 @@ class ParametreController extends Controller
     }
 
     public function savePhrases(Request $request) {
+
         if ($request->id == 'new') {
             $phrase = new Commentaire();
             $phrase->user_id = Auth::id();
@@ -281,7 +285,9 @@ class ParametreController extends Controller
         $phrase->phrase_feminin = $this->chatpht($phrase->phrase_masculin);
 
         $phrase->save();
-        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', $request->section)->get();
+        $commentaires = Commentaire::where(function($query) use($user) {
+            $query->where('user_id', $user)->orWhereNull('user_id');
+        })->where('section_id',$section)->get();
         return view('parametres.phrases.__tableau_des_phrases')->with('commentaires', $commentaires);
     }
 

@@ -121,7 +121,7 @@ const nouvellePhrase = (quill) => {
     })
 
     $('#nouvellePhrase').on('click', function() {
-        $('#controleNouvellePhrase').toggleClass('d-none')
+        $('#controleNouvellePhrase').toggleClass('d-none d-flex')
         $(this).toggleClass('d-none')
         $('#saveNouvellePhrase').attr('data-id', 'new')
         quill.setText('');
@@ -131,7 +131,7 @@ const nouvellePhrase = (quill) => {
 
 const cancelNouvellePhrase = (quill) => {
     $('#cancelNouvellePhrase').on('click', function() {
-        $('#controleNouvellePhrase').toggleClass('d-none')
+        $('#controleNouvellePhrase').toggleClass('d-none d-flex')
         $('#nouvellePhrase').toggleClass('d-none')
         quill.setText('');
         quill.enable(false)
@@ -158,9 +158,11 @@ const saveNouvellePhrase = (quill) => {
             },
             success: function(data) {
                 $('#tableCommentaireContainer').html(data)
-                $('#controleNouvellePhrase').addClass("d-none")
+                $('#controleNouvellePhrase').addClass("d-none d-flex")
+                $('#nouvellePhrase').removeClass("d-none")
                 deletePhrase(quill)
                 editPhrase(quill)
+                quill.enable(false)
                 quill.setText('');
             }
         })
@@ -171,14 +173,17 @@ const saveNouvellePhrase = (quill) => {
 
 const editPhrase = (quill) => {
     $('.editPhrase').on('click', function() {
-        var data = $(this).closest('tr').find('td:first').html()
-        var id = $(this).closest('td').data('id')
-        $('#saveNouvellePhrase').attr('data-id', id)
-        quill.setText('');
-        quill.enable(true)
-        quill.root.innerHTML = data
-        $('#controleNouvellePhrase').toggleClass('d-none')
-        $('#nouvellePhrase').toggleClass('d-none')
+        if ($('#nouvellePhrase').is(':visible')) {
+            var data = $(this).closest('.phrase_bloc').find('.texte').html()
+            var id = $(this).closest('.controlePhrase').data('id')
+            $('#saveNouvellePhrase').attr('data-id', id)
+            quill.setText('');
+            quill.enable(true)
+            quill.root.innerHTML = data
+            $('#controleNouvellePhrase').toggleClass('d-none d-flex')
+            $('#nouvellePhrase').toggleClass('d-none')            
+        }
+
 
     })
 }
