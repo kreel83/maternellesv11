@@ -13,6 +13,10 @@ class Enfant extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'groupe' => 'integer',
+    ];
+
     const DEGRADE = [
         'b1' => 'linear-gradient(to top, #f6d365 0%, #fda085 100%)',
         'b2' => 'linear-gradient(to top, #b721ff 0%, #21d4fd 100%);',

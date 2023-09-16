@@ -2,28 +2,28 @@
 
 namespace App\Mail;
 
-use App\utils\Utils;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class UserEmailVerificationSelfRegistration extends Mailable
+class DemandeDeContact extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $logo, $verificationLink, $prenom;
+    public $user,  $subject, $body;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($verificationLink, $prenom)
+    public function __construct($user, $subject, $body)
     {
-        $this->logo = Utils::getBase64Image('img/deco/les_maternelles.png');
-        $this->verificationLink = $verificationLink;
-        $this->prenom = $prenom;
+        $this->user = $user;
+        $this->subject = $subject;
+        $this->body = $body;
     }
 
     /**
@@ -32,7 +32,8 @@ class UserEmailVerificationSelfRegistration extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Vérifiez votre adresse mail',
+            from: new Address($this->user->email, $this->user->prenom.' '.$this->user->name),
+            subject: $this->subject.' - Les Maternelles',
         );
     }
 
@@ -42,8 +43,7 @@ class UserEmailVerificationSelfRegistration extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.userEmailVerificationSelfRegistration',
-            //text: 'emails.userEmailVerificationSelfRegistration-text'
+            view: 'emails.demandeDeContact',
         );
     }
 

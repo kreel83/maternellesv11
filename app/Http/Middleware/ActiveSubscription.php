@@ -37,6 +37,14 @@ class ActiveSubscription
                     break;
                 case('self'):
                     // licence prise individuellement
+                    if (Auth::user()->subscribed('default')) {
+                        $request->session()->put('isAuthenticated', true);
+                    } else {
+                        return redirect(route('depart'))->with('nolicence', true);
+                    }
+                    break;
+                    /*
+                    // licence prise individuellement
                     $subscription = Subscription::where([
                         ['user_id', Auth::user()->id],
                         ['stripe_status', 'active'],
@@ -48,6 +56,7 @@ class ActiveSubscription
                         $request->session()->put('isAuthenticated', true);
                     }
                     break;
+                    */
                 default:
                     return redirect(route('depart'))->with('nolicence', true);
             }

@@ -106,12 +106,9 @@
 
     <div id="body">
         <p>
-            {{-- Bonjour <span class="prenom">{{ ucfirst($prenom) }}</span>, --}}
             Bonjour,
             <br><br>
-            Nous sommes ravis de vous informer que votre compte Les Maternelles a été créé avec succès par votre établissement.
-            <br><br>
-            <b>Veuillez confirmer votre adresse email en cliquant <a href="{{ $verificationLink }}">sur ce lien.</a> afin d'activer votre compte.</b>
+            Nous vous informons que votre abonnement au service Les Maternelles a été résilié avec succès.
             <br><br><br><br>
 
             L'équipe Les Maternelles se tient à votre disposition pour toute question ou assistance supplémentaire.

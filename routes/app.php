@@ -63,6 +63,7 @@ Route::middleware(['admin'])->group(function()
     Route::post('/admin/licence/remove', [AdminLicenceController::class, 'retraitLicence'])->name('admin.licence.remove.post');
     Route::get('/admin/licence/invoice', [AdminLicenceController::class, 'invoice'])->name('admin.licence.invoice');
     Route::get('/admin/contact', [AdminController::class, 'contact'])->name('admin.contact');
+    Route::post('/admin/contact', [ContactController::class, 'store'])->name('admin.contact.post');
     //Route::post('/admin/contact/store', [ContactController::class, 'store'])->name('admin.contact.store');
     Route::get('/admin/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);
@@ -82,7 +83,7 @@ Route::get('/user/validation/self', [UserController::class, 'validUserFromSelfRe
 Route::get('/deleteuser', [UserController::class, 'deleteinactiveuser'])->name('user.deleteinactive');
 
 // Contact form (utilisé dans contact.js seulement avec prefix /app )
-Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
+//Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
 /*
 // A supprimer dans le futur
@@ -100,6 +101,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
 });
@@ -217,10 +219,12 @@ Route::middleware(['auth','abo'])->group(function () {
 
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
+    Route::get('subscribe/detail', [SubscriptionController::class, 'detailAbonnement'])->name("subscribe.detail");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
     Route::get('subscribe/cancel', [SubscriptionController::class, 'cancel'])->name("subscribe.cancel");
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");
     Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
+    Route::post('subscribe/resume', [SubscriptionController::class, 'resumeSubscription'])->name("subscribe.resumesubscription");
     Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);
     });
