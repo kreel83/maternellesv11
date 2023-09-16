@@ -22,6 +22,7 @@ use Laravel\Cashier\Exceptions\InvalidPaymentMethod;
 use Laravel\Cashier\Payment;
 use Stripe\Exception\CardException;
 use Stripe\PaymentIntent;
+use Illuminate\Support\Facades\Log;
 
 class AdminLicenceController extends Controller
 {
@@ -216,7 +217,6 @@ class AdminLicenceController extends Controller
         $is_email = filter_var($email, FILTER_VALIDATE_EMAIL);
         if($is_email) {
             $user = User::where('email', $email)->first();
-            //$status = (is_null($user)) ? 'attente' : 'active';
             if(!$user) {
                 // compte utilisateur inexistant, on le crée + envoi d'un email pour vérification
                 // pré-remplissage nom + prénom d'après l'adresse email
@@ -233,8 +233,13 @@ class AdminLicenceController extends Controller
                 // Envoi d'un email de vérification
                 $token = md5($user->id.$request->licence_id.$validationKey.env('HASH_SECRET'));
                 $url = route('user.valideUserFromAdminCreatePassword').'?'.'uID='.$user->id.'&lID='.$request->licence_id.'&key='.$validationKey.'&token='.$token;
+                Log::debug($url);
                 Mail::to($email)->send(new UserEmailVerificationFromAdmin($url));
             } else {
+                if($user->actif == 0) {
+                    // on envoi un email de rappel pour activer le compte
+
+                }
                 $user->licence = 'admin';
                 $user->save();
             }

@@ -2,6 +2,6 @@
 
 @section('content')
 
-@include('contact.index')
+@include('contact.include.contact-form')
 
 @endsection

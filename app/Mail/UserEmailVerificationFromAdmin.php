@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\utils\Utils;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,13 +14,14 @@ class UserEmailVerificationFromAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $verificationLink;
+    public $logo, $verificationLink;
 
     /**
      * Create a new message instance.
      */
     public function __construct($url) 
     {
+        $this->logo = Utils::getBase64Image('img/deco/les_maternelles.png');
         $this->verificationLink = $url;
     }
 
@@ -40,7 +42,7 @@ class UserEmailVerificationFromAdmin extends Mailable
     {
         return new Content(
             view: 'emails.userEmailVerificationFromAdmin',
-            text: 'emails.userEmailVerificationFromAdmin-text'
+            //text: 'emails.userEmailVerificationFromAdmin-text'
         );
     }
 

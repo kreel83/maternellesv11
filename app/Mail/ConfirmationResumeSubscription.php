@@ -10,20 +10,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class UserEmailVerificationSelfRegistration extends Mailable
+class ConfirmationResumeSubscription extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $logo, $verificationLink, $prenom;
+    public $logo;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($verificationLink, $prenom)
+    public function __construct()
     {
         $this->logo = Utils::getBase64Image('img/deco/les_maternelles.png');
-        $this->verificationLink = $verificationLink;
-        $this->prenom = $prenom;
     }
 
     /**
@@ -32,7 +30,7 @@ class UserEmailVerificationSelfRegistration extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Vérifiez votre adresse mail',
+            subject: 'Réactivation de votre abonnement',
         );
     }
 
@@ -42,8 +40,7 @@ class UserEmailVerificationSelfRegistration extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.userEmailVerificationSelfRegistration',
-            //text: 'emails.userEmailVerificationSelfRegistration-text'
+            view: 'emails.confirmationResumeSubscription',
         );
     }
 

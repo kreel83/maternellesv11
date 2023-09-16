@@ -12,6 +12,9 @@ class Item extends Model
 {
     public static $FIRE_EVENTS = true;
 
+    protected $casts = [
+        'section_id' => 'integer',
+    ]; 
 
     public $image_name;
 

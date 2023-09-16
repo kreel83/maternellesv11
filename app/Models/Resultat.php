@@ -9,6 +9,14 @@ class Resultat extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'item_id' => 'integer',
+        'enfant_id' => 'integer',
+        'section_id' => 'integer',
+        'notation' => 'integer',
+        'autonome' => 'integer',
+    ];
+
 	/**
      * The attributes that are mass assignable.
      *

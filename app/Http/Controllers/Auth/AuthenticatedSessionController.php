@@ -50,8 +50,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(route('admin.index'));
                 break;
             case ('user'):
-                UserController::setMenuAbonnement();
-                //dd(session('menuAbonnement')['subMenu']);
+                UserController::setMenuAbonnement($request);
                 return redirect()->intended(route('depart'));
                 break;
         }

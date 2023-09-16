@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Licence;
 use App\Models\Produit;
 use App\Models\Transaction;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravel\Cashier\Exceptions\IncompletePayment;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ConfirmationResumeSubscription;
 
 class SubscriptionController extends Controller
 {
@@ -42,6 +46,10 @@ class SubscriptionController extends Controller
                 ->create($request->token);
             // enregistrement de la transaction
             Transaction::ajouterUneTransactionAbonnementUser($request, $subscription, $product);
+            // mise a jour du type de licence dans Users
+            User::where('id', Auth::user()->id)->update(['licence' => 'self']);
+            // mise à jour des variables session pour gérer le menu abonnement
+            UserController::setMenuAbonnement($request);
             return view("subscription.result")
                 ->with('result', 'success');
         } catch (IncompletePayment $exception) {
@@ -92,9 +100,10 @@ class SubscriptionController extends Controller
      *
      * @return View
      */
-    public function cancelsubscription(): View
+    public function cancelsubscription(Request $request): View
     {
         Auth::user()->subscription('default')->cancel();
+        UserController::setMenuAbonnement($request);
         $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
         $finsouscription = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
         return view("subscription.cancel")
@@ -107,14 +116,30 @@ class SubscriptionController extends Controller
      *
      * @return View
      */
-    public function resume(): View
+    public function resume(Request $request): View
     {
         $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
-        if ($onGracePeriode) {
-            Auth::user()->subscription('default')->resume();
-        }
+        $finsouscription = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
         return view("subscription.resume")
-            ->with('onGracePeriode', $onGracePeriode);
+            ->with('onGracePeriode', $onGracePeriode)
+            ->with('finsouscription', $finsouscription);
+    }
+
+    public function resumeSubscription(Request $request)
+    {
+        $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
+        $cancelled = Auth::user()->subscription('default')->canceled();
+        if ($cancelled && $onGracePeriode) {
+            Auth::user()->subscription('default')->resume();
+            $result = Auth::user()->subscribed('default') ? true : false;
+            if($result) {
+                UserController::setMenuAbonnement($request);
+                Mail::to(Auth::user()->email)->send(new ConfirmationResumeSubscription());
+            }
+        } else {
+            $result = false;
+        }
+        return back()->with(["result" => $result]);
     }
 
     /**
@@ -127,6 +152,43 @@ class SubscriptionController extends Controller
         $invoices = Auth::user()->invoices();
         return view("subscription.invoice")
             ->with('invoices', $invoices);
+    }
+
+    /**
+     * Affiche le détail de l'abonnement en cours pour un User
+     *
+     * @return View
+     */
+    public function detailAbonnement(): View
+    {
+        $licenceType = Auth::user()->licence;
+        switch($licenceType) {
+            case 'admin':
+                $licence = Licence::where([
+                    ['user_id', Auth::user()->id],
+                    ['actif', 1],
+                ])->first();                
+                $status = $licence ? 'actif' : 'expiré';
+                $expirationDate = $licence->expires_at;
+                $message = "Licence numéro $licence->name gérée par votre établissement.";
+                $msgIfCanceled = "";
+                break;
+            case 'self':
+                $status = Auth::user()->subscribed('default') ? 'actif' : 'expiré';
+                $expirationDate = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
+                $message = "Licence gérée par vous-même.";
+                //$onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
+                $cancelled = Auth::user()->subscription('default')->canceled();
+                if($cancelled) {
+                    $msgIfCanceled = "Vous avez résilié votre abonnement.";
+                }
+                break;
+        }
+        return view("subscription.detail")
+            ->with('status', $status)
+            ->with('expirationDate', $expirationDate)
+            ->with('message', $message)
+            ->with('msgIfCanceled', $msgIfCanceled);
     }
 
 }

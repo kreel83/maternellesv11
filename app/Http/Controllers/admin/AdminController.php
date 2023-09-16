@@ -64,7 +64,7 @@ class AdminController extends Controller
     public function contact(): View
     {
         return view('contact.admin')
-            ->with('route', '');
+            ->with('route', route('admin.contact.post'));
     }
 
     /**
