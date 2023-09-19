@@ -48,6 +48,7 @@ class SubscriptionController extends Controller
             Transaction::ajouterUneTransactionAbonnementUser($request, $subscription, $product);
             // mise a jour du type de licence dans Users
             User::where('id', Auth::user()->id)->update(['licence' => 'self']);
+            sleep(3);
             // mise à jour des variables session pour gérer le menu abonnement
             UserController::setMenuAbonnement($request);
             return view("subscription.result")

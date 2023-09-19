@@ -2,6 +2,9 @@
 use Illuminate\Support\Facades\Auth;
 
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +38,20 @@ use Illuminate\Support\Facades\Auth;
         </style>
     </head>
     <div class='dashboard'>
+      @php
+          $url = $_SERVER['REQUEST_URI']; 
+          
+          if (isset(parse_url($url)['query'])) {
+            $q = parse_url($url)['query'];
+            if (strpos($q, 'tuto') ) {
+              $tuto = explode('type=', $q)[1];
+            };
+
+          }
+      @endphp 
+
+      <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto}}">
+      <input type="hidden" id="type" value="{{$tuto ?? null}}">
       @if (!isset($log))
       <div class="dashboard-nav">
           <header>
@@ -51,6 +68,7 @@ use Illuminate\Support\Facades\Auth;
             $params = in_array($menu, ['evaluation','reussite','affectation_groupe','avatar']);
           @endphp
 
+            @if (Auth::user()->is_enfants())
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-users"></i> Ma classe </a>      
@@ -64,6 +82,7 @@ use Illuminate\Support\Facades\Auth;
 
               </div>
             </div>
+            @endif
             {{-- <div class='dashboard-nav-dropdown'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Disciplines </a>
               <div class='dashboard-nav-dropdown-menu'>
@@ -81,7 +100,7 @@ use Illuminate\Support\Facades\Auth;
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-calendar"></i> Calendrier </a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('calendrier')}}" class="dashboard-nav-dropdown-item {{$menu == 'calendrier' ? 'active' : null}}">Voir le calendrier</a>
-                <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a>
+                {{-- <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a> --}}
 
 
               </div>
@@ -156,7 +175,8 @@ use Illuminate\Support\Facades\Auth;
         @if(Session::has('message'))
         <p class="alerteMessage alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
         @endif
-        <div class=''>
+        <div class='position-relative'>
+          {{-- <div class="position-absolute" style="top: 40px; right: 40px "><i class="fs-1 fas fa-edit"></i></div> --}}
           @yield('content')
         </div>
         @else
@@ -221,7 +241,22 @@ use Illuminate\Support\Facades\Auth;
     </div>
 </nav> --}}
 
+<!-- Modal -->
+<div class="modal fade" id="tutoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content  position-relative">
+      <img src="{{asset('img/tutos/fleche.png')}}" alt="" width="" id="arrowTuto" class="position-absolute">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ceci est un tuto sur la direction
+      </div>
 
+    </div>
+  </div>
+</div>
 
 
 
