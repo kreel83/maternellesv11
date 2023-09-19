@@ -101,7 +101,7 @@ class ParametreController extends Controller
         return $result['choices'][0]['message']['content'];
     }
 
-    public function monprofil() {
+    public function monprofil(Request $request) {
 
 
         // $coms = Item::all();
@@ -136,7 +136,9 @@ class ParametreController extends Controller
         if($ecole->adresse_3 != '') { $adresseEcole[] = $ecole->adresse_3; }
         $user->photo = Storage::url($user->photo);
         $conf = Configuration::where('user_id', Auth::id())->first();
+
         return view('monprofil.index')
+            ->with('request', $request->all() ?? [])
             ->with('periodes', $conf->periodes)
             ->with('user', $user)
             ->with('equipes', $equipes)
@@ -195,6 +197,7 @@ class ParametreController extends Controller
 
     public function welcome(): View
     {
+        
         // Check for a subscription and calculate end date
         // dd(Auth::user()->subscription('default')->asStripeSubscription());
         if (Auth::user()->subscribed('default')) {

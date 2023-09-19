@@ -19,6 +19,7 @@ import '../../node_modules/quill/dist/quill';
 import Alpine from 'alpinejs';
 
 import './menu'
+import { tutos } from './tutos/tutos';
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
@@ -221,3 +222,7 @@ choix_equipe()
 adminRegistration()
 achatLicences()
 assigneLicence()
+
+
+const tutoModal = new Modal('#tutoModal', {})
+tutos(tutoModal)

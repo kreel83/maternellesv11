@@ -77,6 +77,48 @@ body {
         border-radius: 10px;
       }
 
+      #arrowTuto {
+        &.left_bottom {
+                top: 188px;
+                left: 40px;
+        }
+        &.right_bottom {
+                top: 158px;
+                left: 332px;
+        }
+        &.left_top {
+                top: -165px;
+                left: -7px;
+        }
+        &.right_top {
+                top: 80px;
+                left: 332px;
+        }
+        
+
+      }
+
+      .tuto_cadre {
+        border: 7px solid pink;
+        z-index: 10000;
+        background-color: white;
+        }
+        #tutoModal {
+        .modal-content {
+                border: none;
+                background-color: transparent !important;
+        } 
+        .modal-body, .modal-header {
+                background-color: white !important;
+                height: auto;
+        } 
+        .modal-footer {
+                height: 000px;
+                justify-content: center !important;
+        }
+
+}
+
 :root {
 
         --main-color: #6759FF;

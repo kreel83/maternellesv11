@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <div class="container my-5">
 
 
@@ -116,7 +117,7 @@
             </div>       
         </div>
 
-        <div class="gridcadre grid3 d-flex justify-content-between w-100">
+        <div class="gridcadre grid3 d-flex justify-content-between w-100 tuto_aides">
             <div class="gridTitre">Mes aides maternelles</div>
             <form action="{{route('aidematernelle.post')}}" method="post" class="d-flex justify-content-between w-100">
                 @csrf
@@ -159,12 +160,15 @@
         </div>
 
 
+<style>
+
+</style>
 
 
 
-
-        <div class="gridcadre grid4 d-flex flex-column justify-content-between align-items-center">
+        <div class="gridcadre grid4 d-flex flex-column justify-content-between align-items-center tuto_direction">
             <div class="gridTitre">Direction</div>
+
 
             <div class="d-flex flex-column w-100 pt-4">
                 <div>
@@ -209,7 +213,7 @@
 
 
         </div>
-        <div class="gridcadre grid5 d-flex justify-content-center align-items-center">
+        <div class="gridcadre grid5 d-flex justify-content-center align-items-center tuto_periodicite">
             <div class="gridTitre">Périodocité</div>
             <form action="{{route('periode_save')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
                 <select name="periode" class="custom-select">
@@ -227,5 +231,7 @@
 
 
 </div>
+
+
 
 @endsection
