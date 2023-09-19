@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Licence;
+use App\Models\Subscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -131,24 +132,68 @@ class UserController extends Controller
     public function contact(): View
     {
         return view('contact.user')
-            ->with('route', '');
+            ->with('route', route('contact'));
     }
-
-    public static function setMenuAbonnement() {
+    
+    /**
+     * Montre/Cache les sous-menus du menu Abonnement
+     * Utilisé dans AuthenticatedSessionController::store
+     * @return void
+     */
+    public static function setMenuAbonnement(Request $request) {
         $user = AUTH::user();
+        if ($request->session()->exists('menuAbonnement')) {
+            $request->session()->forget('menuAbonnement');
+        }
+        $invoices = $user->invoices();
         switch($user->licence) {
             case 'admin':
-                session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => false]]);
+                // Vérifie si une licence est accordée par l'école
+                $licence = Licence::where([
+                    ['user_id', $user->id],
+                    ['actif', 1],
+                ])->first();
+                if($licence) {
+                    session(['isAuthenticated' => true]);
+                    $abonnement = true;
+                } else {
+                    $abonnement = false;
+                }
+                session(['menuAbonnement' => [
+                    'abonnement' => $abonnement, 
+                    'resiliationSubMenu' => false,
+                    'resumeSubMenu' => false,
+                    'invoice' => $invoices->isNotEmpty()
+                ]]);
                 break;
             case 'self':
+                // Vérifie si une licence est prise individuellement
+                $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
+                $cancelled = Auth::user()->subscription('default')->canceled();
                 if (Auth::user()->subscribed('default')) {
-                    session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => true]]);
+                    session(['isAuthenticated' => true]);
+                    session(['menuAbonnement' => [
+                        'abonnement' => true, 
+                        'resiliationSubMenu' => !$onGracePeriode,
+                        'resumeSubMenu' => $cancelled && $onGracePeriode,
+                        'invoice' => $invoices->isNotEmpty()
+                    ]]);
                 } else {
-                    session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => false]]);
+                    session(['menuAbonnement' => [
+                        'abonnement' => false, 
+                        'resiliationSubMenu' => false,
+                        'resumeSubMenu' => false,
+                        'invoice' => $invoices->isNotEmpty()
+                    ]]);
                 }
                 break;
             default:
-                session(['menuAbonnement' => ['topMenu' => true, 'subMenu' => false]]);
+                session(['menuAbonnement' => [
+                    'abonnement' => false, 
+                    'resiliationSubMenu' => false,
+                    'resumeSubMenu' => false,
+                    'invoice' => $invoices->isNotEmpty()
+                ]]);
         }
     }
 

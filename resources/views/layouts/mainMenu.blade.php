@@ -121,15 +121,25 @@ use Illuminate\Support\Facades\Auth;
             <!--<a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>-->
 
             @php
-              $params = in_array($menu, ['souscrire','resilier','reactiver','facture']);
+              $params = in_array($menu, ['detail','souscrire','resilier','reactiver','facture']);
             @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-dove"></i> Mon abonnement</a>      
               <div class='dashboard-nav-dropdown-menu'>
-                <a href="{{route('subscribe.cardform')}}" class="dashboard-nav-dropdown-item {{$menu == 'souscrire' ? 'active' : null}}">Souscrire un abonnement</a>
-                <a href="{{route('subscribe.cancel')}}" class="dashboard-nav-dropdown-item {{$menu == 'resilier' ? 'active' : null}}">Résilier mon abonnement</a>
+                @if(session('menuAbonnement')['abonnement'])
+                  <a href="{{route('subscribe.detail')}}" class="dashboard-nav-dropdown-item {{$menu == 'detail' ? 'active' : null}}">Voir le détail</a>
+                @else
+                  <a href="{{route('subscribe.cardform')}}" class="dashboard-nav-dropdown-item {{$menu == 'souscrire' ? 'active' : null}}">Souscrire un abonnement</a>
+                @endif
+                @if(session('menuAbonnement')['resiliationSubMenu'])
+                  <a href="{{route('subscribe.cancel')}}" class="dashboard-nav-dropdown-item {{$menu == 'resilier' ? 'active' : null}}">Résilier mon abonnement</a>
+                @endif
+                @if(session('menuAbonnement')['resumeSubMenu'])
                 <a href="{{route('subscribe.resume')}}" class="dashboard-nav-dropdown-item {{$menu == 'reactiver' ? 'active' : null}}">Réactiver mon abonnement</a>
-                <a href="{{route('subscribe.invoice')}}" class="dashboard-nav-dropdown-item {{$menu == 'facture' ? 'active' : null}}">Mes factures</a>
+                @endif
+                @if(session('menuAbonnement')['invoice'])
+                  <a href="{{route('subscribe.invoice')}}" class="dashboard-nav-dropdown-item {{$menu == 'facture' ? 'active' : null}}">Mes factures</a>
+                @endif
               </div>
             </div>
 

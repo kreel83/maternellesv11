@@ -42,8 +42,6 @@ import {
 import {choix_equipe} from "./pages/equipe";
 import {adminRegistration} from "./pages/admin";
 import {achatLicences,assigneLicence} from "./pages/subscription";
-import {contactform} from "./pages/contact";
-
 
 window.Alpine = Alpine;
 
@@ -148,8 +146,10 @@ if ($('#editor2').length) {
             modules: {
                 toolbar: false    // Snow includes toolbar by default
             },
-            theme: 'snow'
+            theme: 'snow',
+            
         });
+    quill2.enable(false)
     editPhrase(quill2)
     deletePhrase(quill2)
     nouvellePhrase(quill2)
@@ -221,5 +221,3 @@ choix_equipe()
 adminRegistration()
 achatLicences()
 assigneLicence()
-
-contactform()

@@ -139,4 +139,9 @@ class Utils {
             'nom' =>$name);
     }
 
+    public static function getBase64Image($path) {
+        $logoPath = public_path($path);
+        return "data:image/png;base64,".base64_encode(file_get_contents($logoPath));
+    }
+
 }

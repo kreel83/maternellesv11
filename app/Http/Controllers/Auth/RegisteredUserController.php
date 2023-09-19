@@ -16,6 +16,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserEmailVerificationSelfRegistration;
+use App\utils\Utils;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -378,15 +379,15 @@ class RegisteredUserController extends Controller
         //$token = md5($user->id.$validationKey.env('HASH_SECRET'));
         //$url = route('registration.validation').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
         //$token = md5(microtime(TRUE)*100000);
-        $logoPath = public_path('img/deco/les_maternelles.png');
-        $logo = "data:image/png;base64,".base64_encode(file_get_contents($logoPath));
-
-        $url = route('registration.validation', ['token' => $token]);
+        /*$logoPath = public_path('img/deco/les_maternelles.png');
+        $logo = "data:image/png;base64,".base64_encode(file_get_contents($logoPath));*/
+        //$logo = Utils::getBase64Image('img/deco/les_maternelles.png');
+        $verificationLink = route('registration.validation', ['token' => $token]);
         if($request->role == 'user') {
-            Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($logo, $url, $request->prenom));
+            Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         if($request->role == 'admin') {
-            Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($logo, $url, $request->prenom));
+            Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
         

@@ -54,6 +54,7 @@ grid-gap: 30px;
     font-size: 14px;
     background-color: white;
     color: grey;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     
 }
 .titre_welcome {
@@ -79,6 +80,16 @@ grid-gap: 30px;
     font-weight: bolder;
     text-align: center
 }
+.ddn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
 </style>
 
 <div class="container mt-5 py-4">
@@ -98,14 +109,26 @@ grid-gap: 30px;
                 Aucun anniversaire ce mois ci.
             </div>
             @else
-                <div class="text-center fs-2">{{$moisActuel}}</div>
-                <div class="anniversaires1 w-75 d-flex justify-content-center ">
-                    <ul>
+                <div class="text-center fs-2" style="color: var(--second-color)">{{$moisActuel}}</div>
+                <div class="anniversaires1 w-75 d-flex justify-content-between ">
+                    <ul class="w-100">
                         @foreach($anniversaires as $enfant)
-                            <div class="d-flex justify-content-between">
-                                <div class="day1 me-5" style="background-color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">{{$enfant->jour}}</div>
-                                <div class="name1">{{$enfant->prenom}}</div>
+                        @php
+                        $groupe = null;
+                        if (!is_null($enfant->groupe)){                    
+                        $groupe = $lesgroupes[$enfant->groupe];
+                        }
+                    @endphp 
+                        <li class="d-flex justify-content-between align-items-center w-100">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}; width: 27px; height: 27px">
+                                    <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
+                                </div>
+                                <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>
+ 
                             </div>
+                             <div class="ddn">{{Carbon\Carbon::parse($enfant->ddn)->format('d')}}</div>
+                         </li>
                         @endforeach                        
                     </ul>
 
@@ -267,7 +290,7 @@ grid-gap: 30px;
                     @endphp 
                     <tr class="">
                         <td>
-                            <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background]}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
+                            <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background] ?? $degrades['b1']}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
                                 <img src="{{asset('/img/animaux/'.$eleve->photo)}}" alt="" width="30">    
                             </div>
                         </td>

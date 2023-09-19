@@ -50,7 +50,7 @@
         </select> --}}
     </div>
     <div class="form-group">
-        <label for="">Liste des phrases de cette discipline</label>
+
         <div id="tableCommentaireContainer" class="my-4">
             
             @include('parametres.phrases.__tableau_des_phrases')
@@ -60,10 +60,10 @@
     </div>
 
         <div class="d-flex justify-content-between my-4">
-            <button class="btn btn-dark" id="nouvellePhrase" >Nouvelle phrase</button>
+            <button class="custom_button w-25" id="nouvellePhrase" >Nouvelle phrase</button>
             <div id="controleNouvellePhrase" class="d-none">
-                <button class="btn btn-danger" id="cancelNouvellePhrase">Annuler</button>
-                <button class="btn btn-primary" id="saveNouvellePhrase" data-section="{{$section}}">Sauvegarder</button>
+                <button class="custom_button" id="saveNouvellePhrase" data-section="{{$section}}">Sauvegarder</button>
+                <button class="custom_button_secondary ms-4" id="cancelNouvellePhrase">Annuler</button>
             </div>
         </div>
 

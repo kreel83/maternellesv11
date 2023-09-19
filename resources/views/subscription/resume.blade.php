@@ -5,15 +5,30 @@
     
     <h1 class="text-center">Réactiver mon abonnement</h1>
 
-    @if($onGracePeriode)
-        <p class="text-center">Merci. Votre abonnement a été réactivé et est pleinement fonctionnel.</p>
+    @if(session()->has('result'))
+        @if(session('result'))
+            <div class="alert alert-success text-center" role="alert">
+                Votre abonnement a été réactivé.
+            </div>
+        @else
+            <div class="alert alert-danger text-center" role="alert">
+                Une erreur s'est produite. La réactivation de l'abonnement a échouée.
+            </div>
+        @endif
     @else
-        <p class="text-center">Votre abonnement ne peut pas être réactivé car il n'a pas été résilié.</p>
+        @if($onGracePeriode)
+            <p class="text-center">Votre abonnement est résilié et reste néanmoins actif jusqu'au {{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}.</p>
+            <p class="text-center">En réactivant votre abonnement, celui-ci sera automatiquement renouvelé après cette date.</p>
+            <div class="text-center">
+                <form action="{{ route('subscribe.resumesubscription') }}" method="post">
+                    @csrf
+                    <button class="btn btn-primary">Je souhaite réactiver mon abonnement</button>
+                </form>
+            </div>
+        @else
+            <p class="text-center">Votre abonnement ne peut pas être réactivé car il n'a pas été résilié.</p>
+        @endif
     @endif
-
-    <div class="text-center">
-        <a href="{{ route('depart') }}" class="btn btn-primary">Continuer</a>
-    </div> 
 
 </div>
 @endsection
