@@ -16,6 +16,7 @@ use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TutoController;
 use App\Http\Controllers\RegisteredUserController;
 
 use App\Http\Controllers\NewaccountController;
@@ -107,12 +108,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //Route::middleware(['auth'])->group(function () {
-// Les URLs ci-dessous nécessitent authentification + abonnement en cours
-Route::middleware(['auth','abo'])->group(function () {
-    //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
-
-    //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
-
+    // Les URLs ci-dessous nécessitent authentification + abonnement en cours
+    Route::middleware(['auth'])->group(function () {
+        //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+        
+        //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+        
+    Route::get('/tutos', [TutoController::class, 'index'])->name('tutos');
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');

@@ -90,6 +90,29 @@ grid-gap: 30px;
     justify-content: center;
     align-items: center
 }
+
+    .classe_dashboard a {
+        text-decoration: none;
+        
+    }
+    .classe_dashboard tr {
+        cursor: pointer;
+    }
+    .classe_dashboard tr:hover {
+        transform: scale(1.02)
+    }
+    .classe_dashboard .name.G a {
+        color: var(--blue) !important;
+        
+    }
+    .classe_dashboard .name.F a {
+        color: var(--rose) !important;
+        
+    }
+    .dashboard_mail {
+        font-size: 20px;
+        color: red;
+    }
 </style>
 
 <div class="container mt-5 py-4">
@@ -100,6 +123,8 @@ grid-gap: 30px;
             Cette page n'est pas autorisée. <a href="{{ route('subscribe.cardform') }}" class="alert-link">Cliquez ici</a> pour souscrire un abonnement et profiter de toute la puissance de cette application.
         </div>
     @endif
+
+    @if (Auth::user()->is_abonne())
 
     <div class="parent">
         <div class="div1 cadre_welcome"> 
@@ -139,25 +164,27 @@ grid-gap: 30px;
             <div class="titre_welcome">Les 5 élèves les plus avancés</div>
             <div class="">
                 <ul>
-                    @foreach($top5ElevesLesPlusAvances as $enfant)
 
-                    @php
-                        $groupe = null;
-                        if (!is_null($enfant->groupe)){                    
-                        $groupe = $lesgroupes[$enfant->groupe];
-                        }
-                    @endphp 
-                        <li class="d-flex justify-content-between align-items-center">
-                           <div class="d-flex align-items-center">
-                               <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}; width: 27px; height: 27px">
-                                   <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
-                               </div>
-                               <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>
+                        @foreach($top5ElevesLesPlusAvances as $enfant)
 
-                           </div>
-                            <div>{{$enfant->total}} activité{{$enfant->total > 1 ? 's' : null}}</div>
-                        </li>
-                    @endforeach                    
+                        @php
+                            $groupe = null;
+                            if (!is_null($enfant->groupe)){                    
+                            $groupe = $lesgroupes[$enfant->groupe];
+                            }
+                        @endphp 
+                            <li class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}; width: 27px; height: 27px">
+                                    <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
+                                </div>
+                                <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>
+
+                            </div>
+                                <div>{{$enfant->total}} activité{{$enfant->total > 1 ? 's' : null}}</div>
+                            </li>
+                        @endforeach   
+                
                 </ul>
 
             </div>
@@ -250,30 +277,7 @@ grid-gap: 30px;
             </div>
         </div>
 
-                    <style>
-                        .classe_dashboard a {
-                            text-decoration: none;
-                            
-                        }
-                        .classe_dashboard tr {
-                            cursor: pointer;
-                        }
-                        .classe_dashboard tr:hover {
-                            transform: scale(1.02)
-                        }
-                        .classe_dashboard .name.G a {
-                            color: var(--blue) !important;
-                            
-                        }
-                        .classe_dashboard .name.F a {
-                            color: var(--rose) !important;
-                            
-                        }
-                        .dashboard_mail {
-                            font-size: 20px;
-                            color: red;
-                        }
-                    </style>
+
         <div class="div7 cadre_welcome">
             <div class="titre_welcome">Ma classe</div>  
             <div class="row">
@@ -379,21 +383,210 @@ grid-gap: 30px;
         </div>
     </div>
 
+    @else
+    <div class="parent">
+        <div class="div1 cadre_welcome"> 
+            <div class="titre_welcome">Etape 1</div>
+            
+            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
+                Avant de commencer
+            </div>
+            <div>
+                <ol>
+                    <li><a href="/app/monprofil?state=tuto&type=direction">nom du directeur de l'école</a></li>
+                    <li><a href="/app/monprofil?state=tuto&type=periodicite">définition de la périodicité des cahiers de réussite</a></li>
+                    <li><a href="/app/monprofil?state=tuto&type=aides">définition des mes aides maternees et AESH</a> </li>
+                    <li><a href="/app/groupe?state=tuto&type=choix_nombre_groupe">Je crée mes groupes</a> </li>
 
-    <!-- Fin de la liste des élèves -->
+                </ol>
+            </div>
+
+        </div>
+        <div class="div2 cadre_welcome"> 
+            <div class="titre_welcome">Etape 2</div>
+            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
+                Je créé ma classe
+            </div>
+            <div>
+                <ol>
+                    <li>Je créé mes élèves</li>
+                    <li>Je récupère les élèves de l'année dernière</li>
+                    <li>JE corrige les fiche élève si besoin</li>
+
+                </ol>
+            </div>
+        </div>
+        <div class="div3 cadre_welcome">
+            <div class="titre_welcome">Etape 3</div> 
+            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
+                J'organise ma classe
+            </div>
+            <div>
+                <ol>
+                    <li>Je choisi les avatars de élève</li>
+                    <li>J'affecte les groupe à mes élèves</li>
 
 
-    
+                </ol>
+            </div>
+
+        </div>
+        <div class="div4 cadre_welcome"> 
+            <div class="titre_welcome">Etape 4</div>
+            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
+                Je prepare mon année
+            </div>
+            <div>
+                <ol>
+                    <li>Je choisi les activités que je vais traiter</li>
+                    <li>JE créee mes phrases préétablies</li>
 
 
-    {{--
-    <div class="row text-center">
-        <div class="col"><a href="{{ route('subscribe.index') }}" class="btn btn-primary">Souscrire un abonnement</a></div>
-        <div class="col"><a href="{{ route('subscribe.cancel') }}" class="btn btn-primary">Résilier mon abonnement</a></div>
-        <div class="col"><a href="{{ route('subscribe.resume') }}" class="btn btn-primary">Réactiver mon abonnement</a></div>
-        <div class="col"><a href="{{ route('subscribe.invoice') }}" class="btn btn-primary">Mes factures</a></div>
+                </ol>
+            </div>
+        </div>
+        <div class="div5 cadre_welcome"> 
+            <div class="titre_welcome">Etape 5</div>
+            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
+                J'évalue mes élèves
+            </div>
+            <div>
+                <ol>
+                    <li>Je choisi l'élève à évaluer</li>
+                    <li>Je choisi ensuite la discipline</li>
+                    <li>Puis l'activité à évaluer</li>
+                    <li>J'value enfin l'élève</li>
+
+                </ol>
+            </div>
+        </div>
+
+        <div class="div6 cadre_welcome"> 
+            <div class="titre_welcome">Etape 6</div>
+            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
+                J'élabore le cahier de réussite'
+            </div>
+            <div>
+                <ol>
+                    <li>Je choisi l'élève</li>
+                    <li>Je choisi ensuite la discipline</li>
+                    <li>Puis l'activité à évaluer</li>
+                    <li>J'value enfin l'élève</li>
+
+                </ol>
+            </div>
+        </div>
+
+
+
+        <div class="div7 cadre_welcome">
+            <div class="titre_welcome">Ma classe</div>  
+            <div class="row">
+                <div class="col-md-6">
+            <table class="table  table-sm classe_dashboard">
+                <tbody>
+                    @foreach($listeDesEleves->take(12) as $eleve)
+                    @php
+                        $groupe = null;
+                        if (!is_null($eleve->groupe)){
+                        
+                        $groupe = $lesgroupes[$eleve->groupe];
+                        }
+                    @endphp 
+                    <tr class="">
+                        <td>
+                            <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background] ?? $degrades['b1']}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
+                                <img src="{{asset('/img/animaux/'.$eleve->photo)}}" alt="" width="30">    
+                            </div>
+                        </td>
+                        <td class="name {{$eleve->genre}}">
+                            <div>
+                                <a href="{{ route('voirEleve', ['id' => $eleve->id]) }}">
+                                {{ $eleve->prenom.' '.$eleve->nom }}
+                                </a>
+
+                            </div>
+                            <div style="color: lightgrey;">
+                                {{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}} <small>({{ $eleve->age }})</small>
+                            </div>
+                        </td>
+
+                        <td>
+                            @if (!$eleve->mail)
+                            <div class="dashboard_mail">
+
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            @endif
+
+                        </td>
+                        <td>
+                            <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+                </div>
+                <div class="col-md-6">
+
+
+
+            <table class="table table-sm classe_dashboard">
+                <tbody>
+                    @foreach($listeDesEleves->skip(12) as $eleve)
+                    @php
+                    $groupe = null;
+                    if (!is_null($eleve->groupe)){
+                    
+                    $groupe = $lesgroupes[$eleve->groupe];
+                    }
+                @endphp 
+                <tr class="">
+                    <td>
+                        <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background]}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
+                            <img src="{{asset('/img/animaux/'.$eleve->photo)}}" alt="" width="30">    
+                        </div>
+                    </td>
+                    <td class="name {{$eleve->genre}}">
+                        <div>
+                            <a href="{{ route('voirEleve', ['id' => $eleve->id]) }}">
+                            {{ $eleve->prenom.' '.$eleve->nom }}
+                            </a>
+
+                        </div>
+                        <div style="color: lightgrey;">
+                            {{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}} <small>({{ $eleve->age }})</small>
+                        </div>
+                    </td>
+
+                    <td>
+                        @if (!$eleve->mail)
+                        <div class="dashboard_mail">
+
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        @endif
+
+                    </td>
+                    <td>
+                        <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+
+                    </td>
+                </tr>
+                    @endforeach
+                </tbody>
+            </table>
+                </div>
+            </div>
+
+        </div>
     </div>
-    --}}
+    @endif
+
+
+
 
 </div>
 @endsection
