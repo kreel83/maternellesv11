@@ -115,6 +115,7 @@ Route::middleware(['auth'])->group(function () {
         //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
         
     Route::get('/tutos', [TutoController::class, 'index'])->name('tutos');
+    Route::get('/tutos/ajax', [TutoController::class, 'ajax'])->name('ajax');
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
