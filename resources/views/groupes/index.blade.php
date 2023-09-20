@@ -110,7 +110,7 @@
         <div class="col-md-6 p-5" id="myTabContent">
             
             {{-- <div class="couleur_badge_titre">couleur du badge</div> --}}
-            <div class="d-flex flex-wrap w-100" style="padding: 0 125px;">
+            <div class="d-flex flex-wrap w-100 tuto_selection_couleur position-relative" style="padding: 0 125px;">
                 @foreach (App\Models\Enfant::GROUPE_COLORS as $key => $color)
                     <div class="rond_couleur ronds"  data-color="{{$color}}" style="background-color: {{ $color }}">
                        

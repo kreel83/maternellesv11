@@ -50,7 +50,7 @@ use Illuminate\Support\Facades\Auth;
           }
       @endphp 
 
-      <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto}}">
+      <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto ?? null}}">
       <input type="hidden" id="type" value="{{$tuto ?? null}}">
       @if (!isset($log))
       <div class="dashboard-nav">
@@ -242,12 +242,27 @@ use Illuminate\Support\Facades\Auth;
 </nav> --}}
 
 <!-- Modal -->
+
+
+<style>
+  .fleche {
+    cursor: pointer;
+  }
+
+</style>
 <div class="modal fade" id="tutoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content  position-relative">
       <img src="{{asset('img/tutos/fleche.png')}}" alt="" width="" id="arrowTuto" class="position-absolute">
+
+
+
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="title"></h1>
+        <div class="modal-header d-flex justify-content-between px-5 w-50">
+          <i class="fa-solid fa-arrow-left fleche left"></i>
+          <i class="fa-solid fa-arrow-right fleche right"></i>
+      </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
