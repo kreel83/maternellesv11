@@ -224,5 +224,5 @@ achatLicences()
 assigneLicence()
 
 
-const tutoModal = new Modal('#tutoModal', {})
-tutos(tutoModal)
+
+tutos()

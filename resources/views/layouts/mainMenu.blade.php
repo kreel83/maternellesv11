@@ -37,14 +37,14 @@ use Illuminate\Support\Facades\Auth;
             }
         </style>
     </head>
-    <div class='dashboard'>
+    <div class='dashboard position-relative'>
       @php
           $url = $_SERVER['REQUEST_URI']; 
           
           if (isset(parse_url($url)['query'])) {
             $q = parse_url($url)['query'];
             if (strpos($q, 'tuto') ) {
-              $tuto = explode('type=', $q)[1];
+              $tuto = explode('tuto_type=', $q)[1];
             };
 
           }
@@ -52,6 +52,7 @@ use Illuminate\Support\Facades\Auth;
 
       <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto ?? null}}">
       <input type="hidden" id="type" value="{{$tuto ?? null}}">
+      <input type="hidden" id="page" value="{{$menu}}">
       @if (!isset($log))
       <div class="dashboard-nav">
           <header>
@@ -107,7 +108,7 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
               @php
-                $params = in_array($menu, ['affectation_groupe','commentaire','periode','eleve','item','aide','ecole','groupe','avatar']);
+                $params = in_array($menu, ['affectation_groupe','commentaire','periode','eleve','item','create_item','aide','ecole','groupe','avatar']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
@@ -117,7 +118,8 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
                 {{-- <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a> --}}
                 <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Mes élèves</a>
-                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Mes activités</a>
+                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Je selectionne mes activités</a>
+                <a href="{{route('createFiche')}}" class="dashboard-nav-dropdown-item {{$menu == 'create_item' ? 'active' : null}}">Je créé mes activités</a>
                 {{-- <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a> --}}
                 {{-- <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a> --}}
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
@@ -175,12 +177,12 @@ use Illuminate\Support\Facades\Auth;
         @if(Session::has('message'))
         <p class="alerteMessage alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
         @endif
-        <div class='position-relative'>
+        <div class='position-relative h-100'>
           {{-- <div class="position-absolute" style="top: 40px; right: 40px "><i class="fs-1 fas fa-edit"></i></div> --}}
           @yield('content')
         </div>
         @else
-        <div class=''>
+        <div class='h-100'>
           @yield('content')
         </div>
         @endif
@@ -247,10 +249,26 @@ use Illuminate\Support\Facades\Auth;
 <style>
   .fleche {
     cursor: pointer;
+   
   }
 
+
 </style>
-<div class="modal fade" id="tutoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+<div id="tuto_window" class="position-absolute d-none">
+  <img src="{{asset('img/tutos/fleche.png')}}" alt="" height="160" width="100" id="arrowTuto" class="position-absolute" style=" z-index: 8000;">
+  <div class="title"></div>
+  <div class="texte"></div>
+  <div class="d-flex justify-content-between px-5 mt-3">
+    
+    <i class="fa-solid fa-arrow-left fleche left"></i>
+    <i class="fa-solid fa-arrow-right fleche right"></i>
+</div>
+</div>
+
+{{-- <div class="modal fade" id="tutoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content  position-relative">
       <img src="{{asset('img/tutos/fleche.png')}}" alt="" width="" id="arrowTuto" class="position-absolute">
@@ -271,7 +289,7 @@ use Illuminate\Support\Facades\Auth;
 
     </div>
   </div>
-</div>
+</div> --}}
 
 
 

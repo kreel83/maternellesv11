@@ -158,6 +158,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
+    
     Route::post('/fiches/choisirSelection', [ficheController::class, 'choisirSelection']);
     Route::get('/fiches/duplicate', [ficheController::class, 'duplicate']);
     Route::get('/fiches/choix', [ficheController::class, 'choix']);

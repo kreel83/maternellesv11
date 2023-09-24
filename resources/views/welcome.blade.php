@@ -393,10 +393,11 @@ grid-gap: 30px;
             </div>
             <div>
                 <ol>
-                    <li><a href="/app/monprofil?state=tuto&type=direction">nom du directeur de l'école</a></li>
-                    <li><a href="/app/monprofil?state=tuto&type=periodicite">définition de la périodicité des cahiers de réussite</a></li>
-                    <li><a href="/app/monprofil?state=tuto&type=aides">définition des mes aides maternees et AESH</a> </li>
-                    <li><a href="/app/groupe?state=tuto&type=choix_nombre_groupe">Je crée mes groupes</a> </li>
+                    {{-- <li><a href="/app/monprofil?state=tuto&tuto_type=direction">nom du directeur de l'école</a></li>
+                    <li><a href="/app/monprofil?state=tuto&tuto_type=periodicite">définition de la périodicité des cahiers de réussite</a></li>
+                    <li><a href="/app/monprofil?state=tuto&tuto_type=aides">définition des mes aides maternees et AESH</a> </li> --}}
+                    <li><a href="/app/monprofil">page "mon profil"</a> </li>
+                    <li><a href="/app/groupe">Je crée mes groupes</a> </li>
 
                 </ol>
             </div>
@@ -409,7 +410,7 @@ grid-gap: 30px;
             </div>
             <div>
                 <ol>
-                    <li>Je créé mes élèves</li>
+                    <li><a href="/app/eleves">Je créé mes élèves</a></li>
                     <li>Je récupère les élèves de l'année dernière</li>
                     <li>JE corrige les fiche élève si besoin</li>
 
@@ -423,8 +424,8 @@ grid-gap: 30px;
             </div>
             <div>
                 <ol>
-                    <li>Je choisi les avatars de élève</li>
-                    <li>J'affecte les groupe à mes élèves</li>
+                    <li><a href="/app/enfants?type=avatar&tuto_type=modify_avatar">Je choisi les avatars de élève</a></li>
+                    <li><a href="/app/enfants?type=affectation_groupe">J'affecte les groupe à mes élèves</a></li>
 
 
                 </ol>
@@ -438,8 +439,9 @@ grid-gap: 30px;
             </div>
             <div>
                 <ol>
-                    <li>Je choisi les activités que je vais traiter</li>
-                    <li>JE créee mes phrases préétablies</li>
+                    <li><a href="/app/fiches">Je choisi les activités que je vais traiter</a></li>
+                    <li><a href="/app/fiches/create">Je créé mes propres activités</a></li>
+                    <li><a href="/app/parametres/phrases">Je créais mes phrases préétablies</a></li>
 
 
                 </ol>

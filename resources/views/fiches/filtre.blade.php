@@ -23,7 +23,7 @@
 </style>
 
 <div class="d-flex justify-content-between align-items-center " id="filtre">
-    <div class="pt-3 d-flex me-4" >
+    <div class="pt-3 d-flex me-4 selection_classe" >
             <div class="form-check">
                 <input class="form-check-input filtre_input invisible" type="checkbox" value="" id="ps_filter" checked>
                 <label class="form-check-label selected" for="ps_filter">

@@ -77,32 +77,62 @@ body {
         border-radius: 10px;
       }
 
+      #tuto_window {
+        height: auto;
+        width: 400px;
+        top: 500px;
+        left: 500px;
+        background-color: rgba(0, 0, 0, 0.6);  
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        z-index: 8000;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;      
+        .title {
+          background-color: rgba(0, 0, 0, 0.8);      
+          color: white;
+          font-size: 14px;
+          font-weight: bolder;
+        }
+        }
+
+ 
       #arrowTuto {
         &.left_bottom {
-                top: 188px;
-                left: 40px;
+                top: 150px;
+                left: 27px;
         }
         &.right_bottom {
-                top: 158px;
+                top: 150px;
                 left: 332px;
+                transform: rotateY(180deg);
         }
+        &.middle_left {
+                top: 130px;
+                left: 27px;
+                 
+        }
+
         &.left_top {
                 top: -165px;
                 left: -7px;
+                transform: rotateX(180deg);   
         }
         &.right_top {
                 top: -178px;
-                left: 133px;
+                left: 230px;
+                transform: rotateX(180deg) rotateY(180deg);
         }
         
 
       }
 
       .tuto_cadre {
-        border: 7px solid pink;
-        z-index: 10000;
-        background-color: white;
+                border: 3px solid pink !important;
+                font-weight: bold;
+                z-index: 200;
         }
+
         #tutoModal {
         .modal-content {
                 border: none;

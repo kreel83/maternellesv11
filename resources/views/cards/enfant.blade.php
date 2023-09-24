@@ -116,7 +116,7 @@ if (!is_null($enfant->groupe)){
   @endif
   @if ($type == "avatar")
     <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">        
-        <a href="enfants/{{$enfant->id}}/avatar"  class="btn_modif_avatar" >Modifier mon avatar</a>
+        <a href="enfants/{{$enfant->id}}/avatar"  class="btn_modif_avatar {{$kE == 0 ? 'modif_avatar' : null}}" >Modifier mon avatar</a>
     </div>
   @endif
   @if ($type == "affectation_groupe")
@@ -133,7 +133,7 @@ if (!is_null($enfant->groupe)){
 
     @endphp
     <div class="footer p-2 d-flex h-auto"  style="background-color: var(--main-color)" data-enfant="{{$enfant->id}}">        
-      <div class="d-flex w-100  justify-content-around flex-wrap">
+      <div class="d-flex w-100  justify-content-around flex-wrap {{$kE == 0 ? 'choix_groupe' :  null}}">
         @foreach ($groupes as $key=>$terme)
             <div class="badge_termes {{ $enfant->groupe != null && $key == $enfant->groupe ? 'active' : null}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
         @endforeach
@@ -144,7 +144,7 @@ if (!is_null($enfant->groupe)){
   @if ($type == "none")
     <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">
         
-        <button id="valideAvatar" class="custom_button" style="font-size: 12px; width: fit-content; height: 16px; line-height: 1px; margin-top: 7px; background-color: transparent;text-shadow: black 2px 2px;">Selectionner</button>
+        <button id="valideAvatar" class="custom_button btn_select_avatar" style="font-size: 12px; width: fit-content; height: 16px; line-height: 1px; margin-top: 7px; background-color: transparent;text-shadow: black 2px 2px;">Selectionner</button>
 
     </div>
   @endif
