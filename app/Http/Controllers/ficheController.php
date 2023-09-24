@@ -57,6 +57,14 @@ class ficheController extends Controller
 
 
     public function createFiche(Request $request) {
+        
+        if ($request->section)      {
+
+            $section = Section::find($request->section);
+        } else {
+            $section = Section::first();
+            $request->item = 'new';
+        }
 
         if ($request->item == 'new') {
             $fiche = new Item();
@@ -74,15 +82,17 @@ class ficheController extends Controller
         
         
 
-        $images = ImageTable::all();       
-        $section = Section::find($request->section);
+        $images = ImageTable::all();  
+
         
 
         return view('fiches.create')
+            ->with('sections', Section::all())
             ->with('new', $new)
             ->with('duplicate', $request->duplicate == "true" ? $request->item : false)
             ->with('images', $images)
             ->with('itemactuel', $fiche)
+            ->with('menu', $request->duplicate == 'true' ? 'duplicate_item' : 'create_item')
             ->with('section', $section);
 
     }

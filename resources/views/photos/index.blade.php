@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu',['titre' => 'Les mots de passe', 'menu' => 'mdp'])
+@extends('layouts.mainMenu',['titre' => 'Les mots de passe', 'menu' => 'avatar_page'])
 
 
 
@@ -27,16 +27,16 @@
     </div>
     <div class="col-md-6">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
+            <li class="nav-item " role="presentation">
               <button class="nav-link active" id="animaux-tab" data-bs-toggle="tab" data-bs-target="#animaux-tab-pane" type="button" role="tab" aria-controls="animaux-tab-pane" aria-selected="true">Figurines</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="fonds-tab" data-bs-toggle="tab" data-bs-target="#fonds-tab-pane" type="button" role="tab" aria-controls="fonds-tab-pane" aria-selected="false">Fonds</button>
+              <button class="nav-link btn_fond" id="fonds-tab" data-bs-toggle="tab" data-bs-target="#fonds-tab-pane" type="button" role="tab" aria-controls="fonds-tab-pane" aria-selected="false">Fonds</button>
             </li>
 
           </ul>
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="animaux-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+            <div class="tab-pane fade show active choix_figurine" id="animaux-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
                 <div style="height: calc(100vh - 250px);overflow-y: auto" class="d-flex flex-wrap">
         
@@ -48,7 +48,7 @@
                     @endforeach
                 </div>  
             </div>
-            <div class="tab-pane fade" id="fonds-tab-pane" role="tabpanel" aria-labelledby="fonds-tab" tabindex="0">
+            <div class="tab-pane fade choix_fond" id="fonds-tab-pane" role="tabpanel" aria-labelledby="fonds-tab" tabindex="0">
 
                 <div style="height: auto;overflow-y: auto" class="d-flex flex-wrap">
         
