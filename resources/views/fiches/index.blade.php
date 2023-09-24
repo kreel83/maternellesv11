@@ -22,7 +22,7 @@
             </div>
     </div> --}}
     <div  data-section="{{ $section->id }}" class="liste_section">
-        <div class="section_container">
+        <div class="section_container selection_section">
             @foreach($sections as $sec)
             <div class="d-flex flex-column align-items-center">
                     <div class='selectSectionFiche {{$sec->id == $section->id ? "selected" : null}}' data-value="{{$sec->id}}" style="background-color: {{$sec->color}}">
@@ -94,8 +94,8 @@
 
             <div class="d-flex ">
 
-                <div data-type="autresfiches" data-position="left" class="btnSelectionType violet droit selected">Liste des fiches</div>
-                <div data-type="mesfiches"  data-position="right" class="btnSelectionType violet droit">Ma sélection</div>                                
+                <div data-type="autresfiches" data-position="left" class="btnSelectionType violet droit selected les_fiches">Liste des fiches</div>
+                <div data-type="mesfiches"  data-position="right" class="btnSelectionType violet droit ma_selection">Ma sélection</div>                                
             </div>
             <div class="d-flex pb-3">
                 <div>
@@ -114,7 +114,7 @@
                 
                 <ul class="fiche_container fiches autresfiches m-0 p-0 justify-content-center" >
 
-                    @foreach ($universelles as $fiche)
+                    @foreach ($universelles as $key=>$fiche)
                         @include('cards.universelle',['type' => 'autresfiches'])
                     @endforeach
                 </ul>
@@ -122,7 +122,7 @@
 
             <div id="mesfiches" class="d-none listFiches justify-content-center" >
                 <ul class="fiche_container fiches mesfiches p-0 m-0" id="sortable" >
-                @foreach ($fiches as $fiche)
+                @foreach ($fiches as $key=>$fiche)
                     @include('cards.fiche',['type' => 'mesfiches'])
                 @endforeach
                 </ul>

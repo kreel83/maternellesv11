@@ -53,8 +53,8 @@
                 </div>
                 @else
                         <div class="col-md-12 d-flex flex-wrap ps-5">
-                                @foreach ($enfants as $enfant)
-                                @include('cards.enfant',['type' => $type])
+                                @foreach ($enfants as $kE=>$enfant)
+                                @include('cards.enfant',['type' => $type,'kE' => $kE])
                                 @endforeach                
                         </div>
                 @endif

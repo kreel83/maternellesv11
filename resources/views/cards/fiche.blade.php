@@ -10,7 +10,7 @@
 ?>
 
 
-<li class="card_fiche ui-state-default   {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-type="{{$type}}" data-level="{{$lvl}}" data-section="{{$fiche->section_id}}" data-fiche="{{$fiche->id}}" data-selection="{{$fiche->fiche_id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
+<li class="card_fiche {{$key == 0 ? 'fiche_selection' : null}} ui-state-default   {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-type="{{$type}}" data-level="{{$lvl}}" data-section="{{$fiche->section_id}}" data-fiche="{{$fiche->id}}" data-selection="{{$fiche->fiche_id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
 <div class="action">
     <button class="btnSelection   retirer"  style="background-color: {{$fiche->section()->color}}">Retirer</button>
     <button class="btnSelection   d-none selectionner"  style="background-color: {{$fiche->section()->color}}">Selectionner</button>

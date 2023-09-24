@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Mes fiches', 'menu' => 'item'])
+@extends('layouts.mainMenu', ['titre' => 'Mes fiches', 'menu' => $menu])
 
 @section('content')
 
@@ -6,8 +6,10 @@
 
 
 
-<div class="container-fluid row">
+<div class="container-fluid row h-100">
     <div class="col-md-6" style="padding: 0 5rem">
+
+
         @if ($new)
         
         <div class="label_create_fiche">Création de fiche</div>
@@ -23,7 +25,18 @@
                 <input type="hidden" name="duplicate" value="{{$duplicate}}">
                 {{--                <input type="hidden" name="provenance" value="{{$provenance}}">--}}
             
-                <div class="d-flex justify-content-between my-2" id="filtre">
+                <div>
+                    <select class="form-select my-4 form_section" name="section_id" {{ $duplicate ? 'disabled' : null }}>
+                    @foreach ($sections as $sec)
+                        <option value="{{$sec->id}}" {{$sec->id == $section->id ? 'selected' : null }}>{{$sec->name}}</option>
+                    @endforeach
+                    </select>
+                        
+                    
+                </div>
+
+
+                <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="true" name="ps" {{($itemactuel  && substr($itemactuel->lvl,0,1) == '1') ? 'checked' : null}}>
                         <label class="form-check-label" for="flexCheckChecked">
@@ -50,14 +63,14 @@
                         {{--@endphp--}}
             
                         <div class="d-flex flex-column">
-                            <div class="field field_v1 mt-3">
+                            <div class="field field_v1 mt-3 form_titre">
                                 <label for="titre" class="ha-screen-reader">Titre</label>
                                 <input id="titre" class="field__input" placeholder="" name="name" value="{{$itemactuel ? $itemactuel->name : null}}">
                                 <span class="field__label-wrap" aria-hidden="true">
                                 <span class="field__label">Titre</span>
                                 </span>
                             </div>
-                            <div class="field field_v1 mt-3">
+                            <div class="field field_v1 mt-3 form_sous_titre">
                                 <label for="st" class="ha-screen-reader">Sous-titre</label>
                                 <input id="st" class="field__input" placeholder="" name="st" value="{{$itemactuel ? $itemactuel->st : null}}">
                                 <span class="field__label-wrap" aria-hidden="true">
@@ -87,7 +100,7 @@
                     @php
                         // dd($itemactuel);
                     @endphp
-                    <div class="col-md-4 mt-3">
+                    <div class="col-md-4 mt-3 form_image">
             
                         <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
                         
@@ -102,7 +115,7 @@
                 {{-- @php
                 if($itemactuel) dd($itemactuel->phrase);
                 @endphp --}}
-                <div id="editor3" class="mt-3" data-phrase="{{$itemactuel->phrase_masculin}}" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
+                <div id="editor3" class="mt-3 form_editeur" data-phrase="{{$itemactuel->phrase_masculin}}" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
                 <textarea class="mt-3 d-none" name="phrase" id="phraseForm" style="width: 100%" rows="5" > {!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</textarea>
 
                 <style>
@@ -112,7 +125,7 @@
                         margin: 4px
                         }
                 </style>
-                <div class="d-flex mb-5 motCleFiche">
+                <div class="d-flex mb-5 motCleFiche form_mot_cle">
                     <div data-reg="L'élève " class="item btnCommun me-2">prénom</div>
                     {{-- <div data-reg="@ilelle@" class="item btnCommun me-2">pronom personnel</div>
                     <div data-reg="*e*" class="item btnCommun">feminin / masculin</div> --}}
@@ -127,8 +140,8 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     @if ($new || $duplicate)
-                        <button type="submit" name="submit" value="save" class="btnAction">Sauvegarder</button>
-                        <button type="submit" name="submit" value="save_and_select" class="btnAction">Sauvegarder et sélectionner</button>
+                        <button type="submit" name="submit" value="save" class="btnAction form_save">Sauvegarder</button>
+                        <button type="submit" name="submit" value="save_and_select" class="btnAction form_save_select">Sauvegarder et sélectionner</button>
                     @else
 
                         <button type="submit" name="submit" value="modif" class="btnAction">Modifier</button>
@@ -144,8 +157,8 @@
             </form>
             
         </div>
-        <div class="col-md-6">
-            <div class="d-flex flex-wrap" style="height: 80vh; overflow-y: auto; background-color: #7769FE;">
+        <div class="col-md-6 h-100">
+            <div class="d-flex flex-wrap" style="overflow-y: auto; background-color: #7769FE;">
                 @foreach ($images as $image)
                 <div class="selectImage" data-id="{{$image->id}}" data-image="{{$image->name}}" >
                     <img src="{{asset('img/items/'.$image->name)}}" alt="" width="100%">
