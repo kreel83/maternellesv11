@@ -97,6 +97,23 @@ const tutos = () => {
         } 
     }
 
+    $(document).on('click', '.remoteTutoWindow', function() {
+        $('#tuto_window').addClass('d-none')
+        $('.tuto_cadre').removeClass('tuto_cadre')
+        
+    })
+
+    $(document).on('click','.btnModeTuto', function() {
+        $.get('/app/tutos/modetuto?state=off', function(data) {
+            console.log('test', data)
+            $('#tuto_window').addClass('d-none')
+            $('#modeTuto').addClass('d-none')
+            $('.tuto_cadre').removeClass('tuto_cadre')
+            $('#tuto_form').prop('checked', false)
+
+        })
+    })
+
     $(document).on('click','.fleche', function() {
         var champ = $(this).data('champ')
 

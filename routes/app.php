@@ -96,6 +96,7 @@ Route::get('/parent',[EnfantController::class, 'parent']);
 Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
+
 Route::middleware(['auth'])->group(function () {
     //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
@@ -116,6 +117,7 @@ Route::middleware(['auth'])->group(function () {
         
     Route::get('/tutos', [TutoController::class, 'index'])->name('tutos');
     Route::get('/tutos/ajax', [TutoController::class, 'ajax'])->name('ajax');
+    Route::get('/tutos/modetuto', [TutoController::class, 'modetuto'])->name('modeTuto');
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');

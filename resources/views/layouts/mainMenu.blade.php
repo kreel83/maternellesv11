@@ -38,17 +38,9 @@ use Illuminate\Support\Facades\Auth;
         </style>
     </head>
     <div class='dashboard position-relative'>
-      @php
-          $url = $_SERVER['REQUEST_URI']; 
-          
-          if (isset(parse_url($url)['query'])) {
-            $q = parse_url($url)['query'];
-            if (strpos($q, 'tuto') ) {
-              $tuto = explode('tuto_type=', $q)[1];
-            };
-
-          }
-      @endphp 
+      <div id="modeTuto" class="{{Auth::user() && Auth::user()->configuration->tuto == 0 ? 'd-none' : null}}">
+        <button class="btnModeTuto">Desactiver le mode tutoriel</button>
+      </div>
 
       <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto ?? null}}">
       <input type="hidden" id="type" value="{{$tuto ?? null}}">
@@ -170,7 +162,8 @@ use Illuminate\Support\Facades\Auth;
 
           </nav>
       </div>
-      <div class='dashboard-app'>
+      <div class='dashboard-app position-relative' >
+
         {{-- <header class='dashboard-toolbar'>
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
         </header> --}}
@@ -258,6 +251,9 @@ use Illuminate\Support\Facades\Auth;
 
 
 <div id="tuto_window" class="position-absolute d-none">
+  <div class="remoteTutoWindow">
+    <i class="fa-solid fa-times"></i>
+  </div>
   <img src="{{asset('img/tutos/fleche.png')}}" alt="" height="160" width="100" id="arrowTuto" class="position-absolute" style=" z-index: 8000;">
   <div class="title"></div>
   <div class="texte"></div>
