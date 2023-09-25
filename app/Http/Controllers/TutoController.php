@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Configuration;
 use Illuminate\Http\Request;
 use App\Models\Tuto;
 use App\Models\Tutoriel;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TutoController extends Controller
 {
@@ -27,6 +29,18 @@ class TutoController extends Controller
 
 
         return [$t->titre,$t->texte, $t->etape, $liste->count(), $t->champ, $next->champ ?? null, $t->action];
+    }
+
+    public function modetuto(Request $request) {
+
+        $state  = ($request->state == 'on') ? 1 : 0;
+        $conf = Configuration::where('user_id', Auth::id())->first();
+        if (!$conf) return 'ko';
+        $conf->tuto = $state;
+        $conf->save();
+        if ($request->ajax()) return 'ok';
+        return redirect()->back();
+        
     }
 
     public function ajax(Request $request) {

@@ -17,7 +17,7 @@
         .grid_profil {
             display: grid;
             grid-template-columns:1fr 1fr; 
-            grid-template-rows: 370px 220px 220px;
+            grid-template-rows: 370px 220px 220px 220px;
             grid-gap: 35px; 
         }
         .grid1 {
@@ -40,6 +40,10 @@
         .grid5 {
             grid-column: 2;
             grid-row: 3
+        }
+        .grid6 {
+            grid-column: 1;
+            grid-row: 4
         }
         .gridcadre {
             width: 100%;
@@ -221,6 +225,16 @@
                     <option value="2" {{$periodes == 2 ? 'selected' : null}}>Par semestre</option>
                     <option value="3" {{$periodes == 3 ? 'selected' : null}}>Par trimestre</option>
                 </select>
+                <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
+            </form>    
+        </div>
+        <div class="gridcadre grid6 d-flex justify-content-center align-items-center tuto_tutoriel">
+            <div class="gridTitre">Tutoriel</div>
+            <form action="{{route('modeTuto')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="tuto_form" name="state" value="on" {{ Auth::user()->configuration->tuto == 1 ? 'checked' : null}}>
+                    <label class="form-check-label" for="tuto_form">Mode Tutoriel activé</label>
+                  </div>
                 <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
             </form>    
         </div>
