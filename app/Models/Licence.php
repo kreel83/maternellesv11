@@ -63,11 +63,27 @@ class Licence extends Model
     /**
      * Crée les licences pour les utilisateurs après un paiement réussi de l'Admin
      *
-     * @param Request $request
-     * @param Transaction $transaction
-     * @param Produit $product
+     * @param array $stripeObject
+     * @param $transaction
      * @return void
      */
+    public function createUserLicence(array $stripeObject, $transaction): void
+    {
+        for($i = 0; $i < $stripeObject['data']['object']['metadata']['quantity']; $i++) {
+            $licence = Licence::create([
+                'parent_id' => $stripeObject['data']['object']['metadata']['user_id'],
+                'produit_id' => $stripeObject['data']['object']['metadata']['produit_id'],
+                'name' => $this->getInternalName(),
+                'expires_at' => $stripeObject['data']['object']['metadata']['expires_at'],
+            ]);
+            // enregistrement dans la table relation transaction/licence
+            TransactionLicence::create([
+                'transaction_id' => $transaction->id,
+                'licence_id' => $licence->id,
+            ]);
+        }
+    }
+    /*
     public function createUserLicence(Request $request, Transaction $transaction, Produit $product)
     {
         for($i = 0; $i < $request->quantity; $i++) {
@@ -84,15 +100,32 @@ class Licence extends Model
             ]);
         }
     }
+    */
 
     /**
      * Renouvelle les licences pour les utilisateurs après un paiement réussi de l'Admin
      *
-     * @param Request $request
-     * @param Transaction $transaction
-     * @param Produit $product
+     * @param array $stripeObject
+     * @param $transaction
      * @return void
      */
+    public function renewUserLicence(array $stripeObject, $transaction): void
+    {
+        foreach (json_decode($stripeObject['data']['object']['metadata']['licenceSelection']) as $licence_id)
+        {
+            $licence = Licence::find($licence_id);
+            $licence->produit_id = $stripeObject['data']['object']['metadata']['produit_id'];
+            $licence->actif = 1;
+            $licence->expires_at = $stripeObject['data']['object']['metadata']['expires_at'];
+            $licence->save();
+            // enregistrement dans la table relation transaction/licence
+            TransactionLicence::create([
+                'transaction_id' => $transaction->id,
+                'licence_id' => $licence->id,
+            ]);
+        }
+    }
+    /*
     public function renewUserLicence(Request $request, Transaction $transaction, Produit $product)
     {
         foreach (json_decode($request->licenceSelection) as $licence_id)
@@ -110,6 +143,7 @@ class Licence extends Model
             ]);
         }
     }
+    */
 
     /*
     public function createUserLicence($quantity, $stripe_id, $expires_at)

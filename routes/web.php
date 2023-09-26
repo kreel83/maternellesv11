@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\admin\AdminLicenceController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VitrineController;
+use App\Models\Facture;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,11 @@ Route::get('/download/link/{id}', [PdfController::class, 'genereLienVersCahierEn
 Route::get('/download/pdf/see/{token}', [PdfController::class, 'telechargeLeCahier'])->name('cahier.download');
 
 Route::get('/testemail', [RegisteredUserController::class, 'testemaillogo']);
+Route::get('/testinvoice/{id}', [AdminLicenceController::class, 'testinvoice']);
+Route::get('/invnumber', function () {
+    Facture::genereNumeroDeFacture();
+});
+
 /*
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminProfilController;

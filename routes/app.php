@@ -61,21 +61,27 @@ Route::middleware(['admin'])->group(function()
     Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // dans subscription.js prefixé par /app
     Route::get('/admin/licence/remove/{id}', [AdminLicenceController::class, 'confirmationRetraitLicence'])->name('admin.licence.remove');
     Route::post('/admin/licence/remove', [AdminLicenceController::class, 'retraitLicence'])->name('admin.licence.remove.post');
-    Route::get('/admin/licence/invoice', [AdminLicenceController::class, 'invoice'])->name('admin.licence.invoice');
+    Route::get('/admin/invoice', [AdminLicenceController::class, 'invoice'])->name('admin.licence.invoice');
+    Route::get('/admin/invoice/{number}', [AdminLicenceController::class, 'downloadInvoice'])->name('admin.invoice.download');
+    // cette routes est appellée par Stripe dans le cas d'une authentification 3DS en retour de paiement
+    // routes utilisées dans AdminLicenceController@create dans la gestion d'exception
+    Route::get('/admin/licence/{method}', [AdminLicenceController::class, 'stripeRedirect'])->name('admin.stripe.redirect');
+
     Route::get('/admin/contact', [AdminController::class, 'contact'])->name('admin.contact');
     Route::post('/admin/contact', [ContactController::class, 'store'])->name('admin.contact.post');
-    //Route::post('/admin/contact/store', [ContactController::class, 'store'])->name('admin.contact.store');
+    //Route::post('/admin/contact/store', [ContactController::class, 'store'])->name('admin.contact.store');    
+    /*
     Route::get('/admin/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);
     });
-    // Warning: Dans la vue admin.invoice un chemin en dur : /app/admin/invoice/{{ $invoice->id }}
+    */
 });
 // Admin registration URLs
 Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
 Route::get('/admin/checkcode/{code}', [AdminController::class, 'checkcode'])->name('admin.checkcode');  // utilisé dans admin.js
 // User Validation url from admin creation
-Route::get('/user/validation/password', [UserController::class, 'valideUserFromAdminCreatePassword'])->name('user.valideUserFromAdminCreatePassword');  // utilisé pour valider une adresse mail depuis email
-Route::post('/user/validation', [UserController::class, 'valideUserFromAdminSavePassword'])->name('user.valideUserFromAdminSavePassword');  // sauve le mot de passe et active le compte
+Route::get('/user/validation/{token}', [UserController::class, 'valideUserFromAdminCreatePassword'])->name('user.valideUserFromAdminCreatePassword');  // utilisé pour valider une adresse mail depuis email
+Route::post('/user/validation/store', [UserController::class, 'valideUserFromAdminSavePassword'])->name('user.valideUserFromAdminSavePassword');  // sauve le mot de passe et active le compte
 // User Validation url from self registration
 Route::get('/user/validation/self', [UserController::class, 'validUserFromSelfRegistration'])->name('user.validUserFromSelfRegistration');  // utilisé pour valider une adresse mail depuis email
 
@@ -99,6 +105,7 @@ Route::middleware(['auth'])->group(function () {
     //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
+    Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
@@ -223,9 +230,12 @@ Route::middleware(['auth','abo'])->group(function () {
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");
     Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
     Route::post('subscribe/resume', [SubscriptionController::class, 'resumeSubscription'])->name("subscribe.resumesubscription");
+    Route::get('/invoice/download/{number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
+    /*
     Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);
     });
+    */
 
 });
 

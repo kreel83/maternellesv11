@@ -10,7 +10,7 @@
    
                 <div class="card-body">
    
-                    @if($result == 'success')
+                    @if($result == 'succeeded' || $result == 'true')
                         <div class="alert alert-success">
                             Merci. Vous êtes abonné(e) au service Les Maternelles pour 1 an.
                         </div>

@@ -27,14 +27,17 @@ class UserController extends Controller
     }
 
     /**
-     * Validate a User with a link in an email
-     *
+     * Valide le compte d'un user depuis un lien envoyé par mail par l'admin
+     * La vue permet la création du mot de passe par l'utilisateur
      * @return \Illuminate\View\View
      */
     public function valideUserFromAdminCreatePassword(Request $request): View
     {
-        // appelé depuis lien dans email envoyé par admin en assignant une licence
-        // la vue permet la création du mot de passe par l'utilisateur
+        $user = User::where('validation_key', $request->token)->first();
+        return view("registration.validation")
+            ->with('token', $request->token)
+            ->with('user', $user);
+        /*
         $token = md5($request->uID.$request->lID.$request->key.env('HASH_SECRET'));
         if($token != $request->token) {
             $user = null;
@@ -47,6 +50,7 @@ class UserController extends Controller
         return view("registration.validation")
             ->with('user', $user)
             ->with('licence_id', $request->lID);
+        */
     }
 
     /**
@@ -67,22 +71,12 @@ class UserController extends Controller
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
         ]);
 
-        $user = User::find($request->uID);
-        if(!is_null($user)) {
+        $user = User::where('validation_key', $request->token)->first();
+        if($user) {
             $user->password = Hash::make($request->password);
             $user->actif = 1;
             $user->save();
-            // si on a un ID de licence on met le statut a ' active '
-            if(isset($request->lID)) {
-                $licence = Licence::find($request->lID);
-                $licence->status = 'active';
-                $licence->save();
-            }
         }
-        //Auth::login($user);
-        //return redirect(RouteServiceProvider::HOME);
-        //return redirect()->route('login');
-
         return view("registration.validation_self")
             ->with('user', $user);
     }
@@ -140,6 +134,63 @@ class UserController extends Controller
      * Utilisé dans AuthenticatedSessionController::store
      * @return void
      */
+    public static function setMenuAbonnement() {
+        $user = AUTH::user();
+        if (session()->exists('menuAbonnement')) {
+            session()->forget('menuAbonnement');
+        }
+        $invoices = $user->invoices();
+        switch($user->licence) {
+            case 'admin':
+                // Vérifie si une licence est accordée par l'école
+                $licence = Licence::where([
+                    ['user_id', $user->id],
+                    ['actif', 1],
+                ])->first();
+                if($licence) {
+                    session(['isAuthenticated' => true]);
+                    $abonnement = true;
+                } else {
+                    $abonnement = false;
+                }
+                session(['menuAbonnement' => [
+                    'abonnement' => $abonnement, 
+                    'resiliationSubMenu' => false,
+                    'resumeSubMenu' => false,
+                    'invoice' => $invoices->isNotEmpty()
+                ]]);
+                break;
+            case 'self':
+                // Vérifie si une licence est prise individuellement                
+                if (Auth::user()->subscribed('default')) {
+                    $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
+                    $cancelled = Auth::user()->subscription('default')->canceled();
+                    session(['isAuthenticated' => true]);
+                    session(['menuAbonnement' => [
+                        'abonnement' => true, 
+                        'resiliationSubMenu' => !$onGracePeriode,
+                        'resumeSubMenu' => $cancelled && $onGracePeriode,
+                        'invoice' => $invoices->isNotEmpty()
+                    ]]);
+                } else {
+                    session(['menuAbonnement' => [
+                        'abonnement' => false, 
+                        'resiliationSubMenu' => false,
+                        'resumeSubMenu' => false,
+                        'invoice' => $invoices->isNotEmpty()
+                    ]]);
+                }
+                break;
+            default:
+                session(['menuAbonnement' => [
+                    'abonnement' => false, 
+                    'resiliationSubMenu' => false,
+                    'resumeSubMenu' => false,
+                    'invoice' => $invoices->isNotEmpty()
+                ]]);
+        }
+    }
+    /*
     public static function setMenuAbonnement(Request $request) {
         $user = AUTH::user();
         if ($request->session()->exists('menuAbonnement')) {
@@ -196,5 +247,6 @@ class UserController extends Controller
                 ]]);
         }
     }
+    */
 
 }

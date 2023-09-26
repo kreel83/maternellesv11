@@ -193,6 +193,9 @@ class ParametreController extends Controller
 
     public function welcome(): View
     {
+        // mise à jour des variables session pour gérer le menu abonnement
+        UserController::setMenuAbonnement();
+
         // Check for a subscription and calculate end date
         // dd(Auth::user()->subscription('default')->asStripeSubscription());
         if (Auth::user()->subscribed('default')) {

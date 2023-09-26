@@ -14,14 +14,20 @@
                 <th>Montant</th>
                 <th>Télécharger</th>
             </tr>
-            @foreach ($invoices as $invoice)
-                <tr>
-                    <td>{{ $invoice->number }}</td>
-                    <td>{{ $invoice->date()->format('d/m/Y') }}</td>
-                    <td>{{ $invoice->total() }}</td>
-                    <td><a href="/app/admin/invoice/{{ $invoice->id }}"><span class="fa fa-download"></span></a></td>
+            @if ($invoices->first())
+                @foreach ($invoices as $invoice)
+                    <tr>
+                        <td>{{ $invoice->number }}</td>
+                        <td>{{ Carbon\Carbon::parse($invoice->createdAt)->format('d/m/Y')}}</td>
+                        <td>{{ $invoice->amount }}</td>
+                        <td><a href="{{ route('admin.invoice.download', ['number' => $invoice->number]) }}"><span class="fa fa-download"></span></a></td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>        
+                    <td colspan="4">Aucune facture trouvée.</th>                    
                 </tr>
-            @endforeach
+            @endif
         </table>
 
     </div>
