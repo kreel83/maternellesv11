@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use OpenAI\Laravel\Facades\OpenAI;
+use Illuminate\Validation\Rules;
+
 
 
 class ParametreController extends Controller
@@ -99,7 +101,7 @@ class ParametreController extends Controller
         return $result['choices'][0]['message']['content'];
     }
 
-    public function monprofil() {
+    public function monprofil(Request $request) {
 
 
         // $coms = Item::all();
@@ -134,13 +136,22 @@ class ParametreController extends Controller
         if($ecole->adresse_3 != '') { $adresseEcole[] = $ecole->adresse_3; }
         $user->photo = Storage::url($user->photo);
         $conf = Configuration::where('user_id', Auth::id())->first();
+
         return view('monprofil.index')
+            ->with('request', $request->all() ?? [])
             ->with('periodes', $conf->periodes)
             ->with('user', $user)
             ->with('equipes', $equipes)
             ->with('adresseEcole', join(PHP_EOL,$adresseEcole));
     }
 
+
+    public function get_phrases(Request $request) {
+        $c = Commentaire::find($request->id);
+        $c->phrase_masculin = str_replace("L'élève","Léon", $c->phrase_masculin);
+        $c->phrase_feminin = str_replace("L'élève","Lucie", $c->phrase_feminin);
+        return[$c->phrase_masculin, $c->phrase_feminin];
+    }
 
     public function savedirecteur(Request $request) {
 
@@ -193,9 +204,13 @@ class ParametreController extends Controller
 
     public function welcome(): View
     {
+<<<<<<< HEAD
         // mise à jour des variables session pour gérer le menu abonnement
         UserController::setMenuAbonnement();
 
+=======
+        
+>>>>>>> 3e737c4838aab9306c56bc51c8a818fc0622a623
         // Check for a subscription and calculate end date
         // dd(Auth::user()->subscription('default')->asStripeSubscription());
         if (Auth::user()->subscribed('default')) {
@@ -218,6 +233,7 @@ class ParametreController extends Controller
 
         $resultat = new Resultat;
         $top5ElevesLesPlusAvances = $resultat->top5ElevesLesPlusAvances();
+        // dd($top5ElevesLesPlusAvances);
         $top5ElevesLesMoinsAvances = $resultat->top5ElevesLesMoinsAvances();
         $top5DisciplinesLesPlusAvances = $resultat->top5DisciplinesLesPlusAvances();
         $top5DisciplinesLesMoinsAvances = $resultat->top5DisciplinesLesMoinsAvances();
@@ -258,7 +274,10 @@ class ParametreController extends Controller
         } else {
             $section = Section::first()->id;
         }
-        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id',$section)->get();
+        $user = Auth::id();
+        $commentaires = Commentaire::where(function($query) use($user) {
+            $query->where('user_id', $user)->orWhereNull('user_id');
+        })->where('section_id',$section)->get();
         $sections = Section::all();
 
         return view('parametres.phrases.index')
@@ -269,6 +288,7 @@ class ParametreController extends Controller
     }
 
     public function savePhrases(Request $request) {
+
         if ($request->id == 'new') {
             $phrase = new Commentaire();
             $phrase->user_id = Auth::id();
@@ -281,7 +301,9 @@ class ParametreController extends Controller
         $phrase->phrase_feminin = $this->chatpht($phrase->phrase_masculin);
 
         $phrase->save();
-        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', $request->section)->get();
+        $commentaires = Commentaire::where(function($query) use($user) {
+            $query->where('user_id', $user)->orWhereNull('user_id');
+        })->where('section_id',$section)->get();
         return view('parametres.phrases.__tableau_des_phrases')->with('commentaires', $commentaires);
     }
 
@@ -292,12 +314,45 @@ class ParametreController extends Controller
      */
     function changerLeMotDePasse(): View
     {
-        
-        return view('auth.reset-password');
+
+        return view('parametres.reset-password');
         // return view('monprofil.motdepasse');
     }
 
     public function sauverLeMotDePasse(Request $request)
+    {
+
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'password.required' => 'Mot de passe obligatoire.',
+            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+        ]);
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        // session()->flash('success', 'Le mot de passe a bien été réinitalisé');
+        session()->flash('message', 'Le mot de passe a bien été réinitalisé'); 
+        session()->flash('alert-class', 'alert-success'); 
+        return redirect()->route('depart');
+    }
+
+
+
+        /**
+     * Changer le mot de passe de l'adminsitrateur
+     *
+     * @return View
+     */
+    function password_change(): View
+    {
+
+        return view('parametres.motdepasse');
+    }
+
+    public function password_save(Request $request)
     {
         $request->validate([
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -306,6 +361,7 @@ class ParametreController extends Controller
             'password.confirmed' => 'La confirmation du mot de passe a échouée.',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
         ]);
+ 
 
         $user = Auth::user();
         $user->password = Hash::make($request->password);

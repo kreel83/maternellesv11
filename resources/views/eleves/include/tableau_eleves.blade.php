@@ -1,7 +1,7 @@
 
 <style>
 .fiche_eleve_div {
-    width: 200px;
+    width: 215px;
     height: 80px;
     border-radius: 15px;
     margin: 4px;
@@ -10,6 +10,7 @@
     color: grey;
     font-size: 12px;
     position: relative;
+    background-color: var(--back-color);
 }
 
 .fiche_eleve_div:hover {
@@ -102,10 +103,10 @@
 </style>
             
             <div class="wrapper">
-                <div class="liste_classe d-flex flex-wrap">
-                @foreach ($eleves as $eleve)
+                <div class="liste_classe d-flex flex-wrap tuto_liste_eleve">
+                @foreach ($eleves as $key=>$eleve)
                 
-                <div class="fiche_eleve_div d-flex position-relative"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-donnees="{{json_encode($eleve->toArray())}}">
+                <div class="fiche_eleve_div d-flex position-relative {{$key == 0 ? "selection_eleve" : null}}"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-donnees="{{json_encode($eleve->toArray())}}">
 
 
                     <div class="me-2">

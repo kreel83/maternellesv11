@@ -2,6 +2,9 @@
 use Illuminate\Support\Facades\Auth;
 
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,14 @@ use Illuminate\Support\Facades\Auth;
             }
         </style>
     </head>
-    <div class='dashboard'>
+    <div class='dashboard position-relative'>
+      <div id="modeTuto" class="{{Auth::user() && Auth::user()->configuration->tuto == 0 ? 'd-none' : null}}">
+        <button class="btnModeTuto">Desactiver le mode tutoriel</button>
+      </div>
+
+      <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto ?? null}}">
+      <input type="hidden" id="type" value="{{$tuto ?? null}}">
+      <input type="hidden" id="page" value="{{$menu}}">
       @if (!isset($log))
       <div class="dashboard-nav">
           <header>
@@ -51,6 +61,7 @@ use Illuminate\Support\Facades\Auth;
             $params = in_array($menu, ['evaluation','reussite','affectation_groupe','avatar']);
           @endphp
 
+            @if (Auth::user()->is_enfants())
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-users"></i> Ma classe </a>      
@@ -64,6 +75,7 @@ use Illuminate\Support\Facades\Auth;
 
               </div>
             </div>
+            @endif
             {{-- <div class='dashboard-nav-dropdown'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Disciplines </a>
               <div class='dashboard-nav-dropdown-menu'>
@@ -81,14 +93,14 @@ use Illuminate\Support\Facades\Auth;
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fal fa-calendar"></i> Calendrier </a>      
               <div class='dashboard-nav-dropdown-menu'>
                 <a href="{{route('calendrier')}}" class="dashboard-nav-dropdown-item {{$menu == 'calendrier' ? 'active' : null}}">Voir le calendrier</a>
-                <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a>
+                {{-- <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'event' ? 'active' : null}}">Ajouter un évenement</a> --}}
 
 
               </div>
             </div>
 
               @php
-                $params = in_array($menu, ['affectation_groupe','commentaire','periode','eleve','item','aide','ecole','groupe','avatar']);
+                $params = in_array($menu, ['affectation_groupe','commentaire','periode','eleve','item','create_item','aide','ecole','groupe','avatar']);
               @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
 
@@ -98,7 +110,8 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('phrases')}}" class="dashboard-nav-dropdown-item {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
                 {{-- <a href="{{route('password')}}" class="dashboard-nav-dropdown-item {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a> --}}
                 <a href="{{route('eleves')}}" class="dashboard-nav-dropdown-item {{$menu == 'eleve' ? 'active' : null}}">Mes élèves</a>
-                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Mes activités</a>
+                <a href="{{route('fiches')}}" class="dashboard-nav-dropdown-item {{$menu == 'item' ? 'active' : null}}">Je selectionne mes activités</a>
+                <a href="{{route('createFiche')}}" class="dashboard-nav-dropdown-item {{$menu == 'create_item' ? 'active' : null}}">Je créé mes activités</a>
                 {{-- <a href="{{route('aidematernelle')}}" class="dashboard-nav-dropdown-item {{$menu == 'aide' ? 'active' : null}}">Mes aides maternelles</a> --}}
                 {{-- <a href="{{route('ecole')}}" class="dashboard-nav-dropdown-item {{$menu == 'ecole' ? 'active' : null}}">Mon école</a> --}}
                 <a href="{{route('groupe')}}" class="dashboard-nav-dropdown-item {{$menu == 'groupe' ? 'active' : null}}">Mes groupes</a>
@@ -109,13 +122,13 @@ use Illuminate\Support\Facades\Auth;
             </div>
 
             @php
-              $params = in_array($menu, ['monprofil','monpasse']);
+              $params = in_array($menu, ['monprofil','lock']);
             @endphp
             <div class='dashboard-nav-dropdown {{$params ? 'show' : null}}'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa-light fa-user"></i> Mon compte</a>      
               <div class='dashboard-nav-dropdown-menu'>
-                <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fas fa-user"></i> Mon profil</a>
-                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'monpasse' ? 'active' : null }}"><i class="fas fa-user"></i> Changer le mot de passe</a>
+                <a href="{{route('monprofil')}}" class="dashboard-nav-item  {{ $menu == 'monprofil' ? 'active' : null }}"><i class="fal fa-user"></i> Mon profil</a>
+                <a href="{{route('changerLeMotDePasse')}}" class="dashboard-nav-item  {{ $menu == 'lock' ? 'active' : null }}"><i class="fal fa-lock"></i> Changer le mot de passe</a>
               </div>
             </div>
             <!--<a href="{{route('monprofil')}}" class="dashboard-nav-item {{$menu == 'monprofil' ? 'active' : null}}"><i class="fas fa-user"></i> Mon profil</a>-->
@@ -149,18 +162,20 @@ use Illuminate\Support\Facades\Auth;
 
           </nav>
       </div>
-      <div class='dashboard-app'>
+      <div class='dashboard-app position-relative' >
+
         {{-- <header class='dashboard-toolbar'>
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
         </header> --}}
-        <div id="alerte" class="w-100">
-          
-        </div>
-        <div class=''>
+        @if(Session::has('message'))
+        <p class="alerteMessage alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+        @endif
+        <div class='position-relative h-100'>
+          {{-- <div class="position-absolute" style="top: 40px; right: 40px "><i class="fs-1 fas fa-edit"></i></div> --}}
           @yield('content')
         </div>
         @else
-        <div class=''>
+        <div class='h-100'>
           @yield('content')
         </div>
         @endif
@@ -221,7 +236,56 @@ use Illuminate\Support\Facades\Auth;
     </div>
 </nav> --}}
 
+<!-- Modal -->
 
+
+<style>
+  .fleche {
+    cursor: pointer;
+   
+  }
+
+
+</style>
+
+
+
+<div id="tuto_window" class="position-absolute d-none">
+  <div class="remoteTutoWindow">
+    <i class="fa-solid fa-times"></i>
+  </div>
+  <img src="{{asset('img/tutos/fleche.png')}}" alt="" height="160" width="100" id="arrowTuto" class="position-absolute" style=" z-index: 8000;">
+  <div class="title"></div>
+  <div class="texte"></div>
+  <div class="d-flex justify-content-between px-5 mt-3">
+    
+    <i class="fa-solid fa-arrow-left fleche left"></i>
+    <i class="fa-solid fa-arrow-right fleche right"></i>
+</div>
+</div>
+
+{{-- <div class="modal fade" id="tutoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content  position-relative">
+      <img src="{{asset('img/tutos/fleche.png')}}" alt="" width="" id="arrowTuto" class="position-absolute">
+
+
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="title"></h1>
+        <div class="modal-header d-flex justify-content-between px-5 w-50">
+          <i class="fa-solid fa-arrow-left fleche left"></i>
+          <i class="fa-solid fa-arrow-right fleche right"></i>
+      </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ceci est un tuto sur la direction
+      </div>
+
+    </div>
+  </div>
+</div> --}}
 
 
 

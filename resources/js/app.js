@@ -19,6 +19,7 @@ import '../../node_modules/quill/dist/quill';
 import Alpine from 'alpinejs';
 
 import './menu'
+import { tutos } from './tutos/tutos';
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
@@ -92,6 +93,11 @@ $.ajaxSetup({
 
 
 
+if ($('.alerteMessage').length) {
+    setTimeout(() => {
+        $('.alerteMessage').remove()
+    }, 3000);
+}
 
 
 
@@ -141,8 +147,10 @@ if ($('#editor2').length) {
             modules: {
                 toolbar: false    // Snow includes toolbar by default
             },
-            theme: 'snow'
+            theme: 'snow',
+            
         });
+    quill2.enable(false)
     editPhrase(quill2)
     deletePhrase(quill2)
     nouvellePhrase(quill2)
@@ -214,3 +222,7 @@ choix_equipe()
 adminRegistration()
 achatLicences()
 assigneLicence()
+
+
+
+tutos()

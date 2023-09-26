@@ -120,9 +120,20 @@ const nouvellePhrase = (quill) => {
         }
     })
 
-    $('#nouvellePhrase').on('click', function() {
-        $('#controleNouvellePhrase').toggleClass('d-none')
+    $('.seePhrase').on('click', function() {
+        $('#controleNouvellePhrase').toggleClass('d-none d-flex')
+        $('#bloc_editor').toggleClass('d-none d-flex')
         $(this).toggleClass('d-none')
+        $('#saveNouvellePhrase').attr('data-id', 'new')
+        quill.setText('');
+        quill.enable(true)
+    })
+
+    $('#nouvellePhrase').on('click', function() {
+        $('#controleNouvellePhrase').toggleClass('d-none d-flex')
+        $('#bloc_editor').toggleClass('d-none d-flex')
+        $(this).toggleClass('d-none')
+        $('#bloc_2phrases').toggleClass('d-none d-flex')
         $('#saveNouvellePhrase').attr('data-id', 'new')
         quill.setText('');
         quill.enable(true)
@@ -131,8 +142,9 @@ const nouvellePhrase = (quill) => {
 
 const cancelNouvellePhrase = (quill) => {
     $('#cancelNouvellePhrase').on('click', function() {
-        $('#controleNouvellePhrase').toggleClass('d-none')
+        $('#controleNouvellePhrase').toggleClass('d-none d-flex')
         $('#nouvellePhrase').toggleClass('d-none')
+        $('#bloc_editor').toggleClass("d-none d-flex")
         quill.setText('');
         quill.enable(false)
     })
@@ -158,9 +170,12 @@ const saveNouvellePhrase = (quill) => {
             },
             success: function(data) {
                 $('#tableCommentaireContainer').html(data)
-                $('#controleNouvellePhrase').addClass("d-none")
+                $('#controleNouvellePhrase').addClass("d-none d-flex")
+                $('#nouvellePhrase').removeClass("d-none")
+                $('#bloc_editor').toggleClass("d-none d-flex")
                 deletePhrase(quill)
                 editPhrase(quill)
+                quill.enable(false)
                 quill.setText('');
             }
         })
@@ -170,21 +185,50 @@ const saveNouvellePhrase = (quill) => {
 }
 
 const editPhrase = (quill) => {
+
+    $(document).on('keyup', '.searchPhraseCreation', function (e) {
+        var text = $(this).val()
+        console.log(text,'tttt')
+        $('.phrase_bloc').addClass('d-none').removeClass('d-flex')
+        $('.phrase_bloc').each((index, el) => {
+            var phrase = $(el).find('.texte').text()
+            console.log(phrase)
+            if (phrase.includes(text)) {
+                $(el).addClass('d-flex').removeClass('d-none')
+            }
+        })
+    })
+
+
+    $('.seeExemple').on('click', function() {
+        $('#bloc_2phrases').toggleClass('d-none d-flex')
+        $('#controleNouvellePhrase').addClass('d-none').removeClass('d-flex')
+
+        var id = $(this).data('id')
+        $.get('/app/parametres/get_phrases?id='+id, function(data) {
+            $('.masculin').text(data[0])
+            $('.feminin').text(data[1])
+        })
+    })
+
     $('.editPhrase').on('click', function() {
-        var data = $(this).closest('tr').find('td:first').html()
-        var id = $(this).closest('td').data('id')
-        $('#saveNouvellePhrase').attr('data-id', id)
-        quill.setText('');
-        quill.enable(true)
-        quill.root.innerHTML = data
-        $('#controleNouvellePhrase').toggleClass('d-none')
-        $('#nouvellePhrase').toggleClass('d-none')
+        if ($('#nouvellePhrase').is(':visible')) {
+            var data = $(this).closest('.phrase_bloc').find('.texte').html()
+            var id = $(this).closest('.controlePhrase').data('id')
+            $('#saveNouvellePhrase').attr('data-id', id)
+            quill.setText('');
+            quill.enable(true)
+            quill.root.innerHTML = data
+            $('#controleNouvellePhrase').toggleClass('d-none d-flex')
+            $('#nouvellePhrase').toggleClass('d-none')            
+        }
+
 
     })
 }
 
 const setMotCle = (quill) => {
-    $('#motCle td').on('click', function() {
+    $('#motCle').on('click', function() {
         var data = $(this).data('reg')
         var selection = quill.getSelection(true);
         quill.insertText(selection.index, data);

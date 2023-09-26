@@ -126,6 +126,7 @@ class AdminController extends Controller
      */
     function changerLeMotDePasse(): View
     {
+
         return view('admin.motdepasse');
     }
 
@@ -138,6 +139,7 @@ class AdminController extends Controller
             'password.confirmed' => 'La confirmation du mot de passe a échouée.',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
         ]);
+ 
 
         $user = Auth::user();
         $user->password = Hash::make($request->password);

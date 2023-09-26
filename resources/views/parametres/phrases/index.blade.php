@@ -50,8 +50,13 @@
         </select> --}}
     </div>
     <div class="form-group">
-        <label for="">Liste des phrases de cette discipline</label>
+            <div class="input-group my-3">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" class="form-control searchPhraseCreation" placeholder="Chercher une phrase" aria-label="Chercher un élève" aria-describedby="basic-addon1">
+                <span class="input-group-text raz_search_phrase" style="cursor: pointer"><i class="fa-sharp fa-solid fa-xmark"></i></span>
+              </div>
         <div id="tableCommentaireContainer" class="my-4">
+
             
             @include('parametres.phrases.__tableau_des_phrases')
 
@@ -59,37 +64,45 @@
 
     </div>
 
-        <div class="d-flex justify-content-between my-4">
-            <button class="btn btn-dark" id="nouvellePhrase" >Nouvelle phrase</button>
+        <div class="d-flex justify-content-between my-4" id="controle_editor">
+            <button class="custom_button w-25" id="nouvellePhrase" >Nouvelle phrase</button>
             <div id="controleNouvellePhrase" class="d-none">
-                <button class="btn btn-danger" id="cancelNouvellePhrase">Annuler</button>
-                <button class="btn btn-primary" id="saveNouvellePhrase" data-section="{{$section}}">Sauvegarder</button>
+                <button class="custom_button" id="saveNouvellePhrase" data-section="{{$section}}">Sauvegarder</button>
+                <button class="custom_button_secondary ms-4" id="cancelNouvellePhrase">Annuler</button>
             </div>
         </div>
 
-        <div id="editor2" data-section="" style="height: 100px"></div>
-
-        {{-- <div class="row" >
-        <div class="col-md-6">
-            <label for="">Phrase pour les garcons</label>
-            <textarea class="form-control masculin_area" style="font-size: 16px" rows="10"></textarea>
-        </div>
-        <div class="col-md-6">
-            <label for="">Phrase pour les filles</label>
-            <textarea class="form-control feminin_area" style="width: 100%" rows="10"></textarea>
+        <div id="bloc_editor" class="d-none justify-content-between align-items-center">
+            <div data-reg="L'élève " id="motCle" class="custom_button" style="width: fit-content"><i class="fa-solid fa-plus me-3"></i>L'élève</div>
+            <div id="editor2" data-section="" style="height: 100px; width: 70%"  ></div>        
 
         </div>
-        </div> --}}
-        
-        <div style="margin-top: 20px">
-            <table class="table table-bordered table-hover" id="motCle" style="cursor: pointer;">
-                <tr style="text-align: center">
-                    <td data-reg="L'élève ">prénom</td>
+        <style>
+            .feminin, .masculin {
+                padding: 4px 8px;
+                border: 1px solid grey;
+                line-height: 30px;
+                font-size: 18px;
+                width: 80%;;
+                height: auto;
+                
 
-                </tr>
+            }
 
-            </table>
+        </style>
+
+        <div id="bloc_2phrases" class="d-none flex-column">
+            <div class="d-flex align-items-center">
+                <div style="width: 20%">Masculin</div>
+                <div class="masculin"></div>
+            </div>
+            <div class="d-flex mt-3 align-items-center">
+                <div style="width: 20%">Féminin</div>
+                <div class="feminin"></div>
+            </div>
         </div>
+
+
 
 </div>
 

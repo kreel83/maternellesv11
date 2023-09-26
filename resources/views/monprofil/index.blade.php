@@ -2,7 +2,8 @@
 
 @section('content')
 
-<div class="container my-5">
+
+<div class="container my-5 page" id="mon profil">
 
 
 
@@ -16,7 +17,7 @@
         .grid_profil {
             display: grid;
             grid-template-columns:1fr 1fr; 
-            grid-template-rows: 370px 220px 220px;
+            grid-template-rows: 370px 220px 220px 220px;
             grid-gap: 35px; 
         }
         .grid1 {
@@ -39,6 +40,10 @@
         .grid5 {
             grid-column: 2;
             grid-row: 3
+        }
+        .grid6 {
+            grid-column: 1;
+            grid-row: 4
         }
         .gridcadre {
             width: 100%;
@@ -116,7 +121,7 @@
             </div>       
         </div>
 
-        <div class="gridcadre grid3 d-flex justify-content-between w-100">
+        <div class="gridcadre grid3 d-flex justify-content-between w-100 tuto_aides">
             <div class="gridTitre">Mes aides maternelles</div>
             <form action="{{route('aidematernelle.post')}}" method="post" class="d-flex justify-content-between w-100">
                 @csrf
@@ -159,12 +164,15 @@
         </div>
 
 
+<style>
+
+</style>
 
 
 
-
-        <div class="gridcadre grid4 d-flex flex-column justify-content-between align-items-center">
+        <div class="gridcadre grid4 d-flex flex-column justify-content-between align-items-center tuto_direction">
             <div class="gridTitre">Direction</div>
+
 
             <div class="d-flex flex-column w-100 pt-4">
                 <div>
@@ -209,7 +217,7 @@
 
 
         </div>
-        <div class="gridcadre grid5 d-flex justify-content-center align-items-center">
+        <div class="gridcadre grid5 d-flex justify-content-center align-items-center tuto_periodicite">
             <div class="gridTitre">Périodocité</div>
             <form action="{{route('periode_save')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
                 <select name="periode" class="custom-select">
@@ -220,6 +228,16 @@
                 <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
             </form>    
         </div>
+        <div class="gridcadre grid6 d-flex justify-content-center align-items-center tuto_tutoriel">
+            <div class="gridTitre">Tutoriel</div>
+            <form action="{{route('modeTuto')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="tuto_form" name="state" value="on" {{ Auth::user()->configuration->tuto == 1 ? 'checked' : null}}>
+                    <label class="form-check-label" for="tuto_form">Mode Tutoriel activé</label>
+                  </div>
+                <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
+            </form>    
+        </div>
 
     </div>
 
@@ -227,5 +245,7 @@
 
 
 </div>
+
+
 
 @endsection

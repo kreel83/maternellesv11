@@ -11,10 +11,12 @@ body {
         width: 100%;
         height: 700px;
         background-color: transparent;
-        margin-top: 30px;
+        margin-top: 140px;
         padding: 5px;;
         overflow-y: auto;
+        
         .event_container {
+            border-radius: 14px;
             width: 100%;
             height: 200px;
             background-color: white;
@@ -24,13 +26,21 @@ body {
         }
     }
 
+    #calendrier_view {
+        min-height: 100vh;
+    }
+
+    #calendrier_scolaire {
+        height: 100%;
+    }
+
 #calendrier, #calendrier_scolaire, #calendrier_periodes {
 
 
     .month_bloc {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        width: 280px;
         margin: 10px 0;
         border-radius: 25px;
         // box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
@@ -67,11 +77,11 @@ body {
                 border-bottom: 2px solid brown;
             }
             &.selected {
-                background-color: var(--main-color);
-                border: 1px solid var(--main-color);
-                color: white;
-                font-size: 18px;
+                background-color: inherit;
+                border: 2px solid var(--main-color);
+                color: var(--main-color);
                 font-weight: bolder;
+                border-radius: 50% !important;
                 
             }
             &.selected.limite {
@@ -102,8 +112,8 @@ body {
                 color: white;
             }
             &.conges {
-                background-color:white;
-                color:  var(--second-color);
+                color:white;
+                background-color:  var(--second-color);
             }
             &.anniversaire.feminin {
                 color: deeppink;

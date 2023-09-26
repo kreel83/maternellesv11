@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Resultat extends Model
 {
@@ -45,8 +46,9 @@ class Resultat extends Model
     }
 
     public function top5ElevesLesPlusAvances() {
-        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom')
+        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
+        ->where('enfants.user_id', Auth::id())
         ->groupBy('enfant_id')
         ->orderByDesc('total')
         ->limit(5)
@@ -54,8 +56,9 @@ class Resultat extends Model
     }
 
     public function top5ElevesLesMoinsAvances() {
-        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom')
+        return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
+        ->where('enfants.user_id', Auth::id())
         ->groupBy('enfant_id')
         ->orderBy('total')
         ->limit(5)
@@ -63,8 +66,10 @@ class Resultat extends Model
     }
 
     public function top5DisciplinesLesPlusAvances() {
-        return self::selectRaw('count(*) as total, items.name')
+        return self::selectRaw('count(*) as total, items.name, sections.logo')
         ->join('items', 'items.id', '=', 'item_id')
+        ->join('sections', 'sections.id', '=', 'items.section_id')
+        ->where('resultats.user_id', Auth::id())
         ->groupBy('item_id')
         ->orderByDesc('total')
         ->limit(5)
@@ -72,8 +77,10 @@ class Resultat extends Model
     }
 
     public function top5DisciplinesLesMoinsAvances() {
-        return self::selectRaw('count(*) as total, items.name')
+        return self::selectRaw('count(*) as total, items.name, sections.logo')
         ->join('items', 'items.id', '=', 'item_id')
+        ->join('sections', 'sections.id', '=', 'items.section_id')
+        ->where('resultats.user_id', Auth::id())
         ->groupBy('item_id')
         ->orderBy('total')
         ->limit(5)

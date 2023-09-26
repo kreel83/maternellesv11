@@ -16,6 +16,7 @@ use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\EcoleController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TutoController;
 use App\Http\Controllers\RegisteredUserController;
 
 use App\Http\Controllers\NewaccountController;
@@ -101,6 +102,7 @@ Route::get('/parent',[EnfantController::class, 'parent']);
 Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
+
 Route::middleware(['auth'])->group(function () {
     //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
@@ -114,12 +116,15 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //Route::middleware(['auth'])->group(function () {
-// Les URLs ci-dessous nécessitent authentification + abonnement en cours
-Route::middleware(['auth','abo'])->group(function () {
-    //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
-
-    //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
-
+    // Les URLs ci-dessous nécessitent authentification + abonnement en cours
+    Route::middleware(['auth'])->group(function () {
+        //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+        
+        //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+        
+    Route::get('/tutos', [TutoController::class, 'index'])->name('tutos');
+    Route::get('/tutos/ajax', [TutoController::class, 'ajax'])->name('ajax');
+    Route::get('/tutos/modetuto', [TutoController::class, 'modetuto'])->name('modeTuto');
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
@@ -160,8 +165,10 @@ Route::middleware(['auth','abo'])->group(function () {
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');
     Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
+    Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
+    
     Route::post('/fiches/choisirSelection', [ficheController::class, 'choisirSelection']);
     Route::get('/fiches/duplicate', [ficheController::class, 'duplicate']);
     Route::get('/fiches/choix', [ficheController::class, 'choix']);
@@ -197,6 +204,8 @@ Route::middleware(['auth','abo'])->group(function () {
 
     Route::get('/calendrier',[\App\Http\Controllers\CalendrierController::class,'calendrier'])->name('calendrier');
 
+    Route::get('/password/change',[\App\Http\Controllers\ParametreController::class,'password_change'])->name('password_change');
+    Route::post('/password/change',[\App\Http\Controllers\ParametreController::class,'password_save'])->name('password_save');
     Route::get('/password',[\App\Http\Controllers\EnfantController::class,'password'])->name('password');
     Route::post('/password_operation',[\App\Http\Controllers\EnfantController::class,'password_operation'])->name('password_operation');
 

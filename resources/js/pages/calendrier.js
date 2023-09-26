@@ -49,9 +49,9 @@ const initCalendrier = () => {
         conges = JSON.parse(conges)
         conges.forEach(function (element) {
             console.log(element)
-            $('.day[data-all="' + element.start + '"]').addClass('conges')
+            $('.day[data-all="' + element.start + '"]').addClass('conges start')
             $('.day[data-all="' + element.start + '"]').prop('title', element.libele)
-            $('.day[data-all="' + element.end + '"]').addClass('conges')
+            $('.day[data-all="' + element.end + '"]').addClass('conges end')
             $('.day[data-all="' + element.end + '"]').prop('title', element.libele)
             for (var i = element.start + 1; i < element.end; i++) {
                 $('.day[data-all="' + i + '"]').addClass('between conges')

@@ -23,6 +23,29 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use Billable, HasApiTokens;
 
+
+    const SCENARIO = [
+        'step1' => [
+            'name' => 'Créer un directeur',
+            'keyword' => 'createDirector',
+            'explication' => "Nous allors créer à présent le nom de votre directeur d'établissement",
+            "script" => [
+                'menu_parametre' => 'Cliquez sur le menu Paramètre',
+                'menu_monProfil' => 'Cliquez sur Mon profil',
+            ]
+        ],
+        'step2' => [
+            'name' => 'Créer votre périodicité',
+            'keyword' => 'createPeriode',
+            'explication' => "Nous allors créer à présent le nom de votre périodiicité"
+        ],
+        'step1' => [
+            'name' => 'Créer vos groupe',
+            'keyword' => 'createGroupe',
+            'explication' => "Nous allors créer à présent vos groupes"
+        ],
+    ];
+
     public static function boot() {
 
 	    parent::boot();
@@ -30,6 +53,32 @@ class User extends Authenticatable
 	    static::created(function($user) {
 	        //FacadesLog::info('User Created Event:'.$user);
             Configuration::create(['user_id' => $user->id]);
+            Enfant::create([
+                'nom' => 'DE LUCAS',
+                'prenom' => 'Théo',
+                'ddn' => '05/09/2018',
+                'photo' => '6.png',
+                'mail' => $user->email,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'annee_scolaire' => Carbon::now()->format('Y'),
+                'background' => 'b2',   
+                'user_id' =>$user->id,
+                'genre' => 'G'             
+            ]);
+            Enfant::create([
+                'nom' => 'LAURENCE',
+                'prenom' => 'Jennifer',
+                'ddn' => '06/10/2018',
+                'photo' => '32.png',
+                'mail' => $user->email,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'annee_scolaire' => Carbon::now()->format('Y'),
+                'background' => 'b4',   
+                'user_id' =>$user->id,
+                'genre' => 'F'             
+            ]);
 	    });
 
         static::deleted(function($user) {
@@ -128,6 +177,32 @@ class User extends Authenticatable
         return $this->hasmany('App\Models\Notation');
     }
 
+    public function is_abonne() {
+        switch($this->licence) {
+            case('admin'):
+                // Licence accordée par l'école
+                $licence = Licence::where([
+                    ['user_id', $this->id],
+                    ['actif', 1],
+                ])->first();
+                if($licence) {
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            case('self'):
+                // licence prise individuellement
+                if ($this->subscribed('default')) {
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+        }
+        return false;
+    }
+
     public function mesfiches() {
         //$items = Item::join('fiches','fiches.item_id','id')->where('fiches.section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
         //dd($items);
@@ -163,6 +238,11 @@ class User extends Authenticatable
 
     public function evenements() {
         return Event::where('user_id', $this->id);
+    }
+
+    public function is_enfants() {
+        $enfant = Enfant::where('user_id', $this->id)->first();
+        return $enfant;
     }
 
 
