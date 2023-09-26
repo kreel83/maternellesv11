@@ -45,7 +45,7 @@
                 <div class="col-md-12 d-flex flex-column">
                         @foreach ( $enfants as $key=>$groupes )
                         <div class="d-flex flex-wrap my-5">
-                                @foreach ($groupes as $enfant)
+                                @foreach ($groupes as $kE=>$enfant)
                                 @include('cards.enfant',['type' => $type])
                                 @endforeach                                
                         </div>                              

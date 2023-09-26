@@ -201,8 +201,10 @@ const editPhrase = (quill) => {
 
 
     $('.seeExemple').on('click', function() {
-        $('#bloc_2phrases').toggleClass('d-none d-flex')
+        $('#bloc_2phrases').addClass('d-flex').removeClass('d-none')
         $('#controleNouvellePhrase').addClass('d-none').removeClass('d-flex')
+        $('#bloc_editor').addClass('d-none').removeClass('d-flex')
+        $('#controle_editor').removeClass('d-none').addClass('d-flex')
 
         var id = $(this).data('id')
         $.get('/app/parametres/get_phrases?id='+id, function(data) {
