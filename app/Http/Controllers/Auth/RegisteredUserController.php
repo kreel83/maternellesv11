@@ -382,7 +382,8 @@ class RegisteredUserController extends Controller
         /*$logoPath = public_path('img/deco/les_maternelles.png');
         $logo = "data:image/png;base64,".base64_encode(file_get_contents($logoPath));*/
         //$logo = Utils::getBase64Image('img/deco/les_maternelles.png');
-        $verificationLink = route('registration.validation', ['token' => $token]);
+        //$verificationLink = route('registration.validation', ['token' => $token]);
+        $verificationLink = env('APP_URL').'/register/validation/'.$token;
         if($request->role == 'user') {
             Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
