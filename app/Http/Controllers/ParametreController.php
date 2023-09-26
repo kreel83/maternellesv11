@@ -146,6 +146,13 @@ class ParametreController extends Controller
     }
 
 
+    public function get_phrases(Request $request) {
+        $c = Commentaire::find($request->id);
+        $c->phrase_masculin = str_replace("L'élève","Léon", $c->phrase_masculin);
+        $c->phrase_feminin = str_replace("L'élève","Lucie", $c->phrase_feminin);
+        return[$c->phrase_masculin, $c->phrase_feminin];
+    }
+
     public function savedirecteur(Request $request) {
 
         $validated = $request->validate([
