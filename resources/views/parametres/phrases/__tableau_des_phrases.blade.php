@@ -30,6 +30,7 @@
     @foreach ($commentaires as $commentaire)
     <div class="phrase_bloc d-flex">
         <div class="texte">{{  $commentaire->phrase_masculin }}</div>
+        <div class="seeExemple" style="cursor: pointer" data-id="{{$commentaire->id}}"><i class="fas fa-eye"></i></div>
         @if ($commentaire->user_id)
         <div  style="width: 60px" class=" d-flex ms-5 controlePhrase" data-id="{{$commentaire->id}}">
             <div class="editPhrase"><i class="fas fa-edit"></i></div>

@@ -158,6 +158,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');
     Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
+    Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
     
