@@ -18,9 +18,11 @@
                 @foreach ($invoices as $invoice)
                     <tr>
                         <td>{{ $invoice->number }}</td>
-                        <td>{{ $invoice->date()->format('d/m/Y') }}</td>
-                        <td>{{ $invoice->total() }}</td>
-                        <td><a href="/app/user/invoice/{{ $invoice->id }}"><span class="fa fa-download"></span></a></td>
+                        <td>{{ Carbon\Carbon::parse($invoice->createdAt)->format('d/m/Y')}}</td>
+                        {{--<td>{{ $invoice->date()->format('d/m/Y') }}</td>--}}
+                        <td>{{ $invoice->amount }}</td>
+                        {{--<td>{{ $invoice->total() }}</td>--}}
+                        <td><a href="{{ route('user.invoice.download', ['number' => $invoice->number]) }}"><span class="fa fa-download"></span></a></td>
                     </tr>
                 @endforeach
             </table>

@@ -225,10 +225,22 @@ class CahierController extends Controller
 
         $r = Reussite::where('enfant_id', $id)->first();
         $reussite = $r->texte_integral;
-        
 
         // dd($reussite);
         $reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
+
+        // css class pour le pdf
+        $customClass = array();
+        foreach ($resultats as $resultat) {
+            foreach ($resultat as $item) {
+                //$class = '.section'.$item['section_id'].' {border-radius: 15px; padding-top: 10px; padding-bottom: 10px; text-align: center; font-size: 20px; background-color: '.$item['color'].'}';
+                $class = '.titre'.$item['section_id'].' {background-color: '.$item['color'].'}';
+                if(!in_array($class, $customClass)) {
+                    $customClass[] = $class;
+                }
+            }
+        }
+        //dd($customClass);
 
 
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
@@ -236,9 +248,9 @@ class CahierController extends Controller
 //dd($resultats);
 
 
-
+//dd($resultats);
         if ($state == 'see') {
-            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
+            $pdf = PDF::loadView('pdf.reussite2', ['customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
             // download PDF file with download method
             return $pdf->stream('test_cahier.pdf');            
         } else {

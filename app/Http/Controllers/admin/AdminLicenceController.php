@@ -4,11 +4,16 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UserEmailVerificationFromAdmin;
+use App\Mail\UserLicenceActiveeDepuisAdmin;
+use App\Models\Ecole;
+use App\Models\Facture;
+use App\Models\FactureLigne;
 use App\Models\Licence;
 use App\Models\Produit;
 use App\Models\Transaction;
 use App\Models\User;
 use App\utils\Utils;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravel\Cashier\Exceptions\IncompletePayment;
@@ -23,6 +28,7 @@ use Laravel\Cashier\Payment;
 use Stripe\Exception\CardException;
 use Stripe\PaymentIntent;
 use Illuminate\Support\Facades\Log;
+use PDF;
 
 class AdminLicenceController extends Controller
 {
@@ -64,6 +70,7 @@ class AdminLicenceController extends Controller
         // Récupère le produit en vente en ce moment
         $product = Produit::produitEnCoursLicenceAdmin();
         $intent = auth()->user()->createSetupIntent();
+        //dd($intent);
         return view('admin.licence.achat')
             ->with('product', $product)
             ->with('method', 'purchase')
@@ -101,27 +108,6 @@ class AdminLicenceController extends Controller
             ->with('licenceSelection', $request->licenceSelection);
     }
 
-
-    /*
-    private function getInternalName()
-    {
-        $name = uniqid();
-        if ($this->internalNameExists($name)) {
-            return $this->getInternalName();
-        }
-        return $name;
-    }
-
-    private function internalNameExists($name) {
-        $existsInLicences = Licence::where('name', $name)->exists();
-        $existsInSubscriptions = Subscription::where('name', $name)->exists();
-        if($existsInLicences || $existsInSubscriptions) {
-            return true;
-        }
-        return false;
-    }
-    */
-
     /**
      * Write code on Method
      *
@@ -130,42 +116,50 @@ class AdminLicenceController extends Controller
     public function create(Request $request)
     {
         try {
+            // création ou récupération du client
+            $request->user()->createOrGetStripeCustomer();
             // récupération des éléments du produit actuel
             $product = Produit::find($request->product_id);
-            // préparation de la facture
-            $request->user()->invoicePrice($product->stripe_product_id, $request->quantity);
             // montant à charger * 100 pour envoyer à Stripe une valeur sans décimal
             $amount = ($request->quantity * $product->price) * 100;
             // on charge le client
+            //$request->user()->invoicePrice('price_1NYAuHF73qwd826kwfu8ILFA', 1);
             $stripeCharge = $request->user()->charge(
-                $amount, $request->payment_method
+                $amount, $request->payment_method, [
+                    'metadata' => [
+                        'user_id' => $request->user()->id,
+                        'produit_id' => $product->id,
+                        'method' => $request->method,
+                        'price' => $product->price,
+                        'quantity' => $request->quantity,
+                        'expires_at' => $product->active_to,
+                        'licenceSelection' => $request->licenceSelection,
+                    ]
+                ]
             );
-            // enregistrement de la transaction
-            $transaction = Transaction::ajouterUneTransactionLicenceAdmin($request, $stripeCharge, $product);
-            // création / renouvellement des licences
-            $licence = new Licence;
-            if($request->method == 'purchase') {
-                $licence->createUserLicence($request, $transaction, $product);
-            } elseif($request->method == 'renew') {
-                $licence->renewUserLicence($request, $transaction, $product);
-            }
             return view("admin.licence.result")
-                ->with('result', 'success')
-                ->with('request', $request);                
-        } catch (CardException $exception) {
-                $json = $exception->getJsonBody();
-                $message = $json['error']['message'].' ('.$json['error']['type'].')';
-                //dd($json['error']['message']);
-            return view("admin.licence.result")
-                ->with('result', $message)
-                ->with('request', $request);
-            /*
+                ->with('result', $stripeCharge->status)
+                ->with('method', $request->method);
+        }  
+        catch (IncompletePayment $exception) {
             return redirect()->route(
                 'cashier.payment',
-                [$exception->payment->id, 'redirect' => route('home')]  // A VOIR la route en cas d'echec de paiement
+                [$exception->payment->id, 'redirect' => route('admin.stripe.redirect', ['method' => $request->method])]
             );
-            */
         }
+        catch (CardException $exception) {
+            $json = $exception->getJsonBody();
+            $message = $json['error']['message'].' ('.$json['error']['type'].')';
+            return view("admin.licence.result")
+                ->with('result', $message)
+                ->with('request', $request->method);
+        }
+    }
+
+    public function stripeRedirect($method, Request $request) {
+        return view("admin.licence.result")
+                ->with('result', $request->success)
+                ->with('method', $method);
     }
 
     /*
@@ -221,24 +215,28 @@ class AdminLicenceController extends Controller
                 // compte utilisateur inexistant, on le crée + envoi d'un email pour vérification
                 // pré-remplissage nom + prénom d'après l'adresse email
                 $prenomNom = Utils::getNameFromEmail($email);
-                $validationKey = md5(microtime(TRUE)*100000);
+                $token = md5(microtime(TRUE)*100000);
                 $user = User::create([
                     'prenom' => $prenomNom['prenom'],
                     'name' => $prenomNom['nom'],
                     'email' => $email,
                     'ecole_identifiant_de_l_etablissement' => Auth::user()->ecole_identifiant_de_l_etablissement,
-                    'validation_key' => $validationKey,
+                    'validation_key' => $token,
                     'licence' => 'admin'
                 ]);
                 // Envoi d'un email de vérification
-                $token = md5($user->id.$request->licence_id.$validationKey.env('HASH_SECRET'));
-                $url = route('user.valideUserFromAdminCreatePassword').'?'.'uID='.$user->id.'&lID='.$request->licence_id.'&key='.$validationKey.'&token='.$token;
-                Log::debug($url);
-                Mail::to($email)->send(new UserEmailVerificationFromAdmin($url));
+                $verificationLink = route('user.valideUserFromAdminCreatePassword', ['token' => $token]);
+                //Log::info($verificationLink);
+                Mail::to($email)->send(new UserEmailVerificationFromAdmin($verificationLink));
             } else {
                 if($user->actif == 0) {
-                    // on envoi un email de rappel pour activer le compte
-
+                    // compte user déjà crée mais non actif
+                    // on envoi un email de rappel au user pour qu'il active son compte
+                    Mail::to($email)->send(new UserEmailVerificationFromAdmin($user->validation_key));
+                } else {
+                    // compte user déjà crée et actif
+                    // on envoi un email au user pour l'informer qu'une licence vient de lui être accordé
+                    Mail::to($email)->send(new UserLicenceActiveeDepuisAdmin());
                 }
                 $user->licence = 'admin';
                 $user->save();
@@ -294,8 +292,34 @@ class AdminLicenceController extends Controller
      */
     public function invoice(): View
     {
-        $invoices = Auth::user()->invoices();
+        //$invoices = Auth::user()->invoices();
+        $invoices = Facture::where('user_id', Auth::id())->orderByDesc('id')->get();
         return view("admin.invoice")
+            ->with('invoices', $invoices);
+    }
+
+    public function downloadInvoice($number)
+    {
+        $invoice = Facture::select('factures.id','factures.number','factures.created_at','transactions.payment_method')->where([
+            ['factures.number', $number],
+            ['factures.user_id', Auth::id()],
+        ])->leftJoin('transactions', 'factures.transaction_id', '=', 'transactions.id')->first();
+        if($invoice) {
+            $ecole = Ecole::where('identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)->first();
+            $lignes = FactureLigne::where('facture_id', $invoice->id)
+                ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
+                ->get();
+                //dd($lignes);
+            $pdf = PDF::loadView('pdf.facture', ['user' => Auth::user(), 'invoice' => $invoice, 'ecole' => $ecole, 'lignes' => $lignes]);
+            return $pdf->stream('Facture_'.$invoice->number.'.pdf');
+        }
+    }
+
+    public function testinvoice($id)
+    {
+        //$invoices = Auth::user()->invoices();
+        $invoices = Facture::where('id', $id)->first();
+        return view("pdf.facture")
             ->with('invoices', $invoices);
     }
     

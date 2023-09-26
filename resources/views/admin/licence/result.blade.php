@@ -8,10 +8,10 @@
 
             <div class="card-body">
 
-                @if($result == 'success')
+                @if($result == 'succeeded' || $result == 'true')
 
                     <div class="alert alert-success">
-                        @if($request->method == 'purchase')
+                        @if($method == 'purchase')
                             <p>Merci. Les nouvelles licences ont été ajoutées à votre compte.</p>
                         @else
                             <p>Merci. Les licences sélectionnées ont bien été renouvelées.</p>
