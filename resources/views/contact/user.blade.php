@@ -1,4 +1,4 @@
-@extends('layouts.MainMenu', ['titre' => 'Formulaire de contact', 'menu' => 'contact'])
+@extends('layouts.mainMenu2', ['titre' => 'Formulaire de contact', 'menu' => 'contact'])
 
 @section('content')
 

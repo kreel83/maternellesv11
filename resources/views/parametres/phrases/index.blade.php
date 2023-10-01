@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Les paramètres', 'menu' => 'commentaire'])
+@extends('layouts.mainMenu2', ['titre' => 'Les paramètres', 'menu' => 'commentaire'])
 
 @section('content')
 <div class="container" id="phrasesView">

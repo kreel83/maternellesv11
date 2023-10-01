@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Mes factures', 'menu' => 'facture'])
+@extends('layouts.mainMenu2', ['titre' => 'Mes factures', 'menu' => 'facture'])
 
 @section('content')
 <div class="container mt-5">

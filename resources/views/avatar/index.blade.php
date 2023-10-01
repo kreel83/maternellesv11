@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Ma classe', 'menu' => 'avatar'])
+@extends('layouts.mainMenu2', ['titre' => 'Ma classe', 'menu' => 'avatar'])
 @php
     $degrades = App\Models\Enfant::DEGRADE;
 @endphp

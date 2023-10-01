@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu',['titre' => 'Les mots de passe', 'menu' => 'avatar_page'])
+@extends('layouts.mainMenu2',['titre' => 'Les mots de passe', 'menu' => 'avatar_page'])
 
 
 

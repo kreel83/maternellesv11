@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => "les résultats de $enfant->prenom", 'menu' => 'classe'])
+@extends('layouts.mainMenu2', ['titre' => "les résultats de $enfant->prenom", 'menu' => 'classe'])
 
 @section('content')
     <style>

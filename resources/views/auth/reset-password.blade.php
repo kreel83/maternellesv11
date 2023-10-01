@@ -47,7 +47,7 @@
     </x-auth-card>
 </x-guest-layout> --}}
 
-@extends('layouts.mainMenu', ['titre' => 'Mes fiches', 'menu' => 'item', 'log' => true])
+@extends('layouts.mainMenu2', ['titre' => 'Mes fiches', 'menu' => 'item', 'log' => true])
 
 @section('content')
 
