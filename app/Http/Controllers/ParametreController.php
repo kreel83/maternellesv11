@@ -7,6 +7,7 @@ use App\Models\Ecole;
 use App\Models\Enfant;
 use App\Models\Equipe;
 use App\Models\Resultat;
+use App\Models\Fiche;
 use App\Models\Configuration;
 use App\Models\Section;
 use App\Models\Item;
@@ -102,6 +103,8 @@ class ParametreController extends Controller
     }
 
     public function monprofil(Request $request) {
+
+        //Fiche::createDemoFiche(Auth::user());
 
 
         // $coms = Item::all();
