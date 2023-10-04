@@ -24,6 +24,8 @@ class EleveEvent
         $d = str_replace([' years', ' year'], ' ans', $d);
         $d = str_replace([' months', ' month'], ' mois', $d);
         $d = str_replace([' weeks', ' week'], ' semaine(s)', $d);
+        $d = str_replace([' days', ' day'], ' jour(s)', $d);
+        $d = str_replace([' hours', ' hour'], ' heure(s)', $d);
         $d = str_replace([' ago'], '', $d);
         return $d;
     }

@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => "Les groupes d'élèves",'menu' => 'affectation_groupe'])
+@extends('layouts.mainMenu2', ['titre' => "Les groupes d'élèves",'menu' => 'affectation_groupe'])
 
 @section('content')
 

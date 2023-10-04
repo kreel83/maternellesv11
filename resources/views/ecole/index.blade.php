@@ -2,7 +2,7 @@
 
 ?>
 
-@extends('layouts.mainMenu', ['titre' => 'Mon école', 'menu' => 'ecole'])
+@extends('layouts.mainMenu2', ['titre' => 'Mon école', 'menu' => 'ecole'])
 
 
 

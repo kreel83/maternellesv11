@@ -537,7 +537,7 @@ class CahierController extends Controller
 
 
         $resultats = $enfant->resultats();
-        $reussite = Reussite::where('enfant_id',$id)->first();
+        $reussite = Reussite::where('enfant_id',$id)->orderBy('periode', 'DESC')->first();
         //dd($resultats);
 
 
@@ -580,6 +580,7 @@ class CahierController extends Controller
             ->with('phrases', $grouped)
             ->with('section', Section::first())
             ->with('textes', $textes)
+            ->with('type', 'reussite')
             ->with('periode', $this->periode)
             ->with('title', $this->title)
             ->with('sections', $sections);

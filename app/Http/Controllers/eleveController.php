@@ -30,6 +30,7 @@ class EleveController extends Controller
         return view('photos.index')
             ->with('enfant',$enfant)
             ->with('degrades',$degrades)
+            ->with('type','avatar')
             ->with('files', $liste);
     }
     public function avatar() {

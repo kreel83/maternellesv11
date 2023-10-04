@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import "./style.scss";
 @import "elements/card_enfant";
 @import "elements/card_home";
 @import "elements/card_item";
@@ -70,24 +71,22 @@ body {
 }
 
 #modeTuto {
-    position: fixed;
-    width: 250px;
-    height: 60px;
+
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 40px;
-    background-color: #8dc53e;
     bottom:15px;
     left: 15px;
     z-index: 10000;
     .btnModeTuto {
-        background-color: green;
+        background-color: #8dc53e;
         color: white;
         border-radius: 40px;
         border: none;
         outline: none;
         padding: 2px 16px;
+        margin: 0 30px
 
         ;
 
@@ -103,7 +102,7 @@ body {
     color: black;
     font-weight: bolder;
     border-radius: 14px;;
-    border: 4px solid var(--main-color);
+    border: 4px solid #8dc53e;
     padding: 16px;
     font-size: 16px;
     z-index: 8000;
@@ -119,7 +118,7 @@ body {
         }
     .title {
         
-        color: var(--main-color);
+        color: #8dc53e;
         font-size: 20px;
         font-weight: bolder;
     }
@@ -153,7 +152,7 @@ body {
 }
 
 .tuto_cadre {
-    border: 3px solid pink !important;
+    border: 3px solid #8dc53e !important;
     font-weight: bold;
     z-index: 200;
 }
@@ -177,7 +176,7 @@ body {
 :root {
     --main-color: #6759ff;
     --back-color: #fbfaff;
-    --second-color: #f1edff;
+    --second-color: #9f96f9;
 
     --vert: #8dc53e;
     --bleu: #16bdff;

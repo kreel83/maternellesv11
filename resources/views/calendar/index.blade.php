@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ,['titre' => 'Mon calendrier'])
+@extends('layouts.mainMenu2', ,['titre' => 'Mon calendrier'])
 @php
     use Carbon\Carbon;
 

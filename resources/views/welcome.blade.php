@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Bienvenue', 'menu' => 'accueil'])
+@extends('layouts.mainMenu2', ['titre' => 'Bienvenue', 'menu' => 'accueil'])
 
 @section('content')
 
@@ -7,115 +7,9 @@ $degrades = App\Models\Enfant::DEGRADE;
 $lesgroupes = json_decode(Auth::user()->groupes, true);
 @endphp
 
-<style>
-.parent {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-grid-template-rows: 300px 320px 430px;
-grid-gap: 30px;
-}
-
-.div1 { 
-    grid-column: 1;
-    grid-row: 1; 
-}
-.div2 { 
-    grid-column: 2;
-    grid-row: 1; 
-}
-.div3 { 
-    grid-column: 3;
-    grid-row: 1; 
-}
-.div4 { 
-    grid-column: 1;
-    grid-row: 2; 
-}
-.div5 { 
-    grid-column: 2;
-    grid-row: 2; 
-}
-.div6 { 
-    grid-column: 3;
-    grid-row: 2; 
-}
-.div7 { 
-    grid-column: 1/4;
-    grid-row: 3; 
-    height: fit-content;
-}
 
 
-.cadre_welcome {
-    /* //border: 1px solid grey; */
-    border-radius: 14px;
-    padding: 15px 8px 8px 8px;
-    position: relative;
-    font-size: 14px;
-    background-color: white;
-    color: grey;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    
-}
-.titre_welcome {
-    margin-bottom: 20px;
-    color: var(--main-color);
-
-    padding: 2px 16px;
-    font-size: 18px;
-    font-weight: bolder;
-    background-color: white;
-    border-radius: 15px;
-    /* border: 1px solid grey; */
-}
-.abonnement {
-    font-size: 20px;
-    color: green;
-    font-weight: bolder;
-    text-align: center
-}
-.anniversaire {
-    font-size: 20px;
-    color: var(--pink);
-    font-weight: bolder;
-    text-align: center
-}
-.ddn {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: var(--main-color);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center
-}
-
-    .classe_dashboard a {
-        text-decoration: none;
-        
-    }
-    .classe_dashboard tr {
-        cursor: pointer;
-    }
-    .classe_dashboard tr:hover {
-        transform: scale(1.02)
-    }
-    .classe_dashboard .name.G a {
-        color: var(--blue) !important;
-        
-    }
-    .classe_dashboard .name.F a {
-        color: var(--rose) !important;
-        
-    }
-    .dashboard_mail {
-        font-size: 20px;
-        color: red;
-    }
-</style>
-
-<div class="container mt-5 py-4">
+<div class="container mt-5 py-4" id="welcome">
 
     {{-- depuis le midlleware 'abo' --}}
     @if (session('nolicence'))
@@ -128,13 +22,16 @@ grid-gap: 30px;
 
     <div class="parent">
         <div class="div1 cadre_welcome"> 
-            <div class="titre_welcome">Les anniversaires du mois</div>
+            @php
+                
+            @endphp
+            <div class="titre_welcome">Les anniversaires {{ in_array(substr($moisActuel,0,1), ['o','a']) ? "d'" : 'de '}}{{$moisActuel}}</div>
             @if ($anniversaires->isEmpty())
             <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
                 Aucun anniversaire ce mois ci.
             </div>
             @else
-                <div class="text-center fs-2" style="color: var(--second-color)">{{$moisActuel}}</div>
+
                 <div class="anniversaires1 w-75 d-flex justify-content-between ">
                     <ul class="w-100">
                         @foreach($anniversaires as $enfant)

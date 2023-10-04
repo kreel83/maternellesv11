@@ -38,9 +38,7 @@ use Illuminate\Support\Facades\Auth;
         </style>
     </head>
     <div class='dashboard position-relative'>
-      <div id="modeTuto" class="{{Auth::user() && Auth::user()->configuration->tuto == 0 ? 'd-none' : null}}">
-        <button class="btnModeTuto">Desactiver le mode tutoriel</button>
-      </div>
+
 
       <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto ?? null}}">
       <input type="hidden" id="type" value="{{$tuto ?? null}}">
@@ -158,6 +156,9 @@ use Illuminate\Support\Facades\Auth;
 
             <a class="dashboard-nav-item  {{ $menu == 'contact' ? 'active' : null }}" href="{{route('contact')}}"><i class="fa-regular fa-envelope"></i> Nous contacter</a>
             <div class="nav-item-divider"></div>
+            <div id="modeTuto" class="{{Auth::user() && Auth::user()->configuration->tuto == 0 ? 'd-none' : null}}">
+              <button class="btnModeTuto">Desactiver le mode tutoriel</button>
+            </div>
             <a href="{{route('deco')}}" class="dashboard-nav-item"><i class="fal fa-sign-out-alt"></i> Se déconnecter</a>
 
           </nav>

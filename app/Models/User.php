@@ -52,6 +52,7 @@ class User extends Authenticatable
 
 	    static::created(function($user) {
 	        //FacadesLog::info('User Created Event:'.$user);
+            Fiche::createDemoFiche($user);
             Configuration::create(['user_id' => $user->id]);
             Enfant::create([
                 'nom' => 'DE LUCAS',

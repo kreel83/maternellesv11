@@ -19,6 +19,8 @@ import '../../node_modules/quill/dist/quill';
 import Alpine from 'alpinejs';
 
 import './menu'
+import './main';
+import "./jquery.sticky";
 import { tutos } from './tutos/tutos';
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
@@ -49,6 +51,7 @@ window.Alpine = Alpine;
 Alpine.start();
 
 $(document).ready(function($) {
+
 
     
 
