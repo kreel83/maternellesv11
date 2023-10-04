@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 class ContactController extends Controller
 {
     
-    public function store(Request $request)
+    public function envoiLaDemandeDeContact(Request $request)
     {
 
         $request->validate([

@@ -26,7 +26,7 @@
             <p class="mb-0"><span class="fw-bold">Service :</span><span class="c-green"> {{ $product->name }}</span></p>
             <p class="mb-0">
                 <span class="fw-bold">Prix de la licence :</span>
-                <span class="c-green">{{ number_format($product->price,2) }} €</span>
+                <span class="c-green">{{ number_format($product->price, 2) }} €</span>
             </p>
             @if($method == 'purchase')
                 <p>Nombre de licences souhaitées<br />
@@ -38,7 +38,7 @@
                 </p>
                 <p class="mb-0">
                     <span class="fw-bold">Total :</span>
-                    <span class="c-green"><span id="totalPrice">{{$product->price}}</span> €</span>
+                    <span class="c-green"><span id="totalPrice">{{ number_format($product->price, 2) }}</span> €</span>
                 </p>
             @elseif($method == 'renew')
                 <p>Nombre de licences à renouveler : {{ count($licenceSelection)}} <br />
@@ -46,7 +46,7 @@
                 </p>
                 <p class="mb-0">
                     <span class="fw-bold">Total :</span>
-                    <span class="c-green"><span id="totalPrice">{{ count($licenceSelection) * $product->price }}</span> €</span>
+                    <span class="c-green"><span id="totalPrice">{{ number_format(count($licenceSelection) * $product->price, 2) }}</span> €</span>
                 </p>
             @endif
         </div>
@@ -183,8 +183,8 @@
 
 </div>
 
-<div class="col-12 mt-4 text-center">
-    <a href="/">Annuler</a>
+<div class="mt-3">
+    <a class="btn btn-outline-secondary me-2" href="{{ route('admin.licence.index') }}" role="button">Annuler</a>
 </div>
 
 <script src="https://js.stripe.com/v3/"></script>

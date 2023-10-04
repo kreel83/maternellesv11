@@ -59,17 +59,21 @@ Route::middleware(['admin'])->group(function()
     Route::post('/admin/licence', [AdminLicenceController::class, 'renew'])->name('admin.licence.renew');
     Route::get('/admin/licence/achat', [AdminLicenceController::class, 'achat'])->name('admin.licence.achat');
     Route::post('/admin/licence/achat', [AdminLicenceController::class, 'create'])->name('admin.licence.create');
-    Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // dans subscription.js prefixé par /app
-    Route::get('/admin/licence/remove/{id}', [AdminLicenceController::class, 'confirmationRetraitLicence'])->name('admin.licence.remove');
+    //Route::post('/admin/licence/assign', [AdminLicenceController::class, 'assign']);  // dans subscription.js prefixé par /app
+    Route::get('/admin/licence/remove/{licence_name}', [AdminLicenceController::class, 'confirmationRetraitLicence'])->name('admin.licence.remove');
     Route::post('/admin/licence/remove', [AdminLicenceController::class, 'retraitLicence'])->name('admin.licence.remove.post');
     Route::get('/admin/invoice', [AdminLicenceController::class, 'invoice'])->name('admin.licence.invoice');
     Route::get('/admin/invoice/{number}', [AdminLicenceController::class, 'downloadInvoice'])->name('admin.invoice.download');
     // cette routes est appellée par Stripe dans le cas d'une authentification 3DS en retour de paiement
     // routes utilisées dans AdminLicenceController@create dans la gestion d'exception
     Route::get('/admin/licence/{method}', [AdminLicenceController::class, 'stripeRedirect'])->name('admin.stripe.redirect');
+    Route::get('/admin/licence/reminder/{licence_name}', [AdminLicenceController::class, 'sendReminder'])->name('admin.licence.sendreminder');
+    
+    Route::get('/admin/licence/assign/{licence_name}', [AdminLicenceController::class, 'assigneLicenceStep1'])->name('admin.licence.assign.step1');
+    Route::post('/admin/licence/assign/', [AdminLicenceController::class, 'assigneLicenceStep1Post'])->name('admin.licence.assign.step1Post');
 
     Route::get('/admin/contact', [AdminController::class, 'contact'])->name('admin.contact');
-    Route::post('/admin/contact', [ContactController::class, 'store'])->name('admin.contact.post');
+    Route::post('/admin/contact', [ContactController::class, 'envoiLaDemandeDeContact'])->name('admin.contact.post');
     //Route::post('/admin/contact/store', [ContactController::class, 'store'])->name('admin.contact.store');    
     /*
     Route::get('/admin/invoice/{invoice}', function (Request $request, string $invoiceId) {
@@ -83,6 +87,7 @@ Route::get('/admin/checkcode/{code}', [AdminController::class, 'checkcode'])->na
 // User Validation url from admin creation
 Route::get('/user/validation/{token}', [UserController::class, 'valideUserFromAdminCreatePassword'])->name('user.valideUserFromAdminCreatePassword');  // utilisé pour valider une adresse mail depuis email
 Route::post('/user/validation/store', [UserController::class, 'valideUserFromAdminSavePassword'])->name('user.valideUserFromAdminSavePassword');  // sauve le mot de passe et active le compte
+Route::get('/user/validation/reminder/{token}', [UserController::class, 'valideUserFromReminderEmail'])->name('user.valideUserFromReminderEmail');  // utilisé pour valider une adresse mail depuis email
 // User Validation url from self registration
 Route::get('/user/validation/self', [UserController::class, 'validUserFromSelfRegistration'])->name('user.validUserFromSelfRegistration');  // utilisé pour valider une adresse mail depuis email
 

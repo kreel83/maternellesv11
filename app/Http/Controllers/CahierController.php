@@ -187,9 +187,6 @@ class CahierController extends Controller
 
     public function seepdf($id, $state = 'see') {
 
-
-
-
         $rep = Auth::user()->repertoire;
         $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
            ->join('sections','sections.id','resultats.section_id')
@@ -216,7 +213,7 @@ class CahierController extends Controller
         foreach ($sections as $section) {
             $s[$section['id']] = $section;
         }
-
+        //dd($s);
         $enfant = Enfant::find($id);
         $name = $enfant->prenom.' '.$enfant->nom;
         $n = explode(' ', $name);
@@ -229,6 +226,33 @@ class CahierController extends Controller
         // dd($reussite);
         $reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
 
+        // Extraction des textes correspondant à chaque section
+        $textes = array();
+        $titres = array();
+        $textes = explode('<h2 contenteditable="false">', $reussite);
+        for ($i=1; $i < count($textes); $i++) { 
+            $textes[$i] = '<h2 contenteditable="false">'.$textes[$i];
+            preg_match('/<h2 contenteditable="false">(.*?)<\/h2>/s', $textes[$i], $match);
+            $titres[$i] = $match[1];
+        }
+        $textesParSection = array();
+        foreach ($s as $sec) {
+            $findText = false;
+            for ($i=1; $i < count($titres); $i++) { 
+                if($titres[$i] == $sec['name']) {
+                    $textesParSection[$sec['id']] = str_replace('<h2 contenteditable="false">'.$titres[$i].'</h2>', '', $textes[$i]);
+                    $textesParSection[$sec['id']] = str_replace(chr(10), '<br>', $textesParSection[$sec['id']]);
+                    $findText = true;
+                }
+            }
+            if(!$findText) {
+                $textesParSection[$sec['id']] = '';
+            }
+        }
+        // L'indice 0 contient le commentaire général
+        $textesParSection[0] = $textes[count($textes)-1];
+        //dd($textesParSection);
+
         // css class pour le pdf
         $customClass = array();
         foreach ($resultats as $resultat) {
@@ -240,6 +264,9 @@ class CahierController extends Controller
                 }
             }
         }
+        // header pour commentaire général
+        $class = ".titre0 {color: #ffffff; background-color: grey}";
+        $customClass[] = $class;
         //dd($customClass);
 
 
@@ -250,9 +277,10 @@ class CahierController extends Controller
 
 //dd($resultats);
         if ($state == 'see') {
-            $pdf = PDF::loadView('pdf.reussite2', ['customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
+            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
             // download PDF file with download method
-            return $pdf->stream('test_cahier.pdf');            
+            //return $pdf->stream('test_cahier.pdf');            
+            return $pdf->stream('Cahier de reussites de '.ucfirst($enfant->prenom.'.pdf'));
         } else {
             $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => Auth::user(), 'equipes' => $equipes]);
             $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    

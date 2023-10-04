@@ -178,8 +178,36 @@ class Licence extends Model
      * @param int $user_id
      * @return bool
      */
+    public function assignLicenceToUser($licence_id, $user_id)
+    {
+        // on regarde si une licence existe deja pour cet utilisateur :
+        // 1. dans licences :
+        $licenceFromAdmin = Licence::where('user_id', $user_id)
+                                    ->where('parent_id', Auth::id())
+                                    ->where('actif', 1)
+                                    ->first();
+        //Log::debug($licenceFromAdmin);
+        // 2. dans subscriptions
+        $licenceFromSelf = ModelsSubscription::where('user_id', $user_id)
+                                            ->where('stripe_status', 'active')
+                                            ->first();
+        //Log::debug($licenceFromSelf);
+        
+        if(!$licenceFromAdmin && !$licenceFromSelf) {
+            // pas de licence en cours trouvée pour le user, on assigne la licence
+            Licence::where('id', $licence_id)
+                ->where('parent_id', Auth::id())
+                ->update(['user_id' => $user_id]);
+            return true;
+        }
+
+        return false;
+
+    }
+    /*
     public function assignLicenceToUser(Request $request, $user_id)
     {
+        // depuis subscription.js
         // on regarde si une licence existe deja pour cet utilisateur :
         // 1. dans licences :
         $licenceFromAdmin = Licence::where('user_id', $user_id)
@@ -204,6 +232,7 @@ class Licence extends Model
         return false;
 
     }
+    */
 
     /*
     public function assignLicenceToUser($request, $user_id, $status)
@@ -222,10 +251,11 @@ class Licence extends Model
      * @param [type] $id
      * @return void
      */
-    public function removeLicenceToUser($id)
+    public function removeLicenceToUser($licence_name)
     {
         // get the license
-        $licence = Licence::where('id', $id)->where('parent_id', Auth::id())->first();
+        $licence = Licence::where('name', $licence_name)
+            ->where('parent_id', Auth::id())->first();
         if($licence) {
             // met le champ licence a null dans users
             User::where('id', $licence->user_id)->update(['licence' => null]);
@@ -256,8 +286,9 @@ class Licence extends Model
     public static function listeDesLicencesPourUnAdmin()
     {
         $licences = Licence::select(
-            'licences.produit_id', 'licences.actif', 'licences.id', 'licences.user_id', 'licences.created_at', 
-            'licences.expires_at', 'licences.name as internal_name', 'users.name', 'users.prenom'
+            'licences.produit_id', 'licences.actif as licence_actif', 'licences.id', 'licences.user_id', 'licences.created_at', 
+            'licences.expires_at', 'licences.name as internal_name', 'users.name', 'users.prenom',
+            'users.actif as user_actif'
         )
         ->where("licences.parent_id", Auth::id())
         ->leftjoin("users", "users.id", "=", "licences.user_id")
