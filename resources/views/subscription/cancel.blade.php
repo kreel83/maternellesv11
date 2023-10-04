@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Abonnement', 'menu' => 'resilier'])
+@extends('layouts.mainMenu2', ['titre' => 'Abonnement', 'menu' => 'resilier'])
 
 
 

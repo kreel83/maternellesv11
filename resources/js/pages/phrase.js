@@ -133,7 +133,7 @@ const nouvellePhrase = (quill) => {
         $('#controleNouvellePhrase').toggleClass('d-none d-flex')
         $('#bloc_editor').toggleClass('d-none d-flex')
         $(this).toggleClass('d-none')
-        $('#bloc_2phrases').toggleClass('d-none d-flex')
+        $('#bloc_2phrases').addClass('d-none').removeClass('d-flex')
         $('#saveNouvellePhrase').attr('data-id', 'new')
         quill.setText('');
         quill.enable(true)

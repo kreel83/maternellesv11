@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Mes périodes', 'menu' => 'periode'])
+@extends('layouts.mainMenu2', ['titre' => 'Mes périodes', 'menu' => 'periode'])
 
 
 @section('content')

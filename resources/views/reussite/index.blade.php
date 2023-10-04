@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Ma classe', 'menu' => 'cahier'])
+@extends('layouts.mainMenu2', ['titre' => 'Ma classe', 'menu' => 'cahier'])
 
 @php
     $degrades = App\Models\Enfant::DEGRADE;
@@ -32,7 +32,7 @@
 <div id="page_enfants" class="row d-flex p-5 gx-0 " >
         <form action="{{route('reussite')}}">
                 <div class="form-group my-5 d-flex flex-column">
-                        <div for="ordre">Classement</div>
+                        <div for="ordre">Classement:</div>
                         <select name="ordre" id="ordre" class="custom-select w-25 " onchange="this.form.submit()">
                                 <option value="alpha" {{$ordre == 'alpha' ? 'selected' : null}}>Par ordre alphabétique</option>
                                 <option value="groupe" {{$ordre == 'groupe' ? 'selected' : null}}>Par groupe</option>

@@ -50,7 +50,7 @@
 
 
 
-@extends('layouts.mainMenu', ['titre' => 'Mes fiches', 'menu' => 'lock'])
+@extends('layouts.mainMenu2', ['titre' => 'Mes fiches', 'menu' => 'lock'])
 
 @section('content')
 

@@ -59,6 +59,7 @@ class ItemController extends Controller
                 ->with('fiches', $fiches)
                 ->with('sections',$sections)
                 ->with('enfant', $enfant)
+                ->with('type', 'evaluation')
                 ->with('section', $section);
     }
 

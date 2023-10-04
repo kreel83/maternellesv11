@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu', ['titre' => 'Bienvenue', 'menu' => 'accueil'])
+@extends('layouts.mainMenu2', ['titre' => 'Bienvenue', 'menu' => 'accueil'])
 
 @section('content')
 
@@ -22,13 +22,16 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
 
     <div class="parent">
         <div class="div1 cadre_welcome"> 
-            <div class="titre_welcome">Les anniversaires du mois</div>
+            @php
+                
+            @endphp
+            <div class="titre_welcome">Les anniversaires {{ in_array(substr($moisActuel,0,1), ['o','a']) ? "d'" : 'de '}}{{$moisActuel}}</div>
             @if ($anniversaires->isEmpty())
             <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
                 Aucun anniversaire ce mois ci.
             </div>
             @else
-                <div class="text-center fs-2" style="color: var(--second-color)">{{$moisActuel}}</div>
+
                 <div class="anniversaires1 w-75 d-flex justify-content-between ">
                     <ul class="w-100">
                         @foreach($anniversaires as $enfant)

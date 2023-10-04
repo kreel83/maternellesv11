@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import "./style.scss";
 @import "elements/card_enfant";
 @import "elements/card_home";
 @import "elements/card_item";
@@ -85,6 +86,7 @@ body {
         border: none;
         outline: none;
         padding: 2px 16px;
+        margin: 0 30px
 
         ;
 
@@ -174,7 +176,7 @@ body {
 :root {
     --main-color: #6759ff;
     --back-color: #fbfaff;
-    --second-color: #f1edff;
+    --second-color: #9f96f9;
 
     --vert: #8dc53e;
     --bleu: #16bdff;
