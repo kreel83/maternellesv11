@@ -69,14 +69,6 @@ if (!is_null($enfant->groupe)){
   </div>
     <div class="card-body p-0 mt-2" style="text-align: center">
         <div class="name d-flex justify-content-center align-items-center" style="color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
-          {{-- <span class="me-2 mt-1">
-            @if ($enfant->genre == 'G')
-            <i class="icone_avatar garcon fa-duotone fa-user-tie-hair"></i>
-            @else
-            <i class="icone_avatar fille fa-duotone fa-user-tie-hair-long"></i>
-            @endif
-          </span> --}}
-          
           {{$enfant->prenom}}
           <span style="font-size: 1.8rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 ">{{substr($enfant->nom,0,1)}}.</span>
           </div>
@@ -107,10 +99,13 @@ if (!is_null($enfant->groupe)){
 
   @endif  
   @if ($type == "reussite")
-    <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">
+    <div class="footer p-2 d-flex justify-item-around position-relative"  style="background-color: var(--main-color)">
+        <div class="position-absolute" style="top: 5px; left: 55px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div>
+        <div class="position-absolute" style="top: 5px; left: 127px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div>
+        <div class="position-absolute" style="top: 5px; left: 206px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_last()}}</div>
         
         <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-paper-plane-top"></i></a>
-        <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-file-pdf"></i></a>
+        <a href="enfants/{{$enfant->id}}/cahier/seepdf/see"  ><i class="fa-light fa-file-pdf"></i></a>
         <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-notes"></i></a>
     </div>
   @endif

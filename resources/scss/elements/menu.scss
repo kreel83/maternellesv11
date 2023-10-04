@@ -17,10 +17,12 @@
 
 
 .nav-link:hover, .nav-link.show {
-    background-color: var(--main-color) !important;
+    background-color: var(--second-color) !important;
     color: white !important;
     translate: all 0.5s ease-in-out;;
 }
+
+
 
 .dropdown-menu {
     border: none !important;
@@ -31,7 +33,8 @@
 }
 
 
-.nav-item.active {
+.nav-item.active, .nav-link.active {
     background-color: var(--main-color) !important;
+
     color: white !important;  
 }

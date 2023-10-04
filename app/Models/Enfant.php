@@ -80,6 +80,15 @@ class Enfant extends Model
     }
 
 
+    public function state_reussite_definitif() {
+        $r = Reussite::where('enfant_id', $this->id)->where('definitif', 1)->orderBy('periode','DESC')->first();
+        return $r ? 'P'.$r->periode : null;
+    }
+
+    public function state_reussite_last() {
+        $r = Reussite::where('enfant_id', $this->id)->where('definitif', 0)->orderBy('periode','DESC')->first();
+        return $r ? 'P'.$r->periode : null;
+    }
 
 
     public function lastUser($l = false) {
