@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Mail\UserEmailVerificationFromAdmin;
 use App\Mail\UserLicenceActiveeDepuisAdmin;
+use App\Mail\UserReminderToActivateAccount;
 use App\Models\Ecole;
 use App\Models\Facture;
 use App\Models\FactureLigne;
@@ -227,16 +228,17 @@ class AdminLicenceController extends Controller
                 // Envoi d'un email de vérification
                 $verificationLink = route('user.valideUserFromAdminCreatePassword', ['token' => $token]);
                 //Log::info($verificationLink);
-                Mail::to($email)->send(new UserEmailVerificationFromAdmin($verificationLink));
+                Mail::to($email)->send(new UserEmailVerificationFromAdmin($verificationLink, $user->prenom));
             } else {
                 if($user->actif == 0) {
                     // compte user déjà crée mais non actif
                     // on envoi un email de rappel au user pour qu'il active son compte
-                    Mail::to($email)->send(new UserEmailVerificationFromAdmin($user->validation_key));
+                    $verificationLink = route('user.valideUserFromReminderEmail', ['token' => $user->validation_key]);
+                    Mail::to($email)->send(new UserReminderToActivateAccount($verificationLink, $user->prenom));
                 } else {
                     // compte user déjà crée et actif
                     // on envoi un email au user pour l'informer qu'une licence vient de lui être accordé
-                    Mail::to($email)->send(new UserLicenceActiveeDepuisAdmin());
+                    Mail::to($email)->send(new UserLicenceActiveeDepuisAdmin($user->prenom));
                 }
                 $user->licence = 'admin';
                 $user->save();
@@ -253,8 +255,6 @@ class AdminLicenceController extends Controller
                     'msg' => 'Une licence est déjà active pour cet utilisateur !'
                 ]);
             }
-            //$licence->assignLicenceToUser($request, $newUser->id, $status);
-            
         } else {
             return json_encode([
                 'result' => '0',
@@ -263,25 +263,45 @@ class AdminLicenceController extends Controller
         }  
     }
 
-    public function confirmationRetraitLicence($id)
+    /**
+     * Envoi un email de rappel d'activation a un User qui a une licence admin mais un compte toujours inactif
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function sendReminder($licence_name)
     {
-        $licence = Licence::select('licences.id', 'licences.name as licenceName', 'users.name as nom', 'users.prenom as prenom')
-            ->where('licences.id', $id)
+        $licence = Licence::where([
+            ['name', $licence_name],
+            ['parent_id', Auth::id()]
+        ])->first();
+        if($licence) {
+            $user = User::find($licence->user_id);
+            $verificationLink = route('user.valideUserFromReminderEmail', ['token' => $user->validation_key]);
+            Mail::to($user->email)->send(new UserReminderToActivateAccount($verificationLink, $user->prenom));
+            $reminderSent = true;
+        } else {
+            $reminderSent = false;
+        }
+        return back()->with('reminderSent', $reminderSent);
+    }
+
+    public function confirmationRetraitLicence($licence_name)
+    {
+        $licence = Licence::select('licences.id', 'licences.name as internal_name', 'users.name as nom', 'users.prenom as prenom')
+            ->where('licences.name', $licence_name)
             ->where('licences.parent_id', Auth::id())
             ->leftJoin('users', 'licences.user_id', '=', 'users.id')
             ->first();
-        //$licence = Licence::find($id);
-        //$user = User::find($licence->user_id);
         return view("admin.licence.remove")
             ->with('licence', $licence);
-            //->with('user', $user);
     }
 
     
     public function retraitLicence(Request $request)
     {
         $licence = new Licence;
-        $licence->removeLicenceToUser($request->id);
+        $licence->removeLicenceToUser($request->licence_name);
         return redirect()->route('admin.licence.index');
     }
 
@@ -315,12 +335,105 @@ class AdminLicenceController extends Controller
         }
     }
 
-    public function testinvoice($id)
-    {
-        //$invoices = Auth::user()->invoices();
-        $invoices = Facture::where('id', $id)->first();
-        return view("pdf.facture")
-            ->with('invoices', $invoices);
+    public function assigneLicenceStep1($licence_name) {
+        // Vérification du numéro de licence par rapport à l'url / prévention des modifications
+        $licence = Licence::where([
+            ['name', $licence_name],
+            ['parent_id', Auth::id()]
+        ])->first();
+        if($licence) {
+            return view('admin.licence.assign_step1')
+            ->with('licence', $licence);
+        } else {
+            return redirect()->route('admin.licence.index')
+                ->with('success', false)
+                ->with('msg', 'Licence introuvable');
+        }        
+    }
+
+    public function assigneLicenceStep1Post(Request $request) {
+        
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+        ], [
+            'email.required' => 'Adresse mail obligatoire.',
+            'email.max' => 'Adresse mail limitée à 255 caractères.',
+        ]);
+        
+        $licence = Licence::where([
+            ['name', $request->licence_name],
+            ['parent_id', Auth::id()]
+        ])->first();
+
+        if($licence) {
+
+            $user = User::where('email', $request->email)->first();
+            if(!$user) {
+                // compte utilisateur inexistant, on le crée + envoi d'un email pour vérification
+                // pré-remplissage nom + prénom d'après l'adresse email
+                $prenomNom = Utils::getNameFromEmail($request->email);
+                $token = md5(microtime(TRUE)*100000);
+                $user = User::create([
+                    'prenom' => $prenomNom['prenom'],
+                    'name' => $prenomNom['nom'],
+                    'email' => $request->email,
+                    'ecole_identifiant_de_l_etablissement' => Auth::user()->ecole_identifiant_de_l_etablissement,
+                    'validation_key' => $token,
+                    'licence' => 'admin'
+                ]);
+                // Envoi d'un email de vérification
+                $verificationLink = route('user.valideUserFromAdminCreatePassword', ['token' => $token]);
+                //Log::info($verificationLink);
+                Mail::to($request->email)->send(new UserEmailVerificationFromAdmin($verificationLink, $user->prenom));
+                $newUserAccount = true;
+            } else {
+                $newUserAccount = false;
+            }
+            /*else {
+                $user->licence = 'admin';
+                $user->save();
+                if($user->actif == 0) {
+                    // compte user déjà crée mais non actif
+                    // on envoi un email de rappel au user pour qu'il active son compte
+                    $verificationLink = route('user.valideUserFromReminderEmail', ['token' => $user->validation_key]);
+                    Mail::to($request->email)->send(new UserReminderToActivateAccount($verificationLink, $user->prenom));
+                } else {
+                    // compte user déjà crée et actif
+                    // on envoi un email au user pour l'informer qu'une licence vient de lui être accordé
+                    Mail::to($request->email)->send(new UserLicenceActiveeDepuisAdmin($user->prenom));
+                }
+            }*/
+            //$licence = new Licence;
+            if($licence->assignLicenceToUser($licence->id, $user->id)) {
+                // La licence admin a été crée...
+                $user->licence = 'admin';
+                $user->save();
+                if(!$newUserAccount) {
+                    // on envoi ces emails que si le user existait déjà
+                    if($user->actif == 0) {
+                        // compte user déjà crée mais non actif
+                        // on envoi un email de rappel au user pour qu'il active son compte
+                        $verificationLink = route('user.valideUserFromReminderEmail', ['token' => $user->validation_key]);
+                        Mail::to($request->email)->send(new UserReminderToActivateAccount($verificationLink, $user->prenom));
+                    } else {
+                        // compte user déjà crée et actif
+                        // on envoi un email au user pour l'informer qu'une licence vient de lui être accordé
+                        Mail::to($request->email)->send(new UserLicenceActiveeDepuisAdmin($user->prenom));
+                    }
+                }
+                return redirect()->route('admin.licence.index')
+                    ->with('success', true)
+                    ->with('msg', 'Licence '.$request->licence_name.' assignée avec succès.');
+            } else {
+                return redirect()->route('admin.licence.index')
+                    ->with('success', false)
+                    ->with('msg', 'Une licence est déjà active pour cet utilisateur !');
+            }
+        } else {
+            return redirect()->route('admin.licence.index')
+                ->with('success', false)
+                ->with('msg', 'Licence introuvable');
+        }
     }
     
 }

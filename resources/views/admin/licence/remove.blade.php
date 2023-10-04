@@ -6,19 +6,15 @@
 
 @if($licence)
 
-    <p>Veuillez confirmer le retrait de la licence numéro {{ $licence->licenceName }} 
+    <p>Veuillez confirmer le retrait de la licence N° {{ $licence->internal_name }} 
         pour <strong>{{ $licence->prenom.' '.$licence->nom }}</strong></p>
 
     <form action="{{ route('admin.licence.remove.post') }}" method="post">
     @csrf
-        <input type="hidden" name="id" value="{{ $licence->id }}">
-        <div class="row">
-            <div class="col-auto">
-                <button class="btn btn-primary">Je confirme le retrait</button>
-            </div>
-            <div class="col-auto">
-                <a href="{{ route('admin.licence.index') }}" class="btn btn-default">Annuler</a>
-            </div>
+        <input type="hidden" name="licence_name" value="{{ $licence->internal_name }}">
+        <div class="justify-content-start">
+            <a class="btn btn-outline-secondary me-2" href="{{ route('admin.licence.index') }}" role="button">Annuler</a>
+            <button type="submit" class="btn btn-primary">Je confirme le retrait</button>
         </div>
     </form>
 

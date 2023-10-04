@@ -9,33 +9,29 @@ $degrades = App\Models\Enfant::DEGRADE;
     <head>
         <style>
             
-            
+            /*
             @page :first {
                 margin: 0px;
             }
+            */
             
             
             @page {
-                margin: 60px;
+                margin: 0px;    /*60px;*/
             }
 
             .ma_rgin60 {margin: 60px;}
 
             .firstpage { 
-            m-argin: 0;
-            p-adding: 0;
-            m_ax-height: 100%;
-            w-idth: 100%;
-            b_ackground-image:url({{ public_path('/img/pdf/cover.jpg') }});
+            height: 100%;
+            background-image:url({{ public_path('/img/pdf/cover.jpg') }});
+            background-size: cover;
             }
 
-            #coverpage {
-                margin: 0px;
+            .page {
+                margin: 80px 45px 45px 45px;
             }
 
-            
-
-            
             /*
             header {
                 position: fixed;
@@ -52,19 +48,20 @@ $degrades = App\Models\Enfant::DEGRADE;
 
             header {
                 position: fixed;
-                top: -50px;
-                left: 0px;
-                right: 0px;
+                top: 10px;  /*-60px*/
+                left: 45px;
+                right: 45px;
                 height: 40px;
                 font-size: 14px !important;
                 text-align: center;
                 line-height: 35px;
+                width: 700px;
                 b_order-bottom: 1px solid #000;
             }
 
             footer {
                 position: fixed; 
-                bottom: -60px; 
+                bottom: -15px;   /*-60px; */
                 left: 0px; 
                 right: 0px;
                 height: 50px; 
@@ -272,6 +269,28 @@ $degrades = App\Models\Enfant::DEGRADE;
                 color: grey;
             }
 
+            .position-equipe {
+                position: absolute;
+                top: 750px;
+                left: 250px;
+            }
+            .position-adresse-ecole {
+                position: absolute;
+                top: 1060px;
+                left: 290px;
+            }
+            .position-avatar {
+                position: absolute;
+                top: 480px;
+                left: 400px;
+            }
+            .position-prenom {
+                position: absolute;
+                top: 480px;
+                left: 50%;
+                transforrm: translate(-50%);
+            }
+
         </style>
 
     </head>
@@ -290,11 +309,14 @@ $degrades = App\Models\Enfant::DEGRADE;
 
 <div class="firstpage">
 
+    <!--
     <div class="enfant">Cahier de réussites <br> de <br>
         <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
     </div>
+-->
 
-    <div class="photo_enfant">
+    {{--
+    <div class="photo_enfant position-avatar">
         @if ($enfant->background)
             <div class="m-2 degrade_card_enfant animaux little" data-enfant="{{$enfant->id}}">
                 <img src="{{ public_path('/img/animaux/' . $enfant->photo) }}" width="150">
@@ -303,8 +325,13 @@ $degrades = App\Models\Enfant::DEGRADE;
             <img src="{{ public_path('/img/animaux/' . $enfant->photo) }}" width="150">
         @endif
     </div>
+    --}}
+
+    <div class="enfant position-prenom">
+        <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
+    </div>
     
-    <div class="equipes">
+    <div class="position-equipe">
 
         <div class="equipe" >L'équipe pédagogigue</div>
 
@@ -332,8 +359,8 @@ $degrades = App\Models\Enfant::DEGRADE;
         @endforeach
 
     </div>
-    <hr style="margin: 70px 0 70px 0">
-    <div>
+    <!--<hr style="margin: 70px 0 70px 0">-->
+    <div class="position-adresse-ecole">
         <div class="nom_ecole">{{$user->name_ecole()->nom_etablissement}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_1}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_2}}</div>
@@ -349,9 +376,9 @@ $degrades = App\Models\Enfant::DEGRADE;
 
     {{--<header>Adam</header>--}}
 
-
+    
     <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header>
-
+    <div class="page">
     {{--<div class="section{{$k}}">{{$sections[$k]['name']}}</div>--}}
     {{--<div class="titre titre{{$k}}">{{$sections[$k]['name']}}</div>--}}
 
@@ -376,19 +403,23 @@ $degrades = App\Models\Enfant::DEGRADE;
         @endforeach
         </tr>
     </table>
-    @if (count($section) > 1 )
+    @if (count($section) > 8 )
         <!-- Si + de 8 cartes on change de page pour écrire le commentaire -->
+        </div>
         <div class="page-break"></div>
         <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header>
-        <div style="margin-top:20px;">
+        <div class="page">
+        <!--<div style="margin-top:20px;">-->
             {!! $textesParSection[$k] !!}
-        </div>
+        <!--</div>-->
     @else
         {!! $textesParSection[$k] !!}
     @endif
 
-    <footer class="pagenum"></footer>
+</div>
 
+    <footer class="pagenum"></footer>
+    
 
     <div class="page-break"></div>
 
@@ -400,7 +431,9 @@ $degrades = App\Models\Enfant::DEGRADE;
 {{--{!! $reussite !!}--}}
 
 <!-- Commentaire général -->
+<!--<div style="margin:45px">-->
 <header><div class="titre-header titre0">{{ $enfant->prenom }}</div></header>
+<div class="page">
 {!! $textesParSection[0] !!}
 
 {{--<div class="page-break"></div>--}}
@@ -417,6 +450,7 @@ $degrades = App\Models\Enfant::DEGRADE;
             <td style="width: 210px"><div class="contenu_signature">Les parents</div></td>
         </tr>
     </table>
+</div>
 </div>
 
 </body>

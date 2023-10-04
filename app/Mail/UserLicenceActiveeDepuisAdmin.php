@@ -14,14 +14,15 @@ class UserLicenceActiveeDepuisAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $logo;
+    public $logo, $prenom;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($prenom)
     {
         $this->logo = Utils::getBase64Image('img/deco/les_maternelles.png');
+        $this->prenom = $prenom;
     }
 
     /**

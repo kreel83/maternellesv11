@@ -372,18 +372,10 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'validation_key' => $token,
-            //'licence' => 'self'
         ]);
 
         // Envoi d'un email de vérification
-        //$token = md5($user->id.$validationKey.env('HASH_SECRET'));
-        //$url = route('registration.validation').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
-        //$token = md5(microtime(TRUE)*100000);
-        /*$logoPath = public_path('img/deco/les_maternelles.png');
-        $logo = "data:image/png;base64,".base64_encode(file_get_contents($logoPath));*/
-        //$logo = Utils::getBase64Image('img/deco/les_maternelles.png');
-        //$verificationLink = route('registration.validation', ['token' => $token]);
-        $verificationLink = env('APP_URL').'/register/validation/'.$token;
+        $verificationLink = route('registration.validation', ['token' => $token]);
         if($request->role == 'user') {
             Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
@@ -400,35 +392,7 @@ class RegisteredUserController extends Controller
         // php artisan config:clear
         // php artisan cache:clear
 
-        /*
-        return view('registration.step4')
-            ->with('email', $request->email);
-        */
-
         return redirect()->route('registration.step4')->with('email', $request->email);
-
-        /*
-        return redirect()->route('registration.step4', [
-            'role' => $request->role, 
-            'ecole_id' => $request->ecole_id,
-            'token' => $request->token,
-        ]);
-        */
-
-        /*
-        event(new Registered($user));
-        Auth::login($user);
-        return redirect(RouteServiceProvider::HOME);
-        */
-    }
-
-    public function testemaillogo()
-    {
-        $logoPath = public_path('img/deco/les_maternelles.png');
-        $logo = "data:image/png;base64,".base64_encode(file_get_contents($logoPath));
-        //dd($logo);
-        $url = "";
-        Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($logo, $url, 'test'));
     }
 
     public function registrationStep4()
@@ -453,9 +417,9 @@ class RegisteredUserController extends Controller
     {
         // appelé depuis lien dans email
         $user = User::where('validation_key', $request->token)->first();
-        if(!is_null($user)) {
+        if($user) {
             $user->actif = 1;
-            $user->validation_key = null;
+            //$user->validation_key = null;
             $user->save();
             // Auth::login($user);  // A VOIR si on log automatiquement à la validation
         }

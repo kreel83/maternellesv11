@@ -29,8 +29,17 @@ class DeleteInactiveUsers extends Command
     public function handle()
     {
         Log::info('Cron: delete-inactive-users {id}', ['id' => Carbon::now()->subMinutes(30)->toDateTimeString()]);
-        User::where('actif', 0)
-        ->where('created_at', '<=', Carbon::now()->subMinutes(30)->toDateTimeString())
-        ->delete();
+        // Users et Admin self registration - le mot de passe est renseigné
+        User::where([
+            ['actif', '=', '0'],
+            ['password', '<>', ''],
+            ['created_at', '<=', Carbon::now()->subMinutes(30)->toDateTimeString()]
+        ])->delete();
+        // Users crées par un Admin, délai plus long - le mot de passe est vide
+        User::where([
+            ['actif', '=', '0'],
+            ['password', '=', ''],
+            ['created_at', '<=', Carbon::now()->subDays(7)->toDateTimeString()]
+        ])->delete();
     }
 }

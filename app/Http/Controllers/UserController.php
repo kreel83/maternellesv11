@@ -37,20 +37,17 @@ class UserController extends Controller
         return view("registration.validation")
             ->with('token', $request->token)
             ->with('user', $user);
-        /*
-        $token = md5($request->uID.$request->lID.$request->key.env('HASH_SECRET'));
-        if($token != $request->token) {
-            $user = null;
-        } else {
-            $user = User::where([
-                ['id', $request->uID],
-                ['validation_key' , $request->key]
-                ])->first();
+    }
+
+    public function valideUserFromReminderEmail(Request $request): View
+    {
+        $user = User::where('validation_key', $request->token)->first();
+        if($user) {
+            $user->actif = 1;
+            $user->save();
         }
-        return view("registration.validation")
-            ->with('user', $user)
-            ->with('licence_id', $request->lID);
-        */
+        return view("registration.validation_self")
+            ->with('user', $user);
     }
 
     /**
@@ -139,7 +136,7 @@ class UserController extends Controller
         if (session()->exists('menuAbonnement')) {
             session()->forget('menuAbonnement');
         }
-        $invoices = $user->invoices();
+        //$invoices = $user->invoices();
         switch($user->licence) {
             case 'admin':
                 // Vérifie si une licence est accordée par l'école
@@ -157,7 +154,8 @@ class UserController extends Controller
                     'abonnement' => $abonnement, 
                     'resiliationSubMenu' => false,
                     'resumeSubMenu' => false,
-                    'invoice' => $invoices->isNotEmpty()
+                    'invoice' => true
+                    //'invoice' => $invoices->isNotEmpty()
                 ]]);
                 break;
             case 'self':
@@ -170,14 +168,16 @@ class UserController extends Controller
                         'abonnement' => true, 
                         'resiliationSubMenu' => !$onGracePeriode,
                         'resumeSubMenu' => $cancelled && $onGracePeriode,
-                        'invoice' => $invoices->isNotEmpty()
+                        'invoice' => true
+                        //'invoice' => $invoices->isNotEmpty()
                     ]]);
                 } else {
                     session(['menuAbonnement' => [
                         'abonnement' => false, 
                         'resiliationSubMenu' => false,
                         'resumeSubMenu' => false,
-                        'invoice' => $invoices->isNotEmpty()
+                        'invoice' => true
+                        //'invoice' => $invoices->isNotEmpty()
                     ]]);
                 }
                 break;
@@ -186,7 +186,8 @@ class UserController extends Controller
                     'abonnement' => false, 
                     'resiliationSubMenu' => false,
                     'resumeSubMenu' => false,
-                    'invoice' => $invoices->isNotEmpty()
+                    'invoice' => true
+                    //'invoice' => $invoices->isNotEmpty()
                 ]]);
         }
     }

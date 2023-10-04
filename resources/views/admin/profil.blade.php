@@ -3,11 +3,6 @@
 @section('content')
 
 <div class="row mb-3">
-    <!--
-    <div class="col">
-        <h1>Mon profil</h1>
-    </div>
--->
     <div class="col">
         Identifiant de votre établissement : <strong>{{$user->ecole_id}}</strong><br>
         {{ $adresseEcole }}
@@ -90,8 +85,36 @@
 
 </div>
 
-<div class="mt-4">
-    <a href="{{ route('admin.index') }}">Annuler</a>
+<div class="mt-5">
+
+    <form action="{{ route('admin.sauverLeMotDePasse') }}" method="post">
+    @csrf
+
+        <div class="mt-3 mb-3">
+            <h4>Mot de passe de connexion</h4>
+        </div>
+
+        <!-- password -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Nouveau mot de passe</label>
+            <input placeholder="{{ __('Mot de passe') }}" id="password" class="form-control block mt-0 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" />
+        </div>
+
+        <!-- confirm password -->
+        <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirmez le nouveau mot de passe</label>
+            <input placeholder="{{ __('Confirmer le mot de passe') }}" id="password_confirmation" class="form-control block mt-0 w-full"
+                            type="password"
+                            name="password_confirmation" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-1">Modifier le mot de passe</button>
+
+    </form>
+
 </div>
 
 @endsection

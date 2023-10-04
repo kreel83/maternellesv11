@@ -4,11 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Licence;
 use App\Models\Produit;
-use App\Models\Transaction;
-use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravel\Cashier\Exceptions\IncompletePayment;
@@ -35,33 +31,6 @@ class SubscriptionController extends Controller
         return view('subscription.cardform', compact("intent","product"));
     }
 
-    public function subscribe2(Request $request) {
-        
-        $user = $request->user();
-        $product = Produit::produitAbonnementUser();
-        //$plan = $request->input('plan');
-
-        $paymentIntent = $user->createSetupIntent();
-        dd($paymentIntent);
-        $subscription = $user->newSubscription('default', $product->stripe_product_id)
-            ->create($paymentIntent->id);
-
-        $paymentIntent = PaymentIntent::retrieve($paymentIntent->id);
-
-        if ($paymentIntent->status === 'requires_action') {
-            return redirect()->route('cashier.payment', [
-                'payment_intent_client_secret' => $paymentIntent->client_secret,
-                'success_url' => route('subscription.success'),
-                'cancel_url' => route('subscription.cancel'),
-            ]);
-        }
-
-        // Subscription created successfully
-        return redirect()->route('subscription.success');
-        
-
-    }
-
     /**
      * achat d'un abonnement par un User
      *
@@ -72,7 +41,7 @@ class SubscriptionController extends Controller
     {
         $product = Produit::produitAbonnementUser();
         try {
-            $subscription = $request->user()->newSubscription('default', $product->stripe_product_id)
+            $request->user()->newSubscription('default', $product->stripe_product_id)
                 ->create($request->token, [
                     'email' => $request->user()->email,
                 ], [
@@ -85,30 +54,6 @@ class SubscriptionController extends Controller
                         'amount' => $product->price,
                     ]
                 ]);
-            //dd($subscription);
-            /*
-            'user_id' => Auth::id(),
-            'produit_id' => $product->id,
-            'subscription_id' => $subscription->id,
-            'txid' => $subscription->stripe_id,
-            'method' => 'subscription',
-            'price' => $product->price,
-            'quantity' => 1,
-            'amount' => $product->price,
-            'customer' => Auth::user()->stripe_id,
-            'status' => $subscription->stripe_status,
-            */
-            /*
-            // Déporté dans StripeEventListener.php
-            // enregistrement de la transaction
-            Transaction::ajouterUneTransactionAbonnementUser($request, $subscription, $product);
-            // mise a jour du type de licence dans Users
-            User::where('id', Auth::user()->id)->update(['licence' => 'self']);
-            sleep(3);
-            // mise à jour des variables session pour gérer le menu abonnement
-            UserController::setMenuAbonnement($request);
-            */
-            // mise à jour des variables session pour gérer le menu abonnement
             UserController::setMenuAbonnement();
             return view("subscription.result")
                 ->with('result', 'succeeded');
@@ -125,26 +70,9 @@ class SubscriptionController extends Controller
             return view("subscription.result")
                 ->with('result', $message);
         }
-        /*
-        // retour $subscription
-         #attributes: array:11 [▼
-            "name" => "64c2c7e5da1cb"
-            "stripe_id" => "sub_1NYa1rF73qwd826kfBytARcN"
-            "stripe_status" => "active"
-            "stripe_price" => "price_1NEXRRF73qwd826kHYATzqgl"
-            "quantity" => 1
-            "trial_ends_at" => null
-            "ends_at" => null
-            "user_id" => 47
-            "updated_at" => "2023-07-27 19:39:22"
-            "created_at" => "2023-07-27 19:39:20"
-            "id" => 49
-        ]
-        */
     } 
 
     public function stripeRedirect(Request $request) {
-        // mise à jour des variables session pour gérer le menu abonnement
         UserController::setMenuAbonnement();
         return view("subscription.result")
                 ->with('result', $request->success);

@@ -23,15 +23,7 @@
     @endif
 @endif
 
-{{-- Retour assignation licence --}}
-@if(session()->has('success'))
-    @if(session('success'))
-        <div class="alert alert-success" role="alert">{{ session('msg') }}</div>
-    @else
-        <div class="alert alert-danger" role="alert">{{ session('msg') }}</div>
-    @endif
-@endif
-
+<div id="assigneLicence">
 
     <div class="row mt-3">
 
@@ -55,18 +47,16 @@
 
                 <button class="btn btn-primary mb-3">Renouveler la sélection</button>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="selectAll"></th>
-                            <th>ID</th>
-                            <th>Numéro</th>
-                            <th>Utilisateur</th>
-                            <th>Statut</th>
-                            <th>Expires le</th>
-                        </tr>
-                    </thead>
-                <tbody class="table-group-divider">
+                <table class="table mx-auto">
+                <tr style="background-color:#dddddd">
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>ID</th>
+                    <th>Numéro</th>
+                    <th>Utilisateur</th>
+                    <th>Statut</th>
+                    <th>Expires le</th>
+                </tr>
+
                 @foreach ($licences as $licence)
                 <tr>
                     <td>
@@ -82,16 +72,13 @@
                         @if($licence->licence_actif == 0)
                             {{ $licence->prenom }} {{ $licence->name }}
                         @elseif(is_null($licence->user_id))
-                            {{--
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <input type="email" size="32" id="assign-{{$licence->id}}" class="form-control" placeholder="Mail professionnel de l'enseignant">
                                 <button id="{{$licence->id}}" type="button" class="btn btn-primary assignbtn">OK</button>
                             </div>
                             <div id="msg-{{$licence->id}}" class="mt-1"></div>
-                            --}}
-                            <a href="{{ route('admin.licence.assign.step1', ['licence_name' => $licence->internal_name]) }}">Assigner la licence</a>
                         @else
-                            {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['licence_name'=>$licence->internal_name]) }}" class=".removelnk">Retirer</a> ]
+                            {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['id'=>$licence->id]) }}" class=".removelnk">Retirer</a> ]
                             @if($licence->user_actif == 0)
                             <div class="alert alert-warning mt-2 mb-1" role="alert">
                                 Compte utilisateur inactif. <a href="{{ route('admin.licence.sendreminder', ['licence_name' => $licence->internal_name]) }}" class="alert-link">Renvoyer le lien d'activation</a>
@@ -105,15 +92,41 @@
                     <td>{{ Carbon\Carbon::parse($licence->expires_at)->format('d/m/Y H:i:s')}}</td>
                 </tr>
                 @endforeach
-                </tbody>
                     
                 </table>
 
                 
             </form>
 
+            {{--
+            <p><strong>Statuts :</strong></p>
+            <ul>
+                <li>Active : l'utilisateur a accès à toutes les fonctionnalités de son compte.</li>
+                <li>Attente : un compte a été crée pour l'utilisateur, un mail lui a été envoyé pour confirmation de sa part.</li>
+            </ul>
+            --}}
+
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="retireLicenceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        <div class="modal-body">
+            <p>Modal body text goes here.</p>
+        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 

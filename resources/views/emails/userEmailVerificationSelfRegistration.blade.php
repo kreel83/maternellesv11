@@ -111,8 +111,11 @@
             Nous sommes ravis de vous informer que votre compte Les Maternelles a été créé avec succès.
             <br><br>
             <b>Veuillez confirmer votre adresse email en cliquant <a href="{{ $verificationLink }}">sur ce lien.</a> afin de valider votre compte.</b>
+            <br><br>
+            Si le lien ci-dessus ne fonctionne pas, veuillez copier-coller le lien ci-dessous dans votre navigateur :
+            <br><br>
+            {{ $verificationLink }}
             <br><br><br><br>
-
             L'équipe Les Maternelles se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">

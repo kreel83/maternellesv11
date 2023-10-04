@@ -82,10 +82,12 @@ class User extends Authenticatable
             ]);
 	    });
 
-        static::deleted(function($user) {
-	        //FacadesLog::info('User Deleted Event:'.$user);
+        /*
+        static::deleting(function(User $user) {
+	        FacadesLog::info('User Deleted Event:'.$user);
             Configuration::where('user_id', $user->id)->delete();
 	    });
+        */
 	    
 	}
 

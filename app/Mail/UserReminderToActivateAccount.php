@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class UserEmailVerificationFromAdmin extends Mailable
+class UserReminderToActivateAccount extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class UserEmailVerificationFromAdmin extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($verificationLink, $prenom) 
+    public function __construct($verificationLink, $prenom)
     {
         $this->logo = Utils::getBase64Image('img/deco/les_maternelles.png');
         $this->verificationLink = $verificationLink;
@@ -32,7 +32,7 @@ class UserEmailVerificationFromAdmin extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Vérifiez votre adresse mail',
+            subject: 'Activez votre compte - Les Maternelles',
         );
     }
 
@@ -42,8 +42,7 @@ class UserEmailVerificationFromAdmin extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.userEmailVerificationFromAdmin',
-            //text: 'emails.userEmailVerificationFromAdmin-text'
+            view: 'emails.userReminderToActivateAccount',
         );
     }
 

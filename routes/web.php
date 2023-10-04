@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminLicenceController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VitrineController;
 use App\Models\Facture;
@@ -39,11 +40,20 @@ Route::post('/download/pdf', [PdfController::class, 'telechargementDuCahierParLe
 Route::get('/download/link/{id}', [PdfController::class, 'genereLienVersCahierEnPdf']);
 Route::get('/download/pdf/see/{token}', [PdfController::class, 'telechargeLeCahier'])->name('cahier.download');
 
-Route::get('/testemail', [RegisteredUserController::class, 'testemaillogo']);
-Route::get('/testinvoice/{id}', [AdminLicenceController::class, 'testinvoice']);
-Route::get('/invnumber', function () {
-    Facture::genereNumeroDeFacture();
-});
+
+/*
+|--------------------------------------------------------------------------
+| TEST Routes
+|--------------------------------------------------------------------------
+|
+| Pour faire des tests rapides
+|
+*/
+Route::get('/testemail', [TestController::class, 'testemaillogo']);
+Route::get('/crondeleteuser', [TestController::class, 'crondeleteusers']);
+
+
+
 
 /*
 use App\Http\Controllers\admin\AdminController;

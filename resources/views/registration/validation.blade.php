@@ -31,10 +31,7 @@
     <form method="POST" action="{{ route('user.valideUserFromAdminSavePassword') }}">
         {{ csrf_field() }}
         <input type="hidden" name="token" value="{{ $token }}">
-        {{--
-        <input type="hidden" name="uID" value="{{ $user->id }}">
-        <input type="hidden" name="lID" value="{{ $licence_id }}">
-        --}}
+
         <!-- password -->
         <div class="mb-3">
             <!--<label for="password" class="form-label">{{ __('Mot de passe') }}</label>-->
