@@ -110,15 +110,15 @@
             <br><br>
             Nous sommes ravis de vous informer qu'une licence à votre nom a été activée par votre établissement.
             <br><br>
-            Toutefois, votre compte Les Maternelles n'a toujours pas été activé. 
+            Toutefois, votre compte {{env('APP_NAME')}} n'a toujours pas été activé. 
             <br><br>
             Pour l'activer, veuillez cliquer <a href="{{ $verificationLink }}">sur ce lien</a>.
             <br><br><br><br>
 
-            L'équipe Les Maternelles se tient à votre disposition pour toute question ou assistance supplémentaire.
+            L'équipe {{env('APP_NAME')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">
-                L’équipe Les Maternelles
+                L’équipe {{env('APP_NAME')}}
             </div>
         </p>
     </div>

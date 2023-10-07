@@ -1,10 +1,5 @@
 <?
 use Illuminate\Support\Facades\Auth;
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +34,7 @@ use Illuminate\Support\Facades\Auth;
         </style>
     </head>
 
-
+    <body>
 
     <input type="hidden" id="tuto" value="{{Auth::user()->configuration->tuto ?? null}}">
     <input type="hidden" id="type" value="{{$tuto ?? null}}">
@@ -150,7 +145,8 @@ use Illuminate\Support\Facades\Auth;
     </nav>
 
     </header>
-      <div class='position-relative' >
+    
+      <div class="position-relative">
 
         {{-- <header class='dashboard-toolbar'>
           <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
@@ -227,15 +223,12 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Include jQuery UI from a CDN -->
-
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-
-
-
 @include('components.modals.confirmation')
+
+    </body>
+</html>

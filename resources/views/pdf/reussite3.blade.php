@@ -65,14 +65,20 @@ $degrades = App\Models\Enfant::DEGRADE;
                 left: 0px; 
                 right: 0px;
                 height: 50px; 
-                /*font-size: 14px !important;*/
-                /*color: #000;*/
+                font-size: 12px !important;
+                color: grey;
                 text-align: center;
                 line-height: 30px;
-                border-top: 1px solid #000;
+                /*border-top: 1px solid #000;*/
             }
+            .footerimgleft{
+                position: fixed;
+                left: 0px;
+                bottom: 0px;
+            }
+
             .pagenum:after {
-                content: 'Les Maternelles.com - Page ' + counter(page);
+                content: '{{ env('APP_NAME') }} - Page ' + counter(page);
             }
 
             Body {
@@ -296,24 +302,13 @@ $degrades = App\Models\Enfant::DEGRADE;
     </head>
     <body>
 
-{{--<div style="position: relative">--}}
-    {{--<img src="{{public_path('img/deco/fond.png')}}" alt="" class="fond" width="100%" height="100%" >--}}
-    {{--<div style="position: absolute; top:200px; left:50%; transform: translateX(-120px); font-size: 30px; text-align: center">--}}
-        {{--Cahier de progrès<br>--}}
-        {{--de<br>--}}
-        {{--<h2>{{$enfant->prenom}}</h2>--}}
-
-    {{--</div>--}}
-{{--</div>--}}
-
-
 <div class="firstpage">
 
-    <!--
+    {{--
     <div class="enfant">Cahier de réussites <br> de <br>
         <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
     </div>
--->
+    --}}
 
     {{--
     <div class="photo_enfant position-avatar">
@@ -374,69 +369,73 @@ $degrades = App\Models\Enfant::DEGRADE;
 
 @foreach($resultats as $k => $section)
 
-    {{--<header>Adam</header>--}}
-
-    
     <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header>
+
     <div class="page">
-    {{--<div class="section{{$k}}">{{$sections[$k]['name']}}</div>--}}
-    {{--<div class="titre titre{{$k}}">{{$sections[$k]['name']}}</div>--}}
 
-    {{--<h3>{{$sections[$k]['name']}}</h3>--}}
-    <table style="margin-top:20px; border-spacing: 10px">
-        <tr>
-        @foreach ($section as $key =>$resultat)
-            <td style="width: 160px">
-                <div class="card-pdf" style="border-color: {{$resultat['color']}}">
-                    <div class="haut_carte" style="background-color: {{$resultat['color']}}">
-                        <p class="titre1 " >{{$resultat['name_section']}}</p>
+        @php
+            $carte = 1;
+        @endphp
+        <table style="margin-top:20px; border-spacing: 10px">
+            <tr>
+            @foreach ($section as $key =>$resultat)
+                <td style="width: 160px">
+                    <div class="card-pdf" style="border-color: {{$resultat['color']}}">
+                        <div class="haut_carte" style="background-color: {{$resultat['color']}}">
+                            <p class="titre1 " >{{$resultat['name_section']}}</p>
+                        </div>
+
+                        <img src="{{public_path($resultat['image'])}}" alt="" class="image_card" >
+                        <p class="body">{{$resultat['name']}}</p>
                     </div>
+                </td>
+                @if ($key != 0 && (($key - 3)  % 4 == 0))
+                    </tr>
+                    @if ($carte % 12 ==0)
+                        @php
+                            $carte = 1;
+                        @endphp
+                        </table>
+                        </div>  <!-- class="page"> -->
+                        <div class="page-break"></div>
+                        <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header>
+                        <div class="page">
+                        <table style="margin-top:20px; border-spacing: 10px">
+                    @endif
+                    <tr>
+                @endif
+                @php
+                    $carte++;
+                @endphp
+            @endforeach
+            </tr>
+        </table>
 
-                    <img src="{{public_path($resultat['image'])}}" alt="" class="image_card" >
-                    <p class="body">{{$resultat['name']}}</p>
-                </div>
-            </td>
-            @if ($key != 0 && (($key - 3)  % 4 == 0))
-                </tr>
-                <tr>
-            @endif
-        @endforeach
-        </tr>
-    </table>
-    @if (count($section) > 8 )
-        <!-- Si + de 8 cartes on change de page pour écrire le commentaire -->
-        </div>
-        <div class="page-break"></div>
-        <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header>
-        <div class="page">
-        <!--<div style="margin-top:20px;">-->
+        @if ($carte > 8 )
+            <!-- Si + de 8 cartes sur la page en cours on change de page pour écrire le commentaire -->
+            </div> <!-- class="page"> -->
+            <div class="page-break"></div>
+            <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header>
+            <div class="page">
             {!! $textesParSection[$k] !!}
-        <!--</div>-->
-    @else
-        {!! $textesParSection[$k] !!}
-    @endif
+        @else
+            {!! $textesParSection[$k] !!}
+        @endif
 
-</div>
+    </div> <!-- class="page"> -->
 
     <footer class="pagenum"></footer>
-    
+    {{-- <img src="{{ public_path('/img/pdf/gauche.jpg') }}" class="footerimgleft" height="50"> --}}
 
     <div class="page-break"></div>
 
-
 @endforeach
 
-{{--<img src="{{public_path('img/deco/Commentaires.png')}}" alt="">--}}
-
-{{--{!! $reussite !!}--}}
-
 <!-- Commentaire général -->
-<!--<div style="margin:45px">-->
 <header><div class="titre-header titre0">{{ $enfant->prenom }}</div></header>
 <div class="page">
 {!! $textesParSection[0] !!}
 
-{{--<div class="page-break"></div>--}}
 <div class="signature">
     <div class="equipe">Les signatures</div>
     <table style="border-spacing: 10px; bordert: 1px solid lightgray">
