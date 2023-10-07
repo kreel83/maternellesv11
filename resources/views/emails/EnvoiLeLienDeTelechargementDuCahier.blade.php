@@ -6,6 +6,6 @@
 <p>{{ $url }}</p>
 <p>Si vous avez un problème pour cliquer sur le lien ci-dessus, copier-coller le dans votre navigateur.</p>
 <p>Cordialement,</p>
-<p>Toute l'équipe lesmaternelles.com</p>
+<p>L'équipe {{env('APP_NAME')}}</p>
 </body>
 </html>

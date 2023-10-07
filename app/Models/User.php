@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\UserEvent;
+use App\Mail\SendResetPasswordLink;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ use App\Models\Event;
 use App\Models\Configuration;
 use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Log as FacadesLog;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
 
 
@@ -164,9 +166,12 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token): void
         {
+            /*
             $url = 'https://example.com/reset-password?token='.$token;
-        
             $this->notify(new ResetPassword($this));
+            */
+            $url = route('password.reset', ['token' => $token]);
+            Mail::to($this->email)->send(new SendResetPasswordLink($url, $this->prenom));
         }
 
 

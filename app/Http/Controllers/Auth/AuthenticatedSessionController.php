@@ -21,7 +21,7 @@ class AuthenticatedSessionController extends Controller
     {
         //return view('auth.login');
        
-        return view('auth.login-user1');
+        return view('auth.login-user2');
     }
 
     /**
