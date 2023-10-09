@@ -293,34 +293,50 @@ const savePeriode = () => {
 
 const hover = () => {
 
-        $('.day.actif').on('mouseover', function() {
-            if (periodeActive) {
-                if (periodeActive.start && !periodeActive.complete) {
-                    console.log('cc')
+    $('.day.actif').on('mouseenter', function() {
+        if ($(this).find('.day_event').is(':visible')) {
+            $('.cadre_cal').removeClass('d-none')
+            var position = $(this).position()
+            $('.cadre_cal').css('top',position.top+'px')
+            $('.cadre_cal').css('left',position.left +40+'px')            
+        }
 
-                    periodeActive.end = parseInt($(this).data('all'))
-                    periodeActive.dateend = $(this).data('date')
+    })
 
-                    $('.day.'+periodeActive.periode).removeClass('between end select '+periodeActive.periode)
-                    if (periodeActive.start == periodeActive.end) {
-                        $(this).addClass('select '+periodeActive.periode)
-
-                    }
-                    if (periodeActive.start < periodeActive.end) {
-                        $('.day[data-all="'+periodeActive.start+'"]').removeClass('select')
-                        $('.day[data-all="'+periodeActive.start+'"]').addClass('start '+periodeActive.periode)
-                        for(var i = periodeActive.start+1; i < periodeActive.end; i++ ) {
-                            $('.day[data-all="'+i+'"]').addClass('between '+periodeActive.periode)
-                        }
-                        $(this).addClass('end '+periodeActive.periode)
-                    }
+    $('.day.actif').on('mouseleave', function() {
+        $('.cadre_cal').addClass('d-none')
+    })
 
 
-                }
-            }
+
+        // $('.day.actif').on('mouseover', function() {
+        //     if (periodeActive) {
+        //         if (periodeActive.start && !periodeActive.complete) {
+        //             console.log('cc')
+
+        //             periodeActive.end = parseInt($(this).data('all'))
+        //             periodeActive.dateend = $(this).data('date')
+
+        //             $('.day.'+periodeActive.periode).removeClass('between end select '+periodeActive.periode)
+        //             if (periodeActive.start == periodeActive.end) {
+        //                 $(this).addClass('select '+periodeActive.periode)
+
+        //             }
+        //             if (periodeActive.start < periodeActive.end) {
+        //                 $('.day[data-all="'+periodeActive.start+'"]').removeClass('select')
+        //                 $('.day[data-all="'+periodeActive.start+'"]').addClass('start '+periodeActive.periode)
+        //                 for(var i = periodeActive.start+1; i < periodeActive.end; i++ ) {
+        //                     $('.day[data-all="'+i+'"]').addClass('between '+periodeActive.periode)
+        //                 }
+        //                 $(this).addClass('end '+periodeActive.periode)
+        //             }
 
 
-        })
+        //         }
+        //     }
+
+
+        // })
 
 
 }

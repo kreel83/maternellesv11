@@ -21,7 +21,7 @@
         
         <div class="label_create_fiche">Création de fiche</div>
         @else
-        <h2>modification de la fiche {{$itemactuel->name}}</h2>
+        <h2>modification de la fiche</h2>
         @endif
         <form action="{{route('saveFiche')}}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -133,7 +133,7 @@
                         }
                 </style>
                 <div class="d-flex mb-5 motCleFiche form_mot_cle">
-                    <div data-reg="L'élève " class="item btnCommun me-2">prénom</div>
+                    <small>Rédiger une phrase en utilisant le pronom masculin 'il'.</small>
                     {{-- <div data-reg="@ilelle@" class="item btnCommun me-2">pronom personnel</div>
                     <div data-reg="*e*" class="item btnCommun">feminin / masculin</div> --}}
                     {{-- <table class="table table-bordered table-hover" id="motCleFiche" style="cursor: pointer;">

@@ -249,6 +249,7 @@ const photo_eleve = () => {
         $('#mail1_form').val(mails[0])
         $('#mail2_form').val(mails[1])
         $('#eleve_form').val(data.id)
+        $('#'+data.psmsgs).prop("checked", true)
         if (data.sh == 1 ) {
             $('#sh').attr('checked',true)
         }  else {

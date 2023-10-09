@@ -9,7 +9,7 @@ const tutos = () => {
     var hauteur_window = $(window).height()
     var largeur_window = $(window).width()
     var mi_hauteur_window =$(window).height() / 2 - 100
-    var mi_largeur_window = $(window).width() / 2
+    var mi_largeur_window = $(window).width() / 2 - 100
     
     
     function getPosition() {
@@ -22,39 +22,38 @@ const tutos = () => {
 
     
     const positionModal = (h) => {
-        console.log('objet', position)
-        console.log(position.left, mi_largeur_window, position.top, mi_hauteur_window, $(window).height())
-        console.log(position.left > mi_largeur_window, position.top > mi_hauteur_window)
-        var w_menu = $('.dashboard-nav').width()
+               var w_menu = $('.dashboard-nav').width()
         $('#arrowTuto').removeClass('right_bottom right_top left_bottom left_top middle_left')
 
         if (position.left > mi_largeur_window && position.top > mi_hauteur_window) {
             console.log('cadre1 - droit - bas')
-            var hh = $(window).height()
-            var h_arrow_tuto = $('#arrowTuto').height()
+            var hh = $('.tuto_cadre').height()
+            var h_tuto_window = $('#tuto_window').height()
             var w_cible = $('.tuto_cadre').width() / 2
             
             console.log(h_arrow_tuto, hh)
-            addtop = hh-position.top+h_arrow_tuto;
+            addtop = position.top - h_tuto_window - 60;
             addleft = position.left -200 ;
             $('#arrowTuto').addClass('right_bottom') 
             
 
         } 
         if (position.left > mi_largeur_window && position.top < mi_hauteur_window) {
-            h = $('.tuto_cadre').height()
+            console.log(position.left > mi_largeur_window,'test')
             var hh = $(window).height()
             var ww = $(window).width()
             var h_arrow_tuto = $('#arrowTuto').height()
             var w_cible = $('.tuto_cadre').width() /2
-            var h_cible = $('.tuto_cadre').height()        
+            var h_cible = $('.tuto_cadre').height()  
+            var w_tuto = $('#tuto_window').width()      
             addtop = position.bottom + h_arrow_tuto
-            addleft = position.left - 400 ;
+            addleft = position.left - w_tuto + w_cible;
             $('#arrowTuto').addClass('right_top')                   
             console.log('cadre2 - droit / haut', position.top, h, addtop)
             if (h_cible > mi_hauteur_window) {
+                console.log('tttttoppp')
                 addtop -= h_cible / 2
-                addleft -= 40
+                addleft -= 330
             }
         }
 
@@ -62,17 +61,21 @@ const tutos = () => {
         
         
         if (position.left < mi_largeur_window && position.top > mi_hauteur_window) {
-            console.log('cadre3 - gauche / bas', h)
+            console.log('cadre3 - gauche / bas', h, )
             
+            var h_cible = $('.tuto_cadre').height()
             var h_arrow_tuto = $('#arrowTuto').height()
             var w_cible = $('.tuto_cadre').width()            
-            var h =  $('#tuto_window').height()
-            addtop = position.top - h_arrow_tuto - h - 25;
-            addleft = position.right;
+            var w_cible_half = $('.tuto_cadre').width() / 2  
+            var h_tuto_window = $('#tuto_window').height()
+            var w_tuto_window = $('#tuto_window').width()
+           
+            addtop = position.top - h_tuto_window - 60 ;
+            addleft = position.left + w_cible_half;
             $('#arrowTuto').addClass('left_bottom') 
             if (w_cible > mi_largeur_window) {
                 addtop -= 45;
-                addleft -= w_cible / 2
+                addleft += (w_cible_half - w_tuto_window)
             }
             
 
@@ -84,13 +87,14 @@ const tutos = () => {
 
 
         if (position.left < mi_largeur_window && position.top < mi_hauteur_window) {
-            $('#arrowTuto').addClass('left_top')                  
+            $('#arrowTuto').addClass('left_top')   
+            console.log(position.left,mi_largeur_window)               
             var h_tuto_window = $('#tuto_window').height()
             var h_arrow_tuto = $('#arrowTuto').height()
             var w_cible = $('.tuto_cadre').width() / 2
             var h_cible = $('.tuto_cadre').height()
             var h = $('.tuto_cadre').height()
-            console.log('hhhhhhhhhhhhh', h_arrow_tuto)
+
             addtop = position.bottom + h_arrow_tuto;
             addleft = position.left + w_cible;
             console.log('cadre4 - gauche / haut')      
@@ -145,6 +149,7 @@ const tutos = () => {
             $('#tuto_window .title').text(data.titre)
             $('#tuto_window .texte').html(data.texte)
             h = $('#tuto_window').height();
+
             
             getPosition()
             positionModal(h)
@@ -174,17 +179,16 @@ const tutos = () => {
             $('#tuto_window').remove('d-none')
             $('.'+data[4]).addClass('tuto_cadre')
             $('#tuto_window .texte').html(data[1]) 
+            $('#tuto_window .title').html(data[0]) 
             
-             
-            h = $('#tuto_window').height()
-                getPosition()
-                positionModal(h)               
 
-                $('#tuto_window .title').html(data[0]) 
                 $('#tuto_window').attr('data-etape',data[2])
                 $('#tuto_window').attr('data-total',data[3]) 
                  
+                h = $('#tuto_window').height()
 
+                    getPosition()
+                    positionModal(h)  
                 $('#tuto_window').css('top', addtop+'px')
                 $('#tuto_window').css('left',addleft+'px')
 
@@ -198,6 +202,8 @@ const tutos = () => {
                 if (data[2] == data[3]) {
                     $('#tuto_window .right').addClass('invisible')
                 }
+             
+    
             
             
                          

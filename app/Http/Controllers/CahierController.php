@@ -32,7 +32,7 @@ class CahierController extends Controller
 
     private function format_apercu($resultats, $enfant) {
         $bloc = '';
-        $sections = Section::all()->pluck('id')->toArray();
+        $sections = Section::all()->orderBy('ordre')->pluck('id')->toArray();
         
         $sections[] = 99;
 
@@ -208,7 +208,7 @@ class CahierController extends Controller
 
         $resultats = $resultats->groupBy('section_id')->toArray();
  
-        $sections = Section::all()->toArray();
+        $sections = Section::all()->orderBy('ordre')->toArray();
         $s = array();
         foreach ($sections as $section) {
             $s[$section['id']] = $section;
@@ -331,7 +331,7 @@ class CahierController extends Controller
     public function redoPdf($id) {
         $enfant = Enfant::find($id);
         return view('cahiers.pdfview')
-            ->with('sections', Section::all())
+            ->with('sections', Section::all()->orderBy('ordre'))
             ->with('title', "coucou")
             ->with('section', Section::first())
             ->with('enfant', $enfant) ;
@@ -339,7 +339,7 @@ class CahierController extends Controller
     public function pdfview($id) {
         $enfant = Enfant::find($id);
         return view('cahiers.pdfview')
-            ->with('sections', Section::all())
+            ->with('sections', Section::all()->orderBy('ordre'))
             ->with('title', "coucou")
             ->with('section', Section::first())
             ->with('enfant', $enfant) ;
@@ -530,23 +530,29 @@ class CahierController extends Controller
             return [$item['section_id'] => $item];
         });
 
-        $commentaire = Commentaire::where('user_id', Auth::id())->whereNotIn('id', $exclusion)->get();
+        $commentaire = Commentaire::where(function($query) {
+            $query->where('user_id', Auth::id())->orWhereNull('user_id');
+        })->whereNotIn('id', $exclusion)->get();
+
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
             return [$item['section_id'] => $item];
         });
 
 
+
         $resultats = $enfant->resultats();
         $reussite = Reussite::where('enfant_id',$id)->orderBy('periode', 'DESC')->first();
+
         //dd($resultats);
 
 
-        $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
+        $commentaires = Commentaire::where(function($query) {
+            $query->where('user_id', Auth::id())->orWhereNull('user_id');})->where('section_id', 99)->get();
         $textes = $enfant->cahier($this->periode);
         $r = Reussite::where('enfant_id', $enfant->id)->first();
        
         $textes['carnet'] = $r ? $r->commentaire_general : null;
-        $definitif = ($r) ? $r->definitif : null;
+        
 
         $phrases = Phrase::where('enfant_id', $id)->get();        
         $phrases_selection = $phrases->mapToGroups(function ($item, $key) {
@@ -563,8 +569,9 @@ class CahierController extends Controller
         $s->logo = "99.png";
         $sections->push($s);
 
+        
 
-
+// dd($phrases_selection, $grouped);
         
         
         return view('cahiers.index')
@@ -573,7 +580,6 @@ class CahierController extends Controller
             ->with('enfant',$enfant)
             ->with('commentaires',$commentaires)
             ->with('reussite',$reussite)
-            ->with('definitif',$definitif)
             ->with('isreussite',$r)
             ->with('phrases_selection',$phrases_selection)
             ->with('resultats',$resultats)           
@@ -581,6 +587,7 @@ class CahierController extends Controller
             ->with('section', Section::first())
             ->with('textes', $textes)
             ->with('type', 'reussite')
+            ->with('page', 'reussite')
             ->with('periode', $this->periode)
             ->with('title', $this->title)
             ->with('sections', $sections);
@@ -588,17 +595,28 @@ class CahierController extends Controller
 
     public function get_liste_phrase($section, $enfant) {
         $enfant = Enfant::find($enfant);
+        $phrases = Phrase::where('enfant_id', $enfant->id)->get();
+        $exclusion = $phrases->pluck('commentaire_id');
         if ($section == 99) {
             
-            $phrases = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
+            $phrases = Commentaire::where(function($query) {
+                $query->where('user_id', Auth::id())->orWhereNull('user_id');})
+                ->whereNotIn('id', $exclusion)
+                ->where('section_id', 99)->get();
+
             return view('cahiers.liste_phrases')->with('phrases', $phrases)->with('section', $section)->with('enfant', $enfant)->with('type','carnet'); 
         } else {
             $section = Section::find($section);
-            $commentaire = Commentaire::where('user_id', Auth::id())->get();
+            $commentaire = Commentaire::where(function($query) {
+                $query->where('user_id', Auth::id())->orWhereNull('user_id');})
+                ->whereNotIn('id', $exclusion)
+                ->get();
+                
             $grouped = $commentaire->mapToGroups(function ($item, $key) {
                 return [$item['section_id'] => $item];
             });
-            return view('cahiers.liste_phrases')->with('phrases', $grouped)->with('section', $section)->with('enfant', $enfant)->with('type','sections');            
+
+            return view('cahiers.liste_phrases')->with('phrases', $grouped)->with('section', $section)->with('enfant', $enfant)->with('type','reussite');            
         }
 
     }

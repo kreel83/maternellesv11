@@ -22,7 +22,7 @@
 </style>
 
 
-<div class="container">
+
     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 
         <ol class="breadcrumb">
@@ -35,7 +35,7 @@
             <h4 class="text-center pt-2" style="color: var(--main-color)">Ma classe</h4>
             {{-- <button class="custom_button tab_button" data-tab="new_eleve" data-id="null">Nouvel elève</button>
             <button class="custom_button tab_button" data-tab="import_eleves" id="import_eleve" data-id="null">importer des élèves</button> --}}
-            <div class="liste_eleves ps-4" style="margin-top: 20px;">
+            <div class="liste_eleves p-0" style="margin-top: 20px;">
 
                 @include('eleves.include.tableau_eleves')
                 
@@ -96,9 +96,33 @@
             
                                 <input type="hidden" id="eleve_form" name="id" value="new" />
                                 <input type="hidden" id="genre" name="genre" value="F" />
-                                <div class="d-flex justify-content-center">
-                                    <div class="avatar avatar_form pink me-5 selected" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
-                                    <div class="avatar avatar_form blue" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex flex-column">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psmsgs" id="ps" value="ps" >
+                                            <label class="form-check-label" for="ps">
+                                              PS
+                                            </label>
+                                          </div>
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psmsgs" id="ms" checked  value="ms">
+                                            <label class="form-check-label" for="ms">
+                                              MS
+                                            </label>
+                                          </div>
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psmsgs" id="gs"  value="gs">
+                                            <label class="form-check-label" for="gs">
+                                              GS
+                                            </label>
+                                          </div>
+
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="avatar avatar_form pink me-5 selected" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
+                                        <div class="avatar avatar_form blue" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
+
+                                    </div>
                                     <div class="d-flex flex-column ms-3 mt-2" >
                                         <div class="form-check " style="height: 15px">
                                             <input type="checkbox" name="sh" class="form-check-input" id="sh" value="true">
@@ -166,12 +190,7 @@
 
             </div>
         </div>
-
-
-    
-
-        
-    </div>    
+ 
 </div>
 
 
