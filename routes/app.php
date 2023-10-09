@@ -173,6 +173,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
+    Route::get('/fiches/setClassification', [ficheController::class, 'setClassification'])->name('setClassification');
     
     Route::post('/fiches/choisirSelection', [ficheController::class, 'choisirSelection']);
     Route::get('/fiches/duplicate', [ficheController::class, 'duplicate']);

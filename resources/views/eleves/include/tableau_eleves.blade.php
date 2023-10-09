@@ -109,7 +109,10 @@
                 <div class="fiche_eleve_div d-flex position-relative {{$key == 0 ? "selection_eleve" : null}}"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-donnees="{{json_encode($eleve->toArray())}}">
 
 
-                    <div class="me-2">
+                    <div class="me-2 position-relative">
+                        <div class="position-absolute" style="left: 10px; top: 46px; color: {{$eleve->genre == 'F' ? 'pink' : 'var(--blue)'}}">
+                            {{ $eleve->psmsgs}}
+                        </div>
                         @if ($eleve->genre == 'F')
                         <div class="avatar pink">
                             <i class="fa-thin fa-user-tie-hair-long"></i>
@@ -119,6 +122,7 @@
                             <i class="fa-thin fa-user-tie-hair"></i>
                         </div>
                         @endif
+
 
                     </div>
                     <div class="d-flex flex-column pt-2">

@@ -6,6 +6,7 @@ use App\Models\Fiche;
 use App\Models\Item;
 use App\Models\Personnel;
 use App\Models\Section;
+use App\Models\Classification;
 use App\Models\Image as ImageTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,17 +33,30 @@ class ficheController extends Controller
         $fiches = Auth::user()->mesfiches();
         $universelles = Auth::user()->items();
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
+        $classifications = Classification::all();
+        $classifications = $classifications->groupBy('section_id')->toArray();
+
+        
+
 
         return view('fiches.index')
             ->with('type', $request->type)
             ->with('section', $section)
             ->with('fiches', $fiches)
             ->with('itemactuel', $itemactuel)
+            ->with('classifications', $classifications)
             ->with('universelles', $universelles)
             ->with('user', Auth::id())
             ->with('sections', Section::all());
     }
 
+
+    public function setClassification(Request $request) {
+        $item = Item::find($request->item);
+        $item->classification_id = $request->classe;
+        $item->save();
+        return 'ok';
+    }
     public function orderFiche(Request $request) {   
 
         foreach ($request->pos as $key=>$id) {

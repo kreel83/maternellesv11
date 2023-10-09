@@ -20,6 +20,8 @@ use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\JsonResponse;
 
 
 
@@ -89,7 +91,9 @@ class ParametreController extends Controller
 
 
     private function chatpht($reussite) {            
-        $content = "Féminisez la phrase suivante : ".$reussite;
+
+        $content = "Can you help me feminize the following sentence: ".$reussite;
+
         $result = OpenAI::chat()->create([
             'model' => 'gpt-3.5-turbo',
             'messages' => [
@@ -106,6 +110,7 @@ class ParametreController extends Controller
 
         //Fiche::createDemoFiche(Auth::user());
 
+
         /*
          $coms = Item::all();
          foreach ($coms as $com) {
@@ -118,6 +123,50 @@ class ParametreController extends Controller
          }
          */
          
+
+        // function chat($p): JsonResponse
+        //     {
+        //         $search = $p;
+        
+        //         $data = Http::withHeaders([
+        //                     'Content-Type' => 'application/json',
+        //                     'Authorization' => 'Bearer '.env('OPENAI_API_KEY'),
+        //                 ])
+        //                 ->post("https://api.openai.com/v1/chat/completions", [
+        //                     "model" => "gpt-3.5-turbo",
+        //                     'messages' => [
+        //                         [
+        //                         "role" => "user",
+        //                         "content" => $search
+        //                     ]
+        //                     ],
+        //                     'temperature' => 0.5,
+        //                     "max_tokens" => 200,
+        //                     "top_p" => 1.0,
+        //                     "frequency_penalty" => 0.52,
+        //                     "presence_penalty" => 0.5,
+        //                     "stop" => ["11."],
+        //                 ])
+        //                 ->json();
+        //                 dd($data);
+        
+        //         return response()->json($data['choices'][0]['message'], 200, array(), JSON_PRETTY_PRINT);
+        //     }
+
+
+        //     dd(chat("Can you help me feminize the following sentence: l'élève parle en faisant des phrases simples (sujet, verbe, complément)."));
+
+
+        $coms = Item::all();
+        foreach ($coms as $com) {
+            
+                $com->phrase_feminin = $this->chatpht($com->phrase_masculin);
+                $com->save();
+                break;
+
+        }
+
+
 
 
         // $cs = Item::all();
@@ -292,6 +341,8 @@ class ParametreController extends Controller
     }
 
     public function savePhrases(Request $request) {
+        $user = Auth::user();
+        $section = $request->section;
 
         if ($request->id == 'new') {
             $phrase = new Commentaire();

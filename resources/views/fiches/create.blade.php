@@ -20,7 +20,9 @@
         @if ($new)
             <div class="label_create_fiche">Création de fiche</div>
         @else
-            <h2>modification de la fiche {{$itemactuel->name}}</h2>
+
+        <h2>modification de la fiche</h2>
+
         @endif
 
         <form action="{{route('saveFiche')}}" method="post" enctype="multipart/form-data">
@@ -102,18 +104,41 @@
                         overflow: hidden;
                     }
                 </style>
+
                 @php
                     // dd($itemactuel);
                 @endphp
-                <div class="col-md-4 mt-3 form_image">
+                //<div class="col-md-4 mt-3 form_image">
         
-                    <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
+                 //   <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
                     
-                    <div id="photoEnfantImg">
-                        <input type="hidden" name="imageName" id="imageName">
-                        <i style="cursor: pointer;font-size: 200px; z-index: 4000; color: lightgray" class="fa-light fa-image logoImage {{$new ? null : 'd-none'}}"></i>
-                        <img class="dlImage {{$new ? 'd-none' : null}}"  alt="your image" src="{{asset($itemactuel->image_name)}}" width="250px" height="150" style="cursor: pointer; z-index: 6000" />
-                    </div>
+                 //   <div id="photoEnfantImg">
+                 //       <input type="hidden" name="imageName" id="imageName">
+                 //       <i style="cursor: pointer;font-size: 200px; z-index: 4000; color: lightgray" class="fa-light fa-image logoImage {{$new ? null : 'd-none'}}"></i>
+                 //       <img class="dlImage {{$new ? 'd-none' : null}}"  alt="your image" src="{{asset($itemactuel->image_name)}}" width="250px" height="150" style="cursor: pointer; z-index: 6000" />
+                 //   </div>
+
+                <div class="d-flex mb-5 motCleFiche form_mot_cle">
+                    <small>Rédiger une phrase en utilisant le pronom masculin 'il'.</small>
+                    {{-- <div data-reg="@ilelle@" class="item btnCommun me-2">pronom personnel</div>
+                    <div data-reg="*e*" class="item btnCommun">feminin / masculin</div> --}}
+                    {{-- <table class="table table-bordered table-hover" id="motCleFiche" style="cursor: pointer;">
+                        <tr style="text-align: center">
+                            <td data-reg="@name@">prénom</td>
+                            <td data-reg="@ilelle@">pronom personnel</td>
+                            <td data-reg="*e*">feminin / masculin</td>
+                        </tr>
+            
+                    </table> --}}
+                </div>
+                <div class="d-flex justify-content-between">
+                    @if ($new || $duplicate)
+                        <button type="submit" name="submit" value="save" class="btnAction form_save">Sauvegarder</button>
+                        <button type="submit" name="submit" value="save_and_select" class="btnAction form_save_select">Sauvegarder et sélectionner</button>
+                    @else
+
+                        <button type="submit" name="submit" value="modif" class="btnAction">Modifier</button>
+
 
                 </div>
             </div>

@@ -120,6 +120,7 @@ class EleveController extends Controller
     public function save(Request $request) {
 
    
+
         
 
    
@@ -138,8 +139,8 @@ class EleveController extends Controller
             'prenom.max' => 'Le prénom est limité à 255 caractères.',
             'ddn.required' => 'La date de naissance est obligatoire',
             'mail.*.email' => 'Ce mail semble ne pas etre correct',
-            'mail1.email' => 'Ce mail semble ne pas etre correct !!!',
-            'mail2.email' => 'Ce mail semble ne pas etre correct !!!'
+            'mail1.email' => 'Ce mail semble ne pas etre correct',
+            'mail2.email' => 'Ce mail semble ne pas etre correct'
 
         ];
 

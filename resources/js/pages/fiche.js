@@ -111,6 +111,15 @@ const initFiche = () => {
 }
 
 const choixFiltre = () => {
+
+    $(document).on('click','.coder', function() {
+        var classe = $(this).data('id')
+        var item = $(this).data('fiche')
+        $.get('/app/fiches/setClassification?item='+item+'&classe='+classe, function(data) {
+            console.log(data)
+        })
+
+    })
     $(document).on('change','.filtre_input', function() {
         $(this).next().toggleClass('selected')
         var c = []
