@@ -113,6 +113,7 @@ const initFiche = () => {
 const choixFiltre = () => {
 
     $(document).on('click','.coder', function() {
+        console.log('coucou')
         var classe = $(this).data('id')
         var item = $(this).data('fiche')
         $.get('/app/fiches/setClassification?item='+item+'&classe='+classe, function(data) {
