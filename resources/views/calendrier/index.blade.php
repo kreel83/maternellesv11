@@ -24,6 +24,14 @@
     border: none;
     outline: none;
   }
+
+  .cadre_cal {
+    width: 160px !important;
+    height: 80px;
+    background-color: red;
+    position: absolute;
+    z-index: 8000;
+  }
 </style>
 
 @section('content')
@@ -43,7 +51,8 @@
       </ol>
     </nav>
 
-    <div class="row gx-0">
+    <div class="row gx-0 position-relative">
+      <div class="cadre_cal d-none"></div>
         {{-- <div class="offset-md-2 col-md-2 position-relative">
 
             <div class="bloc_event">

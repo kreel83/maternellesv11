@@ -119,10 +119,10 @@
         <div  data-section="{{ $section->id }}">
             <div id="autresfiches" class="listFiches d-flex justify-content-center">
                 
-                <ul class="fiche_container fiches autresfiches m-0 p-0 justify-content-center" >
+                <ul class="fiche_container fiches autresfiches m-0 p-0 justify-content-center"" >
 
                     @foreach ($universelles as $key=>$fiche)
-                        @include('cards.universelle',['type' => 'autresfiches'])
+                        @include('cards.universelle',['type' => 'autresfiches','classifications' => $classifications])
                     @endforeach
                 </ul>
             </div>
