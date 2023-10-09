@@ -91,7 +91,9 @@ class ParametreController extends Controller
 
 
     private function chatpht($reussite) {            
+
         $content = "Can you help me feminize the following sentence: ".$reussite;
+
         $result = OpenAI::chat()->create([
             'model' => 'gpt-3.5-turbo',
             'messages' => [
@@ -107,6 +109,20 @@ class ParametreController extends Controller
     public function monprofil(Request $request) {
 
         //Fiche::createDemoFiche(Auth::user());
+
+
+        /*
+         $coms = Item::all();
+         foreach ($coms as $com) {
+             if (($com->phrase_feminin == null) && ($com->phrase_masculin != null)) {
+                 //$com->phrase_feminin = $com->phrase_masculin;
+                 $com->phrase_feminin = $this->chatpht($com->phrase_masculin);
+                 $com->save();
+
+             }
+         }
+         */
+         
 
         // function chat($p): JsonResponse
         //     {
@@ -149,7 +165,8 @@ class ParametreController extends Controller
                 break;
 
         }
-        dd('coucou');
+
+
 
 
         // $cs = Item::all();
