@@ -78,14 +78,8 @@ class ficheController extends Controller
             $new = false;
             $fiche->id = null;
         }
-        
-        
-        
 
         $images = ImageTable::all();  
-
-        
-
         return view('fiches.create')
             ->with('sections', Section::all())
             ->with('new', $new)
@@ -94,7 +88,6 @@ class ficheController extends Controller
             ->with('itemactuel', $fiche)
             ->with('menu', $request->duplicate == 'true' ? 'duplicate_item' : 'create_item')
             ->with('section', $section);
-
     }
 
 
@@ -149,7 +142,6 @@ class ficheController extends Controller
 
 
     public function save_fiche(Request $request) {
-
 
         function set_lvl($request) {
             $lvl = '';
@@ -223,20 +215,17 @@ class ficheController extends Controller
             $item->st = $request->st;
             $item->user_id = Auth::id();
             $item->phrase_masculin = $request->phrase;
-            $item->phrase_feminin = chatpht($item->phrase_masculin);
-
-
+            if(trim($request->phrase_feminin) == '') {
+                $item->phrase_feminin = chatpht($item->phrase_masculin);
+            } else {
+                $item->phrase_feminin = $request->phrase_feminin;
+            }
+            //$item->phrase_feminin = chatpht($item->phrase_masculin);
             $item->save();
-
-
         } 
         
         if ($request->submit == 'save') {
-            
-
-
             $item = new Item();
-            
             $item->name = $request->name;
             if ($request->file) {
                 $image = Image::make($request->file);
@@ -260,7 +249,11 @@ class ficheController extends Controller
             $item->st = $request->st;
             $item->user_id = Auth::id();
             $item->phrase_masculin = $request->phrase;
-            $item->phrase_feminin = chatpht($item->phrase_masculin);
+            if(trim($request->phrase_feminin) == '') {
+                $item->phrase_feminin = chatpht($item->phrase_masculin);
+            } else {
+                $item->phrase_feminin = $request->phrase_feminin;
+            }
             $item->save();
 
             if ($request->submit == 'save_and_select') {
@@ -272,8 +265,6 @@ class ficheController extends Controller
                 $fiche->section_id = $request->section_id;
                 $fiche->parent_type = "personnels";
                 $fiche->save();
-
-
             }
         }
 

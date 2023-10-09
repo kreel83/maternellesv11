@@ -165,14 +165,14 @@ class User extends Authenticatable
 
 
     public function sendPasswordResetNotification($token): void
-        {
-            /*
-            $url = 'https://example.com/reset-password?token='.$token;
-            $this->notify(new ResetPassword($this));
-            */
-            $url = route('password.reset', ['token' => $token]);
-            Mail::to($this->email)->send(new SendResetPasswordLink($url, $this->prenom));
-        }
+    {
+        /*
+        $url = 'https://example.com/reset-password?token='.$token;
+        $this->notify(new ResetPassword($this));
+        */
+        $url = route('password.reset', ['token' => $token]);
+        Mail::to($this->email)->send(new SendResetPasswordLink($url, $this->prenom));
+    }
 
 
 
