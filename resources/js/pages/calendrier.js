@@ -294,11 +294,17 @@ const savePeriode = () => {
 const hover = () => {
 
     $('.day.actif').on('mouseenter', function() {
-        if ($(this).find('.day_event').is(':visible')) {
+        var that = $(this)
+        var position = $(this).position()
+        if ($(that).find('.day_event').is(':visible')) {
             $('.cadre_cal').removeClass('d-none')
-            var position = $(this).position()
-            $('.cadre_cal').css('top',position.top+'px')
-            $('.cadre_cal').css('left',position.left +40+'px')            
+            $.get('/app/calendrier/getEvent?date='+$(that).data('js_date'), function(data) {
+                $('.cadre_cal').css('top',position.top+'px')
+                $('.cadre_cal').css('left',position.left +40+'px')  
+                $('.cadre_cal').html(data)
+                                
+            })
+          
         }
 
     })

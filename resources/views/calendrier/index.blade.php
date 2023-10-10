@@ -25,13 +25,7 @@
     outline: none;
   }
 
-  .cadre_cal {
-    width: 160px !important;
-    height: 80px;
-    background-color: red;
-    position: absolute;
-    z-index: 8000;
-  }
+
 </style>
 
 @section('content')
