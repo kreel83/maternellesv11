@@ -114,6 +114,9 @@ const choixFiltre = () => {
 
     $(document).on('click','.coder', function() {
         console.log('coucou')
+        var el = $(this).closest('.actiontemp')
+        $(el).find('.coder').removeClass('active')
+        $(this).addClass('active')
         var classe = $(this).data('id')
         var item = $(this).data('fiche')
         $.get('/app/fiches/setClassification?item='+item+'&classe='+classe, function(data) {

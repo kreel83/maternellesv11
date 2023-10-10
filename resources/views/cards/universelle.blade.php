@@ -18,6 +18,13 @@
         background-color: white;
         color: pink;
         margin: 4px;
+        height: 25px;
+    }
+    .coder:hover {
+
+        background-color: red;
+        color: white;
+
     }
     .coder.active {
 
@@ -62,6 +69,7 @@
                     <div class="p-0 caseLvl" style="background-color: {{ $ms == "0" ? 'transparent' : 'var(--green)' }}">MS</div>
                     <div class="p-0 caseLvl" style="background-color: {{ $gs == "0" ? 'transparent' : 'var(--rouge)' }}">GS</div>
                     <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}" class="btnSelection }} modifier my-1">Modifier</button>
+                    <div>{{$fiche->id}}</div>
         </div>
 
 </li>

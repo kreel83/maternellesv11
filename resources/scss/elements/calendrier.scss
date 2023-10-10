@@ -2,6 +2,18 @@
 body {
     background-color: var(--back-color) !important;
 }
+
+.cadre_cal {
+    width: 160px !important;
+    height: 80px;
+    background-color: white;
+    border: 1px solid grey;
+    padding: 4px;
+    
+    position: absolute;
+    z-index: 8000;
+  }
+
 #calendrier_scolaire .day.actif:hover {
 
      font-size: 18px;
