@@ -19,6 +19,51 @@ use PDF;
 
 class SubscriptionController extends Controller
 {
+    public function index(): View
+    {
+        //$is_abonne = Auth::user()->is_abonne();
+        $invoices = Facture::where('user_id', Auth::id())->count();
+        $licenceType = Auth::user()->licence;
+        $msgIfCanceled = "";
+        switch($licenceType) {
+            case 'admin':
+                $licence = Licence::where([
+                    ['user_id', Auth::user()->id],
+                    ['actif', 1],
+                ])->first();                
+                $status = $licence ? 'actif' : 'expiré';
+                $expirationDate = $licence->expires_at;
+                $onGracePeriode = false;
+                $message = "Licence numéro $licence->name gérée par votre établissement.";
+                break;
+            case 'self':
+                $status = Auth::user()->subscribed('default') ? 'actif' : 'expiré';
+                $expirationDate = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
+                $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
+                $message = "Licence gérée par vous-même.";
+                $cancelled = Auth::user()->subscription('default')->canceled();
+                if($cancelled) {
+                    $msgIfCanceled = "Vous avez résilié votre abonnement.";
+                }
+                break;
+            default:
+                $status = 'inactif';
+                $expirationDate = null;
+                $onGracePeriode = false;
+                $message = "Aucun abonnement en cours.";
+        }
+        return view("subscription.index")
+            //->with('is_abonne', $is_abonne)
+            ->with('licenceType', $licenceType)
+            ->with('invoices', $invoices)
+            ->with('status', $status)
+            ->with('expirationDate', $expirationDate)
+            ->with('onGracePeriode', $onGracePeriode)
+            //->with('cancelled', $cancelled)
+            ->with('message', $message)
+            ->with('msgIfCanceled', $msgIfCanceled);
+    }
+
     /**
      * affiche l'écran de paiement
      *
@@ -54,7 +99,6 @@ class SubscriptionController extends Controller
                         'amount' => $product->price,
                     ]
                 ]);
-            UserController::setMenuAbonnement();
             return view("subscription.result")
                 ->with('result', 'succeeded');
         }
@@ -73,7 +117,6 @@ class SubscriptionController extends Controller
     } 
 
     public function stripeRedirect(Request $request) {
-        UserController::setMenuAbonnement();
         return view("subscription.result")
                 ->with('result', $request->success);
     }
@@ -99,7 +142,6 @@ class SubscriptionController extends Controller
     public function cancelsubscription(Request $request): View
     {
         Auth::user()->subscription('default')->cancel();
-        UserController::setMenuAbonnement();
         $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
         $finsouscription = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
         return view("subscription.cancel")
@@ -129,7 +171,6 @@ class SubscriptionController extends Controller
             Auth::user()->subscription('default')->resume();
             $result = Auth::user()->subscribed('default') ? true : false;
             if($result) {
-                UserController::setMenuAbonnement();
                 Mail::to(Auth::user()->email)->send(new ConfirmationResumeSubscription());
             }
         } else {
@@ -149,43 +190,6 @@ class SubscriptionController extends Controller
         $invoices = Facture::where('user_id', Auth::id())->orderByDesc('id')->get();
         return view("subscription.invoice")
             ->with('invoices', $invoices);
-    }
-
-    /**
-     * Affiche le détail de l'abonnement en cours pour un User
-     *
-     * @return View
-     */
-    public function detailAbonnement(): View
-    {
-        $licenceType = Auth::user()->licence;
-        $msgIfCanceled = "";
-        switch($licenceType) {
-            case 'admin':
-                $licence = Licence::where([
-                    ['user_id', Auth::user()->id],
-                    ['actif', 1],
-                ])->first();                
-                $status = $licence ? 'actif' : 'expiré';
-                $expirationDate = $licence->expires_at;
-                $message = "Licence numéro $licence->name gérée par votre établissement.";
-                break;
-            case 'self':
-                $status = Auth::user()->subscribed('default') ? 'actif' : 'expiré';
-                $expirationDate = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
-                $message = "Licence gérée par vous-même.";
-                //$onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
-                $cancelled = Auth::user()->subscription('default')->canceled();
-                if($cancelled) {
-                    $msgIfCanceled = "Vous avez résilié votre abonnement.";
-                }
-                break;
-        }
-        return view("subscription.detail")
-            ->with('status', $status)
-            ->with('expirationDate', $expirationDate)
-            ->with('message', $message)
-            ->with('msgIfCanceled', $msgIfCanceled);
     }
 
     public function downloadInvoice($number)

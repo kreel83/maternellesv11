@@ -109,7 +109,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
 
 
 Route::middleware(['auth'])->group(function () {
-    //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+    Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
+    
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
@@ -182,6 +183,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/fiches/save_fiche', [ficheController::class, 'save_fiche'])->name('saveFiche');
     Route::post('/fiches/order', [ficheController::class, 'orderFiche'])->name('orderFiche');
     Route::get('/fiches/create', [ficheController::class, 'createFiche'])->name('createFiche');
+    Route::post('/fiches/populate/classification', [ficheController::class, 'populateClassification'])->name('populateClassification');
+    Route::post('/fiches/populate/categorie', [ficheController::class, 'populateCategorie'])->name('populateCategorie');
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
 
@@ -239,7 +242,6 @@ Route::middleware(['auth'])->group(function () {
 
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
-    Route::get('subscribe/detail', [SubscriptionController::class, 'detailAbonnement'])->name("subscribe.detail");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
     Route::get('subscribe/cancel', [SubscriptionController::class, 'cancel'])->name("subscribe.cancel");
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");

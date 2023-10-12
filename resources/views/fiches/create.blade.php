@@ -23,22 +23,133 @@
             <h2>modification de la fiche {{$itemactuel->name}}</h2>
         @endif
 
-        <form action="{{route('saveFiche')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('saveFiche')}}" method="post" id="form1" enctype="multipart/form-data">
         @csrf
             
-            
-            <input type="hidden" name="section_id" value="{{$section->id}}">
+            @if($duplicate)
+                <input type="hidden" name="section_id" value="{{$section->id}}">
+                <input type="hidden" name="categorie_id" value="{{$itemactuel->categorie_id}}">
+                <input type="hidden" name="classification_id" value="{{$classification->id}}">
+            @endif
             <input type="hidden" name="fiche_id" value="{{$new ? null : $itemactuel->id}}">
             <input type="hidden" name="duplicate" value="{{$duplicate}}">
-            {{--                <input type="hidden" name="provenance" value="{{$provenance}}">--}}
+            {{--<input type="hidden" name="provenance" value="{{$provenance}}">--}}
         
             <div>
-                <select class="form-select my-4 form_section" name="section_id" {{ $duplicate ? 'disabled' : null }}>
-                @foreach ($sections as $sec)
-                    <option value="{{$sec->id}}" {{$sec->id == $section->id ? 'selected' : null }}>{{$sec->name}}</option>
-                @endforeach
+                <select class="form-select my-4 form_section" onchange="populateCategorie(this.value);populateClassification(this.value)" id="section_id" name="section_id" {{ $duplicate ? 'disabled' : null }}>
+                    <option value="" selected>Choisissez une section...</option>
+                    @foreach ($sections as $sec)
+                        <option value="{{$sec->id}}" {{isset($section->id) ? $sec->id == $section->id ? 'selected' : null : null}}>{{$sec->name}}</option>
+                    @endforeach
                 </select>
             </div>
+
+            <div>
+                <select class="form-select my-4 form_section" id="categorie_id" name="categorie_id" {{ $duplicate ? 'disabled' : null }}>
+                
+                @if(!$new)
+                    <option value="" selected>Choisissez une activité...</option>
+                    @php
+                        $x = '';
+                    @endphp
+                    @foreach ($categories as $cla)
+                        @if($x != $cla->section1)
+                            <option class="disabledtitle" disabled>{{$cla->section1}}</option>
+                            @php
+                                $x = $cla->section1;
+                            @endphp
+                        @endif
+                        <option value="{{$cla->id}}" {{isset($itemactuel->categorie_id) ? $cla->id == $itemactuel->categorie_id ? 'selected' : null : null}}>{{$cla->section2}}</option>
+                    @endforeach
+                @endif
+                
+                </select>
+            </div>
+            <script>
+                function populateCategorie(value) {
+                    $.ajax({
+                        data: {
+                            '_token': $("input[name='_token']").val(),
+                            'section_id': value
+                        },
+                        url: "{{route('populateCategorie')}}",
+                        dataType:"html",
+                        type: "post",
+                        dataType: 'json',
+                        success: function(data) {                         
+                            var s = '<option value="">Sélectionnez une discipline</option>';
+                            var x = '';
+                            for (var i = 0; i < data.length; i++) {
+                                if(x != data[i]['section1']) {
+                                    s += '<option class="disabledtitle" disabled>' + data[i]['section1'] + '</option>';
+                                    x = data[i]['section1'];
+                                }
+                                s += '<option value="' + data[i]['id'] + '"> - ' + data[i]['section2'] + '</option>';  
+                            }  
+                            $("#categorie_id").html(s);
+                        }
+                    });
+                }
+            </script>
+
+            {{--
+            <div>
+                <select class="form-select my-4 form_section" id="classification_id" name="classification_id" {{ $duplicate ? 'disabled' : null }}>
+                
+                @if(!$new)
+                    <option value="" selected>Choisissez une activité...</option>
+                    @php
+                        $x = '';
+                    @endphp
+                    @foreach ($classifications as $cla)
+                        @if($x != $cla->section2)
+                            <option class="disabledtitle" disabled>{{$cla->section2}}</option>
+                            @php
+                                $x = $cla->section2;
+                            @endphp
+                        @endif
+                        <option value="{{$cla->id}}" {{isset($itemactuel->classification_id) ? $cla->id == $itemactuel->classification_id ? 'selected' : null : null}}>{{$cla->description}}</option>
+                    @endforeach
+                @endif
+                
+                </select>
+            </div>
+            <script>
+                function populateClassification(value) {
+                    $.ajax({
+                        data: {
+                            '_token': $("input[name='_token']").val(),
+                            'section_id': value
+                        },
+                        url: "{{route('populateClassification')}}",
+                        dataType:"html",
+                        type: "post",
+                        dataType: 'json',
+                        success: function(data) {                         
+                            var s = '<option value="">Sélectionnez une activité</option>';
+                            var x = '';
+                            for (var i = 0; i < data.length; i++) {
+                                if(x != data[i]['section2']) {
+                                    s += '<option class="disabledtitle" disabled>' + data[i]['section2'] + '</option>';
+                                    x = data[i]['section2'];
+                                }
+                                //s += '<option value="' + data[i]['id'] + '">' + data[i]['section2'] + '</option>';  
+                                s += '<option value="' + data[i]['id'] + '"> - ' + data[i]['description'] + '</option>';  
+                            }  
+                            $("#classification_id").html(s);
+                        }
+                    });
+                }
+            </script>
+            --}}
+
+            <style>
+
+                .disabledtitle {
+                    font-weight:bold;
+                }
+            </style>
+            
 
             <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre">
                 <div class="form-check">
@@ -125,13 +236,17 @@
             <strong>Il convient de la rédiger au masculin</strong>.<br>
             Exemple générale : Il sait compter jusqu'à 5.
             <div id="editor3" class="mt-2 form_editeur" data-phrase="{{$itemactuel->phrase_masculin}}" data-section="" style="height: 100px; ">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</div>
-            <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3" > {!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</textarea>
+            <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3">{!! ($itemactuel && !$new) ? $itemactuel->phrase : null !!}</textarea>
 
-            <div class="alert alert-info mt-2" role="alert">
+            <div class="alert alert-info mt-2 mb-2" role="alert">
                 La phrase équivalente au féminin va être générée. Toutefois, si vous préférez la saisir 
-                vous-même, <a href="javascript:document.getElementById('phrase_feminin').style.display=''" class="alert-link">cliquez ici</a>.
+                vous-même, <a href="#" onclick="$('.pf').show();$('.pf').focus();" class="alert-link">cliquez ici</a>.
             </div>
-            <textarea class="" id="phrase_feminin" name="phrase_feminin" style="width: 100%" rows="3" > {!! ($itemactuel && !$new) ? $itemactuel->phrase_feminin : null !!}</textarea>
+
+            <div class="pf" style="display:none">
+                <textarea name="phrase_feminin" style="width: 100%" rows="3" placeholder="Ecrivez ici la même phrase au féminin...">{!! ($itemactuel && !$new) ? $itemactuel->phrase_feminin : null !!}</textarea>
+            </div>
+
 
             <style>
                 .item {
@@ -161,7 +276,7 @@
                     <button type="submit" name="submit" value="save" class="btnAction form_save">Sauvegarder</button>
                     <button type="submit" name="submit" value="save_and_select" class="btnAction form_save_select">Sauvegarder et sélectionner</button>
                 @else
-                    <button type="submit" name="submit" value="modif" class="btnAction">Modifier</button>
+                    <button type="submit" name="submit" value="modif" class="btnAction">Sauvegarder</button>
                 @endif
                 <!--<button type="button" class="btnAction">Annuler</button>-->
             </div>

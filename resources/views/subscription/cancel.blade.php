@@ -40,8 +40,8 @@
                         <p class="text-center">Votre abonnement est maintenant résilié.</p>
                         <p class="text-center">Il restera toutefois actif jusqu'au {{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}} et pourra être réactivé à tout moment jusqu'à cette date.</p>        
                         <div class="mt-4 text-center">
-                            <a href="{{ route('depart') }}">Retour</a>
-                        </div> 
+                            <a href="{{ route('subscribe.index') }}">Retour à mon abonnement</a>
+                        </div>
                     @else
                         <p class="text-center">Notre service ne correspond pas à vos attentes ? Aucun problème, vous pouvez résilier votre abonnement en 1 clic.</p>
                         <p class="text-center">Il restera toutefois actif jusqu'au {{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}.</p>
@@ -49,7 +49,7 @@
                             <a href="{{ route('subscribe.cancelsubscription') }}" class="btn btn-primary">Résilier mon abonnement</a>
                         </div>
                         <div class="mt-4 text-center">
-                            <a href="{{ route('depart') }}">Annuler</a>
+                            <a href="{{ route('subscribe.index') }}">Annuler</a>
                         </div> 
                     @endif
   

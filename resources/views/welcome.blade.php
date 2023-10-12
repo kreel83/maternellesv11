@@ -35,22 +35,21 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                 <div class="anniversaires1 w-75 d-flex justify-content-between ">
                     <ul class="w-100">
                         @foreach($anniversaires as $enfant)
-                        @php
-                        $groupe = null;
-                        if (!is_null($enfant->groupe)){                    
-                        $groupe = $lesgroupes[$enfant->groupe];
-                        }
-                    @endphp 
-                        <li class="d-flex justify-content-between align-items-center w-100">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}; width: 27px; height: 27px">
-                                    <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
+                            @php
+                                $groupe = null;
+                                if (!is_null($enfant->groupe)){                    
+                                $groupe = $lesgroupes[$enfant->groupe];
+                                }
+                            @endphp 
+                            <li class="d-flex justify-content-between align-items-center w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{ ($enfant->background) ? $degrades[$enfant->background] : null }}; width: 27px; height: 27px">
+                                        <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
+                                    </div>
+                                    <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>
                                 </div>
-                                <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>
- 
-                            </div>
-                             <div class="ddn">{{Carbon\Carbon::parse($enfant->ddn)->format('d')}}</div>
-                         </li>
+                                <div class="ddn">{{Carbon\Carbon::parse($enfant->ddn)->format('d')}}</div>
+                            </li>
                         @endforeach                        
                     </ul>
 
@@ -109,7 +108,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                         @endphp 
                             <li class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
-                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}; width: 27px; height: 27px">
+                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{ ($enfant->background) ? $degrades[$enfant->background] : null }}; width: 27px; height: 27px">
                                     <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
                                 </div>
                                 <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>
@@ -136,7 +135,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                 @endphp 
                         <li class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
-                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}; width: 27px; height: 27px">
+                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{ ($enfant->background) ? $degrades[$enfant->background] : null }}; width: 27px; height: 27px">
                                     <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
                                 </div>
                                 <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>

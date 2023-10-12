@@ -1,4 +1,4 @@
-@extends('layouts.mainMenu2', ['titre' => 'Détail de mon abonnement', 'menu' => 'detail'])
+@extends('layouts.mainMenu2', ['titre' => 'Détail de mon abonnement', 'menu' => 'abonnement'])
 
 
 @section('content')
@@ -11,6 +11,36 @@
   }
 </style>
 
+<h3>Détail de mon abonnement</h3>
+
+{{--@if (!$is_abonne)--}}
+@if ($status != 'actif')
+    <p>Vous n'avez pas d'abonnement en cours.</p>
+    <p><a href="{{ route('subscribe.cardform') }}">Je souhaite m'abonner au service <i>{{ env('APP_NAME') }}</i></a></p>
+@else
+    <p>Statut : {{ $status }}</p>
+                    
+    @if($status == 'actif')
+        <p>Votre abonnement se terminera le {{ Carbon\Carbon::parse($expirationDate)->format('d/m/Y')}}.</p>
+    @endif
+
+    <p>{{ $message }}</p>
+    <p>{{ $msgIfCanceled }}</p>
+@endif
+
+@if($licenceType == 'self' && $status == 'actif')
+
+  @if($onGracePeriode)
+    <a class="btn btn-primary" href="{{ route('subscribe.resume') }}">Réactiver mon abonnement</a>
+  @else
+    <a class="btn btn-primary" href="{{ route('subscribe.cancel') }}">Résilier mon abonnement</a>
+  @endif
+
+@endif
+
+@if($invoices > 0)
+  <a class="btn btn-primary" href="{{ route('subscribe.invoice') }}">Mes factures</a>
+@endif
 
     
       <div class="d-flex justify-content-center align-items-center h-100">
@@ -55,4 +85,3 @@
 
 
 @endsection
-
