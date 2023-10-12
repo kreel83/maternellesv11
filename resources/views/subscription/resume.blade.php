@@ -15,6 +15,9 @@
                 Une erreur s'est produite. La réactivation de l'abonnement a échouée.
             </div>
         @endif
+        <div class="mt-4 text-center">
+            <a href="{{ route('subscribe.index') }}">Retour à mon abonnement</a>
+        </div>
     @else
         @if($onGracePeriode)
             <p class="text-center">Votre abonnement est résilié et reste néanmoins actif jusqu'au {{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}.</p>
@@ -27,6 +30,9 @@
             </div>
         @else
             <p class="text-center">Votre abonnement ne peut pas être réactivé car il n'a pas été résilié.</p>
+            <div class="mt-4 text-center">
+                <a href="{{ route('subscribe.index') }}">Retour à mon abonnement</a>
+            </div>
         @endif
     @endif
 

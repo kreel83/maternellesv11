@@ -80,7 +80,7 @@ use Illuminate\Support\Facades\Auth;
                  $params = in_array($menu, ['commentaire','periode','eleve','item','create_item','aide','ecole','groupe','avatar']);
                @endphp
                     <div class="nav-item dropdown">
-                      <a href="#" class="nav-link dropdown-toggle {{$params ? 'active' : null}}" data-bs-toggle="dropdown">Parametres</a>
+                      <a href="#" class="nav-link dropdown-toggle {{$params ? 'active' : null}}" data-bs-toggle="dropdown">Paramètres</a>
                       <div class="dropdown-menu">
                  <a href="{{route('phrases')}}" class="nav-item nav-link {{$menu == 'commentaire' ? 'active' : null}}">Paragraphe de commentaires</a>
                  {{-- <a href="{{route('password')}}" class="nav-item nav-link {{$menu == 'mdp' ? 'active' : null}}">Mots de passe</a> --}}
@@ -105,31 +105,15 @@ use Illuminate\Support\Facades\Auth;
                <a href="{{route('changerLeMotDePasse')}}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le mot de passe</a>
              </div>
            </div>
-           @php
-           $params = in_array($menu, ['detail','souscrire','resilier','reactiver','facture']);
-         @endphp
-                    <div class="nav-item dropdown">
-                      <a href="#" class="nav-link dropdown-toggle {{$params ? 'active' : null}}" data-bs-toggle="dropdown">Mon abonnement</a>
-                      <div class="dropdown-menu">
-             @if(session('menuAbonnement')['abonnement'])
-               <a href="{{route('subscribe.detail')}}" class="nav-item nav-link {{$menu == 'detail' ? 'active' : null}}">Voir le détail</a>
-             @else
-               <a href="{{route('subscribe.cardform')}}" class="nav-item nav-link {{$menu == 'souscrire' ? 'active' : null}}">Souscrire un abonnement</a>
-             @endif
-             @if(session('menuAbonnement')['resiliationSubMenu'])
-               <a href="{{route('subscribe.cancel')}}" class="nav-item nav-link {{$menu == 'resilier' ? 'active' : null}}">Résilier mon abonnement</a>
-             @endif
-             @if(session('menuAbonnement')['resumeSubMenu'])
-             <a href="{{route('subscribe.resume')}}" class="nav-item nav-link {{$menu == 'reactiver' ? 'active' : null}}">Réactiver mon abonnement</a>
-             @endif
-             @if(session('menuAbonnement')['invoice'])
-               <a href="{{route('subscribe.invoice')}}" class="nav-item nav-link {{$menu == 'facture' ? 'active' : null}}">Mes factures</a>
-             @endif
-           </div>
-         </div>
-         @php
-         $params = in_array($menu, ['contact']);
-       @endphp
+
+          @php
+            $params = in_array($menu, ['abonnement','detail','souscrire','resilier','reactiver','facture']);
+          @endphp
+          <a href="{{ route('subscribe.index') }}" class="nav-item nav-link  {{$params ? 'active' : null}}">Mon abonnement</a>
+
+          @php
+            $params = in_array($menu, ['contact']);
+          @endphp
          <a class="nav-item nav-link  {{$params ? 'active' : null}}" href="{{route('contact')}}">Nous contacter</a>
          <div class="nav-item-divider"></div>
          <div id="modeTuto" class="{{Auth::user() && Auth::user()->configuration->tuto == 0 ? 'd-none' : null}}">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Fiche;
 use App\Models\Item;
 use App\Models\Personnel;
@@ -73,18 +74,22 @@ class ficheController extends Controller
     public function createFiche(Request $request) {
         
         if ($request->section)      {
-
             $section = Section::find($request->section);
         } else {
-            $section = Section::first();
+            //$section = Section::first();
+            $section = null;
             $request->item = 'new';
         }
 
         if ($request->item == 'new') {
             $fiche = new Item();
+            $categories = Categorie::all();
+            $classifications = Classification::all();
             $new = true;
         } else {
-            $fiche = Item::find($request->item);            
+            $fiche = Item::find($request->item);
+            $categories = Categorie::where('section_id', $fiche->section_id)->get();
+            $classifications = Classification::where('section_id', $fiche->section_id)->get();
             $new = false;
         }
 
@@ -93,7 +98,7 @@ class ficheController extends Controller
             $fiche->id = null;
         }
 
-        $images = ImageTable::all();  
+        $images = ImageTable::all();
         return view('fiches.create')
             ->with('sections', Section::all())
             ->with('new', $new)
@@ -101,7 +106,19 @@ class ficheController extends Controller
             ->with('images', $images)
             ->with('itemactuel', $fiche)
             ->with('menu', $request->duplicate == 'true' ? 'duplicate_item' : 'create_item')
-            ->with('section', $section);
+            ->with('section', $section)
+            ->with('categories', $categories)
+            ->with('classifications', $classifications);
+    }
+
+    public function populateCategorie(Request $request) {
+        $categories = Categorie::where('section_id', $request->section_id)->get();
+        return json_encode($categories);
+    }
+
+    public function populateClassification(Request $request) {
+        $classifications = Classification::where('section_id', $request->section_id)->get();
+        return json_encode($classifications);
     }
 
 
@@ -225,6 +242,8 @@ class ficheController extends Controller
             }
             
             $item->section_id = $request->section_id;
+            $item->categorie_id = $request->categorie_id;
+            //$item->classification_id = $request->classification_id;
             $item->lvl = set_lvl($request);
             $item->st = $request->st;
             $item->user_id = Auth::id();
@@ -259,6 +278,8 @@ class ficheController extends Controller
                 $item->image_id = $request->imageName; 
             }
             $item->section_id = $request->section_id;
+            $item->categorie_id = $request->categorie_id;
+            //$item->classification_id = $request->classification_id;
             $item->lvl = set_lvl($request);
             $item->st = $request->st;
             $item->user_id = Auth::id();
@@ -277,6 +298,8 @@ class ficheController extends Controller
                 $fiche->perso = 1;
                 $fiche->user_id = Auth::id();
                 $fiche->section_id = $request->section_id;
+                $item->categorie_id = $request->categorie_id;
+                //$item->classification_id = $request->classification_id;
                 $fiche->parent_type = "personnels";
                 $fiche->save();
             }
