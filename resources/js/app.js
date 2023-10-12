@@ -207,7 +207,7 @@ setDefaultImg()
 
 
 selection()
-hover()
+hover(Modal)
 choosePeriode()
 savePeriode()
 initCalendar()

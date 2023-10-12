@@ -11,7 +11,9 @@ use App\Models\Fiche;
 use App\Models\Configuration;
 use App\Models\Section;
 use App\Models\Item;
+use App\Models\Event;
 use Carbon\Carbon;
+use App\utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -273,6 +275,8 @@ class ParametreController extends Controller
         }
         // ----
 
+
+
         $date = Carbon::now();
         $mois = $date->locale('fr')->monthName;
         $nb = $date->month;
@@ -283,6 +287,25 @@ class ParametreController extends Controller
                 return ($m[1] == $nb);
             }
         })->values();
+
+
+        $events = Event::where('user_id', Auth::id())->where('date','>=', $date)->get();
+        $academie = Auth::user()->ecole->libelle_academie;
+        $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
+
+        $url = "https://data.education.gouv.fr/api/records/1.0/search/?dataset=fr-en-calendrier-scolaire&q=&facet=description&facet=population&facet=start_date&facet=end_date&facet=location&facet=zones&refine.annee_scolaire=$c&refine.location=$academie";
+        $r = file_get_contents($url);
+        $r = json_decode($r, true);
+
+        $conges = array();
+        foreach ($r['records'] as $ligne)  {
+            $l = array();
+            $l['date'] = $ligne['fields']['start_date'];
+            $l['description'] = $ligne['fields']['description'];
+            $conges[] = $l;
+            
+        }
+        // dd($events, $r['records']);
 
         $resultat = new Resultat;
         $top5ElevesLesPlusAvances = $resultat->top5ElevesLesPlusAvances();
