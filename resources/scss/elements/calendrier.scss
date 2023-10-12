@@ -3,15 +3,21 @@ body {
     background-color: var(--back-color) !important;
 }
 
+.day {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
 .cadre_cal {
-    width: 160px !important;
-    height: 80px;
-    background-color: white;
-    border: 1px solid grey;
-    padding: 4px;
-    
+    width: auto !important;
+    height: auto;
+    background-color: transparent;
+    // border: 1px solid grey;
+    padding: 20px;    
     position: absolute;
     z-index: 8000;
+    font-size: 12px;
   }
 
 #calendrier_scolaire .day.actif:hover {
@@ -162,6 +168,8 @@ body {
             }
             &.select {
                 border-radius: 50%;
+                color: black !important;
+                font-weight: bolder !important;
 
             }
 

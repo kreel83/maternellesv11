@@ -163,6 +163,7 @@ const selection = () => {
     })
 
     $(document).on('click','.editEvent', function() {
+        $('.cadre_cal').addClass('d-none')
         var id = $(this).attr('data-id')
         var date = $(this).attr('data-date_js')
         var name = $(this).attr('data-name')
@@ -190,81 +191,81 @@ const selection = () => {
     })
 
 
-    $('#calendrier_scolaire .day').on('click', function() {
-        console.log('coucou')
-        $('.day').removeClass('selected')
-        $(this).addClass('selected')
-        var date = $(this).data('js_date')
-        console.log(date)
-        $('.bloc_event').empty()
-        $.get('/app/calendar/getEvent/'+date, function(data) {
-            $('.bloc_event').html(data)
-        })
+    // $('#calendrier_scolaire .day').on('click', function() {
+    //     console.log('coucou')
+    //     $('.day').removeClass('selected')
+    //     $(this).addClass('selected')
+    //     var date = $(this).data('js_date')
+    //     console.log(date)
+    //     $('.bloc_event').empty()
+    //     $.get('/app/calendar/getEvent/'+date, function(data) {
+    //         $('.bloc_event').html(data)
+    //     })
 
-        $('#date_event').val(date)
+    //     $('#date_event').val(date)
  
-    })
+    // })
 
-    $('#calendrier_periodes .day').on('click', function() {
+    // $('#calendrier_periodes .day').on('click', function() {
         
         
-        if ($('.day.selected').length == 4 && !$(this).hasClass('selected')) return false;
-        $(this).toggleClass('selected')
-        var date = $(this).data('js_date')
-        console.log(date)
-        var date = [];
-        $('.day.selected').each((index, el) => {
-            date.push($(el).data('js_date'))
-        })
-        console.log(date)
+    //     if ($('.day.selected').length == 4 && !$(this).hasClass('selected')) return false;
+    //     $(this).toggleClass('selected')
+    //     var date = $(this).data('js_date')
+    //     console.log(date)
+    //     var date = [];
+    //     $('.day.selected').each((index, el) => {
+    //         date.push($(el).data('js_date'))
+    //     })
+    //     console.log(date)
         
-        $.get('/app/calendar/getPeriodes/?dates='+JSON.stringify(date), function(data) {
-            $('#formulaire_periodes').html(data)
-            var periodes = $('#periodes').val()
-            $('.day').removeClass('periode1 periode2 periode3')
-            periodes = JSON.parse(periodes);
-            console.log('new periodes : '+periodes.length)
-            for (var i =0; i < periodes.length; i++ ) {
-                var now = new Date(periodes[i]['fin']); 
-                for (var d = new Date(periodes[i]['debut']); d <= now; d.setDate(d.getDate() + 1)) {
-                    var select = new Date(d).getFullYear()+'-'+('0' +(new Date(d).getMonth()+1)).slice(-2)+'-'+('0' + new Date(d).getDate()).slice(-2);
+    //     $.get('/app/calendar/getPeriodes/?dates='+JSON.stringify(date), function(data) {
+    //         $('#formulaire_periodes').html(data)
+    //         var periodes = $('#periodes').val()
+    //         $('.day').removeClass('periode1 periode2 periode3')
+    //         periodes = JSON.parse(periodes);
+    //         console.log('new periodes : '+periodes.length)
+    //         for (var i =0; i < periodes.length; i++ ) {
+    //             var now = new Date(periodes[i]['fin']); 
+    //             for (var d = new Date(periodes[i]['debut']); d <= now; d.setDate(d.getDate() + 1)) {
+    //                 var select = new Date(d).getFullYear()+'-'+('0' +(new Date(d).getMonth()+1)).slice(-2)+'-'+('0' + new Date(d).getDate()).slice(-2);
                     
-                    $('.day[data-js_date="'+select+'"]').addClass(periodes[i]['classe'])
-                    if (d == new Date(periodes[i]['debut'])) {
-                        $('.day[data-js_date="'+select+'"]').addClass('start')
-                    }
-                    if (d == now) {
-                        $('.day[data-js_date="'+select+'"]').addClass('end')
-                    }
-                }            
-            }
-        })
+    //                 $('.day[data-js_date="'+select+'"]').addClass(periodes[i]['classe'])
+    //                 if (d == new Date(periodes[i]['debut'])) {
+    //                     $('.day[data-js_date="'+select+'"]').addClass('start')
+    //                 }
+    //                 if (d == now) {
+    //                     $('.day[data-js_date="'+select+'"]').addClass('end')
+    //                 }
+    //             }            
+    //         }
+    //     })
 
         
  
-    })
+    // })
 
-    $('.day.actif').on('click', function() {
-        if (periodeActive) {
-            console.log(periodeActive)
-            if (periodeActive.complete) {
-                periodeActive.start = null
-                periodeActive.datestart = null
-                periodeActive.end = null
-                periodeActive.dateend = null
-                periodeActive.complete = false
-                $('.day.' + periodeActive.periode).removeClass('start between end select ' + periodeActive.periode)
-            }
-            if (!periodeActive.start) {
-                $(this).addClass('start '+periodeActive.periode)
-                periodeActive.start = parseInt($(this).data('all'))
-                periodeActive.datestart = $(this).data('date')
-            }
-            if ($(this).hasClass('end')) {
-                periodeActive.complete = true
-            }
-        }
-    })
+    // $('.day.actif').on('click', function() {
+    //     if (periodeActive) {
+    //         console.log(periodeActive)
+    //         if (periodeActive.complete) {
+    //             periodeActive.start = null
+    //             periodeActive.datestart = null
+    //             periodeActive.end = null
+    //             periodeActive.dateend = null
+    //             periodeActive.complete = false
+    //             $('.day.' + periodeActive.periode).removeClass('start between end select ' + periodeActive.periode)
+    //         }
+    //         if (!periodeActive.start) {
+    //             $(this).addClass('start '+periodeActive.periode)
+    //             periodeActive.start = parseInt($(this).data('all'))
+    //             periodeActive.datestart = $(this).data('date')
+    //         }
+    //         if ($(this).hasClass('end')) {
+    //             periodeActive.complete = true
+    //         }
+    //     }
+    // })
 
 }
 
@@ -291,26 +292,77 @@ const savePeriode = () => {
     })
 }
 
-const hover = () => {
+const hover = (Modal) => {
+    var c = null
 
-    $('.day.actif').on('mouseenter', function() {
+    $('.day.actif').on('click', function() {
+
         var that = $(this)
-        var position = $(this).position()
-        if ($(that).find('.day_event').is(':visible')) {
-            $('.cadre_cal').removeClass('d-none')
-            $.get('/app/calendrier/getEvent?date='+$(that).data('js_date'), function(data) {
-                $('.cadre_cal').css('top',position.top+'px')
-                $('.cadre_cal').css('left',position.left +40+'px')  
-                $('.cadre_cal').html(data)
-                                
+        console.log(that)
+
+
+            
+                clearInterval(c)
+                var position = $(this).position()
+                if ($(that).find('.day_event').is(':visible')) {
+                    $('.cadre_cal').removeClass('d-none')
+                    $.get('/app/calendar/getEvent?date='+$(that).data('js_date')+'&mode=hover', function(data) {
+                        $('.cadre_cal').css('top',position.top+'px')
+                        $('.cadre_cal').css('left',position.left +40+'px')  
+                        $('.cadre_cal').html(data)
+                                        
+                    })
+                
+                }                 
+      
+
+
+
+    })
+
+
+
+    $('.day.actif').on('click', function() {
+        $('.day.actif').removeClass('selected')
+        $(this).addClass('selected')
+        var date = $(this).data('js_date')
+        $('#date_event').val(date)
+    //     console.log('coucou')
+    //     $('.day').removeClass('selected')
+    //     $(this).addClass('selected')
+    //     var date = $(this).data('js_date')
+    //     console.log(date)
+    //     $('.bloc_event').empty()
+    //     $.get('/app/calendar/getEvent/'+date, function(data) {
+    //         $('.bloc_event').html(data)
+    //     })
+
+    //     $('#date_event').val(date)
+    })
+
+    $('.day.actif').on('dblclick', function() {
+        if ($(this).find('.day_event').is(':visible')) {
+            var view_event_modal = new Modal(document.getElementById('view_event_modal'), {
+                keyboard: false
+            })   
+            $.get('/app/calendar/getEvent?date='+$(this).data('js_date')+'&mode=modal', function(data) {
+                $('#view_event_modal').find('.modal-body').html(data)    
+                view_event_modal.show()       
             })
-          
         }
+
 
     })
 
     $('.day.actif').on('mouseleave', function() {
-        $('.cadre_cal').addClass('d-none')
+        c = setTimeout(() => {
+            if ($('.cadre_cal:hover').length == 0) {
+                console.log($('.cadre_cal:hover').length)
+                $('.cadre_cal').addClass('d-none')
+            }
+            clearTimeout(c)
+            
+        }, 500);
     })
 
 
