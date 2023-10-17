@@ -559,7 +559,7 @@ class CahierController extends Controller
             return [$item['section_id'] => $item];
         });
 
-        $sections = Section::all();
+        $sections = Section::orderBy('ordre')->get();
 
         $s = array();
         $s = new Section();

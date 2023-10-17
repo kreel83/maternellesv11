@@ -6,22 +6,28 @@
 
 
 
-<div class="container-fluid row h-100">
+<div class="container-fluid row h-100 my-auto mt-5">
     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
-            <li class="breadcrumb-item active" aria-current="page">Création des fiches d'activité</li>
+            <li class="breadcrumb-item"><a href="/app/fiches?section={{$itemactuel->section_id}}">Les fiches</a></li>        
+            @if ($new)
+            <li class="breadcrumb-item active" aria-current="page">Création d'une fiche d'activité</li>
+            @elseif ($duplicate)
+            <li class="breadcrumb-item active" aria-current="page">Duplication d'un fiche d'activité</li>
+            @else
+            <li class="breadcrumb-item active" aria-current="page">Modification d'un fiche d'activité</li>
+
+            @endif
           </ol>
         </nav>
-    <div class="col-md-6" style="padding: 0 5rem">
+    <div class="col-xs-12 offset-md-2 col-md-8">
 
 
-        @if ($new)
-            <div class="label_create_fiche">Création de fiche</div>
-        @else
-            <h2>modification de la fiche {{$itemactuel->name}}</h2>
-        @endif
+
+
+
 
         <form action="{{route('saveFiche')}}" method="post" id="form1" enctype="multipart/form-data">
         @csrf
@@ -29,14 +35,15 @@
             @if($duplicate)
                 <input type="hidden" name="section_id" value="{{$section->id}}">
                 <input type="hidden" name="categorie_id" value="{{$itemactuel->categorie_id}}">
-                <input type="hidden" name="classification_id" value="{{$classification->id}}">
+                {{-- <input type="hidden" name="classification_id" value="{{$classification->id}}"> --}}
             @endif
             <input type="hidden" name="fiche_id" value="{{$new ? null : $itemactuel->id}}">
             <input type="hidden" name="duplicate" value="{{$duplicate}}">
             {{--<input type="hidden" name="provenance" value="{{$provenance}}">--}}
         
-            <div>
-                <select class="form-select my-4 form_section" onchange="populateCategorie(this.value);populateClassification(this.value)" id="section_id" name="section_id" {{ $duplicate ? 'disabled' : null }}>
+            <div class="form-group">
+                <label for="">Domaines</label>
+                <select class="form-select my-4 form_section"  id="section_id" name="section_id" {{ $duplicate ? 'disabled' : null }}>
                     <option value="" selected>Choisissez une section...</option>
                     @foreach ($sections as $sec)
                         <option value="{{$sec->id}}" {{isset($section->id) ? $sec->id == $section->id ? 'selected' : null : null}}>{{$sec->name}}</option>
@@ -44,8 +51,14 @@
                 </select>
             </div>
 
+
+
             <div>
-                <select class="form-select my-4 form_section" id="categorie_id" name="categorie_id" {{ $duplicate ? 'disabled' : null }}>
+                <div class="form-group">
+                    <label for="">Activités</label>
+                    <select class="form-select my-4 form_section" id="categorie_id" name="categorie_id" {{ $duplicate ? 'disabled' : null }}>
+
+                </div>
                 
                 @if(!$new)
                     <option value="" selected>Choisissez une activité...</option>
@@ -65,83 +78,9 @@
                 
                 </select>
             </div>
-            <script>
-                function populateCategorie(value) {
-                    $.ajax({
-                        data: {
-                            '_token': $("input[name='_token']").val(),
-                            'section_id': value
-                        },
-                        url: "{{route('populateCategorie')}}",
-                        dataType:"html",
-                        type: "post",
-                        dataType: 'json',
-                        success: function(data) {                         
-                            var s = '<option value="">Sélectionnez une discipline</option>';
-                            var x = '';
-                            for (var i = 0; i < data.length; i++) {
-                                if(x != data[i]['section1']) {
-                                    s += '<option class="disabledtitle" disabled>' + data[i]['section1'] + '</option>';
-                                    x = data[i]['section1'];
-                                }
-                                s += '<option value="' + data[i]['id'] + '"> - ' + data[i]['section2'] + '</option>';  
-                            }  
-                            $("#categorie_id").html(s);
-                        }
-                    });
-                }
-            </script>
 
-            {{--
-            <div>
-                <select class="form-select my-4 form_section" id="classification_id" name="classification_id" {{ $duplicate ? 'disabled' : null }}>
-                
-                @if(!$new)
-                    <option value="" selected>Choisissez une activité...</option>
-                    @php
-                        $x = '';
-                    @endphp
-                    @foreach ($classifications as $cla)
-                        @if($x != $cla->section2)
-                            <option class="disabledtitle" disabled>{{$cla->section2}}</option>
-                            @php
-                                $x = $cla->section2;
-                            @endphp
-                        @endif
-                        <option value="{{$cla->id}}" {{isset($itemactuel->classification_id) ? $cla->id == $itemactuel->classification_id ? 'selected' : null : null}}>{{$cla->description}}</option>
-                    @endforeach
-                @endif
-                
-                </select>
-            </div>
-            <script>
-                function populateClassification(value) {
-                    $.ajax({
-                        data: {
-                            '_token': $("input[name='_token']").val(),
-                            'section_id': value
-                        },
-                        url: "{{route('populateClassification')}}",
-                        dataType:"html",
-                        type: "post",
-                        dataType: 'json',
-                        success: function(data) {                         
-                            var s = '<option value="">Sélectionnez une activité</option>';
-                            var x = '';
-                            for (var i = 0; i < data.length; i++) {
-                                if(x != data[i]['section2']) {
-                                    s += '<option class="disabledtitle" disabled>' + data[i]['section2'] + '</option>';
-                                    x = data[i]['section2'];
-                                }
-                                //s += '<option value="' + data[i]['id'] + '">' + data[i]['section2'] + '</option>';  
-                                s += '<option value="' + data[i]['id'] + '"> - ' + data[i]['description'] + '</option>';  
-                            }  
-                            $("#classification_id").html(s);
-                        }
-                    });
-                }
-            </script>
-            --}}
+
+
 
             <style>
 
@@ -151,49 +90,53 @@
             </style>
             
 
-            <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" name="ps" {{($itemactuel  && substr($itemactuel->lvl,0,1) == '1') ? 'checked' : null}}>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        petite section
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" name="ms"{{($itemactuel  && substr($itemactuel->lvl,1,1) == '1') ? 'checked' : null}} >
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Moyenne section
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" name="gs" {{($itemactuel  && substr($itemactuel->lvl,2,1) == '1') ? 'checked' : null}}>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Grande section
-                    </label>
-                </div>
+            <div class="form-group">
+                <label for="">section</label>
+                <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" name="ps" {{($itemactuel  && substr($itemactuel->lvl,0,1) == '1') ? 'checked' : null}}>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            petite section
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" name="ms"{{($itemactuel  && substr($itemactuel->lvl,1,1) == '1') ? 'checked' : null}} >
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Moyenne section
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" name="gs" {{($itemactuel  && substr($itemactuel->lvl,2,1) == '1') ? 'checked' : null}}>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Grande section
+                        </label>
+                    </div>
+                </div>                
             </div>
 
+
             <div class="col-md-12">
-                <div class="col-md-8">
+              
                     {{--@php--}}
                     {{--dd($fiche);--}}
                     {{--@endphp--}}
         
-                    <div class="d-flex flex-column">
-                        <div class="field field_v1 mt-3 form_titre">
-                            <label for="titre" class="ha-screen-reader">Titre</label>
+                    <div class="d-flex flex-column mb-4">
+                        <div class="field field_v1 mt-3 form_titre form-group">
+
                             <input id="titre" class="field__input" placeholder="" name="name" value="{{$itemactuel ? $itemactuel->name : null}}">
                             <span class="field__label-wrap" aria-hidden="true">
                             <span class="field__label">Titre</span>
                             </span>
                         </div>
-                        <div class="field field_v1 mt-3 form_sous_titre">
+                        {{-- <div class="field field_v1 mt-3 form_sous_titre">
                             <label for="st" class="ha-screen-reader">Sous-titre</label>
                             <input id="st" class="field__input" placeholder="" name="st" value="{{$itemactuel ? $itemactuel->st : null}}">
                             <span class="field__label-wrap" aria-hidden="true">
                             <span class="field__label">Sous-titre</span>
                             </span>
-                        </div>                            
-                    </div>
+                        </div>                             --}}
+                 
 
                     {{-- <div class="form-group">
                         <label for="">Titre</label>
@@ -216,17 +159,26 @@
                 @php
                     // dd($itemactuel);
                 @endphp
-                <div class="col-md-4 mt-3 form_image">
-        
-                    <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
-                    
-                    <div id="photoEnfantImg">
-                        <input type="hidden" name="imageName" id="imageName">
-                        <i style="cursor: pointer;font-size: 200px; z-index: 4000; color: lightgray" class="fa-light fa-image logoImage {{$new ? null : 'd-none'}}"></i>
-                        <img class="dlImage {{$new ? 'd-none' : null}}"  alt="your image" src="{{asset($itemactuel->image_name)}}" width="250px" height="150" style="cursor: pointer; z-index: 6000" />
-                    </div>
+                <div class="row mb-5">
+                    <div class="col-md-8 mt-3 form_image">
+                        <label for="">Illustation</label>
+                        <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
+                        
+                        <div id="photoEnfantImg">
+                            <input type="hidden" name="imageName" id="imageName" value="{{$itemactuel->image_id}}">
+                            <i style="cursor: pointer;font-size: 200px; z-index: 4000; color: lightgray" class="fa-light fa-image logoImage {{$new ? null : 'd-none'}}"></i>
+                            <img class="dlImage {{$new ? 'd-none' : null}}"  alt="your image" src="{{asset($itemactuel->image_name)}}" width="250px" height="150" style="cursor: pointer; z-index: 6000" />
+                        </div>
 
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#biblioModal">
+                            bibliotheque d'image
+                          </button>
+                    </div>
+                   
                 </div>
+
             </div>
 
             {{-- @php
@@ -283,19 +235,40 @@
               
         </form>
             
-        </div>
+    </div>
 
-        <div class="col-md-6 h-100">
-            <div class="d-flex flex-wrap" style="overflow-y: auto; background-color: #7769FE;">
-                @foreach ($images as $image)
-                    <div class="selectImage" data-id="{{$image->id}}" data-image="{{$image->name}}" >
-                        <img src="{{asset('img/items/'.$image->name)}}" class="img-fluid" > <!-- width="100%" -->
-                    </div>
-                @endforeach
-            </div>
-        </div>
+    <style>
+        #biblio_container {
+            height: 100vh;
+            overflow: hidden;
+            overflow-y: auto; 
+        }
+    </style>
+
+
 
     </div>
+</div>
+
+    <div class="modal fade" id="biblioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" style="top: 70px">
+    <div class="modal-content" style="height: 600px">
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="title"></h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex flex-wrap" style="overflow: hidden; overflow-y: auto">
+        @foreach ($images as $image)
+        <div class="selectImage" data-id="{{$image->id}}" data-image="{{$image->name}}" >
+            <img src="{{asset('img/items/'.$image->name)}}" class="img-fluid" > <!-- width="100%" -->
+        </div>
+        @endforeach
+      </div>
+
+    </div>
+  </div>
 </div>
 
 

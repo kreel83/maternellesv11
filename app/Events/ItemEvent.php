@@ -32,7 +32,8 @@ class ItemEvent
             } else {
                 $item->image_name = '';
 
-            }            
+            }   
+              
         }
 
         

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Models\Fiche;
 use App\Models\Item;
+use App\Models\Resultat;
 use App\Models\Personnel;
 use App\Models\Section;
 use App\Models\Classification;
@@ -36,19 +37,24 @@ class ficheController extends Controller
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
         $classifications = Classification::all();
         $classifications = $classifications->groupBy('section_id')->toArray();
+        $categories = Categorie::where('section_id', $section->id)->get();
+        $categories = $categories->groupBy('section1');
+
 
         
 
+  
 
         return view('fiches.index')
             ->with('type', $request->type)
+            ->with('categories', $categories)
             ->with('section', $section)
             ->with('fiches', $fiches)
             ->with('itemactuel', $itemactuel)
             ->with('classifications', $classifications)
             ->with('universelles', $universelles)
             ->with('user', Auth::id())
-            ->with('sections', Section::all());
+            ->with('sections', Section::orderBy('ordre')->get());
     }
 
 
@@ -111,9 +117,19 @@ class ficheController extends Controller
             ->with('classifications', $classifications);
     }
 
+    public function deselectionne() {
+        Fiche::where('user_id', Auth::id())->delete();
+        Resultat::where('user_id', Auth::id())->delete();
+        return 'ok';
+    }
+
     public function populateCategorie(Request $request) {
         $categories = Categorie::where('section_id', $request->section_id)->get();
-        return json_encode($categories);
+        $categories = $categories->groupBy('section1');
+       
+        
+        return view('fiches.include.categories')->with('categories', $categories);
+        
     }
 
     public function populateClassification(Request $request) {
@@ -233,10 +249,8 @@ class ficheController extends Controller
                 $new->name = $filename;
                 $new->save();
                 $item->image_id = $new->id;
-            } 
-            if ($request->imageName) {
-                $item->image_id = $request->imageName; 
-            }
+            }  
+
             if ($request->imageName) {
                 $item->image_id = $request->imageName; 
             }
@@ -300,7 +314,6 @@ class ficheController extends Controller
                 $fiche->section_id = $request->section_id;
                 $item->categorie_id = $request->categorie_id;
                 //$item->classification_id = $request->classification_id;
-                $fiche->parent_type = "personnels";
                 $fiche->save();
             }
         }
@@ -308,51 +321,9 @@ class ficheController extends Controller
 
 
 
-
-
-
-
-
-        //$r = $request->except(['_token','ps','fichems','gs', 'file', 'fiche_id', 'personnel_id' ]);
-
-        //$name_file = uniqid().'.jpg';
-        //$rep = Auth::user()->repertoire;
-        // $last_id = ($request->personnel_id) ? $request->personnel_id : $this->set_last_id();
-
-
-//        $r['lvl'] = set_lvl($request);
-//        if ($request->personnel_id) {
-//            $p = Personnel::find($request->personnel_id);
-//            $r['image'] = $p->image;
-//        } else {
-//            $r['image'] = null;
-//        }
-//        if ($request->file) $r['image'] = 'storage/'.$rep.'/personnels/'.$name_file;
-//        $r['id'] = $last_id;
-//        $r['status'] = Auth::id();
-//
-//        $path = storage_path($rep.'/personnels');
-//        $personel = ($request->fiche_id) ? Personnel::find($request->personnel_id) : new Personnel();
-//        $personel->updateOrCreate(['id' => $r['id']], $r);
-//        $fiche = Fiche::where('user_id', Auth::id())->where('section_id',$request->section)->orderBy('order', 'DESC')->first();
-//        $order =  ($fiche) ? $fiche->order + 1 : 1;
-//
-//        $search = Fiche::where('item_id', $request->personnel_id)->where('user_id', Auth::id())->first();
-//
-//        if (!$search) {
-//            $fiche = new Fiche();
-//            $fiche->parent_type = 'personnels';
-//            $fiche->item_id = $last_id;
-//            $fiche->order = $order;
-//            $fiche->user_id = Auth::id();
-//            $fiche->section_id = $request->section_id;
-//            $fiche->save();
-//        }
-
-
-        $r = new Request();
-        $r->replace(['section' => $request->section_id]);
-        return $this->index($r);
+        session()->flash('message', 'La fiche a bien été enregistrée'); 
+        session()->flash('alert-class', 'alert-success'); 
+        return redirect()->back()->withInput();
         
         
 
