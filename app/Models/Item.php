@@ -34,6 +34,13 @@ class Item extends Model
         return $this->hasMany('App\Models\Section','id','section_id')->first();
     }
 
+    public function categorie() { 
+        // $c = Categorie::find($this->categorie_id);
+        // dd($c, $this);
+        // return $c ? $c->section_2 : null;
+        return $this->belongsTo('App\Models\Categorie');
+    }
+
     public function image() {
         return $this->belongsTo('App\Models\Image');
     }

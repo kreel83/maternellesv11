@@ -1,3 +1,5 @@
+import { Modal } from 'bootstrap'
+
 const selectSectionFiche = (quill) => {
     $(document).on('click','.selectSectionFiche', function() {
         $('.selectSectionFiche').removeClass('selected')
@@ -8,6 +10,24 @@ const selectSectionFiche = (quill) => {
         $('.card_fiche').addClass('d-none')
         $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
         $('#SectionName').addClass('big')
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+        });
+        $.ajax({
+            data: {
+                'section_id': id
+            },
+            url: "/app/fiches/populate/categorie",
+                dataType:"html",
+            type: "post",
+           
+            success: function(data) {   
+                console.log(data)                      
+                data = '<option value="null">Toutes les fiches</option>'+data;
+                $("#categories").html(data);
+            }
+        })  
 
     })
     $(document).on('mouseenter','.selectSectionFiche', function() {
@@ -37,6 +57,10 @@ const selectFiche = () => {
         })
     })
 
+    $(document).on('click','#biblio', function() {
+        
+        $('#biblio_container').toggleClass('d-none')
+    })
     $(document).on('click','.retirer', function() {
         
         var that = $(this).closest('.card_fiche')
@@ -52,15 +76,19 @@ const selectFiche = () => {
 }
 
 const choixTypeFiches = () => {
+    
     $(document).on('click','.btnSelectionType', function() {
+        var section = $('.selectSectionFiche.selected').data('value') 
         $('.btnSelectionType').removeClass('selected')
         $(this).addClass('selected')
         var type = $(this).data('type')
         $('.listFiches').addClass('d-none')
-        var section = $("#"+type).removeClass('d-none')
+        $("#"+type).removeClass('d-none')
         $('.triangle-code').removeClass('deploy')
         var position = $(this).data('position')
         $('.triangle-code.'+position).addClass('deploy')
+        $('#categories').val("null")
+        $('.card_fiche[data-section="'+section+'"]').removeClass('d-none')
 
     })
     $(document).on('click','.selectImage', function() {
@@ -69,6 +97,10 @@ const choixTypeFiches = () => {
         $('#photoEnfantImg .dlImage').removeClass('d-none');
         $('#photoEnfantImg .logoImage').addClass('d-none');
         $('#imageName').val($(this).data('id'));
+
+        var myModalEl = document.getElementById('biblioModal');
+        var modal = Modal.getInstance(myModalEl)
+        modal.hide();
     })
 }
 
@@ -183,6 +215,12 @@ const jemodifielafiche = () => {
 
     })
 
+    $(document).on('click','.deletefiches', function() {        
+        $.get('/app/fiches/deselectionne', function(data) {
+            window.location.reload()
+        })
+
+    })
     $(document).on('click','.createfiche, .modifier, .dupliquer', function() {        
         var duplicate = ($(this).hasClass('dupliquer')) ? true : false;
         var section = $('.selectSectionFiche.selected').data('value') 
@@ -193,6 +231,42 @@ const jemodifielafiche = () => {
         }
         window.open('/app/fiches/create?section='+section+'&item='+item+'&duplicate='+duplicate,'_self')
 
+    })
+  
+
+
+    $(document).on('change','#categories', function() {
+        var id = $(this).val()
+        var section = $('.selectSectionFiche.selected').data('value')
+        if (id == 'null') {
+
+            $('.card_fiche[data-section="'+section+'"]').removeClass('d-none')
+        } else {
+
+            $('.card_fiche[data-section="'+section+'"]').addClass('d-none')
+            $('.card_fiche[data-categorie="'+id+'"][data-section="'+section+'"]').removeClass('d-none')
+     
+        }
+    })
+
+    $(document).on('change','#section_id', function() {
+            var section = $(this).val()
+            console.log(section)
+            $.ajax({
+                data: {
+                    '_token': $("input[name='_token']").val(),
+                    'section_id': section
+                },
+                url: "/app/fiches/populate/categorie",
+                    dataType:"html",
+                type: "post",
+               
+                success: function(data) {   
+                    console.log(data)                      
+ 
+                    $("#categorie_id").html(data);
+                }
+            })    
     })
 }
 

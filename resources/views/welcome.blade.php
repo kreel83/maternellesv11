@@ -57,35 +57,36 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
             @endif
         </div>
 
-        <div class="div8 cadre_welcome"> 
+        <div class="div8 cadre_welcome "> 
             @php
                 
             @endphp
             <div class="titre_welcome">Les prochains évenements</div>
             @if ($anniversaires->isEmpty())
             <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
-                Aucun anniversaire ce mois ci.
+                Aucun eventment à venir.
             </div>
             @else
 
-                <div class="anniversaires1 w-75 d-flex justify-content-between ">
-                    <ul class="w-100">
-                        @foreach($anniversaires as $enfant)
-                        @php
-                        $groupe = null;
-                        if (!is_null($enfant->groupe)){                    
-                        $groupe = $lesgroupes[$enfant->groupe];
-                        }
-                    @endphp 
+                <div class="anniversaires1 w-100 d-flex justify-content-between">
+                    <ul class="w-100 pe-3">
+                        @foreach ($conges as $ev )
+                            
+
                         <li class="d-flex justify-content-between align-items-center w-100">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$enfant->background]}}; width: 27px; height: 27px">
-                                    <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="m-2 degrade_card_enfant animaux" style="width: 27px; height: 27px">
+                                    @if ($ev['type'] == 'conges')
+                                        <i class="fa-solid fa-plane"></i>
+                                    @else
+                                    
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                    @endif    
                                 </div>
-                                <div class="name text-start">{{ $enfant->prenom}} {{$enfant->nom}}</div>
+                                <div class="name text-start">{{ $ev['description']}}</div>
  
+                                <div class="">{{Carbon\Carbon::parse($ev['date'])->format('d/m')}}</div>
                             </div>
-                             <div class="ddn">{{Carbon\Carbon::parse($enfant->ddn)->format('d')}}</div>
                          </li>
                         @endforeach                        
                     </ul>
@@ -217,7 +218,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                 <div class="col-md-6">
             <table class="table  table-sm classe_dashboard">
                 <tbody>
-                    @foreach($listeDesEleves->take(12) as $eleve)
+                    @foreach($listeDesEleves->take($middle) as $eleve)
                     @php
                         $groupe = null;
                         if (!is_null($eleve->groupe)){
@@ -267,7 +268,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
 
             <table class="table table-sm classe_dashboard">
                 <tbody>
-                    @foreach($listeDesEleves->skip(12) as $eleve)
+                    @foreach($listeDesEleves->skip($middle) as $eleve)
                     @php
                     $groupe = null;
                     if (!is_null($eleve->groupe)){
