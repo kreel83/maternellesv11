@@ -6,6 +6,7 @@ use App\Models\Myperiode;
 use App\Models\Configuration;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Vacance;
 use App\utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -137,8 +138,32 @@ class CalendrierController extends Controller
     }
 
     public function calendrier() {
-        $month = Carbon::parse('9/1/'.Utils::calcul_annee_scolaire());
 
+        $month = Carbon::parse('9/1/'.Utils::calcul_annee_scolaire());
+        //$c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
+        $start_year = $month->year;
+        $start_year_nb_days = $month->daysInYear;
+
+        $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->get();
+        $conges = array();
+        $key = 0;
+        foreach($vacances as $vacance) {
+            $conges[$key] = array(
+                'start_date' => $vacance->start_date,
+                'end_date' => $vacance->end_date,
+                'libele' => $vacance->description,
+                'start' => Utils::jour_dans_anneee($vacance->start_date),
+                'end' => Utils::jour_dans_anneee($vacance->end_date),
+            );
+            if ($conges[$key]['end'] == $conges[$key]['start']) {
+                $r = Carbon::parse($conges[$key]['end_date'])->addMonths(1)->endOfMonth()->format('Y-m-dT22:00:00+00:00');
+                $conges[$key]['end_date'] = $r;
+                $conges[$key]['end'] = Utils::jour_dans_anneee($r);
+            }
+            $key++;
+        }
+        /*
+        $month = Carbon::parse('9/1/'.Utils::calcul_annee_scolaire());
         $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
         $start_year = $month->year;
         $start_year_nb_days = $month->daysInYear;
@@ -150,7 +175,6 @@ class CalendrierController extends Controller
         $r = json_decode($r);
         
         $conges = array();
-
 
         foreach ($r->records as $key=>$record) {
             Utils::jour_dans_anneee($record->fields->end_date);
@@ -166,6 +190,24 @@ class CalendrierController extends Controller
             }
 
         }
+        */
+        //dd($conges);
+        /*
+        0 => array:5 [▼
+            "end_date" => "2023-11-05T23:00:00+00:00"
+            "start_date" => "2023-10-20T22:00:00+00:00"
+            "end" => 309
+            "start" => 293
+            "libele" => "Vacances de la Toussaint"
+        ]
+        1 => array:5 [▼
+            "end_date" => "2024-03-10T23:00:00+00:00"
+            "start_date" => "2024-02-23T23:00:00+00:00"
+            "end" => 435
+            "start" => 419
+            "libele" => "Vacances d'Hiver"
+        ]
+        */
 
         $anniversaires = array();
         $enfants = Auth::user()->liste();
