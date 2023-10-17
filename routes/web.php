@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AdminLicenceController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MasterController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,15 @@ Route::get('/download/pdf/see/{token}', [PdfController::class, 'telechargeLeCahi
 Route::get('/testemail', [TestController::class, 'testemaillogo']);
 Route::get('/crondeleteuser', [TestController::class, 'crondeleteusers']);
 
+/*
+|--------------------------------------------------------------------------
+| SUPER ADMIN Routes
+|--------------------------------------------------------------------------
+|
+| Fonctions de gestion de l'application
+|
+*/
+Route::get('/chargevacances', [MasterController::class, 'chargementDesVacancesScolaires']);
 
 
 

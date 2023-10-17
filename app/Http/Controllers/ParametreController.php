@@ -12,6 +12,7 @@ use App\Models\Configuration;
 use App\Models\Section;
 use App\Models\Item;
 use App\Models\Event;
+use App\Models\Vacance;
 use Carbon\Carbon;
 use App\utils\Utils;
 use Illuminate\Http\Request;
@@ -284,7 +285,16 @@ class ParametreController extends Controller
             }
         })->values();
 
-
+        $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->get();
+        $conges = array();
+        foreach($vacances as $vacance) {
+            $conges[] = array(
+                'date' => $vacance->start_date, 
+                'description' => $vacance->description
+            );
+        }
+        //dd($conges);
+        /*
         $events = Event::where('user_id', Auth::id())->where('date','>=', $date)->get();
         $academie = Auth::user()->ecole->libelle_academie;
         $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
@@ -318,14 +328,28 @@ class ParametreController extends Controller
             
         }
 
+
         
         $coll = new Collection($conges);
 
         $conges = $coll->sortBy('date')->take(5);
      
 
-
         // dd($events, $r['records']);
+        /*
+        0 => array:2 [▼
+            "date" => "2023-10-20T22:00:00+00:00"
+            "description" => "Vacances de la Toussaint"
+        ]
+        1 => array:2 [▼
+            "date" => "2024-02-23T23:00:00+00:00"
+            "description" => "Vacances d'Hiver"
+        ]
+        2 => array:2 [▼
+            "date" => "2024-07-05T22:00:00+00:00"
+            "description" => "Vacances d'Été"
+        ]
+        */
 
         $resultat = new Resultat;
         $top5ElevesLesPlusAvances = $resultat->top5ElevesLesPlusAvances();

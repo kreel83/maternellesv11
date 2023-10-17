@@ -97,12 +97,6 @@ Route::get('/deleteuser', [UserController::class, 'deleteinactiveuser'])->name('
 // Contact form (utilisé dans contact.js seulement avec prefix /app )
 //Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
-/*
-// A supprimer dans le futur
-Route::get('/dashboardpro', [DashboardProController::class, 'index'])->name('dashboardpro')->middleware('auth.direction');
-Route::get('/decodirection', [UserControllerDirection::class, 'decodirection'])->name('decodirection')->middleware('auth.direction');
-*/
-
 Route::get('/parent',[EnfantController::class, 'parent']);
 Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
