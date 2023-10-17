@@ -63,7 +63,7 @@
     </div>
 
     <style>
-                    .createfiche {
+            .createfiche, .deletefiches {
                 width: 34px !important;
                 height: 34px !important;
                 display: flex;
@@ -105,9 +105,14 @@
                 <div data-type="mesfiches"  data-position="right" class="btnSelectionType violet droit ma_selection">Ma sélection</div>                                
             </div>
             <div class="d-flex pb-3">
-                <div>
-                    @include('fiches.filtre')
-                </div>
+                <select name="" id="categories">
+                    <option value="null" selected>Toutes les fiches</option>
+                    @include('fiches.include.categories')
+                </select>
+
+                <button data-type="" class="deletefiches mx-2 btnSelection  p-0 violet {{$type == "createfiche" ? 'active' : 'null' }}" >
+                    <i class="fa-solid fa-trash"></i>
+                </button>
                 <button data-type="" class="createfiche mx-2 btnSelection  p-0 violet {{$type == "createfiche" ? 'active' : 'null' }}" >
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -119,7 +124,7 @@
         <div  data-section="{{ $section->id }}">
             <div id="autresfiches" class="listFiches d-flex justify-content-center">
                 
-                <ul class="fiche_container fiches autresfiches m-0 p-0 justify-content-center"" >
+                <ul class="fiche_container fiches autresfiches m-0 p-0" >
 
                     @foreach ($universelles as $key=>$fiche)
                         @include('cards.universelle',['type' => 'autresfiches','classifications' => $classifications])

@@ -16,6 +16,7 @@ use App\Models\Vacance;
 use Carbon\Carbon;
 use App\utils\Utils;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -114,17 +115,17 @@ class ParametreController extends Controller
         //Fiche::createDemoFiche(Auth::user());
 
 
-        /*
-         $coms = Item::all();
-         foreach ($coms as $com) {
-             if (($com->phrase_feminin == null) && ($com->phrase_masculin != null)) {
-                 //$com->phrase_feminin = $com->phrase_masculin;
-                 $com->phrase_feminin = $this->chatpht($com->phrase_masculin);
-                 $com->save();
 
-             }
-         }
-         */
+        //  $coms = Item::all();
+        //  foreach ($coms as $com) {
+        //      if (($com->phrase_feminin == null) && ($com->phrase_masculin != null)) {
+        //          //$com->phrase_feminin = $com->phrase_masculin;
+        //          $com->phrase_feminin = $this->chatpht($com->phrase_masculin);
+        //          $com->save();
+
+        //      }
+        //  }
+
          
 
         // function chat($p): JsonResponse
@@ -298,19 +299,42 @@ class ParametreController extends Controller
         $academie = Auth::user()->ecole->libelle_academie;
         $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
 
-        $url = "https://data.education.gouv.fr/api/records/1.0/search/?dataset=fr-en-calendrier-scolaire&q=&facet=description&facet=population&facet=start_date&facet=end_date&facet=location&facet=zones&refine.annee_scolaire=$c&refine.location=$academie";
+
+
+        $url = "https://data.education.gouv.fr/api/records/1.0/search/?dataset=fr-en-calendrier-scolaire&q=&facet=description&facet=population&facet=start_date&facet=end_date&facet=location&facet=zones&refine.annee_scolaire=2025-2026&refine.location=Dijon";
         $r = file_get_contents($url);
         $r = json_decode($r, true);
 
-        $conges = array();
+
+        $evenement = array();
         foreach ($r['records'] as $ligne)  {
+
             $l = array();
-            $l['date'] = $ligne['fields']['start_date'];
-            $l['description'] = $ligne['fields']['description'];
+            if (Carbon::parse($ligne['fields']['start_date']) > $date) {
+                $l['date'] = Carbon::parse($ligne['fields']['start_date']);
+                $l['description'] = $ligne['fields']['description'];
+                $l['type'] = 'conges';
+                $conges[] = $l;                
+            }
+
+            
+        }
+        foreach ($events as $event)  {
+            $l = array();
+            $l['date'] = Carbon::parse($event->date);
+            $l['description'] = $event->name;
+            $l['type'] = 'evenement';
             $conges[] = $l;
             
         }
-        */
+
+
+        
+        $coll = new Collection($conges);
+
+        $conges = $coll->sortBy('date')->take(5);
+     
+
         // dd($events, $r['records']);
         /*
         0 => array:2 [▼
@@ -337,7 +361,11 @@ class ParametreController extends Controller
 
         //dd($top5AdvancedKids);
         $anniversaires = $anniversaires->sortBy('jour');
+
+        $middle = (int) $listeDesEleves->count() / 2;
         return view('welcome')
+            ->with('conges', $conges)
+            ->with('middle', $middle)
             ->with('listeDesEleves', $listeDesEleves)
             ->with('top5DisciplinesLesPlusAvances', $top5DisciplinesLesPlusAvances)
             ->with('top5DisciplinesLesMoinsAvances', $top5DisciplinesLesMoinsAvances)
@@ -374,7 +402,7 @@ class ParametreController extends Controller
         $commentaires = Commentaire::where(function($query) use($user) {
             $query->where('user_id', $user)->orWhereNull('user_id');
         })->where('section_id',$section)->get();
-        $sections = Section::all();
+        $sections = Section::orderBy('ordre')->get();
 
         return view('parametres.phrases.index')
             ->with('sections', $sections)

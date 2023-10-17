@@ -41,7 +41,7 @@ class ItemController extends Controller
         }
         
         $enfant = Enfant::find($id);
-        $sections = Section::all();
+        $sections = Section::orderBy('ordre')->get();
         $fiches = Auth::user()->mesfiches();
 
         foreach ($fiches as $fiche) {

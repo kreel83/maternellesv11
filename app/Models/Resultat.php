@@ -40,8 +40,7 @@ class Resultat extends Model
 
     public function item() {
         $search =  $this->hasOne('App\Models\Item','id','item_id')->first();
-        if ($search) return $search;
-        $search =  $this->hasOne('App\Models\Personnel','id','item_id')->first();
+
         return $search;
     }
 
