@@ -75,7 +75,14 @@ const selectFiche = () => {
     })
 }
 
-const choixTypeFiches = () => {
+const choixTypeFiches = (Modal) => {
+
+
+    if ($('#form1[data-message="1"]').length) {
+        var myModalEl = document.getElementById('successCreate');
+        var modal = new Modal(myModalEl)
+        modal.show() 
+    }
     
     $(document).on('click','.btnSelectionType', function() {
         var section = $('.selectSectionFiche.selected').data('value') 

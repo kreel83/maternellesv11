@@ -106,7 +106,7 @@
                 <div class="liste_classe d-flex flex-wrap tuto_liste_eleve">
                 @foreach ($eleves as $key=>$eleve)
                 
-                <div class="fiche_eleve_div d-flex position-relative {{$key == 0 ? "selection_eleve" : null}}"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-donnees="{{json_encode($eleve->toArray())}}">
+                <div class="fiche_eleve_div d-flex position-relative {{$key == 0 ? "selection_eleve" : null}}"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-periode="{{$eleve->periode}}" data-donnees="{{json_encode($eleve->toArray())}}">
 
 
                     <div class="me-2 position-relative">
@@ -139,7 +139,7 @@
                                 SH
                              </div>
                             @endif
-                            @if ($eleve->reussite == 0)
+                            @if ($eleve->reussite_disabled == 1)
                             <div class="reussite" style="">
                                 Inactif
                              </div>

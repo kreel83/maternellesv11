@@ -229,6 +229,22 @@ $degrades = App\Models\Enfant::DEGRADE;
                 margin-bottom: 50px;
                 color: lightgrey;
             }
+
+            .periode {
+                font-size: 25px;
+                font-weight: 400;
+                text-align: center;
+                margin-bottom: 50px;
+                color: grey;
+            }
+
+            .section {
+                font-size: 25px;
+                font-weight: 400;
+                text-align: center;
+                margin-bottom: 50px;
+                color: purple;
+            }
             .enfant span {
                 font-size: 60px;
             }
@@ -285,16 +301,41 @@ $degrades = App\Models\Enfant::DEGRADE;
                 top: 1060px;
                 left: 290px;
             }
-            .position-avatar {
+            /* .position-avatar {
                 position: absolute;
                 top: 480px;
                 left: 400px;
-            }
+            } */
             .position-prenom {
                 position: absolute;
                 top: 480px;
                 left: 50%;
-                transforrm: translate(-50%);
+                /* transform: translate(-50%); */
+            }
+
+            
+            .position-periode {
+                position: absolute;
+                top: 630px;
+                left: 50%;
+                /* transform: translate(-50%); */
+            }
+
+            .position-section {
+                position: absolute;
+                top: 550px;
+                left: 50%;
+                /* transform: translate(-50%); */
+            }
+
+            .equipe_array {
+                width: 100vw;
+            }
+            .equipe_array tr {
+                width: 100vw;
+            }
+            .equipe_array tr td {
+                width: 50%;
             }
 
         </style>
@@ -325,33 +366,46 @@ $degrades = App\Models\Enfant::DEGRADE;
     <div class="enfant position-prenom">
         <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
     </div>
+    <div class="periode position-periode">
+        {{$enfant->periode()}}
+    </div>
+    <div class="section position-section">
+        {{$enfant->section()}}
+    </div>
     
     <div class="position-equipe">
 
         <div class="equipe" >L'équipe pédagogigue</div>
 
-        <div class="card-equipe">
-            <div class="fonction">~ La maitresse ~</div>
-            <div class="nom">{{$user->prenom}}<br><span>{{$user->name}}</span></div>
-        </div>
 
-        @foreach ($equipes as $equipe)
+
+        <table class="equipe_array">
+            <tr>
+                <td style="width: 300px">~ La maitresse ~</td>
+                <td>{{$user->prenom}} {{$user->name}}</td>                
+            </tr>
+            
+            @foreach ($equipes as $equipe)
+            <tr>
             @if ($equipe->fonction == 1 )
                 @if ($enfant->sh == 1) 
-                    <div class="card-equipe">
-                        <div class="nom">{{$equipe->prenom}}</div>
-                        <div class="fonction">~ {{$equipe->fonction()}} ~</div>
-                    </div>
+
+                    <td>~ {{$equipe->fonction()}} ~</td>
+                    <td>{{$equipe->prenom}}</td>
+             
                 @endif
             @else
-                <div class="card-equipe">
-                    <div class="fonction">~ {{$equipe->fonction()}} ~</div>
-                    <div class="nom">{{$equipe->prenom}}</div>
-                </div>
+           
+                    <td>~ {{$equipe->fonction()}} ~</td>
+                    <td>{{$equipe->prenom}}</td>
+
+          
             @endif
-
-
-        @endforeach
+                
+                
+            </tr>
+            @endforeach
+        </table>
 
     </div>
     <!--<hr style="margin: 70px 0 70px 0">-->

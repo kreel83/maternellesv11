@@ -92,11 +92,11 @@
     .card-equipe {
         position: relative;
         height: 100px;
-        width: 230px;
-        float: left;
+        width: 100%;
+        
     }
 
-    .card-equipe .nom {
+    /* .card-equipe .nom {
         position: absolute;
         top: 10px;
         left: 10px;
@@ -113,7 +113,7 @@
         width: 230px;
         text-align: center;
 
-    }
+    } */
 
 
 
@@ -204,11 +204,14 @@ $degrades = App\Models\Enfant::DEGRADE;
     @endif
     <div class="equipes">
         <div class="equipe" >L'équipe pédagogigue</div>
-        <div class="card-equipe">
-            <div class="fonction">~ La maitresse ~</div>
-            <div class="nom">{{$user->prenom}}<br><span>{{$user->name}}</span></div>
 
-        </div>
+        <table>
+            <tr>
+                <td>{{$user->prenom}}</td>
+                <td>{{$user->name}}</td>
+                <td>~ La maitresse ~</td>
+            </tr>
+        </table>
 
 
             @foreach ($equipes as $equipe)

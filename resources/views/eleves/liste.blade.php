@@ -100,22 +100,17 @@
                                     <div class="d-flex flex-column">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="psmsgs" id="ps" value="ps" >
-                                            <label class="form-check-label" for="ps">
-                                              PS
-                                            </label>
+                                            <label class="form-check-label" for="ps">PS</label>
                                           </div>
                                           <div class="form-check">
-                                            {{--<input class="form-check-input" type="radio" name="psmsgs" id="ms" checked  value="ms">--}}
-                                            <input class="form-check-input" type="radio" name="psmsgs" id="ms" value="ms">
-                                            <label class="form-check-label" for="ms">
-                                              MS
-                                            </label>
+
+                                            <input class="form-check-input" type="radio" name="psmsgs" id="ms" checked  value="ms">
+                                            <label class="form-check-label" for="ms">MS</label>
+
                                           </div>
                                           <div class="form-check">
                                             <input class="form-check-input" type="radio" name="psmsgs" id="gs"  value="gs">
-                                            <label class="form-check-label" for="gs">
-                                              GS
-                                            </label>
+                                            <label class="form-check-label" for="gs">GS</label>
                                           </div>
 
                                     </div>
@@ -125,14 +120,15 @@
 
                                     </div>
                                     <div class="d-flex flex-column ms-3 mt-2" >
-                                        <div class="form-check " style="height: 15px">
-                                            <input type="checkbox" name="sh" class="form-check-input" id="sh" value="true">
-                                            <label class="form-sh-label" for="sh">Situation de handicap ?</label>
+                                  
+                                        <div class="form-check mb-3 " style="height: 15px">
+                                            <input type="checkbox" class="form-check-input" name="sh" id="sh" value="true">
+                                            <label class="form-sh-label" for="sh">L'élève est en situation <br>de handicap ?</label>
                                         </div>
-                                        <div class="form-check"  style="height: 15px">
-                                            <input type="checkbox" name="reussite" class="form-check-input" id="reussite" checked value="true">
-                                            <label class="form-sh-label" for="reussite">Cahier de réussite</label>
-                                        </div>                                        
+                                        <div>
+                                            <button type="button" id="eleveCoursAnnee" style="font-size: 14px;color: var(--main-color)"class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#modalEleveCoursAnnee">
+                                                <i class="fa-solid fa-cog  pe-2 " style=""></i>plus d'options</button>
+                                        </div>                                      
                                     </div>
 
 
@@ -144,6 +140,10 @@
                                         <option value="F">Fille</option>
                                     </select>
                                 </div> --}}
+
+                                    <input type="hidden" name="periode" id="periode_form" value="1">
+                                    <input type="hidden" name="reussite_disabled" id="reussite_form" value="false">
+                                    
 
                                     <div class="icone-input my-4">
                                         <i class="fa-solid fa-user"></i>
@@ -212,7 +212,37 @@
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="modalEleveCoursAnnee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top: 100px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Paramètres avancés de l'élève</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <small>Le prochain cahier de réussite pour cette élève est prévu fin :</small>
+            <select name="" id="selectPeriode" style="width: 80% !important">
+            @foreach ($periodes as $key=>$periode)
+                <option value="{{$key + 1}}">{{$periode}}</option>
+            @endforeach                
+            </select>
 
+            <hr>
+            <div class="form-check"  style="height: 15px">
+                <input type="checkbox" class="form-check-input" id="reussite" value="true">
+                <label class="form-sh-label" for="reussite">Suspendre la création de cahier de réussite ?</label>
+            </div>  
+            <div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" id="valideEleveCoursAnnee"data-bs-dismiss="modal" class="btn btn-primary">Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 @endsection

@@ -56,7 +56,10 @@ class EleveController extends Controller
         foreach ($files as $file) {
             $liste[] = $file->getFileName();
         }
+
+
         return view('eleves.liste')
+            ->with('periodes', $this->getPeriode($user->configuration->periodes))
             ->with('files', $liste)
             ->with('professeur', "null")
             ->with('profs', $user->profs())
@@ -91,6 +94,7 @@ class EleveController extends Controller
             $prof = $e->user_n1_id;
             if ($prof) {
                 $e->user_id = null;
+                $e->psmsgs = $e->prevSection($e->psmsgs);
                 $e->save();
             } else {
                 $e->delete();
@@ -111,10 +115,40 @@ class EleveController extends Controller
         foreach ($eleves as $eleve) {
             $e = Enfant::find($eleve);
             $e->user_id = Auth::id();
+            $e->psmsgs = $e->nextSection($e->psmsgs);
             $e->save();
         }
         return view('eleves.include.tableau_eleves')->with('eleves', Auth::user()->liste());
 
+    }
+
+    private function getPeriode($a) {
+
+       
+        $conf = Auth::user()->configuration;
+        $periodes = $conf->periodes;
+
+        $periode = 
+        [ 1 => [
+           'Année entière' 
+        ], 2 => ['Premier semestre','Second semestre'], 
+        3 => ['Premier trimestre','Deuxième trimestre','Troisième trimestre']];
+
+
+
+     
+        return $periode[$a];
+   
+
+
+}
+
+
+    public function getAnneeEnCours() {
+        $conf = Auth::user()->configuration;
+        $periodes = $conf->periodes;
+
+        return view('eleves.include.getAnneeEnCours')->with('periodes', $this->getPeriode($periodes));
     }
 
     public function save(Request $request) {
@@ -152,10 +186,11 @@ class EleveController extends Controller
         }
 
         $datas = $request->except(['_token']);
+
         $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2']]));
         $datas['user_id'] = Auth::id();
         $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
-        $datas['reussite'] = $datas['reussite'] == 'true' ? 1 : 0;
+        $datas['reussite_disabled'] = $datas['reussite_disabled'] == 'true' ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
         $degrade = Enfant::DEGRADE;
         $datas['background'] = array_rand($degrade);
@@ -172,6 +207,7 @@ class EleveController extends Controller
         unset($datas['mail1']);
         unset($datas['mail2']);
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
+
         return ['state'=>true];
     }
 

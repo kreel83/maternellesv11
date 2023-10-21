@@ -252,7 +252,7 @@ const clickOnDefinif = (quill) => {
 
     var debounce = null
 
-    $(document).on('text-change focusout','#editorApercu', function() {
+    quill.on('text-change', function() {
 
         clearTimeout(debounce);
         debounce = setTimeout(function(){
@@ -276,7 +276,7 @@ const clickOnDefinif = (quill) => {
 
                 }
             })
-        }, 5000);
+        }, 2000);
     });
 
     

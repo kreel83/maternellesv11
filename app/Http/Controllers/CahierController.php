@@ -32,7 +32,7 @@ class CahierController extends Controller
 
     private function format_apercu($resultats, $enfant) {
         $bloc = '';
-        $sections = Section::all()->orderBy('ordre')->pluck('id')->toArray();
+        $sections = Section::orderBy('ordre')->pluck('id')->toArray();
         
         $sections[] = 99;
 
@@ -56,19 +56,14 @@ class CahierController extends Controller
     }
 
 
-    protected $title;
-    protected $periode;
-
-    public $periode_actuelle;
 
 
-    public function __construct() {
+    private function getPeriode($enfant) {
 
-        $this->middleware(function ($request, $next) {
-            $conf = Configuration::where('user_id', Auth::id())->first();
-            $periode_actuelle = $conf->periode;  
-            $date = Carbon::now()->format('Ymd');
+       
+            $conf = Auth::user()->configuration;
             $periodes = $conf->periodes;
+            $periode_actuelle = $enfant->periode;
 
 
 
@@ -85,11 +80,9 @@ class CahierController extends Controller
                     if ($periode_actuelle == 3) $title = 'Troisième trimestre';
                     break;
             }
-            $this->periode_actuelle = $periode_actuelle;            
-            $this->title = $title;         
-            return $next($request);
-        });
-
+         
+            return [$title, $periode_actuelle];
+       
 
 
     }
@@ -158,7 +151,7 @@ class CahierController extends Controller
             $r->user_id = Auth::id();
             $r->definitif = 0;
         }
-        $r->periode = $this->periode_actuelle;
+        $r->periode = $this->getPeriode($enfant)[1];
         $r->texte_integral = $reussite;
         $r->save();
         return $reussite;
@@ -208,7 +201,7 @@ class CahierController extends Controller
 
         $resultats = $resultats->groupBy('section_id')->toArray();
  
-        $sections = Section::all()->orderBy('ordre')->toArray();
+        $sections = Section::orderBy('ordre')->get()->toArray();
         $s = array();
         foreach ($sections as $section) {
             $s[$section['id']] = $section;
@@ -322,7 +315,7 @@ class CahierController extends Controller
             ->with('reussite', $reussite)
             ->with('isChrome',Browser::isChrome())
             ->with('definitif', $definitif)
-            ->with('title', $this->title)
+            ->with('title', $this->getPeriode($enfant)[0])
             ->with('commentaires', $commentaires)
             ->with('isreussite', $r);
     }
@@ -433,7 +426,7 @@ class CahierController extends Controller
             $r->user_id = Auth::id();
             $r->definitif = 0;
         }
-        $r->periode = $this->periode_actuelle;
+        $r->periode = $this->getPeriode($enfant)[1];
         $r->texte_integral = $reussite;
         $r->save();
         return $reussite;
@@ -548,7 +541,7 @@ class CahierController extends Controller
 
         $commentaires = Commentaire::where(function($query) {
             $query->where('user_id', Auth::id())->orWhereNull('user_id');})->where('section_id', 99)->get();
-        $textes = $enfant->cahier($this->periode);
+        $textes = $enfant->cahier($this->getPeriode($enfant)[1]);
         $r = Reussite::where('enfant_id', $enfant->id)->first();
        
         $textes['carnet'] = $r ? $r->commentaire_general : null;
@@ -588,8 +581,8 @@ class CahierController extends Controller
             ->with('textes', $textes)
             ->with('type', 'reussite')
             ->with('page', 'reussite')
-            ->with('periode', $this->periode)
-            ->with('title', $this->title)
+            ->with('periode', $this->getPeriode($enfant)[1])
+            ->with('title', $this->getPeriode($enfant)[0])
             ->with('sections', $sections);
     }
 
