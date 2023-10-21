@@ -150,10 +150,8 @@ class EleveController extends Controller
             return ['state'=>false,'error_description'=>'validator failed','errors'=>$validator->errors()];
             
         }
-       
 
         $datas = $request->except(['_token']);
-
         $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2']]));
         $datas['user_id'] = Auth::id();
         $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;

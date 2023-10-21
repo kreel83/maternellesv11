@@ -155,13 +155,16 @@ class CalendrierController extends Controller
                 'start' => Utils::jour_dans_anneee($vacance->start_date),
                 'end' => Utils::jour_dans_anneee($vacance->end_date),
             );
+            /*
             if ($conges[$key]['end'] == $conges[$key]['start']) {
                 $r = Carbon::parse($conges[$key]['end_date'])->addMonths(1)->endOfMonth()->format('Y-m-dT22:00:00+00:00');
                 $conges[$key]['end_date'] = $r;
                 $conges[$key]['end'] = Utils::jour_dans_anneee($r);
             }
+            */
             $key++;
         }
+        //dd($conges);
         /*
         $month = Carbon::parse('9/1/'.Utils::calcul_annee_scolaire());
         $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);

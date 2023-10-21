@@ -17,6 +17,7 @@ class Vacance extends Model
     protected $fillable = [
         'ecole_code_academie',
         'description',
+        'population',
         'start_date',
         'end_date',
         'location',

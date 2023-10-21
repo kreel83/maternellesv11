@@ -99,7 +99,7 @@ class EnfantController extends Controller
         }
         $nbEnfants = Enfant::where([
             ['user_id', Auth::id()],
-            ['reussite', 1]
+            ['reussite_disabled', 0]
         ])->count();
         $nbReussite = Reussite::where([
             ['user_id', Auth::id()],

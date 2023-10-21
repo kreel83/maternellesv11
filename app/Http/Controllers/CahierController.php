@@ -661,13 +661,13 @@ class CahierController extends Controller
         ])->get();
         $badEmails = [];
         foreach ($enfants as $enfant) {
-            if (!filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL) && !filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
+            if (!filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL) && !filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
                 $badEmails[] = $enfant->prenom.' '.$enfant->nom;
             }
         }
         return view('cahiers.envoi_parents')
         ->with('badEmails', $badEmails);
-    }
+    }    
 
     public function envoiCahierPost(Request $request) {
         $request->validate([
@@ -695,6 +695,51 @@ class CahierController extends Controller
         
         //dd($enfants);
        
+    }
+
+    public function cahierManage() {
+        $enfants = Enfant::where('user_id', Auth::id())->get();
+        $reussites = Reussite::where('user_id', Auth::id())->get();
+        $maxPeriode = Enfant::max('periode');
+        $datesEnvois = array();
+        foreach ($enfants as $enfant) {
+            for ($periode=1; $periode<=$maxPeriode; $periode++) {
+                $r = $reussites->where('periode', $periode)->where('enfant_id', $enfant->id)->first();
+                if(!empty($r->send_at)) {
+                    $datesEnvois[$enfant->id][$periode] = 'Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
+                } else {
+                    $datesEnvois[$enfant->id][$periode] = '';
+                }
+            }
+        }
+        return view('cahiers.manage')
+            ->with('maxPeriode', $maxPeriode)
+            ->with('datesEnvois', $datesEnvois)
+            ->with('enfants', $enfants)
+            ->with('reussites', $reussites);
+    }
+
+    public function cahierManagePost(Request $request) {
+
+        $request->validate([
+            'enfantSelection' => ['required'],
+        ], [
+            'enfantSelection.required' => 'Merci de sélectionner au moins un élève en cochant la case correspondante',
+        ]);
+        $error = array();
+        foreach ($request->enfantSelection as $enfant_id) {
+            $enfant = Enfant::find($enfant_id);
+            $isMailSent = PdfController::genereLienVersCahierEnPdf($enfant);
+            if(!$isMailSent) {
+                $error[] = "L'envoi a échoué pour la période $enfant->periode de $enfant->prenom $enfant->nom";
+            }
+        }
+        return back()->with('success', (count($error) == 0))->with('error', $error);
+    }
+
+    public function renvoiCahier($id, $periode) {
+        $enfant = Enfant::find($id);
+        // code...
     }
 
 }
