@@ -122,6 +122,46 @@ class Enfant extends Model
 
     }
 
+    public function section() {
+        $sec = [
+            'ps' => 'Petite section',
+            'ms' => 'Moyenne section',
+            'gs' => 'Grande section',
+        ];
+        return $sec[$this->psmsgs];
+    }
+
+    public function nextSection($o) {
+        if ($o == 'gs') return 'gs';
+        if ($o == 'ms') return 'gs';
+        if ($o == 'ps') return 'ms';
+
+    }
+
+    public function prevSection($o) {
+        if ($o == 'gs') return 'ms';
+        if ($o == 'ms') return 'ps';
+        if ($o == 'ps') return 'ps';
+
+    }
+
+    public function periode() {
+        $a = $this->periode;
+        $conf = Auth::user()->configuration;
+        $periodes = $conf->periodes;
+        $periode = 
+        [ 1 => [
+           'Année entière' 
+        ], 2 => ['Premier semestre','Second semestre'], 
+        3 => ['Premier trimestre','Deuxième trimestre','Troisième trimestre']];
+        
+
+
+
+     
+        return $periode[$periodes][$a -1];
+    }
+
     public function hasReussite() {
         return $this->hasOne('App\Models\Reussite')->first();
     }

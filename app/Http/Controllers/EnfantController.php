@@ -57,7 +57,7 @@ class EnfantController extends Controller
         // Ok si nombre de cahiers avec defintif = 1 est égal au nombre d'enfants dans la classe
         $nbEnfants = Enfant::where([
             ['user_id', Auth::id()],
-            ['reussite', 1]
+            ['reussite_disabled', 0]
         ])->count();
         $nbReussite = Reussite::where([
             ['user_id', Auth::id()],
@@ -99,7 +99,7 @@ class EnfantController extends Controller
         }
         $nbEnfants = Enfant::where([
             ['user_id', Auth::id()],
-            ['reussite', 1]
+            ['reussite_disabled', 0]
         ])->count();
         $nbReussite = Reussite::where([
             ['user_id', Auth::id()],

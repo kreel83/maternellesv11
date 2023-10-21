@@ -110,16 +110,16 @@
 
 
                 <div class="form-check form-switch position-relative">
-                    <div class="form-check-label labelDefinitif labelDefinitifGauche {{$reussite->definitif == 0 ? 'active' : null}}" for="definitif">Modifier le PDF</div>
-                    <input {{ $reussite->definitif == 1 ? 'checked' : null }} class="form-check-input" type="checkbox" id="definitif"
+                    <div class="form-check-label labelDefinitif labelDefinitifGauche {{$reussite && $reussite->definitif == 0 ? 'active' : null}}" for="definitif">Modifier le PDF</div>
+                    <input {{ $reussite && $reussite->definitif == 1 ? 'checked' : null }} class="form-check-input" type="checkbox" id="definitif"
                         data-enfant="{{ $enfant->id }}">
-                    <div class="form-check-label labelDefinitif labelDefinitifDroit {{$reussite->definitif == 1 ? 'active' : null}}" for="definitif">Finaliser le PDF</div>
+                    <div class="form-check-label labelDefinitif labelDefinitifDroit {{$reussite && $reussite->definitif == 1 ? 'active' : null}}" for="definitif">Finaliser le PDF</div>
                 </div>
                 <a target="_blank" href="{{ route('seepdf', ['id' => $enfant->id, 'state' => 'see']) }}"
-                    data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $reussite->definitif == 0 ? 'd-none' : null }}"
+                    data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $reussite && $reussite->definitif == 0 ? 'd-none' : null }}"
                     id="pdf" style="margin-top: 0 !important">Voir le PDF</a>
                 <div 
-                    data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $reussite->definitif == 1 ? 'd-none' : null }}"
+                    data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $reussite && $reussite->definitif == 1 ? 'd-none' : null }}"
                     id="reactualiser" style="margin-top: 0 !important">Réactualiser le texte</div>
                 {{-- <button data-enfant="{{ $enfant->id }}" class="btn btn-sm btn-primary"
                     id="reformuler">Reformuler</button> --}}
