@@ -16,11 +16,45 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Browser;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isEmpty;
 
 class PdfController extends Controller
 {
+    public static function genereLienVersCahierEnPdf($enfant) {
+        // Mise à jour du token dans la table ' enfants '
+        //$enfant = Enfant::find($enfant_id);
+        $token = uniqid();
+        $url = route('cahier.predownload', ['token' => $token]);
+        $is_sent = false;
+        if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
+            //Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            $is_sent = true;
+        }
+        if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
+            //Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            $is_sent = true;
+        }
+        if($is_sent) {
+            $reussite = Reussite::where([
+                ['user_id', Auth::id()],
+                ['enfant_id', $enfant->id],
+                ['periode', $enfant->periode],
+            ])->update(['send_at' => Carbon::now()]);
+            if($reussite > 0) {
+                $enfant->token = $token;
+                $enfant->periode = $enfant->periode + 1;
+                $enfant->save();
+            } else {
+                $is_sent = false;
+            }
+        }
+        return $is_sent;
+    }
+
+    /*
     public static function genereLienVersCahierEnPdf($enfant) {
         //$enfant = DB::select('select user_id from enfants where id = ?', [$id]);
         //$user = DB::select('select email,name,prenom from users where id = ?', [$enfant[0]->id]);
@@ -35,6 +69,7 @@ class PdfController extends Controller
             //Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
         }
     }
+    */
     
     public function telechargementDuCahierParLesParents($token) {
         return view('cahiers.telechargement')

@@ -26,17 +26,18 @@ class MasterController extends Controller
             $data = getData($offset, $refine);
             $total_count = (int)$data['total_count'];
             foreach ($data['results'] as $ligne)  {
-                //dd(Carbon::parse($ligne['start_date'])->format('Y-m-d h:i:s'));  // pour le jour même
-                $end_date = Carbon::parse($ligne['end_date'])->format('Y-m-d h:i:s');  // pour le jour même
-                Vacance::create([
-                    'description' => $ligne['description'],
-                    'start_date' => $ligne['start_date'],
-                    'end_date' => $end_date,
-                    //'end_date' => $ligne['end_date'],
-                    'location' => $ligne['location'],
-                    'zones' => $ligne['zones'],
-                    'annee_scolaire' => $ligne['annee_scolaire'],
-                ]);
+                if(stripos($ligne['population'], 'Enseignant') === false) {
+                    $end_date = Carbon::parse($ligne['end_date'])->format('Y-m-d h:i:s');  // pour le jour même
+                    Vacance::create([
+                        'description' => $ligne['description'],
+                        'population' => $ligne['population'],
+                        'start_date' => $ligne['start_date'],
+                        'end_date' => $end_date,
+                        'location' => $ligne['location'],
+                        'zones' => $ligne['zones'],
+                        'annee_scolaire' => $ligne['annee_scolaire'],
+                    ]);
+                }
                 $compteur++;
                 if($compteur % 99 == 0) {
                     $offset += 100;

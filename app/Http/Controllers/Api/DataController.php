@@ -69,6 +69,7 @@ class DataController extends Controller
         try {
             //Log::info($request);
             $user = auth('sanctum')->user();
+            $enfant = Enfant::find($request->enfant_id);
             $resultat = Resultat::create([
                 'item_id' => $request->item_id,
                 'enfant_id' => $request->enfant_id,
@@ -77,7 +78,8 @@ class DataController extends Controller
                 'user_id' => $user->id,
                 'groupe' => $request->groupe,
                 'autonome' => $request->autonome,
-                'periode' => $user->configuration->periode,
+                'periode' => $enfant->periode,
+                //'periode' => $user->configuration->periode,
             ]);
 
             return response()->json([

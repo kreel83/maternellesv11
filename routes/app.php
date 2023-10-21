@@ -152,6 +152,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/choix_enfant_select', [EleveController::class, 'choix_enfant_select'])->name('choix_enfant_select');
     Route::get('/enfants/cahier/envoi', [CahierController::class, 'envoiCahier'])->name('envoiCahier');
     Route::post('/enfants/cahier/envoi', [CahierController::class, 'envoiCahierPost'])->name('envoiCahier.post');
+    Route::get('/enfants/cahier/renvoi/{id}/{periode}', [CahierController::class, 'renvoiCahier'])->name('renvoiCahier');
+    
+    Route::get('/enfants/cahier/manage', [CahierController::class, 'cahierManage'])->name('cahierManage');
+    Route::post('/enfants/cahier/manage', [CahierController::class, 'cahierManagePost'])->name('cahierManage.post');
 
     Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
 

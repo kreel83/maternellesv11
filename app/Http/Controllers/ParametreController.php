@@ -161,14 +161,18 @@ class ParametreController extends Controller
         //     dd(chat("Can you help me feminize the following sentence: l'élève parle en faisant des phrases simples (sujet, verbe, complément)."));
 
 
+
         // $coms = Item::all();
         // foreach ($coms as $com) {
+
             
         //         $com->phrase_feminin = $this->chatpht($com->phrase_masculin);
         //         $com->save();
         //         break;
 
+
         // }
+
 
 
 

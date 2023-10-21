@@ -103,8 +103,10 @@
                                             <label class="form-check-label" for="ps">PS</label>
                                           </div>
                                           <div class="form-check">
+
                                             <input class="form-check-input" type="radio" name="psmsgs" id="ms" checked  value="ms">
                                             <label class="form-check-label" for="ms">MS</label>
+
                                           </div>
                                           <div class="form-check">
                                             <input class="form-check-input" type="radio" name="psmsgs" id="gs"  value="gs">
