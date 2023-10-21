@@ -161,14 +161,14 @@ class ParametreController extends Controller
         //     dd(chat("Can you help me feminize the following sentence: l'élève parle en faisant des phrases simples (sujet, verbe, complément)."));
 
 
-        $coms = Item::all();
-        foreach ($coms as $com) {
+        // $coms = Item::all();
+        // foreach ($coms as $com) {
             
-                $com->phrase_feminin = $this->chatpht($com->phrase_masculin);
-                $com->save();
-                break;
+        //         $com->phrase_feminin = $this->chatpht($com->phrase_masculin);
+        //         $com->save();
+        //         break;
 
-        }
+        // }
 
 
 
@@ -290,9 +290,14 @@ class ParametreController extends Controller
         foreach($vacances as $vacance) {
             $conges[] = array(
                 'date' => $vacance->start_date, 
-                'description' => $vacance->description
+                'description' => $vacance->description,
+                'type' => 'conges'
             );
         }
+
+        $coll = new Collection($conges);
+        $conges = $coll->sortBy('date')->take(5);
+
         //dd($conges);
         /*
         $events = Event::where('user_id', Auth::id())->where('date','>=', $date)->get();

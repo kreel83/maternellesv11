@@ -18,11 +18,12 @@ class ItemController extends Controller
 
     public $periode_actuelle;
     public function __construct() {
-        $this->middleware(function ($request, $next) {
-            $conf = Configuration::where('user_id', Auth::id())->first();
-            $this->periode_actuelle = $conf->periode;    
-            return $next($request);
-        });
+        // $this->middleware(function ($request, $next) {
+        //     $conf = Configuration::where('user_id', Auth::id())->first();
+        //     $this->periode_actuelle = $conf->periode;    
+        //     $this->periode_actuelle = $conf->periode;    
+        //     return $next($request);
+        // });
 
     }
 
@@ -87,7 +88,7 @@ class ItemController extends Controller
             $search->autonome = $autonome;
             $search->section_id = $item->section()->id;
             $search->user_id = Auth::id();
-            $search->periode = $this->periode_actuelle;
+            $search->periode = $enfant->periode;
 
 
         }

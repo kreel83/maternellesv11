@@ -105,7 +105,7 @@ use Illuminate\Support\Facades\Auth;
                                         selectionne mes activités</a>
                                     <a href="{{ route('createFiche') }}"
                                         class="nav-item nav-link {{ $menu == 'create_item' ? 'active' : null }}">Je
-                                        créé mes activités</a>
+                                        créais mes activités</a>
                                     <a href="{{ route('groupe') }}"
                                         class="nav-item nav-link {{ $menu == 'groupe' ? 'active' : null }}">Mes
                                         groupes</a>

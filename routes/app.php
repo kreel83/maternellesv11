@@ -189,6 +189,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
     Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
     Route::get('eleves/view/{id}',[EleveController::class,'voirEleve'])->name('voirEleve');
+    Route::get('eleves/getAnneeEnCours',[EleveController::class,'getAnneeEnCours'])->name('getAnneeEnCours');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');

@@ -224,6 +224,13 @@ const photo_eleve = () => {
     $(document).on('click','#import-tab', function() {
         window.location.reload()
     })
+    $(document).on('click','#valideEleveCoursAnnee', function() {
+
+        $('#periode_form').val($('#selectPeriode').val())
+        $('#reussite_form').val($('#reussite').prop('checked'))
+
+
+    })
 
     $(document).on('click', '.fiche_eleve_div', function() {
         $('#create-tab').trigger('click')
@@ -255,11 +262,13 @@ const photo_eleve = () => {
         }  else {
             $('#sh').attr('checked',false)
         }
-        if (data.reussite == 1 ) {
+        if (data.reussite_disabled == 1 ) {
             $('#reussite').attr('checked',true)
         }  else {
             $('#reussite').attr('checked',false)
         }
+        var periode = $(this).data('periode')
+        $('#selectPeriode').val(periode)
       
         console.log(data)
     })
@@ -274,7 +283,9 @@ const photo_eleve = () => {
             var name = $(this).attr('name');
             if ($(this).is(':checkbox')) {
                 form[name] = $(this).prop('checked');
-            } else {
+            } else if ($(this).is(':radio')) {
+                if ($(this).is(':checked')) form[name] = $(this).val()
+            } else {                
                 form[name] = $(this).val();
             }
         });

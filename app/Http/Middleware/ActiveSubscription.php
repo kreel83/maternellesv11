@@ -20,6 +20,8 @@ class ActiveSubscription
     {
         //$request->session()->forget('isAuthenticated');
         // verifie si l'utilisateur a une licence active
+        
+
         if (!$request->session()->exists('isAuthenticated')) {
             switch(Auth::user()->licence) {
                 case('admin'):
