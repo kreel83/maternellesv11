@@ -119,22 +119,9 @@ class PdfController extends Controller
 
     public function telechargementDuCahierParLesParentsPost(Request $request) {
 
-        $request->validate([
-            'jour' => ['required', 'integer', 'max:31'],
-            'mois' => ['required', 'integer', 'max:12'],
-            'annee' => ['required', 'integer'],
-            'token' => ['exists:enfants'],
-        ], [
-            'jour.required' => 'Le jour de naissance est obligatoire',
-            'jour.integer' => 'Le jour de naissance a un format invalide',
-            'jour.max' => 'Le jour de naissance doit être inférieur ou égal à 31',
-            'mois.required' => 'Le mois de naissance est obligatoire',
-            'mois.integer' => 'Le mois de naissance a un format invalide',
-            'mois.max' => 'Le mois de naissance doit être inférieur ou égal à 12',
-            'annee.required' => 'L\'année de naissance est obligatoire',
-            'annee.integer' => 'L\'année de naissance a un format invalide',
-            'token.exists' => 'Token invalide',
-        ]);
+
+
+     
         
         $date = Carbon::create($request->annee, $request->mois, $request->jour);
         $ddn = $date->format('Y-m-d');
