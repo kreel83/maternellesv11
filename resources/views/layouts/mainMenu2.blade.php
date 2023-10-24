@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\Auth;
                                 class="nav-item nav-link  {{ $menu == 'accueil' ? 'active' : null }}">Tableau de bord
                             </a>
                             @php
-                                $params = in_array($menu, ['evaluation', 'reussite', 'affectation_groupe', 'avatar']);
+                                $params = in_array($menu, ['evaluation', 'reussite', 'affectation_groupe', 'avatar','maclasse']);
                             @endphp
 
                             @if (Auth::user()->is_enfants())
@@ -68,17 +68,19 @@ use Illuminate\Support\Facades\Auth;
                                     <div class="dropdown-menu">
 
 
+                                        <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
+                                            class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'edite ma classe</a>
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
-                                            class="nav-item nav-link ">Evaluations</a>
+                                            class="nav-item nav-link ">J'évalue mes élèves</a>
                                         <a href="{{ route('enfants', ['type' => 'reussite']) }}"
-                                            class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">Cahiers
-                                            de réussite</a>
+                                            class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les
+                                            cahiers de réussite</a>
                                         <a href="{{ route('enfants', ['type' => 'avatar']) }}"
                                             class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}">Je
                                             choisis les avatars</a>
                                         <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}"
-                                            class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}">Affectation
-                                            des groupes</a>
+                                            class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}">J'affecte
+                                            mes groupes</a>
 
                                     </div>
                                 </div>
@@ -90,7 +92,7 @@ use Illuminate\Support\Facades\Auth;
                                 class="nav-item nav-link  {{ $params ? 'active' : null }}">Calendrier</a>
 
                             @php
-                                $params = in_array($menu, ['commentaire', 'periode', 'eleve', 'item', 'create_item', 'aide', 'ecole', 'groupe', 'avatar']);
+                                $params = in_array($menu, ['commentaire', 'periode', 'eleve', 'item', 'create_item', 'aide', 'ecole', 'groupe']);
                             @endphp
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
@@ -139,6 +141,10 @@ use Illuminate\Support\Facades\Auth;
 
                         </div>
 
+                        @php
+                            $params = in_array($menu, ['monprofil', 'contact']);
+                        @endphp
+
                         <div class="nav-item dropdown ms-auto">
                           <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
                               data-bs-toggle="dropdown">{{Auth::user()->prenom}} {{Auth::user()->name}}</a>
@@ -152,7 +158,7 @@ use Illuminate\Support\Facades\Auth;
                               <a href="{{ route('changerLeMotDePasse') }}"
                                   class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le
                                   mot de passe</a>
-                                  <a class="nav-item nav-link  {{ $params ? 'active' : null }}"
+                                  <a class="nav-item nav-link  {{ $params == "contact" ? 'active' : null }}"
                                   href="{{ route('contact') }}">Nous contacter</a>
                                   <li><hr class="dropdown-divider"></li>
                                   <a href="{{ route('deco') }}" class="nav-item nav-link"><i class="fal fa-sign-out-alt"></i>

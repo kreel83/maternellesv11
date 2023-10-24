@@ -115,6 +115,15 @@ class Utils {
 
     }
 
+    public static function calcul_annee_scolaire_formated() {
+
+
+        return self::calcul_annee_scolaire().'-'.(self::calcul_annee_scolaire()+1);
+
+    }
+
+    
+
     public static function jour_dans_anneee($date) {
         $annee_actuelle = self::calcul_annee_scolaire();
         $annee_reelle = (int) Carbon::parse($date)->format('Y');

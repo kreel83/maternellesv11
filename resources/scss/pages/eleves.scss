@@ -9,6 +9,26 @@
 }
 .liste_eleves, .import_eleves_container {
 
+    .inactiveEleve {
+        right: 10px; top: 10px; color:var(--main-color);
+        display: none;
+
+    }
+
+    .fiche_eleve_div{
+
+        &.disabled-card {
+            background-color: rgba(0,0,0,0.2);
+        }
+        &:hover {
+            .inactiveEleve {
+
+                    display: block;
+
+            }
+        }
+    }
+
     height: calc(100vh - 100px);
     border-radius: 15px;;
     background-color: white;

@@ -6,7 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>Ma maternelle</title>
 
-        @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 
         <!-- Fonts -->
         <!--<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">-->
@@ -31,7 +32,7 @@
 
     <body>
 
-    <div class="container">
+    <div>
         @yield('content')
     </div>
 

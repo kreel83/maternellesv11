@@ -271,7 +271,7 @@ class ficheController extends Controller
             $item->save();
         } 
         
-        if ($request->submit == 'save') {
+        if (in_array($request->submit,['save','save_and_select'])) {
             $item = new Item();
             $item->name = $request->name;
             if ($request->file) {
@@ -303,7 +303,7 @@ class ficheController extends Controller
             } else {
                 $item->phrase_feminin = $request->phrase_feminin;
             }
-            $item->save();
+            // $item->save();
 
             if ($request->submit == 'save_and_select') {
                 $fiche = new Fiche();
@@ -323,6 +323,7 @@ class ficheController extends Controller
 
         session()->flash('message', 'La fiche a bien été enregistrée'); 
         session()->flash('alert-class', 'alert-success'); 
+        session()->flash('section', $request->section_id); 
         return redirect()->back()->withInput();
         
         
