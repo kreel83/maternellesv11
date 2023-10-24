@@ -43,6 +43,7 @@ import {
 import {choix_equipe} from "./pages/equipe";
 import {adminRegistration} from "./pages/admin";
 import {achatLicences,assigneLicence} from "./pages/subscription";
+import {envoiCahierIndividuel} from "./pages/pdf";
 
 window.Alpine = Alpine;
 
@@ -227,3 +228,4 @@ assigneLicence()
 
 
 tutos()
+envoiCahierIndividuel()

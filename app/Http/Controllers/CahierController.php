@@ -14,6 +14,7 @@ use App\Models\Phrase;
 use App\Models\Resultat;
 use App\Models\Reussite;
 use App\Models\Section;
+use App\Models\User;
 use App\utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -178,14 +179,29 @@ class CahierController extends Controller
         // return $result['choices'][0]->message->content;
     }
 
-    public function seepdf($id, $state = 'see') {
+    //public function seepdf($id, $periode, $state = 'see', $token) {
+    public function seepdf($token, $state = 'see') {
 
-        $rep = Auth::user()->repertoire;
-        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')->join('items','items.id','resultats.item_id')
-           ->join('sections','sections.id','resultats.section_id')
-            ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
+        $enfant = Enfant::where('token', $token)->first();
+        if($enfant) {
+            $id = $enfant->id;
+            $periode = Str::substr($token, 0, 1);
+        } else {
+            return redirect()->route('cahier.predownload', ['token' => $token])
+                ->withErrors(['msg' => 'Token error']);
+        }
+
+        // PDF pour Parent pas de Auth::
+        //$rep = Auth::user()->repertoire;
+
+        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')
+            ->join('items','items.id','resultats.item_id')
+            ->join('sections','sections.id','resultats.section_id')
+            ->where('enfant_id', $id)
+            ->where('periode', $periode)
+            ->orderBy('resultats.section_id')
+            ->get();
          
-
         // $resultats_personnels = Resultat::select('personnels.*','resultats.*','sections.name as name_section','sections.color')->join('personnels','personnels.id','resultats.item_id')
         //    ->join('sections','sections.id','resultats.section_id')
         //     ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
@@ -207,13 +223,21 @@ class CahierController extends Controller
             $s[$section['id']] = $section;
         }
         //dd($s);
-        $enfant = Enfant::find($id);
+        //$enfant = Enfant::find($id);
         $name = $enfant->prenom.' '.$enfant->nom;
         $n = explode(' ', $name);
-        $n=join('-', $n);
-        $equipes = Auth::user()->equipes();
+        $n = join('-', $n);
 
-        $r = Reussite::where('enfant_id', $id)->first();
+        // PDF pour Parent pas de Auth::
+        // $equipes = Auth::user()->equipes();
+        $equipes = Equipe::where('user_id', $enfant->user_id)->get();        
+
+        // PDF pour Parent pas de Auth::
+        $user = User::find($enfant->user_id);
+
+        $r = Reussite::where('enfant_id', $id)
+                ->where('periode', $periode)
+                ->first();
         $reussite = $r->texte_integral;
 
         // dd($reussite);
@@ -260,22 +284,17 @@ class CahierController extends Controller
         // header pour commentaire général
         $class = ".titre0 {color: #ffffff; background-color: grey}";
         $customClass[] = $class;
-        //dd($customClass);
-
 
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
-//dd($resultats);
-
-
-//dd($resultats);
         if ($state == 'see') {
-            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => Auth::user()]);
+            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user]);
             // download PDF file with download method
-            //return $pdf->stream('test_cahier.pdf');            
+            //return $pdf->stream('test_cahier.pdf');     
+            $pdf->add_info('Title', 'Cahier de reussites de '.ucfirst($enfant->prenom));
             return $pdf->stream('Cahier de reussites de '.ucfirst($enfant->prenom.'.pdf'));
         } else {
-            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => Auth::user(), 'equipes' => $equipes]);
+            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
             $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
             return redirect()->back()->with('success','le fichier a bine été enregistré');
         }
@@ -688,51 +707,6 @@ class CahierController extends Controller
         
         //dd($enfants);
        
-    }
-
-    public function cahierManage() {
-        $enfants = Enfant::where('user_id', Auth::id())->get();
-        $reussites = Reussite::where('user_id', Auth::id())->get();
-        $maxPeriode = Enfant::max('periode');
-        $datesEnvois = array();
-        foreach ($enfants as $enfant) {
-            for ($periode=1; $periode<=$maxPeriode; $periode++) {
-                $r = $reussites->where('periode', $periode)->where('enfant_id', $enfant->id)->first();
-                if(!empty($r->send_at)) {
-                    $datesEnvois[$enfant->id][$periode] = 'Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
-                } else {
-                    $datesEnvois[$enfant->id][$periode] = '';
-                }
-            }
-        }
-        return view('cahiers.manage')
-            ->with('maxPeriode', $maxPeriode)
-            ->with('datesEnvois', $datesEnvois)
-            ->with('enfants', $enfants)
-            ->with('reussites', $reussites);
-    }
-
-    public function cahierManagePost(Request $request) {
-
-        $request->validate([
-            'enfantSelection' => ['required'],
-        ], [
-            'enfantSelection.required' => 'Merci de sélectionner au moins un élève en cochant la case correspondante',
-        ]);
-        $error = array();
-        foreach ($request->enfantSelection as $enfant_id) {
-            $enfant = Enfant::find($enfant_id);
-            $isMailSent = PdfController::genereLienVersCahierEnPdf($enfant);
-            if(!$isMailSent) {
-                $error[] = "L'envoi a échoué pour la période $enfant->periode de $enfant->prenom $enfant->nom";
-            }
-        }
-        return back()->with('success', (count($error) == 0))->with('error', $error);
-    }
-
-    public function renvoiCahier($id, $periode) {
-        $enfant = Enfant::find($id);
-        // code...
     }
 
 }
