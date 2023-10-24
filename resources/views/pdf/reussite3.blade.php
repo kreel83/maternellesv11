@@ -236,6 +236,15 @@ $degrades = App\Models\Enfant::DEGRADE;
                 text-align: center;
                 margin-bottom: 50px;
                 color: grey;
+                width: 250px;
+            }
+            .annee {
+                font-size: 25px;
+                font-weight: 400;
+                text-align: center;
+                margin-bottom: 50px;
+                color: grey;
+                width: 250px;
             }
 
             .section {
@@ -317,7 +326,13 @@ $degrades = App\Models\Enfant::DEGRADE;
             .position-periode {
                 position: absolute;
                 top: 630px;
-                left: 50%;
+                left: 45%;
+                /* transform: translate(-50%); */
+            }
+            .position-annee {
+                position: absolute;
+                top: 660px;
+                left: 45%;
                 /* transform: translate(-50%); */
             }
 
@@ -371,6 +386,9 @@ $degrades = App\Models\Enfant::DEGRADE;
     </div>
     <div class="section position-section">
         {{$enfant->section()}}
+    </div>
+    <div class="annee position-annee">
+        {{App\utils\Utils::calcul_annee_scolaire_formated()}}
     </div>
     
     <div class="position-equipe">

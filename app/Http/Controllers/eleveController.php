@@ -109,6 +109,15 @@ class EleveController extends Controller
 
     }
 
+    public function toggleInactiveEleve(Request $request) {
+        $eleve = Enfant::find($request->id);
+        $eleve->reussite_disabled = $request->reussite_disabled == 1 ? 0 : 1;
+        $eleve->save();
+        return 'ok';
+
+
+    }
+
     public function ajouterEleves(Request $request) {
         $eleves = array_filter($request->eleves);
         
@@ -187,10 +196,10 @@ class EleveController extends Controller
 
         $datas = $request->except(['_token']);
 
+
         $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2']]));
         $datas['user_id'] = Auth::id();
         $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
-        $datas['reussite_disabled'] = $datas['reussite_disabled'] == 'true' ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
         $degrade = Enfant::DEGRADE;
         $datas['background'] = array_rand($degrade);
@@ -230,6 +239,15 @@ class EleveController extends Controller
             //->with('sections', $sections)
             ->with('eleve',$eleve)
             ->with('eleves',$user->liste());
+    }
+
+    public function maclasse() {
+        $listeDesEleves = Enfant::listeDesEleves();                
+
+        $middle = (int) $listeDesEleves->count() / 2;
+        return view('maclasse.index')
+                    ->with('middle', $middle)
+                    ->with('listeDesEleves', $listeDesEleves);
     }
 
 }

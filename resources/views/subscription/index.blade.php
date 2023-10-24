@@ -10,6 +10,8 @@
     background-color: white;
   }
 </style>
+<div id="detail_abo mt-5">
+
 
 <h3>Détail de mon abonnement</h3>
 
@@ -83,5 +85,5 @@
     </div>
 
 
-
+  </div>
 @endsection

@@ -221,13 +221,25 @@ const photo_eleve = () => {
         $('#photo_input').trigger('click')
     })
 
+    $(document).on('click','.inactiveEleve', function(e) {
+        e.stopImmediatePropagation()
+        var eleve = $(this).data('eleve')
+        var that = $(this)
+        $.get('/app/eleves/toggleInactiveEleve?id='+eleve, function(data) {
+            $(that).find('i').toggleClass('fa-play fa-pause')
+            $(that).closest('.fiche_eleve_div').toggleClass('disabled-card')
+
+        })
+    })
+
     $(document).on('click','#import-tab', function() {
         window.location.reload()
     })
-    $(document).on('click','#valideEleveCoursAnnee', function() {
+    $(document).on('click','#eleveCoursAnnee', function() {
 
-        $('#periode_form').val($('#selectPeriode').val())
-        $('#reussite_form').val($('#reussite').prop('checked'))
+        $('#eleveCoursAnnee').addClass('d-none')
+        $('#selectPeriodeBloc').removeClass('d-none')
+        $('#selectPeriode').val(null)
 
 
     })
@@ -289,6 +301,10 @@ const photo_eleve = () => {
                 form[name] = $(this).val();
             }
         });
+        if ($('#selectPeriode').is(':visible')) {
+            form['periode'] = $('#selectPeriode').find(':selected').val();
+        }
+        console.log(form);
         e.preventDefault();
         $.ajaxSetup({
             headers: {
