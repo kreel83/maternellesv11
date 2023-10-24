@@ -150,6 +150,11 @@
             </div>
         @endif
 
+
+@if (session('success'))
+    <div class="alert alert-success">
+      <p><a href="{{ route('cahier.seepdf', ['token' => session('token')]) }}">Télécharger le cahier de progrès</a></p>
+
     </div>
 
     <script>

@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AdminLicenceController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\CahierController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VitrineController;
@@ -36,11 +37,10 @@ Route::get('/cookies', [VitrineController::class, 'cookies'])->name('vitrine.coo
 Route::get('/contact', [VitrineController::class, 'contact'])->name('vitrine.contact');
 Route::post('/contact', [VitrineController::class, 'contactSend'])->name('vitrine.contact.send');
 
-Route::get('/download/pdf/{token}', [PdfController::class, 'telechargementDuCahierParLesParents'])->name('cahier.predownload');
-Route::post('/download/pdf', [PdfController::class, 'telechargementDuCahierParLesParentsPost'])->name('cahier.predownload.post');
-Route::get('/download/link/{id}', [PdfController::class, 'genereLienVersCahierEnPdf']);
-Route::get('/download/pdf/see/{token}', [PdfController::class, 'telechargeLeCahier'])->name('cahier.download');
-
+Route::get('/cahier/auth/{token}', [PdfController::class, 'telechargementDuCahierParLesParents'])->name('cahier.predownload');
+Route::post('/cahier/auth', [PdfController::class, 'telechargementDuCahierParLesParentsPost'])->name('cahier.predownload.post');
+//Route::get('/cahier/link/{id}', [PdfController::class, 'genereLienVersCahierEnPdf']);
+Route::get('/cahier/download/{token}', [CahierController::class, 'seepdf'])->name('cahier.seepdf');
 
 /*
 |--------------------------------------------------------------------------
