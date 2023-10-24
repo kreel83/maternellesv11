@@ -37,6 +37,62 @@ const achatLicences = () => {
         }
     })
 
+    /*
+    $(document).on('click','#selectAll1', function() {
+        if(this.checked) {
+            $(':checkbox').each(function() {
+                var idElement = $(this).attr("id");
+                if(idElement == 'enfantSelection1') {
+                    this.checked = true;
+                }
+            });
+        } else {
+            $(':checkbox').each(function() {
+                var idElement = $(this).attr("id");
+                if(idElement == 'enfantSelection1') {
+                    this.checked = false;
+                }                      
+            });
+        }
+    })
+
+    $(document).on('click','#selectAll2', function() {
+        if(this.checked) {
+            $(':checkbox').each(function() {
+                var idElement = $(this).attr("id");
+                if(idElement == 'enfantSelection2') {
+                    this.checked = true;
+                }
+            });
+        } else {
+            $(':checkbox').each(function() {
+                var idElement = $(this).attr("id");
+                if(idElement == 'enfantSelection2') {
+                    this.checked = false;
+                }                      
+            });
+        }
+    })
+
+    $(document).on('click','#selectAll3', function() {
+        if(this.checked) {
+            $(':checkbox').each(function() {
+                var idElement = $(this).attr("id");
+                if(idElement == 'enfantSelection3') {
+                    this.checked = true;
+                }
+            });
+        } else {
+            $(':checkbox').each(function() {
+                var idElement = $(this).attr("id");
+                if(idElement == 'enfantSelection3') {
+                    this.checked = false;
+                }                      
+            });
+        }
+    })
+    */
+
 }
 
 const assigneLicence = () => {

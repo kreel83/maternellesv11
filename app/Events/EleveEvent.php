@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-
+use App\Models\Configuration;
 use App\Models\Enfant;
 use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
@@ -47,8 +47,12 @@ class EleveEvent
         } else {
             $enfant->photoEleve = 'img/avatar/avatar'.$enfant->genre.'.jpg';
         }
-        
-        $lesgroupes = json_decode(Auth::user()->groupes, true);
+
+        // PDF pour Parent pas de Auth::
+        $lesgroupes = Configuration::select('groupes')->where('user_id', $enfant->user_id)->first();
+        $lesgroupes = json_decode($lesgroupes->groupes, true);
+        //$lesgroupes = json_decode(Auth::user()->groupes, true);
+
         $enfant->groupeFormatted = $enfant->groupe ? $lesgroupes[$enfant->groupe] : null;
     }
 
