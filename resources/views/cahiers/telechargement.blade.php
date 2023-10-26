@@ -59,8 +59,8 @@
             color: black;
             position: absolute;
             top: 2px;
-            left: 30px;
-            font-size: 12px;
+            left: 35px;
+            font-size: 14px;
         }
 
         .label_mois {
@@ -69,8 +69,8 @@
             color: black;
             position: absolute;
             top: 2px;
-            left: 27px;
-            font-size: 12px;
+            left: 35px;
+            font-size: 14px;
         }
 
         .label_annee {
@@ -79,8 +79,8 @@
             color: black;
             position: absolute;
             top: 2px;
-            left: 57px;
-            font-size: 12px;
+            left: 78px;
+            font-size: 14px;
         }
 
         .trait {
@@ -114,9 +114,19 @@
             border: none;
             outline: none;
             margin: 0 auto;
+            text-decoration: none;
+        }
+        .btn-go:hover {
+            color: white ! important;
         }
         .btn-go.focus {
             border: 2px solid white;    
+        }
+        .orange {
+            background-color: orange !important;
+        }
+        .bleu {
+            background-color: rgb(73, 73, 228) !important;
         }
 
         .alerte {
@@ -136,24 +146,25 @@
             color: lightgray;
             opacity: 0.3; /* Firefox */
         }
+        .trait .focus {
+            background-color: green;
+        }
     </style>
 
     <div id="espaceParent">
 
 
-
-        <h1 class="text-center">Bienvenue dans la section de téléchargement <br> du cahier de résussite de votre enfant.</h1>
-
-        <!-- Validation Errors -->
-        @if ($errors->any())
-            <div class="alerte">
-                
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}
-                    @endforeach
-                
+        <div class="d-flex justify-content-center flex-column">
+            <div class="mb-5 text-center">
+                <img src="{{asset('img/deco/les_maternelles.png')}}" alt="" width="240">
             </div>
-        @endif
+            <div class="text-center fs-1"><span class="fw-bold">B</span>ienvenue </div>
+            <div class="text-center fs-3">dans la section de téléchargement</div> 
+            <div class="text-center fs-3">du cahier de réussite de votre enfant.</div>
+            <div class="text-center my-3 fs-1 fw-bolder">{{$enfant}}</div>            
+        </div>
+
+
 
 
 
@@ -163,12 +174,24 @@
 
 
 
+
+            @if (session('success'))
+
+
+                <div class="d-flex justify-content-center mt-5">
+                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'see']) }}" class="btn-go bleu">Voir le cahier de réussite</a>
+                </div>         
+                <div class="d-flex justify-content-center mt-5">
+                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'download']) }}" class="btn-go orange">Télécharger le cahier de réussite</a>
+                </div>         
+
+            @else
             <div class="d-flex">
                 <div class="input-group position-relative jour_bloc focus">
                     <label for="" class="label_jour">jour</label>
                     <input type="text"  id="jour" name="jour" placeholder="{{ old('jour') }}" value="" required autofocus>
                     <div class="trait">
-                        <div></div>
+                        <div class="focus"></div>
                         <div></div>
                     </div>
                 </div>
@@ -193,38 +216,38 @@
                     </div>
                 </div>
             </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <button type="submit" class="btn-go">Vérification de sa date de naissance</button>
+                </div>            
+            @endif
 
-            <div class="d-flex justify-content-center mt-5">
-                <button type="submit" class="btn-go">Vérification de la date de naissance</button>
-            </div>
 
         </form>
 
-        @if (session('success'))
+        {{-- @if (session('success'))
             <div class="alert alert-success">
                 <p><a href="{{ route('cahier.download', ['token' => session('token')]) }}">Télécharger le cahier de
                         progrès</a></p>
             </div>
-        @endif
+        @endif --}}
 
 
-@if (session('success'))
-    <div class="alert alert-success">
-      <p><a href="{{ route('cahier.seepdf', ['token' => session('token')]) }}">Télécharger le cahier de progrès</a></p>
 
-    </div>
-    @endif
 
     <script>
         $(document).ready(function() {
-          $(document).on('click', '.jour_bloc, .mois_bloc, .annee_bloc', function(e) {
-              var v = $(this).find('input').val()
-              console.log('trggier', v)
-              $('.jour_bloc, .mois_bloc, .annee_bloc').removeClass('focus')
-              $(this).addClass('focus')
-             $(this).find('input').focus().val("").val(v);
-             $('.btn-go').removeClass('focus')
-          })
+
+            $(document).on('click', '.jour_bloc, .mois_bloc, .annee_bloc', function(e) {
+                var v = $(this).find('input').val()
+                console.log('trggier', v)
+                $('.jour_bloc, .mois_bloc, .annee_bloc').removeClass('focus')
+                $(this).addClass('focus')
+                $(this).find('input').focus().val("").val(v);
+                $('.btn-go').removeClass('focus')
+                $('.trait div').removeClass('focus')
+                var l = $(this).find('input').val().length
+                $(this).find('.trait div').eq(l).addClass('focus')
+            })
 
             $(document).on('keydown', '#jour', function(e) {
               if (e.key == 'Backspace') return true;
@@ -233,6 +256,8 @@
 
                 if (l == 0) {
                     if (["0", "1", "2", "3"].includes(e.key)) $('#jour').val(e.key)
+                    $('.trait div').removeClass('focus')
+                    $('.jour_bloc .trait div').eq(1).addClass('focus')
                 }
                 if (l == 1) {
                     var c = $('#jour').val()[0]
@@ -241,10 +266,14 @@
                         .key))) {
                         $('#jour').val(c + e.key)
                         $('.mois_bloc').trigger('click')
+                        $('.trait div').removeClass('focus')
+                        $('.mois_bloc .trait div').eq(0).addClass('focus')
                     }
                     if ([3].includes(parseInt(c)) && [...Array(2).keys()].includes(parseInt(e.key))) {
                         $('#jour').val(c + e.key)
                         $('.mois_bloc').trigger('click')
+                        $('.trait div').removeClass('focus')
+                        $('.mois_bloc .trait div').eq(0).addClass('focus')
                     }
                 }
             })
@@ -254,6 +283,8 @@
                 var l = $('#mois').val().length
                 if (l == 0) {
                     if (["0", "1"].includes(e.key)) $('#mois').val(e.key)
+                    $('.trait div').removeClass('focus')
+                    $('.mois_bloc .trait div').eq(1).addClass('focus')
                 }
                 if (l == 1) {
                     var c = $('#mois').val()[0]
@@ -262,10 +293,14 @@
                         .key))) {
                         $('#mois').val(c + e.key)
                         $('.annee_bloc').trigger('click')
+                        $('.trait div').removeClass('focus')
+                        $('.annee_bloc .trait div').eq(0).addClass('focus')
                     }
                     if ([1].includes(parseInt(c)) && [...Array(3).keys()].includes(parseInt(e.key))) {
                         $('#mois').val(c + e.key)
                         $('.annee_bloc').trigger('click')
+                        $('.trait div').removeClass('focus')
+                        $('.annee_bloc .trait div').eq(0).addClass('focus')
                     }
                 }
             })
@@ -291,19 +326,31 @@
                 var l = $('#annee').val().length
                   e.preventDefault()
                   if (l == 0) {
-                      if (["2"].includes(e.key)) $('#annee').val(e.key)
+                      if (["2"].includes(e.key)) {
+                        $('#annee').val(e.key)
+                        $('.trait div').removeClass('focus')
+                        $('.annee_bloc .trait div').eq(1).addClass('focus')
+                      } 
+
                   }
                   if (l == 1) {
                       var c = $('#annee').val()[$('#annee').val().length -1]
-                      if (["0"].includes(e.key)) $('#annee').val(c + e.key)
+                      if (["0"].includes(e.key)) {
+                        $('#annee').val(c + e.key)
+                        $('.trait div').removeClass('focus')
+                        $('.annee_bloc .trait div').eq(2).addClass('focus')
+                      }
+
                   }
                   if (l == 2) {
                       var c = $('#annee').val()                   
                       if ([...Array(10).keys()].includes(parseInt(e
                           .key))) {
                           $('#annee').val(c + e.key)
-                          
+                            $('.trait div').removeClass('focus')
+                            $('.annee_bloc .trait div').eq(3).addClass('focus')                          
                       }
+
                   }
                   if (l == 3) {
                       var c = $('#annee').val()                    
@@ -313,7 +360,7 @@
                           $('.btn-go').addClass('focus')
                           $('.annee_bloc').removeClass('focus')
                           $('.btn-go').focus()
-                        
+                          $('.trait div').removeClass('focus')
                       }
                   }                  
               

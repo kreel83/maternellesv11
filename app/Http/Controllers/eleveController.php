@@ -111,7 +111,7 @@ class EleveController extends Controller
 
     public function toggleInactiveEleve(Request $request) {
         $eleve = Enfant::find($request->id);
-        $eleve->reussite_disabled = $request->reussite_disabled == 1 ? 0 : 1;
+        $eleve->reussite_disabled = $eleve->reussite_disabled == 1 ? 0 : 1;
         $eleve->save();
         return 'ok';
 

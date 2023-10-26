@@ -113,8 +113,11 @@ class PdfController extends Controller
     */
     
     public function telechargementDuCahierParLesParents($token) {
+        $enfant = Enfant::where('token', $token)->first()->prenom;
         return view('cahiers.telechargement')
-            ->with('token', $token);
+            ->with('token', $token)
+            ->with('enfant', $enfant)
+            ;
     }
 
     public function telechargementDuCahierParLesParentsPost(Request $request) {

@@ -40,7 +40,7 @@ Route::post('/contact', [VitrineController::class, 'contactSend'])->name('vitrin
 Route::get('/cahier/auth/{token}', [PdfController::class, 'telechargementDuCahierParLesParents'])->name('cahier.predownload');
 Route::post('/cahier/auth', [PdfController::class, 'telechargementDuCahierParLesParentsPost'])->name('cahier.predownload.post');
 //Route::get('/cahier/link/{id}', [PdfController::class, 'genereLienVersCahierEnPdf']);
-Route::get('/cahier/download/{token}', [CahierController::class, 'seepdf'])->name('cahier.download');
+Route::get('/cahier/download/{token}', [CahierController::class, 'seepdf'])->name('cahier.seepdf');
 
 /*
 |--------------------------------------------------------------------------
