@@ -101,6 +101,10 @@ class Enfant extends Model
         return $this->user_n1_id;
     }
 
+    public function user_rel() {
+        return $this->hasOne('App\Models\User','id','user_id');
+    }
+
     public function user() {
         return $this->hasOne('App\Models\User','id','user_id')->first();
     }

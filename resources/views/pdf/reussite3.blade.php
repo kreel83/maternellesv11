@@ -382,7 +382,7 @@ $degrades = App\Models\Enfant::DEGRADE;
         <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
     </div>
     <div class="periode position-periode">
-        {{$enfant->periode()}}
+        {{$periode}}
     </div>
     <div class="section position-section">
         {{$enfant->section()}}
