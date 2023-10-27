@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <style>
         .jour_bloc,
         .mois_bloc,
@@ -371,3 +372,4 @@
     </script>
 
 @endsection
+

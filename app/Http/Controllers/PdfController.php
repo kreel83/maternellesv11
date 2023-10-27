@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
-use App\Models\Configuration;
+//use App\Models\Configuration;
 use App\Models\Enfant;
-use App\Models\Image;
-use App\Models\Resultat;
+//use App\Models\Image;
+//use App\Models\Resultat;
 use App\Models\Reussite;
-use App\Models\Section;
-use App\Models\User;
+//use App\Models\Section;
+//use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
-use PDF;
-use Browser;
-use Exception;
+//use PDF;
+//use Browser;
+//use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-use function PHPUnit\Framework\isEmpty;
+//use function PHPUnit\Framework\isEmpty;
 
 class PdfController extends Controller
 {
@@ -48,19 +48,25 @@ class PdfController extends Controller
             ])->update(['send_at' => Carbon::now()]);
             if($reussite > 0) {
                 $enfant->token = $token;
+                // Si renvoi ou cahier existant pour une période supérieure, on n'incrémente pas la période de l'enfant
                 if($status == 'E') {
-                    // A VOIR car en cas de renvoi ou oubli d'envoi ne pas incrementer
-                    $enfant->periode = $enfant->periode + 1;    
+                    $checkReussite = Reussite::where([
+                        ['user_id', Auth::id()],
+                        ['enfant_id', $enfant->id],
+                        ['periode', '>', $periode],
+                    ]);
+                    if($checkReussite->count() == 0) {
+                        $enfant->periode = $enfant->periode + 1;
+                    }
                 }
                 $enfant->save();
             } else {
                 $is_sent = false;
             }
         }
-        
-        //dd($url.' '.$enfant->id);
         return $is_sent;
     }
+
     /*
     // avec model enfant entrant
     public static function genereLienVersCahierEnPdf($enfant) {
@@ -111,6 +117,7 @@ class PdfController extends Controller
         }
     }
     */
+
     
     public function telechargementDuCahierParLesParents($token) {
         $enfant = Enfant::where('token', $token)->first()->prenom;
@@ -149,29 +156,25 @@ class PdfController extends Controller
 
     }
 
-    /*
-    // INUTILE
-    public function telechargeLeCahier($token) {
-        $enfant = Enfant::where('token', $token)->first();
-        if($enfant) {
-            return redirect()->route('cahier.seepdf', ['token' => $token]);
-        } else {
-            return Redirect::back()->withInput()->withErrors(['msg' => 'Token error']);
-        }
-    }
-    */
-
     public function cahierManage(Request $request) {
         $enfants = Enfant::where('user_id', Auth::id())->get();
         $reussites = Reussite::where('user_id', Auth::id())->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();
         $statutEmail = array();
+        $displayBtnBulk = array_fill(1, $maxPeriode, false);
         foreach ($enfants as $enfant) {
 
             if (filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL) || filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
                 $statutEmail[$enfant->id]['success'] = true;
-                $statutEmail[$enfant->id]['msg'] = 'Emails valides';
+                $contactEmails = array();
+                if (filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
+                    $contactEmails[] = $enfant->mail1;
+                }
+                if (filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
+                    $contactEmails[] = $enfant->mail2;
+                }
+                $statutEmail[$enfant->id]['msg'] = implode(' ; ', $contactEmails);;
                 $statutEmail[$enfant->id]['textcolor'] = 'black';
             } else {
                 $statutEmail[$enfant->id]['success'] = false;
@@ -179,14 +182,6 @@ class PdfController extends Controller
                 $statutEmail[$enfant->id]['textcolor'] = 'orange';
             }
 
-            /*
-            @if (filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL) || filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL))
-            {{$enfant->mail1}} ; {{$enfant->mail2}}
-        @else
-            Aucun email défini
-        @endif
-
-        */
             for ($periode=1; $periode<=$maxPeriode; $periode++) {
                 $r = $reussites->where('periode', $periode)->where('enfant_id', $enfant->id)->first();
                 if(!empty($r->send_at)) {
@@ -202,6 +197,7 @@ class PdfController extends Controller
                             $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-circle-check"></i>';
                             $statutCahier[$enfant->id][$periode]['status'] = 'PRET';
                             $statutCahier[$enfant->id][$periode]['textcolor'] = 'green';
+                            $displayBtnBulk[$periode] = true;
                         } else {
                             // cahier non terminé
                             $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-circle-exclamation"></i>';
@@ -222,11 +218,11 @@ class PdfController extends Controller
             ->with('statutCahier', $statutCahier)
             ->with('statutEmail', $statutEmail)
             ->with('enfants', $enfants)
+            ->with('displayBtnBulk', $displayBtnBulk)
             ->with('reussites', $reussites);
     }
 
     public function cahierManagePost(Request $request) {
-        //dd($request);
         //$tt=array();
         $error = array();
         $periode = $request->btnSubmit;
@@ -237,7 +233,6 @@ class PdfController extends Controller
             ->get();
         foreach ($reussites as $reussite) {
             $enfant = Enfant::find($reussite->enfant_id);
-            //$isMailSent = PdfController::genereLienVersCahierEnPdf($enfant, $periode);
             $isMailSent = $this->genereLienVersCahierEnPdf($enfant, $periode);
             if(!$isMailSent) {
                 $error[] = "L'envoi a échoué pour la période $periode de $enfant->prenom $enfant->nom";
@@ -248,8 +243,6 @@ class PdfController extends Controller
             $error[] = "Aucun cahier à envoyer";
         }
         //dd($tt);
-        //dd('coucou');
-
         /*
         $tt=array();
         $error = array();
@@ -273,34 +266,6 @@ class PdfController extends Controller
         */
         return back()->with('success', (count($error) == 0))->with('error', $error);
     }
-    /*
-    public function cahierManagePost(Request $request) {
-        //dd($request);
-        $selection = "";
-        for ($i=1; $i<=$request->maxPeriode; $i++) {  
-            if($request->has("btn-submit-$i")) {
-                $selection = "enfantSelection$i";
-                break;
-            }
-        }
-        $request->validate([
-            "{$selection}" => ['required'],
-        ], [
-            "{$selection}.required" => 'Merci de sélectionner au moins un élève en cochant la case correspondante',
-        ]);
-        $error = array();
-        //foreach ($request->enfantSelection as $enfant_id) {
-        foreach ($request->{$selection} as $enfant_id) {
-            $enfant = Enfant::find($enfant_id);
-            dd($enfant);
-            $isMailSent = PdfController::genereLienVersCahierEnPdf($enfant);
-            if(!$isMailSent) {
-                $error[] = "L'envoi a échoué pour la période $enfant->periode de $enfant->prenom $enfant->nom";
-            }
-        }
-        return back()->with('success', (count($error) == 0))->with('error', $error);
-    }
-    */
 
     public function envoiCahierIndividuel(Request $request) {
         // $status : E (envoi)  R (renvoi)
@@ -316,11 +281,6 @@ class PdfController extends Controller
             $idtag = ($status == 'E') ? '#envoierror-'.$enfant->id : '#renvoierror-'.$enfant->id;
             return json_encode(array('success' => false, 'idtag' => $idtag, 'status' => $status, 'enfant_id' => $enfant->id, 'msg' => '<div class="mt-2 mb-1 alert alert-danger" role="alert">L\'envoi a échoué</div>'));
         }
-    }
-
-    public function renvoiCahier($id, $periode) {
-        $enfant = Enfant::find($id);
-        // code...
     }
 
 }
