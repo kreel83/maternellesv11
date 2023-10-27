@@ -191,8 +191,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/fiches/populate/categorie', [ficheController::class, 'populateCategorie'])->name('populateCategorie');
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
+    Route::get('/maclasse',[EleveController::class,'maclasse'])->name('maclasse');
 
     Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
+    Route::get('/eleves/toggleInactiveEleve',[EleveController::class,'toggleInactiveEleve'])->name('toggleInactiveEleve');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
     Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
     Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');

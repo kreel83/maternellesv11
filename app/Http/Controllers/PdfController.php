@@ -66,30 +66,72 @@ class PdfController extends Controller
         }
         return $is_sent;
     }
+
+    /*
+    // avec model enfant entrant
+    public static function genereLienVersCahierEnPdf($enfant) {
+        // Mise à jour du token dans la table ' enfants '
+        //$enfant = Enfant::find($enfant_id);
+        $token = uniqid();
+        $url = route('cahier.predownload', ['token' => $token]);
+        $is_sent = false;
+        if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
+            Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            $is_sent = true;
+        }
+        if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
+            Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            $is_sent = true;
+        }
+        if($is_sent) {
+            $reussite = Reussite::where([
+                ['user_id', Auth::id()],
+                ['enfant_id', $enfant->id],
+                ['periode', $enfant->periode],
+            ])->update(['send_at' => Carbon::now()]);
+            if($reussite > 0) {
+                $enfant->token = $token;
+                $enfant->periode = $enfant->periode + 1;
+                $enfant->save();
+            } else {
+                $is_sent = false;
+            }
+        }
+        return $is_sent;
+    }
+    */
+
+    /*
+    public static function genereLienVersCahierEnPdf($enfant) {
+        //$enfant = DB::select('select user_id from enfants where id = ?', [$id]);
+        //$user = DB::select('select email,name,prenom from users where id = ?', [$enfant[0]->id]);
+        // Mise à jour du token dans la table ' enfants '
+        $token = uniqid();
+        Enfant::where('id', $enfant->id)->update(['token' => $token]);
+        $url = route('cahier.predownload', ['token' => $token]);
+        if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {        
+            //Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+        }
+        if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
+            //Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+        }
+    }
+    */
+
     
     public function telechargementDuCahierParLesParents($token) {
+        $enfant = Enfant::where('token', $token)->first()->prenom;
         return view('cahiers.telechargement')
-            ->with('token', $token);
+            ->with('token', $token)
+            ->with('enfant', $enfant)
+            ;
     }
 
     public function telechargementDuCahierParLesParentsPost(Request $request) {
 
-        $request->validate([
-            'jour' => ['required', 'integer', 'max:31'],
-            'mois' => ['required', 'integer', 'max:12'],
-            'annee' => ['required', 'integer'],
-            'token' => ['exists:enfants'],
-        ], [
-            'jour.required' => 'Le jour de naissance est obligatoire',
-            'jour.integer' => 'Le jour de naissance a un format invalide',
-            'jour.max' => 'Le jour de naissance doit être inférieur ou égal à 31',
-            'mois.required' => 'Le mois de naissance est obligatoire',
-            'mois.integer' => 'Le mois de naissance a un format invalide',
-            'mois.max' => 'Le mois de naissance doit être inférieur ou égal à 12',
-            'annee.required' => 'L\'année de naissance est obligatoire',
-            'annee.integer' => 'L\'année de naissance a un format invalide',
-            'token.exists' => 'Token invalide',
-        ]);
+
+
+     
         
         $date = Carbon::create($request->annee, $request->mois, $request->jour);
         $ddn = $date->format('Y-m-d');

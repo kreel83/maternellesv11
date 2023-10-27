@@ -49,8 +49,10 @@ class EleveEvent
         }
 
         // PDF pour Parent pas de Auth::
-        $lesgroupes = Configuration::select('groupes')->where('user_id', $enfant->user_id)->first();
-        $lesgroupes = json_decode($lesgroupes->groupes, true);
+        
+        $conf = Configuration::where('user_id', $enfant->user_id)->first();
+        $lesgroupes = [];
+        if ($conf) $lesgroupes = json_decode($conf->groupes, true);
         //$lesgroupes = json_decode(Auth::user()->groupes, true);
 
         $enfant->groupeFormatted = $enfant->groupe ? $lesgroupes[$enfant->groupe] : null;

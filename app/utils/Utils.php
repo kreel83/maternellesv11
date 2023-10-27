@@ -26,6 +26,19 @@ class Utils {
     }
 
 
+    public static function periode($enfant, $p) {
+        
+        
+        $periodes = $enfant->user_rel->periodes;
+        
+          $periode =    [   1 => ['Année entière'], 
+                            2 => ['Premier semestre','Second semestre'], 
+                            3 => ['Premier trimestre','Deuxième trimestre','Troisième trimestre']
+                        ];  
+        return $periode[$periodes][(int)$p -1];
+    }         
+
+
 
     public static function traitementPronom($comment, $enfant)
     {
@@ -114,6 +127,15 @@ class Utils {
         return $year;
 
     }
+
+    public static function calcul_annee_scolaire_formated() {
+
+
+        return self::calcul_annee_scolaire().'-'.(self::calcul_annee_scolaire()+1);
+
+    }
+
+    
 
     public static function jour_dans_anneee($date) {
         $annee_actuelle = self::calcul_annee_scolaire();

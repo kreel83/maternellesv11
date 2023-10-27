@@ -103,13 +103,18 @@
 </style>
             
             <div class="wrapper">
-                <div class="liste_classe d-flex flex-wrap tuto_liste_eleve">
+                <div class="liste_classe d-flex flex-wrap tuto_liste_eleve ">
                 @foreach ($eleves as $key=>$eleve)
                 
-                <div class="fiche_eleve_div d-flex position-relative {{$key == 0 ? "selection_eleve" : null}}"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-periode="{{$eleve->periode}}" data-donnees="{{json_encode($eleve->toArray())}}">
+                <div class="fiche_eleve_div d-flex position-relative {{$key == 0 ? "selection_eleve" : null}} {{$eleve->reussite_disabled == 1 ? 'disabled-card' : null}}"  data-prof="{{$eleve->lastProfId()}}" data-id="{{$eleve->id}}" data-periode="{{$eleve->periode}}" data-donnees="{{json_encode($eleve->toArray())}}">
+                        <div class="position-absolute inactiveEleve" title="desactiver l'élève" data-eleve="{{$eleve->id}}">
 
+                            <i class="fa-solid {{$eleve->reussite_disabled == 1 ? 'fa-play' : 'fa-pause'}}"></i>
 
+                        </div>
+                    
                     <div class="me-2 position-relative">
+
                         <div class="position-absolute" style="left: 10px; top: 46px; color: {{$eleve->genre == 'F' ? 'pink' : 'var(--blue)'}}">
                             {{ $eleve->psmsgs}}
                         </div>
@@ -139,11 +144,7 @@
                                 SH
                              </div>
                             @endif
-                            @if ($eleve->reussite_disabled == 1)
-                            <div class="reussite" style="">
-                                Inactif
-                             </div>
-                            @endif
+
                         </div>
                         {{-- <div class="prof_eleve">{{$eleve->lastUser()}}</div>                        --}}
                     </div>

@@ -257,6 +257,7 @@ class CahierController extends Controller
         // dd($reussite);
         $reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
 
+
         // Extraction des textes correspondant à chaque section
         $textes = array();
         $titres = array();
@@ -319,10 +320,14 @@ class CahierController extends Controller
     // OK avec Token
 	public function seepdf($token, $state = 'see') {
 
+
         $enfant = Enfant::where('token', $token)->first();
+        
         if($enfant) {
             $id = $enfant->id;
             $periode = Str::substr($token, 0, 1);
+            $periode_actuelle = Utils::periode($enfant, $periode);
+
         } else {
             return redirect()->route('cahier.predownload', ['token' => $token])
                 ->withErrors(['msg' => 'Token error']);
@@ -424,16 +429,17 @@ class CahierController extends Controller
 
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
-        if ($state == 'see') {
-            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user]);
+        if ($request->state != 'download') {
+            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode_actuelle]);
             // download PDF file with download method
             //return $pdf->stream('test_cahier.pdf');     
             $pdf->add_info('Title', 'Cahier de reussites de '.ucfirst($enfant->prenom));
             return $pdf->stream('Cahier de reussites de '.ucfirst($enfant->prenom.'.pdf'));
         } else {
-            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
-            $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
-            return redirect()->back()->with('success','le fichier a bine été enregistré');
+            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode_actuelle]);
+            // $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
+            return $pdf->download('test.pdf');
+            //return redirect()->back();
         }
 
 

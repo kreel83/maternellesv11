@@ -80,7 +80,9 @@ const choixTypeFiches = (Modal) => {
 
     if ($('#form1[data-message="1"]').length) {
         var myModalEl = document.getElementById('successCreate');
-        var modal = new Modal(myModalEl)
+        var modal = new Modal(myModalEl,{
+            backdrop: 'static', keyboard: false
+        })
         modal.show() 
     }
     
@@ -272,6 +274,7 @@ const jemodifielafiche = () => {
                     console.log(data)                      
  
                     $("#categorie_id").html(data);
+
                 }
             })    
     })

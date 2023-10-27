@@ -131,6 +131,10 @@ const clickOnCahier = (quill, myModal) => {
             }
         })
     })
+
+    
+
+
     $(document).on('click','#CommitGeneratePDF', function() {
         myModal.hide();
         $('#titreSection').text('Génération du cahier de réussite')

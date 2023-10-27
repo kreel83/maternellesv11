@@ -90,12 +90,19 @@ class EnfantController extends Controller
     }
 
     public function index(Request $request) {
-        $enfants = Enfant::where('user_id', Auth::id())->get();
+        
+        if (in_array($request->type,["evaluation","reussite"])) {
+
+            $enfants = Enfant::where('user_id', Auth::id())->where("reussite_disabled",0);
+        } else {
+            $enfants = Enfant::where('user_id', Auth::id());
+
+        }
         $ordre = $request->ordre ?? 'alpha';
         switch($ordre) {
-            case 'age' : $enfants = Enfant::where('user_id', Auth::id())->orderBy('ddn','DESC')->get();break;
-            case 'alpha' : $enfants = Enfant::where('user_id', Auth::id())->orderBy('prenom')->get();break;
-            case 'groupe' : $enfants = Enfant::where('user_id', Auth::id())->get();$enfants = $enfants->groupBy('groupe');break;
+            case 'age' : $enfants = $enfants->orderBy('ddn','DESC')->get();break;
+            case 'alpha' : $enfants = $enfants->orderBy('prenom')->get();break;
+            case 'groupe' : $enfants = $enfants->get();$enfants = $enfants->groupBy('groupe');break;
         }
         $nbEnfants = Enfant::where([
             ['user_id', Auth::id()],
