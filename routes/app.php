@@ -114,6 +114,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
+    Route::get('/error', [parametreController::class, 'error'])->name('error');
 });
 
 //Route::middleware(['auth'])->group(function () {
@@ -156,8 +157,10 @@ Route::middleware(['auth'])->group(function () {
         
     Route::get('/enfants/cahier/manage', [PdfController::class, 'cahierManage'])->name('cahierManage');
     Route::post('/enfants/cahier/manage', [PdfController::class, 'cahierManagePost'])->name('cahierManage.post');
+    Route::get('/enfants/cahier/apercu/{token}/{enfant_id}/{periode}', [CahierController::class, 'seepdf'])->name('cahierApercu');
+    //Route::get('/enfants/cahier/apercu', [CahierController::class, 'seepdf'])->name('cahierApercu');
+    // cette route est utilisée dans pdf.js :
     Route::post('/enfants/cahier/envoi/individuel', [PdfController::class, 'envoiCahierIndividuel'])->name('cahierManage.individuel');
-    Route::get('/enfants/cahier/renvoi/{id}/{periode}', [PdfController::class, 'renvoiCahier'])->name('renvoiCahier');
 
     Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
 

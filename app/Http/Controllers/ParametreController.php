@@ -385,6 +385,10 @@ class ParametreController extends Controller
             ->with('moisActuel', $mois);
     }
 
+    public function error() {
+        return view('errors.error');
+    }
+
     public function index() {
         return view('home.parametres');
     }

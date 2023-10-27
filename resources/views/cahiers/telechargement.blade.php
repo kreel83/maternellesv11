@@ -47,7 +47,7 @@
 
 @if (session('success'))
     <div class="alert alert-success">
-      <p><a href="{{ route('cahier.seepdf', ['token' => session('token')]) }}">Télécharger le cahier de progrès</a></p>
+      <p><a href="{{ route('cahier.seepdf', ['token' => session('token')]) }}">Télécharger le cahier de réussites</a></p>
     </div>
 @endif
 
