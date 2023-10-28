@@ -196,6 +196,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
     Route::get('/eleves/toggleInactiveEleve',[EleveController::class,'toggleInactiveEleve'])->name('toggleInactiveEleve');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
+    Route::post('/eleves/save_form',[EleveController::class,'save_form'])->name('save_eleve_form');
     Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
     Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
     Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');

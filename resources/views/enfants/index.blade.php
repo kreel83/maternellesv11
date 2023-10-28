@@ -19,7 +19,13 @@
                         </nav>                
                 </div>
 
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
+                        @if ($type == 'reussite')
+                        <div>
+
+                                <a class="btn btn-success btn-lg" href="{{ route('cahierManage') }}">Gestion des cahiers de réussites</a> 
+                        </div>
+                        @endif
                         <form action="{{route('enfants')}}">
                                 <input type="hidden" value="{{$type}}" name="type">
                                 <div class="form-group my-5 d-flex align-items-center">
@@ -34,7 +40,7 @@
                 </div>                
         </div>
 
-        @if ($type == "reussite")
+        {{-- @if ($type == "reussite")
                 @if($canSendPDF)
                 <div class="alert alert-success" role="alert">
                     <div class="row d-flex">
@@ -54,9 +60,8 @@
                             </div>		
                         </div>
                     </div>
-                   <a href="{{ route('cahierManage') }}">Gestion des PDF</a> 
                 @endif
-        @endif
+        @endif --}}
 
 
         <div class="row gx-0">
