@@ -1,9 +1,58 @@
 
 const envoiCahierIndividuel = () => {
 
+    // Bouton envoi tous les cahiers
+    $(document).on('click','.bulk', function(e) {
+        e.preventDefault();
+        $('#periode').val($(this).val());
+        //var periode = $(this).val();
+        //$('#periodeBulkEnvoi').val(periode);
+        //$('#periode').val(periode);
+        $("#envoiTousLesCahiersModal").modal('show');
+    })
+    $(document).on('click','#confirmationEnvoiTousLesCahiers', function() {
+        var form = $("#bulkForm");
+        var url = form.attr('action');
+        $.ajax({ 
+            type: "POST", 
+            url: url, 
+            //data: form.serialize() + '&periode=' + $('#periodeBulkEnvoi').val(), 
+            data: form.serialize(),
+            success: function(data) {
+                window.location.reload();
+            }, 
+            error: function(data) { 
+            } 
+        });
+        $("#envoiTousLesCahiersModal").modal('hide');
+    })
+    // Fin bouton envoi tous les cahiers
+
+    // Renvoi d'un cahier
+    $(document).on('click','.renvoicahier', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id');
+        $('#confirmationRenvoiMailId').val(id);
+        $('#renvoiModal').modal("show");
+    })
+    $(document).on('click','#confirmationRenvoiMail', function(e) {
+        e.preventDefault();
+        var id = $('#confirmationRenvoiMailId').val();
+        envoiLeLien(id);
+        $('#renvoiModal').modal("hide");
+    })
+    // Fin renvoi d'un cahier
+
+    // Envoi d'un cahier
     $(document).on('click','.envoicahier', function(e) {
         e.preventDefault();
         var id = $(this).attr('id');
+        envoiLeLien(id);
+    })
+    // Fin envoi d'un cahier
+
+    // Commun a envoi / renvoi
+    function envoiLeLien(id) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -23,7 +72,7 @@ const envoiCahierIndividuel = () => {
                 $('#result').html(data)
             }
         })
-    })
+    }
 
 }
 
