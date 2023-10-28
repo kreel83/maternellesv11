@@ -250,8 +250,8 @@ class CalendrierController extends Controller
     }
 
 
-    public function deleteEvent($id) {
-        $event = Event::find($id);
+    public function deleteEvent($event_id) {
+        $event = Event::find($event_id);
         $event->delete();
         return 'ok';
     }

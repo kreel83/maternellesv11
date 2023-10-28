@@ -16,9 +16,9 @@ use Illuminate\View\View;
 
 class EleveController extends Controller
 {
-    public function avatarEleve($id) {
+    public function avatarEleve($enfant_id) {
         $user = Auth::user();
-        $enfant = Enfant::find($id);
+        $enfant = Enfant::find($enfant_id);
 
         $degrades = Enfant::DEGRADE;
         $files = File::files(public_path('img/animaux'));
@@ -235,15 +235,15 @@ class EleveController extends Controller
         return ['state'=>true];
     }
 
-    public function voirEleve($id) {
+    public function voirEleve($enfant_id) {
         $user = Auth::user();
         $files = File::files(public_path('img/animaux'));
         $liste = array();
         foreach ($files as $file) {
             $liste[] = $file->getFileName();
         }
-        $eleve = Enfant::find($id);
-        $resultats = Resultat::resultatsPourUnEleve($id);
+        $eleve = Enfant::find($enfant_id);
+        $resultats = Resultat::resultatsPourUnEleve($enfant_id);
         return view('eleves.voir_eleve')
             ->with('flag', 'disabled')
             ->with('periodes', $this->getPeriode($user->configuration->periodes))        

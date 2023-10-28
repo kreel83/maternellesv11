@@ -7,8 +7,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Validation\Rules\Exists;
 
 class UserAuthenticated
 {
@@ -22,9 +20,19 @@ class UserAuthenticated
         
         // Récupération des paramètres passés dans les routes :
         // tous : $request->route()->parameters() / 1 seul : $request->route('nom_parametre')
-        if(!empty($request->route('id'))) {
-            $enfant = Enfant::where('id', $request->route('id'))->where('user_id', Auth::id())->first();
-            if(empty($enfant)) {
+        // $request->route()->getActionMethod()  ->  renvoi le nom de la route : ->name('')
+        if(!empty($request->route('enfant_id'))) {
+            /*
+            Benchmark::dd([
+                    'scenario 1' => fn () => Enfant::where('id', $request->route('id'))->where('user_id', Auth::id())->first(),
+                    'scenario 2' => fn () => Enfant::find($request->route('id')),
+            ]);
+            */
+            $enfant = Enfant::find($request->route('enfant_id'));
+            if($enfant) {
+                $is_ok = ($enfant->user_id == Auth::id());
+            }
+            if(empty($enfant) || !$is_ok) {
                 return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
             }
         }

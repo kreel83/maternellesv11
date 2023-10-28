@@ -34,7 +34,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('maclasse') }}">Edition de la classe</a></li>
-                <li class="breadcrumb-item"> <a href="{{ route('voirEleve', ['id' => $modif]) }}">Edition de l'élève</a></li>
+                <li class="breadcrumb-item"> <a href="{{ route('voirEleve', ['enfant_id' => $modif]) }}">Edition de l'élève</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Modification de l'élève</li>
             </ol>
             @else
