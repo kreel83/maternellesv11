@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 //use Browser;
 //use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 //use function PHPUnit\Framework\isEmpty;
@@ -28,15 +30,16 @@ class PdfController extends Controller
     public static function genereLienVersCahierEnPdf($enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
         //$enfant = Enfant::find($enfant_id);
-        $token = $periode.uniqid();
+        $token = $periode . md5($enfant->id.uniqid().env('HASH_SECRET'));
+        //$token = $periode.uniqid();
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
         if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            //Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
         if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            //Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
         
@@ -161,31 +164,35 @@ class PdfController extends Controller
         $reussites = Reussite::where('user_id', Auth::id())->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();
-        $statutEmail = array();
+        $statutEmail = array();        
         $displayBtnBulk = array_fill(1, $maxPeriode, false);
         foreach ($enfants as $enfant) {
 
-            if (filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL) || filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
+            $emails = explode(';', $enfant->mail);
+            $contactEmails = array();
+            foreach($emails as $mymail) {
+                if (filter_var($mymail, FILTER_VALIDATE_EMAIL)) {
+                    $contactEmails[] = $mymail;
+                }
+            }
+
+            if(count($contactEmails) > 0) {
+                $s = count($contactEmails) > 1 ? 's' : '';
                 $statutEmail[$enfant->id]['success'] = true;
-                $contactEmails = array();
-                if (filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
-                    $contactEmails[] = $enfant->mail1;
-                }
-                if (filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-                    $contactEmails[] = $enfant->mail2;
-                }
-                $statutEmail[$enfant->id]['msg'] = implode(' ; ', $contactEmails);;
-                $statutEmail[$enfant->id]['textcolor'] = 'black';
+                //$statutEmail[$enfant->id]['msg'] = '<button type="button" class="btn btn-success btn-sm" title="'.implode(chr(10), $contactEmails).'"><i class="fa-solid fa-circle-check me-2"></i>'.count($contactEmails).' email'.$s.'</button>';
+                $statutEmail[$enfant->id]['msg'] = '<div title="'.implode(chr(10), $contactEmails).'"><i class="fa-solid fa-circle-check me-2"></i>'.count($contactEmails).' email'.$s.'</div>';
+                $statutEmail[$enfant->id]['textcolor'] = 'green';
             } else {
                 $statutEmail[$enfant->id]['success'] = false;
-                $statutEmail[$enfant->id]['msg'] = '<i class="fa-solid fa-triangle-exclamation"></i> Aucun email défini';
+                $statutEmail[$enfant->id]['msg'] = '<i class="fa-solid fa-triangle-exclamation me-2"></i>Aucun email';
                 $statutEmail[$enfant->id]['textcolor'] = 'orange';
             }
 
             for ($periode=1; $periode<=$maxPeriode; $periode++) {
                 $r = $reussites->where('periode', $periode)->where('enfant_id', $enfant->id)->first();
                 if(!empty($r->send_at)) {
-                    $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-check"></i> Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
+                    //$statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-check"></i> Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
+                    $statutCahier[$enfant->id][$periode]['msg'] = 'Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
                     $statutCahier[$enfant->id][$periode]['status'] = 'ENVOYE';
                     $statutCahier[$enfant->id][$periode]['textcolor'] = 'black';
                 } else {
@@ -194,7 +201,7 @@ class PdfController extends Controller
                         // cahier crée
                         if($r->definitif == 1) {
                             // cahier prêt
-                            $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-circle-check"></i>';
+                            $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-regular fa-paper-plane fa-lg"></i> Envoyer';
                             $statutCahier[$enfant->id][$periode]['status'] = 'PRET';
                             $statutCahier[$enfant->id][$periode]['textcolor'] = 'green';
                             $displayBtnBulk[$periode] = true;
@@ -223,9 +230,10 @@ class PdfController extends Controller
     }
 
     public function cahierManagePost(Request $request) {
-        //$tt=array();
+        Log::info($request);
         $error = array();
-        $periode = $request->btnSubmit;
+        //$periode = $request->btnSubmit;
+        $periode = $request->periode;
         $reussites = Reussite::where('user_id', Auth::id())
             ->where('definitif', 1)
             ->where('send_at', null)
@@ -234,9 +242,11 @@ class PdfController extends Controller
         foreach ($reussites as $reussite) {
             $enfant = Enfant::find($reussite->enfant_id);
             $isMailSent = $this->genereLienVersCahierEnPdf($enfant, $periode);
+            
             if(!$isMailSent) {
                 $error[] = "L'envoi a échoué pour la période $periode de $enfant->prenom $enfant->nom";
             }
+            
             //$tt[] = $reussite->enfant_id;
         }
         if($reussites->isEmpty()) {
@@ -264,7 +274,10 @@ class PdfController extends Controller
             }
         }
         */
-        return back()->with('success', (count($error) == 0))->with('error', $error);
+        //return back()->with('success', (count($error) == 0))->with('error', $error);
+        Session::flash('success', (count($error) == 0));
+        Session::flash('error', $error);
+        return route('cahierManage');
     }
 
     public function envoiCahierIndividuel(Request $request) {
@@ -278,7 +291,7 @@ class PdfController extends Controller
             $msg = ($status == 'E') ? '<i class="fa-solid fa-check fa-lg"></i> Envoyé le '.Carbon::now()->format('d/m/Y') : '<div class="mt-2 mb-1 alert alert-success" role="alert">Mail renvoyé</div>';
             return json_encode(array('success' => true, 'idtag' => $idtag, 'status' => $status, 'enfant_id' => $enfant->id, 'msg' => $msg));
         } else {
-            $idtag = ($status == 'E') ? '#envoierror-'.$enfant->id : '#renvoierror-'.$enfant->id;
+            $idtag = ($status == 'E') ? '#envoierror-'.$enfant->id : '#renvoi-'.$enfant->id;
             return json_encode(array('success' => false, 'idtag' => $idtag, 'status' => $status, 'enfant_id' => $enfant->id, 'msg' => '<div class="mt-2 mb-1 alert alert-danger" role="alert">L\'envoi a échoué</div>'));
         }
     }

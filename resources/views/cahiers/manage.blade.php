@@ -35,10 +35,10 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
     </div>
 @endif
 
-<form action="{{ route('cahierManage.post') }}" method="POST">
+<form id="bulkForm" action="{{ route('cahierManage.post') }}" method="POST">
     @csrf
-        <input type="hidden" name="maxPeriode" value="{{$maxPeriode}}">
-
+        {{--<input type="hidden" name="maxPeriode" value="{{$maxPeriode}}">--}}
+        <input type="hidden" id="periode" name="periode">
         <table class="table align-middle">
             <thead>
                 <tr>
@@ -50,7 +50,8 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                         <th class="text-center align-top" colspan="1">
                             <h5>Période {{$periode}}</h5>
                             @if($displayBtnBulk[$periode])
-                                <button name="btnSubmit" value="{{$periode}}" class="btn btn-outline-primary mt-2 mb-2 btn-sm">Envoyer les cahiers</button>
+                                {{--<button name="btnSubmit" value="{{$periode}}" class="btn btn-outline-primary mt-2 mb-2 btn-sm">Envoyer les cahiers</button>--}}
+                                <button id="btnSubmit{{$periode}}" type="button" value="{{$periode}}" class="btn btn-outline-primary mt-2 mb-2 btn-sm bulk">Envoyer les cahiers</button>
                             @endif
                         </th>
                     @endfor
@@ -75,9 +76,11 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                 <td align="center">
                     <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
                 </td>
+
                 <td>
                     <span style="color:{{$statutEmail[$enfant->id]['textcolor']}}">{!! $statutEmail[$enfant->id]['msg'] !!}</span>
                 </td>
+                
                 @for ($periode=1; $periode<=$maxPeriode; $periode++)
                     <td class="text-center">
                         @if ($statutCahier[$enfant->id][$periode]['status'] == 'PRET')
@@ -85,19 +88,27 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                                 <div class="btn-group" role="group" aria-label="Actions">
                                     <a class="btn btn-outline-info btn-sm" type="button" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id, 'periode' => $periode]) }}" target="_blank"><i class="fa-regular fa-eye"></i> Aperçu</a>
                                     <button id="{{$enfant->id}}-{{$periode}}-E" type="button" class="btn {{ $statutEmail[$enfant->id]['success'] ? 'btn-outline-success' : 'btn-outline-secondary'}} btn-sm envoicahier" role="button" {{ $statutEmail[$enfant->id]['success'] ? '' : 'disabled'}}>
-                                    {!! $statutCahier[$enfant->id][$periode]['msg'] !!} Envoyer
+                                    {!! $statutCahier[$enfant->id][$periode]['msg'] !!}
                                     </button>                                
                                 </div>
                             </div>
                             <div id="envoierror-{{$enfant->id}}"></div>
                         @else
-                            <span style="color:{{$statutCahier[$enfant->id][$periode]['textcolor']}}">{!! $statutCahier[$enfant->id][$periode]['msg'] !!}</span>
-
                             @if ($statutCahier[$enfant->id][$periode]['status'] == 'ENVOYE')
+
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <a class="btn btn-outline-info btn-sm" type="button" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id, 'periode' => $periode]) }}" target="_blank"><i class="fa-regular fa-eye"></i> Aperçu</a>
+                                    <button id="{{$enfant->id}}-{{$periode}}-R" type="button" class="btn btn-success btn-sm renvoicahier" title="{{ $statutCahier[$enfant->id][$periode]['msg'] }}"><i class="fa-solid fa-envelope-circle-check fa-lg"></i> Renvoyer</button>
+                                </div>
+                                <div id="renvoi-{{$enfant->id}}"></div>
+                                {{--
                                 <div id="renvoi-{{$enfant->id}}">
                                     <small><a id="{{$enfant->id}}-{{$periode}}-R" class="envoicahier" href="#">Renvoyer l'email</a></small>
-                                </div>
+                                </div>                                
                                 <div id="renvoierror-{{$enfant->id}}"></div>
+                                --}}
+                            @else
+                                <span style="color:{{$statutCahier[$enfant->id][$periode]['textcolor']}}">{!! $statutCahier[$enfant->id][$periode]['msg'] !!}</span>
                             @endif
                         @endif
                     </td>
@@ -108,6 +119,46 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
         </table>
         
     </form>
+</div>
+
+<!-- Modal pour le renvoi de l'email -->
+<div class="modal fade" id="renvoiModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Renvoyer le mail aux parents</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Un email contenant le lien de téléchargement du cahier de réussites va être renvoyé à tous les contacts de l'élève.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" id="confirmationRenvoiMail">Renvoyer le Mail</button>
+            <input type="hidden" id="confirmationRenvoiMailId">
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour l'envoi en masse des cahiers (bouton sous periode) -->
+<div class="modal fade" id="envoiTousLesCahiersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Renvoyer le mail aux parents</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Un email contenant le lien de téléchargement du cahier de réussites va être renvoyé à tous les contacts de l'élève.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" id="confirmationEnvoiTousLesCahiers">Confirmer</button>
+            {{--<input type="hidden" id="periodeBulkEnvoi">--}}
+        </div>
+        </div>
+    </div>
 </div>
 
 @endsection
