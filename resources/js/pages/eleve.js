@@ -27,7 +27,18 @@ const preview_photo = (event) => {
         readURL(this);
     });
 
+    $(document).on('click',".modif_eleve",function() {
+        var id = $(this).data('id')
+        window.open('/app/eleves?id='+id,'_self')
+
+        
+    })
+
+
+    
     $(document).on('click',".avatar_form",function() {
+        if ($(this).closest('.avatarBloc').data('flag') == "disabled") return false;
+        console.log($(this).closest('div').data('flag'))
         $('.avatar_form').removeClass('selected')
         $(this).addClass('selected')
         $('#genre').val($(this).data('genre'))

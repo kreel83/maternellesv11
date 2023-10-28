@@ -24,17 +24,26 @@
     </style>
 
 
-    <div id="maclasse">
+    <div id="maclasse" data-modif={{$modif}}>
 
 
 
         <nav class="mt-5" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
             aria-label="breadcrumb">
+            @if (isset($modif))
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('maclasse') }}">Edition de la classe</a></li>
+                <li class="breadcrumb-item"> <a href="{{ route('voirEleve', ['id' => $modif]) }}">Edition de l'élève</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Modification de l'élève</li>
+            </ol>
+            @else
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Création de la classe</li>
             </ol>
+            @endif
         </nav>
         <div class="row">
             <div class="col-md-7">
@@ -104,124 +113,9 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('save_eleve') }}" method="post" id="elevePost"
-                            style="font-size: 12px; padding: 10px;" class="affiche_eleve">
-                            @csrf
+                        @include('eleves.include.eleve_form')
 
 
-
-                            <input type="hidden" id="eleve_form" name="id" value="new" />
-                            <input type="hidden" id="genre" name="genre" value="F" />
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex flex-column">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="psmsgs" id="ps"
-                                            value="ps">
-                                        <label class="form-check-label" for="ps">PS</label>
-                                    </div>
-                                    <div class="form-check">
-
-                                        <input class="form-check-input" type="radio" name="psmsgs" id="ms"
-                                            checked value="ms">
-                                        <label class="form-check-label" for="ms">MS</label>
-
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="psmsgs" id="gs"
-                                            value="gs">
-                                        <label class="form-check-label" for="gs">GS</label>
-                                    </div>
-
-                                </div>
-                                <div class="d-flex">
-                                    <div class="avatar avatar_form pink me-5 selected" data-genre="F"><i
-                                            class="fa-thin fa-user-tie-hair-long"></i></div>
-                                    <div class="avatar avatar_form blue" data-genre="G"><i
-                                            class="fa-thin fa-user-tie-hair"></i></div>
-
-                                </div>
-                                <div class="d-flex flex-column ms-3 mt-2">
-
-                                    <div class="form-check mb-3 " style="height: 15px">
-                                        <input type="checkbox" class="form-check-input" name="sh" id="sh"
-                                            value="true">
-                                        <label class="form-sh-label" for="sh">L'élève est en situation <br>de
-                                            handicap ?</label>
-                                    </div>
-                                    <div>
-                                        <button type="button" id="eleveCoursAnnee"
-                                            style="font-size: 14px;color: var(--main-color)"class="btn btn-sm btnCoursAnnéee"
-                                            >Arrivé en cours d'année ?</button>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            {{-- <div class="form-group">
-                                    <label for="">Genre</label>
-                                    <select id="genre_form"  name="genre" class="form-control">
-                                        <option value="G">Garcon</option>
-                                        <option value="F">Fille</option>
-                                    </select>
-                                </div> --}}
-
-
-                            <div id="selectPeriodeBloc" class="d-none">
-                                <label for="">Prochain cahier de réussite prévu pour fin :</label>    
-                                <select name="periode"  class="custom-select" style="width: 100% !important">
-                                    <option value="">Choississez une période</option>
-                                    @foreach ($periodes as $key => $periode)
-                                        <option value="{{ $key + 1 }}" {{$key == 0 ? 'selected' : null}}>{{ $periode }}</option>
-                                    @endforeach
-                                </select>
-                            </div>    
-
-                            <div class="icone-input my-4">
-                                <i class="fa-solid fa-user"></i>
-                                <input type="text" class="custom-input" id="nom_form" name="nom" value=""
-                                    placeholder="Nom de l'élève" />
-                            </div>
-                            <div class="icone-input my-4">
-                                <i class="fa-solid fa-user"></i>
-                                <input type="text" class="custom-input" id="prenom_form" name="prenom"
-                                    value="" placeholder="Prénom de l'élève" />
-                            </div>
-                            <div class="icone-input my-4">
-                                <i class="fa-solid fa-cake-candles"></i>
-                                <input type="date" class="custom-input" id="ddn_form" name="ddn" value=""
-                                    placeholder="Date de naissance de l'élève" />
-                            </div>
-                            <div class="custom-area">
-                                <textarea type="date" class="custom-input" id="commentaire_form" name="comment" placeholder="Commentaire"></textarea>
-                            </div>
-
-                            <div class="icone-input my-4">
-                                <i class="fa-sharp fa-solid fa-envelope"></i>
-                                <input type="email" class="custom-input" id="mail1_form" name="mail1"
-                                    value="" placeholder="Mail principal" />
-                            </div>
-                            <div class="icone-input my-4">
-                                <i class="fa-sharp fa-solid fa-envelope"></i>
-                                <input type="email" class="custom-input" id="mail2_form" name="mail2"
-                                    value="" placeholder="Mail secondaire" />
-                            </div>
-
-
-
-
-
-
-
-                            <div class="d-flex">
-                                <button type="button" class="custom_button big submit save_eleve">Sauvegarder</button>
-
-                                <button type="button" data-id="new"
-                                    class="custom_button submit remove_eleve delete ms-1">Retirer</button>
-                            </div>
-
-
-
-                        </form>
 
 
                     </div>

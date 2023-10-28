@@ -40,6 +40,8 @@ class EleveEvent
         $mails = explode(';', $enfant->mail);
         $enfant->mail1 = isset($mails[0]) ? $mails[0] : null;
         $enfant->mail2 = isset($mails[1]) ? $mails[1] : null;
+        $enfant->mail3 = isset($mails[2]) ? $mails[2] : null;
+        $enfant->mail4 = isset($mails[3]) ? $mails[3] : null;
         $enfant->jour = Carbon::parse($enfant->ddn)->format('d');
         $enfant->age = $this->convertDate(Carbon::parse($enfant->ddn)->diffForHumans([ 'parts'=>2, 'short'=>false, ]));
         if ($enfant->photo) {

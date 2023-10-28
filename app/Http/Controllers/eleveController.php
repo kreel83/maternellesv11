@@ -49,7 +49,7 @@ class EleveController extends Controller
             ->with('files', $liste);
     }
 
-    public function liste() {
+    public function liste(Request $request) {
         $user = Auth::user();
         $files = File::files(public_path('img/animaux'));
         $liste = array();
@@ -61,10 +61,12 @@ class EleveController extends Controller
         return view('eleves.liste')
             ->with('periodes', $this->getPeriode($user->configuration->periodes))
             ->with('files', $liste)
+            ->with('modif', $request->id)
             ->with('professeur', "null")
             ->with('profs', $user->profs())
             ->with('tous', $user->tous())
-            ->with('eleves',$user->liste());
+            ->with('eleves',$user->liste())
+            ->with('eleve', new Enfant());
     }
 
     public function setAnimaux(Request $request) {
@@ -160,6 +162,13 @@ class EleveController extends Controller
         return view('eleves.include.getAnneeEnCours')->with('periodes', $this->getPeriode($periodes));
     }
 
+
+    public function save_form(Request $request) {
+        dd($request);
+    }
+
+
+
     public function save(Request $request) {
 
    
@@ -172,7 +181,9 @@ class EleveController extends Controller
             'prenom' => ['required', 'string', 'max:255'],
             'ddn' => ['required', 'date'],
             'mail1' => ['email:rfc,dns','nullable'],
-            'mail2' => ['email:rfc,dns','nullable']
+            'mail2' => ['email:rfc,dns','nullable'],
+            'mail3' => ['email:rfc,dns','nullable'],
+            'mail4' => ['email:rfc,dns','nullable']
             
         ];
         $messages = [
@@ -183,7 +194,9 @@ class EleveController extends Controller
             'ddn.required' => 'La date de naissance est obligatoire',
             'mail.*.email' => 'Ce mail semble ne pas etre correct',
             'mail1.email' => 'Ce mail semble ne pas etre correct',
-            'mail2.email' => 'Ce mail semble ne pas etre correct'
+            'mail2.email' => 'Ce mail semble ne pas etre correct',
+            'mail3.email' => 'Ce mail semble ne pas etre correct',
+            'mail4.email' => 'Ce mail semble ne pas etre correct'
 
         ];
 
@@ -197,7 +210,7 @@ class EleveController extends Controller
         $datas = $request->except(['_token']);
 
 
-        $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2']]));
+        $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2'],$datas['mail3'],$datas['mail4']]));
         $datas['user_id'] = Auth::id();
         $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
@@ -215,6 +228,8 @@ class EleveController extends Controller
         $datas['annee_scolaire'] = Auth::user()->calcul_annee_scolaire();
         unset($datas['mail1']);
         unset($datas['mail2']);
+        unset($datas['mail3']);
+        unset($datas['mail4']);
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
 
         return ['state'=>true];
@@ -229,7 +244,9 @@ class EleveController extends Controller
         }
         $eleve = Enfant::find($id);
         $resultats = Resultat::resultatsPourUnEleve($id);
-        return view('eleves.voir_eleve')        
+        return view('eleves.voir_eleve')
+            ->with('flag', 'disabled')
+            ->with('periodes', $this->getPeriode($user->configuration->periodes))        
             ->with('files', $liste)
             ->with('professeur', "null")
             ->with('profs', $user->profs())

@@ -52,6 +52,13 @@ Alpine.start();
 $(document).ready(function($) {
 
 
+    if ($('#maclasse').length) {
+        if ($('#maclasse').attr('data-modif')) {
+            var id = $('#maclasse').attr('data-modif')
+            
+            $('.fiche_eleve_div[data-id="'+id+'"]').trigger('click')
+        }
+    }
     
 
     $(document).on("click",".card__share  div", function(e){

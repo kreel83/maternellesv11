@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\Auth;
                                 class="nav-item nav-link  {{ $menu == 'accueil' ? 'active' : null }}">Tableau de bord
                             </a>
                             @php
-                                $params = in_array($menu, ['evaluation', 'reussite', 'affectation_groupe', 'avatar','maclasse']);
+                                $params = in_array($menu, ['evaluation',  'affectation_groupe', 'avatar','maclasse']);
                             @endphp
 
                             @if (Auth::user()->is_enfants())
@@ -83,6 +83,26 @@ use Illuminate\Support\Facades\Auth;
                                             mes groupes</a>
 
                                     </div>
+                                </div>
+                            @endif
+
+                            @php
+                            $params = in_array($menu, ['manage', 'reussite']);
+                            @endphp
+
+                            @if (Auth::user()->is_enfants())
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
+                                        data-bs-toggle="dropdown">Les cahiers de réussites</a>
+                                    <div class="dropdown-menu">
+                                        <a href="{{ route('enfants', ['type' => 'reussite']) }}"
+                                            class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les
+                                            cahiers de réussite</a>
+                                            <a href="{{ route('cahierManage') }}"
+                                                class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère les
+                                                cahiers de réussite</a>
+                                    </div>
+
                                 </div>
                             @endif
                             @php

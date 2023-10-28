@@ -72,7 +72,7 @@ class Enfant extends Model
     ];
 
 
-    public $mail1, $mail2, $photoEleve, $jour, $age, $groupeFormatted;
+    public $mail1, $mail2, $mail3, $mail4, $photoEleve, $jour, $age, $groupeFormatted;
 
 
     public function item() {
