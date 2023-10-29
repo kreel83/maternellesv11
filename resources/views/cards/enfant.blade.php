@@ -18,16 +18,14 @@
 
     .btn_modif_avatar {
       font-size: 14px !important;
-      border-radius: 25px;
-      border: 1px solid white;
+
       padding: 8px 24px !important;
       line-height: 16px !important;
 
     }
 
     .btn_modif_avatar:hover {
-      background-color: white;
-      color: var(--main-color) !important;
+
 
 
     }
@@ -100,13 +98,13 @@ if (!is_null($enfant->groupe)){
   @endif  
   @if ($type == "reussite")
     <div class="footer p-2 d-flex justify-item-around position-relative"  style="background-color: var(--main-color)">
-        <div class="position-absolute" style="top: 5px; left: 55px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div>
-        <div class="position-absolute" style="top: 5px; left: 127px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div>
+        {{-- <div class="position-absolute" style="top: 5px; left: 55px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div>
+        <div class="position-absolute" style="top: 5px; left: 127px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div> --}}
         <div class="position-absolute" style="top: 5px; left: 206px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_last()}}</div>
         
-        <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-paper-plane-top"></i></a>
-        <a href="enfants/{{$enfant->id}}/cahier/seepdf/see"  ><i class="fa-light fa-file-pdf"></i></a>
-        <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-notes"></i></a>
+        {{-- <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-paper-plane-top"></i></a>
+        <a href="enfants/{{$enfant->id}}/cahier/seepdf/see"  ><i class="fa-light fa-file-pdf"></i></a> --}}
+        <a href="enfants/{{$enfant->id}}/cahier" style="font-size: 14px; padding-top: 7px"  ><i class="fa-light fa-notes me-2"></i>Créer le cahier de réussite</a>
     </div>
   @endif
   @if ($type == "avatar")

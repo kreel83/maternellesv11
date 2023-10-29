@@ -7,7 +7,7 @@ style="font-size: 12px; padding: 10px;" class="affiche_eleve">
 <input type="hidden" id="eleve_form" name="id" value="new" />
 <input type="hidden" id="genre" name="genre" value="F" />
 <div class="d-flex justify-content-between">
-    <div class="d-flex flex-column">
+    {{-- <div class="d-flex flex-column">
         <div class="form-check">
             <input class="form-check-input" type="radio" name="psmsgs" id="ps"
                 value="ps" {{$eleve->psmsgs == 'ps' ? 'checked' : null}} {{ $flag ?? null}}>
@@ -26,7 +26,7 @@ style="font-size: 12px; padding: 10px;" class="affiche_eleve">
             <label class="form-check-label" for="gs">GS</label>
         </div>
 
-    </div>
+    </div> --}}
     <div class="d-flex avatarBloc" data-flag="{{ $flag ?? null}}">
         <div class="avatar avatar_form pink me-5 {{$eleve->genre == 'F' ? 'selected' : null}}" data-genre="F"><i
                 class="fa-thin fa-user-tie-hair-long"></i></div>
@@ -69,18 +69,28 @@ style="font-size: 12px; padding: 10px;" class="affiche_eleve">
         @endforeach
     </select>
 </div>    
+<div class="mt-3">
 
-<div class="icone-input my-4">
+   
+    <select name="psmsgs" id="psmsgs" value="{{$eleve->psmsgs}}"  class="custom-select" style="width: 100% !important"   {{ $flag ?? null}}>
+        <option value="">Choississez une section</option>
+        <option value="ps" {{$eleve->psmsgs == 'ps' ? 'selected' : null}}>Petite section</option>    
+        <option value="ms" {{$eleve->psmsgs == 'ms' ? 'selected' : null}}>Moyenne section</option>    
+        <option value="gs" {{$eleve->psmsgs == 'gs' ? 'selected' : null}}>Grande section</option>    
+    </select>
+</div>    
+
+<div class="icone-input my-2">
     <i class="fa-solid fa-user"></i>
     <input type="text" class="custom-input" id="nom_form" name="nom" value="{{ $eleve->nom }}"
         placeholder="Nom de l'élève"  {{ $flag ?? null}} />
 </div>
-<div class="icone-input my-4">
+<div class="icone-input my-2">
     <i class="fa-solid fa-user"></i>
     <input type="text" class="custom-input" id="prenom_form" name="prenom"
     value="{{ $eleve->prenom }}" placeholder="Prénom de l'élève"  {{ $flag ?? null}}/>
 </div>
-<div class="icone-input my-4">
+<div class="icone-input my-2">
     <i class="fa-solid fa-cake-candles"></i>
     <input type="date" class="custom-input" id="ddn_form" name="ddn" value="{{ $eleve->ddn }}"
         placeholder="Date de naissance de l'élève"  {{ $flag ?? null}} />
@@ -89,19 +99,19 @@ style="font-size: 12px; padding: 10px;" class="affiche_eleve">
     <textarea type="date" class="custom-input" id="commentaire_form" name="comment" placeholder="Commentaire"  {{ $flag ?? null}}>{{ $eleve->comment }}</textarea>
 </div>
 
-<div class="icone-input my-4">
+<div class="icone-input my-2">
     <i class="fa-sharp fa-solid fa-envelope"></i>
     <input type="email" class="custom-input" id="mail1_form" name="mail1" id="mail1" value="{{ $eleve->mail1 }}" placeholder="Mail principal"  {{ $flag ?? null}}/>
 </div>
-<div class="icone-input my-4">
+<div class="icone-input my-2">
     <i class="fa-sharp fa-solid fa-envelope"></i>
     <input type="email" class="custom-input" id="mail2_form" name="mail2" id="mail2" value="{{ $eleve->mail2 }}" placeholder="Mail secondaire" {{ $flag ?? null}} />
 </div>
-<div class="icone-input my-4">
+<div class="icone-input my-2">
     <i class="fa-sharp fa-solid fa-envelope"></i>
     <input type="email" class="custom-input" id="mail3_form" name="mail3" id="mail3" value="{{ $eleve->mail3 }}" placeholder="Mail supplementaire"  {{ $flag ?? null}}/>
 </div>
-<div class="icone-input my-4">
+<div class="icone-input my-2">
     <i class="fa-sharp fa-solid fa-envelope"></i>
     <input type="email" class="custom-input" id="mail4_form" name="mail4" id="mail4" value="{{ $eleve->mail4 }}" placeholder="Mail supplementaire" {{ $flag ?? null}} />
 </div>

@@ -29,7 +29,7 @@ const preview_photo = (event) => {
 
     $(document).on('click',".modif_eleve",function() {
         var id = $(this).data('id')
-        window.open('/app/eleves?id='+id,'_self')
+        window.open('/app/eleves?enfant_id='+id,'_self')
 
         
     })
@@ -279,7 +279,7 @@ const photo_eleve = () => {
         $('#mail1_form').val(mails[0])
         $('#mail2_form').val(mails[1])
         $('#eleve_form').val(data.id)
-        $('#'+data.psmsgs).prop("checked", true)
+        $('#psmsgs').val(data.psmsgs)
         if (data.sh == 1 ) {
             $('#sh').attr('checked',true)
         }  else {
@@ -342,6 +342,7 @@ const photo_eleve = () => {
                     $.each(data.errors,function(input_name,input_errors){
                         $.each(input_errors,function(i,error){
                             $('<small class="error_input">'+error+'</small><br>').insertAfter('#elevePost input[name="'+input_name+'"]');
+                            $('<small class="error_input">'+error+'</small><br>').insertAfter('#elevePost select[name="'+input_name+'"]');
                         });
                     });
                 }
