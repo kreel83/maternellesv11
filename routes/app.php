@@ -119,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
 
 //Route::middleware(['auth'])->group(function () {
     // Les URLs ci-dessous nécessitent authentification + abonnement en cours
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth','user'])->group(function () {
         //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
         
         //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
@@ -128,7 +128,28 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tutos/ajax', [TutoController::class, 'ajax'])->name('ajax');
     Route::get('/tutos/modetuto', [TutoController::class, 'modetuto'])->name('modeTuto');
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
+
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
+    Route::get('/enfants/{enfant_id}/items', [ItemController::class, 'index'])->name('items');
+    Route::get('/enfants/{enfant_id}/cahier', [CahierController::class, 'index'])->name('cahier');
+    Route::get('/enfants/{enfant_id}/pdfview', [CahierController::class, 'pdfview'])->name('pdfview');
+    Route::get('/enfants/{enfant_id}/redoPdf', [CahierController::class, 'redoPdf'])->name('redoPdf');
+    Route::post('/enfants/{enfant_id}/cahier/saveCommentaireGeneral', [CahierController::class, 'saveCommentaireGeneral'])->name('saveCommentaireGeneral');
+    Route::post('/enfants/{enfant_id}/translate', [CahierController::class, 'translate'])->name('translate');
+    Route::post('/enfants/{enfant_id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
+    Route::post('/enfants/{enfant_id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
+    Route::post('/enfants/{enfant_id}/cahier/reformuler', [CahierController::class, 'reformuler'])->name('reformuler');
+    Route::get('/enfants/{enfant_id}/cahier/reactualiser', [CahierController::class, 'reactualiser'])->name('reactualiser');
+    Route::get('/enfants/{enfant_id}/cahier/calcul_duration', [CahierController::class, 'calcul_duration'])->name('calcul_duration');
+    Route::get('/enfants/{enfant_id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
+    Route::get('/enfants/{enfant_id}/add_phrase/{phrase}', [CahierController::class, 'add_phrase'])->name('add_phrase'); // phrase = commentaire_id ??
+    Route::get('/enfants/{id}/remove_phrase/{phrase_id}', [CahierController::class, 'remove_phrase'])->name('remove_phrase'); // A VERIFIER id si enfant et utilisé cahier.js ligne 41
+    Route::get('/cahiers/get_apercu/{enfant_id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
+    Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
+    Route::get('/enfants/{enfant_id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
+    Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');  // id = model enfant ??
+    Route::post('/enfants/{enfant_id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
+    /*
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
     Route::get('/enfants/{id}/pdfview', [CahierController::class, 'pdfview'])->name('pdfview');
@@ -148,6 +169,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
+    */
+
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
     //Route::get('/home', [HomeController::class, 'index'])->name('home');
     //Route::get('/deco', [UserController::class, 'deco'])->name('deco');
@@ -162,7 +185,7 @@ Route::middleware(['auth'])->group(function () {
     // cette route est utilisée dans pdf.js :
     Route::post('/enfants/cahier/envoi/individuel', [PdfController::class, 'envoiCahierIndividuel'])->name('cahierManage.individuel');
 
-    Route::get('/get_liste_phrase/{section}/{enfant}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
+    Route::get('/get_liste_phrase/{section_id}/{enfant_id}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
 
     Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
     Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');
@@ -173,7 +196,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');
-    Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
+    Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase'); // commentaire_id ?? rattaché à un user ??
     Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
@@ -200,7 +223,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
     Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
     Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
-    Route::get('eleves/view/{id}',[EleveController::class,'voirEleve'])->name('voirEleve');
+    Route::get('eleves/view/{enfant_id}',[EleveController::class,'voirEleve'])->name('voirEleve');
     Route::get('eleves/getAnneeEnCours',[EleveController::class,'getAnneeEnCours'])->name('getAnneeEnCours');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
@@ -215,7 +238,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/periode/save',[\App\Http\Controllers\CalendrierController::class,'periode_save'])->name('periode_save');
     Route::post('/calendar/periodes/save',[\App\Http\Controllers\CalendrierController::class,'savePeriode']);
     Route::post('/calendar/event/add',[\App\Http\Controllers\CalendrierController::class,'saveEvent'])->name('event');
-    Route::get('/calendar/event/delete/{id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
+    Route::get('/calendar/event/delete/{event_id}',[\App\Http\Controllers\CalendrierController::class,'deleteEvent'])->name('deleteEvent');
     Route::get('/calendar/getEvent',[\App\Http\Controllers\CalendrierController::class,'getEvent'])->name('getEvent');
     Route::get('/calendar/getPeriodes',[\App\Http\Controllers\CalendrierController::class,'getPeriodes'])->name('getPeriodes');
     
@@ -226,9 +249,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/password',[\App\Http\Controllers\EnfantController::class,'password'])->name('password');
     Route::post('/password_operation',[\App\Http\Controllers\EnfantController::class,'password_operation'])->name('password_operation');
 
-
-    Route::get('/editerPDF/{enfant}', [CahierController::class, 'editerPDF'])->name('editerPDF');
-    Route::get('/deleteReussite/{enfant}', [CahierController::class, 'deleteReussite'])->name('deleteReussite');
+    Route::get('/editerPDF/{enfant_id}', [CahierController::class, 'editerPDF'])->name('editerPDF');
+    Route::get('/deleteReussite/{enfant_id}', [CahierController::class, 'deleteReussite'])->name('deleteReussite');
 
     Route::get('/monprofil', [ParametreController::class, 'monprofil'])->name('monprofil');
     Route::post('/monprofil', [ParametreController::class, 'savemonprofil'])->name('savemonprofil');
@@ -241,7 +263,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/directeur', [ParametreController::class, 'savedirecteur'])->name('directeur.post');
 
     Route::get('/mesfiches', [ItemController::class, 'mesfiches'])->name('mesfiches');
-
     
     Route::get('/initClasse', [AdminController::class, 'initClasse'])->name('initClasse');
     Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
@@ -255,7 +276,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");
     Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
     Route::post('subscribe/resume', [SubscriptionController::class, 'resumeSubscription'])->name("subscribe.resumesubscription");
-    Route::get('/invoice/download/{number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
+    Route::get('/invoice/download/{facture_number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
     /*
     Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
         return $request->user()->downloadInvoice($invoiceId);

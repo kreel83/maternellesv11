@@ -33,7 +33,7 @@ class ItemController extends Controller
         return view('mesfiches.index')->with('items', $items)->with('sections', $sections);
     }
 
-    public function index($id, Request $request) {
+    public function index($enfant_id, Request $request) {
 
         if($request->sectionID) {
             $section = Section::skip((int)$request->sectionID)->take(1)->first();
@@ -41,7 +41,7 @@ class ItemController extends Controller
             $section = Section::first();
         }
         
-        $enfant = Enfant::find($id);
+        $enfant = Enfant::find($enfant_id);
         $sections = Section::orderBy('ordre')->get();
         $fiches = Auth::user()->mesfiches();
 
