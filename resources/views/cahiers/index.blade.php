@@ -115,7 +115,7 @@
                         data-enfant="{{ $enfant->id }}">
                     <div class="form-check-label labelDefinitif labelDefinitifDroit {{$reussite && $reussite->definitif == 1 ? 'active' : null}}" for="definitif">Finaliser le PDF</div>
                 </div>
-                <a target="_blank" href="{{ route('cahier.seepdf', ['token' => $enfant->token, 'state' => 'see']) }}"
+                <a target="_blank" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id,'periode' => $enfant->periode]) }}"
                     data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $reussite && $reussite->definitif == 0 ? 'd-none' : null }}"
                     id="pdf" style="margin-top: 0 !important">Voir le PDF</a>
                 <div 

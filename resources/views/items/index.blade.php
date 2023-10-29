@@ -8,7 +8,9 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: red;
-            padding-top: 50%;
+            width: fit-content;
+            height: 70px;
+        
 
         }
     </style>
@@ -37,7 +39,7 @@
             $degrades = App\Models\Enfant::DEGRADE;
         @endphp
 
-        <div class="col-md-12 position-relative ">
+        <div class="col-md-12 position-relative vh-100 ">
             <div class="custom-container">
 
             

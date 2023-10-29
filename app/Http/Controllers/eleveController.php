@@ -50,6 +50,12 @@ class EleveController extends Controller
     }
 
     public function liste(Request $request) {
+        if ($request->enfant_id) {
+            $e = Enfant::find($request->enfant_id);
+            if (!$e || $e->user_id != Auth::id()) {
+                return dd('false');
+            }
+        }
         $user = Auth::user();
         $files = File::files(public_path('img/animaux'));
         $liste = array();
@@ -180,6 +186,7 @@ class EleveController extends Controller
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'ddn' => ['required', 'date'],
+            'psmsgs' => ['required'],
             'mail1' => ['email:rfc,dns','nullable'],
             'mail2' => ['email:rfc,dns','nullable'],
             'mail3' => ['email:rfc,dns','nullable'],
@@ -187,6 +194,7 @@ class EleveController extends Controller
             
         ];
         $messages = [
+            'psmsgs.required' => 'La section est obligatoire.',
             'nom.required' => 'Le nom est obligatoire.',
             'nom.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
@@ -211,6 +219,8 @@ class EleveController extends Controller
 
 
         $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2'],$datas['mail3'],$datas['mail4']]));
+        $datas['mail'] = $datas['mail'] == '' ? null : $datas['mail'];
+
         $datas['user_id'] = Auth::id();
         $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
