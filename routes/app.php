@@ -142,12 +142,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{enfant_id}/cahier/reactualiser', [CahierController::class, 'reactualiser'])->name('reactualiser');
     Route::get('/enfants/{enfant_id}/cahier/calcul_duration', [CahierController::class, 'calcul_duration'])->name('calcul_duration');
     Route::get('/enfants/{enfant_id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
-    Route::get('/enfants/{enfant_id}/add_phrase/{phrase}', [CahierController::class, 'add_phrase'])->name('add_phrase'); // phrase = commentaire_id ??
+    Route::get('/enfants/{enfant_id}/add_phrase/{commentaire_id}', [CahierController::class, 'add_phrase'])->name('add_phrase');
     Route::get('/enfants/{id}/remove_phrase/{phrase_id}', [CahierController::class, 'remove_phrase'])->name('remove_phrase'); // A VERIFIER id si enfant et utilisé cahier.js ligne 41
     Route::get('/cahiers/get_apercu/{enfant_id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{enfant_id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
-    Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');  // id = model enfant ??
+    //Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // remplacé par seepdf
     Route::post('/enfants/{enfant_id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     /*
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
@@ -196,7 +196,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');
-    Route::get('/parametres/phrases/{id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase'); // commentaire_id ?? rattaché à un user ??
+    Route::get('/parametres/phrases/{commentaire_id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
     Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');

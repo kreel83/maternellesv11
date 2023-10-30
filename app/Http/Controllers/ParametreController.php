@@ -393,8 +393,8 @@ class ParametreController extends Controller
         return view('home.parametres');
     }
 
-    public function deletePhrase($id) {
-        Commentaire::find($id)->delete();
+    public function deletePhrase($commentaire_id) {
+        Commentaire::find($commentaire_id)->delete();
         return 'ok';
     }
 

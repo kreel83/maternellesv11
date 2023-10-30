@@ -11,7 +11,7 @@
         <h2 class="h1-responsive font-weight-bold text-center my-4">Nous contacter</h2>
 
         <p class="text-center w-responsive mx-auto mb-5">Vous avez des questions ? N'hésitez pas à nous contacter directement. Notre équipe vous répondra dans les
-            meilleurs délais pour vous aider.</p>
+            meilleurs délais.</p>
 
         
 
@@ -62,7 +62,7 @@
                     </li>
 
                     <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                        <p>contact@lesmaternelles.com</p>
+                        <p>{{ env('MAIL_FROM_ADDRESS') }}</p>
                     </li>
                 </ul>
             </div>

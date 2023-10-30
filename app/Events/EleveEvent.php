@@ -37,7 +37,7 @@ class EleveEvent
      */
     public function __construct(Enfant $enfant)
     {
-        $mails = explode(';', $enfant->mail);
+        $enfant->mails = empty($enfant->mail) ? array() : explode(';', $enfant->mail);
         $enfant->mail1 = isset($mails[0]) ? $mails[0] : null;
         $enfant->mail2 = isset($mails[1]) ? $mails[1] : null;
         $enfant->mail3 = isset($mails[2]) ? $mails[2] : null;

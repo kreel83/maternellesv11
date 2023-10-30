@@ -34,15 +34,21 @@ class PdfController extends Controller
         //$token = $periode.uniqid();
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
+        if(!empty($enfant->mails)) {
+            Mail::to($enfant->mails)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            $is_sent = true;
+        }
+        //dd('coucou');
+        /*
         if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
-            //Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
         if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-            //Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
-        
+        */
         if($is_sent) {
             $reussite = Reussite::where([
                 ['user_id', Auth::id()],
@@ -167,20 +173,11 @@ class PdfController extends Controller
         $statutEmail = array();        
         $displayBtnBulk = array_fill(1, $maxPeriode, false);
         foreach ($enfants as $enfant) {
-
-            $emails = explode(';', $enfant->mail);
-            $contactEmails = array();
-            foreach($emails as $mymail) {
-                if (filter_var($mymail, FILTER_VALIDATE_EMAIL)) {
-                    $contactEmails[] = $mymail;
-                }
-            }
-
-            if(count($contactEmails) > 0) {
-                $s = count($contactEmails) > 1 ? 's' : '';
+            
+            if(!empty($enfant->mails) > 0) {
+                $s = count($enfant->mails) > 1 ? 's' : '';
                 $statutEmail[$enfant->id]['success'] = true;
-                //$statutEmail[$enfant->id]['msg'] = '<button type="button" class="btn btn-success btn-sm" title="'.implode(chr(10), $contactEmails).'"><i class="fa-solid fa-circle-check me-2"></i>'.count($contactEmails).' email'.$s.'</button>';
-                $statutEmail[$enfant->id]['msg'] = '<div title="'.implode(chr(10), $contactEmails).'"><i class="fa-solid fa-circle-check me-2"></i>'.count($contactEmails).' email'.$s.'</div>';
+                $statutEmail[$enfant->id]['msg'] = '<div title="'.implode(chr(10), $enfant->mails).'"><i class="fa-solid fa-circle-check me-2"></i>'.count($enfant->mails).' email'.$s.'</div>';
                 $statutEmail[$enfant->id]['textcolor'] = 'green';
             } else {
                 $statutEmail[$enfant->id]['success'] = false;
@@ -191,7 +188,6 @@ class PdfController extends Controller
             for ($periode=1; $periode<=$maxPeriode; $periode++) {
                 $r = $reussites->where('periode', $periode)->where('enfant_id', $enfant->id)->first();
                 if(!empty($r->send_at)) {
-                    //$statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-check"></i> Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
                     $statutCahier[$enfant->id][$periode]['msg'] = 'Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
                     $statutCahier[$enfant->id][$periode]['status'] = 'ENVOYE';
                     $statutCahier[$enfant->id][$periode]['textcolor'] = 'black';
