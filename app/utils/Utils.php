@@ -40,6 +40,29 @@ class Utils {
 
 
 
+    public static function commentaire(&$commentaire, $prenom, $genre) {
+
+            if ($genre == 'F') {
+                $commentaire->phrase_feminin = str_replace('Lucie ', $prenom.' ', $commentaire->phrase_feminin);
+            } else {
+                $commentaire->phrase_masculin = str_replace('Tom ', $prenom.' ', $commentaire->phrase_masculin);
+            }
+
+        return true;
+    }
+
+    public static function commentaires(&$commentaires, $prenom, $genre) {
+        foreach ($commentaires as $commentaire) {
+            if ($genre == 'F') {
+                $commentaire->phrase_feminin = str_replace('Lucie ', $prenom.' ', $commentaire->phrase_feminin);
+            } else {
+                $commentaire->phrase_masculin = str_replace('Tom ', $prenom.' ', $commentaire->phrase_masculin);
+            }
+        }
+        return true;
+    }
+
+
     public static function traitementPronom($comment, $enfant)
     {
         $enfant = Enfant::find($enfant);

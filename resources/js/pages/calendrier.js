@@ -158,6 +158,7 @@ const selection = () => {
         var id = $(this).attr('data-id')
         var date = $(this).attr('data-date_js')
         console.log('id', id, date)
+        $('.cadre_cal').addClass('d-none')
         $('#do_delete_event').attr('data-id', id)
         $('#do_delete_event').attr('data-date', date)
     })

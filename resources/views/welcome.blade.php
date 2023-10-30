@@ -341,7 +341,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                         </td>
                         <td class="name {{$eleve->genre}}">
                             <div>
-                                <a href="{{ route('voirEleve', ['id' => $eleve->id]) }}">
+                                <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
                                 {{ $eleve->prenom.' '.$eleve->nom }}
                                 </a>
 
@@ -391,7 +391,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                     </td>
                     <td class="name {{$eleve->genre}}">
                         <div>
-                            <a href="{{ route('voirEleve', ['id' => $eleve->id]) }}">
+                            <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
                             {{ $eleve->prenom.' '.$eleve->nom }}
                             </a>
 

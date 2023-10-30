@@ -35,11 +35,11 @@ class PdfController extends Controller
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
         if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
-            //Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
         if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-            //Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
         

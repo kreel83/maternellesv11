@@ -29,7 +29,7 @@
             <div class="d-flex flex-column align-items-center" style="border-left: 1px solid lightgray">
                 <div class='sectionPhrase selectSectionFiche' data-section="99" data-value="99" id="nav-carnet"                    
                     style="background-color: red">
-                    <img src="{{ asset('img/illustrations/commentaires.png') }}" alt="" width="90px"
+                    <img src="{{ asset('img/illustrations/99.png') }}" alt="" width="90px"
                         height="45px">
                 </div>
                 <div class="tiret_selection {{ $section == 99 ? null : 'd-none' }}" data-id="99" style="background-color: red"></div>
@@ -62,7 +62,7 @@
                 <input type="text" class="form-control searchPhraseCreation" placeholder="Chercher une phrase" aria-label="Chercher un élève" aria-describedby="basic-addon1">
                 <span class="input-group-text raz_search_phrase" style="cursor: pointer"><i class="fa-sharp fa-solid fa-xmark"></i></span>
               </div>
-        <div id="tableCommentaireContainer" class="my-4">
+              <div id="tableauDesPhrases" class="my-4">
 
             
             @include('parametres.phrases.__tableau_des_phrases')
@@ -79,8 +79,10 @@
             </div>
         </div>
 
-        <div id="bloc_editor" class="d-none justify-content-between align-items-center">
-            <div data-reg="L'élève " id="motCle" class="custom_button" style="width: fit-content"><i class="fa-solid fa-plus me-3"></i>L'élève</div>
+        
+        <div id="bloc_editor" class="d-none justify-content-between  flex-column">
+            <small>Vous devez écrire un phrase au masculin exclusivement en utilisant le prénom par défaut "Tom"</small>
+            {{-- <div data-reg="L'élève " id="motCle" class="custom_button" style="width: fit-content"><i class="fa-solid fa-plus me-3"></i>L'élève</div> --}}
             <div id="editor2" data-section="" style="height: 100px; width: 70%"  ></div>        
 
         </div>

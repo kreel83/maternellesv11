@@ -25,16 +25,16 @@
 
 </style>
 
-<table class="table table-bordered" id="tableauDesPhrases">
+
 
     @foreach ($commentaires as $commentaire)
-    <div class="phrase_bloc d-flex">
+    <div class="phrase_bloc d-flex" data-id="{{$commentaire->id}}">
         <div class="texte">{{  $commentaire->phrase_masculin }}</div>
-        <div class="seeExemple" style="cursor: pointer" data-id="{{$commentaire->id}}"><i class="fas fa-eye"></i></div>
+        <div class="seeExemple ms-2" style="cursor: pointer" data-id="{{$commentaire->id}}"><i class="fas fa-eye"></i></div>
         @if ($commentaire->user_id)
-        <div  style="width: 60px" class=" d-flex ms-5 controlePhrase" data-id="{{$commentaire->id}}">
-            <div class="editPhrase"><i class="fas fa-edit"></i></div>
-            <div class="deletePhrase" style="margin-left: 10px"><i class="fas fa-trash"></i></div>
+        <div  style="width: 30px" class=" d-flex ms-2 controlePhrase" data-id="{{$commentaire->id}}">
+            <div class="editPhrase" style="cursor: pointer"><i class="fas fa-edit"></i></div>
+            <div class="deletePhrase" style="margin-left: 10px; cursor: pointer"><i class="fas fa-trash"></i></div>
         </div>
         @endif
     </div>
@@ -47,4 +47,4 @@
     </tr>
     @endforeach --}}
  
-</table>
+

@@ -90,15 +90,19 @@ class CahierController extends Controller
 
 
     private function garcon($reussite, $enfant) {
-        $prenom = $enfant->prenom;
-        $reussite = str_replace("L'élève", 'Il', $reussite);
-        $reussite = str_replace("l'élève", 'il', $reussite);
-        $r = explode(PHP_EOL, $reussite);
-        if (isset($r[0])) {
-            
-            $r[0] = str_replace(['il', 'Il'], [$prenom, $prenom], $r[0]); 
+        $prenom = $enfant->prenom;        
+        
+        // $reussite = str_replace("l'élève", 'il', $reussite);
+        $liste = explode(PHP_EOL, $reussite);
+        foreach ($liste as $key=>$phrase) {
+            $liste[$key] = str_replace('Il ', $prenom,  $liste[$key]);
+            if (isset($liste[0])) {            
+                $liste[0] = str_replace(['il', 'Il'], [$prenom, $prenom], $liste[0]); 
+            }            
         }
-        $result = join(PHP_EOL, $r);
+
+
+        $result = join(PHP_EOL, $liste);
        
         
         return $result;
@@ -106,8 +110,8 @@ class CahierController extends Controller
 
     private function fille($reussite, $enfant) {
         $prenom = $enfant->prenom;
-        $reussite = str_replace("L'élève ", 'Elle ', $reussite);
-        $reussite = str_replace("l'élève ", $prenom.' ', $reussite);
+        $reussite = str_replace($prenom, 'Elle ', $reussite);
+        // $reussite = str_replace("l'élève ", $prenom.' ', $reussite);
         $r = explode(PHP_EOL, $reussite);
 
         if (isset($r[0])) {
@@ -186,11 +190,11 @@ class CahierController extends Controller
             $enfant = Enfant::where('id', $enfant_id)->where('user_id', Auth::id())->first();
             if($enfant && filter_var($periode, FILTER_VALIDATE_INT) !== false) {
 				$maxPeriode = Reussite::where('enfant_id', $enfant_id)->max('periode');
-				if((int)$periode <= $maxPeriode) {
-					$id = $enfant->id;
-				} else {
-					return redirect()->route('error')->with('msg', 'Il n\'y a aucun cahier de réussites pour cette période.');
-				}
+                $id = $enfant->id;
+				// if((int)$periode <= $maxPeriode) {
+				// } else {
+				// 	return redirect()->route('error')->with('msg', 'Il n\'y a aucun cahier de réussites pour cette période.');
+				// }
             } else {
                 return redirect()->route('error')->with('msg', 'Données incorrectes.');
             }
@@ -252,7 +256,7 @@ class CahierController extends Controller
         $r = Reussite::where('enfant_id', $id)
                 ->where('periode', $periode)
                 ->first();
-        $reussite = $r->texte_integral;
+        $reussite = $r ? $r->texte_integral : '';
 
         // dd($reussite);
         $reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
@@ -300,10 +304,12 @@ class CahierController extends Controller
         $class = ".titre0 {color: #ffffff; background-color: grey}";
         $customClass[] = $class;
 
+        $periode = Utils::periode($enfant, $periode);
+
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
         if ($state == 'see') {
-            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user]);
+            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
             // download PDF file with download method
             //return $pdf->stream('test_cahier.pdf');     
             $pdf->add_info('Title', 'Cahier de reussites de '.ucfirst($enfant->prenom));
@@ -576,6 +582,7 @@ class CahierController extends Controller
             return $reussite->texte_integral;
         }
         $reussite = $this->apercu($enfant);
+        ;
         $r = Reussite::where('enfant_id', $enfant_id)->first();
         if (!$r) {
             $r = new Reussite();
@@ -599,10 +606,22 @@ class CahierController extends Controller
 
         foreach ($r as $key=>$fiches) {
             $resultats[$key] = '';
-            foreach ($fiches as $fiche) {                               
-                $resultats[$key] .= Item::find($fiche->item_id)->phrase_masculin.PHP_EOL;;            
+            foreach ($fiches as $fiche) {  
+                $c= Item::find($fiche->item_id);
+                if ($enfant->genre == 'F') {
+                    Utils::commentaire($c, $enfant->prenom, $enfant->genre);
+                    $resultats[$key] .= $c->phrase_feminin.PHP_EOL;
+
+                               
+                } else {
+                    Utils::commentaire($c, $enfant->prenom, $enfant->genre);
+                    $resultats[$key] .= $c->phrase_masculin.PHP_EOL;
+                              
+                }
+
             }    
             $resultats[$key] .= PHP_EOL;
+        
         }
         
         
@@ -611,7 +630,7 @@ class CahierController extends Controller
         foreach ($phrases as $key=>$liste) {
             $resultats[$key] =  isset($resultats[$key]) ? $resultats[$key] : '' ;
             foreach ($liste as $phrase) {                               
-                $resultats[$key] .= $phrase->commentaire()->phrase_masculin.PHP_EOL;                
+                $resultats[$key] .= $phrase->commentaire($enfant).PHP_EOL;                
             }
 
         }
@@ -648,21 +667,27 @@ class CahierController extends Controller
 
 
     public function add_phrase($enfant_id, $phrase) {
+        $enfant = Enfant::find($enfant_id);
         $commentaire = Commentaire::find($phrase);
+        Utils::commentaire($commentaire, $enfant->prenom, $enfant->genre);
         $phrase = Phrase::create([
-           'commentaire_id' => $phrase,
-           'enfant_id' => $enfant_id,
-           'order' => 1,
-           'section_id' => $commentaire->section_id,
+            'commentaire_id' => $phrase,
+            'enfant_id' => $enfant_id,
+            'order' => 1,
+            'section_id' => $commentaire->section_id,
         ]);
-        return '<li class="badge_phrase_selected" data-phrase="'.$phrase->id.'">'.$commentaire->phrase_masculin.'</li>' ;       
+        $texte = $enfant->genre == 'F' ? $commentaire->phrase_feminin : $commentaire->phrase_masculin;
+        return '<li class="badge_phrase_selected" data-phrase="'.$phrase->id.'">'.$texte.'</li>' ;       
     }
-
+    
     public function remove_phrase($id, $phrase_id) {
+        $enfant = Enfant::find($id);
         $phrase = Phrase::find($phrase_id);
         $commentaire = Commentaire::find($phrase->commentaire_id);
-        $phrase->delete();        
-        return '<li class="badge_phrase" data-value="'.$commentaire->id.'">'.$commentaire->phrase_masculin.'</li>' ;       
+        Utils::commentaire($commentaire, $enfant->prenom, $enfant->genre);
+        $phrase->delete();  
+        $texte = $enfant->genre == 'F' ? $commentaire->phrase_feminin : $commentaire->phrase_masculin;      
+        return '<li class="badge_phrase" data-value="'.$commentaire->id.'">'.$texte.'</li>' ;       
     }
 
     public function index($enfant_id) {
@@ -680,6 +705,9 @@ class CahierController extends Controller
             $query->where('user_id', Auth::id())->orWhereNull('user_id');
         })->whereNotIn('id', $exclusion)->get();
 
+        Utils::commentaires($commentaire, $enfant->prenom, $enfant->genre);
+    
+
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
             return [$item['section_id'] => $item];
         });
@@ -694,6 +722,7 @@ class CahierController extends Controller
 
         $commentaires = Commentaire::where(function($query) {
             $query->where('user_id', Auth::id())->orWhereNull('user_id');})->where('section_id', 99)->get();
+        Utils::commentaires($commentaire, $enfant->prenom, $enfant->genre);   
         $textes = $enfant->cahier($this->getPeriode($enfant)[1]);
         $r = Reussite::where('enfant_id', $enfant->id)->first();
        
@@ -717,7 +746,7 @@ class CahierController extends Controller
 
         
 
-// dd($phrases_selection, $grouped);
+//  dd($phrases_selection, $grouped);
         
         
         return view('cahiers.index')
@@ -749,6 +778,7 @@ class CahierController extends Controller
                 $query->where('user_id', Auth::id())->orWhereNull('user_id');})
                 ->whereNotIn('id', $exclusion)
                 ->where('section_id', 99)->get();
+            Utils::commentaires($phrases, $enfant->prenom, $enfant->genre);
 
             return view('cahiers.liste_phrases')
                 ->with('phrases', $phrases)
@@ -762,7 +792,7 @@ class CahierController extends Controller
                 $query->where('user_id', Auth::id())->orWhereNull('user_id');})
                 ->whereNotIn('id', $exclusion)
                 ->get();
-                
+            Utils::commentaires($commentaire, $enfant->prenom, $enfant->genre);   
             $grouped = $commentaire->mapToGroups(function ($item, $key) {
                 return [$item['section_id'] => $item];
             });
