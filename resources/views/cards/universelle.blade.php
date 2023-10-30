@@ -62,12 +62,24 @@
             <div style="font-weight: bolder;">{{$fiche->categorie->section2 ?? null}}</div>
             <div>{{$fiche->name}}</div>
         </div>
-        <div class="card-footer2" style="padding: 0; background-color: {{$fiche->section()->color}}">
+        <div class="card-footer2" style="padding: 0; background-color: {{$fiche->section()->color}}" data-id="{{$fiche->id}}">
            
+                <style>
+                    .caseLvl.ps.active {
+                        background-color: var(--pink);
+                    }
+                    .caseLvl.ms.active {
+                        background-color: var(--green);
+                    }
+                    .caseLvl.gs.active {
+                        background-color: var(--rouge);
+                    }
+                </style>
                 
-                    <div class="p-0 caseLvl" style="background-color: {{ $ps == "0" ? 'transparent' : 'var(--pink)' }}">PS</div>
-                    <div class="p-0 caseLvl" style="background-color: {{ $ms == "0" ? 'transparent' : 'var(--green)' }}">MS</div>
-                    <div class="p-0 caseLvl" style="background-color: {{ $gs == "0" ? 'transparent' : 'var(--rouge)' }}">GS</div>
+                    <div class="p-0 caseLvl ps {{ $ps == "1" ? 'active' : null }}" style="cursor: pointer">PS</div>
+                    <div class="p-0 caseLvl ms {{ $ms == "1" ? 'active' : null }}" style="cursor: pointer">MS</div>
+                    <div class="p-0 caseLvl gs {{ $gs == "1" ? 'active' : null }}" style="cursor: pointer">GS</div>
+                    <div class="ms-5">{{$fiche->id}}</div>
                     {{-- <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}" class="btnSelection }} modifier my-1">Modifier</button>
                     <div>{{$fiche->id}}</div> --}}
         </div>

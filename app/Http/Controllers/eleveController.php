@@ -67,7 +67,7 @@ class EleveController extends Controller
         return view('eleves.liste')
             ->with('periodes', $this->getPeriode($user->configuration->periodes))
             ->with('files', $liste)
-            ->with('modif', $request->id)
+            ->with('modif', $request->enfant_id)
             ->with('professeur', "null")
             ->with('profs', $user->profs())
             ->with('tous', $user->tous())

@@ -58,6 +58,21 @@ class ficheController extends Controller
     }
 
 
+    public function setLvl($fiche_id, Request $request) {
+        $item = Item::find($fiche_id);
+        
+        $lvl['PS'] = substr($item->lvl,0,1);
+        $lvl['MS'] = substr($item->lvl,1,1);
+        $lvl['GS'] = substr($item->lvl,2,1);
+        $lvl[$request->lvl] = $lvl[$request->lvl] == 1 ? 0 : 1;
+        $item->lvl = $lvl['PS'].$lvl['MS'].$lvl['GS'];
+        $item->save();
+        return 'ok';
+
+
+
+    }
+
     public function setClassification(Request $request) {
         $item = Item::find($request->item);
         $item->classification_id = $request->classe;
