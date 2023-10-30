@@ -422,12 +422,11 @@ class ParametreController extends Controller
         return view('home.parametres');
     }
 
-    public function deletePhrase($id) {
-        $c = Commentaire::find($id);
-        $search = Phrase::where('commentaire_id', $id)->first();
+    public function deletePhrase($commentaire_id) {
+        $c = Commentaire::find($commentaire_id);
+        $search = Phrase::where('commentaire_id', $commentaire_id)->first();
         if ($search) return 'ko';
         $c->delete();
-
         return 'ok';
     }
 

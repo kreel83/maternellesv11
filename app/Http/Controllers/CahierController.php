@@ -596,13 +596,14 @@ class CahierController extends Controller
         return $reussite;
     }
 
+    /*
+    // Normalement remplacé par un appel a seepdf
     public function apercu($enfant, $calcul = true) {
         $reussite = Reussite::where('enfant_id', $enfant->id)->first();
 
         $resultats = array();
         $r = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
         $r = $r->groupBy('section_id');
-       
 
         foreach ($r as $key=>$fiches) {
             $resultats[$key] = '';
@@ -623,7 +624,6 @@ class CahierController extends Controller
             $resultats[$key] .= PHP_EOL;
         
         }
-        
         
         $phrases = Phrase::where('enfant_id', $enfant->id)->get();
         $phrases = $phrases->groupBy('section_id');
@@ -650,31 +650,27 @@ class CahierController extends Controller
             }   
         }
 
-
-        
-
-      
-
         // $commentaire_enfant = Cahier::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
         // $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
 
-        
-
         return $this->format_apercu($r, $enfant);
     }
+    */
 
 
 
 
-    public function add_phrase($enfant_id, $phrase) {
+
+    public function add_phrase($enfant_id, $commentaire_id) {
         $enfant = Enfant::find($enfant_id);
-        $commentaire = Commentaire::find($phrase);
+        $commentaire = Commentaire::find($commentaire_id);
         Utils::commentaire($commentaire, $enfant->prenom, $enfant->genre);
         $phrase = Phrase::create([
-            'commentaire_id' => $phrase,
+            'commentaire_id' => $commentaire_id,
             'enfant_id' => $enfant_id,
             'order' => 1,
             'section_id' => $commentaire->section_id,
+
         ]);
         $texte = $enfant->genre == 'F' ? $commentaire->phrase_feminin : $commentaire->phrase_masculin;
         return '<li class="badge_phrase_selected" data-phrase="'.$phrase->id.'">'.$texte.'</li>' ;       
