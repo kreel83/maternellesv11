@@ -1,6 +1,17 @@
 import { Modal } from 'bootstrap'
 
 const selectSectionFiche = (quill) => {
+
+    $(document).on('click','.caseLvl', function() {
+        var id =$(this).closest('.card-footer2').data('id')
+        var lvl = $(this).text()
+        var that = $(this)
+        $.get('/app/fiches/'+id+'/setLvl?lvl='+lvl, function(data) {
+            $(that).toggleClass('active')
+        })
+    })
+
+
     $(document).on('click','.selectSectionFiche', function() {
         $('.selectSectionFiche').removeClass('selected')
         $(this).addClass('selected')

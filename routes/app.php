@@ -202,6 +202,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
     Route::get('/fiches/setClassification', [ficheController::class, 'setClassification'])->name('setClassification');
     Route::get('/fiches/deselectionne', [ficheController::class, 'deselectionne'])->name('deselectionne');
+    Route::get('/fiches/{fiche_id}/setLvl', [ficheController::class, 'setLvl'])->name('setLvl');
     
     Route::post('/fiches/choisirSelection', [ficheController::class, 'choisirSelection']);
     Route::get('/fiches/duplicate', [ficheController::class, 'duplicate']);

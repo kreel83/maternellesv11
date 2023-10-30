@@ -300,9 +300,6 @@ const hover = (Modal) => {
 
         var that = $(this)
         console.log(that)
-
-
-            
                 clearInterval(c)
                 var position = $(this).position()
                 if ($(that).find('.day_event').is(':visible')) {
@@ -315,10 +312,6 @@ const hover = (Modal) => {
                     })
                 
                 }                 
-      
-
-
-
     })
 
 
