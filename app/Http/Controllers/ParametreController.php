@@ -10,6 +10,7 @@ use App\Models\Resultat;
 use App\Models\Fiche;
 use App\Models\Configuration;
 use App\Models\Section;
+use App\Models\Phrase;
 use App\Models\Item;
 use App\Models\Event;
 use App\Models\Vacance;
@@ -96,7 +97,7 @@ class ParametreController extends Controller
 
     private function chatpht($reussite) {            
 
-        $content = "Can you help me feminize the following sentence: ".$reussite;
+        $content = "Can you transform the following sentence with the first name \"Lucie\" who is a girl : ".$reussite;
 
         $result = OpenAI::chat()->create([
             'model' => 'gpt-3.5-turbo',
@@ -111,6 +112,34 @@ class ParametreController extends Controller
     }
 
     public function monprofil(Request $request) {
+
+
+        // $c = Item::all();
+        // foreach ($c as $cc) {
+        //     if (str_contains($cc->phrase_masculin, "Il ")) {
+        //         $cc->phrase_masculin = str_replace("Il ", "Tom ", $cc->phrase_masculin);
+                
+        //     }
+        //     if (str_contains($cc->phrase_feminin, "Elle ")) {
+        //         $cc->phrase_feminin = str_replace("Elle ", "Lucie ", $cc->phrase_feminin);
+        //     }
+        //     $cc->save();
+
+
+        // }
+        // $c = Commentaire::all();
+        // foreach ($c as $cc) {
+        //     if (str_contains($cc->phrase_masculin, "Léon ")) {
+        //         $cc->phrase_masculin = str_replace("Léon ", "Tom ", $cc->phrase_masculin);
+                
+        //     }
+        //     if (str_contains($cc->phrase_feminin, "Elle ")) {
+        //         $cc->phrase_feminin = str_replace("Elle ", "Lucie ", $cc->phrase_feminin);
+        //     }
+        //     $cc->save();
+
+
+        // }
 
         //Fiche::createDemoFiche(Auth::user());
 
@@ -394,7 +423,10 @@ class ParametreController extends Controller
     }
 
     public function deletePhrase($commentaire_id) {
-        Commentaire::find($commentaire_id)->delete();
+        $c = Commentaire::find($commentaire_id);
+        $search = Phrase::where('commentaire_id', $commentaire_id)->first();
+        if ($search) return 'ko';
+        $c->delete();
         return 'ok';
     }
 
@@ -425,9 +457,9 @@ class ParametreController extends Controller
     }
 
     public function savePhrases(Request $request) {
-        $user = Auth::user();
+        $user = Auth::id();
         $section = $request->section;
-
+        
         if ($request->id == 'new') {
             $phrase = new Commentaire();
             $phrase->user_id = Auth::id();
@@ -435,14 +467,17 @@ class ParametreController extends Controller
             $phrase->court = '';
         } else {
             $phrase = Commentaire::find($request->id);
+
         }
         $phrase->phrase_masculin = strip_tags($request->quill);
         $phrase->phrase_feminin = $this->chatpht($phrase->phrase_masculin);
+
 
         $phrase->save();
         $commentaires = Commentaire::where(function($query) use($user) {
             $query->where('user_id', $user)->orWhereNull('user_id');
         })->where('section_id',$section)->get();
+
         return view('parametres.phrases.__tableau_des_phrases')->with('commentaires', $commentaires);
     }
 

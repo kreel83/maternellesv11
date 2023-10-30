@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\utils\Utils;
 
 class Resultat extends Model
 {
@@ -38,10 +39,11 @@ class Resultat extends Model
         return $this->hasone('App\models\Notation','id','notation_id')->first();
     }
 
-    public function item() {
+    public function item($enfant) {
         $search =  $this->hasOne('App\Models\Item','id','item_id')->first();
-
-        return $search;
+        Utils::commentaire($search, $enfant->prenom, $enfant->genre);
+        return $enfant->genre == 'F' ?  $search->phrase_feminin : $search->phrase_masculin;
+        
     }
 
     public function top5ElevesLesPlusAvances() {

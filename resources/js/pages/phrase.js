@@ -95,10 +95,15 @@ const selectPhrase = () => {
 
 const deletePhrase = () => {
     $('.deletePhrase').on('click', function() {
-        var id = $(this).closest('.controle').data('id')
-        var el = $(this).closest('tr')
+        var id = $(this).closest('.phrase_bloc').attr('data-id')
+        var el = $(this).closest('.phrase_bloc')
         $.get('/app/parametres/phrases/'+id+'/delete', function(data) {
-            $(el).remove()
+            console.log('data', data)
+            if (data == 'ok') {
+                $(el).remove()
+            } else {
+                alert('impossible : commentaire deja unitilsé')
+            }
         })
     })
 }
@@ -169,7 +174,8 @@ const saveNouvellePhrase = (quill) => {
                 quill: data
             },
             success: function(data) {
-                $('#tableCommentaireContainer').html(data)
+                console.log(data)
+                $('#tableauDesPhrases').html(data)
                 $('#controleNouvellePhrase').addClass("d-none d-flex")
                 $('#nouvellePhrase').removeClass("d-none")
                 $('#bloc_editor').toggleClass("d-none d-flex")
@@ -214,16 +220,20 @@ const editPhrase = (quill) => {
     })
 
     $('.editPhrase').on('click', function() {
-        if ($('#nouvellePhrase').is(':visible')) {
+
             var data = $(this).closest('.phrase_bloc').find('.texte').html()
             var id = $(this).closest('.controlePhrase').data('id')
+            console.log('iddd', id)
+            $('#bloc_editor').removeClass('d-none')
+            $('#bloc_2phrases').addClass('d-none')
+            $('#nouvellePhrase').addClass('d-none')
             $('#saveNouvellePhrase').attr('data-id', id)
             quill.setText('');
             quill.enable(true)
             quill.root.innerHTML = data
-            $('#controleNouvellePhrase').toggleClass('d-none d-flex')
-            $('#nouvellePhrase').toggleClass('d-none')            
-        }
+            $('#controleNouvellePhrase').addClass('d-flex').removeClass('d-none')
+                      
+  
 
 
     })

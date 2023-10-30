@@ -15,7 +15,7 @@
         }
     </style>
 
-    <div class="row position-relative gx-0" id="page_items">
+    <div class="row position-relative gx-0 mt-5" id="page_items">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
@@ -51,8 +51,8 @@
             <div class="d-flex justify-content-between align-items-center my-5">
 
                     <div class="d-flex ps-2 align-items-center enfant_pill">
-                        <div class="arrowLeft me-5">
-                            <a href="{{ route('enfants') }}">
+                        <div class="arrowLeft me-2">
+                            <a href="{{ route('enfants',['type' => 'evaluation']) }}">
                                 <i class="fa-solid fa-arrow-left"></i>
                             </a>
                         </div>

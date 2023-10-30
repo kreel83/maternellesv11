@@ -17,22 +17,26 @@ class UserAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
+
+        $id_enfant = null;
+        if ($request->route('enfant_id')) $id_enfant = $request->route('enfant_id');
+        if ($request->enfant_id) $id_enfant = $request->enfant_id;
+        
+
+
         
         // Récupération des paramètres passés dans les routes :
         // tous : $request->route()->parameters() / 1 seul : $request->route('nom_parametre')
         // $request->route()->getActionMethod()  ->  renvoi le nom de la route : ->name('')
-        if(!empty($request->route('enfant_id'))) {
+        if($id_enfant) {
             /*
             Benchmark::dd([
                     'scenario 1' => fn () => Enfant::where('id', $request->route('id'))->where('user_id', Auth::id())->first(),
                     'scenario 2' => fn () => Enfant::find($request->route('id')),
             ]);
             */
-            $enfant = Enfant::find($request->route('enfant_id'));
-            if($enfant) {
-                $is_ok = ($enfant->user_id == Auth::id());
-            }
-            if(empty($enfant) || !$is_ok) {
+            $enfant = Enfant::find($id_enfant);
+            if(!$enfant || $enfant->user_id != Auth::id()) {
                 return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
             }
         }

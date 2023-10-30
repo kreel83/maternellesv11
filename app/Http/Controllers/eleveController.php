@@ -186,7 +186,7 @@ class EleveController extends Controller
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'ddn' => ['required', 'date'],
-            'psmsgs' => ['required'],
+            
             'mail1' => ['email:rfc,dns','nullable'],
             'mail2' => ['email:rfc,dns','nullable'],
             'mail3' => ['email:rfc,dns','nullable'],
@@ -194,7 +194,7 @@ class EleveController extends Controller
             
         ];
         $messages = [
-            'psmsgs.required' => 'La section est obligatoire.',
+            
             'nom.required' => 'Le nom est obligatoire.',
             'nom.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',

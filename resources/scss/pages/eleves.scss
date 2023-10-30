@@ -1,14 +1,33 @@
-.import_eleves_container {
-    height: calc(100vh - 273px) !important;
 
-}
 
 .error_input {
     color: var(--main-color);
     font-weight: bold;
     font-size: 14px !important;
 }
+
+#maclasse {
+    height: calc(100vh - 200px);
+    padding: 15px;
+    .affiche_eleve {
+        height: 600px;
+        overflow-y: auto;
+    }
+    #myTabContent {
+        height: 600px;
+    }
+
+}
+
+.import_eleves_container {
+    height: 450px !important;
+    overflow: hidden;
+    .wrapper {
+        height: 100%;
+    }
+}
 .liste_eleves, .import_eleves_container {
+
 
     .inactiveEleve {
         right: 10px; top: 10px; color:var(--main-color);
@@ -30,7 +49,7 @@
         }
     }
 
-    height: calc(100vh - 100px);
+    height: 600px;
     border-radius: 15px;;
     background-color: white;
     overflow-y: auto; margin-top: 16px;
@@ -39,7 +58,8 @@
         font-size: 14px;
         padding: 15px;
         border-radius: 8px;;
-        height: auto;
+        height: 600px;
+        overflow-y: auto;
             .fiche_eleve {
             &:hover {
                 background-color: #272C34;
