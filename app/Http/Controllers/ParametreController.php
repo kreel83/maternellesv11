@@ -318,7 +318,7 @@ class ParametreController extends Controller
             }
         })->values();
 
-        $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->get();
+        $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->where('start_date','>=', $date)->get();
         $conges = array();
         foreach($vacances as $vacance) {
             $conges[] = array(
@@ -330,10 +330,19 @@ class ParametreController extends Controller
 
         $coll = new Collection($conges);
         $conges = $coll->sortBy('date')->take(5);
+        $events = Event::where('user_id', Auth::id())->where('date','>=', $date)->get()->take(5);
+        foreach($events as $vacance) {
+            $conges[] = array(
+                'date' => $vacance->date, 
+                'description' => $vacance->name,
+                'type' => 'event'
+            );
+        }
+        $conges = $conges->sortBy('date')->take(5);
 
-        //dd($conges);
+
+
         /*
-        $events = Event::where('user_id', Auth::id())->where('date','>=', $date)->get();
         $academie = Auth::user()->ecole->libelle_academie;
         $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
 

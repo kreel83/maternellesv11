@@ -72,9 +72,7 @@ use Illuminate\Support\Facades\Auth;
                                             class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'edite ma classe</a>
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
                                             class="nav-item nav-link ">J'évalue mes élèves</a>
-                                        <a href="{{ route('enfants', ['type' => 'reussite']) }}"
-                                            class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les
-                                            cahiers de réussite</a>
+
                                         <a href="{{ route('enfants', ['type' => 'avatar']) }}"
                                             class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}">Je
                                             choisis les avatars</a>
