@@ -34,6 +34,7 @@ class ficheController extends Controller
 
         $fiches = Auth::user()->mesfiches();
         $universelles = Auth::user()->items();
+        
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
         $classifications = Classification::all();
         $classifications = $classifications->groupBy('section_id')->toArray();

@@ -27,7 +27,7 @@
         @endphp
 
         <div class="card-footer" style="font-size: 12px">
-            <div style="font-weight: bolder;">{{$fiche->st}}</div>
+            <div style="font-weight: bolder;">{{$fiche->categorie->section2 ?? null}}</div>
             <div>{{$fiche->name}}</div>
         </div>
         <div class="card-footer2 niveau_{{$fiche->notation}}" style="padding: 0; border-top: 10px solid {{$fiche->section()->color}}">

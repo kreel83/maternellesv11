@@ -140,6 +140,7 @@ class PdfController extends Controller
 
 
 
+
      
         
         $date = Carbon::create($request->annee, $request->mois, $request->jour);
@@ -152,6 +153,7 @@ class PdfController extends Controller
         */
         
         $enfant = DB::select('select id,ddn from enfants where token = ?', [$request->token]);
+
         if(!$enfant) {
             return Redirect::back()->withInput()->withErrors(['msg' => 'Enfant non trouvé']);
         }
