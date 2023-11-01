@@ -1,6 +1,6 @@
 import { Modal } from 'bootstrap'
 
-const selectSectionFiche = (quill) => {
+const selectSectionFiche = (ficheSelect) => {
 
     $(document).on('click','.caseLvl', function() {
         var id =$(this).closest('.card-footer2').data('id')
@@ -9,6 +9,83 @@ const selectSectionFiche = (quill) => {
         $.get('/app/fiches/'+id+'/setLvl?lvl='+lvl, function(data) {
             $(that).toggleClass('active')
         })
+    })
+
+    $(document).on('click','.biblioModal', function() {
+        var id = $('#section_id').val()
+        $.get('/app/get_images/'+id+'?source=create', function(data) {
+
+            $('#biblioModal .modal-body').html(data)
+        })
+
+    })
+
+    $(document).on('click','.selectImage', function() {
+        var image  = $(this).data('image')
+        if ($(this).hasClass('create')) {
+            $('#photoEnfantImg .dlImage').attr('src','/storage/items/'+image);
+            $('#photoEnfantImg .dlImage').removeClass('d-none');
+            $('#photoEnfantImg .logoImage').addClass('d-none');
+            $('#imageName').val(image);           
+        } else {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            console.log(image, ficheSelect)
+            $.ajax({
+                url: '/app/set_image',
+                method:'POST',
+                data: {
+                    image: image,
+                    fiche: ficheSelect
+                },
+                success: function(data) {
+                    console.log(data)
+                    $('.card_fiche[data-fiche="'+ficheSelect+'"]').find('.card__image img').attr('src', '/storage/items/'+image)
+
+                }
+
+            })
+
+        }
+
+
+        var myModalEl = document.getElementById('biblioModal');
+        var modal = Modal.getInstance(myModalEl)
+        modal.hide();
+    })
+
+    $(document).on('click','.biblioModalFiche', function() {
+        var id = $(this).closest('.card_fiche').data('section')
+        ficheSelect = $(this).closest('.card_fiche').data('fiche')
+        $.get('/app/get_images/'+id+'?source=modif', function(data) {
+
+            $('#biblioModal .modal-body').html(data)
+        })
+
+    })
+
+    $(document).on('click','.biblioModalCategories', function() {
+        var liste = $(this).data('categories')
+        ficheSelect = $(this).closest('.card_fiche').data('fiche')
+        $('#newCategorie').html(liste)
+    })
+
+    $(document).on('change','#newCategorie', function() {
+        var id = $(this).val()
+        var texte = $(this).find(':selected').text()
+        console.log(texte)
+        $.get('/app/setNewCategories?cat='+id+'&fiche='+ficheSelect, function() {
+            $('.card_fiche[data-fiche="'+ficheSelect+'"]').find('.st').text(texte)
+        })
+        var myModalEl = document.getElementById('biblioModalCategories');
+        var modal = Modal.getInstance(myModalEl)
+        modal.hide();
+
+        
     })
 
 
@@ -87,6 +164,7 @@ const selectFiche = () => {
 }
 
 const choixTypeFiches = (Modal) => {
+    
 
 
     if ($('#form1[data-message="1"]').length) {
@@ -98,6 +176,15 @@ const choixTypeFiches = (Modal) => {
     }
     
     $(document).on('click','.btnSelectionType', function() {
+        if ($(this).hasClass('les_fiches')) {
+            $('#categories').removeClass('d-none')
+            $('.deletefiches').addClass('d-none')
+
+        } else {
+            $('#categories').addClass('d-none')
+            $('.deletefiches').removeClass('d-none')
+        }
+
         var section = $('.selectSectionFiche.selected').data('value') 
         $('.btnSelectionType').removeClass('selected')
         $(this).addClass('selected')
@@ -111,17 +198,7 @@ const choixTypeFiches = (Modal) => {
         $('.card_fiche[data-section="'+section+'"]').removeClass('d-none')
 
     })
-    $(document).on('click','.selectImage', function() {
-        var image  = $(this).data('image')
-        $('#photoEnfantImg .dlImage').attr('src','/img/items/'+image);
-        $('#photoEnfantImg .dlImage').removeClass('d-none');
-        $('#photoEnfantImg .logoImage').addClass('d-none');
-        $('#imageName').val($(this).data('id'));
 
-        var myModalEl = document.getElementById('biblioModal');
-        var modal = Modal.getInstance(myModalEl)
-        modal.hide();
-    })
 }
 
 const initFiche = () => {

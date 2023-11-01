@@ -186,6 +186,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/enfants/cahier/envoi/individuel', [PdfController::class, 'envoiCahierIndividuel'])->name('cahierManage.individuel');
 
     Route::get('/get_liste_phrase/{section_id}/{enfant_id}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
+    Route::get('/get_images/{section_id}', [FicheController::class, 'get_images'])->name('get_images');
+    Route::post('/set_image', [FicheController::class, 'set_image'])->name('set_image');
+    Route::get('/setNewCategories', [FicheController::class, 'setNewCategories'])->name('setNewCategories');
 
     Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
     Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');

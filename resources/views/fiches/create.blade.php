@@ -128,7 +128,7 @@
                         </div>
                     
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-sm btn-primary biblioModal" data-bs-toggle="modal"
                                 data-bs-target="#biblioModal">
                                 bibliotheque d'image
                             </button>
@@ -320,12 +320,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-wrap" style="overflow: hidden; overflow-y: auto">
-                    @foreach ($images as $image)
-                        <div class="selectImage" data-id="{{ $image->id }}" data-image="{{ $image->name }}">
-                            <img src="{{ asset('img/items/' . $image->name) }}" class="img-fluid">
-                            <!-- width="100%" -->
-                        </div>
-                    @endforeach
+                    {{-- @include('fiches..include.liste_images') --}}
+
                 </div>
 
             </div>

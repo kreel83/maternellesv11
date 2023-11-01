@@ -6,6 +6,7 @@
     
 
     $classification = $classifications[$fiche->section_id] ?? [];
+   
 
 
 ?>
@@ -44,6 +45,10 @@
     <button class="btnSelection   d-none retirer my-2" style="background-color: {{$fiche->section()->color}}" >Retirer</button>
     <button class="btnSelection   selectionner my-2" style="background-color: {{$fiche->section()->color}}" >Selectionner</button>
     <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}"  class="btnSelection  dupliquer my-2">Dupliquer</button>
+    <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}"  class="biblioModalFiche btnSelection changer my-2" data-bs-toggle="modal"
+        data-bs-target="#biblioModal">image</button>
+    <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}"  class="biblioModalCategories btnSelection changer my-2" data-bs-toggle="modal"
+        data-bs-target="#biblioModalCategories" data-categories="{{$fiche->categories()}}">categories</button>
     <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}" class="btnSelection {{$fiche->user_id ? null : 'd-none'}} modifier my-2">Modifier</button>
 </div>
     <div class="perso_card">
@@ -59,8 +64,8 @@
         </div>
 
         <div class="card-footer" style="font-size: 12px;border-color: {{$fiche->section()->color}} !important">
-            <div style="font-weight: bolder;">{{$fiche->categorie->section2 ?? null}}</div>
-            <div>{{$fiche->name}}</div>
+            <div style="font-weight: bolder;" class="st">{{$fiche->categorie->section2 ?? null}}</div>
+            <div>{{$fiche->name}} <span style="color: red">{{$fiche->image_name}}</span></div>
         </div>
         <div class="card-footer2" style="padding: 0; background-color: {{$fiche->section()->color}}" data-id="{{$fiche->id}}">
            

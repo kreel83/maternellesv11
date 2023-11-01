@@ -8,6 +8,7 @@ use App\Models\Enfant;
 use App\Models\Equipe;
 use App\Models\Resultat;
 use App\Models\Fiche;
+use App\Models\Image;
 use App\Models\Configuration;
 use App\Models\Section;
 use App\Models\Phrase;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use Intervention\Image\Facades\Image;
+// use Intervention\Image\Facades\Image;
 use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Http;
@@ -112,6 +113,17 @@ class ParametreController extends Controller
     }
 
     public function monprofil(Request $request) {
+
+        // $items = Item::all();
+        // foreach ($items as $item) {
+        //     $id = $item->image_id;
+        //     $image = Image::find($id);
+        //     if ($image) {
+        //         $item->image_nom = $image->name;
+        //         $item->save();
+        //     }
+        // }
+        // dd('coucou', $id, $image->nom);
 
 
         // $c = Item::all();
