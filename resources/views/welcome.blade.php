@@ -155,7 +155,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
             @if (!$finsouscription)
   
                     <div class="abonnement">
-                        Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.cardform') }}">Cliquez ici</a> pour vous abonner
+                        Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.index') }}">Cliquez ici</a> pour vous abonner
                     </div>
 
             @else

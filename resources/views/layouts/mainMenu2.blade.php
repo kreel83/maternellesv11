@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\Auth;
 
 
                                         <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
-                                            class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'edite ma classe</a>
+                                            class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'édite ma classe</a>
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
                                             class="nav-item nav-link ">J'évalue mes élèves</a>
 
@@ -122,10 +122,10 @@ use Illuminate\Support\Facades\Auth;
                                         élèves</a>
                                     <a href="{{ route('fiches') }}"
                                         class="nav-item nav-link {{ $menu == 'item' ? 'active' : null }}">Je
-                                        selectionne mes activités</a>
+                                        sélectionne mes activités</a>
                                     <a href="{{ route('createFiche') }}"
                                         class="nav-item nav-link {{ $menu == 'create_item' ? 'active' : null }}">Je
-                                        créais mes activités</a>
+                                        crée mes activités</a>
                                     <a href="{{ route('groupe') }}"
                                         class="nav-item nav-link {{ $menu == 'groupe' ? 'active' : null }}">Mes
                                         groupes</a>

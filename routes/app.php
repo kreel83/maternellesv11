@@ -143,11 +143,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{enfant_id}/cahier/calcul_duration', [CahierController::class, 'calcul_duration'])->name('calcul_duration');
     Route::get('/enfants/{enfant_id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
     Route::get('/enfants/{enfant_id}/add_phrase/{commentaire_id}', [CahierController::class, 'add_phrase'])->name('add_phrase');
-    Route::get('/enfants/{id}/remove_phrase/{phrase_id}', [CahierController::class, 'remove_phrase'])->name('remove_phrase'); // A VERIFIER id si enfant et utilisé cahier.js ligne 41
+    Route::get('/enfants/{enfant_id}/remove_phrase/{phrase_id}', [CahierController::class, 'remove_phrase'])->name('remove_phrase'); // A VERIFIER id si enfant et utilisé cahier.js ligne 41
     Route::get('/cahiers/get_apercu/{enfant_id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{enfant_id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
-    //Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // remplacé par seepdf
+    Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
     Route::post('/enfants/{enfant_id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     /*
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
@@ -224,6 +224,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/eleves/toggleInactiveEleve',[EleveController::class,'toggleInactiveEleve'])->name('toggleInactiveEleve');
     Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
     Route::post('/eleves/save_form',[EleveController::class,'save_form'])->name('save_eleve_form');
+    Route::post('/eleves/update',[EleveController::class,'enregistre'])->name('enregistreEleve');
     Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
     Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
     Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
