@@ -45,6 +45,15 @@ class Item extends Model
         return $this->belongsTo('App\Models\Image');
     }
 
+    public function categories() {
+        $categories = Categorie::where('section_id', $this->section_id)->pluck('section2','id')->toArray();        
+        $return = '<option value="">Veuilliez choisir...</option>';
+        foreach ($categories as $key=>$categorie) {
+            $return .= '<option value="'.$key.'">'.$categorie.'</option>';
+        }
+        return $return;
+    }
+
 
 
     public function resultat($enfant) {
