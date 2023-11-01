@@ -29,26 +29,15 @@ class PdfController extends Controller
 {
     public static function genereLienVersCahierEnPdf($enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
-        //$enfant = Enfant::find($enfant_id);
+        // $enfant = Enfant::find($enfant_id);
         $token = $periode . md5($enfant->id.uniqid().env('HASH_SECRET'));
-        //$token = $periode.uniqid();
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
-        if(!empty($enfant->mails)) {
-            Mail::to($enfant->mails)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+        // Envoi des emails aux contacts de l'enfant...
+        foreach ($enfant->mails as $email) {
+            Mail::to($email)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
-        //dd('coucou');
-        /*
-        if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
-            $is_sent = true;
-        }
-        if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
-            $is_sent = true;
-        }
-        */
         if($is_sent) {
             $reussite = Reussite::where([
                 ['user_id', Auth::id()],

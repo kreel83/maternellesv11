@@ -676,8 +676,8 @@ class CahierController extends Controller
         return '<li class="badge_phrase_selected" data-phrase="'.$phrase->id.'">'.$texte.'</li>' ;       
     }
     
-    public function remove_phrase($id, $phrase_id) {
-        $enfant = Enfant::find($id);
+    public function remove_phrase($enfant_id, $phrase_id) {
+        $enfant = Enfant::find($enfant_id);
         $phrase = Phrase::find($phrase_id);
         $commentaire = Commentaire::find($phrase->commentaire_id);
         Utils::commentaire($commentaire, $enfant->prenom, $enfant->genre);

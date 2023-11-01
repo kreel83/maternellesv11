@@ -89,7 +89,7 @@ class Resultat extends Model
     }
 
     public static function resultatsPourUnEleve($id) {
-        $resultats = Resultat::select('autonome','items.name as itemName','sections.name as sectionName','resultats.section_id',
+        $resultats = Resultat::select('resultats.id','notation','autonome','items.name as itemName','sections.name as sectionName','resultats.section_id',
             'sections.logo as sectionLogo')
             ->where('enfant_id', $id)
             ->leftJoin('items', 'item_id', '=', 'items.id')
