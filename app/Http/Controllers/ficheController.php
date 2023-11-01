@@ -228,6 +228,8 @@ class ficheController extends Controller
 
     public function save_fiche(Request $request) {
 
+
+
     
 
         function set_lvl($request) {
@@ -289,6 +291,7 @@ class ficheController extends Controller
                 $new->name = $filename;
                 $new->save();
                 $item->image_nom = $filename;
+                $request->imageName = null;
             }  
 
             if ($request->imageName) {
@@ -329,9 +332,10 @@ class ficheController extends Controller
                 $new->name = $filename;
                 $new->save();
                 $item->image_nom = $filename;
+                $request->imageName = null;
             } else {
                 if ($request->imageName) {
-                    $item->image_nom = explode('/',$request->imageName)[1]; 
+                    $item->image_nom = $request->imageName; 
                 } else {
                     $item->image_nom = $img; 
 

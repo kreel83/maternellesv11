@@ -117,7 +117,7 @@
                         <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
 
                         <div id="photoEnfantImg" class="d-flex flex-column">
-                            <input type="hidden" name="imageName" id="imageName" value="{{ $itemactuel->image_id }}">
+                            <input type="hidden" name="imageName" id="imageName" value="">
 
                             <i style="cursor: pointer;font-size: 200px; z-index: 1000; color: lightgray"
                                 class="fa-light fa-image logoImage {{ $new ? null : 'd-none' }}"></i>
