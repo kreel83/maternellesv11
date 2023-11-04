@@ -7,6 +7,7 @@ use App\Models\Fiche;
 use App\Models\Item;
 use App\Models\Resultat;
 use App\Models\Personnel;
+use App\Models\Enfant;
 use App\Models\Section;
 use App\Models\Classification;
 use App\Models\Image as ImageTable;
@@ -177,24 +178,43 @@ class ficheController extends Controller
 
 
     public function retirerChoix(Request $request) {
-        $fiche = Fiche::find($request->fiche);
-        $fiche->delete();
-        return 'deleted';
+
+        $item_id = Fiche::find($request->fiche)->item_id;
+        $check = Resultat::where('item_id', $item_id)->get();
+
+        if ($check->count() == 0 || $request->state == 'confirmation') {
+            $fiche = Fiche::find($request->fiche);
+            Resultat::where('item_id', $item_id)->delete();
+            $fiche->delete();
+            return 'ok';
+        } else {
+            $enfants = [];
+            foreach ($check as $line) {
+                $enfants[] = Enfant::find($line->enfant_id)->prenom;
+            }
+            return $enfants;
+        }
+
     }
+
     public function choix(Request $request) {
-
-
-  
+            $liste = explode(',',$request->order);
+ 
             $fiche = Fiche::where('user_id', Auth::id())->where('section_id',$request->section)->orderBy('order', 'DESC')->first();
             $order =  ($fiche) ? $fiche->order + 1 : 1;
             $fiche = new Fiche();
             $fiche->item_id = $request->fiche;
-            $fiche->order = $order;
             $fiche->parent_type = $request->table;
             $fiche->section_id = $request->section;
             $fiche->user_id = Auth::id();
             $fiche->save();
             $t = $fiche->id;
+
+            foreach ($liste as $key=>$item) {
+               $p = Fiche::where('user_id', Auth::id())->where('item_id', $item)->first();
+               $p->order = $key + 1;
+               $p->save(); 
+            }
         
 
         return $t;
@@ -258,7 +278,7 @@ class ficheController extends Controller
 
 
         // $name_file = uniqid().'.jpg';
-        //dd($request);
+        
 
         $img = null;
         if ($request->duplicate) {
@@ -305,11 +325,8 @@ class ficheController extends Controller
             $item->st = $request->st;
             $item->user_id = Auth::id();
             $item->phrase_masculin = $request->phrase;
-            if(trim($request->phrase_feminin) == '') {
-                $item->phrase_feminin = chatpht($item->phrase_masculin);
-            } else {
-                $item->phrase_feminin = $request->phrase_feminin;
-            }
+            $item->phrase_feminin = $request->phrase_feminin;
+    
             //$item->phrase_feminin = chatpht($item->phrase_masculin);
             
             $item->save();
@@ -348,12 +365,9 @@ class ficheController extends Controller
             $item->st = $request->st;
             $item->user_id = Auth::id();
             $item->phrase_masculin = $request->phrase;
-            if(trim($request->phrase_feminin) == '') {
-                $item->phrase_feminin = chatpht($item->phrase_masculin);
-            } else {
-                $item->phrase_feminin = $request->phrase_feminin;
-            }
+            $item->phrase_feminin = chatpht($item->phrase_masculin);
             $item->save();
+
 
             if ($request->submit == 'save_and_select') {
                 $fiche = new Fiche();

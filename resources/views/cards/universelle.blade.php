@@ -71,13 +71,19 @@
            
                 <style>
                     .caseLvl.ps.active {
-                        background-color: var(--pink);
+                        /* background-color: var(--pink); */
+                        border: 1px solid white;
+                        font-weight: bolder;
                     }
                     .caseLvl.ms.active {
-                        background-color: var(--green);
+                        /* background-color: var(--green); */
+                        border: 1px solid white;
+                        font-weight: bolder;
                     }
                     .caseLvl.gs.active {
-                        background-color: var(--rouge);
+                        border: 1px solid white;
+                        font-weight: bolder;
+                        /* background-color: var(--rouge); */
                     }
                 </style>
                 

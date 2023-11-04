@@ -189,6 +189,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get_images/{section_id}', [FicheController::class, 'get_images'])->name('get_images');
     Route::post('/set_image', [FicheController::class, 'set_image'])->name('set_image');
     Route::get('/setNewCategories', [FicheController::class, 'setNewCategories'])->name('setNewCategories');
+    Route::get('/set_ordre', [PdfController::class, 'set_ordre'])->name('set_ordre');
+    Route::get('/getFiche', [ItemController::class, 'getFiche'])->name('getFiche');
 
     Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
     Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');

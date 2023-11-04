@@ -184,21 +184,39 @@
 <div class="modal fade" id="biblioModalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="top: 70px">
         <div class="modal-content" style="height: 600px">
-
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="title">
-
-                </h1>
-
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <select name="" id="newCategorie" class="form-control">
 
                 </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRetirerFiche" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top: 70px">
+        <div class="modal-content" style="height: 600px">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">Une validation a déjà été effectuée sur cette fiche
+                    <br>sur les enfants suivants :
+                </div>
+                <ul id="enfant_liste"></ul>
+                <div class="alert alert-danger">La déselection de cette fiche entrainera la suppression de l'évaluation de ou des enfants sur cette activite. <br> Voulez-vous déselectionner cette fiche ?
+                </div>
+
+                
 
             </div>
-
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                <button class="btn btn-primary deselectionneFiche" data-bs-dismiss="modal">Déselectionner la fiche</button>
+            </div>
         </div>
     </div>
 </div>
