@@ -8,6 +8,7 @@ use App\Models\Enfant;
 //use App\Models\Image;
 //use App\Models\Resultat;
 use App\Models\Reussite;
+use App\Models\Configuration;
 //use App\Models\Section;
 //use App\Models\User;
 use Carbon\Carbon;
@@ -156,8 +157,18 @@ class PdfController extends Controller
 
     }
 
+
+
+    public function set_ordre(Request $request) {
+        $conf = Configuration::where('user_id', Auth::id())->first();
+        $conf->ordre_pdf = $request->ordre;
+        $conf->save();
+        return 'ok';
+    }
+
     public function cahierManage(Request $request) {
-        $enfants = Enfant::where('user_id', Auth::id())->get();
+        $ordre = Auth::user()->configuration->ordre_pdf;
+        $enfants = Enfant::where('user_id', Auth::id())->orderBy($ordre)->get();
         $reussites = Reussite::where('user_id', Auth::id())->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();

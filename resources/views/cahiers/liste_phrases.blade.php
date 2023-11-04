@@ -1,4 +1,7 @@
 
+@php
+    // dd($phrases);
+@endphp
 @if (!isset($type) || $type == 'reussite')
     @if (!$phrases->isEmpty())
         <ul>

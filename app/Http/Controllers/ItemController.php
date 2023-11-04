@@ -33,6 +33,26 @@ class ItemController extends Controller
         return view('mesfiches.index')->with('items', $items)->with('sections', $sections);
     }
 
+    public function getFiche(Request $request) {
+        $resultat = Resultat::find($request->resultat);
+        $fiche = Item::find($resultat->item_id);
+        $section = Item::find($resultat->section_id);
+        $r = $fiche->resultat($request->enfant);
+        $fiche = Item::find($resultat->item_id);
+        if ($resultat) {
+            // dd($fiche->resultat($enfant->id));
+            $fiche->notation = $fiche->resultat($request->enfant)[0];
+            $fiche->autonome = $fiche->resultat($request->enfant)[1];
+            $fiche->textnote = $fiche->resultat($request->enfant)[2];
+        }  
+
+        return view('cards.item')
+            ->with('section', $section)
+            ->with('fiche', $fiche);
+        
+        
+    }
+
     public function index($enfant_id, Request $request) {
 
         if($request->sectionID) {

@@ -26,7 +26,7 @@ const selectItem = () => {
         
     })
 
-    $('.notation').on('click', function() {
+    $(document).on('click','.notation', function() {
         const notation = $(this).data('notation')
         const text = $(this).text()
         const el = $(this).closest('.card_item')
@@ -54,7 +54,9 @@ const selectItem = () => {
 
         }
         $.get('/app/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+notation, function(data) {
-            console.log(data)
+            if ($(el).parent().hasClass('fiche_modify')) {
+                location.reload()
+            }
         })
     })
 }
