@@ -26,13 +26,14 @@ class ItemEvent
     {
 
         if(Item::$FIRE_EVENTS) {
-            if ($item->image) {
-                $item->image_name = 'storage/items/'.$item->image->name;
+            if ($item->image_nom) {
+                $item->image_name = 'storage/items/'.$item->section_id.'/'.$item->image_nom;
 
             } else {
                 $item->image_name = '';
 
             }   
+            
               
         }
 

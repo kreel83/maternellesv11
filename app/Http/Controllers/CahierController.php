@@ -596,7 +596,7 @@ class CahierController extends Controller
         return $reussite;
     }
 
-    /*
+
     // Normalement remplacé par un appel a seepdf
     public function apercu($enfant, $calcul = true) {
         $reussite = Reussite::where('enfant_id', $enfant->id)->first();
@@ -655,7 +655,7 @@ class CahierController extends Controller
 
         return $this->format_apercu($r, $enfant);
     }
-    */
+
 
 
 

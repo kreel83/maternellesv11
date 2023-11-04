@@ -50,6 +50,7 @@ window.Alpine = Alpine;
 Alpine.start();
 
 $(document).ready(function($) {
+    
 
 
     if ($('#maclasse').length) {
@@ -196,10 +197,11 @@ phraseCommentaireGeneral()
 jeducpliquelafiche()
 jemodifielafiche()
 initFiche()
-selectSectionFiche()
-selectFiche()
+var ficheSelect;
+selectSectionFiche(ficheSelect)
+selectFiche(Modal)
 choixTypeFiches(Modal)
-choixFiltre()
+choixFiltre(Modal)
 jechoisislaselection()
 photoEnfant()
 photoEnfantTrigger()

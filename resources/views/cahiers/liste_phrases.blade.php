@@ -1,3 +1,4 @@
+
 @if (!isset($type) || $type == 'reussite')
     @if (isset($phrases[$section->id]))
         <ul>

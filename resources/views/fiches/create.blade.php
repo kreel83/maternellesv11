@@ -117,7 +117,7 @@
                         <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
 
                         <div id="photoEnfantImg" class="d-flex flex-column">
-                            <input type="hidden" name="imageName" id="imageName" value="{{ $itemactuel->image_id }}">
+                            <input type="hidden" name="imageName" id="imageName" value="">
 
                             <i style="cursor: pointer;font-size: 200px; z-index: 1000; color: lightgray"
                                 class="fa-light fa-image logoImage {{ $new ? null : 'd-none' }}"></i>
@@ -128,7 +128,7 @@
                         </div>
                     
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-sm btn-primary biblioModal" data-bs-toggle="modal"
                                 data-bs-target="#biblioModal">
                                 bibliotheque d'image
                             </button>
@@ -170,7 +170,7 @@
                             </div>
                             <div class="field field_v1 my-3 form_titre form-group w-100">
 
-                                <input id="titre" class="form-control" name="name" placeholder="titre de la fiche"
+                                <input id="titre" class="form-control" name="name" placeholder="titre de la fiche" style="font-size: 1rem !important"
                                     value="{{ $itemactuel ? $itemactuel->name : null }}" required>
 
                             </div>
@@ -185,31 +185,23 @@
 
                         <div class="d-flex flex-column mb-4 cadre-group pt-4 ">
                             <label for="">Phrase</label>
-
-
-
-
-
-
-                            Phrase qui apparaitra dans le cahier de réussites.
-                            <strong>Il convient de la rédiger au masculin.</strong><br>
-                            Exemple : Il sait compter jusqu'à 5.
+                            <div class="alert alert-info mt-2 mb-2" role="alert" style="font-size: 14px">
+                                Vous devez rédiger un texte qui sera repris dans le cahier de réussite à la validation de cette activité. Par convention, utilisez le prénom 'Tom' dans la rédaction de votre phrase.
+                                Notre intelligence artificielle adpatera automatiquement la phrase au féminin et remplacera par la même occasion le prénom Tom par Lucie (par convention également).
+                                Bien évidement, le prénom de l'enfant remplacera le prénom par défaut dans le cahier de réussite.
+                            </div>
+                            Exemple : Tom sait compter jusqu'à 5.
                             <div id="editor3" class="mt-2 form_editeur"
                                 data-phrase="{{ $itemactuel->phrase_masculin }}" data-section=""
                                 style="height: 100px; ">{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</div>
                             <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3" required>{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</textarea>
 
-                            <div class="alert alert-info mt-2 mb-2" role="alert">
-                                Ve texte au féminin va être généré. Toutefois, si vous préférez la saisir
-                                manuellement, <a href="#" onclick="$('.pf').show();$('.pf').focus();"
-                                    class="alert-link">cliquez
-                                    ici</a>.
-                            </div>
 
-                            <div class="pf" style="display:none">
+
+                            {{-- <div class="pf" style="display:none">
                                 <textarea name="phrase_feminin" style="width: 100%" rows="3"
                                     placeholder="Ecrivez ici la même phrase au féminin...">{!! $itemactuel && !$new ? $itemactuel->phrase_feminin : null !!}</textarea>
-                            </div>
+                            </div> --}}
 
 
                             <style>
@@ -320,12 +312,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-wrap" style="overflow: hidden; overflow-y: auto">
-                    @foreach ($images as $image)
-                        <div class="selectImage" data-id="{{ $image->id }}" data-image="{{ $image->name }}">
-                            <img src="{{ asset('img/items/' . $image->name) }}" class="img-fluid">
-                            <!-- width="100%" -->
-                        </div>
-                    @endforeach
+                    {{-- @include('fiches..include.liste_images') --}}
+
                 </div>
 
             </div>

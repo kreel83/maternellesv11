@@ -7,6 +7,7 @@ use App\Models\Fiche;
 use App\Models\Item;
 use App\Models\Resultat;
 use App\Models\Personnel;
+use App\Models\Enfant;
 use App\Models\Section;
 use App\Models\Classification;
 use App\Models\Image as ImageTable;
@@ -58,6 +59,29 @@ class ficheController extends Controller
             ->with('sections', Section::orderBy('ordre')->get());
     }
 
+
+
+
+    public function setNewCategories(Request $request) {
+        $item = Item::find($request->fiche);
+        $item->categorie_id = $request->cat;
+        $item->save();
+        return 'ok';
+    }
+
+    public function set_image(Request $request) {
+        $item = Item::find($request->fiche);
+        $nom = explode('/', $request->image)[1];
+        $item->image_nom = $nom;
+        $item->save();
+        return 'ok';
+    }
+
+    public function get_images($section_id, Request $request) {
+        $images = Storage::disk('image')->allFiles($section_id);
+        
+        return view('fiches.include.liste_images')->with('images', $images)->with('source', $request->source);
+    }
 
     public function setLvl($fiche_id, Request $request) {
         $item = Item::find($fiche_id);
@@ -120,12 +144,11 @@ class ficheController extends Controller
             $fiche->id = null;
         }
 
-        $images = ImageTable::all();
+        
         return view('fiches.create')
             ->with('sections', Section::all())
             ->with('new', $new)
-            ->with('duplicate', $request->duplicate == "true" ? $request->item : false)
-            ->with('images', $images)
+            ->with('duplicate', $request->duplicate == "true" ? $request->item : false)            
             ->with('itemactuel', $fiche)
             ->with('menu', $request->duplicate == 'true' ? 'duplicate_item' : 'create_item')
             ->with('section', $section)
@@ -155,24 +178,43 @@ class ficheController extends Controller
 
 
     public function retirerChoix(Request $request) {
-        $fiche = Fiche::find($request->fiche);
-        $fiche->delete();
-        return 'deleted';
+
+        $item_id = Fiche::find($request->fiche)->item_id;
+        $check = Resultat::where('item_id', $item_id)->get();
+
+        if ($check->count() == 0 || $request->state == 'confirmation') {
+            $fiche = Fiche::find($request->fiche);
+            Resultat::where('item_id', $item_id)->delete();
+            $fiche->delete();
+            return 'ok';
+        } else {
+            $enfants = [];
+            foreach ($check as $line) {
+                $enfants[] = Enfant::find($line->enfant_id)->prenom;
+            }
+            return $enfants;
+        }
+
     }
+
     public function choix(Request $request) {
-
-
-  
+            $liste = explode(',',$request->order);
+ 
             $fiche = Fiche::where('user_id', Auth::id())->where('section_id',$request->section)->orderBy('order', 'DESC')->first();
             $order =  ($fiche) ? $fiche->order + 1 : 1;
             $fiche = new Fiche();
             $fiche->item_id = $request->fiche;
-            $fiche->order = $order;
             $fiche->parent_type = $request->table;
             $fiche->section_id = $request->section;
             $fiche->user_id = Auth::id();
             $fiche->save();
             $t = $fiche->id;
+
+            foreach ($liste as $key=>$item) {
+               $p = Fiche::where('user_id', Auth::id())->where('item_id', $item)->first();
+               $p->order = $key + 1;
+               $p->save(); 
+            }
         
 
         return $t;
@@ -206,6 +248,10 @@ class ficheController extends Controller
 
     public function save_fiche(Request $request) {
 
+
+
+    
+
         function set_lvl($request) {
             $lvl = '';
             $lvl .= isset($request->ps) ? '1' : '0';
@@ -232,12 +278,12 @@ class ficheController extends Controller
 
 
         // $name_file = uniqid().'.jpg';
-        //dd($request);
+        
 
         $img = null;
         if ($request->duplicate) {
             $item = Item::find($request->duplicate);
-            $img = $item->image_id;
+            $img = $item->image_nom;
         }
         
         if ($request->submit == 'modif')
@@ -249,7 +295,7 @@ class ficheController extends Controller
 
             $item->name = $request->name;
             if ($img) {
-                $item->image_id = $img;
+                $item->image_nom = $img;
             }
             if ($request->file) {
                 $image = Image::make($request->file);
@@ -257,18 +303,19 @@ class ficheController extends Controller
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->encode('jpg', 75);
-                $filename = time(). '.jpg';
-                Storage::disk('image')->put($filename, $image);
+                $filename = Auth::id().'_'.uniqid().'.jpg';
+                Storage::disk('image')->put($request->section_id.'/'.$filename, $image);
                 // Storage::move($filename, 'public/img/items/' . $filename);
                 // $image->move(public_path('img/items'), $name_file);
                 $new = new ImageTable();
                 $new->name = $filename;
                 $new->save();
-                $item->image_id = $new->id;
+                $item->image_nom = $filename;
+                $request->imageName = null;
             }  
 
             if ($request->imageName) {
-                $item->image_id = $request->imageName; 
+                $item->image_nom = explode('/',$request->imageName)[1]; 
             }
             
             $item->section_id = $request->section_id;
@@ -278,12 +325,10 @@ class ficheController extends Controller
             $item->st = $request->st;
             $item->user_id = Auth::id();
             $item->phrase_masculin = $request->phrase;
-            if(trim($request->phrase_feminin) == '') {
-                $item->phrase_feminin = chatpht($item->phrase_masculin);
-            } else {
-                $item->phrase_feminin = $request->phrase_feminin;
-            }
+            $item->phrase_feminin = $request->phrase_feminin;
+    
             //$item->phrase_feminin = chatpht($item->phrase_masculin);
+            
             $item->save();
         } 
         
@@ -296,16 +341,22 @@ class ficheController extends Controller
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->encode('jpg', 75);
-                $filename = time(). '.jpg';
-                Storage::disk('image')->put($filename, $image);
+                $filename = Auth::id().'_'.uniqid().'.jpg';
+                Storage::disk('image')->put($request->section_id.'/'.$filename, $image);
                 // Storage::move($filename, 'public/img/items/' . $filename);
                 // $image->move(public_path('img/items'), $name_file);
                 $new = new ImageTable();
                 $new->name = $filename;
                 $new->save();
-                $item->image_id = $new->id;
+                $item->image_nom = $filename;
+                $request->imageName = null;
             } else {
-                $item->image_id = $request->imageName; 
+                if ($request->imageName) {
+                    $item->image_nom = $request->imageName; 
+                } else {
+                    $item->image_nom = $img; 
+
+                }
             }
             $item->section_id = $request->section_id;
             $item->categorie_id = $request->categorie_id;
@@ -314,12 +365,9 @@ class ficheController extends Controller
             $item->st = $request->st;
             $item->user_id = Auth::id();
             $item->phrase_masculin = $request->phrase;
-            if(trim($request->phrase_feminin) == '') {
-                $item->phrase_feminin = chatpht($item->phrase_masculin);
-            } else {
-                $item->phrase_feminin = $request->phrase_feminin;
-            }
-            // $item->save();
+            $item->phrase_feminin = chatpht($item->phrase_masculin);
+            $item->save();
+
 
             if ($request->submit == 'save_and_select') {
                 $fiche = new Fiche();

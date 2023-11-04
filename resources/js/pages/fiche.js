@@ -1,6 +1,6 @@
 import { Modal } from 'bootstrap'
 
-const selectSectionFiche = (quill) => {
+const selectSectionFiche = (ficheSelect) => {
 
     $(document).on('click','.caseLvl', function() {
         var id =$(this).closest('.card-footer2').data('id')
@@ -9,6 +9,83 @@ const selectSectionFiche = (quill) => {
         $.get('/app/fiches/'+id+'/setLvl?lvl='+lvl, function(data) {
             $(that).toggleClass('active')
         })
+    })
+
+    $(document).on('click','.biblioModal', function() {
+        var id = $('#section_id').val()
+        $.get('/app/get_images/'+id+'?source=create', function(data) {
+
+            $('#biblioModal .modal-body').html(data)
+        })
+
+    })
+
+    $(document).on('click','.selectImage', function() {
+        var image  = $(this).data('image')
+        if ($(this).hasClass('create')) {
+            $('#photoEnfantImg .dlImage').attr('src','/storage/items/'+image);
+            $('#photoEnfantImg .dlImage').removeClass('d-none');
+            $('#photoEnfantImg .logoImage').addClass('d-none');
+            $('#imageName').val(image);           
+        } else {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            console.log(image, ficheSelect)
+            $.ajax({
+                url: '/app/set_image',
+                method:'POST',
+                data: {
+                    image: image,
+                    fiche: ficheSelect
+                },
+                success: function(data) {
+                    console.log(data)
+                    $('.card_fiche[data-fiche="'+ficheSelect+'"]').find('.card__image img').attr('src', '/storage/items/'+image)
+
+                }
+
+            })
+
+        }
+
+
+        var myModalEl = document.getElementById('biblioModal');
+        var modal = Modal.getInstance(myModalEl)
+        modal.hide();
+    })
+
+    $(document).on('click','.biblioModalFiche', function() {
+        var id = $(this).closest('.card_fiche').data('section')
+        ficheSelect = $(this).closest('.card_fiche').data('fiche')
+        $.get('/app/get_images/'+id+'?source=modif', function(data) {
+
+            $('#biblioModal .modal-body').html(data)
+        })
+
+    })
+
+    $(document).on('click','.biblioModalCategories', function() {
+        var liste = $(this).data('categories')
+        ficheSelect = $(this).closest('.card_fiche').data('fiche')
+        $('#newCategorie').html(liste)
+    })
+
+    $(document).on('change','#newCategorie', function() {
+        var id = $(this).val()
+        var texte = $(this).find(':selected').text()
+        console.log(texte)
+        $.get('/app/setNewCategories?cat='+id+'&fiche='+ficheSelect, function() {
+            $('.card_fiche[data-fiche="'+ficheSelect+'"]').find('.st').text(texte)
+        })
+        var myModalEl = document.getElementById('biblioModalCategories');
+        var modal = Modal.getInstance(myModalEl)
+        modal.hide();
+
+        
     })
 
 
@@ -49,7 +126,7 @@ const selectSectionFiche = (quill) => {
     })
 }
 
-const selectFiche = () => {
+const selectFiche = (Modal) => {
     $(document).on('click','.selectionner', function() {
         console.log('coucou')
         
@@ -57,11 +134,26 @@ const selectFiche = () => {
         var id = $(that).data('fiche')
         var type = $(that).data('type')
         var table = $(that).data('table')
+        var categorie = $(that).data('categorie')
         var section = $('.selectSectionFiche.selected').attr('data-value')
 
-        $.get('/app/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table, function(data) {
-            console.log('data', data, that)
+        var p = $('#mesfiches li[data-categorie="'+categorie+'"]').first()
+        if (p.length) {
+
+            $(that).detach().insertBefore(p)
+        } else {
             $(that).detach().appendTo('#mesfiches ul')
+
+        }
+        
+        var order = [];
+        $('#mesfiches ul li').each((index, el) => {
+            order[index] = $(el).data('fiche')
+        })
+        console.log('index', order)
+        
+        $.get('/app/fiches/choix?fiche='+id+'&section='+section+'&type='+type+'&table='+table+'&order='+order, function(data) {
+            console.log('data', data, that, categorie)
             $(that).find('.selectionner').addClass('d-none')
             $(that).find('.retirer').removeClass('d-none')
             $(that).attr('data-selection', data)
@@ -72,6 +164,21 @@ const selectFiche = () => {
         
         $('#biblio_container').toggleClass('d-none')
     })
+
+
+    $(document).on('click','.deselectionneFiche', function() {
+        var id =$(this).data('fiche')
+        var that = $('.card_fiche[data-selection="'+id+'"]')
+        $.get('/app/fiches/retirerChoix?fiche='+id+'&state=confirmation', function(data) {
+            console.log(data)
+            
+                $(that).detach().appendTo('#autresfiches ul')
+                $(that).find('.selectionner').removeClass('d-none')
+                $(that).find('.retirer').addClass('d-none')   
+        })
+    })
+
+
     $(document).on('click','.retirer', function() {
         
         var that = $(this).closest('.card_fiche')
@@ -79,14 +186,33 @@ const selectFiche = () => {
 
 
         $.get('/app/fiches/retirerChoix?fiche='+id, function(data) {
-            $(that).detach().appendTo('#autresfiches ul')
-            $(that).find('.selectionner').removeClass('d-none')
-            $(that).find('.retirer').addClass('d-none')
+            console.log(data)
+            if (data == 'ok') {
+                $(that).detach().appendTo('#autresfiches ul')
+                $(that).find('.selectionner').removeClass('d-none')
+                $(that).find('.retirer').addClass('d-none')                
+            } else {
+                var liste = '';
+                for (var i = 0; i < data.length; i++) {
+                    liste = liste + '<li>'+data[i]+'</li>';
+                }
+                console.log(liste)
+
+                var myModalEl = document.getElementById('modalRetirerFiche');
+                var modal = new Modal(myModalEl,{
+                    backdrop: 'static', keyboard: false
+                })
+                $('#enfant_liste').html(liste)
+                $('.deselectionneFiche').attr('data-fiche', id)
+                modal.show() 
+            }
+
         })
     })
 }
 
 const choixTypeFiches = (Modal) => {
+    
 
 
     if ($('#form1[data-message="1"]').length) {
@@ -98,6 +224,15 @@ const choixTypeFiches = (Modal) => {
     }
     
     $(document).on('click','.btnSelectionType', function() {
+        if ($(this).hasClass('les_fiches')) {
+            $('#categories').removeClass('d-none')
+            $('.deletefiches').addClass('d-none')
+
+        } else {
+            $('#categories').addClass('d-none')
+            $('.deletefiches').removeClass('d-none')
+        }
+
         var section = $('.selectSectionFiche.selected').data('value') 
         $('.btnSelectionType').removeClass('selected')
         $(this).addClass('selected')
@@ -111,17 +246,7 @@ const choixTypeFiches = (Modal) => {
         $('.card_fiche[data-section="'+section+'"]').removeClass('d-none')
 
     })
-    $(document).on('click','.selectImage', function() {
-        var image  = $(this).data('image')
-        $('#photoEnfantImg .dlImage').attr('src','/img/items/'+image);
-        $('#photoEnfantImg .dlImage').removeClass('d-none');
-        $('#photoEnfantImg .logoImage').addClass('d-none');
-        $('#imageName').val($(this).data('id'));
 
-        var myModalEl = document.getElementById('biblioModal');
-        var modal = Modal.getInstance(myModalEl)
-        modal.hide();
-    })
 }
 
 const initFiche = () => {
@@ -129,11 +254,12 @@ const initFiche = () => {
         $( "#sortable" ).disableSelection();
         $( "#sortable" ).sortable({
             start: function() {
-                $('#sortable').css('background-color', 'red')
+                $('#sortable').css('background-color', 'lightgray')
                 $(this).find('.action').addClass('d-none')
 
             },
-            stop: function() {
+            top: function() {
+                $('#sortable').css('background-color', 'transparent')
                 $(this).find('.action').removeClass('d-none')
                 let pos = []
                 let section = $('.selectSectionFiche.selected').data('value');
@@ -148,7 +274,7 @@ const initFiche = () => {
                 });
                 $.ajax({
                     method: 'POST',
-                    url: '/fiches/order',
+                    url: '/app/fiches/order',
                     data : {
                         pos: pos,
                         section: section
@@ -162,7 +288,35 @@ const initFiche = () => {
     } );
 }
 
-const choixFiltre = () => {
+const choixFiltre = (Modal) => {
+
+    $(document).on('click','.croix', function() {
+        location.reload()
+    })
+
+
+    $(document).on('click','.list-group-item-info', function() {
+        var resultat = $(this).data('fiche')
+        var enfant = $('#enfant').val()
+        $('form').slideUp(400)
+        setTimeout(() => {
+            $.get('/app/getFiche?resultat='+resultat+'&enfant='+enfant, function(data) {
+
+                $('.fiche_modify').html(data)
+                $('.card_item').removeClass('d-none')
+                $('.fiche_modify_bloc').removeClass('d-none').slideDown(400)
+                
+            })            
+        }, 400);
+
+    })
+
+    $(document).on('click','.ordreArray', function() {
+        var ordre = $(this).data('ordre')
+        $.get('/app/set_ordre?ordre='+ordre, function() {
+            window.open('/app/enfants/cahier/manage', '_self')
+        })
+    })
 
     $(document).on('click','.coder', function() {
         console.log('coucou')

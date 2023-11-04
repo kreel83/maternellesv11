@@ -39,7 +39,7 @@
     $flag=false;
 @endphp
 
-<div class="mt-5">
+<div class="mt-5" id="fiche_eleve">
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
@@ -69,9 +69,25 @@
 
     <div class="row">
 
-        <div class="col">
+        <div class="col-md-6 gauche d-flex justify-content-center align-items-center">
+            <style>
+                .croix {
+                    right: -20px; top: -20px; cursor: pointer;
+                    font-size: 30px; color: grey;
 
-            <form action="{{ route('enregistreEleve') }}" method="post">
+                }
+            </style>
+
+            <div class="d-none fiche_modify_bloc position-relative">
+                <div class="position-absolute croix" style="">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="fiche_modify">
+
+                </div>
+            </div>
+
+            <form action="{{ route('enregistreEleve') }}" method="post" class="w-100">
             @csrf
 
             <input type="hidden" id="eleve_form" name="id" value="new" />
@@ -199,8 +215,11 @@
 
         </div>
 
+
         @if ($eleve['id'] != 'new')
-            <div class="col">
+
+            <div class="col-md-6">
+
 
                 <h4 class="text-center">Compétences acquises</h4>
 
@@ -209,6 +228,7 @@
                 @endphp
 
                 <div class="liste_eleves ps-4" style="margin-top: 20px;">
+                    <input type="hidden" id="enfant" value="{{$eleve->id}}">
 
                         <ul class="list-group">
                         @foreach($resultats as $resultat)
@@ -232,7 +252,7 @@
                                 <li class="list-group-item">
 
                                 @if ($resultat->notation == 2 && $resultat->autonome == 0)
-                                <a href="#collapseExample{{$resultat->id}}" data-bs-toggle="collapse" class="list-group-item list-group-item-action list-group-item-info">
+                                    <div class="list-group-item-info" data-fiche="{{$resultat->id}}">
                                 @endif
 
                                 {{--
@@ -275,5 +295,24 @@
     </div>
 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modifyFicheModal" tabindex="-1" aria-labelledby="modifyFicheModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 @endsection
