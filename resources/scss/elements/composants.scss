@@ -1,28 +1,29 @@
 /* Définir la classe pour l'icône dans la balise <i> */
-input[type='email']::placeholder {
-    color: white;
-    opacity: 1; /* Firefox */
-  }
+
+// input[type='email']::placeholder {
+//     color: white;
+//     opacity: 1; /* Firefox */
+//   }
   
-  input[type='email']::-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: white;
-  }
+//   input[type='email']::-ms-input-placeholder { /* Internet Explorer 10-11 */
+//    color: white;
+//   }
   
-  input[type='email']::-ms-input-placeholder { /* Microsoft Edge */
-   color: white;
-  }
-  input[type='password']::placeholder {
-    color: white;
-    opacity: 1; /* Firefox */
-  }
+//   input[type='email']::-ms-input-placeholder { /* Microsoft Edge */
+//    color: white;
+//   }
+//   input[type='password']::placeholder {
+//     color: white;
+//     opacity: 1; /* Firefox */
+//   }
   
-  input[type='password']::-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: white;
-  }
+//   input[type='password']::-ms-input-placeholder { /* Internet Explorer 10-11 */
+//    color: white;
+//   }
   
-  input[type='password']::-ms-input-placeholder { /* Microsoft Edge */
-   color: white;
-  }
+//   input[type='password']::-ms-input-placeholder { /* Microsoft Edge */
+//    color: white;
+//   }
 
 .icone-input {
     position: relative;
