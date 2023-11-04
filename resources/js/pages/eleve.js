@@ -1,6 +1,11 @@
 
 import * as bootstrap from 'bootstrap';
 
+$( document ).ready(function() {
+    if($('#btnRetourFicheEnfant').length)
+        $('#btnRetourFicheEnfant').attr("href", $('#btnRetourFicheEnfantValue').val());
+});
+
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

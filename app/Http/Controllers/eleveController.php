@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use File;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -251,6 +254,7 @@ class EleveController extends Controller
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'ddn' => ['required', 'date'],
+            'psmsgs' => ['required'],
             'mail1' => ['email:rfc,dns','nullable'],
             'mail2' => ['email:rfc,dns','nullable'],
             'mail3' => ['email:rfc,dns','nullable'],
@@ -261,23 +265,23 @@ class EleveController extends Controller
             'prenom.required' => 'Le prénom est obligatoire.',
             'prenom.max' => 'Le prénom est limité à 255 caractères.',
             'ddn.required' => 'La date de naissance est obligatoire',
-            'mail.*.email' => 'Ce mail semble ne pas etre correct',
-            'mail1.email' => 'Ce mail semble ne pas etre correct',
-            'mail2.email' => 'Ce mail semble ne pas etre correct',
-            'mail3.email' => 'Ce mail semble ne pas etre correct',
-            'mail4.email' => 'Ce mail semble ne pas etre correct'
+            'psmsgs.required' => 'La section est obligatoire',
+            'mail1.email' => 'Le mail principal ne semble pas correct',
+            'mail2.email' => 'Le mail secondaire ne semble pas correct',
+            'mail3.email' => 'Le mail additionnel ne semble pas correct',
+            'mail4.email' => 'Le mail additionnel ne semble pas correct'
         ]);
-        //dd($request->mail);
-        $emails = implode(';', $request->mail);
-        dd($emails);
 
-        /*
+        $datas = $request->except(['_token']);
+        //dd($datas);
+        $datas['user_id'] = Auth::id();
+
         $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2'],$datas['mail3'],$datas['mail4']]));
         $datas['mail'] = $datas['mail'] == '' ? null : $datas['mail'];
-
-        $datas['user_id'] = Auth::id();
-        $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
+        $datas['sh'] =  (Arr::exists($datas, 'sh')) ? 1 : 0;
+        //$datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
+        $datas['prenom'] = ucfirst($datas['prenom']);
         $degrade = Enfant::DEGRADE;
         $datas['background'] = array_rand($degrade);
         $files = File::files(public_path('img/animaux'));
@@ -286,29 +290,41 @@ class EleveController extends Controller
             $liste[] = $file->getFileName();
         }
         $k = array_rand($liste);
-        
         $datas['photo'] = $liste[$k];
-        $datas['prenom'] = ucfirst($datas['prenom']);
         $datas['annee_scolaire'] = Auth::user()->calcul_annee_scolaire();
         unset($datas['mail1']);
         unset($datas['mail2']);
         unset($datas['mail3']);
         unset($datas['mail4']);
+        //dd($datas);
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
-
-        return ['state'=>true];
-        */
+        //return ['state'=>true];
+        return redirect()->route('maclasse');
     }
 
-    public function voirEleve($enfant_id) {
+    public function addEleve() {
         $user = Auth::user();
         $files = File::files(public_path('img/animaux'));
         $liste = array();
         foreach ($files as $file) {
             $liste[] = $file->getFileName();
         }
-        $eleve = Enfant::find($enfant_id);
-        $resultats = Resultat::resultatsPourUnEleve($enfant_id);
+        $datas = array(
+            'id' => 'new',
+            'genre' => null,
+            'sh' => null,
+            'psmsgs' => null,
+            'nom' => null,
+            'prenom' => null,
+            'ddn' => null,
+            'comment' => null,
+            'mail1' => null,
+            'mail2' => null,
+            'mail3' => null,
+            'mail4' => null,
+        );
+        $resultats = new Resultat();
+        $sections = Section::all();
         return view('eleves.fiche')
             ->with('flag', 'disabled')
             ->with('periodes', $this->getPeriode($user->configuration->periodes))        
@@ -318,8 +334,49 @@ class EleveController extends Controller
             ->with('tous', $user->tous())
             ->with('role', Auth::user()->role)
             ->with('resultats', $resultats)
-            //->with('sections', $sections)
-            ->with('eleve',$eleve)
+            ->with('sections', $sections)
+            ->with('backUrl', URL::previous())
+            ->with('eleve', $datas)
+            ->with('eleves',$user->liste());
+    }
+
+    public function voirEleve($enfant_id) {
+        $user = Auth::user();
+        $files = File::files(public_path('img/animaux'));
+        $liste = array();
+        foreach ($files as $file) {
+            $liste[] = $file->getFileName();
+        }        
+        $enfant = Enfant::find($enfant_id);
+        $datas = array(
+            'id' => $enfant->id,
+            'genre' => $enfant->genre,
+            'sh' => $enfant->sh,
+            'psmsgs' => $enfant->psmsgs,
+            'nom' => $enfant->nom,
+            'prenom' => $enfant->prenom,
+            'ddn' => $enfant->ddn,
+            'comment' => $enfant->comment,
+            'mail1' => $enfant->mail1,
+            'mail2' => $enfant->mail2,
+            'mail3' => $enfant->mail3,
+            'mail4' => $enfant->mail4,
+        );
+        $resultats = Resultat::resultatsPourUnEleve($enfant_id);
+        $sections = Section::all();
+        session(['backUrl' => URL::previous()]);
+        return view('eleves.fiche')
+            ->with('flag', 'disabled')
+            ->with('periodes', $this->getPeriode($user->configuration->periodes))        
+            ->with('files', $liste)
+            ->with('professeur', "null")
+            ->with('profs', $user->profs())
+            ->with('tous', $user->tous())
+            ->with('role', Auth::user()->role)
+            ->with('resultats', $resultats)
+            ->with('sections', $sections)
+            ->with('backUrl', URL::previous())
+            ->with('eleve', $datas)
             ->with('eleves',$user->liste());
     }
     /*

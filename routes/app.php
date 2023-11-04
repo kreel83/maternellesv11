@@ -232,6 +232,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
     Route::get('eleves/view/{enfant_id}',[EleveController::class,'voirEleve'])->name('voirEleve');
     Route::get('eleves/getAnneeEnCours',[EleveController::class,'getAnneeEnCours'])->name('getAnneeEnCours');
+    Route::get('eleves/add',[EleveController::class,'addEleve'])->name('addEleve');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');
