@@ -250,7 +250,9 @@ class EleveController extends Controller
 
     public function enregistre(Request $request) {
 
+
         $request->validate([
+            'genre' => ['required'],
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'ddn' => ['required', 'date'],
@@ -260,6 +262,7 @@ class EleveController extends Controller
             'mail3' => ['email:rfc,dns','nullable'],
             'mail4' => ['email:rfc,dns','nullable'],
         ], [
+            'genre.required' => 'Veuillez indiquer "garçon" ou "fille".',
             'nom.required' => 'Le nom est obligatoire.',
             'nom.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
@@ -296,6 +299,7 @@ class EleveController extends Controller
         unset($datas['mail2']);
         unset($datas['mail3']);
         unset($datas['mail4']);
+        unset($datas['backUrl']);
         //dd($datas);
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
         //return ['state'=>true];

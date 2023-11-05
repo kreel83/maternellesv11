@@ -61,7 +61,7 @@ use Illuminate\Support\Facades\Auth;
                                 $params = in_array($menu, ['evaluation',  'affectation_groupe', 'avatar','maclasse']);
                             @endphp
 
-                            @if (Auth::user()->is_enfants())
+                            
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
                                         data-bs-toggle="dropdown">Ma classe</a>
@@ -70,6 +70,7 @@ use Illuminate\Support\Facades\Auth;
 
                                         <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
                                             class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'édite ma classe</a>
+                                        @if (Auth::user()->is_enfants())    
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
                                             class="nav-item nav-link ">J'évalue mes élèves</a>
 
@@ -80,9 +81,9 @@ use Illuminate\Support\Facades\Auth;
                                             class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}">J'affecte
                                             mes groupes</a>
 
+                                            @endif
                                     </div>
                                 </div>
-                            @endif
 
                             @php
                             $params = in_array($menu, ['manage', 'reussite']);
@@ -117,9 +118,9 @@ use Illuminate\Support\Facades\Auth;
                                     data-bs-toggle="dropdown">Paramètres</a>
                                 <div class="dropdown-menu">
 
-                                    <a href="{{ route('eleves') }}"
+                                    {{-- <a href="{{ route('eleves') }}"
                                         class="nav-item nav-link {{ $menu == 'eleve' ? 'active' : null }}">Mes
-                                        élèves</a>
+                                        élèves</a> --}}
                                     <a href="{{ route('fiches') }}"
                                         class="nav-item nav-link {{ $menu == 'item' ? 'active' : null }}">Je
                                         sélectionne mes activités</a>

@@ -92,12 +92,12 @@ class CahierController extends Controller
     private function garcon($reussite, $enfant) {
         $prenom = $enfant->prenom;        
         
+        
         // $reussite = str_replace("l'élève", 'il', $reussite);
         $liste = explode(PHP_EOL, $reussite);
         foreach ($liste as $key=>$phrase) {
-            $liste[$key] = str_replace('Il ', $prenom,  $liste[$key]);
-            if (isset($liste[0])) {            
-                $liste[0] = str_replace(['il', 'Il'], [$prenom, $prenom], $liste[0]); 
+            if ($key != 0) {                         
+                $liste[$key] = str_replace($prenom.' ', 'Il ',  $liste[$key]);                
             }            
         }
 
@@ -110,15 +110,13 @@ class CahierController extends Controller
 
     private function fille($reussite, $enfant) {
         $prenom = $enfant->prenom;
-        $reussite = str_replace($prenom, 'Elle ', $reussite);
-        // $reussite = str_replace("l'élève ", $prenom.' ', $reussite);
-        $r = explode(PHP_EOL, $reussite);
-
-        if (isset($r[0])) {
-            
-            $r[0] = str_replace(['elle', 'Elle'], [$prenom, $prenom], $r[0]); 
+        $liste = explode(PHP_EOL, $reussite);
+        foreach ($liste as $key=>$phrase) {
+            if ($key != 0) {                         
+                $liste[$key] = str_replace($prenom.' ', 'Elle ',  $liste[$key]);                
+            }            
         }
-        $result = join(PHP_EOL, $r);
+        $result = join(PHP_EOL, $liste);
        
         
         return $result;
@@ -159,6 +157,7 @@ class CahierController extends Controller
         $r->periode = $this->getPeriode($enfant)[1];
         $r->texte_integral = $reussite;
         $r->save();
+        
         return $reussite;
 
     }
@@ -604,6 +603,7 @@ class CahierController extends Controller
         $resultats = array();
         $r = Resultat::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
         $r = $r->groupBy('section_id');
+        
 
         foreach ($r as $key=>$fiches) {
             $resultats[$key] = '';
@@ -636,6 +636,7 @@ class CahierController extends Controller
         }
         if (!$calcul) return strlen(join('',$resultats));
 
+
         
         if ($enfant->genre == "F") {
             $r = array();
@@ -650,8 +651,10 @@ class CahierController extends Controller
             }   
         }
 
+
         // $commentaire_enfant = Cahier::where('enfant_id', $enfant->id)->orderBy('section_id')->get();
         // $commentaire_enfant = $commentaire_enfant->groupBy('section_id');
+        
 
         return $this->format_apercu($r, $enfant);
     }
