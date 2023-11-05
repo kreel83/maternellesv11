@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Reussite;
 use App\utils\Utils;
 
 class Resultat extends Model
@@ -33,6 +34,32 @@ class Resultat extends Model
         'groupe',
         'autonome',
     ];
+
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($resultat) {
+	        $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+            if ($r)  {
+                $r->texte_integral = null;
+                $r->save();
+
+            }
+	    });
+
+	    static::updating(function($resultat) {
+	        $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+
+            if ($r)  {
+                $r->texte_integral = null;
+                $r->save();
+
+            }
+	    });
+    
+	}
 
 
     public function notation() {

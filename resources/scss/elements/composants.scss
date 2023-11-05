@@ -70,6 +70,41 @@
  
   }
 
+  .liste_eleves {
+    padding-right: 16px;
+  }
+
+  .list-group-item-info {
+    cursor: pointer;
+    background-color: transparent !important;
+  }
+  .list-group-item:hover {
+    
+    font-weight: bolder !important;
+    .list-group-item-info {
+        color: white !important;
+
+    }
+    background-color: var(--main-color);
+  }
+
+.input-group-text
+ {
+    background-color: #9251C9 !important;
+    i {
+        color: white !important;
+        
+    }    
+ }
+
+.btn-check:checked {
+    label {
+        border-color : red !important; 
+        outline: 1px solid red !important;
+
+    }
+}
+
 .icone-input-login {
     position: relative;
     color: white;
@@ -207,7 +242,6 @@
     font-weight: 700;
     color: red;
     width: 100%;
-    text-align: center;
     margin-top: 6px
  } 
 

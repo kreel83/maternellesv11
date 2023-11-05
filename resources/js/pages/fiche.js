@@ -298,13 +298,13 @@ const choixFiltre = (Modal) => {
     $(document).on('click','.list-group-item-info', function() {
         var resultat = $(this).data('fiche')
         var enfant = $('#enfant').val()
-        $('form').slideUp(400)
+        $('.form_bloc').slideToggle()
         setTimeout(() => {
             $.get('/app/getFiche?resultat='+resultat+'&enfant='+enfant, function(data) {
 
                 $('.fiche_modify').html(data)
                 $('.card_item').removeClass('d-none')
-                $('.fiche_modify_bloc').removeClass('d-none').slideDown(400)
+                $('.fiche_modify_bloc').removeClass('d-none').slideDown()
                 
             })            
         }, 400);

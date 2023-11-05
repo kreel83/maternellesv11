@@ -253,7 +253,7 @@ const photo_eleve = () => {
     })
     $(document).on('click','#eleveCoursAnnee', function() {
 
-        $('#eleveCoursAnnee').addClass('d-none')
+        $('.eleveCoursAnnee_bloc').addClass('d-none')
         $('#selectPeriodeBloc').removeClass('d-none')
         $('#selectPeriode').val(null)
 

@@ -194,9 +194,9 @@ body {
 }
 
 :root {
-    --main-color: #6759ff;
+    --main-color: #9A78C4;
     --back-color: #fbfaff;
-    --second-color: #9f96f9;
+    --second-color: #6534A9;
 
     --vert: #8dc53e;
     --bleu: #16bdff;
@@ -227,4 +227,11 @@ body {
 
     --orange: rgba(202, 126, 49, 0.98);
     --section7: rgba(202, 126, 49, 0.98);
+
+
+    --niveau_3: rgba(105,240,174,1);
+    --niveau_2: rgba(68,138,255,1);
+    --niveau_1: rgba(255,152,0,1);
+    --niveau_0: rgba(238,238,238,1);
+
 }
