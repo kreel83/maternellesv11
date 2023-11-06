@@ -211,7 +211,7 @@ class CahierController extends Controller
         // PDF pour Parent pas de Auth::
         //$rep = Auth::user()->repertoire;
 
-        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color')
+        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color','sections.texte')
             ->join('items','items.id','resultats.item_id')
             ->join('sections','sections.id','resultats.section_id')
             ->where('enfant_id', $id)
@@ -228,12 +228,12 @@ class CahierController extends Controller
             $p = Image::find($resultat->image_id);
             $resultat->image = null;
             if ($p) {
-                $resultat->image = 'storage/items/'.$p->name;
+                $resultat->image = 'storage/items/'.$resultat->section_id.'/'.$p->name;
             }
         }
 
         $resultats = $resultats->groupBy('section_id')->toArray();
- 
+
         $sections = Section::orderBy('ordre')->get()->toArray();
         $s = array();
         foreach ($sections as $section) {
@@ -286,6 +286,7 @@ class CahierController extends Controller
         }
         // L'indice 0 contient le commentaire général
         $textesParSection[0] = $textes[count($textes)-1];
+        $textesParSection[0] = str_replace('<h2 contenteditable="false">Commentaire général</h2>', '', $textesParSection[0]);
         //dd($textesParSection);
 
         // css class pour le pdf
@@ -293,14 +294,14 @@ class CahierController extends Controller
         foreach ($resultats as $resultat) {
             foreach ($resultat as $item) {
                 //$class = '.section'.$item['section_id'].' {border-radius: 15px; padding-top: 10px; padding-bottom: 10px; text-align: center; font-size: 20px; background-color: '.$item['color'].'}';
-                $class = '.titre'.$item['section_id'].' {background-color: '.$item['color'].'}';
+                $class = '.titre'.$item['section_id'].' {color: '.$item['texte'].'; background-color: '.$item['color'].'}';
                 if(!in_array($class, $customClass)) {
                     $customClass[] = $class;
                 }
             }
         }
         // header pour commentaire général
-        $class = ".titre0 {color: #ffffff; background-color: grey}";
+        $class = ".titre0 {color: #000; background-color: #f5e342}";
         $customClass[] = $class;
 
         $periode = Utils::periode($enfant, $periode);
@@ -308,7 +309,8 @@ class CahierController extends Controller
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
         if ($state == 'see') {
-            $pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
+            $pdf = PDF::loadView('pdf.reussite4', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
+            //$pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
             // download PDF file with download method
             //return $pdf->stream('test_cahier.pdf');     
             $pdf->add_info('Title', 'Cahier de reussites de '.ucfirst($enfant->prenom));

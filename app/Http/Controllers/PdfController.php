@@ -24,18 +24,21 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
+use function PHPUnit\Framework\isEmpty;
+
 //use function PHPUnit\Framework\isEmpty;
 
 class PdfController extends Controller
 {
-    public static function genereLienVersCahierEnPdf($enfant, $periode, $status = 'E') {
+    public static function genereLienVersCahierEnPdf(Enfant $enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
         // $enfant = Enfant::find($enfant_id);
         $token = $periode . md5($enfant->id.uniqid().env('HASH_SECRET'));
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
         // Envoi des emails aux contacts de l'enfant...
-        foreach ($enfant->mails as $email) {
+        $mails = $enfant->tableauDesMailsEnfant();
+        foreach($mails as $email) {
             Mail::to($email)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
             $is_sent = true;
         }
@@ -176,10 +179,12 @@ class PdfController extends Controller
         $displayBtnBulk = array_fill(1, $maxPeriode, false);
         foreach ($enfants as $enfant) {
             
-            if(!empty($enfant->mails) > 0) {
-                $s = count($enfant->mails) > 1 ? 's' : '';
+            $mails = $enfant->tableauDesMailsEnfant();
+
+            if(count($mails) > 0) {
+                $s = count($mails) > 1 ? 's' : '';
                 $statutEmail[$enfant->id]['success'] = true;
-                $statutEmail[$enfant->id]['msg'] = '<div title="'.implode(chr(10), $enfant->mails).'"><i class="fa-solid fa-circle-check me-2"></i>'.count($enfant->mails).' email'.$s.'</div>';
+                $statutEmail[$enfant->id]['msg'] = '<div title="'.implode(chr(10), $mails).'"><i class="fa-solid fa-circle-check me-2"></i>'.count($mails).' email'.$s.'</div>';
                 $statutEmail[$enfant->id]['textcolor'] = 'green';
             } else {
                 $statutEmail[$enfant->id]['success'] = false;

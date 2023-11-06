@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
-use App\Http\Controllers\admin\AdminProfilController;
 use App\Http\Controllers\admin\AdminLicenceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnfantController;
@@ -12,15 +11,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CahierController;
 use App\Http\Controllers\ParametreController;
 use App\Http\Controllers\ficheController;
-use App\Http\Controllers\EleveController;
 use App\Http\Controllers\GoogleConnect;
-use App\Http\Controllers\EcoleController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TutoController;
-use App\Http\Controllers\RegisteredUserController;
-
 use App\Http\Controllers\NewaccountController;
-use App\Http\Controllers\Direction\DashboardProController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
@@ -146,7 +140,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{enfant_id}/remove_phrase/{phrase_id}', [CahierController::class, 'remove_phrase'])->name('remove_phrase'); // A VERIFIER id si enfant et utilisé cahier.js ligne 41
     Route::get('/cahiers/get_apercu/{enfant_id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
-    Route::get('/enfants/{enfant_id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
+    Route::get('/enfants/{enfant_id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
     Route::post('/enfants/{enfant_id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     /*
@@ -166,7 +160,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{id}/remove_phrase/{phrase}', [CahierController::class, 'remove_phrase'])->name('remove_phrase');
     Route::get('/cahiers/get_apercu/{id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
-    Route::get('/enfants/{id}/avatar', [EleveController::class, 'avatarEleve'])->name('avatarEleve');
+    Route::get('/enfants/{id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     */
@@ -174,7 +168,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
     //Route::get('/home', [HomeController::class, 'index'])->name('home');
     //Route::get('/deco', [UserController::class, 'deco'])->name('deco');
-    Route::get('/choix_enfant_select', [EleveController::class, 'choix_enfant_select'])->name('choix_enfant_select');
+    Route::get('/choix_enfant_select', [EnfantController::class, 'choix_enfant_select'])->name('choix_enfant_select');
     Route::get('/enfants/cahier/envoi', [CahierController::class, 'envoiCahier'])->name('envoiCahier');
     Route::post('/enfants/cahier/envoi', [CahierController::class, 'envoiCahierPost'])->name('envoiCahier.post');
         
@@ -220,19 +214,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/fiches/populate/categorie', [ficheController::class, 'populateCategorie'])->name('populateCategorie');
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
-    Route::get('/maclasse',[EleveController::class,'maclasse'])->name('maclasse');
+    Route::get('/maclasse',[EnfantController::class,'maclasse'])->name('maclasse');
 
-    Route::get('/eleves',[EleveController::class,'liste'])->name('eleves');
-    Route::get('/eleves/toggleInactiveEleve',[EleveController::class,'toggleInactiveEleve'])->name('toggleInactiveEleve');
-    Route::post('/eleves/save',[EleveController::class,'save'])->name('save_eleve');
-    Route::post('/eleves/save_form',[EleveController::class,'save_form'])->name('save_eleve_form');
-    Route::post('/eleves/update',[EleveController::class,'enregistre'])->name('enregistreEleve');
-    Route::post('/eleves/ajouterEleves',[EleveController::class,'ajouterEleves'])->name('ajouterEleves');
-    Route::post('/eleves/removeEleve',[EleveController::class,'removeEleve'])->name('removeEleve');
-    Route::get('eleves/setAnimaux',[EleveController::class,'setAnimaux'])->name('setAnimaux');
-    Route::get('eleves/view/{enfant_id}',[EleveController::class,'voirEleve'])->name('voirEleve');
-    Route::get('eleves/getAnneeEnCours',[EleveController::class,'getAnneeEnCours'])->name('getAnneeEnCours');
-    Route::get('eleves/add',[EleveController::class,'addEleve'])->name('addEleve');
+    Route::get('/eleves',[EnfantController::class,'liste'])->name('eleves');
+    Route::get('/eleves/toggleInactiveEleve',[EnfantController::class,'toggleInactiveEleve'])->name('toggleInactiveEleve');
+    Route::post('/eleves/save',[EnfantController::class,'save'])->name('save_eleve');
+    Route::post('/eleves/save_form',[EnfantController::class,'save_form'])->name('save_eleve_form');
+    Route::post('/eleves/update',[EnfantController::class,'enregistre'])->name('enregistreEleve');
+    Route::post('/eleves/ajouterEleves',[EnfantController::class,'ajouterEleves'])->name('ajouterEleves');
+    Route::post('/eleves/removeEleve',[EnfantController::class,'removeEleve'])->name('removeEleve');
+    Route::get('eleves/setAnimaux',[EnfantController::class,'setAnimaux'])->name('setAnimaux');
+    Route::get('eleves/view/{enfant_id}',[EnfantController::class,'voirEleve'])->name('voirEleve');
+    Route::get('eleves/getAnneeEnCours',[EnfantController::class,'getAnneeEnCours'])->name('getAnneeEnCours');
+    Route::get('eleves/add',[EnfantController::class,'addEleve'])->name('addEleve');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');
@@ -275,7 +269,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/initClasse', [AdminController::class, 'initClasse'])->name('initClasse');
     Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
 
-    Route::get('/avatar', [EleveController::class, 'avatar'])->name('avatar');
+    Route::get('/avatar', [EnfantController::class, 'avatar'])->name('avatar');
 
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
