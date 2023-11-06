@@ -228,7 +228,7 @@
                 @endphp
 
                 <div class="liste_eleves ps-4" style="margin-top: 20px;">
-                    <input type="hidden" id="enfant" value="{{$eleve->id}}">
+                    <input type="hidden" id="enfant" value="{{$eleve['id']}}">
 
                         <ul class="list-group">
                         @foreach($resultats as $resultat)

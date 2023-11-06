@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Resultat;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isEmpty;
+
 class Enfant extends Model
 {
     use HasFactory;
@@ -173,6 +175,16 @@ class Enfant extends Model
     public static function listeDesEleves() {
         $liste = self::where('user_id', Auth::id())->get();
         return $liste;
+    }
+
+    public function tableauDesMailsEnfant() {
+        $mails = array();
+        for ($i=1; $i <= 4; $i++) { 
+            if(filter_var($this->{"mail$i"}, FILTER_VALIDATE_EMAIL)) {
+                $mails[] = $this->{"mail$i"};
+            }
+        }
+        return $mails;
     }
 
 }

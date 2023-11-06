@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\admin\AdminLicenceController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+//use App\Http\Controllers\admin\AdminLicenceController;
+//use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CahierController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VitrineController;
-use App\Models\Facture;
+//use App\Models\Facture;
 
 /*
 |--------------------------------------------------------------------------
