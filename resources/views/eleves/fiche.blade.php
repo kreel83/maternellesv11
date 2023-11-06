@@ -70,8 +70,12 @@
     <div class="position-relative gx-0" style="width: 100%; height: 100%">
         <img src="{{asset('img/deco/fond_1.jpg')}}" alt="" class="position-absolute" width="100%" style="top:0;bottom:0;left:0;right:0">
 
-        <div class="position-absolute" style="top: 80px;left: 250px; width: 470px;padding: 16px;height: 660px; font-size: 50px; color: #6639AC">
-            un nouvel élève
+        <div class="position-absolute" style="top: 80px;left: 250px; width: 470px;padding: 16px;height: 660px; font-size: 40px; color: #6639AC; font-weight: bolder">
+            @if ($eleve['id'] == 'new') 
+                un nouvel élève
+                @else
+                La fiche de {{$eleve['prenom']}}
+                @endif
         </div>
         <div class="position-absolute" style="top: 110px;left: 717px; width: 474px;padding: 16px;height: 677px; border: 1px solid var(--main-color); border-radius: 8px">
             <style>
@@ -254,7 +258,8 @@
         </div>
 
 
-        @if ($eleve['id'] != 'new')
+
+        @if ($eleve['id'] != 'new' && !$resultats->isEmpty())
 
             <div class="position-absolute" style="top: 44px; left: 56px;width: 620px;height: 800px; overflow-y: auto">
 
