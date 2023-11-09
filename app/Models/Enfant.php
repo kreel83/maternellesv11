@@ -111,10 +111,28 @@ class Enfant extends Model
         return $this->hasOne('App\Models\User','id','user_id')->first();
     }
 
+    public function formatPdf() {
+        function rand_color() {
+            return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+        }
+        $s = '';
+        for ($i = 0; $i<strlen($this->prenom); $i++) {
+            $s .= '<span style="color: '.rand_color().'">'.substr($this->prenom,$i,1).'<span>';
+        }
+
+        return $s;
+    }
+
     public function resultat($item) {
         $r =  Resultat::where('enfant_id', $this->id)->where('item_id', $item)->where('notation',2)->first();
 
         return $r;
+    }
+
+    public function directeur() {
+        $user = Auth::user();
+        return [$user->directeur_civilite, $user->directeur_nom.' '.$user->directeur_prenom];
+        
     }
 
     public function cahier() {

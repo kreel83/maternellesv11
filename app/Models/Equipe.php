@@ -15,7 +15,9 @@ class Equipe extends Model
 
     public $photoEquipe;
 
-    const FONCTIONS = ['Aide maternelle (ATSEM)','AESH'];
+    const FONCTIONS = [
+        'am' => 'Aide maternelle (ATSEM)',
+        'aesh' => 'AESH'];
 
     public function fonction() {
         return self::FONCTIONS[$this->fonction];

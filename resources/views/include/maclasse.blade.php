@@ -17,7 +17,7 @@
 
     <div class="mb-3">
         <a href="{{ route('addEleve') }}" class="btn btn-primary">Ajouter un élève</a>
-        <a href="#" class="btn btn-primary">Importer un élève</a>
+        <a href="{{route('import')}}" class="btn btn-primary">Importer un élève</a>
     </div>
 
 <div class="row">
