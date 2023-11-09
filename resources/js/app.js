@@ -19,6 +19,7 @@ import '../../node_modules/quill/dist/quill';
 import Alpine from 'alpinejs';
 
 import './menu'
+import { importation} from './pages/import';
 import { tutos } from './tutos/tutos';
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
 import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
@@ -223,6 +224,8 @@ savePeriode()
 initCalendar()
 initCalendrier()
 initCalendrierPeriodes()
+
+importation()
 
 chercheCommune()
 chercheEcole()

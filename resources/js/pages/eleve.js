@@ -359,7 +359,7 @@ const photo_eleve = () => {
 
     $(document).on('click','.remove_eleve', function(e) {
         e.stopImmediatePropagation()
-        var id = $('#eleve_form').val()
+        var id = $('.remove_eleve').data("id")
         
 
         $.ajaxSetup({
@@ -373,25 +373,19 @@ const photo_eleve = () => {
                 eleve: id,
             },
             success: function(data) {
-                if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
-                toast.show()
-                var texte = "L'élève a bien été retiré de votre classe";
-                $('#myToast').find('.toast-body').text(texte)
-                    setTimeout(function() {
-                        toast.dispose()
-                        window.location.reload()                            
-                    },3000)
+                window.open('/app/maclasse','_self')
+
                 
             }
         })
     })
 
-    $(document).on('click','#ajouterEleves', function() {
+    $(document).on('click','#importer', function() {
         var arr = []
-        var nb = $('#tableau_tous tr input:checked').length
-        $('#tableau_tous tr input:checked').each((index, el) => {
-            arr.push($(el).closest('tr').data('id'))
-            $(el).closest('tr').remove()
+        
+        $('.choix_liste:checked').each((index, el) => {
+            arr.push($(el).data('id'))
+            
         })
         $.ajaxSetup({
             headers: {
@@ -405,14 +399,7 @@ const photo_eleve = () => {
                 
             },
             success: function(data) {
-                if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
-                toast.show()
-                $('.liste_eleves').html(data)
-                var texte =  (nb > 1) ?  nb+" élèves ont bien été ajoutés à votre classe" : "L'élève a bien été ajouté à votre classe";
-                $('#myToast').find('.toast-body').text(texte)
-                    setTimeout(function() {
-                        toast.dispose()                            
-                    },3000)
+                window.location.reload()
                 
             }
         })

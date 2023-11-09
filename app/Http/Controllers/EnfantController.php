@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Enfant;
 use App\Models\Resultat;
 use App\Models\Section;
@@ -47,6 +48,16 @@ class EnfantController extends Controller
         $enfant = Enfant::where('mdp', $request->mdp)->first();
         if ($enfant) return view('parent.pdf');
         return redirect()->back()->withError('non non non ');
+    }
+
+
+    public function import() {
+        $ecole = Auth::user()->ecole_identifiant_de_l_etablissement;
+        $enfants = Enfant::whereNull('user_id')->get();
+        $profs = User::where('ecole_identifiant_de_l_etablissement', $ecole)->get();
+        return view('eleves.import')
+            ->with('profs', $profs)
+            ->with('enfants', $enfants);
     }
 
     public function reussite(Request $request) {
@@ -244,24 +255,24 @@ class EnfantController extends Controller
     }
 
 
-    public function removeEleve(Request $request) {
-               
+    public function removeEleve(Request $request) {               
             $e = Enfant::find($request->eleve);
             $prof = $e->user_n1_id;
             if ($prof) {
                 $e->user_id = null;
                 $e->psmsgs = $e->prevSection($e->psmsgs);
                 $e->save();
+                return redirect()->route('maclasse')
+                    ->with('message', "L'élève a été retiré de votre classe")
+                    ->with('alert-class', 'alert-danger');
             } else {
                 $e->delete();
-
+                return redirect()->route('maclasse')
+                    ->with('message', "La fiche de l'élève a été supprimée")
+                    ->with('alert-class', 'alert-danger');
             }
 
         
-        return view('eleves.include.tableau_tous')
-            ->with('tous', Auth::user()->tous())
-            ->with('professeur', $request->prof)
-            ->with('prof', $request->prof);
 
     }
 
@@ -503,6 +514,7 @@ class EnfantController extends Controller
             'prenom' => $enfant->prenom,
             'ddn' => $enfant->ddn,
             'comment' => $enfant->comment,
+            'user_n1_id' => $enfant->user_n1_id,
             'mail1' => $enfant->mail1,
             'mail2' => $enfant->mail2,
             'mail3' => $enfant->mail3,

@@ -222,11 +222,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/eleves/save_form',[EnfantController::class,'save_form'])->name('save_eleve_form');
     Route::post('/eleves/update',[EnfantController::class,'enregistre'])->name('enregistreEleve');
     Route::post('/eleves/ajouterEleves',[EnfantController::class,'ajouterEleves'])->name('ajouterEleves');
-    Route::post('/eleves/removeEleve',[EnfantController::class,'removeEleve'])->name('removeEleve');
+    Route::get('/eleves/removeEleve',[EnfantController::class,'removeEleve'])->name('removeEleve');
     Route::get('eleves/setAnimaux',[EnfantController::class,'setAnimaux'])->name('setAnimaux');
     Route::get('eleves/view/{enfant_id}',[EnfantController::class,'voirEleve'])->name('voirEleve');
     Route::get('eleves/getAnneeEnCours',[EnfantController::class,'getAnneeEnCours'])->name('getAnneeEnCours');
     Route::get('eleves/add',[EnfantController::class,'addEleve'])->name('addEleve');
+    Route::get('eleves/import',[EnfantController::class,'import'])->name('import');
 
     Route::get('/ecole',[\App\Http\Controllers\EcoleController::class,'index'])->name('ecole');
     Route::get('/ecole/chercheCommune',[\App\Http\Controllers\EcoleController::class,'chercheCommune'])->name('chercheCommune');

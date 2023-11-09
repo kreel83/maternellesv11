@@ -295,7 +295,24 @@ const choixFiltre = (Modal) => {
     })
 
 
-    $(document).on('click','.list-group-item-info', function() {
+    $(document).on('click', '.phone .list-group-item-info', function() {
+        var myModalEl = document.getElementById('modifyFicheModal');
+        var modal = new Modal(myModalEl,{
+           
+        })
+        var resultat = $(this).data('fiche')
+        var enfant = $('#enfant').val()
+        $.get('/app/getFiche?resultat='+resultat+'&enfant='+enfant, function(data) {
+
+            $('#modifyFicheModal .modal-content').html(data)
+            modal.show()
+
+            
+        }) 
+        
+    })
+
+    $(document).on('click','.navigateur .list-group-item-info', function() {
         var resultat = $(this).data('fiche')
         var enfant = $('#enfant').val()
         $('.form_bloc').slideToggle()

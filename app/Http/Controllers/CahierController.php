@@ -247,7 +247,8 @@ class CahierController extends Controller
 
         // PDF pour Parent pas de Auth::
         // $equipes = Auth::user()->equipes();
-        $equipes = Equipe::where('user_id', $enfant->user_id)->get();        
+        $equipes = json_decode(Auth::user()->configuration->equipes, true);        
+        // dd($equipes);
 
         // PDF pour Parent pas de Auth::
         $user = User::find($enfant->user_id);
@@ -308,7 +309,9 @@ class CahierController extends Controller
 
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
+        
         if ($state == 'see') {
+
             $pdf = PDF::loadView('pdf.reussite4', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
             //$pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
             // download PDF file with download method

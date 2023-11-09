@@ -1,139 +1,162 @@
-<form action="{{ route('save_eleve_form') }}" method="post" id="elevePost"
-style="font-size: 12px; padding: 10px;" class="affiche_eleve">
-@csrf
+<form action="{{ route('enregistreEleve') }}" method="post" class="d-flex flex-column align-items-between">
+    @csrf
+    <div style="overflow-y: auto; height: 550px " class="pe-2 ">
+        <input type="hidden" id="eleve_form" name="id" value="new" />
+        <input type="hidden" id="id" name="id" value="{{ $eleve['id'] }}">
+        <input type="hidden" id="btnRetourFicheEnfantValue" name="backUrl" value="{{ old('backUrl') ?? $backUrl }}">
+        
+        {{-- <div class="d-flex justify-content-between px-5 mb-3" style="font-size: 14px; color: grey">
+            
+            <div class="form-check form-check-inline input-group">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-venus"></i></span>
+                <input class="form-check-input" type="radio" name="genre" id="genref" value="F" {{$eleve['genre'] == 'F' ? 'checked' : null}}>
+
+            </div>
+            <div class="form-check form-check-inline input-group">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-mars"></i></span>
+                <input class="form-check-input ms-2" type="radio" name="genre" id="genreg" value="G" {{$eleve['genre'] == 'G' ? 'checked' : null}}>
+
+            </div>
 
 
+        </div> --}}
+        <style>
 
-<input type="hidden" id="eleve_form" name="id" value="new" />
-<input type="hidden" id="genre" name="genre" value="F" />
-<div class="d-flex justify-content-between">
-    {{-- <div class="d-flex flex-column">
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="psmsgs" id="ps"
-                value="ps" {{$eleve->psmsgs == 'ps' ? 'checked' : null}} {{ $flag ?? null}}>
-            <label class="form-check-label" for="ps">PS</label>
+        </style>
+
+        <div class="d-flex justify-content-between mb-2 px-5">
+            <div class="input-group text-center" style="border-right: 3px solid var(--main-color)">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-venus"></i></span> 
+                <input type="radio" class="btn-check" name="genre" id="genref" value="F" {{$eleve['genre'] == 'F' ? 'checked' : null}}>
+                <label class="btn" for="genref">Fille</label>
+            </div>
+            
+            <div class="input-group d-flex justify-content-end ">
+                <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-mars"></i></span> 
+                <input type="radio" class="btn-check" name="genre" id="genreg" autocomplete="off" value="G" {{$eleve['genre'] == 'G' ? 'checked' : null}}>
+                <label class="btn" for="genreg">Garcon</label>
+            </div>
+            
+            
         </div>
-        <div class="form-check">
+        @error('genre')
+        <div class="error_message">{{ $message }}</div>                                        
+        @enderror
 
-            <input class="form-check-input" type="radio" name="psmsgs" id="ms"
-                checked value="ms" {{$eleve->psmsgs == 'ms' ? 'checked' : null}} {{ $flag ?? null}}>
-            <label class="form-check-label" for="ms">MS</label>
+
+
+
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lines-leaning"></i></span>
+            <select name="psmsgs" id="psmsgs" value="{{$eleve['psmsgs']}}" class="form-select" style="font-size: 14px; color: grey">
+                <option value="">Choississez une section</option>
+                <option value="ps" {{$eleve['psmsgs'] == 'ps' ? 'selected' : null}}>Petite section</option>    
+                <option value="ms" {{$eleve['psmsgs'] == 'ms' ? 'selected' : null}}>Moyenne section</option>    
+                <option value="gs" {{$eleve['psmsgs'] == 'gs' ? 'selected' : null}}>Grande section</option>    
+            </select>
+            @error('psmsgs')
+            <div class="error_message">{{ $message }}</div>                                        
+            @enderror
+        </div>    
+
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+            <input type="text" class="form-control form-control-lg" id="nom_form" name="nom" placeholder="Nom de l'élève" value="{{ old('nom') ?? $eleve['nom'] }}">
+
+            @error('nom')
+                <div class="error_message">{{ $message }}</div>                                        
+            @enderror
+        
 
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="psmsgs" id="gs"
-                value="gs" {{$eleve->psmsgs == 'gs' ? 'checked' : null}}  {{ $flag ?? null}}>
-            <label class="form-check-label" for="gs">GS</label>
+
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+            <input type="text" class="form-control form-control-lg" id="prenom_form" name="prenom" placeholder="Prénom de l'élève" value="{{ old('prenom') ?? $eleve['prenom'] }}">
+            @error('prenom')
+            <div class="error_message">{{ $message }}</div>                                        
+            @enderror
         </div>
 
-    </div> --}}
-    <div class="d-flex avatarBloc" data-flag="{{ $flag ?? null}}">
-        <div class="avatar avatar_form pink me-5 {{$eleve->genre == 'F' ? 'selected' : null}}" data-genre="F"><i
-                class="fa-thin fa-user-tie-hair-long"></i></div>
-        <div class="avatar avatar_form blue {{$eleve->genre == 'G' ? 'selected' : null}}"  data-genre="G"><i
-                class="fa-thin fa-user-tie-hair"></i></div>
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-cake-candles"></i></span>
+            <input type="date" class="form-control form-control-lg" id="ddn_form" name="ddn" placeholder="Date de naissance de l'élève" value="{{ old('ddn') ?? $eleve['ddn'] }}">
+            @error('ddn')
+            <div class="error_message">{{ $message }}</div>                                        
+            @enderror
+        </div>
 
-    </div>
-    <div class="d-flex flex-column ms-3 mt-2">
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-note-sticky"></i></span>
+            <textarea class="form-control" rows="3" id="commentaire_form" name="comment" placeholder="Commentaire">{{ old('comment') ?? $eleve['comment'] }}</textarea>
+        </div>
 
-        <div class="form-check mb-3 " style="height: 15px">
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
+            <input type="email" class="form-control form-control-lg" id="mail1_form" name="mail1" id="mail1" value="{{ old('mail1') ?? $eleve['mail1'] }}" placeholder="Mail principal">
+        </div>
+
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
+            <input type="email" class="form-control form-control-lg" id="mail2_form" name="mail2" id="mail2" value="{{ old('mail2') ?? $eleve['mail2'] }}" placeholder="Mail secondaire">
+        </div>
+
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
+            <input type="email" class="form-control form-control-lg" id="mail3_form" name="mail3" id="mail3" value="{{ old('mail3') ?? $eleve['mail3'] }}" placeholder="Mail supplementaire">
+        </div>
+
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
+            <input type="email" class="form-control form-control-lg" id="mail4_form" name="mail4" id="mail4" value="{{ old('mail4') ?? $eleve['mail4'] }}" placeholder="Mail supplementaire">
+        </div>
+        <div class="form-check mb-2 ">
             <input type="checkbox" class="form-check-input" name="sh" id="sh"
-                value="true" {{$eleve->sh == 1 ? 'checked' : null}}  {{ $flag ?? null}}>
-            <label class="form-sh-label" for="sh">L'élève est en situation <br>de
-                handicap ?</label>
+                value="true" {{$eleve['sh'] == 1 ? 'checked' : null}}>
+            <label class="form-sh-label" for="sh" style="font-size: 12px; color: grey;padding-top: 2px">L'élève est en situation de handicap ?</label>
+        </div>
+        <div class="form-check mb-2 eleveCoursAnnee_bloc">
+            <input type="checkbox" class="form-check-input" id="eleveCoursAnnee">
+            <label class="form-sh-label" for="sh2" style="font-size: 12px; color: grey;padding-top: 2px">L'élève arrive en cours d'année</label>
+        </div>
+        <div id="selectPeriodeBloc" class="d-none mb-2">
+            <label for="" style="font-size: 14px; color: grey">Prochain cahier de réussite prévu pour fin :</label>    
+            <select name="periode"  class="form-select" style="font-size: 14px; color: grey">
+                <option value="">Choississez une période</option>
+                @foreach ($periodes as $key => $periode)
+                    <option value="{{ $key + 1 }}" {{$key == 0 ? 'selected' : null}}>{{ $periode }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div style="height: 55px ">
+        @if (!isset($flag))
+        <div class="d-flex">
+            <button type="button" class="custom_button big submit save_eleve">Sauvegarder</button>
+
+            <button type="button" data-id="new"
+                class="custom_button submit remove_eleve delete ms-1">Retirer</button>
+        </div>
+    @else
+        <div class="d-flex justify-content-between">
+            {{-- href mis à jour dans cahier.js --}}
+            <a href="" id="btnRetourFicheEnfant" type="button" class="btn btn-outline-secondary">Annuler</a>
+            <button type="submit" class="custom_button ms-3" data-id="{{$eleve['id']}}">{{ ($eleve['id'] == 'new' ? 'Créer la fiche' : 'Modifier la fiche')}}</button>
         </div>
         <div>
-            <button type="button" id="eleveCoursAnnee"
-                style="font-size: 14px;color: var(--main-color)" class="btn btn-sm btnCoursAnnéee"  {{ $flag ?? null}}
-                >Arrivé en cours d'année ?</button>
+            @if ($eleve['user_n1_id'])
+            <a href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btn btn-danger btn-sm w-100 mt-2 remove_eleve" data-id="{{$eleve['id']}}">retirer l'élève de ma classe</a>
+            @else
+            <a href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btn btn-danger btn-sm w-100 mt-2 remove_eleve" data-id="{{$eleve['id']}}">supprimer l'élève de ma classe</a>
+            @endif
         </div>
+    @endif
+
     </div>
 
 
-</div>
-{{-- <div class="form-group">
-        <label for="">Genre</label>
-        <select id="genre_form"  name="genre" class="form-control">
-            <option value="G">Garcon</option>
-            <option value="F">Fille</option>
-        </select>
-    </div> --}}
-
-
-<div id="selectPeriodeBloc" class="d-none">
-    <label for="">Prochain cahier de réussite prévu pour fin :</label>    
-    <select name="periode"  class="custom-select" style="width: 100% !important">
-        <option value="">Choississez une période</option>
-        @foreach ($periodes as $key => $periode)
-            <option value="{{ $key + 1 }}" {{$key == 0 ? 'selected' : null}}>{{ $periode }}</option>
-        @endforeach
-    </select>
-</div>    
-<div class="mt-3">
-
-   
-    <select name="psmsgs" id="psmsgs" value="{{$eleve->psmsgs}}"  class="custom-select" style="width: 100% !important"   {{ $flag ?? null}}>
-        <option value="">Choississez une section</option>
-        <option value="ps" {{$eleve->psmsgs == 'ps' ? 'selected' : null}}>Petite section</option>    
-        <option value="ms" {{$eleve->psmsgs == 'ms' ? 'selected' : null}}>Moyenne section</option>    
-        <option value="gs" {{$eleve->psmsgs == 'gs' ? 'selected' : null}}>Grande section</option>    
-    </select>
-</div>    
-
-<div class="icone-input my-2">
-    <i class="fa-solid fa-user"></i>
-    <input type="text" class="custom-input" id="nom_form" name="nom" value="{{ $eleve->nom }}"
-        placeholder="Nom de l'élève"  {{ $flag ?? null}} />
-</div>
-<div class="icone-input my-2">
-    <i class="fa-solid fa-user"></i>
-    <input type="text" class="custom-input" id="prenom_form" name="prenom"
-    value="{{ $eleve->prenom }}" placeholder="Prénom de l'élève"  {{ $flag ?? null}}/>
-</div>
-<div class="icone-input my-2">
-    <i class="fa-solid fa-cake-candles"></i>
-    <input type="date" class="custom-input" id="ddn_form" name="ddn" value="{{ $eleve->ddn }}"
-        placeholder="Date de naissance de l'élève"  {{ $flag ?? null}} />
-</div>
-<div class="custom-area">
-    <textarea type="date" class="custom-input" id="commentaire_form" name="comment" placeholder="Commentaire"  {{ $flag ?? null}}>{{ $eleve->comment }}</textarea>
-</div>
-
-<div class="icone-input my-2">
-    <i class="fa-sharp fa-solid fa-envelope"></i>
-    <input type="email" class="custom-input" id="mail1_form" name="mail1" id="mail1" value="{{ $eleve->mail1 }}" placeholder="Mail principal"  {{ $flag ?? null}}/>
-</div>
-<div class="icone-input my-2">
-    <i class="fa-sharp fa-solid fa-envelope"></i>
-    <input type="email" class="custom-input" id="mail2_form" name="mail2" id="mail2" value="{{ $eleve->mail2 }}" placeholder="Mail secondaire" {{ $flag ?? null}} />
-</div>
-<div class="icone-input my-2">
-    <i class="fa-sharp fa-solid fa-envelope"></i>
-    <input type="email" class="custom-input" id="mail3_form" name="mail3" id="mail3" value="{{ $eleve->mail3 }}" placeholder="Mail supplementaire"  {{ $flag ?? null}}/>
-</div>
-<div class="icone-input my-2">
-    <i class="fa-sharp fa-solid fa-envelope"></i>
-    <input type="email" class="custom-input" id="mail4_form" name="mail4" id="mail4" value="{{ $eleve->mail4 }}" placeholder="Mail supplementaire" {{ $flag ?? null}} />
-</div>
 
 
 
 
-
-
-@if (!isset($flag))
-<div class="d-flex">
-    <button type="button" class="custom_button big submit save_eleve">Sauvegarder</button>
-
-    <button type="button" data-id="new"
-        class="custom_button submit remove_eleve delete ms-1">Retirer</button>
-</div>
-@else
-<div class="d-flex">
-    <button type="button" class="custom_button big modif_eleve" data-id="{{$eleve->id}}">Modifier la fiche</button>
-</div>
-@endif
-
-
-
-</form>
+</form>   
