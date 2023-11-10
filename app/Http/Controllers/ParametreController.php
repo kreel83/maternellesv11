@@ -240,10 +240,14 @@ class ParametreController extends Controller
         if($ecole->adresse_3 != '') { $adresseEcole[] = $ecole->adresse_3; }
         $user->photo = Storage::url($user->photo);
         $conf = Configuration::where('user_id', Auth::id())->first();
+        $directeur = json_decode($user->configuration->direction);
+        
+        
 
         return view('monprofil.index')
             ->with('request', $request->all() ?? [])
             ->with('periodes', $conf->periodes)
+            ->with('directeur', $directeur)
             ->with('user', $user)
             ->with('equipes', $equipes)
             ->with('adresseEcole', join(PHP_EOL,$adresseEcole));
@@ -258,21 +262,29 @@ class ParametreController extends Controller
     }
 
     public function savedirecteur(Request $request) {
+     
 
         $validated = $request->validate([
-            'directeur_prenom' => 'required',
-            'directeur_nom' => 'required',
+            'prenom' => 'required',
+            'nom' => 'required',
         ],[
-            'directeur_prenom.required' => 'Le prénom est obligatoire.',
-            'directeur_nom.required' => 'Le nom est obligatoire.'
+            'prenom.required' => 'Le prénom est obligatoire.',
+            'nom.required' => 'Le nom est obligatoire.'
         ]);
+        $r = $request->except(['_token']);
+        $r = json_encode($r);
+        
+        
 
         
         $user = Auth::user();
-        $user->directeur_prenom = ucfirst($request->directeur_prenom);
-        $user->directeur_nom = strtoupper($request->directeur_nom);
-        $user->directeur_civilite = $request->directeur_civilite;
-        $user->save();
+        $conf = Configuration::where('user_id', Auth::id())->first();
+        $conf->direction = $r;
+
+        $conf->save();
+
+        
+        
         return redirect()->back()->withInput();
     }
 
