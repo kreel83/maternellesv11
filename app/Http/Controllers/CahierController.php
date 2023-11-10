@@ -307,6 +307,9 @@ class CahierController extends Controller
 
         $periode = Utils::periode($enfant, $periode);
 
+        //$customFontUrl = str_replace(chr(92), chr(47), storage_path('fonts/Agbalumo-Regular.ttf'));
+        //dd($customFontUrl);
+
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
         
