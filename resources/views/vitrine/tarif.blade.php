@@ -19,8 +19,8 @@
 				<div class="about-content">
 					<div class="section-header left-style mb-olpo">
 						<span class="cate">Tarif</span>
-						<h3>9,99 € par an tout compris</h3>
-						<p>Notre service en ligne <b>Les Maternelles</b> offre une flexibilité accrue.
+						<h3>12,90 € par an tout compris</h3>
+						<p>Notre service en ligne <b>{{ env('APP_NAME') }}</b> offre une flexibilité accrue.
 						Gérez votre classe depuis votre ordinateur ou votre tablette en toute sécurité. L'application mobile (compagnon) est le 
 						complément idéal en classe pour inscrire des notes sur l'instant.
 						</p>
@@ -43,7 +43,7 @@
 						</li>
 					</ul>
 					<div class="load-more">
-						<a href="#" class="custom-button"><span>Commencez maintenant</span></a>
+						<a href="{{ route('registration.start') }}" class="custom-button"><span>Créez un compte gratuitement</span></a>
 					</div>
 				</div>
 			</div>

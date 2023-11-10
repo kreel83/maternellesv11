@@ -20,8 +20,7 @@
 					<div class="section-header left-style mb-olpo">
 						<span class="cate">Le Compagnon</span>
 						<h3>L'application mobile qui vous suit partout</h3>
-						<p>L'application mobile disponible sur Google Play et App Store, vous permet d'enregistrer dans votre compte tout au long de la journée de classe 
-						des évènements, des commentaires, des fiches... En téléchargement gratuit et comprise dans votre abonnement.
+						<p>L'application mobile disponible sur Google Play et App Store, vous permet d'évaluer vos élèves tout au long de la journée de classe depuis votre mobile ou une tablette. 
 						</p>
 					</div>
 					<ul class="about-list">
@@ -42,7 +41,7 @@
 						</li>
 					</ul>
 					<div class="load-more">
-						<a href="#" class="custom-button"><span>Commencez maintenant</span></a>
+						<a href="{{ route('registration.start') }}" class="custom-button"><span>Commencez maintenant</span></a>
 					</div>
 				</div>
 			</div>

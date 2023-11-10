@@ -168,17 +168,24 @@ class AdminController extends Controller
         return redirect()->back()->with('result', $result);
     }
 
-
-
-    public function voirEleve($user_id, $id)
-    {        
-        $eleve = Enfant::find($id);
-        $resultats = Resultat::resultatsPourUnEleve($id);
-        return view('admin.voir_eleve')
-            ->with('user_id', $user_id)     // id du prof pour retour sur le dashboard et reafficher la classe si besoin
-            ->with('role', Auth::user()->role)
-            ->with('resultats', $resultats)
-            ->with('eleve', $eleve);
+    public function voirEleve($enfant_id, Request $request)
+    {
+        $eleve = Enfant::where('enfants.id', $enfant_id)
+                    ->leftJoin('users', 'enfants.user_id', '=', 'users.id')
+                    ->where('users.ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)
+                    ->first();
+        if($eleve) {
+            $resultats = Resultat::resultatsPourUnEleve($enfant_id);
+            return view('admin.voir_eleve')
+                ->with('source', $request->source)
+                ->with('role', Auth::user()->role)
+                ->with('resultats', $resultats)
+                ->with('eleve', $eleve);
+        } else {
+            return redirect()->route('admin.index')
+                ->with('success', false)
+                ->with('msg', 'Aucun élève trouvé.');
+        }
     }
 
 }

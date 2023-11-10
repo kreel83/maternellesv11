@@ -157,7 +157,7 @@
 
         <div class="d-flex justify-content-center flex-column">
             <div class="mb-5 text-center">
-                <img src="{{asset('img/deco/les_maternelles.png')}}" alt="" width="240">
+                <img src="{{asset('img/deco/logo.png')}}" alt="" width="240">
             </div>
             <div class="text-center fs-1"><span class="fw-bold">B</span>ienvenue </div>
             <div class="text-center fs-3">dans la section de téléchargement</div> 

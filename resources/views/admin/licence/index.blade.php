@@ -23,7 +23,7 @@
     @endif
 @endif
 
-{{-- Retour assignation licence --}}
+{{-- Retour assignation / suppression licence --}}
 @if(session()->has('success'))
     @if(session('success'))
         <div class="alert alert-success" role="alert">{{ session('msg') }}</div>

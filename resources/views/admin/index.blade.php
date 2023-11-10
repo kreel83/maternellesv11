@@ -4,6 +4,15 @@
 
 <h1>Bienvenue sur votre espace administrateur</h1>
 
+{{-- Gestion des succès / erreurs --}}
+@if(session()->has('success'))
+    @if(session('success'))
+        <div class="alert alert-success" role="alert">{{ session('msg') }}</div>
+    @else
+        <div class="alert alert-danger" role="alert">{{ session('msg') }}</div>
+    @endif
+@endif
+
 @isset($saveadminprofile)
     <div class="alert alert-success" role="alert">
         Votre profil a été modifié
@@ -45,7 +54,7 @@
         -->
     </form>
 
-    <!-- retour du résultat de recherche ens session -->
+    <!-- retour du résultat de recherche en session -->
     @if(!is_null(session('result')))
         @if(!session('result')->isEmpty())
             @php
@@ -65,7 +74,8 @@
                             @endif
                             </div>
                             <div class="col-auto">
-                            <a href="{{ route('admin.voirEleve', ['user_id' => 0, 'id' => $enfant->id]) }}">{{ $enfant->elevePrenom.' '.$enfant->eleveNom}}</a> 
+                            {{-- <a href="{{ route('admin.voirEleve', ['user_id' => 0, 'id' => $enfant->id, 'source' => 'search']) }}">{{ $enfant->elevePrenom.' '.$enfant->eleveNom}}</a>  --}}
+                            <a href="{{ route('admin.voirEleve', ['enfant_id' => $enfant->id, 'source' => 'search']) }}">{{ $enfant->elevePrenom.' '.$enfant->eleveNom}}</a>
                             dans la classe de {{ $enfant->userPrenom.' '.$enfant->userNom}}
                             </div>
                         </div>
@@ -103,7 +113,8 @@
             <tbody class="table-group-divider">
                 @foreach($listeDesEleves as $eleve)
                 <tr>
-                    <td><a href="{{ route('admin.voirEleve', ['user_id' => $prof->id, 'id' => $eleve->id]) }}">{{ $eleve->prenom.' '.$eleve->nom }}</a></td>
+                    {{-- <td><a href="{{ route('admin.voirEleve', ['user_id' => $prof->id, 'id' => $eleve->id]) }}">{{ $eleve->prenom.' '.$eleve->nom }}</a></td> --}}
+                    <td><a href="{{ route('admin.voirEleve', ['enfant_id' => $eleve->id]) }}">{{ $eleve->prenom.' '.$eleve->nom }}</a></td>
                     <td>{{ $eleve->genre }}</td>
                     <td>{{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}} <small>({{ $eleve->age }})</small></td>
                     <td>{{ $eleve->groupe }}</td>

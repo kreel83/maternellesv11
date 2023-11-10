@@ -67,11 +67,11 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-widget widget-about">
                             <h5 class="title">A propos</h5>
-                            <p>Les Maternelles est un service sur Internet afin de faciliter la gestion d'une classe de maternelle.</p>
+                            <p>{{ env('APP_NAME') }} est un service en ligne pour faciliter la gestion d'une classe de maternelle et l'édition du cahier de réussites.</p>
                             <ul class="contact">
                                 <li><i class="fas fa-headphones-alt"></i> 09 08 07 06 05</li>
                                 <li><i class="fas fa-home"></i> Notre adresse</li>
-                                <li><i class="fas fa-globe-asia"></i> <a href="/">www.lesmaternelles.com </a></li>
+                                <li><i class="fas fa-globe-asia"></i> <a href="/">www.maternellefacile.fr</a></li>
                             </ul>
                             <ul class="social-icons">
                                 <li>
@@ -151,7 +151,7 @@
         <div class="footer-bottom">
             <div class="container">
                 <p>
-                    &copy; 2023 Tous droits réservés.
+                    <i class="fa-regular fa-copyright"></i> 2023 Tous droits réservés.
                 </p>
             </div>
         </div>

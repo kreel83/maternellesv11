@@ -33,7 +33,7 @@ class DemandeDeContact extends Mailable
     {
         return new Envelope(
             from: new Address($this->user->email, $this->user->prenom.' '.$this->user->name),
-            subject: $this->subject.' - Les Maternelles',
+            subject: $this->subject.' - '.env('APP_NAME'),
         );
     }
 

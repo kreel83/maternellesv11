@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col">
                 <a href="{{route('vitrine.index')}}" class="brand-logo">
-                <img src="{{asset('img/deco/les_maternelles.png')}}" alt="" width="150">
+                <img src="{{asset('img/deco/logo.png')}}" alt="" width="150">
                 </a>
             </div>
         </div>    
