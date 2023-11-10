@@ -130,8 +130,10 @@ class Enfant extends Model
     }
 
     public function directeur() {
-        $user = Auth::user();
-        return [$user->directeur_civilite, $user->directeur_nom.' '.$user->directeur_prenom];
+        $directeur = json_decode(Auth::user()->configuration->direction);
+        $arr = null;
+        if ($directeur) $arr = [$directeur->civilite, $directeur->nom.' '.$directeur->prenom];
+        return $arr;
         
     }
 
