@@ -17,7 +17,7 @@ $degrades = App\Models\Enfant::DEGRADE;
 
             @font-face {
             font-family: 'agba';
-            src: url({{ storage_path('fonts/Agbalumo-Regular.ttf') }}) format("truetype");
+            src: url({{ storage_path('fonts\Agbalumo-Regular.ttf') }}) format("truetype");
             font-weight: 400; 
             font-style: normal; 
         }
@@ -387,11 +387,11 @@ $degrades = App\Models\Enfant::DEGRADE;
     </div>
     --}}
 
-    <table width="100%" style="margin-top:38%">
+    <table width="100%" style="margin-top:38%;">
         <tr>
             <td align="center">
-                <div class="enfant p_osition-prenom">
-                    <span class="prenom">
+                <div class="enfa_nt p_osition-prenom">
+                    <span class="p_renom" style="font-family:'agba';font-size:40px">
                          {!! $enfant->formatPdf() !!}
                     </span>
                 </div>
