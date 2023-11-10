@@ -14,10 +14,13 @@ $degrades = App\Models\Enfant::DEGRADE;
             @page {
                 margin: 0px;    /*60px;*/
             }
+            
 
             @font-face {
+
             font-family: 'agba';
             src: url({{ storage_path('fonts\Agbalumo-Regular.ttf') }}) format("truetype");
+
             font-weight: 400; 
             font-style: normal; 
         }
@@ -25,7 +28,7 @@ $degrades = App\Models\Enfant::DEGRADE;
 
 
             .prenom {
-                font-family: "agba";
+                font-family: "Agbalumo";
                 letter-spacing: 5px
             }
 
@@ -44,7 +47,7 @@ $degrades = App\Models\Enfant::DEGRADE;
 
             .body {
                 padding: 80px 50px 20px 50px;
-                font-family: "agba";
+                font: "Agbalumo";
             }
 
             .contenu {

@@ -188,20 +188,20 @@
                         <div class="d-flex flex-column w-100 justify-content-end align-items-center">
 
                             <div class="form-group my-1 ">            
-                                <select style="width: 220px" class="custom-select little" name="directeur_civilite">
+                                <select style="width: 220px" class="custom-select little" name="civilite">
 
-                                    <option value="mlle" {{ $user->directeur_civilite == 'mlle' ? 'selected' : null}}>Mademoiselle</option>
-                                    <option value="mme" {{ $user->directeur_civilite == 'mme' ? 'selected' : null}}>Madame</option>
-                                    <option value="mrs" {{ $user->directeur_civilite == 'mrs' ? 'selected' : null}}>Monsieur</option>
+                                    <option value="">Veuillez selectionner</option>
+                                    <option value="mrs" {{ $directeur && $directeur->civilite == 'mrs' ? 'selected' : null}}>Monsieur</option>
+                                    <option value="mme" {{ $directeur && $directeur->civilite == 'mme' ? 'selected' : null}}>Madame</option>
                                 </select>
                             </div> 
                             <div class="icone-input little my-1">
                                 <i class="fa-solid fa-user"></i>
-                                <input type="text" class="custom-input" name="directeur_prenom" value="{{$user->directeur_prenom}}" placeholder="Prénom" />
+                                <input type="text" class="custom-input" name="prenom" value="{{$directeur->prenom ?? null}}" placeholder="Prénom" />
                             </div> 
                             <div class="icone-input little" my-1>
                                 <i class="fa-solid fa-user"></i>
-                                <input type="text" class="custom-input" name="directeur_nom" value="{{$user->directeur_nom}}" placeholder="Nom" />
+                                <input type="text" class="custom-input" name="nom" value="{{$directeur->nom ?? null}}" placeholder="Nom" />
                             </div>                
 
                         </div>
