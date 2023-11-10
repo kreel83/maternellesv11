@@ -36,8 +36,10 @@ use Illuminate\Support\Facades\Auth;
 
     <nav class="navbar navbar-expand-lg fixed-top" aria-label="" style="background-color: #E7FCFF">
         <div class="container-fluid">
-            
-        <a class="navbar-brand me-5" href="{{route('admin.index')}}">Les maternelles - Administration</a>
+            <a href="{{ route('admin.index') }}" class="brand-logo">
+                <img src="{{ asset('img/deco/logo.png') }}" alt="{{ env('APP_NAME').' Administration' }}" width="130">
+            </a>
+        {{-- <a class="navbar-brand me-5" href="{{route('admin.index')}}">Les maternelles - Administration</a> --}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,7 +72,8 @@ use Illuminate\Support\Facades\Auth;
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">{{Auth::user()->nom_complet()}}</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown06">
                     <li><a class="dropdown-item" href="{{route('admin.loadprofile')}}">Mon profil</a></li>
-                    <li><a class="dropdown-item" href="{{route('admin.logout')}}">Se deconnecter</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{route('admin.logout')}}"><i class="fal fa-sign-out-alt"></i> Se déconnecter</a></li>
                     </ul>
                 </li>
                 @else
@@ -90,7 +93,7 @@ use Illuminate\Support\Facades\Auth;
 
     </div>
 
-  <div class="container" style="margin-top: 70px;">
+  <div class="container" style="margin-top: 90px">
        @yield('content')
   </div>
 

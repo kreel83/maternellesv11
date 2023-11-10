@@ -48,7 +48,7 @@ use Illuminate\Support\Facades\Auth;
           <header>
             <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <a href="{{route('home')}}" class="brand-logo">
-                <img src="{{asset('img/deco/les_maternelles.png')}}" alt="" width="200">
+                <img src="{{asset('img/deco/logo.png')}}" alt="" width="200">
             </a></header>
           <nav class="dashboard-nav-list">
             {{-- <a href="{{route('home')}}" class="dashboard-nav-item {{$menu == 'accueil' ? 'active' : null}}"><i class="fal fa-home"></i>Accueil </a> --}}

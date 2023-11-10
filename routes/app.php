@@ -44,7 +44,8 @@ Route::middleware(['admin'])->group(function()
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/admin/dashboard', [AdminController::class, 'chercherUnEleve'])->name('admin.chercherUnEleve');
     Route::get('/admin/dashboard/{id}', [AdminController::class, 'voirClasse'])->name('admin.voirClasse');
-    Route::get('/admin/eleve/view/{user_id}/{id}', [AdminController::class, 'voirEleve'])->name('admin.voirEleve');
+    //Route::get('/admin/eleve/view/{user_id}/{id}', [AdminController::class, 'voirEleve'])->name('admin.voirEleve');
+    Route::get('/admin/eleve/view/{enfant_id}', [AdminController::class, 'voirEleve'])->name('admin.voirEleve');
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
     Route::get('/admin/profil', [AdminController::class, 'loadAdminProfile'])->name('admin.loadprofile');
     Route::post('/admin/profil', [AdminController::class, 'saveAdminProfile'])->name('admin.saveprofile');
@@ -76,6 +77,7 @@ Route::middleware(['admin'])->group(function()
     });
     */
 });
+
 // Admin registration URLs
 Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
 Route::get('/admin/checkcode/{code}', [AdminController::class, 'checkcode'])->name('admin.checkcode');  // utilisé dans admin.js

@@ -30,7 +30,7 @@ class TestController extends Controller
 
     public function testemaillogo()
     {
-        $logoPath = public_path('img/deco/les_maternelles.png');
+        $logoPath = public_path('img/deco/logo.png');
         $logo = "data:image/png;base64,".base64_encode(file_get_contents($logoPath));
         //dd($logo);
         $url = "";

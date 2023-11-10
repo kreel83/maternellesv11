@@ -300,9 +300,19 @@ class AdminLicenceController extends Controller
     
     public function retraitLicence(Request $request)
     {
-        $licence = new Licence;
-        $licence->removeLicenceToUser($request->licence_name);
-        return redirect()->route('admin.licence.index');
+        $licence = Licence::where('licences.name', $request->licence_name)
+            ->where('licences.parent_id', Auth::id())
+            ->first();
+        if($licence) {
+            $licence->removeLicenceToUser($request->licence_name);
+            return redirect()->route('admin.licence.index')
+                ->with('success', true)
+                ->with('msg', 'Licence '.$request->licence_name.' retirée avec succès.');
+        } else {
+            return redirect()->route('admin.licence.index')
+                ->with('success', false)
+                ->with('msg', 'Erreur : le numéro de licence '.$request->licence_name.' est incorrect.');
+        }
     }
 
     /**

@@ -47,9 +47,9 @@
                         <img src="{{ asset('img/vitrine/feature/01.png') }}" class="ml--8" alt="feature">
                     </div>
                     <div class="feature-content">
-                        <h5 class="title">Cahier de progrès</h5>
+                        <h5 class="title">Cahier de réussites</h5>
                         <span class="cate">L'indispensable</span>
-                        <p>Il n'a jamais été aussi simple de générer le cahier de progrès de vos élèves : 1 clic suffit !</p>
+                        <p>Il n'a jamais été aussi simple de générer le cahier de réussites de vos élèves !</p>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     <div class="feature-content">
                         <h5 class="title">Mes élèves</h5>
                         <span class="cate">Toutes sections</span>
-                        <p>Je gère ma classe avec une grande facilité...</p>
+                        <p>Je gère ma classe avec une grande facilité de la petite à la grande section</p>
                     </div>
                 </div>
             </div>
@@ -71,9 +71,9 @@
                         <img src="{{ asset('img/vitrine/feature/03.png') }}" class="ml--8" alt="feature">
                     </div>
                     <div class="feature-content">
-                        <h5 class="title">Mes fiches</h5>
+                        <h5 class="title">Mes activités</h5>
                         <span class="cate">Grande flexibilité</span>
-                        <p>Je crée, modifie, assigne mes fiches en 2 clics à mes élèves</p>
+                        <p>Je crée, modifie, assigne mes activités à mes élèves très facilement</p>
                     </div>
                 </div>
             </div>
@@ -103,9 +103,9 @@
                 <div class="col-lg-6">
                     <div class="about-content">
                         <div class="section-header left-style mb-olpo">
-                            <span class="cate">Les Maternelles</span>
+                            <span class="cate">{{ env('APP_NAME') }}</span>
                             <h3 class="title">Les points forts de notre service</h3>
-                            <p>Notre service en ligne <b>Les Maternelles</b> offre une flexibilité accrue.
+                            <p>Notre service en ligne <b>{{ env('APP_NAME') }}</b> offre une flexibilité accrue.
                             Gérez votre classe depuis votre ordinateur ou votre tablette en toute sécurité. L'application mobile (compagnon) est le 
                             complément idéal en classe pour inscrire des notes sur l'instant.
                             </p>

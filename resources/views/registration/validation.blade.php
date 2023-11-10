@@ -1,4 +1,4 @@
-@extends('layouts.parentLayout', ['titre' => 'Validation'])
+@extends('layouts.parentLayout', ['titre' => 'Finalisation de votre compte'])
 
 @section('content')
 
@@ -14,17 +14,22 @@
 
 @else
 
-    <h2>Création de votre compte Les Maternelles</h2>
-    <p>Pour terminer la création de votre compte veuillez choisir un mot de passe :</p>
+    <div class="row mb-3">
+        <div class="col">
+            <img src="{{asset('img/deco/logo.png')}}" alt="" width="150">
+        </div>
+    </div> 
+
+    <h3 class="mb-3">Création de votre compte {{ env('APP_NAME') }}</h3>
+    <p>Félicitations, votre adresse e-mail est validée.</p>
+    <p>Pour terminer la création de votre compte, veuillez choisir un mot de passe :</p>
 
     <!-- Validation Errors -->
     @if ($errors->any())
     <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        @foreach ($errors->all() as $error)
+            {{ $error }}<br>
+        @endforeach
     </div>
     @endif
 

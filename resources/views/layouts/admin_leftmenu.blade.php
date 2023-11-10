@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Auth;
           <header>
             <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <a href="{{route('admin.index')}}" class="brand-logo">
-                <img src="{{asset('img/deco/les_maternelles.png')}}" alt="" width="200">
+                <img src="{{asset('img/deco/logo.png')}}" alt="" width="200">
             </a></header>
           <nav class="dashboard-nav-list">
             <a href="{{route('admin.index')}}" class="dashboard-nav-item  {{ $menu == 'dashboard' ? 'active' : null }}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>

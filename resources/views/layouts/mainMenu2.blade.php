@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Auth;
             <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                 <div class="container-fluid">
                     <a href="{{ route('home') }}" class="brand-logo">
-                        <img src="{{ asset('img/deco/les_maternelles.png') }}" alt="" width="130">
+                        <img src="{{ asset('img/deco/logo.png') }}" alt="" width="130">
                     </a>
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">

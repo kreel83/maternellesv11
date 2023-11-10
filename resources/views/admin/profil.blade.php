@@ -4,11 +4,11 @@
 
 <div class="row mb-3">
     <div class="col">
-        Identifiant de votre établissement : <strong>{{$user->ecole_id}}</strong><br>
+        Identifiant de votre établissement : <strong>{{ $user->ecole_identifiant_de_l_etablissement }}</strong><br>
         {{ $adresseEcole }}
     </div>
     <div class="col">
-        Adresse e-mail de contact : <strong>{{$user->email}}</strong><br>
+        Adresse e-mail de contact : <strong>{{ $user->email }}</strong><br>
         Téléphone professionnel : <strong>{{ $telephoneEcole }}
     </div>
 </div>
@@ -116,5 +116,6 @@
     </form>
 
 </div>
+
 
 @endsection

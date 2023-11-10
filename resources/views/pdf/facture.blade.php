@@ -84,7 +84,7 @@
 <body>
 
     <p class="titre"><i>Facture Client Acquitée N° {{ $invoice->number }}</i></p>
-    <img class="logo" src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path('public/img/deco/les_maternelles.png'))); ?>" width="170">
+    <img class="logo" src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path('public/img/deco/logo.png'))); ?>" width="170">
 
     <table class="adresses" width="100%">
     <tr>

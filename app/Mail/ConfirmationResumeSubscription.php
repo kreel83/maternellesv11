@@ -21,7 +21,7 @@ class ConfirmationResumeSubscription extends Mailable
      */
     public function __construct()
     {
-        $this->logo = Utils::getBase64Image('img/deco/les_maternelles.png');
+        $this->logo = Utils::getBase64Image('img/deco/logo.png');
     }
 
     /**
