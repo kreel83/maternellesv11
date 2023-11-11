@@ -43,7 +43,7 @@ Route::middleware(['admin'])->group(function()
 {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/admin/dashboard', [AdminController::class, 'chercherUnEleve'])->name('admin.chercherUnEleve');
-    Route::get('/admin/dashboard/{id}', [AdminController::class, 'voirClasse'])->name('admin.voirClasse');
+    Route::get('/admin/dashboard/{user_id}', [AdminController::class, 'voirClasse'])->name('admin.voirClasse');
     //Route::get('/admin/eleve/view/{user_id}/{id}', [AdminController::class, 'voirEleve'])->name('admin.voirEleve');
     Route::get('/admin/eleve/view/{enfant_id}', [AdminController::class, 'voirEleve'])->name('admin.voirEleve');
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
