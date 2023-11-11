@@ -86,13 +86,21 @@
                        
                     </td>
                 </tr>
+
+                <style>
+                    .psmsgs {
+                        color: red;
+                        margin-left: 20px;
+                        
+                    }
+                </style>
                 @foreach ($enfants as $enfant)
                 <tr class="enfant" data-prof="{{$enfant->user_n1_id}}" data-texte="{{ $enfant->nom}} {{ $enfant->prenom}}">
                     <td>
                         <input type="checkbox" class="choix choix_liste" data-id="{{$enfant->id}}">
                     </td>
                     <td>
-                        {{ $enfant->nom}} {{ $enfant->prenom}}
+                        {{ $enfant->nom}} {{ $enfant->prenom}} <span class="psmsgs">{{$enfant->psmsgs}}</span>
                     </td>
                 </tr>
                 @endforeach

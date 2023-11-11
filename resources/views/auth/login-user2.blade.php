@@ -16,12 +16,12 @@
   }
 </style>
 
-<section class="mt-3">
+<section>
     
       <!--<div class="d-flex justify-content-center align-items-center h-100">-->
-    <div class="d-flex justify-content-center align-items-center h-100">
+    <div class="d-flex justify-content-center align-items-center vh-100">
         
-          <div class="card_login" style="border-radius: 1rem; overflow: hidden">
+          <div class="card_login " style="border-radius: 1rem; overflow: hidden">
             
             <div class="row g-0 h-100">
 

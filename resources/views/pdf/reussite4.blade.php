@@ -16,10 +16,19 @@ $degrades = App\Models\Enfant::DEGRADE;
             }
             
 
-            @font-face {
+        @font-face {
 
             font-family: 'agba';
             src: url({{ storage_path('fonts\Agbalumo-Regular.ttf') }}) format("truetype");
+
+            font-weight: 400; 
+            font-style: normal; 
+        }
+
+        @font-face {
+
+            font-family: 'script';
+            src: url({{ storage_path('fonts\DancingScript-VariableFont_wght.ttf') }}) format("truetype");
 
             font-weight: 400; 
             font-style: normal; 
@@ -231,7 +240,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                 font-size: 25px;
                 font-weight: 400;
                 text-align: center;
-                margin-bottom: 5px;
+                margin-top: 42px;
                 color: grey;
                 /* width: 250px; */
             }
@@ -239,7 +248,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                 font-size: 45px;
                 font-weight: 800;
                 text-align: center;
-                margin-bottom: 38px;
+                margin-top: 24px;
                 color: grey;
                 /* width: 250px; */
             }
@@ -248,8 +257,9 @@ $degrades = App\Models\Enfant::DEGRADE;
                 font-size: 25px;
                 font-weight: 800;
                 text-align: center;
-                margin-bottom: 22px;
-                color: purple;
+                
+                margin-top: 25px;
+                color: grey;
             }
             .enfant span {
                 font-size: 60px;
@@ -312,7 +322,7 @@ $degrades = App\Models\Enfant::DEGRADE;
             }
             .position-adresse-ecole {
                 position: absolute;
-                top: 870px;
+                top: 915px;
                 left:0px;
                 width: 100%;
                 text-align: center;
@@ -390,11 +400,11 @@ $degrades = App\Models\Enfant::DEGRADE;
     </div>
     --}}
 
-    <table width="100%" style="margin-top:38%;">
+    <table width="100%" style="margin-top:147px;">
         <tr>
             <td align="center">
-                <div class="enfa_nt p_osition-prenom">
-                    <span class="p_renom" style="font-family:'agba';font-size:40px">
+                <div class="e_nfant p_osition-prenom">
+                    <span class="p_renom" style="font-family:'script';font-size:80px;">
                          {!! $enfant->formatPdf() !!}
                     </span>
                 </div>
@@ -402,15 +412,15 @@ $degrades = App\Models\Enfant::DEGRADE;
         </tr>
         <tr>
             <td>
-                <div class="periode p_osition-periode">
-                    {{$periode}}
+                <div class="section p_osition-section">
+                    {{$enfant->section()}}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div class="section p_osition-section">
-                    {{$enfant->section()}}
+                <div class="periode p_osition-periode">
+                    {{$periode}}
                 </div>
             </td>
         </tr>
@@ -424,13 +434,13 @@ $degrades = App\Models\Enfant::DEGRADE;
         <tr>
             <td>
 
-                <div class="equipe" >L'équipe pédagogigue</div>
+                
 
-                <table align="center" class="e_quipe_array">
+                <table align="center" class="e_quipe_array" style="font-size: 12px;position: absolute; top: 670px; left: 150px; transform: rotate(3deg)">
                     <tr>
-                        <td>~ La maitresse ~</td>
+                        <td style="font-weight: bolder; color: black">La maitresse</td>
                         
-                        <td style='padding-left: 50px'>{{$user->prenom}} {{$user->name}}</td>                
+                        <td style='padding-left: 5px'>{{$user->prenom}} {{$user->name}}</td>                
                     </tr>
                     @if ($equipes)
                     @foreach ($equipes as $equipe)
@@ -438,14 +448,14 @@ $degrades = App\Models\Enfant::DEGRADE;
                     @if ($equipe[2] == 'aesh' )
                         @if ($enfant->sh == 1) 
 
-                            <td>~ {{App\Models\Equipe::FONCTIONS[$equipe[2]]}} ~</td>
-                            <td style='padding-left: 50px'>{{$equipe[0]}}</td>
+                            <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
+                            <td style='padding-left: 5px'>{{$equipe[0]}}</td>
                     
                         @endif
                     @else
                 
-                            <td>~ {{App\Models\Equipe::FONCTIONS[$equipe[2]]}} ~</td>
-                            <td style='padding-left: 50px'>{{$equipe[0]}}</td>
+                            <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
+                            <td style='padding-left: 5px'>{{$equipe[0]}}</td>
 
                 
                     @endif
@@ -457,8 +467,8 @@ $degrades = App\Models\Enfant::DEGRADE;
 
                     @if ($enfant->directeur())
                     <tr>
-                        <td>~ {{$enfant->directeur()[0] == 'mr' ? 'Monsieur' : 'Madame'}} le proviseur ~</td>
-                        <td style='padding-left: 50px'>{{$enfant->directeur()[1]}}</td>
+                        <td style="font-weight: bolder; color: black">{{$enfant->directeur()[0] == 'mr' ? 'Monsieur' : 'Madame'}} le proviseur</td>
+                        <td style='padding-left: 5px'>{{$enfant->directeur()[1]}}</td>
                     </tr>
                     @endif
                 </table>
@@ -467,57 +477,7 @@ $degrades = App\Models\Enfant::DEGRADE;
 
     </table>
 
-    {{-- <div class="enfant position-prenom">
-        <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
-    </div>
-    <div class="periode position-periode">
-        {{$periode}}
-    </div>
-    <div class="section position-section">
-        {{$enfant->section()}}
-    </div>
-    <div class="annee position-annee">
-        {{App\utils\Utils::calcul_annee_scolaire_formated()}}
-    </div> --}}
-    
-    {{-- <div class="position-equipe">
 
-        <div class="equipe" >L'équipe pédagogigue</div>
-
-        <div class="alert alert-primary" role="alert">
-            A simple primary alert—check it out!
-          </div>
-
-        <table class="equipe_array">
-            <tr>
-                <td style="width: 300px">~ La maitresse ~</td>
-                <td>{{$user->prenom}} {{$user->name}}</td>                
-            </tr>
-            
-            @foreach ($equipes as $equipe)
-            <tr>
-            @if ($equipe->fonction == 1 )
-                @if ($enfant->sh == 1) 
-
-                    <td>~ {{$equipe->fonction()}} ~</td>
-                    <td>{{$equipe->prenom}}</td>
-             
-                @endif
-            @else
-           
-                    <td>~ {{$equipe->fonction()}} ~</td>
-                    <td>{{$equipe->prenom}}</td>
-
-          
-            @endif
-                
-                
-            </tr>
-            @endforeach
-        </table>
-
-    </div> --}}
-    <!--<hr style="margin: 70px 0 70px 0">-->
     
     <div class="position-adresse-ecole">
         <div class="nom_ecole">{{$user->name_ecole()->nom_etablissement}}</div>
