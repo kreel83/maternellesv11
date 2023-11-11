@@ -55,10 +55,16 @@ class EleveEvent
         
         $conf = Configuration::where('user_id', $enfant->user_id)->first();
         $lesgroupes = [];
-        if ($conf) $lesgroupes = json_decode($conf->groupes, true);
-        //$lesgroupes = json_decode(Auth::user()->groupes, true);
+        if ($conf)  {
+            $lesgroupes = json_decode($conf->groupes, true);
+            $enfant->groupeFormatted = $enfant->groupe ? $lesgroupes[$enfant->groupe] : null;
 
-        $enfant->groupeFormatted = $enfant->groupe ? $lesgroupes[$enfant->groupe] : null;
+        } else {
+            $enfant->groupeFormatted = null;
+        }
+        //$lesgroupes = json_decode(Auth::user()->groupes, true);
+        
+
     }
 
     /**
