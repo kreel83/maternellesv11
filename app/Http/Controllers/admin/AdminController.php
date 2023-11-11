@@ -17,7 +17,7 @@ use Illuminate\Validation\Rules;
 
 class AdminController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         $enseignants = User::where([
             ['ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement],
@@ -27,21 +27,31 @@ class AdminController extends Controller
             -> with('enseignants', $enseignants);
     }
 
-    public function voirClasse($id): View
+    public function voirClasse($user_id)
     {
         $enseignants = User::where([
             ['ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement],
             ['id', '<>', Auth::id()],
         ])->get();
-        $listeDesEleves = Enfant::where('user_id', $id)->get();
-        $prof = User::find($id);
-        return view('admin.index')
-            ->with('prof', $prof)
-            ->with('listeDesEleves', $listeDesEleves)
-            -> with('enseignants', $enseignants);
+        $listeDesEleves = Enfant::where('user_id', $user_id)->get();
+        $prof = User::where([
+            ['ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement],
+            ['id', $user_id],
+        ])->first();
+        // $prof = User::find($user_id);
+        if($prof) {
+            return view('admin.index')
+                ->with('prof', $prof)
+                ->with('listeDesEleves', $listeDesEleves)
+                -> with('enseignants', $enseignants);
+        } else {
+            return redirect()->route('admin.index')
+                ->with('success', false)
+                ->with('msg', 'Cet enseignant(e) ne fait pas partie de votre établissement');
+        }
     }
 
-    public function logout(Request $request) : RedirectResponse
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
@@ -50,7 +60,7 @@ class AdminController extends Controller
         //return redirect(route('admin.login'));
     }
 
-    public function register(): View
+    public function register()
     {
         return view('admin.register');
     }
@@ -170,10 +180,11 @@ class AdminController extends Controller
 
     public function voirEleve($enfant_id, Request $request)
     {
-        $eleve = Enfant::where('enfants.id', $enfant_id)
-                    ->leftJoin('users', 'enfants.user_id', '=', 'users.id')
-                    ->where('users.ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)
-                    ->first();
+        // $eleve = Enfant::where('enfants.id', $enfant_id)
+        //             ->leftJoin('users', 'enfants.user_id', '=', 'users.id')
+        //             ->where('users.ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)
+        //             ->first();
+        $eleve = Enfant::find($enfant_id);
         if($eleve) {
             $resultats = Resultat::resultatsPourUnEleve($enfant_id);
             return view('admin.voir_eleve')

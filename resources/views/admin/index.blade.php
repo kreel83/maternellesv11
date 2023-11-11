@@ -7,9 +7,9 @@
 {{-- Gestion des succès / erreurs --}}
 @if(session()->has('success'))
     @if(session('success'))
-        <div class="alert alert-success" role="alert">{{ session('msg') }}</div>
+        <div class="alert alert-success" role="alert"><i class="fa-solid fa-circle-check me-1"></i> {{ session('msg') }}</div>
     @else
-        <div class="alert alert-danger" role="alert">{{ session('msg') }}</div>
+        <div class="alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation me-1"></i> {{ session('msg') }}</div>
     @endif
 @endif
 
@@ -95,7 +95,7 @@
     @else
         <ul>
             @foreach($enseignants as $enseignant)
-                <li><a href="{{ route('admin.voirClasse', ['id' => $enseignant->id]) }}">{{ $enseignant->prenom.' '.$enseignant->name }}</a></li>
+                <li><a href="{{ route('admin.voirClasse', ['user_id' => $enseignant->id]) }}">{{ $enseignant->prenom.' '.$enseignant->name }}</a></li>
             @endforeach
         </ul>
     @endif
@@ -103,6 +103,118 @@
 
 <!-- Liste des élèves -->
 @if(!empty($listeDesEleves))
+    @php
+    $degrades = App\Models\Enfant::DEGRADE;
+    $lesgroupes = json_decode($prof->groupes, true);
+    $takeFirst = round($listeDesEleves->count() / 2);
+    @endphp
+    <div class="div7 cadre_welcome mt-4">
+        <h4>Classe de {{ $prof->prenom.' '.$prof->name }}</h4>
+        <div class="row">
+            <div class="col-md-6">
+
+                <table class="table table-sm classe_dashboard">
+                <tbody>
+                    @foreach($listeDesEleves->take($takeFirst) as $eleve)
+                    @php
+                        $groupe = null;
+                        if (!is_null($eleve->groupe)){
+                        
+                        $groupe = $lesgroupes[$eleve->groupe];
+                        }
+                    @endphp 
+                    <tr>
+                        <td>
+                            <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background] ?? $degrades['b1']}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
+                                <img src="{{asset('/img/animaux/'.$eleve->photo)}}" alt="" width="30">    
+                            </div>
+                        </td>
+                        <td class="name {{$eleve->genre}}">
+                            <div>
+                                <a href="{{ route('admin.voirEleve', ['enfant_id' => $eleve->id]) }}">
+                                {{ $eleve->prenom.' '.$eleve->nom }}
+                                </a>
+
+                            </div>
+                            <div style="color: lightgrey;">
+                                {{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}} <small>({{ $eleve->age }})</small>
+                            </div>
+                        </td>
+
+                        <td>
+                            @if (!$eleve->mail)
+                            <div class="dashboard_mail">
+
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            @endif
+
+                        </td>
+                        <td>
+                            <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+                </table>
+
+            </div>
+
+            <div class="col-md-6">
+            <table class="table table-sm classe_dashboard">
+            <tbody>
+                @foreach($listeDesEleves->skip($takeFirst) as $eleve)
+                @php
+                $groupe = null;
+                if (!is_null($eleve->groupe)){
+                
+                $groupe = $lesgroupes[$eleve->groupe];
+                }
+            @endphp 
+            <tr class="">
+                <td>
+                    <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{$degrades[$eleve->background]}}; width: 27px; height: 27px" data-degrade="{{$eleve->background}}"  data-animaux="{{$eleve->photo}}">
+                        <img src="{{asset('/img/animaux/'.$eleve->photo)}}" alt="" width="30">    
+                    </div>
+                </td>
+                <td class="name {{$eleve->genre}}">
+                    <div>
+                        <a href="{{ route('admin.voirEleve', ['enfant_id' => $eleve->id]) }}">
+                        {{ $eleve->prenom.' '.$eleve->nom }}
+                        </a>
+
+                    </div>
+                    <div style="color: lightgrey;">
+                        {{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}} <small>({{ $eleve->age }})</small>
+                    </div>
+                </td>
+
+                <td>
+                    @if (!$eleve->mail)
+                    <div class="dashboard_mail">
+
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    @endif
+
+                </td>
+                <td>
+                    <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+
+                </td>
+            </tr>
+                @endforeach
+            </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+@endif
+
+<!-- Liste des élèves -->
+{{-- @if(!empty($listeDesEleves))
     <div class="mb-3">
         <table class="table table-striped table-sm">
             <thead>
@@ -113,7 +225,6 @@
             <tbody class="table-group-divider">
                 @foreach($listeDesEleves as $eleve)
                 <tr>
-                    {{-- <td><a href="{{ route('admin.voirEleve', ['user_id' => $prof->id, 'id' => $eleve->id]) }}">{{ $eleve->prenom.' '.$eleve->nom }}</a></td> --}}
                     <td><a href="{{ route('admin.voirEleve', ['enfant_id' => $eleve->id]) }}">{{ $eleve->prenom.' '.$eleve->nom }}</a></td>
                     <td>{{ $eleve->genre }}</td>
                     <td>{{Carbon\Carbon::parse($eleve->ddn)->format('d/m/Y')}} <small>({{ $eleve->age }})</small></td>
@@ -123,7 +234,7 @@
             </tbody>
         </table>
     </div>
-@endif
+@endif --}}
 <!-- Fin de la liste des élèves -->
 
 @endsection

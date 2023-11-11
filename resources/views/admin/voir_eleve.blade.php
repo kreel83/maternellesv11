@@ -39,6 +39,23 @@
         
         <div class="col-md-6">
 
+            <div class="d-flex justify-content-center align-middle">
+                <div class="me-4">
+                    @if($eleve->genre == 'F')
+                        <div class="avatar avatar_form pink selected" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
+                    @else
+                        <div class="avatar avatar_form blue selected" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
+                    @endif
+                </div>
+                <div>
+                    <h4 class="text-center">{{ $eleve->prenom.' '.$eleve->nom }}</h4>
+
+                    <div class="text-center">                                       
+                        {{ $eleve->age }}
+                    </div>
+                </div>
+            </div>
+
             <div>
 
                 <form action="{{route('save_eleve')}}" method="post" enctype="multipart/form-data" style="font-size: 12px; padding-top: 10px;">
@@ -53,7 +70,7 @@
                             $readonly = ($role == 'admin') ? 'readonly' : '';
                         @endphp
 
-                        @if($role == 'user')
+                        {{-- @if($role == 'user')
                             <div class="d-flex justify-content-center">
                                 <div class="avatar avatar_form pink me-5 {{$selectedF}}" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
                                 <div class="avatar avatar_form blue {{$selectedG}}" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
@@ -66,20 +83,27 @@
                                     <div class="avatar avatar_form blue {{$selectedG}}" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
                                 @endif
                             </div>
-                        @endif
+                        @endif --}}
 
-                        <div class="icone-input my-4">
-                            <i class="fa-solid fa-user"></i>
-                            <input type="text" class="custom-input" id="nom_form" name="nom" value="{{ $eleve->nom }}" placeholder="Nom de l'élève" {{$readonly}} />
-                        </div>    
-                        <div class="icone-input my-4">
-                            <i class="fa-solid fa-user"></i>
-                            <input type="text" class="custom-input" id="prenom_form" name="prenom" value="{{ $eleve->prenom }}" placeholder="Prénom de l'élève" {{$readonly}} />
-                        </div>    
-                        <div class="icone-input my-4">
+                        {{-- <div class="row">
+                            <div class="col">
+                                <div class="icone-input my-4">
+                                    <i class="fa-solid fa-user"></i>
+                                    <input type="text" class="custom-input" id="nom_form" name="nom" value="{{ $eleve->nom }}" placeholder="Nom de l'élève" {{$readonly}} />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="icone-input my-4">
+                                    <i class="fa-solid fa-user"></i>
+                                    <input type="text" class="custom-input" id="prenom_form" name="prenom" value="{{ $eleve->prenom }}" placeholder="Prénom de l'élève" {{$readonly}} />
+                                </div>
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="icone-input my-4">
                             <i class="fa-solid fa-cake-candles"></i>
                             <input type="date" class="custom-input" id="ddn_form" name="ddn" value="{{ $eleve->ddn }}" placeholder="Date de naissance de l'élève" {{$readonly}} />
-                        </div>    
+                        </div>     --}}
                         <div class="custom-area">                                       
                             <textarea type="date" class="custom-input" id="commentaire_form" name="comment" placeholder="Commentaire" {{$readonly}}>{{ $eleve->comment }}</textarea>
                         </div>
