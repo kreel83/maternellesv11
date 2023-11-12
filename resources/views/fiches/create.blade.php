@@ -30,7 +30,7 @@
     </style>
 
 
-    <div class="container-fluid row my-auto mt-5">
+    <div class="my-auto mt-5" id="create_fiche">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
             aria-label="breadcrumb">
 
@@ -47,27 +47,12 @@
             </ol>
         </nav>
 
-        <style>
-             .cadre-group {
-                position: relative;;
-                border-radius: 14px;
-                border: 1px solid grey;
-                padding: 8px;
-                margin:  30px 0;
-             }
-             .cadre-group>label {
-                background-color: white;
-                top: -12px;
-                left: 30px;
-                padding: 0 16px;
-                position: absolute
-             }
-        </style>
+
 
         <form action="{{ route('saveFiche') }}" method="post" id="form1" enctype="multipart/form-data"
             data-message={{ Session::has('message') }}>
             <div class="row">
-                <div class="col-xs-12 col-md-6 pe-4">
+                <div class="col-xs-12 col-xl-6 pe-4">
                     @csrf
 
                     @if ($duplicate)
@@ -90,7 +75,7 @@
                             @endforeach
                         </select>
                         <select class="form-select my-4 form_section" id="categorie_id" name="categorie_id"
-                        {{ $duplicate ? 'disabled' : null }}>
+                            {{ $duplicate ? 'disabled' : null }}>
 
                             @if (!$new)
                                 <option value="" selected>Choisissez une activité...</option>
@@ -112,7 +97,8 @@
 
                         </select>
                     </div>
-                    <div class="cadre-group form_image d-flex justify-content-between align-items-center px-5">
+                    <div
+                        class="cadre-group form_image d-flex justify-content-between align-items-center px-5 flex-column flex-md-row">
                         <label for="">Illustation</label>
                         <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
 
@@ -124,126 +110,92 @@
                             <img class="dlImage {{ $new ? 'd-none' : null }}" alt="your image"
                                 src="{{ asset($itemactuel->image_name) }}" width="250px" height="150"
                                 style="cursor: pointer; z-index: 6000" />
-                            <small>Cliquez sur l'image pour télécharger <br> votre illustration</small>
+                            <small class="text-center">Cliquez sur l'image pour télécharger <br> votre illustration</small>
                         </div>
-                    
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-sm btn-primary biblioModal" data-bs-toggle="modal"
+
+                        <div class="col-md-2 mt-3">
+                            <button type="button" class="btnAction biblioModal" data-bs-toggle="modal"
                                 data-bs-target="#biblioModal">
                                 bibliotheque d'image
                             </button>
-                        </div>                    
+                        </div>
                     </div>
                 </div>
 
+                <div class="col-xs-12 col-xl-6 ps-4 create_droit">
 
-
-
-
-
-                    <div class="col-xs-12 col-md-6 ps-4">
-
-                        <div class="form-group cadre-group">
-                            <label for="">section et titre</label>
-                            <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="true" name="ps"
-                                        {{ $itemactuel && substr($itemactuel->lvl, 0, 1) == '1' ? 'checked' : null }}>
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        petite section
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="true"
-                                        name="ms"{{ $itemactuel && substr($itemactuel->lvl, 1, 1) == '1' ? 'checked' : null }}>
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        Moyenne section
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="true" name="gs"
-                                        {{ $itemactuel && substr($itemactuel->lvl, 2, 1) == '1' ? 'checked' : null }}>
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        Grande section
-                                    </label>
-                                </div>
+                    <div class="form-group cadre-group">
+                        <label for="">section et titre</label>
+                        <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="true" name="ps"
+                                    {{ $itemactuel && substr($itemactuel->lvl, 0, 1) == '1' ? 'checked' : null }}>
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    petite section
+                                </label>
                             </div>
-                            <div class="field field_v1 my-3 form_titre form-group w-100">
-
-                                <input id="titre" class="form-control" name="name" placeholder="titre de la fiche" style="font-size: 1rem !important"
-                                    value="{{ $itemactuel ? $itemactuel->name : null }}" required>
-
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                    name="ms"{{ $itemactuel && substr($itemactuel->lvl, 1, 1) == '1' ? 'checked' : null }}>
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    Moyenne section
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="true" name="gs"
+                                    {{ $itemactuel && substr($itemactuel->lvl, 2, 1) == '1' ? 'checked' : null }}>
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    Grande section
+                                </label>
                             </div>
                         </div>
+                        <div class="field field_v1 my-3 form_titre form-group w-100">
 
+                            <input id="titre" class="form-control" name="name" placeholder="titre de la fiche"
+                                style="font-size: 1rem !important" value="{{ $itemactuel ? $itemactuel->name : null }}"
+                                required>
 
-
-
-                        {{-- @php --}}
-                        {{-- dd($fiche); --}}
-                        {{-- @endphp --}}
-
-                        <div class="d-flex flex-column mb-4 cadre-group pt-4 ">
-                            <label for="">Phrase</label>
-                            <div class="alert alert-info mt-2 mb-2" role="alert" style="font-size: 14px">
-                                Vous devez rédiger un texte qui sera repris dans le cahier de réussite à la validation de cette activité. Par convention, utilisez le prénom 'Tom' dans la rédaction de votre phrase.
-                                Notre intelligence artificielle adpatera automatiquement la phrase au féminin et remplacera par la même occasion le prénom Tom par Lucie (par convention également).
-                                Bien évidement, le prénom de l'enfant remplacera le prénom par défaut dans le cahier de réussite.
-                            </div>
-                            Exemple : Tom sait compter jusqu'à 5.
-                            <div id="editor3" class="mt-2 form_editeur"
-                                data-phrase="{{ $itemactuel->phrase_masculin }}" data-section=""
-                                style="height: 100px; ">{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</div>
-                            <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3" required>{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</textarea>
-
-
-
-                            {{-- <div class="pf" style="display:none">
-                                <textarea name="phrase_feminin" style="width: 100%" rows="3"
-                                    placeholder="Ecrivez ici la même phrase au féminin...">{!! $itemactuel && !$new ? $itemactuel->phrase_feminin : null !!}</textarea>
-                            </div> --}}
-
-
-                            <style>
-
-                            </style>
-                            <!--
-                                    <div class="d-flex mb-5 motCleFiche form_mot_cle">
-                                        <div data-reg="L'élève " class="item btnCommun me-2">prénom</div>
-                                        {{-- <div data-reg="@ilelle@" class="item btnCommun me-2">pronom personnel</div>
-                <div data-reg="*e*" class="item btnCommun">feminin / masculin</div> --}}
-                                        {{-- <table class="table table-bordered table-hover" id="motCleFiche" style="cursor: pointer;">
-                    <tr style="text-align: center">
-                        <td data-reg="@name@">prénom</td>
-                        <td data-reg="@ilelle@">pronom personnel</td>
-                        <td data-reg="*e*">feminin / masculin</td>
-                    </tr>
-        
-                </table> --}}
-                                    </div>
-                                    -->
-
-
-
-
-                        </div>
-
-                        <div class="d-flex justify-content-between">
-                            @if ($new || $duplicate)
-                                <button type="submit" name="submit" value="save"
-                                    class="btnAction form_save">Sauvegarder</button>
-                                <button type="submit" name="submit" value="save_and_select"
-                                    class="btnAction form_save_select">Sauvegarder et sélectionner</button>
-                            @else
-                                <button type="submit" name="submit" value="modif"
-                                    class="btnAction">Sauvegarder</button>
-                            @endif
-                            <!--<button type="button" class="btnAction">Annuler</button>-->
                         </div>
                     </div>
+
+
+
+
+
+                    <div class="d-flex flex-column mb-4 cadre-group pt-4 ">
+                        <label for="">Phrase</label>
+                        <div class="alert alert-info mt-2 mb-2" role="alert" style="font-size: 14px">
+                            Vous devez rédiger un texte qui sera repris dans le cahier de réussite à la validation de cette
+                            activité. Par convention, utilisez le prénom 'Tom' dans la rédaction de votre phrase.
+                            Notre intelligence artificielle adpatera automatiquement la phrase au féminin et remplacera par
+                            la même occasion le prénom Tom par Lucie (par convention également).
+                            Bien évidement, le prénom de l'enfant remplacera le prénom par défaut dans le cahier de
+                            réussite.
+                        </div>
+                        Exemple : Tom sait compter jusqu'à 5.
+                        <div id="editor3" class="mt-2 form_editeur" data-phrase="{{ $itemactuel->phrase_masculin }}"
+                            data-section="" style="height: 100px; ">{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</div>
+                        <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3" required>{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</textarea>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        @if ($new || $duplicate)
+                            <button type="submit" name="submit" value="save"
+                                class="btnAction form_save">Sauvegarder</button>
+                            <button type="submit" name="submit" value="save_and_select"
+                                class="btnAction form_save_select">Sauvegarder et sélectionner</button>
+                        @else
+                            <button type="submit" name="submit" value="modif" class="btnAction">Sauvegarder</button>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </form>
 
     </div>
+    
+
 
 
 
@@ -254,6 +206,7 @@
             background-color: var(--main-color);
             color: white;
         }
+
         .btn-main:hover {
             background-color: var(--main-color);
             filter: brightness(85%) !important;
@@ -291,7 +244,7 @@
                             <a href="/app/fiches?section={{ Session::get('section') }}" id="lienRetourFiche"
                                 class="btn btn-main my-2">Retourner aux fiches ?</a>
                             <a href="/app" class="btn btn-main my-2">Aller sur votre tableau de bord ?</a>
-                        @endif                        
+                        @endif
                     </div>
 
 
