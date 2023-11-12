@@ -169,6 +169,14 @@
         }
     }
 
+.breadcrumb-item a {
+    color: var(--second-color);
+    font-weight: 400;;
+}
+.breadcrumb-item.active {
+    
+    font-weight: 600;
+}
 
 .custom-area {
     color: #545454;
@@ -192,7 +200,7 @@
   }
 
   .custom-container {
-    margin: 0 8rem;
+    // margin: 0 8rem;
   }
 
 

@@ -144,10 +144,12 @@
             <button type="submit" class="custom_button ms-3" data-id="{{$eleve['id']}}">{{ ($eleve['id'] == 'new' ? 'Créer la fiche' : 'Modifier la fiche')}}</button>
         </div>
         <div>
-            @if ($eleve['user_n1_id'])
-            <a href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btn btn-danger btn-sm w-100 mt-2 remove_eleve" data-id="{{$eleve['id']}}">retirer l'élève de ma classe</a>
-            @else
-            <a href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btn btn-danger btn-sm w-100 mt-2 remove_eleve" data-id="{{$eleve['id']}}">supprimer l'élève de ma classe</a>
+            @if (isset($eleve['user_n1_id']))
+                @if ($eleve['user_n1_id'])
+                <a href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btn btn-danger btn-sm w-100 mt-2 remove_eleve" data-id="{{$eleve['id']}}">retirer l'élève de ma classe</a>
+                @else
+                <a href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btn btn-danger btn-sm w-100 mt-2 remove_eleve" data-id="{{$eleve['id']}}">supprimer l'élève de ma classe</a>
+                @endif
             @endif
         </div>
     @endif

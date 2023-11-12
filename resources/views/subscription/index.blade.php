@@ -10,13 +10,13 @@
     background-color: white;
   }
 </style>
-<div id="detail_abo mt-5">
+<div id="detail_abo">
 
 
 <h3>Détail de mon abonnement</h3>
 
 {{--@if (!$is_abonne)--}}
-@if ($status != 'actif')
+{{-- @if ($status != 'actif')
     <p>Vous n'avez pas d'abonnement en cours.</p>
     <p><a href="{{ route('subscribe.cardform') }}">Je souhaite m'abonner au service <i>{{ env('APP_NAME') }}</i></a></p>
 @else
@@ -28,7 +28,13 @@
 
     <p>{{ $message }}</p>
     <p>{{ $msgIfCanceled }}</p>
-@endif
+@endif --}}
+
+<style>
+  p {
+    color: white !important;
+  }
+</style>
 
 @if($licenceType == 'self' && $status == 'actif')
 
@@ -45,7 +51,7 @@
 @endif
 
     
-      <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="d-flex justify-content-center align-items-center vh-100">
         
           <div class="card_login" style="border-radius: 1rem; overflow: hidden">
             <div class="row g-0 h-100">

@@ -19,16 +19,16 @@
 @import "pages/eleves";
 @import "pages/aides";
 
-@import "vitrine/main";
-@import "vitrine/custom";
-@import "vitrine/flaticon";
-@import "vitrine/odometer";
-@import "vitrine/slick";
-@import "vitrine/slick-theme";
-@import "vitrine/nice-select";
-@import "vitrine/animate";
-@import "vitrine/magnific-popup";
-@import "vitrine/temoignage";
+// @import "vitrine/main";
+// @import "vitrine/custom";
+// @import "vitrine/flaticon";
+// @import "vitrine/odometer";
+// @import "vitrine/slick";
+// @import "vitrine/slick-theme";
+// @import "vitrine/nice-select";
+// @import "vitrine/animate";
+// @import "vitrine/magnific-popup";
+// @import "vitrine/temoignage";
 
 @import "./responsive.scss";
 
@@ -194,10 +194,15 @@ body {
     }
 }
 
+
+.white {
+    background-color: white;
+}
 :root {
     --main-color: #9A78C4;
-    --back-color: #fbfaff;
+    --back-color: #e7dde7 ;
     --second-color: #6534A9;
+
 
     --vert: #8dc53e;
     --bleu: #16bdff;
@@ -236,3 +241,13 @@ body {
     --niveau_0: rgba(238,238,238,1);
 
 }
+
+
+@media (max-width: 994px) {
+    body {
+        .breadcrumb {
+            display: none;
+        }
+    }
+}
+

@@ -48,7 +48,7 @@ if (!is_null($enfant->groupe)){
   // dd(Auth::user()->groupe, $enfant->groupe, $enfant, Auth::user()->type_groupe, Auth::user()->groupe[$enfant->groupe]);
 @endphp
 
-<div class="card-enfant position-relative m-4">
+<div class="card-enfant position-relative">
 
 
   {{-- @if ($groupe && strlen($groupe[0]) <2)

@@ -30,7 +30,7 @@ $degrades = App\Models\Enfant::DEGRADE;
             font-family: 'script';
             src: url({{ storage_path('fonts\DancingScript-VariableFont_wght.ttf') }}) format("truetype");
 
-            font-weight: 400; 
+            font-weight: 800; 
             font-style: normal; 
         }
 
@@ -438,7 +438,7 @@ $degrades = App\Models\Enfant::DEGRADE;
         <tr>
             <td align="center">
                 <div class="e_nfant p_osition-prenom">
-                    <span class="p_renom" style="font-family:'script';font-size:80px;">
+                    <span class="p_renom" style="font-family:'script';font-size:80px">
                          {!! $enfant->formatPdf() !!}
                     </span>
                 </div>

@@ -503,3 +503,11 @@ a {
 	}
 }
 
+
+@media only screen and (min-width: 994px) and (max-width: 1345px)  {
+	.site-navbar a {
+		font-size: 13px;
+		padding: 4px 4px !important;
+	}
+}
+

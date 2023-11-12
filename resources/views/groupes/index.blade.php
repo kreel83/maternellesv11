@@ -6,7 +6,8 @@
 @endphp
     <style>
         #myTabContent {
-            background-color: var(--second-color);
+            background-color: var(--main-color);
+            border-radius: 26px;
         }
 
         .terme.selected {
@@ -16,6 +17,7 @@
         
         
         .ronds {
+            border: 1px solid white;
             padding: 2px 18px;
             font-weight: 700;
             width: 80px;
@@ -28,7 +30,6 @@
             align-items: center;
             color: grey;
             font-size: 60px;
-            border: 1px solid grey;
         }
 
         .couleur_badge_titre {
@@ -65,11 +66,17 @@
         <div class="col-md-6 p-5" id="termes-tab-pane">
             <form action="{{ route('saveTermes') }}" method="POST">
                 @csrf
-                <div class="choix_nombre_groupe p-3 position-relative w-50" >
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="choix_nombre_groupe p-3 position-relative w-50" >
 
-                    <label for="">Nombre de groupes</label>
-                    <input type="number" value="{{$nbGroupe ?? 2}}"  min="2" max="4" class="form-control w-25" id="nbGroupe" name="nbGroupe">
+                        <label for="">Nombre de groupes</label>
+                        <input type="number" value="{{$nbGroupe ?? 2}}"  min="2" max="4" class="form-control w-25" id="nbGroupe" name="nbGroupe">
+                    </div>
+                    <div>
+                        <button type="submit" class="save_terme custom_button" id="saveTermes">Sauvegarder</button>
+                    </div>                    
                 </div>
+
 
                <div class="selection_groupe p-3 position-relative">
                     <div class="icone-input my-4 terme " id="terme1">
@@ -109,15 +116,13 @@
                 {{-- <textarea  class="form-control" name="" id="termes" cols="10" rows="5">
                     {{ $type == 'termes' ? $groupe : null}}
                 </textarea> --}}
-                <div>
-                    <button type="submit" class="save_terme custom_button mt-5 w-25" id="saveTermes">Sauvegarder</button>
-                </div>
+
             </form>
         </div>
-        <div class="col-md-6 p-5" id="myTabContent">
+        <div class="col-md-6 p-5" id="myTabContent"  style="height: fit-content">
             
             {{-- <div class="couleur_badge_titre">couleur du badge</div> --}}
-            <div class="d-flex flex-wrap w-100 selection_couleur position-relative" style="padding: 0 125px;">
+            <div class="d-flex flex-wrap selection_couleur position-relative" style="height: fit-content">
                 @foreach (App\Models\Enfant::GROUPE_COLORS as $key => $color)
                     <div class="rond_couleur ronds"  data-color="{{$color}}" style="background-color: {{ $color }}">
                        

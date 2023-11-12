@@ -135,6 +135,7 @@
 
 
 #cahierView {
+    padding: 0 1.5em;
     #choixFiche {
         position: relative;
         padding-bottom: 20px;
@@ -201,5 +202,20 @@
     //     }
     //   }  
 
+
+}
+
+@media (max-width: 1280px) {
+    #cahierView {
+        .section_container {
+            width: calc(100vw - 70px) !important;
+            padding-right: 0 !important;  
+            margin-top: 30px;          
+        }
+        .blocSelectFiche   {
+            margin-top: 170px;;
+        }
+
+    }
 
 }
