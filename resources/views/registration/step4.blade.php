@@ -8,10 +8,9 @@
 
     <p>Un message de confirmation a été envoyé à l'adresse suivante : <strong>{{ session('email') }}</strong></p>
 
-    <p>
-        Veuillez cliquer sur le lien disponible dans ce message afin de confirmer votre inscription sur le portail. <br>
-        <strong>Ce lien a une validité de 30 minutes.</strong>
-    </p>
+    <p>Veuillez cliquer sur le lien disponible dans ce message afin de confirmer votre inscription.</p>
+
+    <p><strong>Attention : ce lien a une validité de 30 minutes.</strong></p>
 
     <p>Si vous n'avez pas reçu le message de confirmation vous pouvez :</p>
 

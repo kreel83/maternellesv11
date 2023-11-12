@@ -289,7 +289,9 @@ class RegisteredUserController extends Controller
     {
         // verification Token
         if($token != md5($role.$ecole_id.env('HASH_SECRET'))) {
-            return redirect()->route('registration.start');
+            return redirect()->route('registration.start')
+                ->with('status', 'danger')
+                ->with('msg', 'Token invalide.');
         }
         $ecole = Ecole::where('identifiant_de_l_etablissement', $ecole_id)->first();
         return view('registration.step2')
@@ -302,8 +304,11 @@ class RegisteredUserController extends Controller
     {
         // verification Token
         if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
-            return redirect()->route('registration.start');
+            return redirect()->route('registration.start')
+                ->with('status', 'danger')
+                ->with('msg', 'Token invalide.');
         }
+
         $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
         // test si l'email de l'ecole est sur un domaine académique
         //$academique = Str::contains($ecole->mail, '@ac-');
@@ -322,13 +327,16 @@ class RegisteredUserController extends Controller
     {
         // verification Token
         if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
-            return redirect()->route('registration.start');
+            return redirect()->route('registration.start')
+                ->with('status', 'danger')
+                ->with('msg', 'Token invalide.');
         }     
            
         $request->validate([
             'emailondomain' => ['exclude_if:role,admin', 'required'],
             'role' => ['required', 'string', 'in:admin,user'],
             'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
+            'civilite' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -339,6 +347,7 @@ class RegisteredUserController extends Controller
             'role.in' => 'Fonction invalide.',
             'ecole_id.required' => 'Identifiant établissement manquant.',
             'ecole_id.exists' => 'Identifiant établissement introuvable.',
+            'civilite.required' => 'La civilité est obligatoire.',
             'name.required' => 'Le nom est obligatoire.',
             'name.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
@@ -367,6 +376,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'role' => $request->role,
             'ecole_identifiant_de_l_etablissement' => $request->ecole_id,
+            'civilite' => $request->civilite,
             'name' => $request->name,
             'prenom' => $request->prenom,
             'email' => $request->email,
@@ -383,9 +393,6 @@ class RegisteredUserController extends Controller
             Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
-        
-        // php artisan tinker   test email
-        // Mail::raw('hello world',function($msg) {$msg->to('thierry.thevenoud@gmail.com')->subject('test depsui local'); });
 
         // si probleme envoi mail
         // php artisan config:cache

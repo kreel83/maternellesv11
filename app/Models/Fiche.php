@@ -55,6 +55,6 @@ class Fiche extends Model
 
             }
         }
-        dd('done');
+        //dd('done');
     }
 }

@@ -2,6 +2,8 @@
 
 @section('content')
 
+@include('include.display_msg_error')
+
 <div class="row">
   <div class="d-inline-flex p-0">
     <div class="card" style="width: 18rem;">

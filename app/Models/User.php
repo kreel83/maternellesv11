@@ -54,34 +54,34 @@ class User extends Authenticatable
 
 	    static::created(function($user) {
 	        //FacadesLog::info('User Created Event:'.$user);
-            Fiche::createDemoFiche($user);
+            // Fiche::createDemoFiche($user);
             Configuration::create(['user_id' => $user->id]);
-            Enfant::create([
-                'nom' => 'DE LUCAS',
-                'prenom' => 'Théo',
-                'ddn' => '05/09/2018',
-                'photo' => '6.png',
-                'mail' => $user->email,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-                'annee_scolaire' => Carbon::now()->format('Y'),
-                'background' => 'b2',   
-                'user_id' =>$user->id,
-                'genre' => 'G'             
-            ]);
-            Enfant::create([
-                'nom' => 'LAURENCE',
-                'prenom' => 'Jennifer',
-                'ddn' => '06/10/2018',
-                'photo' => '32.png',
-                'mail' => $user->email,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-                'annee_scolaire' => Carbon::now()->format('Y'),
-                'background' => 'b4',   
-                'user_id' =>$user->id,
-                'genre' => 'F'             
-            ]);
+            // Enfant::create([
+            //     'nom' => 'DE LUCAS',
+            //     'prenom' => 'Théo',
+            //     'ddn' => '05/09/2018',
+            //     'photo' => '6.png',
+            //     'mail' => $user->email,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now(),
+            //     'annee_scolaire' => Carbon::now()->format('Y'),
+            //     'background' => 'b2',   
+            //     'user_id' =>$user->id,
+            //     'genre' => 'G'             
+            // ]);
+            // Enfant::create([
+            //     'nom' => 'LAURENCE',
+            //     'prenom' => 'Jennifer',
+            //     'ddn' => '06/10/2018',
+            //     'photo' => '32.png',
+            //     'mail' => $user->email,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now(),
+            //     'annee_scolaire' => Carbon::now()->format('Y'),
+            //     'background' => 'b4',   
+            //     'user_id' =>$user->id,
+            //     'genre' => 'F'             
+            // ]);
 	    });
 
         /*
@@ -116,6 +116,7 @@ class User extends Authenticatable
     protected $fillable = [
         'ecole_identifiant_de_l_etablissement',
         'role',
+        'civilite',
         'name',
         'prenom',
         'email',

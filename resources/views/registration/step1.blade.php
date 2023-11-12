@@ -11,20 +11,11 @@
 </div>
 --}}
 
+@include('include.display_msg_error')
+
 <div class="mt-3 mb-4">
     <h5>Etape 1 / 3 : choix de l'établissement</h5>
 </div>
-
-<!-- Validation Errors -->
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 
 <form action="{{ route('registration.step1.post') }}" method="post">
 @csrf
