@@ -46,8 +46,8 @@ class AdminController extends Controller
                 -> with('enseignants', $enseignants);
         } else {
             return redirect()->route('admin.index')
-                ->with('success', false)
-                ->with('msg', 'Cet enseignant(e) ne fait pas partie de votre établissement');
+                ->with('status', 'danger')
+                ->with('msg', 'Cet enseignant(e) ne fait pas parti de votre établissement.');
         }
     }
 
@@ -107,26 +107,29 @@ class AdminController extends Controller
     public function saveAdminProfile(Request $request)
     {
         $request->validate([
+            'civilite' => ['required'],
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
-            'mobile' => ['max:20'],
-            'directeur' => ['required'],
+            'mobile' => ['max:20'],            
         ], [
             'nom.required' => 'Le nom est obligatoire.',
             'nom.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
             'prenom.max' => 'Le prénom est limité à 255 caractères.',
             'mobile.max' => 'Le numéro de mobile est limité à 20 caractères.',
-            'directeur.required' => 'Merci de renseigner la section Directeur / Directrice.',
+            'civilite.required' => 'Merci de renseigner votre civilité.',
         ]);
 
         $user = Auth::user();
         $user->name = strtoupper($request->nom);
-        $user->prenom = strtoupper($request->prenom);
-        $user->directeur = (int) $request->directeur;
+        $user->prenom = ucfirst($request->prenom);
+        $user->civilite = $request->civilite;
         $user->mobile = $request->mobile;
         $user->save();
-        return redirect()->back()->with('result', 'success');
+
+        return redirect()->back()
+                ->with('status', 'success')
+                ->with('msg', 'Votre profil a été mis à jour.');
     }
 
     /**
@@ -175,16 +178,17 @@ class AdminController extends Controller
             ->leftJoin('users', 'user_id', '=', 'users.id')
             ->where('users.ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)
             ->get();
-        return redirect()->back()->with('result', $result);
+
+        return redirect()->route('admin.index')->with('result', $result);
     }
 
     public function voirEleve($enfant_id, Request $request)
     {
-        // $eleve = Enfant::where('enfants.id', $enfant_id)
-        //             ->leftJoin('users', 'enfants.user_id', '=', 'users.id')
-        //             ->where('users.ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)
-        //             ->first();
-        $eleve = Enfant::find($enfant_id);
+        $eleve = Enfant::where('enfants.id', $enfant_id)
+                    ->leftJoin('users', 'enfants.user_id', '=', 'users.id')
+                    ->where('users.ecole_identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)
+                    ->first();
+        // $eleve = Enfant::find($enfant_id);
         if($eleve) {
             $resultats = Resultat::resultatsPourUnEleve($enfant_id);
             return view('admin.voir_eleve')
@@ -194,7 +198,7 @@ class AdminController extends Controller
                 ->with('eleve', $eleve);
         } else {
             return redirect()->route('admin.index')
-                ->with('success', false)
+                ->with('status', 'error')
                 ->with('msg', 'Aucun élève trouvé.');
         }
     }

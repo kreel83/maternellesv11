@@ -279,11 +279,17 @@ class AdminLicenceController extends Controller
             $user = User::find($licence->user_id);
             $verificationLink = route('user.valideUserFromReminderEmail', ['token' => $user->validation_key]);
             Mail::to($user->email)->send(new UserReminderToActivateAccount($verificationLink, $user->prenom));
-            $reminderSent = true;
+            // $reminderSent = true;
+            return back()
+                ->with('status', 'success')
+                ->with('msg', 'Un courrier électronique de demande d\'activation de compte a bien été renvoyé.');
         } else {
-            $reminderSent = false;
+            // $reminderSent = false;
+            return back()
+                ->with('status', 'danger')
+                ->with('msg', 'Numéro de licence incorrect.');
         }
-        return back()->with('reminderSent', $reminderSent);
+        //return back()->with('reminderSent', $reminderSent);
     }
 
     public function confirmationRetraitLicence($licence_name)
@@ -310,7 +316,7 @@ class AdminLicenceController extends Controller
                 ->with('msg', 'Licence '.$request->licence_name.' retirée avec succès.');
         } else {
             return redirect()->route('admin.licence.index')
-                ->with('success', false)
+                ->with('status', 'danger')
                 ->with('msg', 'Erreur : le numéro de licence '.$request->licence_name.' est incorrect.');
         }
     }
@@ -356,7 +362,7 @@ class AdminLicenceController extends Controller
             ->with('licence', $licence);
         } else {
             return redirect()->route('admin.licence.index')
-                ->with('success', false)
+                ->with('status', 'danger')
                 ->with('msg', 'Licence introuvable');
         }        
     }
@@ -436,12 +442,12 @@ class AdminLicenceController extends Controller
                     ->with('msg', 'Licence '.$request->licence_name.' assignée avec succès.');
             } else {
                 return redirect()->route('admin.licence.index')
-                    ->with('success', false)
+                    ->with('status', 'warning')
                     ->with('msg', 'Une licence est déjà active pour cet utilisateur !');
             }
         } else {
             return redirect()->route('admin.licence.index')
-                ->with('success', false)
+                ->with('status', 'danger')
                 ->with('msg', 'Licence introuvable');
         }
     }

@@ -1,21 +1,12 @@
 @extends('layouts.createAccount')
 
-@section('content')    
+@section('content')
+
+@include('include.display_msg_error')
       
 <div class="mt-3 mb-4">
     <h5>Etape 3 / 3 : informations personnelles</h5>
 </div>
-
-<!-- Validation Errors -->
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 
 <form action="{{ route('registration.step3.post') }}" method="POST">
 @csrf
@@ -59,13 +50,20 @@
 
     <div class="row mt-3 mb-4">
 
-        <!-- nom -->
+        <div class="col">
+            <label for="civilite" class="form-label">Civilité</label><br>
+            <select class="form-select form-select-sm" name="civilite" id="civilite" required>
+                <option value=""></option>
+                <option value="MME" {{ old('civilite') == 'MME' ? 'selected' : null }}>Madame</option>
+                <option value="M" {{ old('civilite') == 'M' ? 'selected' : null }}>Monsieur</option>
+            </select>
+        </div>
+
         <div class="col">
             <label for="name" class="form-label">Votre nom</label>
             <input placeholder="" id="name" class="form-control block w-full" type="text" name="name" value="{{ old('name') }}" required  />
         </div>
     
-        <!-- prenom -->
         <div class="col">
             <label for="prenom" class="form-label">Votre prénom</label>
             <input placeholder="" id="prenom" class="form-control block w-full" type="text" name="prenom" value="{{ old('prenom') }}" required />
@@ -75,7 +73,6 @@
 
     <div class="row mt-3 mb-4">
 
-        <!-- password -->
         <div class="col">
             <label for="password" class="form-label">Choisissez un mot de passe (minimum 8 caractères)</label>
             <input placeholder="Mot de passe" id="password" class="form-control block w-full"
@@ -84,7 +81,6 @@
                             required autocomplete="new-password" />
         </div>
 
-        <!-- confirm password -->
         <div class="col">
             <label for="password_confirmation" class="form-label">Veuillez confirmer le mot de passe</label>
             <input placeholder="Confirmation du mot de passe" id="password_confirmation" class="form-control block w-full"
@@ -109,15 +105,6 @@
 
 </form>
 
-{{-- <p class="text-center mt-4"><a href="{{ route('registration.start') }}">Annuler</a></p> --}}
-
-{{--
-<p class="text-center mt-4"><a href="{{ route('registration.start') }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-</svg> Annuler</a></p>
---}}        
-
-    
 <div class="modal" id="voirCGU" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

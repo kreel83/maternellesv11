@@ -34,6 +34,14 @@ $degrades = App\Models\Enfant::DEGRADE;
             font-style: normal; 
         }
 
+        @font-face {
+
+            font-family: 'roboto';
+            src: url({{ storage_path('fonts\Roboto-Regular.ttf') }}) format("truetype");
+            f_ont-weight: 400; 
+            f_ont-style: normal; 
+            }
+
 
 
             .prenom {
@@ -50,13 +58,14 @@ $degrades = App\Models\Enfant::DEGRADE;
 
             .page {
                 height: 100%;
-                background-image:url({{ public_path('/img/pdf/page.png') }});
+                background-image:url({{ public_path('/img/pdf/page2.png') }});
                 background-size: cover;
             }
 
             .body {
-                padding: 80px 50px 20px 50px;
-                font: "Agbalumo";
+                padding: 60px 50px 20px 55px;
+                font-family: "roboto";
+                font-size: 13px;
             }
 
             .contenu {
@@ -128,13 +137,38 @@ $degrades = App\Models\Enfant::DEGRADE;
                 font-size: 18px;
             }
 
-            .titre-page {
+            /* .titre-page {
                 border-radius: 10px; 
                 padding: 32px 8px 32px 8px;
                 margin-bottom: 25px;
                 text-align: left; 
                 font-size: 22px;
                 width: 560px
+            } */
+
+            .titre-page {
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 10px; 
+                padding: 32px 8px 32px 8px;
+                margin-bottom: 25px;
+                text-align: center; 
+                font-size: 26px;
+                width: 663px;
+                font-family: 'script';
+            }
+
+            .table-carte {
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 20px;
+            }
+
+            .text-container {
+                margin-left: auto;
+                margin-right: auto;
+                width: 663px;
+                text-align: left;
             }
             
             {{ $customClass }}
@@ -506,7 +540,8 @@ $degrades = App\Models\Enfant::DEGRADE;
             $carte = 1;
         @endphp
         {{-- <table style="margin-top:20px; border-spacing: 10px"> --}}
-            <table style="margin-top:20px;" cellpadding="0">
+            {{-- <table style="margin-top:20px;" cellpadding="0"> --}}
+                <table class="table-carte" cellpadding="0">
             <tr>
             @foreach ($section as $key =>$resultat)
                 <td style="width: 160px; padding-right: 10px; padding-bottom:10px">
@@ -514,7 +549,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                         <div class="haut_carte" style="background-color: {{$resultat['color']}}">
                             <p class="titre1 " >{{$resultat['name_section']}}</p>
                         </div>
-                        <img src="{{public_path($resultat['image'])}}" alt="" class="image_card" >
+                        <img src="{{public_path($resultat['image'])}}" class="image_card">
                         <p class="body">{{$resultat['name']}}</p>
                     </div>
                 </td>
@@ -532,7 +567,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                         <div class="page">
                         <div class="body">
                             <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
-                            <table style="margin-top:20px;" cellpadding="0">
+                            <table class="table-carte" cellpadding="0">
                     @endif
                     <tr>
                 @endif
@@ -552,7 +587,8 @@ $degrades = App\Models\Enfant::DEGRADE;
     <div class="page">
     <div class="body">
     <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
-    {!! $textesParSection[$k] !!}
+    
+    <div class="text-container">{!! $textesParSection[$k] !!}</div>
 
         {{-- @if ($carte > 8 )
             <!-- Si + de 8 cartes sur la page en cours on change de page pour écrire le commentaire -->

@@ -19,25 +19,4 @@
 
 <p class="mt-4"><a href="{{ route('registration.start') }}">Annuler</a></p>
 
-{{--
-<!-- Validation Errors -->
-<x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-<form action="{{ route('registration.step2.post') }}" method="post">
-@csrf
-
-    <input type="hidden" name="role" value="{{ $role }}">
-    <input type="hidden" name="ecole_id" value="{{ $ecole->identifiant_de_l_etablissement }}">
-
-    <div class="">
-        <button id="btnsubmit" class="btn btn-primary ml-3">
-            {{ __('Suivant') }}
-        </button>
-    </div>
-
-    <p class="mt-4"><a href="{{ route('registration.start') }}">Annuler</a></p>
-
-</form>
---}}
-
 @endsection

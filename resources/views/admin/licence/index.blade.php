@@ -11,109 +11,90 @@
     </div>
 </div>
 
-@if(session()->has('reminderSent'))
-    @if(session('reminderSent'))
-        <div class="alert alert-success" role="alert">
-            L'email de demande d'activation de compte a bien été renvoyé.
-        </div>
-    @else
-        <div class="alert alert-danger" role="alert">
-            Erreur : numéro de licence incorrect.
-        </div>
-    @endif
-@endif
+@include('include.display_msg_error')
 
-{{-- Retour assignation / suppression licence --}}
-@if(session()->has('success'))
-    @if(session('success'))
-        <div class="alert alert-success" role="alert">{{ session('msg') }}</div>
-    @else
-        <div class="alert alert-danger" role="alert">{{ session('msg') }}</div>
-    @endif
-@endif
+<div class="row mt-3">
 
+    <div class="col-md-12">
 
-    <div class="row mt-3">
+        <div id="result"></div>
 
-        <div class="col-md-12">
-
-            <div id="result"></div>
-
-            <!-- Validation Errors -->
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-
-            <form action="{{ route('admin.licence.renew') }}" method="POST">
-            @csrf
-
-                <button class="btn btn-primary mb-3">Renouveler la sélection</button>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="selectAll"></th>
-                            <th>ID</th>
-                            <th>Numéro</th>
-                            <th>Utilisateur</th>
-                            <th>Statut</th>
-                            <th>Expires le</th>
-                        </tr>
-                    </thead>
-                <tbody class="table-group-divider">
-                @foreach ($licences as $licence)
-                <tr>
-                    <td>
-                    @if($product->id == $licence->produit_id)
-                        A jour
-                    @else
-                        <input type="checkbox" id="licenceSelection" name="licenceSelection[]" value="{{ $licence->id }}">
-                    @endif
-                    </td>
-                    <td>{{ $licence->id }}</td>
-                    <td>{{ $licence->internal_name }}</td>
-                    <td>
-                        @if($licence->licence_actif == 0)
-                            {{ $licence->prenom }} {{ $licence->name }}
-                        @elseif(is_null($licence->user_id))
-                            {{--
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <input type="email" size="32" id="assign-{{$licence->id}}" class="form-control" placeholder="Mail professionnel de l'enseignant">
-                                <button id="{{$licence->id}}" type="button" class="btn btn-primary assignbtn">OK</button>
-                            </div>
-                            <div id="msg-{{$licence->id}}" class="mt-1"></div>
-                            --}}
-                            <a href="{{ route('admin.licence.assign.step1', ['licence_name' => $licence->internal_name]) }}">Assigner la licence</a>
-                        @else
-                            {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['licence_name'=>$licence->internal_name]) }}" class=".removelnk">Retirer</a> ]
-                            @if($licence->user_actif == 0)
-                            <div class="alert alert-warning mt-2 mb-1" role="alert">
-                                Compte utilisateur inactif. <a href="{{ route('admin.licence.sendreminder', ['licence_name' => $licence->internal_name]) }}" class="alert-link">Renvoyer le lien d'activation</a>
-                              </div>
-                            @endif
-                        @endif
-                    </td>
-                    <td>
-                        {{ ($licence->licence_actif == 1) ? 'Active' : 'Expirée' }}
-                    </td>
-                    <td>{{ Carbon\Carbon::parse($licence->expires_at)->format('d/m/Y H:i:s')}}</td>
-                </tr>
+        <!-- Validation Errors -->
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
                 @endforeach
-                </tbody>
-                    
-                </table>
-
-                
-            </form>
-
+            </ul>
         </div>
+        @endif
+
+        <form action="{{ route('admin.licence.renew') }}" method="POST">
+        @csrf
+
+            <button class="btn btn-primary mb-3">Renouveler la sélection</button>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll"></th>
+                        <th>ID</th>
+                        <th>Numéro</th>
+                        <th>Utilisateur</th>
+                        <th>Statut</th>
+                        <th>Expires le</th>
+                    </tr>
+                </thead>
+            <tbody class="table-group-divider">
+            @foreach ($licences as $licence)
+            <tr>
+                <td>
+                @if($product->id == $licence->produit_id)
+                    A jour
+                @else
+                    <input type="checkbox" id="licenceSelection" name="licenceSelection[]" value="{{ $licence->id }}">
+                @endif
+                </td>
+                <td>{{ $licence->id }}</td>
+                <td>{{ $licence->internal_name }}</td>
+                <td>
+                    @if($licence->licence_actif == 0)
+                        {{ $licence->prenom }} {{ $licence->name }}
+                    @elseif(is_null($licence->user_id))
+                        {{--
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <input type="email" size="32" id="assign-{{$licence->id}}" class="form-control" placeholder="Mail professionnel de l'enseignant">
+                            <button id="{{$licence->id}}" type="button" class="btn btn-primary assignbtn">OK</button>
+                        </div>
+                        <div id="msg-{{$licence->id}}" class="mt-1"></div>
+                        --}}
+                        <a href="{{ route('admin.licence.assign.step1', ['licence_name' => $licence->internal_name]) }}">Assigner la licence</a>
+                    @else
+                        {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['licence_name'=>$licence->internal_name]) }}" class=".removelnk">Retirer</a> ]
+                        @if($licence->user_actif == 0)
+                        <div class="alert alert-warning mt-2 mb-1" role="alert">
+                            Compte utilisateur inactif. <a href="{{ route('admin.licence.sendreminder', ['licence_name' => $licence->internal_name]) }}" class="alert-link">Renvoyer le lien d'activation</a>
+                            </div>
+                        @endif
+                    @endif
+                </td>
+                <td>
+                    {{ ($licence->licence_actif == 1) ? 'Active' : 'Expirée' }}
+                </td>
+                <td>{{ Carbon\Carbon::parse($licence->expires_at)->format('d/m/Y H:i:s')}}</td>
+            </tr>
+            @endforeach
+            </tbody>
+                
+            </table>
+
+            
+        </form>
+
     </div>
+    
+</div>
 
 @endsection
 

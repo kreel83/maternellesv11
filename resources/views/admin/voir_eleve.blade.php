@@ -141,7 +141,7 @@
                                 <a href="{{ route('admin.index') }}" class="btn btn-primary" role="button">Quitter</a>
                             @else
                                 {{-- on vient depuis clic dans la classe --}}
-                                <a href="{{ route('admin.voirClasse', ['id' => $eleve->user_id]) }}" class="btn btn-primary" role="button">Quitter</a>
+                                <a href="{{ route('admin.voirClasse', ['user_id' => $eleve->user_id]) }}" class="btn btn-primary" role="button">Quitter</a>
                             @endif
                             
                         </div>
