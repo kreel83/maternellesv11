@@ -113,11 +113,15 @@ class Enfant extends Model
 
     public function formatPdf() {
         function rand_color() {
-            return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+            $colors = ['#F3DA24','#F15E61','#51C5CF','#00B04C', '#FF914D', '#66ACE2', '#C9E265']; 
+
+            $index = array_rand($colors);
+            return $colors[$index];
         }
         $s = '';
-        for ($i = 0; $i<strlen($this->prenom); $i++) {
-            $s .= '<span style="color: '.rand_color().'">'.substr($this->prenom,$i,1).'<span>';
+        $prenom = ucfirst(strtolower($this->prenom));
+        for ($i = 0; $i<strlen($prenom); $i++) {
+            $s .= '<span style="color: '.rand_color().'">'.substr($prenom,$i,1).'<span>';
         }
 
         return $s;

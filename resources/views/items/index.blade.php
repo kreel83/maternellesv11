@@ -15,7 +15,7 @@
         }
     </style>
 
-    <div class="row position-relative gx-0 mt-5" id="page_items">
+    <div class="position-relative gx-0 mt-5" id="page_items">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
@@ -39,7 +39,7 @@
             $degrades = App\Models\Enfant::DEGRADE;
         @endphp
 
-        <div class="col-md-12 position-relative vh-100 ">
+        <div class="position-relative">
             <div class="custom-container">
 
             
@@ -48,7 +48,7 @@
                 <a class="linkNoFiche btn btn-primary mt-3" href="">Ajouter des fiches</a>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center my-5">
+            <div class="d-flex justify-content-between align-items-center my-5 flex-column flex-xl-row">
 
                     <div class="d-flex ps-2 align-items-center enfant_pill">
                         <div class="arrowLeft me-2">
@@ -56,7 +56,7 @@
                                 <i class="fa-solid fa-arrow-left"></i>
                             </a>
                         </div>
-                        <div class=" d-flex">
+                        <div class="d-flex">
                             @if ($enfant->background)
                                 <div class="m-2 degrade_card_enfant animaux little"
                                     style="background-image: {{ $degrades[$enfant->background] }}">
@@ -72,33 +72,33 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div data-section="{{ $section->id }}" class="liste_section pe-5">
-                            <div class="section_container">
-        
-                                @foreach ($sections as $sec)
-                                    <div class="d-flex flex-column align-items-center">
-                                        <div class='selectSectionFiche selectSectionItem {{ $sec->id == $section->id ? 'selected' : null }}'
-                                            data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}" title="{{$sec->name}}">
-                                            <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
-                                                height="45px">
-                                        </div>
-                                        <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
-                                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
+                    
+                    <div data-section="{{ $section->id }}" class="liste_section pe-5 d-flex">
+                        
+    
+                            @foreach ($sections as $sec)
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class='selectSectionFiche selectSectionItem {{ $sec->id == $section->id ? 'selected' : null }}'
+                                        data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}" title="{{$sec->name}}">
+                                        <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
+                                            height="45px">
                                     </div>
-                                @endforeach
-                            </div>
+                                    <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
+                                        data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
+                                </div>
+                            @endforeach
+                       
                             {{-- <div id="SectionName">
                                 {{ $sections[0]->name }}
                             </div> --}}
-                        </div>
                     </div>
+                    
                 
             </div>
 
 
             <div id="mesfiches" class="listItems d-flex justify-content-center">
-                <div class="fiche_container fiches mesitems ">
+                <div class="fiche_container fiches mesitems">
                     @foreach ($fiches as $fiche)
                         @include('cards.item')
                     @endforeach

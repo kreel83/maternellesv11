@@ -39,7 +39,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
     @csrf
         {{--<input type="hidden" name="maxPeriode" value="{{$maxPeriode}}">--}}
         <input type="hidden" id="periode" name="periode">
-        <table class="table align-middle">
+        <table class="table align-middle white">
             <thead>
                 <tr>
                     <th colspan="2">Mes élèves <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="prenom"><i class="fa-solid fa-arrow-down"></i></span></th>
