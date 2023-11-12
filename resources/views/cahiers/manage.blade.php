@@ -43,10 +43,10 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
             <thead>
                 <tr>
                     <th colspan="2">Mes élèves <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="prenom"><i class="fa-solid fa-arrow-down"></i></span></th>
-                    <div class="d-xs-none d-md-block">
+                    
                         <th>Section <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="psmsgs"><i class="fa-solid fa-arrow-down"></i></span></th>
 
-                    </div>
+                    
                     <th>Groupe <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="groupe"><i class="fa-solid fa-arrow-down"></i></span></th>
                     <th>Emails parents</th>
                     @for ($periode=1;$periode<=$maxPeriode;$periode++)

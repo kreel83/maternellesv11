@@ -214,7 +214,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="informationPDF" tabindex="-1" aria-labelledby="informationPDF" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="top: 200px">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Information importante</h1>

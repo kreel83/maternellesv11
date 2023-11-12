@@ -207,12 +207,10 @@ use Illuminate\Support\Facades\Auth;
             @endif
 
 
-            <div class='d-none d-md-block position-relative h-100 container'>
+            <div class='position-relative h-100 container' id="appli">
                 @yield('content')
             </div>
-            <div class='d-xs-block d-md-none position-relative container-fluid'>
-                @yield('content')
-            </div>
+
         </div>
     @else
             <div class='h-100'>
