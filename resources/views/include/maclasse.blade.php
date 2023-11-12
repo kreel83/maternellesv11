@@ -15,14 +15,14 @@
     
     </nav>
 
-    <div class="mb-3">
-        <a href="{{ route('addEleve') }}" class="btn btn-primary">Ajouter un élève</a>
-        <a href="{{route('import')}}" class="btn btn-primary">Importer un élève</a>
+    <div class="mb-3 d-flex">
+        <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
+        <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
     </div>
 
 <div class="row">
     <div class="col-md-6">
-        <table class="table  table-sm classe_dashboard">
+        <table class="table  table-sm classe_dashboard white">
             <tbody>
                 @foreach ($listeDesEleves->take($middle) as $eleve)
                     @php
@@ -80,7 +80,7 @@
 
 
 
-        <table class="table table-sm classe_dashboard">
+        <table class="table table-sm classe_dashboard white">
             <tbody>
                 @foreach ($listeDesEleves->skip($middle) as $eleve)
                     @php

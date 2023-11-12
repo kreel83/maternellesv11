@@ -172,12 +172,12 @@ use Illuminate\Support\Facades\Auth;
                                   class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}">Mon
                                   profil</a>
                                   <a href="{{ route('subscribe.index') }}"
-                                  class="nav-item nav-link  {{ $params ? 'active' : null }}">Mon abonnement</a>
+                                  class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon abonnement</a>
   
-                              <a href="{{ route('changerLeMotDePasse') }}"
+                                    <a href="{{ route('changerLeMotDePasse') }}"
                                   class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le
                                   mot de passe</a>
-                                  <a class="nav-item nav-link  {{ $params == "contact" ? 'active' : null }}"
+                                  <a class="nav-item nav-link  {{ $menu == "contact" ? 'active' : null }}"
                                   href="{{ route('contact') }}">Nous contacter</a>
                                   <li><hr class="dropdown-divider"></li>
                                   <a href="{{ route('deco') }}" class="nav-item nav-link"><i class="fal fa-sign-out-alt"></i>
@@ -198,10 +198,15 @@ use Illuminate\Support\Facades\Auth;
                 <p class="alerteMessage mt-4 alert {{ Session::get('alert-class', 'alert-info') }}">
                     {{ Session::get('message') }}</p>
             @endif
-            <div class='position-relative h-100 container'>
 
+
+            <div class='d-none d-md-block position-relative h-100 container'>
                 @yield('content')
             </div>
+            <div class='d-block d-md-none position-relative container-fluid'>
+                @yield('content')
+            </div>
+            
         @else
             <div class='h-100'>
                 @yield('content')

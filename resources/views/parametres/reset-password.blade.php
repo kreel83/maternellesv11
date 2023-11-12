@@ -69,7 +69,7 @@
         
           <div class="card_login" style="border-radius: 1rem; overflow: hidden">
             <div class="row g-0 h-100">
-                <div class="col-md-5 col-lg-5 d-none d-md-block h-100">
+                <div class="col-md-5 col-lg-5 d-none d-lg-block h-100">
                     <div style="height: 100%; position: relative; padding-top: 87px">
 
                         <img src="{{ asset('img/log/lock.png') }}"
@@ -82,7 +82,7 @@
                   -->
                 </div>
             
-              <div class="col-md-7 col-lg-7 d-flex align-items-center p-5" style="padding-left: 85px !important;background-color: var(--main-color); color: white !important">
+              <div class="col-md-12 col-lg-7 d-flex align-items-center p-5" style="padding-left: 85px !important;background-color: var(--main-color); color: white !important">
                 <div class="card-body p-4 p-lg-5"  >
   
                   <x-auth-session-status class="mb-4" :status="session('status')" />

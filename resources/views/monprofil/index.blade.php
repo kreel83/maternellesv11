@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container my-5 page" id="mon profil">
+<div class="container my-5 page" id="monprofil">
 
     <nav class="pb-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 
@@ -19,65 +19,7 @@
 
 
 
-    <style>
-        .grid_profil {
-            display: grid;
-            grid-template-columns:1fr 1fr; 
-            grid-template-rows: 370px 220px 220px 220px;
-            grid-gap: 35px; 
-        }
-        .grid1 {
-            grid-column: 1;
-            grid-row: 1
-        }
-        .grid2 {
-            grid-column: 2;
-            grid-row: 1
-        }
-        .grid3 {
-            grid-column: 1/3;
-            grid-row: 2
 
-        }
-        .grid4 {
-            grid-column: 1;
-            grid-row: 3
-        }
-        .grid5 {
-            grid-column: 2;
-            grid-row: 3
-        }
-        .grid6 {
-            grid-column: 1;
-            grid-row: 4
-        }
-        .gridcadre {
-            width: 100%;
-            border-radius: 40px;
-            position: relative;
-            padding: 10px 40px;
-            background-color: white;
-        }
-        .gridTitre {
-            position: absolute;
-            top: -16px;
-            left: 30px;
-            font-weight: 400;
-            font-size: 16px;
-            padding: 4px 16px;
-            background-color: white;
-            border-radius: 14px;
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-
-        }
-        .groupeAide {
-            position: relative;
-           
-            padding: 5px;
-            margin: 5px;
-        }
-
-    </style>
 
 
     <div class="grid_profil">
@@ -90,26 +32,38 @@
                     <i class="fa-solid fa-key"></i>
                     <input type="email" class="custom-input" name="email" value="" placeholder="Votre adresse mail" />
                 </div>  --}}
-                <div class="icone-input my-4 little">
+                <select class="custom-select mt-4 little" name="civilite">
+                    <option value="">Veuillez sélectionner</option>
+                    <option value="Mme" {{$user->civilite == "Mme" ? 'selected' :null}}>Madame</option>
+                    <option value="Mr" {{$user->civilite == "Mr" ? 'selected' :null}}>Monsieur</option>
+                </select> 
+                <div class="icone-input my-2 little">
                     <i class="fa-solid fa-user"></i>
                     <input type="text" class="custom-input" name="prenom" value="{{$user->prenom}}" placeholder="Prénom" />
                 </div> 
-                <div class="icone-input my-4 little">
+                <div class="icone-input my-2 little">
                     <i class="fa-solid fa-user"></i>
                     <input type="text" class="custom-input" name="name" value="{{$user->name}}" placeholder="Nom" />
                 </div>
-                <div class="icone-input my-4 little">
+                <div class="icone-input my-2 little">
                     <i class="fa-solid fa-envelope"></i>
                     <input type="text" class="custom-input" name="email" value="{{$user->email}}" placeholder="Nom" disabled/>
                 </div>
-                <div class="icone-input my-4 little">
+                <div class="icone-input my-2 little">
                     <i class="fa-solid fa-phone"></i>
                         <input type="text" class="custom-input" name="phone" value="{{$user->phone}}" placeholder="Téléphone" />
                 </div>
 
-                <button type="submit" class="btnAction">Sauvegarder</button>
+                <div class="d-flex align-items-center">
+                    <button type="submit" class="btnAction me-4">Sauvegarder</button>
+                    @if(Session::has('error_profil'))
+                    <div class="error_message">{{Session::get('error_profil_message')}}</div>
+                    @endif
+
+                </div>
             </form>
         </div>
+
         <div class="gridcadre grid2">
             <div class="gridTitre">Mon établissement</div>
             <div class="mt-4 text-center">
@@ -132,8 +86,8 @@
             <div class="gridTitre">Mes aides maternelles</div>
             <form action="{{route('aidematernelle.post')}}" method="post" class="d-flex justify-content-between w-100">
                 @csrf
-                <div class="groupesAide d-flex flex-wrap justify-content-between w-100 pt-3">
-                    <div class="d-flex justify-content-between">
+                <div class="groupesAide d-flex flex-wrap justify-content-between w-100 pt-3  flex-column flex-md-row">
+                    <div class="d-flex justify-content-between  flex-column flex-md-row">
                         @for ($i = 0; $i<=3; $i++)
                         <div class="groupeAide">
                             <div class="icone-input my-2 little">
@@ -182,10 +136,10 @@
 
 
             <div class="d-flex flex-column w-100 pt-4">
-                <div>
-                    <form action="{{route('directeur.post')}}" method="POST" class="w-100 d-flex justify-content-between align-items-center">
+                <div class="">
+                    <form action="{{route('directeur.post')}}" method="POST" class="w-100 d-flex justify-content-between align-items-center flex-column flex-md-row">
                         @csrf
-                        <div class="d-flex flex-column w-100 justify-content-end align-items-center">
+                        <div class="d-flex flex-column w-100 justify-content-end align-items-center ">
 
                             <div class="form-group my-1 ">            
                                 <select style="width: 220px" class="custom-select little" name="civilite">

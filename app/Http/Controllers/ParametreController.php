@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use App\Models\Commentaire;
 use App\Models\Ecole;
 use App\Models\Enfant;
@@ -113,6 +114,9 @@ class ParametreController extends Controller
     }
 
     public function monprofil(Request $request) {
+
+        // $e = Enfant::first();
+        // dd($e->formatPDF());
 
         // $items = Item::all();
         // foreach ($items as $item) {
@@ -289,12 +293,15 @@ class ParametreController extends Controller
     }
 
     public function savemonprofil(Request $request) {
+      
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
+            'civilite' => ['required'],
             'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'phone' => ['max:10'],
         ], [
+            'civilite.required' => 'La civilité est obligatoire.',
             'name.required' => 'Le nom est obligatoire.',
             'name.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
@@ -303,10 +310,19 @@ class ParametreController extends Controller
         ]);
 
 
+        if ($validator->fails()) {
+            session()->flash('error_profil', 'Les 3 champs sont obligatoires');
+            session()->flash('error_profil_message', $validator->errors()->first());
+            return redirect()->back()->withInput();
+            
+        }
+
+
         $user = Auth::user();
         $user->name = strtoupper($request->name);
         $user->prenom = strtoupper($request->prenom);
         $user->phone = $request->phone;
+        $user->civilite = $request->civilite;
         //$user->nom_ecole = ucfirst($request->nom_ecole);
         //$user->adresse_ecole = ucfirst($request->adresse_ecole);
         // $user->nom_directeur = ucfirst($request->nom_directeur);

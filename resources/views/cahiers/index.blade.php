@@ -25,7 +25,7 @@
 
     </style>
 
-    <div id="cahierView" class="row px-5 gx-0 position-relative mt-5" data-enfant="{{ $enfant->id }}">
+    <div id="cahierView" class="row gx-0 position-relative mt-5" data-enfant="{{ $enfant->id }}">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
@@ -44,7 +44,7 @@
         <div data-section="{{ $section->id }}" class="liste_section m-0 d-flex w-100">
 
             
-            <div class="d-flex justify-content-between align-items-center my-5 align-items-center">
+            <div class="d-flex justify-content-between align-items-center my-5 align-items-center flex-column flex-xl-row">
                 <div class="enfant_pill d-flex ps-0 align-items-center ps-3">
                     <div class="arrowLeft" style="font-size: 30px">
                         <a href="{{ route('enfants',['type' => $type]) }}">
@@ -66,11 +66,12 @@
                     </div>
                     
                 </div>
-                <div>
-                    <div class="section_container">
 
-                        <div class="d-flex flex-column">
-                            <div class="d-flex">
+              
+                    <div class="section_container flex-wrap justify-content-center">
+
+                        
+                           
                                 @foreach ($sections as $sec)
                                     <div class="d-flex flex-column align-items-center">
                                         <div class='sectionCahier selectSectionFiche {{ $sec->id == $section->id ? 'selected' : null }}'
@@ -95,13 +96,13 @@
                                     </div>
                                     <div class="tiret_selection d-none" data-id="cahier" style="background-color: brown"></div>
                                 </div>                   
-                            </div>
-                </div>
-            </div>
+                            
+                      
+                    </div>
             
 
                    
-                </div>
+              
 
             </div>
 

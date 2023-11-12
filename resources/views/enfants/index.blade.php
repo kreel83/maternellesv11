@@ -23,7 +23,7 @@
                         @if ($type == 'reussite')
                         <div>
 
-                                <a class="btn btn-success btn-lg" href="{{ route('cahierManage') }}">Gestion des cahiers de réussites</a> 
+                                <a class="btnAction mt-0" href="{{ route('cahierManage') }}">Gestion des cahiers de réussites</a> 
                         </div>
                         @endif
                         <form action="{{route('enfants')}}">
@@ -76,7 +76,7 @@
                         @endforeach
                 </div>
                 @else
-                        <div class="col-md-12 d-flex flex-wrap ps-5">
+                        <div class="col-md-12 d-flex flex-wrap ps-5 card_enfant_container">
                                 @foreach ($enfants as $kE=>$enfant)
                                 @include('cards.enfant',['type' => $type,'kE' => $kE])
                                 @endforeach                
