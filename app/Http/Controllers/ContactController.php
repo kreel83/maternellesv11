@@ -34,9 +34,13 @@ class ContactController extends Controller
 
         // Envoi d'un email pour nous prévenir
         $user = Auth::user();
-        Mail::to("contact.clickweb@gmail.com")->send(new DemandeDeContact($user, $request->subject, $request->message));
+        Mail::to(env('MAIL_FROM_ADDRESS'))->send(new DemandeDeContact($user, $request->subject, $request->message));
 
-        return back()->with(["result" => "success"]);
+        return back()
+            ->with('status', 'success')
+            ->with('msg', 'Votre message a été envoyé.');
+
+        // return back()->with(["result" => "success"]);
 
     }
 

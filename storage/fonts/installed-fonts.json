@@ -3,11 +3,10 @@
         "normal": "agba_normal_665afa29ecdb1bfa78dbf1dc29d52eda"
     },
     "script": {
-
-        "normal": "script_normal_0278e7620c40b7cabe48c2f54b56062b"
+        "normal": "D:\\maternellesv3\\storage\\fonts\/script_normal_0278e7620c40b7cabe48c2f54b56062b",
+        "800": "script_800_0278e7620c40b7cabe48c2f54b56062b"
     },
     "roboto": {
         "normal": "roboto_normal_420dd9f75125a880a01367e3ef929955"
-
     }
 }

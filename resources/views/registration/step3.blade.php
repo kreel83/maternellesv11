@@ -54,8 +54,8 @@
             <label for="civilite" class="form-label">Civilité</label><br>
             <select class="form-select form-select-sm" name="civilite" id="civilite" required>
                 <option value=""></option>
-                <option value="MME" {{ old('civilite') == 'MME' ? 'selected' : null }}>Madame</option>
-                <option value="M" {{ old('civilite') == 'M' ? 'selected' : null }}>Monsieur</option>
+                <option value="Mme" {{ old('civilite') == 'Mme' ? 'selected' : null }}>Madame</option>
+                <option value="M." {{ old('civilite') == 'M.' ? 'selected' : null }}>Monsieur</option>
             </select>
         </div>
 

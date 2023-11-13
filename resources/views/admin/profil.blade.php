@@ -24,23 +24,24 @@
             <h4>Informations de contact</h4>
         </div>
 
-        <div class="d-flex align-items-start mb-3">
-            <div class="me-3">
+        {{-- <div class="d-flex align-items-start mb-3"> --}}
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-3">
                 <label for="civilite" class="form-label">Civilité</label><br>
                 <select class="form-select form-select-sm" name="civilite" id="civilite">
-                    <option value="MME" {{$user->civilite == 'MME' ? 'selected' : null}}>Madame</option>
-                    <option value="M" {{$user->civilite == 'M' ? 'selected' : null}}>Monsieur</option>
+                    <option value="Mme" {{$user->civilite == 'Mme' ? 'selected' : null}}>Madame</option>
+                    <option value="M." {{$user->civilite == 'M.' ? 'selected' : null}}>Monsieur</option>
                 </select>
             </div>
-            <div class="me-3">
+            <div class="col-sm-12 col-md-6 col-lg-3">
                 <label for="nom" class="form-label">Votre nom</label>
                 <input type="text" class="form-control" id="nom" name="nom" value="{{$user->name}}">
             </div>
-            <div class="me-3">
+            <div class="col-sm-12 col-md-6 col-lg-3">
                 <label for="prenom" class="form-label">Votre prénom</label>
                 <input type="text" class="form-control" id="prenom" name="prenom" value="{{$user->prenom}}">
             </div>
-            <div class="me-3">
+            <div class="col-sm-12 col-md-6 col-lg-3">
                 <label for="mobile" class="form-label">Téléphone mobile (facultatif)</label>
                 <input type="text" class="form-control" id="mobile" name="mobile" aria-describedby="mobileHelp" value="{{$user->mobile}}">
                 {{-- <div id="mobileHelp" class="form-text">Information confidentielle qui ne sera jamais partagée avec un tiers. Peut servir à vous contacter plus rapidement si nécessaire.</div> --}}

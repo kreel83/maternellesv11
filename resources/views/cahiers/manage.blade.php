@@ -71,10 +71,10 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                         <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
                     </div>
                 </td>
-                <td>{{ $enfant->id.' '.$enfant->prenom.' '.$enfant->nom}}</td>
+                <td>{{ $enfant->prenom.' '.$enfant->nom}}</td>
 				<td>{{ strtoupper($enfant->psmsgs) }}</td>
-                <td align="center">
-                    <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+                <td class="mx-auto">
+                    <div class="text-center groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
                 </td>
 
                 <td>
