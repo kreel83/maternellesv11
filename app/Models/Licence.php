@@ -73,9 +73,11 @@ class Licence extends Model
             $licence = Licence::create([
                 'parent_id' => $stripeObject['data']['object']['metadata']['user_id'],
                 'produit_id' => $stripeObject['data']['object']['metadata']['produit_id'],
-                'name' => $this->getInternalName(),
                 'expires_at' => $stripeObject['data']['object']['metadata']['expires_at'],
+                // 'name' => $this->getInternalName(),
             ]);
+            $licence->name = $licence->id.rand(100, 999);
+            $licence->save();
             // enregistrement dans la table relation transaction/licence
             TransactionLicence::create([
                 'transaction_id' => $transaction->id,
