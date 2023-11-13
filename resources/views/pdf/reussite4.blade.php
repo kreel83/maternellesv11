@@ -197,6 +197,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                 padding: 4px;
                 text-align: center;
                 margin-top:15px;
+                line-height: 12px;
             }
 
             .card-pdf .haut_carte {
@@ -549,7 +550,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                         <div class="haut_carte" style="background-color: {{$resultat['color']}}">
                             <p class="titre1 " >{{$resultat['name_section']}}</p>
                         </div>
-                        <img src="{{public_path($resultat['image'])}}" class="image_card">
+                        <img src="{{public_path('storage/items/'.$resultat["section_id"].'\\'.$resultat['image_nom'])}}" class="image_card">
                         <p class="body">{{$resultat['name']}}</p>
                     </div>
                 </td>

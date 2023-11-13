@@ -39,11 +39,14 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
     @csrf
         {{--<input type="hidden" name="maxPeriode" value="{{$maxPeriode}}">--}}
         <input type="hidden" id="periode" name="periode">
-        <table class="table align-middle white">
+        <table class="table align-middle white  table-responsive">
             <thead>
                 <tr>
                     <th colspan="2">Mes élèves <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="prenom"><i class="fa-solid fa-arrow-down"></i></span></th>
-					<th>Section <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="psmsgs"><i class="fa-solid fa-arrow-down"></i></span></th>
+                    
+                        <th>Section <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="psmsgs"><i class="fa-solid fa-arrow-down"></i></span></th>
+
+                    
                     <th>Groupe <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="groupe"><i class="fa-solid fa-arrow-down"></i></span></th>
                     <th>Emails parents</th>
                     @for ($periode=1;$periode<=$maxPeriode;$periode++)
@@ -72,7 +75,9 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                     </div>
                 </td>
                 <td>{{ $enfant->id.' '.$enfant->prenom.' '.$enfant->nom}}</td>
+                <div class="d-xs-none d-md-block">
 				<td>{{ strtoupper($enfant->psmsgs) }}</td>
+                </div>
                 <td align="center">
                     <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
                 </td>
