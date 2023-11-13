@@ -58,19 +58,20 @@ use Illuminate\Support\Facades\Auth;
                                 class="nav-item nav-link  {{ $menu == 'accueil' ? 'active' : null }}">Tableau de bord
                             </a>
                             @php
-                                $params = in_array($menu, ['evaluation',  'affectation_groupe', 'avatar','maclasse']);
+                                $params = in_array($menu, ['evaluation', 'affectation_groupe', 'avatar', 'maclasse']);
                             @endphp
 
-                            
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
-                                        data-bs-toggle="dropdown">Ma classe</a>
-                                    <div class="dropdown-menu">
+
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
+                                    data-bs-toggle="dropdown">Ma classe</a>
+                                <div class="dropdown-menu">
 
 
-                                        <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
-                                            class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'édite ma classe</a>
-                                        @if (Auth::user()->is_enfants())    
+                                    <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
+                                        class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'édite
+                                        ma classe</a>
+                                    @if (Auth::user()->is_enfants())
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
                                             class="nav-item nav-link ">J'évalue mes élèves</a>
 
@@ -80,13 +81,12 @@ use Illuminate\Support\Facades\Auth;
                                         <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}"
                                             class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}">J'affecte
                                             mes groupes</a>
-
-                                            @endif
-                                    </div>
+                                    @endif
                                 </div>
+                            </div>
 
                             @php
-                            $params = in_array($menu, ['manage', 'reussite']);
+                                $params = in_array($menu, ['manage', 'reussite']);
                             @endphp
 
                             @if (Auth::user()->is_enfants())
@@ -95,11 +95,13 @@ use Illuminate\Support\Facades\Auth;
                                         data-bs-toggle="dropdown">Les cahiers de réussites</a>
                                     <div class="dropdown-menu">
                                         <a href="{{ route('enfants', ['type' => 'reussite']) }}"
-                                            class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les
+                                            class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite
+                                            les
                                             cahiers de réussite</a>
-                                            <a href="{{ route('cahierManage') }}"
-                                                class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère les
-                                                cahiers de réussite</a>
+                                        <a href="{{ route('cahierManage') }}"
+                                            class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère
+                                            les
+                                            cahiers de réussite</a>
                                     </div>
 
                                 </div>
@@ -130,8 +132,9 @@ use Illuminate\Support\Facades\Auth;
                                     <a href="{{ route('groupe') }}"
                                         class="nav-item nav-link {{ $menu == 'groupe' ? 'active' : null }}">Mes
                                         groupes</a>
-                                        <a href="{{ route('phrases') }}"
-                                        class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}">Mes phrases pré-enregistrées</a>                                        
+                                    <a href="{{ route('phrases') }}"
+                                        class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}">Mes
+                                        phrases pré-enregistrées</a>
                                 </div>
                             </div>
                             {{-- @php
@@ -165,26 +168,30 @@ use Illuminate\Support\Facades\Auth;
                         @endphp
 
                         <div class="nav-item dropdown ms-auto">
-                          <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
-                              data-bs-toggle="dropdown">{{Auth::user()->prenom}} {{Auth::user()->name}}</a>
-                          <div class="dropdown-menu" style="left: inherit !important; right: 0">
-                              <a href="{{ route('monprofil') }}"
-                                  class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}">Mon
-                                  profil</a>
-                                  <a href="{{ route('subscribe.index') }}"
-                                  class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon abonnement</a>
-  
-                                    <a href="{{ route('changerLeMotDePasse') }}"
-                                  class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le
-                                  mot de passe</a>
-                                  <a class="nav-item nav-link  {{ $menu == "contact" ? 'active' : null }}"
-                                  href="{{ route('contact') }}">Nous contacter</a>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <a href="{{ route('deco') }}" class="nav-item nav-link"><i class="fal fa-sign-out-alt"></i>
+                            <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
+                                data-bs-toggle="dropdown">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</a>
+                            <div class="dropdown-menu" style="left: inherit !important; right: 0">
+                                <a href="{{ route('monprofil') }}"
+                                    class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}">Mon
+                                    profil</a>
+                                <a href="{{ route('subscribe.index') }}"
+                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon
+                                    abonnement</a>
+
+                                <a href="{{ route('changerLeMotDePasse') }}"
+                                    class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le
+                                    mot de passe</a>
+                                <a class="nav-item nav-link  {{ $menu == 'contact' ? 'active' : null }}"
+                                    href="{{ route('contact') }}">Nous contacter</a>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <a href="{{ route('deco') }}" class="nav-item nav-link"><i
+                                        class="fal fa-sign-out-alt"></i>
                                     Se déconnecter</a>
-                          </div>
-                      </div>
-                        
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
@@ -200,21 +207,20 @@ use Illuminate\Support\Facades\Auth;
             @endif
 
 
-            <div class='d-none d-md-block position-relative h-100 container'>
+            <div class='position-relative h-100 container' id="appli">
                 @yield('content')
             </div>
-            <div class='d-block d-md-none position-relative container-fluid'>
-                @yield('content')
-            </div>
-            
-        @else
+
+        </div>
+    @else
             <div class='h-100'>
                 @yield('content')
             </div>
-    @endif
-    </div>
 
-    </div>
+    @endif
+    
+
+
 
 
     <!-- Modal -->

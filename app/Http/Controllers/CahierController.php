@@ -294,6 +294,8 @@ class CahierController extends Controller
         $customClass = array();
         foreach ($resultats as $resultat) {
             foreach ($resultat as $item) {
+                //dd($resultat);
+                // dd(public_path($item["section_id"].'\\'.$item['image_nom']));
                 //$class = '.section'.$item['section_id'].' {border-radius: 15px; padding-top: 10px; padding-bottom: 10px; text-align: center; font-size: 20px; background-color: '.$item['color'].'}';
                 $class = '.titre'.$item['section_id'].' {color: '.$item['texte'].'; background-color: '.$item['color'].'}';
                 if(!in_array($class, $customClass)) {
