@@ -19,16 +19,16 @@
 @import "pages/eleves";
 @import "pages/aides";
 
-// @import "vitrine/main";
-// @import "vitrine/custom";
-// @import "vitrine/flaticon";
-// @import "vitrine/odometer";
-// @import "vitrine/slick";
-// @import "vitrine/slick-theme";
-// @import "vitrine/nice-select";
-// @import "vitrine/animate";
-// @import "vitrine/magnific-popup";
-// @import "vitrine/temoignage";
+@import "vitrine/main";
+@import "vitrine/custom";
+@import "vitrine/flaticon";
+@import "vitrine/odometer";
+@import "vitrine/slick";
+@import "vitrine/slick-theme";
+@import "vitrine/nice-select";
+@import "vitrine/animate";
+@import "vitrine/magnific-popup";
+@import "vitrine/temoignage";
 
 @import "./responsive.scss";
 
@@ -94,6 +94,29 @@ body {
     }
 }
 
+#modeDecouverte {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    bottom:15px;
+    left: 15px;
+    z-index: 10000;
+    .btnModeDecouverte {
+        background-color: #8dc53e;
+        color: white;
+        border-radius: 14px;
+        border: none;
+        outline: none;
+        padding: 2px 16px;
+        margin: 0 30px
+
+        ;
+
+    }
+}
+
 
 #form1 {
     background-color: white;
@@ -135,6 +158,10 @@ body {
         font-size: 20px;
         font-weight: bolder;
     }
+}
+
+.hide {
+    display: none
 }
 
 #arrowTuto {
@@ -200,7 +227,7 @@ body {
 }
 :root {
     --main-color: #9A78C4;
-    --back-color: #e7dde7 ;
+    --back-color: #F6F6F6 ;
     --second-color: #6534A9;
 
 

@@ -1,6 +1,6 @@
 
 
-const selectItem = () => {
+const selectItem = (Modal) => {
 
     $('.note').on('click', function() {
         const card = $(this).closest('.card_item')
@@ -20,7 +20,7 @@ const selectItem = () => {
         $('.card_item[data-section="'+section+'"]').removeClass('d-none')
         if ($('.card_item:visible').length == 0) {
            $('.noFiche').removeClass('d-none') 
-           $('.linkNoFiche').attr('href','/fiches?section='+section) 
+           $('.linkNoFiche').attr('href','/app/fiches?section='+section) 
 
         }
         
@@ -54,6 +54,14 @@ const selectItem = () => {
 
         }
         $.get('/app/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+notation, function(data) {
+            console.log(data)
+            if (data == 'demo') {
+                var myModalEl = document.getElementById('InfoDemo');
+                var modal = new Modal(myModalEl,{
+                    backdrop: 'static', keyboard: false
+                })
+                modal.show()
+            }
             if ($(el).parent().hasClass('fiche_modify')) {
                 location.reload()
             }

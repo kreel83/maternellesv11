@@ -33,6 +33,16 @@ $degrades = App\Models\Enfant::DEGRADE;
             font-weight: 800; 
             font-style: normal; 
         }
+        @font-face {
+
+            font-family: 'frenchScript';
+            src: url({{ storage_path('fonts\FrenchScriptMT.ttf') }}) format("truetype");
+
+            font-weight: 400; 
+            font-style: normal; 
+        }
+
+
 
         @font-face {
 
@@ -275,15 +285,15 @@ $degrades = App\Models\Enfant::DEGRADE;
                 font-size: 25px;
                 font-weight: 400;
                 text-align: center;
-                margin-top: 42px;
+                margin-top: -2px;
                 color: grey;
                 /* width: 250px; */
             }
             .annee {
-                font-size: 45px;
+                font-size: 15px;
                 font-weight: 800;
                 text-align: center;
-                margin-top: 24px;
+                margin-top: -40px;
                 color: grey;
                 /* width: 250px; */
             }
@@ -294,7 +304,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                 text-align: center;
                 
                 margin-top: 25px;
-                color: grey;
+                color: black;
             }
             .enfant span {
                 font-size: 60px;
@@ -435,7 +445,7 @@ $degrades = App\Models\Enfant::DEGRADE;
     </div>
     --}}
 
-    <table width="100%" style="margin-top:147px;">
+    <table width="100%" style="margin-top:168px;">
         <tr>
             <td align="center">
                 <div class="e_nfant p_osition-prenom">
@@ -447,21 +457,21 @@ $degrades = App\Models\Enfant::DEGRADE;
         </tr>
         <tr>
             <td>
-                <div class="section p_osition-section">
+                <div class="section p_osition-section"  style="font-family:'frenchScript';font-size:50px">
                     {{$enfant->section()}}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div class="periode p_osition-periode">
+                <div class="periode p_osition-periode"  style="font-family: frenchScript; font-size: 50px">
                     {{$periode}}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div class="annee p_osition-annee">
+                <div class="annee p_osition-annee"  style="font-family:'frenchScript';font-size:50px">
                     {{App\utils\Utils::calcul_annee_scolaire_formated()}}
                 </div>
             </td>
@@ -471,11 +481,16 @@ $degrades = App\Models\Enfant::DEGRADE;
 
                 
 
-                <table align="center" class="e_quipe_array" style="font-size: 12px;position: absolute; top: 670px; left: 150px; transform: rotate(3deg)">
+                <table align="center" class="e_quipe_array" style="font-size: 12px;position: absolute; top: 670px; left: 130px; transform: rotate(3deg)">
                     <tr>
-                        <td style="font-weight: bolder; color: black">La maitresse</td>
+                        @if ($user->civilite == 'Mme')
+                            <td style="font-weight: bolder; color: black">La maitresse</td>
+                        @else
+                            <td style="font-weight: bolder; color: black">Le maître</td>
+                        @endif
+
                         
-                        <td style='padding-left: 5px'>{{$user->prenom}} {{$user->name}}</td>                
+                        <td style='padding-left: 15px'>{{ucfirst(strtolower($user->prenom))}} {{strtoupper($user->name)}}</td>                
                     </tr>
                     @if ($equipes)
                     @foreach ($equipes as $equipe)
@@ -484,13 +499,13 @@ $degrades = App\Models\Enfant::DEGRADE;
                         @if ($enfant->sh == 1) 
 
                             <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
-                            <td style='padding-left: 5px'>{{$equipe[0]}}</td>
+                            <td style='padding-left: 15px'>{{$equipe[0]}}</td>
                     
                         @endif
                     @else
                 
                             <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
-                            <td style='padding-left: 5px'>{{$equipe[0]}}</td>
+                            <td style='padding-left: 15px'>{{$equipe[0]}}</td>
 
                 
                     @endif
@@ -502,8 +517,8 @@ $degrades = App\Models\Enfant::DEGRADE;
 
                     @if ($enfant->directeur())
                     <tr>
-                        <td style="font-weight: bolder; color: black">{{$enfant->directeur()[0] == 'mr' ? 'Monsieur' : 'Madame'}} le proviseur</td>
-                        <td style='padding-left: 5px'>{{$enfant->directeur()[1]}}</td>
+                        <td style="font-weight: bolder; color: black">{{$enfant->directeur()[0] == 'mr' ? 'Le directeur' : 'La directrice'}}</td>
+                        <td style='padding-left: 15px'>{{$enfant->directeur()[1]}}</td>
                     </tr>
                     @endif
                 </table>
@@ -632,7 +647,11 @@ $degrades = App\Models\Enfant::DEGRADE;
         <div class="signature_title">Les signatures</div>
         <table style="border-spacing: 10px; bordert: 1px solid lightgray">
             <tr>
-                <td style="width: 210px"><div class="contenu_signature">la maitresse</div></td>
+                @if ($user->civilite == 'Mme')
+                    <td style="width: 210px"><div class="contenu_signature">la maîtresse</div></td>
+                @else
+                    <td style="width: 210px"><div class="contenu_signature">le maître</div></td>
+                @endif
                 @if ($user->directeur == 0)
                     <td style="width: 210px"><div class="contenu_signature">Le directeur</div></td>
                 @else

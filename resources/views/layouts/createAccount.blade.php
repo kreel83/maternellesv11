@@ -15,15 +15,15 @@
 
     <div class="container">
 
-        <div class="row">
-            <div class="col">
+        <div class="d-flex justify-content-center">
+           
                 <a href="{{route('vitrine.index')}}" class="brand-logo">
-                <img src="{{asset('img/deco/logo.png')}}" alt="" width="150">
+                <img src="{{asset('img/deco/logo.png')}}" alt="" width="250" class="d-bloc mx-auto">
                 </a>
-            </div>
+        
         </div>    
           
-        <p class="mt-3 h3">Création de mon compte {{ env('APP_NAME') }}</p>
+        <p class="mt-3 h3 text-center">Création de mon compte {{ env('APP_NAME') }}</p>
 
         @yield('content')
 

@@ -3,13 +3,20 @@
 @section('content')
     <style>
         .noFiche {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: red;
-            width: fit-content;
-            height: 70px;
+
+           
+            color: black;
+
+            width: 300px;
+
+            display: flex;
+            height: 300px;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            flex-direction: column;
+            border-radius: 15px;
+            
         
 
         }
@@ -43,10 +50,7 @@
             <div class="custom-container">
 
             
-            <div class="noFiche d-none ">
-                <div>Aucune fiche trouvé</div>
-                <a class="linkNoFiche btn btn-primary mt-3" href="">Ajouter des fiches</a>
-            </div>
+
 
             <div class="d-flex justify-content-between align-items-center my-5 flex-column flex-xl-row">
 
@@ -99,9 +103,17 @@
 
             <div id="mesfiches" class="listItems d-flex justify-content-center">
                 <div class="fiche_container fiches mesitems">
+
+                    
                     @foreach ($fiches as $fiche)
                         @include('cards.item')
                     @endforeach
+                    
+                    <div class="noFiche d-none">
+                        <div>Aucune activité sélectionnée</div>
+                        <a class="linkNoFiche btnAction mt-5" href="">Ajouter des activités</a>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -111,4 +123,7 @@
 
 
     </div>
+
+
+
 @endsection

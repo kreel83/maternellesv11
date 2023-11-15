@@ -186,7 +186,7 @@ window.section_active = null
 
 
 
-selectItem()
+selectItem(Modal)
 hamburger()
 
 

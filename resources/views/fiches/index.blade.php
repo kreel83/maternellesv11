@@ -51,8 +51,8 @@
                 <div class="d-flex ">
 
                     <div data-type="autresfiches" data-position="left"
-                        class="btnSelectionType violet droit selected les_fiches">Liste des fiches</div>
-                    <div data-type="mesfiches" data-position="right" class="btnSelectionType violet droit ma_selection">Ma
+                        class="btnSelectionType violet droit selected les_fiches text-center">Liste des fiches</div>
+                    <div data-type="mesfiches" data-position="right" class="btnSelectionType violet droit ma_selection  text-center">Ma
                         sélection</div>
                 </div>
                 <div class="d-flex pb-3 justify-content-end w-100">

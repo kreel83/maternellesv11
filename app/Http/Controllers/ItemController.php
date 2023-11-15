@@ -85,6 +85,18 @@ class ItemController extends Controller
     }
 
     public function saveResultat(Request $request) {
+        $user = Auth::user();
+        
+        if (!$user->is_abonne()) {
+            $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
+
+            $compte = Resultat::where('user_id', $user->id)->count();
+            if ($compte == 5 && !$search) {
+                return 'demo';
+            }
+
+        }
+
         $autonome = 0;
         if ($request->note == 3) {
             $request->note = 2;
