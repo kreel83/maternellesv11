@@ -160,6 +160,10 @@ use Illuminate\Support\Facades\Auth;
                                 class="{{ Auth::user() && Auth::user()->configuration->tuto == 0 ? 'd-none' : null }}">
                                 <button class="btnModeTuto">Desactiver le mode tutoriel</button>
                             </div>
+                            <div id="modeDecouverte"
+                                class="{{ Auth::user() && Auth::user()->is_abonne() ? 'd-none' : null }}">
+                                <button class="btnModeDecouverte">Mode découverte</button>
+                            </div>
 
                         </div>
 
@@ -272,6 +276,27 @@ use Illuminate\Support\Facades\Auth;
     </div>
   </div>
 </div> --}}
+
+<div class="modal fade" id="InfoDemo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top: 200px;">
+      <div class="modal-content  position-relative">
+      
+  
+
+
+        <div class="modal-body text-center">
+            Vous utilisez un version "découverte" de l'application<br>
+            Cette version est limitée à 10 notations.<br><br>
+            Abonnez-vous pour 12€99 / an pour profiter<br>
+             pleinement de votre application
+            <div>
+                <button class="btnAction mx-auto" data-bs-dismiss="modal" aria-label="Close">J'ai compris</button>
+            </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
 
 
 

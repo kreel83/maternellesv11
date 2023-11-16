@@ -127,9 +127,11 @@ if (!is_null($enfant->groupe)){
     @endphp
     <div class="footer p-2 d-flex h-auto"  style="background-color: var(--main-color)" data-enfant="{{$enfant->id}}">        
       <div class="d-flex w-100  justify-content-around flex-wrap {{$kE == 0 ? 'choix_groupe' :  null}}">
+        @if ($groupes)
         @foreach ($groupes as $key=>$terme)
             <div class="badge_termes {{ $enfant->groupe != null && $key == $enfant->groupe ? 'active' : null}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
         @endforeach
+        @endif
     </div>
     </div>
   @endif

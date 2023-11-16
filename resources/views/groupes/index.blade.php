@@ -6,7 +6,7 @@
 @endphp
     <style>
         #myTabContent {
-            background-color: var(--main-color);
+            background-color: var(--third-color);
             border-radius: 26px;
         }
 

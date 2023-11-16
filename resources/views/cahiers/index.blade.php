@@ -75,26 +75,29 @@
                                 @foreach ($sections as $sec)
                                     <div class="d-flex flex-column align-items-center">
                                         <div class='sectionCahier selectSectionFiche {{ $sec->id == $section->id ? 'selected' : null }}'
+                                            title="{{$sec->name}}"
                                             data-value="{{ $sec->id }}" data-section="{{ $sec->id }}"
                                             data-titre="{{ $sec->name }}"
                                             data-textes="{{ isset($textes[$sec->id]) ? $textes[$sec->id] : null }}"
                                             data-phrases="@include('include.card_phrases', ['section' => $sec])" style="background-color: {{ $sec->color }}">
                                             <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
-                                                height="45px">
+                                                height="45px" >
                                         </div>
                                         <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
-                                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}">
+                                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"
+                                            title="Commentaire général">
                                         </div>
                                     </div>
                                 
                                 @endforeach
                                 <div class="d-flex flex-column align-items-center" style="border-left: 1px solid lightgray">
                                     <div class='sectionApercu selectSectionFiche' data-section="cahier" data-value="cahier" id="nav-cahier"
-                                        style="background-color: brown">
+                                        style="background-color: var(--main-color)"
+                                        title="Le cahier de réussite">
                                         <img src="{{ asset('img/illustrations/cahier.png') }}" alt="" width="120px"
                                             height="120px">
                                     </div>
-                                    <div class="tiret_selection d-none" data-id="cahier" style="background-color: brown"></div>
+                                    <div class="tiret_selection d-none" data-id="cahier" style="background-color: var(--main-color)"></div>
                                 </div>                   
                             
                       
@@ -221,10 +224,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Vous allez entrer dans la page de génération du PDF.
-          Cette génération va se faire avec les phrases pré-ecrites que vous avez sélectionner,
-          ainsi que les phrases qui emmanent des fiches que l'élève a acquis.
-          Assurez-vous que toutes les activité acquises par l'élève sont bien notifiées.
+          Vous allez entrer dans la page de génération du PDF.<br><br>
+          Cette génération va se faire avec les phrases pré-ecrites que vous avez sélectionnées,
+          ainsi que les phrases qui emmanent des activités que l'élève a acquis.
+          Assurez-vous que toutes les activités acquises par l'élève soient bien notées.<br><br>
+          <div class="alert alert-warning">
+              La modification ou l'ajout d'une activité acquise entrainera la regénération du cahier de réussite
+              et effacera les éventuelles modifications que vous avez faites.  
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Je vérifie d'abord</button>

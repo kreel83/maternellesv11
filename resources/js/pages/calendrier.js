@@ -303,11 +303,17 @@ const hover = (Modal) => {
                 clearInterval(c)
                 var position = $(this).position()
                 if ($(that).find('.day_event').is(':visible')) {
-                    $('.cadre_cal').removeClass('d-none')
+                    // $('.cadre_cal').removeClass('d-none')
+                    var myModalEl = document.getElementById('view_event_modal');
+                    var modal = new Modal(myModalEl,{
+                        backdrop: 'static', keyboard: false
+                    })
                     $.get('/app/calendar/getEvent?date='+$(that).data('js_date')+'&mode=hover', function(data) {
-                        $('.cadre_cal').css('top',position.top+'px')
-                        $('.cadre_cal').css('left',position.left +40+'px')  
-                        $('.cadre_cal').html(data)
+                        $('#view_event_modal').find('.modal-body').html(data)
+                        modal.show()
+                        // $('.cadre_cal').css('top',position.top+'px')
+                        // $('.cadre_cal').css('left',position.left +40+'px')  
+                        // $('.cadre_cal').html(data)
                                         
                     })
                 

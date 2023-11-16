@@ -13,28 +13,34 @@
 
 @include('include.display_msg_error')
 
-<div class="mt-3 mb-4">
-    <h5>Etape 1 / 3 : choix de l'établissement</h5>
+<div class="mt-5 mb-4">
+    <h5 class="text-center">Etape 1 / 3 : choix de l'établissement</h5>
 </div>
-
 <form action="{{ route('registration.step1.post') }}" method="post">
 @csrf
+<div class="card mx-auto p-0" style="width: 36rem; height: 20rem">
+
 
     <input type="hidden" name="role" value="{{ $role }}">
 
-    <div class="mb-3">
-        <label for="ecole_id" class="form-label">Merci de saisir l'identifiant de votre établissement composé de 7 chiffres et 1 lettre</label>
+    <div class="card-body p-5">
+        <label for="ecole_id" class="form-label">Saisissez l'identifiant de votre établissement</label>
         <input type="text" class="form-control" id="ecole_id" name="ecole_id" value="{{ old('ecole_id') }}" required>
+        <small>Celui-ci se compose de 7 chiffres suivi d'une lettre</small>
     </div>
+    <div class="card-footer mt-5 px-5 d-flex justify-content-between align-items-center">
     
-    <div class="">
-        <button class="btn btn-primary ml-3">
+        <a href="{{ route('registration.start') }}">Annuler</a>
+        <button class="btnAction">
             {{ __('Suivant') }}
         </button>
-    </div>
+    </div>        
+    
+    
 
-    <p class="mt-4"><a href="{{ route('registration.start') }}">Annuler</a></p>
 
+
+</div>
 </form>
 
 @endsection

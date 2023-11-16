@@ -317,9 +317,10 @@ class CalendrierController extends Controller
         
         $date = Carbon::parse($request->date)->format('Y-m-d');
         $events = Event::where('date', $request->date)->get();
-        if ($request->mode == 'hover') {
-            return view('calendrier.include.event_hover')->with('events', $events);
-        }
+        // if ($request->mode == 'hover') {
+        //     return view('calendrier.include.event_hover')->with('events', $events);
+        // }
+        
         return view('calendrier.include.event')->with('events', $events);
     }
     public function index() {

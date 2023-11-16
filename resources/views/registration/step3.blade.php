@@ -5,9 +5,11 @@
 @include('include.display_msg_error')
       
 <div class="mt-3 mb-4">
-    <h5>Etape 3 / 3 : informations personnelles</h5>
+    <h5 class="text-center">Etape 3 / 3 : informations personnelles</h5>
 </div>
 
+
+<div class="card mx-auto p-5" style="width: auto; height: auto">
 <form action="{{ route('registration.step3.post') }}" method="POST">
 @csrf
 
@@ -50,7 +52,7 @@
 
     <div class="row mt-3 mb-4">
 
-        <div class="col">
+        <div class="col-12 col-xl-2">
             <label for="civilite" class="form-label">Civilité</label><br>
             <select class="form-select form-select-sm" name="civilite" id="civilite" required>
                 <option value=""></option>
@@ -59,12 +61,12 @@
             </select>
         </div>
 
-        <div class="col">
+        <div class="col-12 col-xl-5">
             <label for="name" class="form-label">Votre nom</label>
             <input placeholder="" id="name" class="form-control block w-full" type="text" name="name" value="{{ old('name') }}" required  />
         </div>
     
-        <div class="col">
+        <div class="col-12 col-xl-5">
             <label for="prenom" class="form-label">Votre prénom</label>
             <input placeholder="" id="prenom" class="form-control block w-full" type="text" name="prenom" value="{{ old('prenom') }}" required />
         </div>
@@ -73,7 +75,7 @@
 
     <div class="row mt-3 mb-4">
 
-        <div class="col">
+        <div class="col-12 col-xl-6">
             <label for="password" class="form-label">Choisissez un mot de passe (minimum 8 caractères)</label>
             <input placeholder="Mot de passe" id="password" class="form-control block w-full"
                             type="password"
@@ -81,7 +83,7 @@
                             required autocomplete="new-password" />
         </div>
 
-        <div class="col">
+        <div class="col-12 col-xl-6">
             <label for="password_confirmation" class="form-label">Veuillez confirmer le mot de passe</label>
             <input placeholder="Confirmation du mot de passe" id="password_confirmation" class="form-control block w-full"
                             type="password"
@@ -97,8 +99,8 @@
         </label>
     </div>
 
-    <div class="text-center">
-        <button class="btn btn-primary ml-3">
+    <div class="d-flex justify-content-center">
+        <button class="btnAction mx-0">
             {{ __('Créer le compte') }}
         </button>
     </div>
@@ -117,7 +119,7 @@
                 <p>...</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btnAction" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
@@ -135,10 +137,11 @@
                 <p>...</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btnAction" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
+</div>
 </div>
       
     

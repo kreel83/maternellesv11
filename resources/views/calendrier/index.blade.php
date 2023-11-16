@@ -12,17 +12,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 35px;
-    height: 35px;
+    width: 60px;
+    height: 60px;
     font-size: 20px;
     color: white;
     background-color: var(--main-color);
     border-radius: 50%;
-    top: 0px;
-    right: 110px;
-    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    position: fixed;
     border: none;
     outline: none;
+    z-index: 800;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   }
 
 
@@ -31,17 +33,22 @@
 @section('content')
 
 <div id="calendrier_view" class="position-relative mt-5">
-
+  <div class="d-flex justify-content-between">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
         <li class="breadcrumb-item active" aria-current="page">Calendrier</li>
       </ol>
+    <div class="d-none d-xl-block" data-bs-toggle="modal" data-bs-target="#EventModal">
+      <a href="#">Ajouter un événement</a>
+      </div>  
+  </div>
+
  
-  <div class="d-flex justify-item-end">
-    <button type="button" class="btnEvent"  data-bs-toggle="modal" data-bs-target="#EventModal">
+
+    <button type="button" class="btnEvent d-flex d-xl-none"  data-bs-toggle="modal" data-bs-target="#EventModal">
       <i class="fa-solid fa-plus"></i>
     </button>
-  </div>
+
 
 
     <div class="row gx-0 position-relative">
@@ -53,7 +60,7 @@
                 
             </div>
         </div> --}}
-        <div class="col-md-12 d-flex flex-wrap " id="calendrier_scolaire">
+        <div class="col-md-12 d-flex flex-wrap justify-content-center " id="calendrier_scolaire">
            
                 <input type="hidden" value="{{$conges}}" id="conges">
                 <input type="hidden" value="{{$anniversaires}}" id="anniversaires">

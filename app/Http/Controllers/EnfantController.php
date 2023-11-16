@@ -115,6 +115,9 @@ class EnfantController extends Controller
             $enfants = Enfant::where('user_id', Auth::id())->where("reussite_disabled",0);
         } else {
             $enfants = Enfant::where('user_id', Auth::id());
+            if (!Auth::user()->groupe) {
+                return view('enfants.no_groupes')->with('type', $request->type);
+            }
 
         }
         $ordre = $request->ordre ?? 'alpha';
