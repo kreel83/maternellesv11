@@ -139,7 +139,8 @@ if (!is_null($enfant->groupe)){
   @if ($type == "none")
     <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">
         
-        <button id="valideAvatar" class="custom_button btn_select_avatar" style="font-size: 12px; width: fit-content; height: 16px; line-height: 1px; margin-top: 7px; background-color: transparent;text-shadow: black 2px 2px;">Selectionner</button>
+        {{-- <button id="valideAvatar" class="custom_button btn_select_avatar" style="font-size: 12px; width: fit-content; height: 16px; line-height: 1px; margin-top: 7px; background-color: transparent;text-shadow: black 2px 2px;">Sauvegarder</button> --}}
+        <button id="valideAvatar" class="custom_button btn_select_avatar">Sauvegarder</button>
 
     </div>
   @endif
