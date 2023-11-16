@@ -64,7 +64,7 @@
 
 
                     <div class="form-group cadre-group">
-                        <label for="">Domaine et activité</label>
+                        <div class="h4">Domaine et activité</div>
                         <select class="form-select my-4 form_section" id="section_id" name="section_id"
                             {{ $duplicate ? 'disabled' : null }}>
                             <option value="" selected>Choisissez un domaine...</option>
@@ -99,7 +99,7 @@
                     </div>
                     <div
                         class="cadre-group form_image d-flex justify-content-between align-items-center px-5 flex-column flex-md-row">
-                        <label for="">Illustation</label>
+                        <div class="h4">Illustation</div>
                         <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
 
                         <div id="photoEnfantImg" class="d-flex flex-column">
@@ -125,26 +125,27 @@
                 <div class="col-xs-12 col-xl-6 ps-4 create_droit">
 
                     <div class="form-group cadre-group">
-                        <label for="">section et titre</label>
-                        <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="true" name="ps"
+                        <div class="h4">Section et titre</div>
+                        {{-- <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre"> --}}
+                        <div class="my-2 form_maternelle" id="filtre">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="true" id="ps" name="ps"
                                     {{ $itemactuel && substr($itemactuel->lvl, 0, 1) == '1' ? 'checked' : null }}>
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    petite section
+                                <label class="form-check-label" for="ps">
+                                    Petite section
                                 </label>
                             </div>
-                            <div class="form-check">
+                            <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" value="true"
-                                    name="ms"{{ $itemactuel && substr($itemactuel->lvl, 1, 1) == '1' ? 'checked' : null }}>
-                                <label class="form-check-label" for="flexCheckChecked">
+                                    id="ms" name="ms"{{ $itemactuel && substr($itemactuel->lvl, 1, 1) == '1' ? 'checked' : null }}>
+                                <label class="form-check-label" for="ms">
                                     Moyenne section
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="true" name="gs"
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="true" id="gs" name="gs"
                                     {{ $itemactuel && substr($itemactuel->lvl, 2, 1) == '1' ? 'checked' : null }}>
-                                <label class="form-check-label" for="flexCheckChecked">
+                                <label class="form-check-label" for="gs">
                                     Grande section
                                 </label>
                             </div>
@@ -163,7 +164,7 @@
 
 
                     <div class="d-flex flex-column mb-4 cadre-group pt-4 ">
-                        <label for="">Phrase</label>
+                        <div class="h4">Phrase</div>
                         <div class="alert alert-info mt-2 mb-2" role="alert" style="font-size: 14px">
                             Vous devez rédiger un texte qui sera repris dans le cahier de réussite à la validation de cette
                             activité. Par convention, utilisez le prénom 'Tom' dans la rédaction de votre phrase.
@@ -179,7 +180,28 @@
 
                     </div>
 
-                    <div class="d-flex justify-content-between">
+                    @if ($new || $duplicate)
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-start">
+                                <button type="submit" name="submit" value="save"
+                                    class="btnAction form_save">Sauvegarder</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" name="submit" value="save_and_select"
+                                    class="btnAction form_save_select">Sauvegarder et sélectionner</button>
+                            </div>
+                        </div>
+                    </div>
+                    @else
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" name="submit" value="modif" class="btnAction">Sauvegarder</button>
+                        </div>
+                    @endif
+
+                    {{-- <div class="d-flex justify-content-between">
                         @if ($new || $duplicate)
                             <button type="submit" name="submit" value="save"
                                 class="btnAction form_save">Sauvegarder</button>
@@ -188,7 +210,8 @@
                         @else
                             <button type="submit" name="submit" value="modif" class="btnAction">Sauvegarder</button>
                         @endif
-                    </div>
+                    </div> --}}
+
                 </div>
             </div>
         </form>

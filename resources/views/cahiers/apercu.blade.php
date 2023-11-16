@@ -46,7 +46,7 @@
                 @endif
             </h4>
             <select id="phraseCommentaireGeneral" class="form-control  mb-2" mt-4 data-section="99" data-enfant="{{$enfant->id}}">
-                <option value="null">Veuillez selectionner</option>
+                <option value="null">Veuillez sélectionner</option>
 
                 @if (!$commentaires->isEmpty())
                     @foreach ($commentaires as $phrase)

@@ -143,7 +143,7 @@
                             <div class="form-group my-1 ">            
                                 <select style="width: 220px" class="custom-select little" name="civilite">
 
-                                    <option value="">Veuillez selectionner</option>
+                                    <option value="">Veuillez sélectionner</option>
                                     <option value="mrs" {{ $directeur && $directeur->civilite == 'mrs' ? 'selected' : null}}>Monsieur</option>
                                     <option value="mme" {{ $directeur && $directeur->civilite == 'mme' ? 'selected' : null}}>Madame</option>
                                 </select>
