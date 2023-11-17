@@ -16,7 +16,7 @@
             </ol>
         </nav>
 
-        <div data-section="{{ $section->id }}" class="liste_section">
+        <div data-section="{{ $section->id }}" class="liste_section d-flex align-items-center" style="width: 1000px !important">
             
                 @foreach ($sections as $sec)
                     <div class="d-flex flex-column align-items-center">
@@ -29,6 +29,9 @@
                             data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
                     </div>
                 @endforeach
+                <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 50px; border-radius: 10px; margin: 0; margin-left: 20px">
+                    <i class="fa-solid fa-file-import fs-3"></i>
+                </div>
             
         </div>
 
@@ -101,6 +104,47 @@
     </div>
 
 
+        <div class="modal fade" id="importSection" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="top: 70px">
+                <div class="modal-content" style="height: 250px">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-5" id="title">
+                            Selectionnez votre ou vos sections
+                        </h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="overflow: hidden; overflow-y: auto">
+                        <form action="{{route('setSection')}}" method="POST">
+                            @csrf
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="ps" id="ps" name="section[]">
+                            <label class="form-check-label" for="ps">
+                              Petite section
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="ms" id="ms"  name="section[]">
+                            <label class="form-check-label" for="ms">
+                              Moyenne section
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="gs" id="gs"  name="section[]">
+                            <label class="form-check-label" for="gs">
+                              Grande section
+                            </label>
+                          </div>
+                          <button type="submit" class="btnAction">Selectionner</button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="biblioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" style="top: 70px">
                 <div class="modal-content" style="height: 600px">

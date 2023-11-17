@@ -276,19 +276,23 @@ class RegisteredUserController extends Controller
             ->with('role', $request->role)
             ->with('ecole', $ecole);
         */
+        $ecole_id = strtoupper($request->ecole_id);
 
-        $token = md5($request->role.$request->ecole_id.env('HASH_SECRET'));
+        $token = md5($request->role.$ecole_id.env('HASH_SECRET'));
+        // dd(md5($request->role.$request->ecole_id.env('HASH_SECRET')), $request->role, $request->ecole_id);
         return redirect()->route('registration.step2', [
             'role' => $request->role, 
-            'ecole_id' => $request->ecole_id,
+            'ecole_id' => $ecole_id,
             'token' => $token,
         ]);
     }
     
     public function registrationStep2($role, $ecole_id, $token)
     {
+        
         // verification Token
         if($token != md5($role.$ecole_id.env('HASH_SECRET'))) {
+            
             return redirect()->route('registration.start')
                 ->with('status', 'danger')
                 ->with('msg', 'Token invalide.');
@@ -302,6 +306,7 @@ class RegisteredUserController extends Controller
 
     public function registrationStep3(Request $request)
     {
+        // dd($request->token, $request->role, $request->ecole_id,env('HASH_SECRET'), md5($request->role.$request->ecole_id.env('HASH_SECRET')));
         // verification Token
         if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
             return redirect()->route('registration.start')

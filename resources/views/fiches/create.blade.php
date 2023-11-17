@@ -74,6 +74,10 @@
                                     {{ $sec->name }}</option>
                             @endforeach
                         </select>
+                        @error('section_id')
+                        <div class="error_message">{{ $message }}</div>                                        
+                        @enderror
+
                         <select class="form-select my-4 form_section" id="categorie_id" name="categorie_id"
                             {{ $duplicate ? 'disabled' : null }}>
 
@@ -98,27 +102,30 @@
                         </select>
                     </div>
                     <div
-                        class="cadre-group form_image d-flex justify-content-between align-items-center px-5 flex-column flex-md-row">
+                        class="cadre-group form_image d-flex   flex-column">
                         <div class="h4">Illustation</div>
-                        <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
+                        <div class="d-flex flex-column flex-md-row justify-content-between px-5">
+                            <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
 
-                        <div id="photoEnfantImg" class="d-flex flex-column">
-                            <input type="hidden" name="imageName" id="imageName" value="">
+                            <div id="photoEnfantImg" class="d-flex flex-column">
+                                <input type="hidden" name="imageName" id="imageName" value="">
 
-                            <i style="cursor: pointer;font-size: 200px; z-index: 1000; color: lightgray"
-                                class="fa-light fa-image logoImage {{ $new ? null : 'd-none' }}"></i>
-                            <img class="dlImage {{ $new ? 'd-none' : null }}" alt="your image"
-                                src="{{ asset($itemactuel->image_name) }}" width="250px" height="150"
-                                style="cursor: pointer; z-index: 6000" />
-                            <small class="text-center">Cliquez sur l'image pour télécharger <br> votre illustration</small>
+                                <i style="cursor: pointer;font-size: 200px; z-index: 1000; color: lightgray"
+                                    class="fa-light fa-image logoImage {{ $new ? null : 'd-none' }}"></i>
+                                <img class="dlImage {{ $new ? 'd-none' : null }}" alt="your image"
+                                    src="{{ asset($itemactuel->image_name) }}" width="250px" height="150"
+                                    style="cursor: pointer; z-index: 6000" />
+                                <small class="text-center">Cliquez sur l'image pour télécharger <br> votre illustration</small>
+                            </div>
+
+                            <div class="col-md-2 mt-3">
+                                <button type="button" class="btnAction biblioModal" data-bs-toggle="modal"
+                                    data-bs-target="#biblioModal">
+                                    bibliotheque d'image
+                                </button>
+                            </div>                            
                         </div>
 
-                        <div class="col-md-2 mt-3">
-                            <button type="button" class="btnAction biblioModal" data-bs-toggle="modal"
-                                data-bs-target="#biblioModal">
-                                bibliotheque d'image
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -154,7 +161,7 @@
 
                             <input id="titre" class="form-control" name="name" placeholder="titre de la fiche"
                                 style="font-size: 1rem !important" value="{{ $itemactuel ? $itemactuel->name : null }}"
-                                required>
+                                >
 
                         </div>
                     </div>
@@ -176,7 +183,7 @@
                         Exemple : Tom sait compter jusqu'à 5.
                         <div id="editor3" class="mt-2 form_editeur" data-phrase="{{ $itemactuel->phrase_masculin }}"
                             data-section="" style="height: 100px; ">{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</div>
-                        <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3" required>{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</textarea>
+                        <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3">{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</textarea>
 
                     </div>
 

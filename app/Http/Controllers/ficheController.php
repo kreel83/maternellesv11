@@ -11,7 +11,9 @@ use App\Models\Enfant;
 use App\Models\Section;
 use App\Models\Classification;
 use App\Models\Image as ImageTable;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -162,6 +164,36 @@ class ficheController extends Controller
         return 'ok';
     }
 
+    public function setSection(Request $request) {
+        $ps = $ms = $gs = null;
+        $total = [];
+        foreach ($request->section as $section) {
+            if ($section == 'ps')  $total[] = Item::whereRaw('substr(lvl,1,1) = 1')->whereNull('user_id')->pluck('id');
+            if ($section == 'ms')  $total[] = Item::whereRaw('substr(lvl,2,1) = 1')->whereNull('user_id')->pluck('id');
+            if ($section == 'gs')  $total[] = Item::whereRaw('substr(lvl,3,1) = 1')->whereNull('user_id')->pluck('id');                           
+        }
+        
+        $total = new Collection($total);
+        $total = $total->flatten();
+        $total = $total->unique();
+        $order = 1;
+        Fiche::where('user_id',Auth::id())->delete();
+        foreach ($total as $line) {
+            $section_id = Item::find($line)->section_id;
+            $fiche = new Fiche();
+            $fiche->user_id = Auth::id();
+            $fiche->item_id = $line;
+            $fiche->order = $order;
+            $fiche->perso = 1;
+            $fiche->parent_type = 'items';
+            $fiche->section_id = $section_id;
+            $fiche->save();
+            $order++;
+        }
+        return redirect()->back()->with('success','Les fiches ont bien été importées');
+        
+    }
+
     public function populateCategorie(Request $request) {
         $categories = Categorie::where('section_id', $request->section_id)->get();
         $categories = $categories->groupBy('section1');
@@ -248,6 +280,8 @@ class ficheController extends Controller
 
     public function save_fiche(Request $request) {
 
+        
+
 
 
     
@@ -275,6 +309,22 @@ class ficheController extends Controller
         }
 
         
+        $rules = [
+            'section_id' => ['required']            
+        ];
+        $messages = [            
+            'section_id.required' => 'La section est obligatoire.',
+        ];
+
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+
+        if ($validator->fails()) {
+            return ['state'=>false,'error_description'=>'validator failed','errors'=>$validator->errors()];
+            
+        }
+
 
 
         // $name_file = uniqid().'.jpg';
