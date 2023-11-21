@@ -314,6 +314,7 @@ class CahierController extends Controller
 
         //return view('pdf.reussite')->with('reussite', $reussite)->with('resultats', $resultats)->with('sections', $sections)->with('rep',$rep);
 
+        // dd($resultats);
         
         if ($state == 'see') {
 

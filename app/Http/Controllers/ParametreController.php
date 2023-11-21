@@ -245,6 +245,7 @@ class ParametreController extends Controller
         $user->photo = Storage::url($user->photo);
         $conf = Configuration::where('user_id', Auth::id())->first();
         $directeur = json_decode($user->configuration->direction);
+        $sections = Section::orderBy('ordre','ASC')->get();
         
         
 
@@ -252,6 +253,7 @@ class ParametreController extends Controller
             ->with('request', $request->all() ?? [])
             ->with('periodes', $conf->periodes)
             ->with('directeur', $directeur)
+            ->with('sections', $sections)
             ->with('user', $user)
             ->with('equipes', $equipes)
             ->with('adresseEcole', join(PHP_EOL,$adresseEcole));

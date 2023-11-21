@@ -112,6 +112,11 @@ const saveTexteReussite = (quill) => {
 
 
 const clickOnCahier = (quill, myModal) => {
+
+
+
+
+
     $(document).on('click','#reformuler', function() {
         var texte = quill.root.innerHTML
         var enfant = $(this).data('enfant')

@@ -2,9 +2,9 @@
 
 namespace App\Events;
 
-use App\Models\Fiche;
-use App\Models\Item;
-use App\Models\Personnel;
+
+use App\Models\Section;
+
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -13,7 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ItemEvent
+class SectionEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,26 +22,9 @@ class ItemEvent
      *
      * @return void
      */
-    public function __construct(Item $item)
+    public function __construct(Section $section)
     {
-
-        
-        if(Item::$FIRE_EVENTS) {
-            if ($item->image_nom) {
-                $item->image_name = 'storage/items/'.$item->section_id.'/'.$item->image_nom;
-
-            } else {
-                $item->image_name = 'storage/items/none/'.$item->section_id.'-none.png';
-
-            }   
-            
-              
-        }
-
-        
-
-
-
+        $section->logo = $section->id.'.png';
     }
 
     /**

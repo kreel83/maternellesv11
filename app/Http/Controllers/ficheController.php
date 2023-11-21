@@ -11,7 +11,9 @@ use App\Models\Enfant;
 use App\Models\Section;
 use App\Models\Classification;
 use App\Models\Image as ImageTable;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -78,9 +80,30 @@ class ficheController extends Controller
     }
 
     public function get_images($section_id, Request $request) {
+
+
         $images = Storage::disk('image')->allFiles($section_id);
+        $results = array();
+        foreach ($images as $image) {
+            $racine = explode('/', $image)[1];
+            $r = explode('_', $racine);
+            if (!isset($r[1])) {
+                $results['appli'][] = $image;
+            } else {
+                if ((int) $r[0] == Auth::id()) {
+                    $results['mine'][] = $image;
+                } else {
+                    $results['others'][] = $image;
+
+                }
+            }
+        }
+
+
         
-        return view('fiches.include.liste_images')->with('images', $images)->with('source', $request->source);
+        return view('fiches.include.liste_images')
+            ->with('images', $results)
+            ->with('source', $request->source);
     }
 
     public function setLvl($fiche_id, Request $request) {
@@ -131,6 +154,11 @@ class ficheController extends Controller
             $fiche = new Item();
             $categories = Categorie::all();
             $classifications = Classification::all();
+            $fiche->image_name = null;
+            if ($section) {
+                $fiche->image_name = 'storage/items/none/'.$request->section.'-none.png';
+
+            }
             $new = true;
         } else {
             $fiche = Item::find($request->item);
@@ -144,9 +172,16 @@ class ficheController extends Controller
             $fiche->id = null;
         }
 
+        $search = Item::where('user_id', Auth::id())->first();
+        
+
+
+        
+
         
         return view('fiches.create')
             ->with('sections', Section::all())
+            ->with('first_item', $search ? false : true)
             ->with('new', $new)
             ->with('duplicate', $request->duplicate == "true" ? $request->item : false)            
             ->with('itemactuel', $fiche)
@@ -160,6 +195,36 @@ class ficheController extends Controller
         Fiche::where('user_id', Auth::id())->delete();
         Resultat::where('user_id', Auth::id())->delete();
         return 'ok';
+    }
+
+    public function setSection(Request $request) {
+        $ps = $ms = $gs = null;
+        $total = [];
+        foreach ($request->section as $section) {
+            if ($section == 'ps')  $total[] = Item::whereRaw('substr(lvl,1,1) = 1')->whereNull('user_id')->pluck('id');
+            if ($section == 'ms')  $total[] = Item::whereRaw('substr(lvl,2,1) = 1')->whereNull('user_id')->pluck('id');
+            if ($section == 'gs')  $total[] = Item::whereRaw('substr(lvl,3,1) = 1')->whereNull('user_id')->pluck('id');                           
+        }
+        
+        $total = new Collection($total);
+        $total = $total->flatten();
+        $total = $total->unique();
+        $order = 1;
+        Fiche::where('user_id',Auth::id())->delete();
+        foreach ($total as $line) {
+            $section_id = Item::find($line)->section_id;
+            $fiche = new Fiche();
+            $fiche->user_id = Auth::id();
+            $fiche->item_id = $line;
+            $fiche->order = $order;
+            $fiche->perso = 1;
+            $fiche->parent_type = 'items';
+            $fiche->section_id = $section_id;
+            $fiche->save();
+            $order++;
+        }
+        return redirect()->back()->with('success','Les fiches ont bien été importées');
+        
     }
 
     public function populateCategorie(Request $request) {
@@ -246,17 +311,14 @@ class ficheController extends Controller
     }
 
 
-    public function save_fiche(Request $request) {
-
-
-
-    
+    public function savefiche(Request $request) {
 
         function set_lvl($request) {
+            $r = $request->section;
             $lvl = '';
-            $lvl .= isset($request->ps) ? '1' : '0';
-            $lvl .= isset($request->ms) ? '1' : '0';
-            $lvl .= isset($request->gs) ? '1' : '0';
+            $lvl .= isset($r['ps']) ? '1' : '0';
+            $lvl .= isset($r['ms']) ? '1' : '0';
+            $lvl .= isset($r['gs']) ? '1' : '0';
             return $lvl;
         }
 
@@ -274,10 +336,35 @@ class ficheController extends Controller
             return $result['choices'][0]['message']['content'];
         }
 
+
+        // dd($request);
         
+        $request->validate([
+            'section_id' => ['required'],
+            'categorie_id' => ['required'],
+            'section' => ['required'],
+            'name' => ['required'],
+            'phrase' => [
+                'required',
+                'regex:/(?:^|\W)Tom(?:$|\W)/',
+                
+            ],
+
+        ], [
+            'section_id.required' => 'Le domaine est obligatoire.',
+            'categorie_id.required' => 'Une catégorie doit être sélectionnée.',
+            'section.required' => 'Une ou plusieurs sections doivent etre affectées à la fiche.',
+            'name.required' => 'Le titre de la fiche est obligatoire',
+            'phrase.required' => 'La phrase pré-enregistrée est obligatoire',
+            'phrase.regex' => 'La phrase doit contenir le prénom Tom obligatoirement'
+            
+
+        ]);
+
 
 
         // $name_file = uniqid().'.jpg';
+        
         
 
         $img = null;
