@@ -199,6 +199,25 @@
             </form>    
         </div>
 
+        <style>
+            .section_ligne {
+                font-size: 12px;
+                font-weight: bolder;
+                padding: 4px;
+                margin: 4px 0;
+            }
+        </style>
+
+        <div class="gridcadre grid7 d-flex justify-content-center align-items-center tuto_tutoriel">
+            <div class="gridTitre">Sections</div>
+            <div class="mt-3">
+                @foreach ($sections as $section)
+                    <div class="section_ligne">{{$section->name}}</div>
+                @endforeach
+            </div>
+              
+        </div>
+
     </div>
 
 

@@ -209,7 +209,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fiches/duplicate', [ficheController::class, 'duplicate']);
     Route::get('/fiches/choix', [ficheController::class, 'choix']);
     Route::get('/fiches/retirerChoix', [ficheController::class, 'retirerChoix']);
-    Route::post('/fiches/save_fiche', [ficheController::class, 'save_fiche'])->name('saveFiche');
+    Route::post('/fiches/save_fiche', [ficheController::class, 'savefiche'])->name('saveFiche');
     Route::post('/fiches/order', [ficheController::class, 'orderFiche'])->name('orderFiche');
     Route::get('/fiches/create', [ficheController::class, 'createFiche'])->name('createFiche');
     Route::post('/fiches/populate/classification', [ficheController::class, 'populateClassification'])->name('populateClassification');
@@ -221,8 +221,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/eleves',[EnfantController::class,'liste'])->name('eleves');
     Route::get('/eleves/toggleInactiveEleve',[EnfantController::class,'toggleInactiveEleve'])->name('toggleInactiveEleve');
-    Route::post('/eleves/save',[EnfantController::class,'save'])->name('save_eleve');
-    Route::post('/eleves/save_form',[EnfantController::class,'save_form'])->name('save_eleve_form');
+    // Route::post('/eleves/save',[EnfantController::class,'save'])->name('save_eleve');
     Route::post('/eleves/update',[EnfantController::class,'enregistre'])->name('enregistreEleve');
     Route::post('/eleves/ajouterEleves',[EnfantController::class,'ajouterEleves'])->name('ajouterEleves');
     Route::get('/eleves/removeEleve',[EnfantController::class,'removeEleve'])->name('removeEleve');

@@ -13,8 +13,11 @@ const selectSectionFiche = (ficheSelect) => {
 
     $(document).on('click','.biblioModal', function() {
         var id = $('#section_id').val()
+        var texte = $('#section_id').find(':selected').text()
+        console.log('texte', texte)
         $.get('/app/get_images/'+id+'?source=create', function(data) {
 
+            $('#biblioModal .modal-title').text(texte)
             $('#biblioModal .modal-body').html(data)
         })
 
@@ -165,6 +168,16 @@ const selectFiche = (Modal) => {
         $('#biblio_container').toggleClass('d-none')
     })
 
+    $(document).on('click','.ill_tab', function() {
+        $('.ill_tab').find('button').removeClass('active')
+        $(this).find('button').addClass('active')
+        var id = $(this).data('id')
+        console.log(id)
+        $('.ill').addClass('d-none').removeClass('d-flex')
+        $('#'+id).removeClass('d-none').addClass('d-flex')
+
+    })
+
 
     $(document).on('click','.deselectionneFiche', function() {
         var id =$(this).data('fiche')
@@ -294,6 +307,16 @@ const choixFiltre = (Modal) => {
         location.reload()
     })
 
+    if ($('#create_fiche').length) {
+        if ($('#first_item').val() == 1) {
+            var myModalEl = document.getElementById('warningFichePhrase');
+            var modal = new Modal(myModalEl,{
+                backdrop: 'static', keyboard: false
+            })
+            $('#first_item').val(0)
+            modal.show();     
+        }
+    }
 
     $(document).on('click', '.phone .list-group-item-info', function() {
         var myModalEl = document.getElementById('modifyFicheModal');
@@ -399,6 +422,10 @@ const jechoisislaselection = () => {
 }
 
 const jemodifielafiche = () => {
+
+
+
+
     $(document).on('click','.modifyFiche', function() {
         var item = $(this).data('id')
         var section = $(this).data('section')
@@ -442,6 +469,7 @@ const jemodifielafiche = () => {
 
     $(document).on('change','#section_id', function() {
             var section = $(this).val()
+            var img = $(this).find(':selected').data('img')
             console.log(section)
             $.ajax({
                 data: {
@@ -456,6 +484,8 @@ const jemodifielafiche = () => {
                     console.log(data)                      
  
                     $("#categorie_id").html(data);
+                    $('.dlImage').attr('src', img)
+                    $('.form_image').removeClass('d-none')
 
                 }
             })    

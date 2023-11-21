@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Auth;
 
     <!-- Theme included stylesheets -->
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
+    <script src="
+https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
+" defer></script>
 
 
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
@@ -301,10 +303,11 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
 
     <!-- Include jQuery UI from a CDN -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>
+
 
     @include('components.modals.confirmation')
 

@@ -94,8 +94,8 @@
                                     <div class='sectionApercu selectSectionFiche' data-section="cahier" data-value="cahier" id="nav-cahier"
                                         style="background-color: var(--main-color)"
                                         title="Le cahier de réussite">
-                                        <img src="{{ asset('img/illustrations/cahier.png') }}" alt="" width="120px"
-                                            height="120px">
+                                        <img src="{{ asset('img/illustrations/cahier.png') }}" alt="" width="45px"
+                                            height="45px">
                                     </div>
                                     <div class="tiret_selection d-none" data-id="cahier" style="background-color: var(--main-color)"></div>
                                 </div>                   

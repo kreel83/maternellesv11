@@ -26,6 +26,7 @@
                                 <a class="btnAction mt-0" href="{{ route('cahierManage') }}">Gestion des cahiers de réussites</a> 
                         </div>
                         @endif
+
                         <form action="{{route('enfants')}}">
                                 <input type="hidden" value="{{$type}}" name="type">
                                 <div class="form-group my-5 d-flex align-items-center">

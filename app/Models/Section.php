@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\SectionEvent;
 
 class Section extends Model
 {
     use HasFactory;
+
+    protected $dispatchesEvents = [
+        'retrieved' => SectionEvent::class,
+    ];
+
+
+
 
     const COLOR = [
 

@@ -66,11 +66,11 @@ if (!is_null($enfant->groupe)){
     @endif
   </div>
     <div class="card-body p-0 mt-2" style="text-align: center">
-        <div class="name d-flex justify-content-center align-items-center" style="color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
-          {{$enfant->prenom}}
-          <span style="font-size: 1.8rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 ">{{substr($enfant->nom,0,1)}}.</span>
+        <div class="name d-flex flex-column justify-content-center align-items-center" style="color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
+          <div style="line-height: 15px; margin-top: 10px">{{$enfant->prenom}}</div>
+          <div style="font-size: 0.9rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 ">{{$enfant->nom}}</div>
           </div>
-        <div class="title" style="border-color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
+        <div class="title" style="font-size: 0.8rem; font-weight: bold;border-color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
 
 
            {{ $enfant->age}}

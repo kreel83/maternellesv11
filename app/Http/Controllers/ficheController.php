@@ -80,9 +80,30 @@ class ficheController extends Controller
     }
 
     public function get_images($section_id, Request $request) {
+
+
         $images = Storage::disk('image')->allFiles($section_id);
+        $results = array();
+        foreach ($images as $image) {
+            $racine = explode('/', $image)[1];
+            $r = explode('_', $racine);
+            if (!isset($r[1])) {
+                $results['appli'][] = $image;
+            } else {
+                if ((int) $r[0] == Auth::id()) {
+                    $results['mine'][] = $image;
+                } else {
+                    $results['others'][] = $image;
+
+                }
+            }
+        }
+
+
         
-        return view('fiches.include.liste_images')->with('images', $images)->with('source', $request->source);
+        return view('fiches.include.liste_images')
+            ->with('images', $results)
+            ->with('source', $request->source);
     }
 
     public function setLvl($fiche_id, Request $request) {
@@ -133,6 +154,11 @@ class ficheController extends Controller
             $fiche = new Item();
             $categories = Categorie::all();
             $classifications = Classification::all();
+            $fiche->image_name = null;
+            if ($section) {
+                $fiche->image_name = 'storage/items/none/'.$request->section.'-none.png';
+
+            }
             $new = true;
         } else {
             $fiche = Item::find($request->item);
@@ -146,9 +172,16 @@ class ficheController extends Controller
             $fiche->id = null;
         }
 
+        $search = Item::where('user_id', Auth::id())->first();
+        
+
+
+        
+
         
         return view('fiches.create')
             ->with('sections', Section::all())
+            ->with('first_item', $search ? false : true)
             ->with('new', $new)
             ->with('duplicate', $request->duplicate == "true" ? $request->item : false)            
             ->with('itemactuel', $fiche)
@@ -278,19 +311,14 @@ class ficheController extends Controller
     }
 
 
-    public function save_fiche(Request $request) {
-
-        
-
-
-
-    
+    public function savefiche(Request $request) {
 
         function set_lvl($request) {
+            $r = $request->section;
             $lvl = '';
-            $lvl .= isset($request->ps) ? '1' : '0';
-            $lvl .= isset($request->ms) ? '1' : '0';
-            $lvl .= isset($request->gs) ? '1' : '0';
+            $lvl .= isset($r['ps']) ? '1' : '0';
+            $lvl .= isset($r['ms']) ? '1' : '0';
+            $lvl .= isset($r['gs']) ? '1' : '0';
             return $lvl;
         }
 
@@ -308,26 +336,35 @@ class ficheController extends Controller
             return $result['choices'][0]['message']['content'];
         }
 
+
+        // dd($request);
         
-        $rules = [
-            'section_id' => ['required']            
-        ];
-        $messages = [            
-            'section_id.required' => 'La section est obligatoire.',
-        ];
+        $request->validate([
+            'section_id' => ['required'],
+            'categorie_id' => ['required'],
+            'section' => ['required'],
+            'name' => ['required'],
+            'phrase' => [
+                'required',
+                'regex:/(?:^|\W)Tom(?:$|\W)/',
+                
+            ],
 
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-
-        if ($validator->fails()) {
-            return ['state'=>false,'error_description'=>'validator failed','errors'=>$validator->errors()];
+        ], [
+            'section_id.required' => 'Le domaine est obligatoire.',
+            'categorie_id.required' => 'Une catégorie doit être sélectionnée.',
+            'section.required' => 'Une ou plusieurs sections doivent etre affectées à la fiche.',
+            'name.required' => 'Le titre de la fiche est obligatoire',
+            'phrase.required' => 'La phrase pré-enregistrée est obligatoire',
+            'phrase.regex' => 'La phrase doit contenir le prénom Tom obligatoirement'
             
-        }
+
+        ]);
 
 
 
         // $name_file = uniqid().'.jpg';
+        
         
 
         $img = null;
