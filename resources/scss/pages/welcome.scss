@@ -150,7 +150,7 @@
     .grid_profil {
         display: grid;
         grid-template-columns:1fr 1fr; 
-        grid-template-rows: 370px 220px 220px 220px;
+        grid-template-rows: 370px 220px 220px 350px;
         grid-gap: 35px; 
     }
     .grid1 {
@@ -177,6 +177,11 @@
     .grid6 {
         grid-column: 1;
         grid-row: 4
+    }
+    .grid7 {
+        grid-column: 2;
+        grid-row: 4;
+        height: auto;
     }
     .gridcadre {
         width: 100%;
@@ -238,6 +243,10 @@
         .grid6 {
             grid-column: 1;
             grid-row: 5
+        }
+        .grid7 {
+            grid-column: 1;
+            grid-row: 6
         }
         
     }    

@@ -1,6 +1,7 @@
 
 import $ from 'jquery';
-import 'bootstrap';
+// import 'bootstrap';
+
 import { Modal } from 'bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -11,7 +12,8 @@ import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
 
-import '../../node_modules/quill/dist/quill';
+// import '../../node_modules/quill/dist/quill';
+
 //import Quill from 'quill/quill';
 //window.Quill = Quill;
 
@@ -114,6 +116,7 @@ if ($('.alerteMessage').length) {
 
 
 if ($('#editorApercu').length) {
+
     var ColorClass = Quill.import('attributors/class/color');
     var SizeStyle = Quill.import('attributors/style/size');
     Quill.register(ColorClass, true);
@@ -121,9 +124,11 @@ if ($('#editorApercu').length) {
     var toolbarOptions = ['bold', 'italic', 'underline', 'strike','image'];
     var quill = new Quill('#editorApercu', {
         modules: {
-            'toolbar': toolbarOptions,
+            'toolbar': [toolbarOptions, ['imageResize']],
           },
-          theme: 'snow'
+          theme: 'snow',
+          ImageResize: {}
+
     });
     console.log('2')
     const myModal = new Modal('#informationPDF', {})

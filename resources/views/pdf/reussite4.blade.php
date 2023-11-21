@@ -565,7 +565,11 @@ $degrades = App\Models\Enfant::DEGRADE;
                         <div class="haut_carte" style="background-color: {{$resultat['color']}}">
                             <p class="titre1 " >{{$resultat['name_section']}}</p>
                         </div>
+                        @if ($resultat['image_nom'])
                         <img src="{{public_path('storage/items/'.$resultat["section_id"].'\\'.$resultat['image_nom'])}}" class="image_card">
+                        @else
+                        <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
+                        @endif
                         <p class="body">{{$resultat['name']}}</p>
                     </div>
                 </td>

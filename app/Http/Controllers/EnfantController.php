@@ -110,12 +110,13 @@ class EnfantController extends Controller
 
     public function index(Request $request) {
         
+        
         if (in_array($request->type,["evaluation","reussite"])) {
 
             $enfants = Enfant::where('user_id', Auth::id())->where("reussite_disabled",0);
         } else {
             $enfants = Enfant::where('user_id', Auth::id());
-            if (!Auth::user()->groupe) {
+            if (!Auth::user()->groupes) {
                 return view('enfants.no_groupes')->with('type', $request->type);
             }
 
@@ -136,6 +137,7 @@ class EnfantController extends Controller
         ])->count();
         $canSendPDF = ($nbEnfants == $nbReussite);
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
+        
         
         return view('enfants.index')
             ->with('type', $request->type)
@@ -331,81 +333,73 @@ class EnfantController extends Controller
     }
 
 
-    public function save_form(Request $request) {
-        dd($request);
-    }
 
 
-
-    public function save(Request $request) {
+    // public function save(Request $request) {       
 
    
+    //     $rules = [
+    //         'nom' => ['required', 'string', 'max:255'],
+    //         'prenom' => ['required', 'string', 'max:255'],
+    //         'ddn' => ['required', 'date'],
+            
+    //         'mail1' => ['email:rfc,dns','nullable'],
+    //         'mail2' => ['email:rfc,dns','nullable'],
+    //         'mail3' => ['email:rfc,dns','nullable'],
+    //         'mail4' => ['email:rfc,dns','nullable']
+            
+    //     ];
+    //     $messages = [
+            
+    //         'nom.required' => 'Le nom est obligatoire.',
+    //         'nom.max' => 'Le nom est limité à 255 caractères.',
+    //         'prenom.required' => 'Le prénom est obligatoire.',
+    //         'prenom.max' => 'Le prénom est limité à 255 caractères.',
+    //         'ddn.required' => 'La date de naissance est obligatoire',
+    //         'mail.*.email' => 'Ce mail semble ne pas etre correct',
+    //         'mail1.email' => 'Ce mail semble ne pas etre correct',
+    //         'mail2.email' => 'Ce mail semble ne pas etre correct',
+    //         'mail3.email' => 'Ce mail semble ne pas etre correct',
+    //         'mail4.email' => 'Ce mail semble ne pas etre correct'
 
+    //     ];
+
+    //     $validator = Validator::make($request->all(), $rules, $messages);
+
+    //     if ($validator->fails()) {
+    //         return ['state'=>false,'error_description'=>'validator failed','errors'=>$validator->errors()];
+            
+    //     }
+
+    //     $datas = $request->except(['_token']);
+
+
+    //     $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2'],$datas['mail3'],$datas['mail4']]));
+    //     $datas['mail'] = $datas['mail'] == '' ? null : $datas['mail'];
+
+    //     $datas['user_id'] = Auth::id();
+    //     $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
+    //     $datas['nom'] = mb_strtoupper($datas['nom']);
+    //     $degrade = Enfant::DEGRADE;
+    //     $datas['background'] = array_rand($degrade);
+    //     $files = File::files(public_path('img/animaux'));
+    //     $liste = array();
+    //     foreach ($files as $file) {
+    //         $liste[] = $file->getFileName();
+    //     }
+    //     $k = array_rand($liste);
         
+    //     $datas['photo'] = $liste[$k];
+    //     $datas['prenom'] = ucfirst($datas['prenom']);
+    //     $datas['annee_scolaire'] = Auth::user()->calcul_annee_scolaire();
+    //     unset($datas['mail1']);
+    //     unset($datas['mail2']);
+    //     unset($datas['mail3']);
+    //     unset($datas['mail4']);
+    //     Enfant::updateOrCreate(['id' => $datas['id']], $datas);
 
-   
-        $rules = [
-            'nom' => ['required', 'string', 'max:255'],
-            'prenom' => ['required', 'string', 'max:255'],
-            'ddn' => ['required', 'date'],
-            
-            'mail1' => ['email:rfc,dns','nullable'],
-            'mail2' => ['email:rfc,dns','nullable'],
-            'mail3' => ['email:rfc,dns','nullable'],
-            'mail4' => ['email:rfc,dns','nullable']
-            
-        ];
-        $messages = [
-            
-            'nom.required' => 'Le nom est obligatoire.',
-            'nom.max' => 'Le nom est limité à 255 caractères.',
-            'prenom.required' => 'Le prénom est obligatoire.',
-            'prenom.max' => 'Le prénom est limité à 255 caractères.',
-            'ddn.required' => 'La date de naissance est obligatoire',
-            'mail.*.email' => 'Ce mail semble ne pas etre correct',
-            'mail1.email' => 'Ce mail semble ne pas etre correct',
-            'mail2.email' => 'Ce mail semble ne pas etre correct',
-            'mail3.email' => 'Ce mail semble ne pas etre correct',
-            'mail4.email' => 'Ce mail semble ne pas etre correct'
-
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return ['state'=>false,'error_description'=>'validator failed','errors'=>$validator->errors()];
-            
-        }
-
-        $datas = $request->except(['_token']);
-
-
-        $datas['mail'] = join(';', array_filter([$datas['mail1'],$datas['mail2'],$datas['mail3'],$datas['mail4']]));
-        $datas['mail'] = $datas['mail'] == '' ? null : $datas['mail'];
-
-        $datas['user_id'] = Auth::id();
-        $datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
-        $datas['nom'] = mb_strtoupper($datas['nom']);
-        $degrade = Enfant::DEGRADE;
-        $datas['background'] = array_rand($degrade);
-        $files = File::files(public_path('img/animaux'));
-        $liste = array();
-        foreach ($files as $file) {
-            $liste[] = $file->getFileName();
-        }
-        $k = array_rand($liste);
-        
-        $datas['photo'] = $liste[$k];
-        $datas['prenom'] = ucfirst($datas['prenom']);
-        $datas['annee_scolaire'] = Auth::user()->calcul_annee_scolaire();
-        unset($datas['mail1']);
-        unset($datas['mail2']);
-        unset($datas['mail3']);
-        unset($datas['mail4']);
-        Enfant::updateOrCreate(['id' => $datas['id']], $datas);
-
-        return ['state'=>true];
-    }
+    //     return ['state'=>true];
+    // }
 
     public function enregistre(Request $request) {
 

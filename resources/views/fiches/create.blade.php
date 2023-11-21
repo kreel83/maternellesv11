@@ -49,7 +49,7 @@
 
 
 
-        <form action="{{ route('saveFiche') }}" method="post" id="form1" enctype="multipart/form-data"
+        <form class="mt-xl-5" action="{{ route('saveFiche') }}" method="post" id="form1" enctype="multipart/form-data"
             data-message={{ Session::has('message') }}>
             <div class="row">
                 <div class="col-xs-12 col-xl-6 pe-4">
@@ -61,19 +61,24 @@
                     @endif
                     <input type="hidden" name="fiche_id" value="{{ $new ? null : $itemactuel->id }}">
                     <input type="hidden" name="duplicate" value="{{ $duplicate }}">
+                    <input type="hidden" id="first_item" value="{{$first_item}}">
 
 
                     <div class="form-group cadre-group">
-                        <div class="h4">Domaine et activité</div>
+                        <div class="h5">Domaine et activité</div>
                         <select class="form-select my-4 form_section" id="section_id" name="section_id"
                             {{ $duplicate ? 'disabled' : null }}>
                             <option value="" selected>Choisissez un domaine...</option>
                             @foreach ($sections as $sec)
-                                <option value="{{ $sec->id }}"
+                                <option value="{{ $sec->id }}" data-img={{'/storage/items/none/'.$sec->id.'-none.png'}}
                                     {{ isset($section->id) ? ($sec->id == $section->id ? 'selected' : null) : null }}>
                                     {{ $sec->name }}</option>
                             @endforeach
                         </select>
+                        @error('section_id')
+                        <div class="error_message">{{ $message }}</div>                                        
+                        @enderror
+
                         <select class="form-select my-4 form_section" id="categorie_id" name="categorie_id"
                             {{ $duplicate ? 'disabled' : null }}>
 
@@ -96,40 +101,46 @@
                             @endif
 
                         </select>
+                        @error('categorie_id')
+                        <div class="error_message">{{ $message }}</div>                                        
+                        @enderror
                     </div>
                     <div
-                        class="cadre-group form_image d-flex justify-content-between align-items-center px-5 flex-column flex-md-row">
-                        <div class="h4">Illustation</div>
-                        <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
+                        class="cadre-group form_image d-flex   flex-column  {{ isset($section->id) ? null : 'd-none' }}">
+                        <div class="h5">Illustation</div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between px-5">
+                            <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
 
-                        <div id="photoEnfantImg" class="d-flex flex-column">
-                            <input type="hidden" name="imageName" id="imageName" value="">
+                            <div id="photoEnfantImg" class="d-flex flex-column">
+                                <input type="hidden" name="imageName" id="imageName" value="">
 
-                            <i style="cursor: pointer;font-size: 200px; z-index: 1000; color: lightgray"
-                                class="fa-light fa-image logoImage {{ $new ? null : 'd-none' }}"></i>
-                            <img class="dlImage {{ $new ? 'd-none' : null }}" alt="your image"
-                                src="{{ asset($itemactuel->image_name) }}" width="250px" height="150"
-                                style="cursor: pointer; z-index: 6000" />
-                            <small class="text-center">Cliquez sur l'image pour télécharger <br> votre illustration</small>
+                                {{-- <i style="cursor: pointer;font-size: 200px; z-index: 1000; color: lightgray"
+                                    class="fa-light fa-image logoImage {{ $new ? null : 'd-none' }}"></i> --}}
+                                <img class="dlImage" alt="your image"
+                                    src="{{ asset($itemactuel->image_name) }}" width="250px" height="150"
+                                    style="cursor: pointer;" />
+                                <small class="text-center">Cliquez sur l'image pour télécharger <br> votre illustration</small>
+                            </div>
+
+                            <div class="col-md-2 mt-3">
+                                <button type="button" class="btnAction biblioModal" data-bs-toggle="modal"
+                                    data-bs-target="#biblioModal">
+                                    bibliotheque d'image
+                                </button>
+                            </div>                            
                         </div>
 
-                        <div class="col-md-2 mt-3">
-                            <button type="button" class="btnAction biblioModal" data-bs-toggle="modal"
-                                data-bs-target="#biblioModal">
-                                bibliotheque d'image
-                            </button>
-                        </div>
                     </div>
                 </div>
 
                 <div class="col-xs-12 col-xl-6 ps-4 create_droit">
 
                     <div class="form-group cadre-group">
-                        <div class="h4">Section et titre</div>
+                        <div class="h5">Section et titre</div>
                         {{-- <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre"> --}}
                         <div class="my-2 form_maternelle" id="filtre">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="true" id="ps" name="ps"
+                                <input class="form-check-input" type="checkbox" value="true" id="ps" name="section[ps]"
                                     {{ $itemactuel && substr($itemactuel->lvl, 0, 1) == '1' ? 'checked' : null }}>
                                 <label class="form-check-label" for="ps">
                                     Petite section
@@ -137,26 +148,31 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" value="true"
-                                    id="ms" name="ms"{{ $itemactuel && substr($itemactuel->lvl, 1, 1) == '1' ? 'checked' : null }}>
+                                    id="ms" name="section[ms]" {{ $itemactuel && substr($itemactuel->lvl, 1, 1) == '1' ? 'checked' : null }}>
                                 <label class="form-check-label" for="ms">
                                     Moyenne section
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="true" id="gs" name="gs"
+                                <input class="form-check-input" type="checkbox" value="true" id="gs" name="section[gs]"
                                     {{ $itemactuel && substr($itemactuel->lvl, 2, 1) == '1' ? 'checked' : null }}>
                                 <label class="form-check-label" for="gs">
                                     Grande section
                                 </label>
                             </div>
                         </div>
+                        @error('section')
+                        <div class="error_message">{{ $message }}</div>                                        
+                        @enderror
                         <div class="field field_v1 my-3 form_titre form-group w-100">
 
                             <input id="titre" class="form-control" name="name" placeholder="titre de la fiche"
                                 style="font-size: 1rem !important" value="{{ $itemactuel ? $itemactuel->name : null }}"
-                                required>
-
-                        </div>
+                                >
+                            </div>
+                            @error('name')
+                            <div class="error_message">{{ $message }}</div>                                        
+                            @enderror
                     </div>
 
 
@@ -164,20 +180,20 @@
 
 
                     <div class="d-flex flex-column mb-4 cadre-group pt-4 ">
-                        <div class="h4">Phrase</div>
-                        <div class="alert alert-info mt-2 mb-2" role="alert" style="font-size: 14px">
-                            Vous devez rédiger un texte qui sera repris dans le cahier de réussite à la validation de cette
-                            activité. Par convention, utilisez le prénom 'Tom' dans la rédaction de votre phrase.
-                            Notre intelligence artificielle adpatera automatiquement la phrase au féminin et remplacera par
-                            la même occasion le prénom Tom par Lucie (par convention également).
-                            Bien évidement, le prénom de l'enfant remplacera le prénom par défaut dans le cahier de
-                            réussite.
+                        <div class="h5">Phrase</div>
+
+                        <div class="d-flex justify-content-between">
+                            <div>Exemple : Tom sait compter jusqu'à 5.</div>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#warningFichePhrase"><i class="fa-solid fa-question"></i></button>
+                            
+
                         </div>
-                        Exemple : Tom sait compter jusqu'à 5.
                         <div id="editor3" class="mt-2 form_editeur" data-phrase="{{ $itemactuel->phrase_masculin }}"
                             data-section="" style="height: 100px; ">{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</div>
-                        <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3" required>{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</textarea>
-
+                        <textarea class="d-none" name="phrase" id="phraseForm" style="width: 100%" rows="3">{!! $itemactuel && !$new ? $itemactuel->phrase : null !!}</textarea>
+                        @error('phrase')
+                        <div class="error_message">{{ $message }}</div>                                        
+                        @enderror
                     </div>
 
                     @if ($new || $duplicate)
@@ -256,7 +272,7 @@
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
-                    <h4 class="text-center">Souhaitez-vous :</h4>
+                    <h5 class="text-center">Souhaitez-vous :</h5>
                     <div class="d-flex flex-column mx-5">
                         @if ($duplicate)
                             <a href="/app/fiches?section={{ $section->id }}" class="btn btn-main my-2">Retour aux
@@ -293,6 +309,29 @@
                 </div>
 
             </div>
+        </div>
+    </div>
+
+        <!-- Modal -->
+    <div class="modal fade" id="warningFichePhrase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="top: 100px">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5>Information concernant la création de fiche</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info mt-2 mb-2" role="alert" style="font-size: 14px">
+                    Vous devez rédiger un texte qui sera repris dans le cahier de réussite à la validation de cette
+                    activité. <br> Par convention, utilisez le prénom <strong>Tom</strong> dans la rédaction de votre phrase.<br>
+                    Notre intelligence artificielle fera le reste :)
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btnAction" data-bs-dismiss="modal">J'ai compris</button>
+
+            </div>
+        </div>
         </div>
     </div>
 
