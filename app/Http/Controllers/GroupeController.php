@@ -12,20 +12,31 @@ use Illuminate\Support\Facades\Redirect;
 class GroupeController extends Controller
 {
     public function index() {
-        $type = Auth::user()->type_groupe;
         $groupes = Auth::user()->configuration->groupes;
-        $nbGroupe = 2;           
-       
         if ($groupes) {
             $groupes = json_decode($groupes, true);
-            $nbGroupe = sizeof($groupes);           
+            $nbGroupe = sizeof($groupes);
+        } else {
+            $nbGroupe = 0;
         }
-
-
         return view('groupes.index')
             ->with('nbGroupe', $nbGroupe)
             ->with('groupes', $groupes);
     }
+    // public function index() {
+    //     $type = Auth::user()->type_groupe;
+    //     $groupes = Auth::user()->configuration->groupes;
+    //     $nbGroupe = 2;           
+       
+    //     if ($groupes) {
+    //         $groupes = json_decode($groupes, true);
+    //         $nbGroupe = sizeof($groupes);           
+    //     }
+
+    //     return view('groupes.index')
+    //         ->with('nbGroupe', $nbGroupe)
+    //         ->with('groupes', $groupes);
+    // }
 
     public function affectation_groupe() {
         $eleves = Auth::user()->liste();
@@ -67,7 +78,7 @@ class GroupeController extends Controller
 
     public function saveTermes(Request $request) {
         $arr = array();
-        for ($i = 0; $i<$request->nbGroupe; $i++) {
+        for ($i = 0; $i < $request->nbGroupe; $i++) {
             $arr[$i]['name'] = $request->termes[$i];
             $arr[$i]['backgroundColor'] = $request->back[$i];
             $arr[$i]['textColor'] = $request->font[$i];
@@ -87,4 +98,125 @@ class GroupeController extends Controller
 
 
     }
+
+    public function editerUnGroupe($id, Request $request) {
+        $token = md5(Auth::id().$id.env('HASH_SECRET'));
+        if($token != $request->token) {
+            return redirect()->route('groupe')
+                ->with('status', 'danger')
+                ->with('msg', 'Token invalide.');
+        }
+        $groupes = Auth::user()->configuration->groupes;
+        if ($groupes) {
+            $groupes = json_decode($groupes, true);          
+        } else {
+            $groupes = array();
+        }
+        return view('groupes.edit')
+            ->with('token', $token)
+            ->with('groupes', $groupes)
+            ->with('id', $id);
+    }
+
+    public function editerUnGroupePost(Request $request) {
+        $token = md5(Auth::id().$request->id.env('HASH_SECRET'));
+        if($token != $request->token) {
+            return redirect()->route('groupe')
+                ->with('status', 'danger')
+                ->with('msg', 'Token invalide.');
+        }
+
+        $request->validate([
+            'groupName' => ['string', 'max:12'],
+        ], [
+            'groupName.required' => 'Le nom est obligatoire.',
+            'groupName.max' => 'Le nom est limité à 12 caractères.',
+        ]);
+
+        $groupes = Auth::user()->configuration->groupes;
+        if ($groupes) {
+            $groupes = json_decode($groupes, true);          
+        } else {
+            $groupes = array();
+        }
+        if($request->id == 'new') {
+            $groupes[] = array(
+                'name' => $request->groupName,
+                'backgroundColor' => $request->groupBackgroundColor,
+                'textColor' => $request->groupTextColor
+            );
+        } else {
+            $groupes[$request->id]['name'] = $request->groupName;
+            $groupes[$request->id]['backgroundColor'] = $request->groupBackgroundColor;
+            $groupes[$request->id]['textColor'] = $request->groupTextColor;
+        }
+        //$groupes[] = $newGroup;
+        //dd($groupes);
+        $config = Configuration::where('user_id', Auth::id())->first();
+        if (!$config) {
+            $config = new Configuration();
+            $config->user_id = Auth::id();            
+        }        
+        $config->groupes = json_encode($groupes);
+        $config->save();
+
+        session()->flash('success','Les groupes ont bien été enregistrés');
+        return redirect()->route('groupe');
+
+        // [{"name":"dfgfdg","backgroundColor":"#B71C1C","textColor":"#FFFFFF"},{"name":"dfgfdg","backgroundColor":"#311B92","textColor":"#FFFFFF"},{"name":"dfgfd","backgroundColor":"#009688","textColor":"#FFFFFF"},{"name":"hhjjghjg","backgroundColor":"#F44336","textColor":"#FFFFFF"}]
+    }
+
+    public function supprimerUnGroupe($id, Request $request) {
+        $token = md5(Auth::id().$id.env('HASH_SECRET'));        
+        if($token != $request->token) {
+            return redirect()->route('groupe')
+                ->with('status', 'danger')
+                ->with('msg', 'Token invalide.');
+        }
+        $groupes = Auth::user()->configuration->groupes;
+        if ($groupes) {
+            $groupes = json_decode($groupes, true);          
+        } else {
+            $groupes = array();
+        }
+        $enfants = Enfant::where('user_id', Auth::id())
+                    ->where('groupe', $id)
+                    ->get();
+        return view('groupes.remove')
+            ->with('token', $token)
+            ->with('enfants', $enfants)
+            ->with('groupes', $groupes)
+            ->with('id', $id);
+    }
+
+    public function supprimerUnGroupePost(Request $request) {
+        $token = md5(Auth::id().$request->id.env('HASH_SECRET'));        
+        if($token != $request->token) {
+            return redirect()->route('groupe')
+                ->with('status', 'danger')
+                ->with('msg', 'Token invalide.');
+        }
+        $groupes = Auth::user()->configuration->groupes;
+        if ($groupes) {
+            $groupes = json_decode($groupes, true);          
+        } else {
+            $groupes = array();
+        }
+        unset($groupes[$request->id]);
+        //dd($groupes);
+        $config = Configuration::where('user_id', Auth::id())->first();
+        if (!$config) {
+            $config = new Configuration();
+            $config->user_id = Auth::id();            
+        }        
+        $config->groupes = json_encode($groupes);
+        dd($config);
+        $config->save();
+
+        session()->flash('success','Les groupes ont bien été enregistrés');
+        return redirect()->route('groupe');
+        
+        
+    }
+
 }

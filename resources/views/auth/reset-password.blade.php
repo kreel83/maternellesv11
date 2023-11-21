@@ -47,7 +47,82 @@
     </x-auth-card>
 </x-guest-layout> --}}
 
-@extends('layouts.mainMenu2', ['titre' => 'Mes fiches', 'menu' => 'item', 'log' => true])
+@extends('layouts.parentLayout', ['titre' => 'Réinitialisation du mot de passe', 'menu' => 'item', 'log' => true])
+
+@section('content')
+
+<div class="mb-3 d-flex justify-content-center">
+           
+  <a href="{{route('vitrine.index')}}" class="brand-logo">
+  <img src="{{asset('img/deco/logo.png')}}" alt="" width="250" class="d-bloc mx-auto">
+  </a>
+
+</div>    
+
+<div class="card mx-auto w-75">
+
+    <div class="card-body">
+
+        @if (session()->has('status'))
+            <div class="alert alert-info">
+                <x-auth-session-status class="mb-4" :status="session('status')" />
+            </div>
+        @endif
+        
+        <form method="POST" action="{{ route('password.update') }}">
+        @csrf
+
+        <!-- Password Reset Token -->
+        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+        <!-- Validation Errors -->
+        @if ($errors->any())
+        <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}<br>
+                @endforeach
+        </div>
+        @endif
+
+        <h4 class="mb-3">Réinitialisation du mot de passe</h4>
+
+        <p>Indiquez ci-dessous votre adresse e-mail ainsi que votre nouveau mot de passe.</p>
+
+        <!-- Email Address -->
+        <div class="input-group mb-3">
+            <span class="input-group-text bg-light" id="email">@</span>
+            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $request->email) }}" placeholder="Votre adresse e-mail" required>
+        </div>
+
+        <!-- Password -->
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-dark" id="password"><i class="fa-solid fa-lock"></i></span>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Nouveau mot de passe" required>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-dark" id="password_confirmation"><i class="fa-solid fa-lock"></i></span>
+          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmation du mot de passe" required>
+        </div>
+
+        <div class="mb-3 gap-2 d-grid">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@endsection
+
+
+
+
+
+{{-- @extends('layouts.mainMenu2', ['titre' => 'Mes fiches', 'menu' => 'item', 'log' => true])
 
 @section('content')
 
@@ -83,8 +158,10 @@
   
                   <x-auth-session-status class="mb-4" :status="session('status')" />
   
-                  <form action="{{ route('admin.sauverLeMotDePasse') }}" method="post">
+                  <!-- <form action="{{ route('admin.sauverLeMotDePasse') }}" method="post"> -->
+                    <form action="{{ route('password.update') }}" method="post">
                   @csrf
+
                   @if ($errors->any())
                   <div class="alert alert-danger">
                       <ul>
@@ -94,11 +171,12 @@
                       </ul>
                   </div>
                   @endif
-                  {{-- <input type="hidden" name="token" value="{{ $request->route('token') }}"> --}}
-                    {{-- <div class="d-flex align-items-center mb-3 pb-1">
+
+                  <!-- <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                    <div class="d-flex align-items-center mb-3 pb-1">
                         <img src="{{ asset('img/vitrine/logo/logoV2.png') }}"
                         style="width: 150px;" alt="logo">
-                    </div> --}}
+                    </div> -->
   
                     <h2 class="mb-3 pb-3" style="letter-spacing: 1px;font-size: 36px; color: white; font-weight: bolder">Réinitialisation du mot de passe</h2>
   
@@ -131,4 +209,4 @@
   </section>
 
 
-@endsection
+@endsection --}}

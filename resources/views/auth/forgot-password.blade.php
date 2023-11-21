@@ -35,7 +35,66 @@
     </x-auth-card>
 </x-guest-layout> --}}
 
-@extends('layouts.mainMenu2', ['titre' => 'Mes fiches', 'menu' => 'item', 'log' => true])
+
+
+@extends('layouts.parentLayout', ['titre' => 'Réinitialisation du mot de passe', 'menu' => 'item', 'log' => true])
+
+@section('content')
+
+<div class="mb-3 d-flex justify-content-center">
+           
+  <a href="{{route('vitrine.index')}}" class="brand-logo">
+  <img src="{{asset('img/deco/logo.png')}}" alt="" width="250" class="d-bloc mx-auto">
+  </a>
+
+</div>    
+
+<div class="card mx-auto w-75">
+
+    <div class="card-body">
+
+        @if (session()->has('status'))
+            <div class="alert alert-info">
+                <x-auth-session-status class="mb-4" :status="session('status')" />
+            </div>
+        @endif
+        
+        <form method="POST" action="{{ route('password.email') }}">
+        @csrf
+
+        <!-- Validation Errors -->
+        @if ($errors->any())
+        <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}<br>
+                @endforeach
+        </div>
+        @endif
+
+        <h4 class="mb-3">Mot de passe oublié ?</h4>
+
+        <p>Indiquez ci-dessous votre adresse e-mail pour recevoir un lien de réinitialisation de votre mot de passe.</p>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text bg-light" id="email">@</span>
+            <input type="email" class="form-control" id="email" name="email" value="" placeholder="Votre adresse mail" required>
+        </div>
+
+        <div class="mb-3 gap-2 d-grid">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@endsection
+
+
+
+{{-- @extends('layouts.mainMenu2', ['titre' => 'Réinitialisation du mot de passe', 'menu' => 'item', 'log' => true])
 
 @section('content')
 
@@ -74,10 +133,10 @@
                   <form method="POST" action="{{ route('password.email') }}">
                   @csrf
   
-                    {{-- <div class="d-flex align-items-center mb-3 pb-1">
+                    <!-- <div class="d-flex align-items-center mb-3 pb-1">
                         <img src="{{ asset('img/vitrine/logo/logoV2.png') }}"
                         style="width: 150px;" alt="logo">
-                    </div> --}}
+                    </div> -->
                     <!-- Validation Errors -->
                     @if ($errors->any())
                     <div class="alert alert-danger">
@@ -115,4 +174,4 @@
   </section>
 
 
-@endsection
+@endsection --}}

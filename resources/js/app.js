@@ -12,6 +12,7 @@ import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
 
 import '../../node_modules/quill/dist/quill';
+
 //import Quill from 'quill/quill';
 //window.Quill = Quill;
 
@@ -111,17 +112,21 @@ if ($('.alerteMessage').length) {
 }
 
 
-
-
 if ($('#editorApercu').length) {
     var ColorClass = Quill.import('attributors/class/color');
     var SizeStyle = Quill.import('attributors/style/size');
     Quill.register(ColorClass, true);
     Quill.register(SizeStyle, true);
+    Quill.register("modules/resize", window.QuillResizeImage);
     var toolbarOptions = ['bold', 'italic', 'underline', 'strike','image'];
     var quill = new Quill('#editorApercu', {
         modules: {
-            'toolbar': toolbarOptions,
+            toolbar: toolbarOptions,
+            resize: {
+                locale: {
+                  center: "center",
+                },
+              },
           },
           theme: 'snow'
     });

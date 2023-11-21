@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Auth;
 
     <script src="//cdn.quilljs.com/1.3.6/quill.js" defer></script>
 
+    {{-- <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js" defer></script> --}}
+
+    {{-- https://npm.io/package/quill-resize-image --}}
+    <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-module/dist/quill-resize-image.min.js"></script>
+
     <!-- Theme included stylesheets -->
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 

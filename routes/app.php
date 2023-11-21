@@ -193,6 +193,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::post('/groupe/saveColor',[GroupeController::class,'saveColor'])->name('saveColor');
     Route::post('/groupe/saveTermes',[GroupeController::class,'saveTermes'])->name('saveTermes');
+    Route::get('/groupe/edit/{id}',[GroupeController::class,'editerUnGroupe'])->name('editerUnGroupe');
+    Route::post('/groupe/edit',[GroupeController::class,'editerUnGroupePost'])->name('editerUnGroupePost');
+    Route::get('/groupe/remove/{id}',[GroupeController::class,'supprimerUnGroupe'])->name('supprimerUnGroupe');
+    Route::post('/groupe/remove',[GroupeController::class,'supprimerUnGroupePost'])->name('supprimerUnGroupePost');
 
     Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
