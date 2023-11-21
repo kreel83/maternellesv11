@@ -200,12 +200,33 @@ const preview_photo = (event) => {
         $(el).find('.policeColor').val(color)
     })
     $(document).on('click','.rond_couleur', function() {
-        var el = $('.terme.selected')
+        var el = $('#newterme')
         var color = $(this).data('color')
         console.log(color)
         $(el).find('.badge_terme').css('background-color', color  )
         $(el).find('.fondColor').val(color)
     })
+    $(document).on('change','#groupBackgroundColor', function() {
+        var el = $('#apercuGroupe')
+        var color = $(this).val()
+        el.css('background', color)
+    })
+    $(document).on('change','#groupTextColor', function() {
+        var el = $('#apercuGroupe')
+        var color = $(this).val()
+        el.css('color', color)
+    })
+    $(document).on('change','#groupName', function() {
+        var el = $('#apercuGroupe')
+        el.val($(this).val())
+    })
+    // $(document).on('click','.rond_couleur', function() {
+    //     var el = $('.terme.selected')
+    //     var color = $(this).data('color')
+    //     console.log(color)
+    //     $(el).find('.badge_terme').css('background-color', color  )
+    //     $(el).find('.fondColor').val(color)
+    // })
     $(document).on('keyup','.br-40', function(e) {
         if (e.key == "tab") {
             $(this).trigger('focus')
