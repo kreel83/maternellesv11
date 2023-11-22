@@ -9,38 +9,43 @@
         <li class="breadcrumb-item active" aria-current="page">Création des phrases pré-enregistrées</li>
       </ol>
     </nav>
+    @php
+        $section_actuelle = App\Models\Section::find($section);
+    @endphp
 <div class="form-group" style="margin-top: 40px">
     <div data-section="{{ $section }}" class="liste_section">
-        <div class="section_container">
+        <div class="section_container align-items-end">
 
 
             @foreach ($sections as $sec)
-                <div class="d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center">
+                    <div class="tiret_selection {{ $sec->id == $section ? null : 'd-none' }}"
+                        data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
                     <div class='sectionPhrase selectSectionFiche {{ $sec->id == $section ? 'selected' : null }}'
                         data-value="{{ $sec->id }}" data-section="{{ $sec->id }}" data-titre="{{$sec->name}}"                        
                          style="background-color: {{ $sec->color }}">
                         <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
                             height="45px">
                     </div>
-                    <div class="tiret_selection {{ $sec->id == $section ? null : 'd-none' }}"
-                        data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
+
+                    <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
+                    
                 </div>
             @endforeach
             <div class="d-flex flex-column align-items-center" style="border-left: 1px solid lightgray">
+                <div class="tiret_selection {{ $section == 99 ? null : 'd-none' }}" data-id="99" style="background-color: red"></div>
                 <div class='sectionPhrase selectSectionFiche' data-section="99" data-value="99" id="nav-carnet"                    
                     style="background-color: red">
-                    <img src="{{ asset('img/illustrations/99.png') }}" alt="" width="90px"
+                    <img src="{{ asset('img/illustrations/99.png') }}" alt="" width="45px"
                         height="45px">
                 </div>
-                <div class="tiret_selection {{ $section == 99 ? null : 'd-none' }}" data-id="99" style="background-color: red"></div>
+                <div class="petit_texte" style="color: red">Général</div>
             </div>
 
         </div>
 
 
-        <div id="SectionName">
-            {{$sections[0]->name}}
-        </div>
+
 
 
 
@@ -56,6 +61,9 @@
                 <option value="99" {{$section == 99 ? "selected" : null}}>Commentaire général</option>
         </select> --}}
     </div>
+    <div id="phrase_container" class="p-5" style="border: 10px solid {{ $section_actuelle->color ?? 'red' }}; border-radius: 40px;">
+
+    
     <div class="form-group">
             <div class="input-group my-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -113,6 +121,7 @@
 
 
 
+</div>
 </div>
 
   

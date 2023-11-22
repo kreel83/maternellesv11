@@ -11,7 +11,7 @@
         width: fit-content;
         height: auto;
         background-color: var(--second-color);
-        color: var(--main-color);
+        color: white;
         padding: 4px 26px;
         margin: 8px 0;
         border-radius: 8px;
