@@ -28,44 +28,106 @@
 
     @include('include.display_msg_error')
 
-    @if($nbGroupe < 4)
-        <div class="mb-3">
-            Vous pouvez créer jusqu'à 4 groupes.
-        </div>
-        <div class="mb-3">
-            @php
-                $token = md5(Auth::id().'new'.env('HASH_SECRET'));
-            @endphp
-            <a href="{{ route('editerUnGroupe', ['id' => 'new', 'token' => $token]) }}" class="btn btn-primary"><i class="fa-solid fa-plus me-1"></i> Créer un nouveau groupe</a>
-        </div>
-    @else
-        <div class="alert alert-warning" role="alert">
-            Vous avez atteint la limite des 4 groupes crées.
-        </div>
-    @endif
+
+ 
+        <div class="alert alert-info" role="alert">
+            <ul>
+                @if ($ct > 0) 
+                <li>La suppression d'un groupe réinialisera l'affectation de groupe des enfants</li>
+                @endif
+                @if (4 - $nbGroupe == 0)
+                <li>Vous pouvez ne pouvez plus créer de groupe</li>
+                @else
+                <li>Vous pouvez créer encore {{ 4 - $nbGroupe}} groupe{{ 4 - $nbGroupe == 1 ? null : 's'}}</li>
+                @endif
+
+            </ul>
+            
+        </div>   
+    
+
+    <style>
+        .groupe_container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 10rem;
+
+        }
+        .groupe_card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 200px;
+            border-radius: 24px;
+            background-color: white;
+            padding: 16px;
+            margin: 16px;
+        }
+        .groupe_titre {
+            position: absolute;
+            top: -16px;
+            left: 30px;
+            font-weight: 400;
+            font-size: 16px;
+            padding: 4px 16px;
+            background-color: white;
+            border-radius: 14px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        }
+        .groupe_controle {
+            position: absolute;
+            top: -16px;
+            right: 30px;
+            font-weight: 400;
+            font-size: 16px;
+            padding: 4px 16px;
+            background-color: white;
+            border-radius: 14px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        }
+      
+    </style>
     
     @if($nbGroupe == 0)
         <div class="alert alert-info" role="alert">
             Vous n'avez encore aucun groupe de défini.
         </div>
     @else
-        <div class="mb-3">
-            Liste de mes groupes :
-        </div>
-        @foreach ($groupes as $groupe)
-            <div class="d-flex mb-3">
-                    <div class="apercu-groupe me-3" style="background-color: {{ $groupes[$loop->index]['backgroundColor'] }}; color: {{ $groupes[$loop->index]['textColor'] }}">{{ $groupes[$loop->index]['name'] ?? null }}</div>
-                @php
-                    $token = md5(Auth::id().$loop->index.env('HASH_SECRET'));
-                @endphp
-                <div class="me-3">
-                    <a class="btn btn-primary btn-sm" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}">Modifier</a>
+
+        <div class="groupe_container mt-5">
+            @foreach ($groupes as $key=>$groupe)
+                    @php
+                        $token = md5(Auth::id().$loop->index.env('HASH_SECRET'));
+                    @endphp
+                <div class="d-flex mb-3 groupe_card position-relative">
+                    <div class="groupe_titre">Groupe {{$key +1 }}</div>
+                    <div class="groupe_controle d-flex w-25 justify-content-between">
+                        <a  style="color: black" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><i class="fa-solid fa-edit"></i></a>
+                        <a  style="color: black" href="{{ route('supprimerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><span style="cursor: pointer"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                        <div class="apercu-groupe mb-3" style="background-color: {{ $groupes[$loop->index]['backgroundColor'] }}; color: {{ $groupes[$loop->index]['textColor'] }}">{{ $groupes[$loop->index]['name'] ?? null }}</div>
+                    {{-- <div class="d-flex justify-content-between w-100">
+                        <a class="btnAction" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}">Modifier</a>
+                        <a class="btnAction inverse red" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}">Supprimer</a>
+                    </div> --}}
+                    {{-- <div class="me-3">
+                        <a href="{{ route('supprimerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}">Supprimer</a>
+                    </div> --}}
                 </div>
-                {{-- <div class="me-3">
-                    <a href="{{ route('supprimerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}">Supprimer</a>
-                </div> --}}
-            </div>
-        @endforeach
+            @endforeach  
+            @if (sizeof($groupes) < 4) 
+               <div class="groupe_card d-flex justify-content-center align-items-center">
+                @php
+                $token = md5(Auth::id().'new'.env('HASH_SECRET'));
+            @endphp
+                    <a href="{{ route('editerUnGroupe', ['id' => 'new', 'token' => $token]) }}" style="font-size: 60px"><i class="fa-solid fa-plus"></i></a> 
+                </div>      
+                @endif
+        </div>
+
     @endif
 
 @endsection

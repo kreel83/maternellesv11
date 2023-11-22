@@ -79,6 +79,7 @@
 
 
     background-color: var(--main-color);
+    border: 1px solid transparent;
     padding: 4px 24px;
     color: white;
     width: fit-content;
@@ -104,7 +105,7 @@
 
   .card-enfant {
     background-color: #fff;
-    margin: 1.5em;
+    margin: 1.5em !important;
    
     width: 240px;;
     height: 300px;
@@ -165,6 +166,7 @@
       position: absolute;
       left: 50%;
       top: -8px;
+      border: 1px solid transparent;
       transform: translate(-50%);
       background-color: var(--main-color);
       padding: 4px 24px;

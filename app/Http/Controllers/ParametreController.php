@@ -260,6 +260,15 @@ class ParametreController extends Controller
     }
 
 
+    public function activeDomaineEleve(Request $request) {
+        $conf = Configuration::where('user_id',Auth::id())->first();
+        if ($conf) {
+            $conf->desactive_devenir_eleve = ($request->activeDomaineEleve == 'on' ? 0 : 1);
+            $conf->save();
+        }
+        return redirect()->back()->with('success','Le domaine a bien étédésactivé');
+    }
+
     public function get_phrases(Request $request) {
         $c = Commentaire::find($request->id);
         $c->phrase_masculin = str_replace("L'élève","Léon", $c->phrase_masculin);

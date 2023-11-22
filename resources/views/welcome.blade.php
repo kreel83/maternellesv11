@@ -178,7 +178,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                     @endphp
                         <div class="d-flex justify-content-between align-items-center border-bottom my-1">
                             <div class="me-2">
-                                <img src="{{ asset('img/illustrations/' . $discipline->logo) }}" alt="" width="25px"
+                                <img src="{{ asset('img/illustrations/' . $discipline->id.'.png') }}" alt="" width="25px"
                                 height="25px">
                             </div>
                             <div class="name w-75">{{ $discipline->name}}</div>
@@ -199,7 +199,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                     @foreach($top5DisciplinesLesMoinsAvances as $discipline)
                         <div class="d-flex align-items-center justify-content-between border-bottom my-1">
                             <div class="me-2">
-                                <img src="{{ asset('img/illustrations/' . $discipline->logo) }}" alt="" width="25px"
+                                <img src="{{ asset('img/illustrations/' . $discipline->id.'.png') }}" alt="" width="25px"
                                 height="25px">
                             </div>
                             <div class="w-75 name">{{ $discipline->name }}</div>
@@ -361,7 +361,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
 
                         </td>
                         <td>
-                            <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+                            <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">{{$groupe["name"] ?? ''}}</div>
 
                         </td>
                     </tr>
@@ -411,7 +411,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
 
                     </td>
                     <td>
-                        <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+                        <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">{{$groupe["name"] ?? ''}}</div>
 
                     </td>
                 </tr>

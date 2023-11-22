@@ -121,7 +121,7 @@
                         </td>
                         <td>
                             <div class="groupe-terme {{ isset($groupe) ? null : 'd-none' }}"
-                                style="background-color: {{ $groupe['backgroundColor'] ?? '' }}; color:{{ $groupe['textColor'] ?? '' }}">
+                                style="background-color: {{ $groupe['backgroundColor'] ?? '' }}; color:{{ $groupe['textColor'] ?? '' }} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}" >
                                 {{ $groupe['name'] ?? '' }}</div>
 
                         </td>

@@ -54,7 +54,7 @@
 
             <div class="d-flex justify-content-between align-items-center my-5 flex-column flex-xl-row">
 
-                    <div class="d-flex ps-2 align-items-center enfant_pill">
+                    <div class="d-flex ps-2 align-items-center enfant_pill mb-3">
                         <div class="arrowLeft me-2">
                             <a href="{{ route('enfants',['type' => 'evaluation']) }}">
                                 <i class="fa-solid fa-arrow-left"></i>
@@ -81,15 +81,23 @@
                         
     
                             @foreach ($sections as $sec)
+                                @if ($sec->id == 9 && Auth::user()->configuration->desactive_devenir_eleve == 1)
+                                @else
                                 <div class="d-flex flex-column align-items-center">
+                                    <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
+                                        data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
                                     <div class='selectSectionFiche selectSectionItem {{ $sec->id == $section->id ? 'selected' : null }}'
                                         data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}" title="{{$sec->name}}">
                                         <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
                                             height="45px">
                                     </div>
-                                    <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
-                                        data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
+                                    @if ($sec->id == 99)
+                                    <div class="petit_texte" style="color: {{$sec->color}}">Général</div>
+                                    @else
+                                    <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
+                                    @endif
                                 </div>
+                                @endif
                             @endforeach
                        
                             {{-- <div id="SectionName">

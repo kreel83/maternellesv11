@@ -78,7 +78,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                 <td>{{ $enfant->prenom.' '.$enfant->nom}}</td>
 				<td>{{ strtoupper($enfant->psmsgs) }}</td>
                 <td class="mx-auto">
-                    <div class="text-center groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+                    <div class="text-center groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">{{$groupe["name"] ?? ''}}</div>
 
                 </td>
 

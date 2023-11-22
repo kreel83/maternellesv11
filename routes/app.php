@@ -194,15 +194,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/groupe/saveColor',[GroupeController::class,'saveColor'])->name('saveColor');
     Route::post('/groupe/saveTermes',[GroupeController::class,'saveTermes'])->name('saveTermes');
     Route::get('/groupe/edit/{id}',[GroupeController::class,'editerUnGroupe'])->name('editerUnGroupe');
-    Route::post('/groupe/edit',[GroupeController::class,'editerUnGroupePost'])->name('editerUnGroupePost');
-    Route::get('/groupe/remove/{id}',[GroupeController::class,'supprimerUnGroupe'])->name('supprimerUnGroupe');
-    Route::post('/groupe/remove',[GroupeController::class,'supprimerUnGroupePost'])->name('supprimerUnGroupePost');
+    Route::get('/groupe/supprimer/{id}',[GroupeController::class,'supprimerUnGroupe'])->name('supprimerUnGroupe');
+    // Route::post('/groupe/edit',[GroupeController::class,'editerUnGroupePost'])->name('editerUnGroupePost');
+    // Route::get('/groupe/remove/{id}',[GroupeController::class,'supprimerUnGroupe'])->name('supprimerUnGroupe');
+    // Route::post('/groupe/remove',[GroupeController::class,'supprimerUnGroupePost'])->name('supprimerUnGroupePost');
 
     Route::get('/parametres', [parametreController::class, 'index'])->name('parametres');
     Route::get('/parametres/phrases', [parametreController::class, 'phrases'])->name('phrases');
     Route::post('/parametres/phrases/save', [parametreController::class, 'savePhrases'])->name('savePhrases');
     Route::get('/parametres/phrases/{commentaire_id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
     Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
+    Route::get('/parametres/activeDomaineEleve', [parametreController::class, 'activeDomaineEleve'])->name('activeDomaineEleve');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
     Route::get('/fiches/setClassification', [ficheController::class, 'setClassification'])->name('setClassification');
