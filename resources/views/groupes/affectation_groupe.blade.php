@@ -23,19 +23,7 @@
         background-color: white;
     }
 
-    .badge_termes {
-        padding: 2px 4px;
-        font-size: 12px;
-        border-radius: 40px;
-        border: 1px solid purple;
-        color: purple;
-        background-color: white;
-        width: fit-content;
-        min-width: 25px;
-        min-height: 25px;
-        margin: 4px 0;
-        cursor: pointer;
-    }
+
 
     .badge_termes.active {
 
@@ -70,7 +58,7 @@
 
             <div style="width: 40%" class="d-flex flex-column align-items-end">
                 @foreach ($groupes as $key=>$terme)
-                    <div class="badge_termes {{ $eleve->groupe != null && $key == $eleve->groupe ? 'active' : null}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
+                    <div class="badge_termes {{ $eleve->groupe != null && $key == $eleve->groupe ? 'active' : null}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}; border: 1px solid {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
                 @endforeach
             </div>
            

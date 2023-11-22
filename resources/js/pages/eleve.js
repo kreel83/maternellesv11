@@ -168,6 +168,8 @@ const preview_photo = (event) => {
         var card = $(this).closest('.card-enfant')
 
         $(card).find('.groupe-terme').css('background-color', $(this).data('color'))
+        $(card).find('.groupe-terme').css('color', $(this).data('textcolor'))
+        $(card).find('.groupe-terme').css('border-color', $(this).data('textcolor'))
         $(card).find('.groupe-terme').text($(this).text())
         $(card).find('.groupe-terme').removeClass('d-none')
 
@@ -216,7 +218,7 @@ const preview_photo = (event) => {
         var color = $(this).val()
         el.css('color', color)
     })
-    $(document).on('change','#groupName', function() {
+    $(document).on('change keyup','#groupName', function() {
         var el = $('#apercuGroupe')
         el.val($(this).val())
     })
