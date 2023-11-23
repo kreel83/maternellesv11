@@ -14,10 +14,16 @@
     @endphp
 <div class="form-group" style="margin-top: 40px">
     <div data-section="{{ $section }}" class="liste_section">
+
+        <style>
+            
+        </style>
         <div class="section_container align-items-end">
 
 
             @foreach ($sections as $sec)
+            @if ($sec->id == 9 && Auth::user()->configuration->desactive_devenir_eleve == 1)
+            @else
             <div class="d-flex flex-column align-items-center">
                     <div class="tiret_selection {{ $sec->id == $section ? null : 'd-none' }}"
                         data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
@@ -31,6 +37,7 @@
                     <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
                     
                 </div>
+                @endif
             @endforeach
             <div class="d-flex flex-column align-items-center" style="border-left: 1px solid lightgray">
                 <div class="tiret_selection {{ $section == 99 ? null : 'd-none' }}" data-id="99" style="background-color: red"></div>

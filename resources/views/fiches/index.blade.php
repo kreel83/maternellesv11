@@ -37,9 +37,11 @@
                     </div>
                     @endif
                 @endforeach
+                @if (Auth::user()->hasResultats() ==  0)
                 <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
                     <i class="fa-solid fa-file-import fs-3"></i>
                 </div>
+                @endif
             
         </div>
 

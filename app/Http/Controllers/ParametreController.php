@@ -455,20 +455,31 @@ class ParametreController extends Controller
         $top5ElevesLesMoinsAvances = $resultat->top5ElevesLesMoinsAvances();
         $top5DisciplinesLesPlusAvances = $resultat->top5DisciplinesLesPlusAvances();
         $top5DisciplinesLesMoinsAvances = $resultat->top5DisciplinesLesMoinsAvances();
+        $listeDesEnfantsSansNote = $resultat->listeDesEnfantsSansNote();
         $listeDesEleves = Enfant::listeDesEleves();
 
         //dd($top5AdvancedKids);
         $anniversaires = $anniversaires->sortBy('jour');
+        $info[1] = Enfant::where('user_id', Auth::id())->count();
+        $info[2] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('notation',2)->count();        
+        $info[22] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('autonome',0)->where('notation',2)->count();        
+        $info[3] = Fiche::where('user_id', Auth::id())->count();
 
         $middle = (int) $listeDesEleves->count() / 2;
+
+        $sections =Section::orderBy('ordre')->get();
+        
         return view('welcome')
+            ->with('sections', $sections)
             ->with('conges', $conges)
             ->with('middle', $middle)
+            ->with('info', $info)
             ->with('listeDesEleves', $listeDesEleves)
             ->with('top5DisciplinesLesPlusAvances', $top5DisciplinesLesPlusAvances)
             ->with('top5DisciplinesLesMoinsAvances', $top5DisciplinesLesMoinsAvances)
             ->with('top5ElevesLesPlusAvances', $top5ElevesLesPlusAvances)
             ->with('top5ElevesLesMoinsAvances', $top5ElevesLesMoinsAvances)
+            ->with('listeDesEnfantsSansNote', $listeDesEnfantsSansNote)
             ->with('finsouscription', $finsouscription)
             ->with('anniversaires', $anniversaires)
             ->with('moisActuel', $mois);
