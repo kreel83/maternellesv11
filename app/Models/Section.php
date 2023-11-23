@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\SectionEvent;
+use Illuminate\Support\Facades\Auth;
 
 class Section extends Model
 {
@@ -54,6 +55,10 @@ class Section extends Model
 
     public function items() {
         return $this->hasmany('App\Models\Item');
+    }
+
+    public function nbSection() {
+        return Fiche::where('section_id', $this->id)->where('user_id', Auth::id())->count();
     }
 
     public function commentaires() {

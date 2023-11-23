@@ -21,6 +21,45 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
     @if (Auth::user()->is_abonne())
 
     <div class="parent">
+        <div class="info1 cadre_info d-flex justify-content flex-column align-items-center">
+            <div style="font-size: 40px; font-weight: bold">{{ $info[1]}}</div>
+            <div>élèves</div>
+        </div>
+        <div class="info2 cadre_info d-flex justify-content flex-column align-items-center">
+            <div  style="font-size: 40px; font-weight: bold">{{ $info[2]}}</div>
+            <div>activités acquises</div>
+            @if ($info[22] > 0)
+            <small style="font-weight:bold; font-size: 12px; color: var(--main-color)">dont {{$info[22]}} avec aide</small>
+            @endif
+        </div>
+        <div class="info3 cadre_info d-flex justify-content flex-column align-items-center">
+            <div style="font-size: 40px; font-weight: bold">{{ $info[3]}}</div>
+            <div>fiches sélectionnées</div>
+        </div>
+        <div class="info4 cadre_info">
+            @foreach ($sections as $sec)
+            @if ($sec->id == 9 && Auth::user()->configuration->desactive_devenir_eleve == 1)
+            @else
+            <div class="d-flex flex-column align-items-center">
+
+                <div class="nbSection" style="color: {{$sec->color}}">{{$sec->nbSection()}}</div>
+                <div class='selectSectionFiche selectSectionItem'
+                    data-value="{{ $sec->id }}" title="{{$sec->name}}">
+                    <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
+                        height="45px">
+                </div>
+
+                <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
+          
+            </div>
+            @endif
+        @endforeach
+        </div>
+        {{-- <div class="info5 cadre_info">
+        </div>
+        <div class="info6 cadre_info">
+        </div> --}}
+
         <div class="div1 cadre_welcome"> 
             @php
                 
@@ -195,6 +234,7 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
         <div class="div6 cadre_welcome"> 
             <div class="titre_welcome">Les 5 activités les moins avancées</div>
             <div class="">
+                @if ($listeDesEnfantsSansNote == 0)
                 <ul>
                     @foreach($top5DisciplinesLesMoinsAvances as $discipline)
                         <div class="d-flex align-items-center justify-content-between border-bottom my-1">
@@ -207,6 +247,13 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
                         </div>
                     @endforeach                    
                 </ul>
+                @else
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div style="font-size: 70px; text-align: center">{{$listeDesEnfantsSansNote}}</div>
+                    <div style="font-size: 20px; text-align: center">Elèves n'ont pas <br>encore d'évaluation</div>                    
+                </div>
+
+                @endif
 
             </div>
         </div>

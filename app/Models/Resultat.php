@@ -115,6 +115,17 @@ class Resultat extends Model
         ->get();
     }
 
+    public function listeDesEnfantsSansNote() {
+        $r = Enfant::where('user_id', Auth::id())->count();
+        // dd($r);
+        $c = self::rightJoin('enfants','enfants.id','enfant_id')
+        ->where('enfants.user_id', Auth::id())
+        ->whereNull('resultats.enfant_id')
+        ->count();
+
+        return $c;
+    }
+
     public static function resultatsPourUnEleve($id) {
         $resultats = Resultat::select('resultats.id','notation','autonome','items.name as itemName','sections.name as sectionName','resultats.section_id',
             'sections.logo as sectionLogo')

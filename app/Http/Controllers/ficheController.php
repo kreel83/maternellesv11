@@ -213,6 +213,9 @@ class ficheController extends Controller
         Fiche::where('user_id',Auth::id())->delete();
         foreach ($total as $line) {
             $section_id = Item::find($line)->section_id;
+        if (Auth::user()->configuration->desactive_devenir_eleve == 1 && $section_id == 9 ) {
+
+        } else {
             $fiche = new Fiche();
             $fiche->user_id = Auth::id();
             $fiche->item_id = $line;
@@ -221,7 +224,9 @@ class ficheController extends Controller
             $fiche->parent_type = 'items';
             $fiche->section_id = $section_id;
             $fiche->save();
-            $order++;
+            $order++;            
+        }
+
         }
         return redirect()->back()->with('success','Les fiches ont bien été importées');
         

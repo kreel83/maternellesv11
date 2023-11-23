@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 use App\Models\Event;
 use App\Models\Configuration;
+use App\Models\Resultat;
 use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Support\Facades\Mail;
@@ -302,6 +303,12 @@ class User extends Authenticatable
         })->whereNotIn('id', $fiches)->get();
         
         return $result;
+    }
+
+
+    public function hasResultats() {
+         return Resultat::join('enfants','enfants.id', 'resultats.enfant_id')->where('enfants.user_id', $this->id)->count();
+         
     }
     /*
     public function getSchool() {
