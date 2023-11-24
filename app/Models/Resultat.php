@@ -94,7 +94,7 @@ class Resultat extends Model
     }
 
     public function top5DisciplinesLesPlusAvances() {
-        return self::selectRaw('count(*) as total, items.name, sections.logo')
+        return self::selectRaw('count(*) as total, items.name, sections.id')
         ->join('items', 'items.id', '=', 'item_id')
         ->join('sections', 'sections.id', '=', 'items.section_id')
         ->where('resultats.user_id', Auth::id())
@@ -105,7 +105,7 @@ class Resultat extends Model
     }
 
     public function top5DisciplinesLesMoinsAvances() {
-        return self::selectRaw('count(*) as total, items.name, sections.logo')
+        return self::selectRaw('count(*) as total, items.name, sections.id')
         ->join('items', 'items.id', '=', 'item_id')
         ->join('sections', 'sections.id', '=', 'items.section_id')
         ->where('resultats.user_id', Auth::id())
@@ -113,6 +113,17 @@ class Resultat extends Model
         ->orderBy('total')
         ->limit(5)
         ->get();
+    }
+
+    public function listeDesEnfantsSansNote() {
+        $r = Enfant::where('user_id', Auth::id())->count();
+        // dd($r);
+        $c = self::rightJoin('enfants','enfants.id','enfant_id')
+        ->where('enfants.user_id', Auth::id())
+        ->whereNull('resultats.enfant_id')
+        ->count();
+
+        return $c;
     }
 
     public static function resultatsPourUnEleve($id) {

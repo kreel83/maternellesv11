@@ -16,22 +16,32 @@
             </ol>
         </nav>
 
-        <div data-section="{{ $section->id }}" class="liste_section d-flex align-items-center" style="width: 1000px !important">
+        <div data-section="{{ $section->id }}" class="liste_section d-flex align-items-end" style="width: 1000px !important">
             
                 @foreach ($sections as $sec)
-                    <div class="d-flex flex-column align-items-center">
+                @if ($sec->id == 9 && Auth::user()->configuration->desactive_devenir_eleve == 1)
+                @else
+                <div class="d-flex flex-column align-items-center">
+                        <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
+                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
                         <div class='selectSectionFiche {{ $sec->id == $section->id ? 'selected' : null }}'
                             data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}">
                             <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
                                 height="45px">
                         </div>
-                        <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
-                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
+                        @if ($sec->id == 99)
+                        <div class="petit_texte" style="color: {{$sec->color}}">Général</div>
+                        @else
+                        <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
+                        @endif
                     </div>
+                    @endif
                 @endforeach
-                <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 50px; border-radius: 10px; margin: 0; margin-left: 20px">
+                @if (Auth::user()->hasResultats() ==  0)
+                <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
                     <i class="fa-solid fa-file-import fs-3"></i>
                 </div>
+                @endif
             
         </div>
 

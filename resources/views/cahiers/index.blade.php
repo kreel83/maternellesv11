@@ -44,7 +44,7 @@
         <div data-section="{{ $section->id }}" class="liste_section m-0 d-flex w-100">
 
             
-            <div class="d-flex justify-content-between align-items-center my-5 align-items-center flex-column flex-xl-row">
+            <div class="d-flex justify-content-between align-items-center mt-2 mb-5 align-items-center flex-column flex-xl-row">
                 <div class="enfant_pill d-flex ps-0 align-items-center ps-3">
                     <div class="arrowLeft" style="font-size: 30px">
                         <a href="{{ route('enfants',['type' => $type]) }}">
@@ -68,12 +68,20 @@
                 </div>
 
               
-                    <div class="section_container flex-wrap justify-content-center">
+                    <div class="section_container flex-wrap justify-content-center align-items-end">
 
-                        
+                        <style>
+
+                        </style>
                            
                                 @foreach ($sections as $sec)
+                                @if ($sec->id == 9 && Auth::user()->configuration->desactive_devenir_eleve == 1)
+                                @else
                                     <div class="d-flex flex-column align-items-center">
+                                        <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
+                                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"
+                                            title="Commentaire général">
+                                        </div>
                                         <div class='sectionCahier selectSectionFiche {{ $sec->id == $section->id ? 'selected' : null }}'
                                             title="{{$sec->name}}"
                                             data-value="{{ $sec->id }}" data-section="{{ $sec->id }}"
@@ -82,22 +90,28 @@
                                             data-phrases="@include('include.card_phrases', ['section' => $sec])" style="background-color: {{ $sec->color }}">
                                             <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
                                                 height="45px" >
+                                            </div>
+                                            @if ($sec->id == 99)
+                                            <div class="petit_texte" style="color: {{$sec->color}}">Général</div>
+                                            @else
+                                            <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
+                                            @endif
+                                            
+                                            
                                         </div>
-                                        <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
-                                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"
-                                            title="Commentaire général">
-                                        </div>
-                                    </div>
-                                
-                                @endforeach
-                                <div class="d-flex flex-column align-items-center" style="border-left: 1px solid lightgray">
-                                    <div class='sectionApercu selectSectionFiche' data-section="cahier" data-value="cahier" id="nav-cahier"
-                                        style="background-color: var(--main-color)"
-                                        title="Le cahier de réussite">
-                                        <img src="{{ asset('img/illustrations/cahier.png') }}" alt="" width="45px"
+                                        @endif
+                                        
+                                        @endforeach
+                                        
+                                        <div class="d-flex flex-column align-items-center" style="border-left: 1px solid lightgray">
+                                            <div class="tiret_selection d-none" data-id="cahier" style="background-color: var(--main-color)"></div>
+                                            <div class='sectionApercu selectSectionFiche' data-section="cahier" data-value="cahier" id="nav-cahier"
+                                            style="background-color: var(--main-color)"
+                                            title="Le cahier de réussite">
+                                            <img src="{{ asset('img/illustrations/cahier.png') }}" alt="" width="45px"
                                             height="45px">
-                                    </div>
-                                    <div class="tiret_selection d-none" data-id="cahier" style="background-color: var(--main-color)"></div>
+                                        </div>
+                                        <div class="petit_texte" style="color: var(--main-color)">Cahier</div>
                                 </div>                   
                             
                       

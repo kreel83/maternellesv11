@@ -116,18 +116,7 @@
                     </div>
                 </div>
             </form>
-
-
-            
-
-
         </div>
-
-
-<style>
-
-</style>
-
 
 
         <div class="gridcadre grid4 d-flex flex-column justify-content-between align-items-center tuto_direction">
@@ -209,11 +198,15 @@
         </style>
 
         <div class="gridcadre grid7 d-flex justify-content-center align-items-center tuto_tutoriel">
-            <div class="gridTitre">Sections</div>
+            <div class="gridTitre">Domaine optionnel</div>
             <div class="mt-3">
-                @foreach ($sections as $section)
-                    <div class="section_ligne">{{$section->name}}</div>
-                @endforeach
+                <form action="{{route('activeDomaineEleve')}}" class=" d-flex flex-column justify-content-center align-items-center">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->configuration->desactive_devenir_eleve == 0 ? 'checked' : null}}>
+                        <label class="form-check-label" for="activeDomaineEleve">Activé le domaine "Devenir "élève"</label>
+                    </div>
+                    <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
+                </form>
             </div>
               
         </div>

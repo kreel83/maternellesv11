@@ -1,20 +1,7 @@
 
 
 <style>
-    .badge_termes {
-        padding: 2px 8px;
-        font-size: 12px;
-        border-radius: 40px;
-        color: purple;
-        background-color: white;
-        width: fit-content;
-        min-width: 25px;
-        min-height: 25px;
-        margin: 4px 0;
-        cursor: pointer;
-        color:  white !important;
-        line-height: 25px;
-    }
+
 
     .btn_modif_avatar {
       font-size: 14px !important;
@@ -24,10 +11,12 @@
 
     }
 
-    .btn_modif_avatar:hover {
-
-
-
+    .card-enfant[data-type="affectation_groupe"] {
+      height: 350px !important;
+    }
+    .card-enfant[data-type="affectation_groupe"] .footer {
+      height: auto !important;
+      border-top: 3px solid var(--main-color);
     }
 
 
@@ -48,7 +37,7 @@ if (!is_null($enfant->groupe)){
   // dd(Auth::user()->groupe, $enfant->groupe, $enfant, Auth::user()->type_groupe, Auth::user()->groupe[$enfant->groupe]);
 @endphp
 
-<div class="card-enfant position-relative">
+<div class="card-enfant position-relative" data-type="{{$type}}">
 
 
   {{-- @if ($groupe && strlen($groupe[0]) <2)
@@ -77,7 +66,7 @@ if (!is_null($enfant->groupe)){
         </div>
   </div>
 
-    <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}">{{$groupe["name"] ?? ''}}</div>
+    <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">{{$groupe["name"] ?? ''}}</div>
 
 
 
@@ -88,10 +77,13 @@ if (!is_null($enfant->groupe)){
         <a href="enfants/{{$enfant->id}}/items?sectionID=1"  ><i style="font-size: 18px" class="fa-light fa-pen"></i></a>
         <a href="enfants/{{$enfant->id}}/items?sectionID=2"  ><i style="font-size: 18px" class="fa-light fa-volleyball"></i></a>
         <a href="enfants/{{$enfant->id}}/items?sectionID=3"  ><i style="font-size: 18px" class="fa-light fa-paintbrush-pencil"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=4"  ><i style="font-size: 18px" class="fa-light fa-font-case"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=4"  ><i style="font-size: 18px" class="fa-light fa-hundred-points"></i></a>
         <a href="enfants/{{$enfant->id}}/items?sectionID=5"  ><i style="font-size: 18px" class="fa-light fa-shapes"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=6"  ><i style="font-size: 18px" class="fa-light fa-globe"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=6"  ><i style="font-size: 18px" class="fa-light fa-clock"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?sectionID=8"  ><i style="font-size: 18px" class="fa-light fa-heart"></i></a>
+        @if (Auth::user()->configuration->desactive_devenir_eleve == 0)
         <a href="enfants/{{$enfant->id}}/items?sectionID=7"  ><i style="font-size: 18px" class="fa-light fa-child-reaching"></i></a>
+        @endif
         
     </div>
 
@@ -125,11 +117,11 @@ if (!is_null($enfant->groupe)){
       
 
     @endphp
-    <div class="footer p-2 d-flex h-auto"  style="background-color: var(--main-color)" data-enfant="{{$enfant->id}}">        
+    <div class="footer p-2 d-flex h-auto; height: 300px !important"  style="background-color: var(--background-color)" data-enfant="{{$enfant->id}}">        
       <div class="d-flex w-100  justify-content-around flex-wrap {{$kE == 0 ? 'choix_groupe' :  null}}">
         @if ($groupes)
         @foreach ($groupes as $key=>$terme)
-            <div class="badge_termes {{ $enfant->groupe != null && $key == $enfant->groupe ? 'active' : null}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
+            <div class="badge_termes {{ $enfant->groupe != null && $key == $enfant->groupe ? 'active' : null}}" data-textColor="{{$terme['textColor']}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}; ; border: 1px solid {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
         @endforeach
         @endif
     </div>
