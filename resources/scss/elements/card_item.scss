@@ -1,138 +1,140 @@
-@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
-@import 'https://fonts.googleapis.com/css?family=Roboto:700,400';
-/*
-*  Basic Reset
-*/
+#backEndUser {
 
+    @import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+    @import 'https://fonts.googleapis.com/css?family=Roboto:700,400';
+    /*
+    *  Basic Reset
+    */
 
+    #page_items, #fiche_eleve, #modifyFicheModal  {
 
-#page_items, #fiche_eleve, #modifyFicheModal  {
-
-    .niveau_3 {
-        background-color: var(--niveau_3);
-        color: black;
-    }
-    .niveau_2 {
-        background-color: var(--niveau_2);
-        color: white;
-    }
-    .niveau_1 {
-        background-color: var(--niveau_1);
-        color: black;
-    }
-    .niveau_0 {
-        background-color: var(--niveau_0);
-        color: black;
-    }
-
-
-    .card_item {
-        padding: 0;
-        width: 240px;
-        height: 304px;
-        display: flex;
-        flex-direction: column;
-        background-color: white;
-        margin: 10px;
-        position: relative;
-        overflow: hidden;
-        color: #6759FF;
-        border-radius: 15px;;
-        cursor: pointer;
-        
-        &:hover {
-            .action {
-               
-                top:0;                
-            }
-
+        .niveau_3 {
+            background-color: var(--niveau_3);
+            color: black;
+        }
+        .niveau_2 {
+            background-color: var(--niveau_2);
+            color: white;
+        }
+        .niveau_1 {
+            background-color: var(--niveau_1);
+            color: black;
+        }
+        .niveau_0 {
+            background-color: var(--niveau_0);
+            color: black;
         }
 
-        .notation {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            line-height: 35x;; 
-            border-radius: 15px !important;
-            border: none;
-            outline: none;
-            height: 100px !important;
-            font-size: 14px;;
-            font-weight: bold;
-        }
 
-        .action {
-            width: 100%;
-            height: 280px !important;
-            background-color: rgba(255,255,255,0.8);;
-            position: absolute;
-            top: -100%;
-            left: 0;
-            transition: all 0.5s ease-in-out;
-            padding: 16px;;
-
-        }
-        
-
-        .perso_card {
-            position: absolute;
-            top: 0;
-            right: 0;
-            cursor: pointer;
+        .card_item {
+            padding: 0;
+            width: 240px;
+            height: 304px;
             display: flex;
             flex-direction: column;
-            height: 72px;
-            span {
-                margin-bottom: 2px;
-            }
-        }
-
-        .card-footer {
-            padding: 8px;;
-           
-        }
-
-        
-        .card-footer2 {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;;
+            background-color: white;
+            margin: 10px;
+            position: relative;
+            overflow: hidden;
+            color: #6759FF;
+            border-radius: 15px;;
+            cursor: pointer;
             
-            .autonome_0 {
-                color: red
+            &:hover {
+                .action {
+                
+                    top:0;                
+                }
+
             }
-            .autonome_1 {
-                color: green
+
+            .notation {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                line-height: 35x;; 
+                border-radius: 15px !important;
+                border: none;
+                outline: none;
+                height: 100px !important;
+                font-size: 14px;;
+                font-weight: bold;
             }
+
+            .action {
+                width: 100%;
+                height: 280px !important;
+                background-color: rgba(255,255,255,0.8);;
+                position: absolute;
+                top: -100%;
+                left: 0;
+                transition: all 0.5s ease-in-out;
+                padding: 16px;;
+
+            }
+            
+
+            .perso_card {
+                position: absolute;
+                top: 0;
+                right: 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                height: 72px;
+                span {
+                    margin-bottom: 2px;
+                }
+            }
+
+            .card-footer {
+                padding: 8px;;
+            
+            }
+
+            
+            .card-footer2 {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 50px;;
+                
+                .autonome_0 {
+                    color: red
+                }
+                .autonome_1 {
+                    color: green
+                }
+
+            }
+
+            .tableLevel {
+                margin-right: 5px;
+                font-size: 15px;
+                td {
+                    background-color: white;
+                    color: red
+                }
+
+            }
+                .card__image {
+                    //height: 50px;
+                    width: 100%;
+                    height: 50%;
+                    background-color: #eee;
+                }
+                .card__image img {
+                    width: 100%;
+
+                    height: 100%;
+                    display: block;
+                }
 
         }
-
-        .tableLevel {
-            margin-right: 5px;
-            font-size: 15px;
-            td {
-                background-color: white;
-                color: red
-            }
-
-        }
-            .card__image {
-                //height: 50px;
-                width: 100%;
-                height: 50%;
-                background-color: #eee;
-            }
-            .card__image img {
-                width: 100%;
-
-                height: 100%;
-                display: block;
-            }
 
     }
 

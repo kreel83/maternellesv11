@@ -133,8 +133,8 @@
                                 <select style="width: 220px" class="custom-select little" name="civilite">
 
                                     <option value="">Veuillez sélectionner</option>
-                                    <option value="mrs" {{ $directeur && $directeur->civilite == 'mrs' ? 'selected' : null}}>Monsieur</option>
-                                    <option value="mme" {{ $directeur && $directeur->civilite == 'mme' ? 'selected' : null}}>Madame</option>
+                                    <option value="M." {{ $directeur && $directeur->civilite == 'M.' ? 'selected' : null}}>Monsieur</option>
+                                    <option value="Mme" {{ $directeur && $directeur->civilite == 'Mme' ? 'selected' : null}}>Madame</option>
                                 </select>
                             </div> 
                             <div class="icone-input little my-1">

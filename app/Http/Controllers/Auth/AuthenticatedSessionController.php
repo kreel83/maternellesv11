@@ -29,10 +29,10 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function createDirection()
-    {
-        return view('auth.login_direction');
-    }
+    // public function createDirection()
+    // {
+    //     return view('auth.login_direction');
+    // }
 
     /**
      * Handle an incoming authentication request.
@@ -63,14 +63,14 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeDirection(LoginRequest $request)
-    {
-        $request->authenticate();
+    // public function storeDirection(LoginRequest $request)
+    // {
+    //     $request->authenticate();
 
-        $request->session()->regenerate();
+    //     $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.index'));
-    }
+    //     return redirect()->intended(route('admin.index'));
+    // }
 
     /**
      * Destroy an authenticated session.

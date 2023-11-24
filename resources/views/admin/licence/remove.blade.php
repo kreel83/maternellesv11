@@ -6,8 +6,10 @@
 
 @if($licence)
 
-    <p>Veuillez confirmer le retrait de la licence N° {{ $licence->internal_name }} 
-        pour <strong>{{ $licence->prenom.' '.$licence->nom }}</strong></p>
+    <div class="mb-3">
+        Veuillez confirmer le retrait de la licence n° {{ $licence->internal_name }} 
+        pour <strong>{{ $licence->prenom.' '.$licence->nom }}</strong>
+    </div>
 
     <form action="{{ route('admin.licence.remove.post') }}" method="post">
     @csrf

@@ -1,197 +1,198 @@
+#backEndUser {
 
-body {
-    background-color: var(--back-color) !important;
-}
+    body {
+        background-color: var(--back-color) !important;
+    }
 
-.day {
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-}
+    .day {
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+    }
 
-.cadre_cal {
-    width: auto !important;
-    height: auto;
-    background-color: transparent;
-    // border: 1px solid grey;
-    padding: 20px;    
-    position: absolute;
-    z-index: 8000;
-    font-size: 12px;
-  }
-
-#calendrier_scolaire .day.actif:hover {
-
-     font-size: 18px;
-     font-weight: bolder;
-}
-.event_container {
-    border-radius: 14px;
-    width: 100%;
-    height: 200px;
-    background-color: white;
-    margin: 5px 0;
-    padding: 8px;;
-    font-size: 12px;
-}
-    .bloc_event {
-        width: 100%;
-        height: 700px;
+    .cadre_cal {
+        width: auto !important;
+        height: auto;
         background-color: transparent;
-        margin-top: 140px;
-        padding: 5px;;
-        overflow-y: auto;
-        
-
+        // border: 1px solid grey;
+        padding: 20px;    
+        position: absolute;
+        z-index: 8000;
+        font-size: 12px;
     }
 
-    #calendrier_view {
-        min-height: 100vh;
+    #calendrier_scolaire .day.actif:hover {
+
+        font-size: 18px;
+        font-weight: bolder;
     }
-
-    #calendrier_scolaire {
-        height: 100%;
-    }
-
-#calendrier, #calendrier_scolaire, #calendrier_periodes {
-
-
-    .month_bloc {
-        display: flex;
-        flex-direction: column;
-        width: 280px;
-        margin: 10px 0;
-        border-radius: 25px;
-        // box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-        margin: 10px;
+    .event_container {
+        border-radius: 14px;
+        width: 100%;
+        height: 200px;
         background-color: white;
-
-        overflow: hidden;
-        .month_name {
-            color: white;
-            background-color: var(--main-color);
-            text-align: center;
-        }
-
+        margin: 5px 0;
+        padding: 8px;;
+        font-size: 12px;
     }
-    .month_days {
-        display: flex;
-        width: 300px;
-        div {
-            width:40px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-
-        }
-    }
-
-        .month_dates {
-            display: flex; flex-wrap: wrap;width: 300px;
-        }
-        .day {
-            color: #2C3034;display: flex;justify-content: center;align-items: center;width:39px;height: 39px;font-size:14px;
+        .bloc_event {
+            width: 100%;
+            height: 700px;
+            background-color: transparent;
+            margin-top: 140px;
+            padding: 5px;;
+            overflow-y: auto;
             
-            &.event {
-                border-bottom: 2px solid brown;
-            }
-            &.selected {
-                background-color: inherit;
-                border: 2px solid var(--main-color);
-                color: var(--main-color);
-                font-weight: bolder;
-                border-radius: 50% !important;
-                
-            }
-            &.selected.limite {
-                border: 1px solid rgb(118, 160, 118);;
-                background-color: rgb(118, 160, 118);
-                border-radius: 50%;
-            }
-            &.actif {
-                cursor: pointer;
-                //&:hover {
-                //    background-color: #0a53be;
-                //    border-radius: 50%;
-                //    color: white;
-                //}
-            }
-            &.p1 {
-                background-color: red;
-                color: white;
-            }
-
-            &.p2 {
-                background-color: blue;
-                color: white;
-            }
-
-            &.p3 {
-                background-color: green;
-                color: white;
-            }
-            &.conges {
-                color:white;
-                background-color:  var(--second-color);
-            }
-            &.anniversaire.feminin {
-                color: deeppink;
-                font-weight: bolder;
-                font-size: 16px;
-                
-            }
-            &.anniversaire.masculin {
-                font-size: 16px;
-                color: #52a5ff;
-                font-weight: bolder;
-
-            }
-            &.ddj {
-
-                background-color: var(--vert);
-                font-weight: bolder;
-                border-radius: 50%;
-
-            }
-            &.start {
-                border-bottom-left-radius: 50%;
-                border-top-left-radius: 50%;
-
-            }
-            &.between {
-
-
-            }
-            &.end {
-                border-bottom-right-radius: 50%;
-                border-top-right-radius: 50%;
-
-            }
-            &.select {
-                border-radius: 50%;
-                color: black !important;
-                font-weight: bolder !important;
-
-            }
 
         }
 
+        #calendrier_view {
+            min-height: 100vh;
+        }
+
+        #calendrier_scolaire {
+            height: 100%;
+        }
+
+    #calendrier, #calendrier_scolaire, #calendrier_periodes {
+
+
+        .month_bloc {
+            display: flex;
+            flex-direction: column;
+            width: 280px;
+            margin: 10px 0;
+            border-radius: 25px;
+            // box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+            margin: 10px;
+            background-color: white;
+
+            overflow: hidden;
+            .month_name {
+                color: white;
+                background-color: var(--main-color);
+                text-align: center;
+            }
+
+        }
+        .month_days {
+            display: flex;
+            width: 300px;
+            div {
+                width:40px;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+
+            }
+        }
+
+            .month_dates {
+                display: flex; flex-wrap: wrap;width: 300px;
+            }
+            .day {
+                color: #2C3034;display: flex;justify-content: center;align-items: center;width:39px;height: 39px;font-size:14px;
+                
+                &.event {
+                    border-bottom: 2px solid brown;
+                }
+                &.selected {
+                    background-color: inherit;
+                    border: 2px solid var(--main-color);
+                    color: var(--main-color);
+                    font-weight: bolder;
+                    border-radius: 50% !important;
+                    
+                }
+                &.selected.limite {
+                    border: 1px solid rgb(118, 160, 118);;
+                    background-color: rgb(118, 160, 118);
+                    border-radius: 50%;
+                }
+                &.actif {
+                    cursor: pointer;
+                    //&:hover {
+                    //    background-color: #0a53be;
+                    //    border-radius: 50%;
+                    //    color: white;
+                    //}
+                }
+                &.p1 {
+                    background-color: red;
+                    color: white;
+                }
+
+                &.p2 {
+                    background-color: blue;
+                    color: white;
+                }
+
+                &.p3 {
+                    background-color: green;
+                    color: white;
+                }
+                &.conges {
+                    color:white;
+                    background-color:  var(--second-color);
+                }
+                &.anniversaire.feminin {
+                    color: deeppink;
+                    font-weight: bolder;
+                    font-size: 16px;
+                    
+                }
+                &.anniversaire.masculin {
+                    font-size: 16px;
+                    color: #52a5ff;
+                    font-weight: bolder;
+
+                }
+                &.ddj {
+
+                    background-color: var(--vert);
+                    font-weight: bolder;
+                    border-radius: 50%;
+
+                }
+                &.start {
+                    border-bottom-left-radius: 50%;
+                    border-top-left-radius: 50%;
+
+                }
+                &.between {
+
+
+                }
+                &.end {
+                    border-bottom-right-radius: 50%;
+                    border-top-right-radius: 50%;
+
+                }
+                &.select {
+                    border-radius: 50%;
+                    color: black !important;
+                    font-weight: bolder !important;
+
+                }
+
+            }
+
+
+    }
+
+    .btnp1 {
+        background-color: red;
+        color: white;
+    }
+
+    .btnp2 {
+        background-color: blue;
+        color: white;
+    }
+
+    .btnp3 {
+        background-color: green;
+        color: white;
+    }
 
 }
-
-.btnp1 {
-    background-color: red;
-    color: white;
-}
-
-.btnp2 {
-    background-color: blue;
-    color: white;
-}
-
-.btnp3 {
-    background-color: green;
-    color: white;
-}
-
-

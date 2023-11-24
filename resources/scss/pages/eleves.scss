@@ -1,137 +1,139 @@
+#backEndUser {
 
-
-.error_input {
-    color: var(--main-color);
-    font-weight: bold;
-    font-size: 14px !important;
-}
-
-#maclasse {
-    height: calc(100vh - 200px);
-    padding: 15px;
-    .affiche_eleve {
-        height: 600px;
-        overflow-y: auto;
-    }
-    #myTabContent {
-        height: 600px;
-    }
-
-}
-
-.import_eleves_container {
-    height: 450px !important;
-    overflow: hidden;
-    .wrapper {
-        height: 100%;
-    }
-}
-.liste_eleves, .import_eleves_container {
-
-
-    .inactiveEleve {
-        right: 10px; top: 10px; color:var(--main-color);
-        display: none;
-
-    }
-
-    .fiche_eleve_div{
-
-        &.disabled-card {
-            background-color: rgba(0,0,0,0.2);
-        }
-        &:hover {
-            .inactiveEleve {
-
-                    display: block;
-
-            }
-        }
-    }
-
-    height: 600px;
-    border-radius: 15px;;
-    background-color: white;
-    overflow-y: auto; margin-top: 16px;
-    // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-        .wrapper {
-        font-size: 14px;
-        padding: 15px;
-        border-radius: 8px;;
-        height: 600px;
-        overflow-y: auto;
-            .fiche_eleve {
-            &:hover {
-                background-color: #272C34;
-                color: white;
-                cursor: pointer;
-            }
-            .genre_eleve {
-                width : 5%
-            }
-            .nom_eleve {
-                width: 40%;
-            }        
-            .ddn_eleve {
-                width: 25%;
-            }   
-            .prof_eleve {
-                width: 30%
-                
-            }     
-
-        }
-
-    }    
-}
-
-
-.table-cours {
-    tr {
-        cursor: pointer;
-        background-color: white;
+    .error_input {
         color: var(--main-color);
-        border-radius: 12px;
-        .custom-badge {
-            color: white;
-            background-color:  var(--main-color);;
-            font-size: 10px;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 4px 0;
+        font-weight: bold;
+        font-size: 14px !important;
+    }
+
+    #maclasse {
+        height: calc(100vh - 200px);
+        padding: 15px;
+        .affiche_eleve {
+            height: 600px;
+            overflow-y: auto;
         }
-        &.selected {
-            background-color:  var(--main-color);;
-            color: white;
-            .custom-badge {
-                color:  var(--main-color);
-                background-color: white;
-                border: 1px solid white;
+        #myTabContent {
+            height: 600px;
+        }
+
+    }
+
+    .import_eleves_container {
+        height: 450px !important;
+        overflow: hidden;
+        .wrapper {
+            height: 100%;
+        }
+    }
+    .liste_eleves, .import_eleves_container {
+
+
+        .inactiveEleve {
+            right: 10px; top: 10px; color:var(--main-color);
+            display: none;
+
+        }
+
+        .fiche_eleve_div{
+
+            &.disabled-card {
+                background-color: rgba(0,0,0,0.2);
+            }
+            &:hover {
+                .inactiveEleve {
+
+                        display: block;
+
+                }
+            }
+        }
+
+        height: 600px;
+        border-radius: 15px;;
+        background-color: white;
+        overflow-y: auto; margin-top: 16px;
+        // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+            .wrapper {
+            font-size: 14px;
+            padding: 15px;
+            border-radius: 8px;;
+            height: 600px;
+            overflow-y: auto;
+                .fiche_eleve {
+                &:hover {
+                    background-color: #272C34;
+                    color: white;
+                    cursor: pointer;
+                }
+                .genre_eleve {
+                    width : 5%
+                }
+                .nom_eleve {
+                    width: 40%;
+                }        
+                .ddn_eleve {
+                    width: 25%;
+                }   
+                .prof_eleve {
+                    width: 30%
+                    
+                }     
 
             }
 
+        }    
+    }
 
-        }
-        &:hover {
-            background-color: #a7a2ec;
-            color: white;
 
+    .table-cours {
+        tr {
+            cursor: pointer;
+            background-color: white;
+            color: var(--main-color);
+            border-radius: 12px;
+            .custom-badge {
+                color: white;
+                background-color:  var(--main-color);;
+                font-size: 10px;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 4px 0;
+            }
+            &.selected {
+                background-color:  var(--main-color);;
+                color: white;
+                .custom-badge {
+                    color:  var(--main-color);
+                    background-color: white;
+                    border: 1px solid white;
+
+                }
+
+
+            }
+            &:hover {
+                background-color: #a7a2ec;
+                color: white;
+
+            }
         }
     }
+
+    #tableau_tous {
+        td {
+            margin: 0;
+            padding: 0;
+    
+                line-height: 14px;
+                vertical-align: middle;
+            
+            
+        }
+    }
+
 }
-
-  #tableau_tous {
-    td {
-        margin: 0;
-        padding: 0;
- 
-            line-height: 14px;
-            vertical-align: middle;
-           
-        
-    }
-  }

@@ -16,33 +16,33 @@ Route::get('/admin/form', [RegisteredUserController::class, 'adminCreationForm']
                 ->middleware('guest')
                 ->name('admin.admincreationform');
 */
-Route::post('/admin/create', [RegisteredUserController::class, 'createAdminUser'])
-                ->middleware('guest')
-                ->name('admin.create');
-Route::get('/admin/login', [AuthenticatedSessionController::class, 'createDirection']);
+// Route::post('/admin/create', [RegisteredUserController::class, 'createAdminUser'])
+//                 ->middleware('guest')
+//                 ->name('admin.create');
+// Route::get('/admin/login', [AuthenticatedSessionController::class, 'createDirection']);
 
-Route::get('/register/direction', [RegisteredUserController::class, 'createDirection'])
-                ->middleware('guest')
-                ->name('register.direction');
+// Route::get('/register/direction', [RegisteredUserController::class, 'createDirection'])
+//                 ->middleware('guest')
+//                 ->name('register.direction');
 
-Route::get('/register/prof', [RegisteredUserController::class, 'createProf'])
-                ->middleware('guest')
-                ->name('register.prof');
+// Route::get('/register/prof', [RegisteredUserController::class, 'createProf'])
+//                 ->middleware('guest')
+//                 ->name('register.prof');
 
-Route::post('/register/direction', [RegisteredUserController::class, 'storeDirection'])
-                ->middleware('guest')
-                ->name('storeDirection');
+// Route::post('/register/direction', [RegisteredUserController::class, 'storeDirection'])
+//                 ->middleware('guest')
+//                 ->name('storeDirection');
 
-Route::post('/register/prof', [RegisteredUserController::class, 'storeProf'])
-                ->middleware('guest')
-                ->name('storeProf');
+// Route::post('/register/prof', [RegisteredUserController::class, 'storeProf'])
+//                 ->middleware('guest')
+//                 ->name('storeProf');
 
-Route::get('/login/direction', [AuthenticatedSessionController::class, 'createDirection'])
-                ->middleware('guest')
-                ->name('admin.login');
+// Route::get('/login/direction', [AuthenticatedSessionController::class, 'createDirection'])
+//                 ->middleware('guest')
+//                 ->name('admin.login');
 
-Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])
-                ->name('storedirection');
+// Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])
+//                 ->name('storedirection');
 
 /*
                 Route::post('/login/direction', [AuthenticatedSessionController::class, 'storeDirection'])
@@ -102,18 +102,15 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
 
+// *******************************                
 // Création de compte Admin / User
+// *******************************
 Route::get('/register/start', [RegisteredUserController::class, 'registrationStart'])->name('registration.start');
 Route::get('/register/step1/{role}', [RegisteredUserController::class, 'registrationStep1'])->name('registration.step1');
 Route::post('/register/step1', [RegisteredUserController::class, 'registrationStep1Post'])->name('registration.step1.post');
 Route::get('/register/step2/{role}/{ecole_id}/{token}', [RegisteredUserController::class, 'registrationStep2'])->name('registration.step2');
-//Route::get('/register/step2/{id}', [RegisteredUserController::class, 'registrationStep2'])->name('registration.step2');
-//Route::get('/register/step2/{role}/{id}', [RegisteredUserController::class, 'registrationStep2'])->name('registration.step2');
-//Route::get('/register/step2', [RegisteredUserController::class, 'registrationStep2'])->name('registration.step2');
 Route::post('/register/step2', [RegisteredUserController::class, 'registrationStep2Post'])->name('registration.step2.post');
 Route::get('/register/step3/{role}/{ecole_id}/{token}', [RegisteredUserController::class, 'registrationStep3'])->name('registration.step3');
 Route::post('/register/step3', [RegisteredUserController::class, 'registrationStep3Post'])->name('registration.step3.post');
 Route::get('/register/step4', [RegisteredUserController::class, 'registrationStep4'])->name('registration.step4');
-//Route::get('/register/step4/{role}/{ecole_id}/{token}', [RegisteredUserController::class, 'registrationStep4'])->name('registration.step4');
-//Route::get('/register/validation', [RegisteredUserController::class, 'valideUser'])->name('registration.validation');  // utilisé pour valider une adresse mail depuis email
 Route::get('/register/validation/{token}', [RegisteredUserController::class, 'valideUser'])->name('registration.validation');  // utilisé pour valider une adresse mail depuis email

@@ -72,7 +72,8 @@
                                 {{-- <a href="{{ route('admin.licence.assign.step1', ['licence_name' => $licence->internal_name]) }}">Assigner la licence</a> --}}
                                 <a href="{{ route('admin.licence.assign.step1', ['licence_name' => $licence->internal_name]) }}">Assigner</a>
                             @else
-                                {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['licence_name'=>$licence->internal_name]) }}" class=".removelnk">Retirer</a> ]
+                                {{-- {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['licence_name'=>$licence->internal_name]) }}" class=".removelnk">Retirer</a> ] --}}
+                                {{ $licence->prenom }} {{ $licence->name }} [ <a href="{{ route('admin.licence.remove', ['licence_name'=>$licence->internal_name]) }}" title="Retirer la licence pour cet utilisateur"><i class="fa-solid fa-trash"></i></a> ]
                                 @if($licence->user_actif == 0)
                                 <div class="alert alert-warning mt-2 mb-1" role="alert">
                                     Compte utilisateur inactif. <a href="{{ route('admin.licence.sendreminder', ['licence_name' => $licence->internal_name]) }}" class="alert-link">Renvoyer le lien d'activation</a>

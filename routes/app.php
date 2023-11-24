@@ -79,6 +79,7 @@ Route::middleware(['admin'])->group(function()
 });
 
 // Admin registration URLs
+/*
 Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
 Route::get('/admin/checkcode/{code}', [AdminController::class, 'checkcode'])->name('admin.checkcode');  // utilisé dans admin.js
 // User Validation url from admin creation
@@ -87,6 +88,7 @@ Route::post('/user/validation/store', [UserController::class, 'valideUserFromAdm
 Route::get('/user/validation/reminder/{token}', [UserController::class, 'valideUserFromReminderEmail'])->name('user.valideUserFromReminderEmail');  // utilisé pour valider une adresse mail depuis email
 // User Validation url from self registration
 Route::get('/user/validation/self', [UserController::class, 'validUserFromSelfRegistration'])->name('user.validUserFromSelfRegistration');  // utilisé pour valider une adresse mail depuis email
+*/
 
 // CRON routes
 Route::get('/deleteuser', [UserController::class, 'deleteinactiveuser'])->name('user.deleteinactive');
