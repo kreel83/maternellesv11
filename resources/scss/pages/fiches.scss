@@ -1,249 +1,240 @@
 #backEndUser {
-
-    .btnCommun{
-        margin-top: 15px;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: white;
-        color: var(--main-color);
-        border: 1px solid var(--main-color);
-        font-weight: 400;;
-        width: fit-content;
-        padding: 4px 24px;
-        transition: all 0.5 ease-in-out;
-        cursor: pointer;
-        &.selected {
-            font-weight: bolder;
-            color: white;
-            background-color: var(--main-color);
-        }
-        &:hover {
-            color:  var(--main-color);
-            background-color: #E5E3FF;
-            
-        }    
-    } 
-
-    .test {
-        color: red;
-    }
-
-    #editor3:hover {
-        border-color: var(--main-color);
-    }
-
-    .label_create_fiche {
-        color: var(--main-color);
-        font-size: 24px;
+.btnCommun{
+    margin-top: 15px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: var(--main-color);
+    border: 1px solid var(--main-color);
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    transition: all 0.5 ease-in-out;
+    cursor: pointer;
+    &.selected {
         font-weight: bolder;
-        border-bottom: 4px solid var(--main-color);
-    }
-
-    //ceci est un commentaire 
-    .btnSelectionType {
-        margin-top: 15px;
-        border-radius: 25px;;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 400;;
-        width: fit-content;
-        padding: 4px 24px;
-        background-color: white !important;
-        border: none !important;
-        outline: none !important;    
-        cursor: pointer;
-        
-        &.droit {
-            border-radius: 15px 15px 0 0 !important;
-            
-        }
-        &.violet {
-            color: var(--main-color);
-            border: 1px solid var(--main-color) !important;
-            &:hover {
-                color:  var(--main-color) !important;
-                background-color: #E5E3FF;
-                
-            }
-            &.selected {
-                background-color:  var(--main-color) !important;
-                color: #E5E3FF !important;
-                
-            }
-
-        }
-
-        
-    } 
-    .btnSelection {
-        text-decoration: none;
-        margin-top: 15px;
-        border-radius: 25px;;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 400;;
-        width: fit-content;
-        padding: 4px 24px;
-        border: none !important;
-        outline: none !important;
-        
-        cursor: pointer;
-        &.vert {
-            color: #16C1BC;
-            border: 1px solid #16C1BC;
-            &:hover, &.selected {
-                color:  #16C1BC !important;
-                background-color: white !important;
-                border: 1px solid #16C1BC !important;
-            }
-
-        }
-
-        &.violet {
-            background-color: var(--main-color);
-            color: white;
-            border: 1px solid var(--main-color) !important;
-            &:hover {
-                color:  var(--main-color) !important;
-                background-color: #E5E3FF !important;
-                border-color: #E5E3FF !important;
-
-                
-            }
-            &.selected {
-                background-color: var(--main-color) !important;
-                color: #E5E3FF !important;
-                
-            }
-
-        }
-
-        
-    } 
-
-    .controle {
-        border-bottom: 5px solid var(--main-color);
-        margin-bottom: 20px;
-    }
-
-    .btnAction {
-        margin-top: 15px;
-        border-radius: 25px;;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         color: white;
         background-color: var(--main-color);
-        font-weight: 400;;
-        width: fit-content;
-        padding: 4px 24px;
-        border: none;
-        outline: none;
-        cursor: pointer;    
-    } 
-
-
-
-    .selectImage {
-        cursor: pointer; width: 180px; height: 150px; margin: 5px; overflow: hidden;
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
-
-    #fichesView, #page_items, #cahierView, #phrasesView {
-        .createfiche {
-            width: 34px !important;
-            height: 34px !important;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .deletefiches {
-            width: fit-content !important;
-            height: 34px !important;
-            display: flex;
-            padding: 0 9px !important;
-            justify-content: center;
-            align-items: center;
-        }
-    /* width */
-    .o-container {
-        /* width */
-        ::-webkit-scrollbar {
-            width: 20px;
-        }
-
-        /* Track */
-        ::-webkit-bar-track {
-            box-shadow: inset 0 0 5px #7769FE;
-            border-radius: 10px;
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: #7769FE;
-            border-radius: 20px;
-        }
-
-
-    }
-        #choixFiche {
-            position: relative;
-            padding-bottom: 20px;
-
-        #pointerFiche {
-            #pointer {
-                height: 20px;
-                background-color: red;
-            }
-        }    
+    &:hover {
+        color:  var(--main-color);
+        background-color: #E5E3FF;
         
-        }
+    }    
+} 
 
+.test {
+    color: red;
+}
 
+#editor3:hover {
+    border-color: var(--main-color);
+}
 
-        .selectSectionFiche {
+.label_create_fiche {
+    color: var(--main-color);
+    font-size: 24px;
+    font-weight: bolder;
+    border-bottom: 4px solid var(--main-color);
+}
+
+//ceci est un commentaire 
+.btnSelectionType {
+    margin-top: 15px;
+    border-radius: 25px;;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    background-color: white !important;
+    border: none !important;
+    outline: none !important;    
+    cursor: pointer;
+    
+    &.droit {
+        border-radius: 15px 15px 0 0 !important;
+        
+    }
+    &.violet {
+        color: var(--main-color);
+        border: 1px solid var(--main-color) !important;
+        &:hover {
+            color:  var(--main-color) !important;
+            background-color: #E5E3FF;
             
-            color: white;
-            height: 50px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            transition: all 0.2s ease-in-out;
-            width: 50px;
-            border-radius: 10px;
-            margin: 2px 8px;
-
-
-            &.selected {
-            padding: 10px;
-            font-size: 13px;
-            font-weight: bolder;
-            }
-            &:hover {
-                padding: 5px;
-                font-weight: bolder;
-                
-            }
-        }  
-        .tiret_selection {
-            width: 50px;
-            height: 4px;
-            border-radius: 5px;
-            margin-top: 8px;
+        }
+        &.selected {
+            background-color:  var(--main-color) !important;
+            color: #E5E3FF !important;
+            
         }
 
+    }
+
+    
+} 
+.btnSelection {
+    text-decoration: none;
+    margin-top: 15px;
+    border-radius: 25px;;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    border: none !important;
+    outline: none !important;
+    
+    cursor: pointer;
+    &.vert {
+        color: #16C1BC;
+        border: 1px solid #16C1BC;
+        &:hover, &.selected {
+            color:  #16C1BC !important;
+            background-color: white !important;
+            border: 1px solid #16C1BC !important;
+        }
+
+    }
+
+    &.violet {
+        background-color: var(--main-color);
+        color: white;
+        border: 1px solid var(--main-color) !important;
+        &:hover {
+            color:  var(--main-color) !important;
+            background-color: #E5E3FF !important;
+            border-color: #E5E3FF !important;
+
+            
+        }
+        &.selected {
+            background-color: var(--main-color) !important;
+            color: #E5E3FF !important;
+            
+        }
+
+    }
+
+    
+} 
+
+.controle {
+    border-bottom: 5px solid var(--main-color);
+    margin-bottom: 20px;
+}
+
+.btnAction {
+    margin-top: 15px;
+    border-radius: 25px;;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: var(--main-color);
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    border: none;
+    outline: none;
+    cursor: pointer;    
+} 
+
+
+
+.selectImage {
+    cursor: pointer; width: 180px; height: 150px; margin: 5px; overflow: hidden;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#fichesView, #page_items, #cahierView, #phrasesView {
+    .createfiche {
+        width: 34px !important;
+        height: 34px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .deletefiches {
+        width: fit-content !important;
+        height: 34px !important;
+        display: flex;
+        padding: 0 9px !important;
+        justify-content: center;
+        align-items: center;
+    }
+/* width */
+.o-container {
+    /* width */
+    ::-webkit-scrollbar {
+        width: 20px;
+    }
+
+    /* Track */
+    ::-webkit-bar-track {
+        box-shadow: inset 0 0 5px #7769FE;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #7769FE;
+        border-radius: 20px;
+    }
+
+
+}
+    #choixFiche {
+        position: relative;
+        padding-bottom: 20px;
+
+    #pointerFiche {
+        #pointer {
+            height: 20px;
+            background-color: red;
+        }
+    }    
+      
+    }
+
+
+
+    .selectSectionFiche {
+        
+        color: white;
+        height: 50px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        transition: all 0.2s ease-in-out;
+        width: 50px;
+        border-radius: 10px;
+        margin: 2px 8px;
+
+
+        &.selected {
+           padding: 10px;
+           font-size: 13px;
+           font-weight: bolder;
+        }
+        &:hover {
+            padding: 5px;
+            font-weight: bolder;
+            
+        }
       }  
       .tiret_selection {
         width: 50px;
@@ -253,16 +244,16 @@
     }
 
 
+}
 
-
+@media only screen and (max-width: 994px) {
+#create_fiche {
+    .create_droit {
+        margin-top: 60px;;
     }
+}
+}
 
-    @media only screen and (max-width: 994px) {
-        #create_fiche {
-            .create_droit {
-                margin-top: 60px;;
-            }
-        }
-    }
+
 
 }

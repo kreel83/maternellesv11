@@ -103,7 +103,7 @@
                         $token = md5(Auth::id().$loop->index.env('HASH_SECRET'));
                     @endphp
                 <div class="d-flex mb-3 groupe_card position-relative">
-                    <div class="groupe_titre">Groupe {{$key +1 }}</div>
+                    <div class="groupe_titre">{{$key +1 }}</div>
                     <div class="groupe_controle d-flex w-25 justify-content-between">
                         <a  style="color: black" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><i class="fa-solid fa-edit"></i></a>
                         <a  style="color: black" href="{{ route('supprimerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><span style="cursor: pointer"><i class="fa-solid fa-trash"></i></a>
@@ -118,17 +118,17 @@
                     </div> --}}
                 </div>
             @endforeach  
+        @endif
             @if (sizeof($groupes) < 4) 
                <div class="groupe_card d-flex justify-content-center align-items-center">
-                @php
-                $token = md5(Auth::id().'new'.env('HASH_SECRET'));
-            @endphp
+                    @php
+                    $token = md5(Auth::id().'new'.env('HASH_SECRET'));
+                    @endphp
                     <a href="{{ route('editerUnGroupe', ['id' => 'new', 'token' => $token]) }}" style="font-size: 60px"><i class="fa-solid fa-plus"></i></a> 
                 </div>      
-                @endif
+            @endif
         </div>
 
-    @endif
 
 @endsection
     
