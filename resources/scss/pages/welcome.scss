@@ -1,222 +1,158 @@
-.anniversaire_texte {
-    font-size: 60px;
-    text-align: center;
-    font-weight: bolder;
-}
+#backEndUser {
 
-#welcome, #monprofil {
-    .parent {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: 300px auto 320px 320px;
-        grid-gap: 30px;
-    }
-
-    .div1 {
-        grid-column: 1/3;
-        grid-row: 1;
-    }
-    .div2 {
-        grid-column: 1/4;
-        grid-row: 3;
-    }
-    .div3 {
-        grid-column: 4/7;
-        grid-row: 3;
-    }
-    .div4 {
-        grid-column: 5/7;
-        grid-row: 1;
-    }
-    .div5 {
-        grid-column: 1/4;
-        grid-row: 4;
-    }
-    .div6 {
-        grid-column: 4/7;
-        grid-row: 4;
-    }
-    .div7 {
-        grid-column: 1/7;
-        grid-row: 2;
-        height: fit-content;
-    }
-    .div8 {
-        grid-column: 3/5;
-        grid-row: 1;
-        height: fit-content;
-    }
-
-    .cadre_welcome {
-        /* //border: 1px solid grey; */
-        border-radius: 14px;
-        padding: 15px 8px 8px 8px;
-        position: relative;
-        font-size: 14px;
-        background-color: white;
-        color: grey;
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    }
-    .titre_welcome {
-        margin-bottom: 20px;
-        color: var(--main-color);
-
-        padding: 2px 16px;
-        font-size: 18px;
-        font-weight: bolder;
-        background-color: white;
-        border-radius: 15px;
-        /* border: 1px solid grey; */
-    }
-    .abonnement {
-        font-size: 20px;
-        color: green;
-        font-weight: bolder;
+    .anniversaire_texte {
+        font-size: 60px;
         text-align: center;
-    }
-    .anniversaire {
-        font-size: 20px;
-        color: var(--pink);
         font-weight: bolder;
-        text-align: center;
-    }
-    .ddn {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        background-color: var(--main-color);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
-    .classe_dashboard a {
-        text-decoration: none;
-    }
-    .classe_dashboard tr {
-        cursor: pointer;
-    }
-    .classe_dashboard tr:hover {
-        transform: scale(1.02);
-    }
-    .classe_dashboard .name.G a {
-        color: var(--blue) !important;
-    }
-    .classe_dashboard .name.F a {
-        color: var(--rose) !important;
-    }
-    .dashboard_mail {
-        font-size: 20px;
-        color: red;
-    }
-}
+    #welcome, #monprofil {
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 300px auto 320px 320px;
+            grid-gap: 30px;
+        }
 
-.anniversaires {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 60px;
-    .anniversaire {
-        display: flex;
-        justify-content: center;
+        .div1 {
+            grid-column: 1/3;
+            grid-row: 1;
+        }
+        .div2 {
+            grid-column: 1/4;
+            grid-row: 3;
+        }
+        .div3 {
+            grid-column: 4/7;
+            grid-row: 3;
+        }
+        .div4 {
+            grid-column: 5/7;
+            grid-row: 1;
+        }
+        .div5 {
+            grid-column: 1/4;
+            grid-row: 4;
+        }
+        .div6 {
+            grid-column: 4/7;
+            grid-row: 4;
+        }
+        .div7 {
+            grid-column: 1/7;
+            grid-row: 2;
+            height: fit-content;
+        }
+        .div8 {
+            grid-column: 3/5;
+            grid-row: 1;
+            height: fit-content;
+        }
 
-        align-content: center;
-        align-items: center;
-        margin: 15px;
-        width: fit-content;
-        .day {
+        .cadre_welcome {
+            /* //border: 1px solid grey; */
+            border-radius: 14px;
+            padding: 15px 8px 8px 8px;
+            position: relative;
+            font-size: 14px;
+            background-color: white;
+            color: grey;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        .titre_welcome {
+            margin-bottom: 20px;
+            color: var(--main-color);
+
+            padding: 2px 16px;
+            font-size: 18px;
+            font-weight: bolder;
+            background-color: white;
+            border-radius: 15px;
+            /* border: 1px solid grey; */
+        }
+        .abonnement {
+            font-size: 20px;
+            color: green;
+            font-weight: bolder;
+            text-align: center;
+        }
+        .anniversaire {
+            font-size: 20px;
+            color: var(--pink);
+            font-weight: bolder;
+            text-align: center;
+        }
+        .ddn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: var(--main-color);
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 50px;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            color: white;
-            font-weight: bolder;
-            margin-right: 50px;
         }
-        .name {
-            font-size: 25px;
-            font-weight: bolder;
+
+        .classe_dashboard a {
+            text-decoration: none;
+        }
+        .classe_dashboard tr {
+            cursor: pointer;
+        }
+        .classe_dashboard tr:hover {
+            transform: scale(1.02);
+        }
+        .classe_dashboard .name.G a {
+            color: var(--blue) !important;
+        }
+        .classe_dashboard .name.F a {
+            color: var(--rose) !important;
+        }
+        .dashboard_mail {
+            font-size: 20px;
+            color: red;
         }
     }
-}
 
-#monprofil {
-    .grid_profil {
-        display: grid;
-        grid-template-columns:1fr 1fr; 
-        grid-template-rows: 370px 220px 220px 350px;
-        grid-gap: 35px; 
-    }
-    .grid1 {
-        grid-column: 1;
-        grid-row: 1
-    }
-    .grid2 {
-        grid-column: 2;
-        grid-row: 1
-    }
-    .grid3 {
-        grid-column: 1/3;
-        grid-row: 2
+    .anniversaires {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: fit-content;
+        margin: 0 auto;
+        margin-top: 60px;
+        .anniversaire {
+            display: flex;
+            justify-content: center;
 
+            align-content: center;
+            align-items: center;
+            margin: 15px;
+            width: fit-content;
+            .day {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 50px;
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+                color: white;
+                font-weight: bolder;
+                margin-right: 50px;
+            }
+            .name {
+                font-size: 25px;
+                font-weight: bolder;
+            }
+        }
     }
-    .grid4 {
-        grid-column: 1;
-        grid-row: 3
-    }
-    .grid5 {
-        grid-column: 2;
-        grid-row: 3
-    }
-    .grid6 {
-        grid-column: 1;
-        grid-row: 4
-    }
-    .grid7 {
-        grid-column: 2;
-        grid-row: 4;
-        height: auto;
-    }
-    .gridcadre {
-        width: 100%;
-        border-radius: 40px;
-        position: relative;
-        padding: 10px 40px;
-        background-color: white;
-    }
-    .gridTitre {
-        position: absolute;
-        top: -16px;
-        left: 30px;
-        font-weight: 400;
-        font-size: 16px;
-        padding: 4px 16px;
-        background-color: white;
-        border-radius: 14px;
-        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
-    }
-    .groupeAide {
-        position: relative;
-       
-        padding: 5px;
-        margin: 5px;
-    }
-}
-
-
-@media only screen and (max-width: 994px) {
     #monprofil {
         .grid_profil {
             display: grid;
-            grid-template-columns:1fr; 
-            grid-template-rows: auto;
+            grid-template-columns:1fr 1fr; 
+            grid-template-rows: 370px 220px 220px 350px;
             grid-gap: 35px; 
         }
         .grid1 {
@@ -224,11 +160,11 @@
             grid-row: 1
         }
         .grid2 {
-            grid-column: 1;
-            grid-row: 2
+            grid-column: 2;
+            grid-row: 1
         }
         .grid3 {
-            grid-column: 1;
+            grid-column: 1/3;
             grid-row: 2
 
         }
@@ -237,61 +173,128 @@
             grid-row: 3
         }
         .grid5 {
-            grid-column: 1;
-            grid-row: 4
+            grid-column: 2;
+            grid-row: 3
         }
         .grid6 {
             grid-column: 1;
-            grid-row: 5
+            grid-row: 4
         }
         .grid7 {
-            grid-column: 1;
-            grid-row: 6
-        }
-        
-    }    
-    #welcome {
-        .parent {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows:auto;
-            grid-gap: 30px;
-        }
-    
-        .div1 {
-            grid-column: 1;
-            grid-row: 1;
-        }
-        .div2 {
-            grid-column: 1;
-            grid-row: 3;
-        }
-        .div3 {
-            grid-column: 1;
+            grid-column: 2;
             grid-row: 4;
+            height: auto;
         }
-        .div4 {
-            grid-column: 1;
-            grid-row: 5;
+        .gridcadre {
+            width: 100%;
+            border-radius: 40px;
+            position: relative;
+            padding: 10px 40px;
+            background-color: white;
         }
-        .div5 {
-            grid-column: 1;
-            grid-row: 6;
+        .gridTitre {
+            position: absolute;
+            top: -16px;
+            left: 30px;
+            font-weight: 400;
+            font-size: 16px;
+            padding: 4px 16px;
+            background-color: white;
+            border-radius: 14px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
         }
-        .div6 {
-            grid-column: 1;
-            grid-row: 7;
-        }
-        .div7 {
-            grid-column: 1;
-            grid-row: 8;
-            height: fit-content;
-        }
-        .div8 {
-            grid-column: 1;
-            grid-row: 2;
-            height: fit-content;
+        .groupeAide {
+            position: relative;
+        
+            padding: 5px;
+            margin: 5px;
         }
     }
-}
 
+
+    @media only screen and (max-width: 994px) {
+        #monprofil {
+            .grid_profil {
+                display: grid;
+                grid-template-columns:1fr; 
+                grid-template-rows: auto;
+                grid-gap: 35px; 
+            }
+            .grid1 {
+                grid-column: 1;
+                grid-row: 1
+            }
+            .grid2 {
+                grid-column: 1;
+                grid-row: 2
+            }
+            .grid3 {
+                grid-column: 1;
+                grid-row: 2
+
+            }
+            .grid4 {
+                grid-column: 1;
+                grid-row: 3
+            }
+            .grid5 {
+                grid-column: 1;
+                grid-row: 4
+            }
+            .grid6 {
+                grid-column: 1;
+                grid-row: 5
+            }
+            .grid7 {
+                grid-column: 1;
+                grid-row: 6
+            }
+            
+        }    
+        #welcome {
+            .parent {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows:auto;
+                grid-gap: 30px;
+            }
+        
+            .div1 {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            .div2 {
+                grid-column: 1;
+                grid-row: 3;
+            }
+            .div3 {
+                grid-column: 1;
+                grid-row: 4;
+            }
+            .div4 {
+                grid-column: 1;
+                grid-row: 5;
+            }
+            .div5 {
+                grid-column: 1;
+                grid-row: 6;
+            }
+            .div6 {
+                grid-column: 1;
+                grid-row: 7;
+            }
+            .div7 {
+                grid-column: 1;
+                grid-row: 8;
+                height: fit-content;
+            }
+            .div8 {
+                grid-column: 1;
+                grid-row: 2;
+                height: fit-content;
+            }
+        }
+    }
+
+}

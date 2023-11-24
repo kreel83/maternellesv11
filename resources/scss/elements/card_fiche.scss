@@ -1,162 +1,164 @@
-@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
-@import 'https://fonts.googleapis.com/css?family=Roboto:700,400';
-/*
-*  Basic Reset
-*/
+#backEndUser {
+    
+    @import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+    @import 'https://fonts.googleapis.com/css?family=Roboto:700,400';
+    /*
+    *  Basic Reset
+    */
 
 
-.fiche_container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-
-
-.fiches  {
-
-
-    .card_fiche {
-        padding: 0;
-        width: 240px;
-        height: 300px;
+    .fiche_container {
         display: flex;
-        flex-direction: column;
-        background-color: white;
-        margin: 5px;
-        position: relative;
-        overflow: hidden;
-        color: #6759FF;
-        border-radius: 10px;;
+        flex-wrap: wrap;
+    }
 
-        &:hover {
-            .action, .actiontemp {
-                transition: all 0.5 ease-in-out;
-                top:0;                
-            }
 
-        }
 
-        .actiontemp {
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);;
-            position: absolute;
-            top: -100%;
-            left: 0;
-            display: flex;
-            // align-items: center;
-            flex-wrap: wrap;
-            // justify-content: center;
-            // flex-direction: column;
+    .fiches  {
 
-        }
-        .action {
-            width: 100%;
-            height: 100%;
-            background-color: rgba(99,99,99,0.2);;
-            position: absolute;
-            top: -100%;
-            left: 0;
-            display: flex;
-            // align-items: center;
-            // justify-content: center;
-            // flex-direction: column;
 
-        }
-        
-
-        .perso_card {
-            position: absolute;
-            top: 0;
-            right: 0;
-            cursor: pointer;
+        .card_fiche {
+            padding: 0;
+            width: 240px;
+            height: 300px;
             display: flex;
             flex-direction: column;
-            height: 72px;
-            span {
-                margin-bottom: 2px;
-            }
-        }
+            background-color: white;
+            margin: 5px;
+            position: relative;
+            overflow: hidden;
+            color: #6759FF;
+            border-radius: 10px;;
 
-        .card-footer {
-            padding: 8px;;
-            border-top: 5px solid black;
-        }
-
-        
-        .card-footer2 {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40px;;
-            .caseLvl {
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 25px;
-                height: 25px;
-                font-size: 12px;
-                margin-left: 10px;;
-                padding-top: 3px;
-                color: white
+            &:hover {
+                .action, .actiontemp {
+                    transition: all 0.5 ease-in-out;
+                    top:0;                
+                }
 
             }
-        }
 
-        .tableLevel {
-            margin-right: 5px;
-            font-size: 15px;
-            td {
-                background-color: white;
-                color: red
-            }
-
-        }
-            .card__image {
-                //height: 50px;
+            .actiontemp {
                 width: 100%;
-                height: 50%;
-                background-color: #eee;
-            }
-            .card__image img {
-                width: 100%;
-
                 height: 100%;
-                display: block;
+                background-color: rgba(0,0,0,0.5);;
+                position: absolute;
+                top: -100%;
+                left: 0;
+                display: flex;
+                // align-items: center;
+                flex-wrap: wrap;
+                // justify-content: center;
+                // flex-direction: column;
+
             }
+            .action {
+                width: 100%;
+                height: 100%;
+                background-color: rgba(99,99,99,0.2);;
+                position: absolute;
+                top: -100%;
+                left: 0;
+                display: flex;
+                // align-items: center;
+                // justify-content: center;
+                // flex-direction: column;
+
+            }
+            
+
+            .perso_card {
+                position: absolute;
+                top: 0;
+                right: 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                height: 72px;
+                span {
+                    margin-bottom: 2px;
+                }
+            }
+
+            .card-footer {
+                padding: 8px;;
+                border-top: 5px solid black;
+            }
+
+            
+            .card-footer2 {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 40px;;
+                .caseLvl {
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 25px;
+                    height: 25px;
+                    font-size: 12px;
+                    margin-left: 10px;;
+                    padding-top: 3px;
+                    color: white
+
+                }
+            }
+
+            .tableLevel {
+                margin-right: 5px;
+                font-size: 15px;
+                td {
+                    background-color: white;
+                    color: red
+                }
+
+            }
+                .card__image {
+                    //height: 50px;
+                    width: 100%;
+                    height: 50%;
+                    background-color: #eee;
+                }
+                .card__image img {
+                    width: 100%;
+
+                    height: 100%;
+                    display: block;
+                }
+
+        }
 
     }
 
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .inputfile + label {
+        font-size: 1.25em;
+        font-weight: 700;
+        color: white;
+        background-color: black;
+        display: inline-block;
+    }
+
+    .inputfile:focus + label,
+    .inputfile + label:hover {
+        background-color: red;
+    }
+
+    .inputfile + label {
+        cursor: pointer; /* "hand" cursor */
+    }
+
 }
-
-.inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-
-.inputfile + label {
-    font-size: 1.25em;
-    font-weight: 700;
-    color: white;
-    background-color: black;
-    display: inline-block;
-}
-
-.inputfile:focus + label,
-.inputfile + label:hover {
-    background-color: red;
-}
-
-.inputfile + label {
-    cursor: pointer; /* "hand" cursor */
-}
-
-

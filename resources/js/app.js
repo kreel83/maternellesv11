@@ -46,7 +46,7 @@ import {
     choixSection
 } from './pages/fiche';
 import {choix_equipe} from "./pages/equipe";
-import {adminRegistration} from "./pages/admin";
+// import {adminRegistration} from "./pages/admin";
 import {achatLicences,assigneLicence} from "./pages/subscription";
 import {envoiCahierIndividuel} from "./pages/pdf";
 
@@ -246,7 +246,7 @@ choixEcole()
 
 choix_equipe()
 
-adminRegistration()
+// adminRegistration()
 achatLicences()
 assigneLicence()
 

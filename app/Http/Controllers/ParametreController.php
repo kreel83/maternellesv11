@@ -322,7 +322,7 @@ class ParametreController extends Controller
 
         $user = Auth::user();
         $user->name = strtoupper($request->name);
-        $user->prenom = strtoupper($request->prenom);
+        $user->prenom = ucfirst($request->prenom);
         $user->phone = $request->phone;
         $user->civilite = $request->civilite;
         //$user->nom_ecole = ucfirst($request->nom_ecole);

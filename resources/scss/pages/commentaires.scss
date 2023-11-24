@@ -1,16 +1,17 @@
-#tableauDesPhrases {
-    height: 300px;
-    width: 100%;
-    overflow-y: auto;
-    color: grey;
-    .controle span{
-        cursor: pointer;
+#backEndUser {
+
+    #tableauDesPhrases {
+        height: 300px;
+        width: 100%;
+        overflow-y: auto;
+        color: grey;
+        .controle span{
+            cursor: pointer;
+        }
     }
-}
 
+    #motCle td {
+        width: 33%;
+    }
 
-
-
-#motCle td {
-    width: 33%;
 }

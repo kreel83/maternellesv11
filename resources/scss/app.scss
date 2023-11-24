@@ -30,6 +30,8 @@
 @import "vitrine/magnific-popup";
 @import "vitrine/temoignage";
 
+@import "admin/main";
+
 @import "./responsive.scss";
 
 @import "../../node_modules/quill/dist/quill.snow.css";
@@ -38,259 +40,261 @@
 
 // Font Awesome
 @import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Style+Script&display=swap");
 
-body {
-    font-family: "Roboto", sans-serif !important;
-}
 
-.titre {
-    font-size: 40px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 100px;
-}
+    body {
+        font-family: "Roboto", sans-serif !important;
+    }
 
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
+    .titre {
+        font-size: 40px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 100px;
+    }
 
-/* Track */
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-}
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: var(--main-color);
-    border-radius: 10px;
-}
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+    }
 
-#modeTuto {
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--main-color);
+        border-radius: 10px;
+    }
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 40px;
-    bottom:15px;
-    left: 15px;
-    z-index: 10000;
-    .btnModeTuto {
-        background-color: #8dc53e;
-        color: white;
+    #modeTuto {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 40px;
-        border: none;
-        outline: none;
-        padding: 2px 16px;
-        margin: 0 30px
+        bottom:15px;
+        left: 15px;
+        z-index: 10000;
+        .btnModeTuto {
+            background-color: #8dc53e;
+            color: white;
+            border-radius: 40px;
+            border: none;
+            outline: none;
+            padding: 2px 16px;
+            margin: 0 30px
 
-        ;
+            ;
 
-    }
-}
-
-#modeDecouverte {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 14px;
-    bottom:15px;
-    left: 15px;
-    z-index: 10000;
-    .btnModeDecouverte {
-        background-color: #8dc53e;
-        color: white;
-        border-radius: 14px;
-        border: none;
-        outline: none;
-        padding: 2px 16px;
-        margin: 0 30px
-
-        ;
-
-    }
-}
-
-
-#form1 {
-    background-color: white;
-    border-radius: 35px;
-    padding: 20px;
-}
-.alerteMessage {
-    font-size: 14px;
-    text-align: center;
-    font-weight: bolder;
-}
-
-#tuto_window {
-    height: auto;
-    width: 400px;
-    top: 500px;
-    left: 500px;
-    background-color: rgb(211, 232, 201);
-    color: grey;
-    font-weight: bolder;
-    border-radius: 14px;;
-    border: 4px solid #8dc53e;
-    padding: 16px;
-    font-size: 16px;
-    z-index: 8000;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-        rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-        rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        .remoteTutoWindow {
-            position: absolute;
-            top: 5px;
-            right: 15px;
-            font-size: 12px;
-            cursor: pointer;
         }
-    .title {
-        
-        color: #8dc53e;
-        font-size: 20px;
+    }
+
+    #modeDecouverte {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 14px;
+        bottom:15px;
+        left: 15px;
+        z-index: 10000;
+        .btnModeDecouverte {
+            background-color: #8dc53e;
+            color: white;
+            border-radius: 14px;
+            border: none;
+            outline: none;
+            padding: 2px 16px;
+            margin: 0 30px
+
+            ;
+
+        }
+    }
+
+
+    #form1 {
+        background-color: white;
+        border-radius: 35px;
+        padding: 20px;
+    }
+    .alerteMessage {
+        font-size: 14px;
+        text-align: center;
         font-weight: bolder;
     }
-}
 
-.hide {
-    display: none
-}
-
-#arrowTuto {
-    display: none !important;
-    &.left_bottom {
-        top: 150px;
-        left: 27px;
-    }
-    &.right_bottom {
-        top: 150px;
-        left: 332px;
-        transform: rotateY(180deg);
-    }
-    &.middle_left {
-        top: 130px;
-        left: 27px;
-    }
-
-    &.left_top {
-        top: -165px;
-        left: -7px;
-        transform: rotateX(180deg);
-    }
-    &.right_top {
-        top: -178px;
-        left: 230px;
-        transform: rotateX(180deg) rotateY(180deg);
-    }
-}
-
-@keyframes tree {
-    0%   { outline: 3px solid #8dc53e; }
-    50% { outline: 6px solid #8dc53e}
-    100% { outline: 8px solid #8dc53e; }
-  }
-
-.tuto_cadre {
-    
-    font-weight: bold;
-    z-index: 200;
-    animation: tree 0.5s alternate infinite;
-}
-
-#tutoModal {
-    .modal-content {
-        border: none;
-        background-color: transparent !important;
-    }
-    .modal-body,
-    .modal-header {
-        background-color: white !important;
+    #tuto_window {
         height: auto;
-    }
-    .modal-footer {
-        height: 000px;
-        justify-content: center !important;
-    }
-}
-
-
-.white {
-    background-color: white;
-}
-:root {
-    --main-color: #9A78C4;
-    --back-color: #F6F6F6 ;
-    --second-color: #6534A9;
-    --third-color: #D3C8E9;
-
-
-    --vert: #8dc53e;
-    --bleu: #16bdff;
-    --orange: #f16422;
-    --rouge: #e01a1f;
-    --rose: #f96e69;
-
-    --blue: #3fbafe;
-    --section0: #3fbafe;
-
-    --pink: #fa99b2;
-    --section1: #fa99b2;
-
-    --night: #b69efe;
-    --section2: #b69efe;
-
-    --green: #58d5c9;
-    --section3: #58d5c9;
-
-    --purple: #c0a3e5;
-    --section4: #c0a3e5;
-
-    --brown: #e5dd62;
-    --section5: #e5dd62;
-
-    --dark: rgba(86, 88, 84, 0.98);
-    --section6: rgba(86, 88, 84, 0.98);
-
-    --orange: rgba(202, 126, 49, 0.98);
-    --section7: rgba(202, 126, 49, 0.98);
-
-
-    --niveau_3: rgba(105,240,174,1);
-    --niveau_2: rgba(68,138,255,1);
-    --niveau_1: rgba(255,152,0,1);
-    --niveau_0: rgba(238,238,238,1);
-
-}
-
-
-@media (max-width: 994px) {
-    body {
-        .breadcrumb {
-            display: none;
+        width: 400px;
+        top: 500px;
+        left: 500px;
+        background-color: rgb(211, 232, 201);
+        color: grey;
+        font-weight: bolder;
+        border-radius: 14px;;
+        border: 4px solid #8dc53e;
+        padding: 16px;
+        font-size: 16px;
+        z-index: 8000;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+            rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+            rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            .remoteTutoWindow {
+                position: absolute;
+                top: 5px;
+                right: 15px;
+                font-size: 12px;
+                cursor: pointer;
+            }
+        .title {
+            
+            color: #8dc53e;
+            font-size: 20px;
+            font-weight: bolder;
         }
-        .container {
-            --bs-gutter-x: 1.5rem;
-            --bs-gutter-y: 0;
-            width: 100%;
-            padding-right: calc(var(--bs-gutter-x) * 0.5);
-            padding-left: calc(var(--bs-gutter-x) * 0.5);
-            margin-right: auto;
-            margin-left: auto; 
+    }
+
+    .hide {
+        display: none
+    }
+
+    #arrowTuto {
+        display: none !important;
+        &.left_bottom {
+            top: 150px;
+            left: 27px;
         }
-        .dropdown-menu {
-            box-shadow: none;
-            text-align: center;
+        &.right_bottom {
+            top: 150px;
+            left: 332px;
+            transform: rotateY(180deg);
+        }
+        &.middle_left {
+            top: 130px;
+            left: 27px;
+        }
+
+        &.left_top {
+            top: -165px;
+            left: -7px;
+            transform: rotateX(180deg);
+        }
+        &.right_top {
+            top: -178px;
+            left: 230px;
+            transform: rotateX(180deg) rotateY(180deg);
+        }
+    }
+
+    @keyframes tree {
+        0%   { outline: 3px solid #8dc53e; }
+        50% { outline: 6px solid #8dc53e}
+        100% { outline: 8px solid #8dc53e; }
+    }
+
+    .tuto_cadre {
+        
+        font-weight: bold;
+        z-index: 200;
+        animation: tree 0.5s alternate infinite;
+    }
+
+    #tutoModal {
+        .modal-content {
+            border: none;
             background-color: transparent !important;
-            padding: 0;;
+        }
+        .modal-body,
+        .modal-header {
+            background-color: white !important;
+            height: auto;
+        }
+        .modal-footer {
+            height: 000px;
+            justify-content: center !important;
         }
     }
-}
+
+
+    .white {
+        background-color: white;
+    }
+    :root {
+        --main-color: #9A78C4;
+        --back-color: #F6F6F6 ;
+        --second-color: #6534A9;
+        --third-color: #D3C8E9;
+
+
+        --vert: #8dc53e;
+        --bleu: #16bdff;
+        --orange: #f16422;
+        --rouge: #e01a1f;
+        --rose: #f96e69;
+
+        --blue: #3fbafe;
+        --section0: #3fbafe;
+
+        --pink: #fa99b2;
+        --section1: #fa99b2;
+
+        --night: #b69efe;
+        --section2: #b69efe;
+
+        --green: #58d5c9;
+        --section3: #58d5c9;
+
+        --purple: #c0a3e5;
+        --section4: #c0a3e5;
+
+        --brown: #e5dd62;
+        --section5: #e5dd62;
+
+        --dark: rgba(86, 88, 84, 0.98);
+        --section6: rgba(86, 88, 84, 0.98);
+
+        --orange: rgba(202, 126, 49, 0.98);
+        --section7: rgba(202, 126, 49, 0.98);
+
+
+        --niveau_3: rgba(105,240,174,1);
+        --niveau_2: rgba(68,138,255,1);
+        --niveau_1: rgba(255,152,0,1);
+        --niveau_0: rgba(238,238,238,1);
+
+    }
+
+
+    @media (max-width: 994px) {
+        body {
+            .breadcrumb {
+                display: none;
+            }
+            .container {
+                --bs-gutter-x: 1.5rem;
+                --bs-gutter-y: 0;
+                width: 100%;
+                padding-right: calc(var(--bs-gutter-x) * 0.5);
+                padding-left: calc(var(--bs-gutter-x) * 0.5);
+                margin-right: auto;
+                margin-left: auto; 
+            }
+            .dropdown-menu {
+                box-shadow: none;
+                text-align: center;
+                background-color: transparent !important;
+                padding: 0;;
+            }
+        }
+    }
 
