@@ -136,11 +136,11 @@
                         <div class="footer-widget widgt-form">
                             <h5 class="title">Inscription à la Newsletter</h5>
                             <p>Entrez votre email et recevez les dernières mises à jour et informations sur notre plateforme.</p>
-                            <form class="footer-form">
+                            <form class="footer-form" action="#" method="post">
                                 <input type="text" placeholder="Entrez votre email" name="email">
                                 <button type="submit">
                                     <span class="shape"></span>
-                                    <span><i class="bi bi-forward-fill"></i><!--<i class="flaticon-vegan"></i>--> S'inscrire</span>
+                                    <span>S'inscrire</span>
                                 </button>
                             </form>
                         </div>

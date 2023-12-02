@@ -6,3 +6,102 @@
     .menu-link-red {color:#e3171a; font-weight:bold !important;}
     .menu-link-darkblue {color:#0a2fa4; font-weight:bold !important;}
 }
+
+.bg_img {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .banner-section {
+    padding: 180px 0;
+    position: relative;
+  }
+  @media (max-width: 1199px) {
+    .banner-section {
+      padding: 150px 0;
+    }
+  }
+  @media (max-width: 991px) {
+    .banner-section {
+      padding: 120px 0;
+    }
+  }
+  @media (max-width: 767px) {
+    .banner-section {
+      padding: 100px 0;
+      background: #8dc63f !important;
+    }
+  }
+  @media (max-width: 575px) {
+    .banner-section {
+      padding: 80px 0 90px;
+    }
+  }
+  .banner-section.style-2 {
+    padding: 236px 0 245px;
+  }
+  @media (max-width: 1199px) {
+    .banner-section.style-2 {
+      padding: 180px 0;
+    }
+  }
+  @media (max-width: 991px) {
+    .banner-section.style-2 {
+      padding: 170px 0;
+    }
+  }
+  @media (max-width: 767px) {
+    .banner-section.style-2 {
+      padding: 150px 0;
+      background-color: #00bfff !important;
+    }
+  }
+  @media (max-width: 575px) {
+    .banner-section.style-2 {
+      padding: 120px 0 130px;
+    }
+  }
+  .banner-section.style-slide {
+    padding: 0;
+  }
+
+  .about-list li {
+    font-size: 18px;
+    color: #0e2c53;
+    padding: 0;
+    margin-bottom: 9px;
+  }
+  .about-list li span {
+    color: #8dc63f;
+    font-weight: 700;
+  }
+  .about-list li i {
+    font-weight: 700;
+    margin-right: 5px;
+    font-size: 20px;
+  }
+  .about-list li:nth-of-type(4n + 2) span,
+  .about-list li:nth-of-type(4n + 2) i {
+    color: #92278f;
+  }
+  .about-list li:nth-of-type(4n + 3) span,
+  .about-list li:nth-of-type(4n + 3) i {
+    color: #ff5200;
+  }
+  .about-list li:nth-of-type(4n + 4) span,
+  .about-list li:nth-of-type(4n + 4) i {
+    color: #00bfff;
+  }
+  .about-list li:last-child {
+    margin-bottom: -8px;
+  }
+  @media (max-width: 575px) {
+    .about-list li {
+      font-size: 16px;
+    }
+  }
+
+  .about-content .about-list {
+    margin-bottom: 40px;
+  }
