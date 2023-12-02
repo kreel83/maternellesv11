@@ -57,7 +57,8 @@ if (!is_null($enfant->groupe)){
     <div class="card-body p-0 mt-2" style="text-align: center">
         <div class="name d-flex flex-column justify-content-center align-items-center" style="color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
           <div style="line-height: 15px; margin-top: 10px">{{$enfant->prenom}}</div>
-          <div style="font-size: 0.9rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 ">{{$enfant->nom}}</div>
+
+          <div style="font-size: 0.9rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 {{ env('App_DEMO') ? 'blur' : null}}">{{$enfant->nom}}</div>
           </div>
         <div class="title" style="font-size: 0.8rem; font-weight: bold;border-color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
 

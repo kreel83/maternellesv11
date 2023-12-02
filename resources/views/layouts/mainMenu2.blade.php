@@ -35,11 +35,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
     <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet">
 
 
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-        }
-    </style>
+
 </head>
 
 <body id="backEndUser">
@@ -52,15 +48,28 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                 <div class="container-fluid">
-                    <a href="{{ route('home') }}" class="brand-logo">
+                    <a href="{{ route('home') }}" class="brand-logo d-none d-lg-block">
                         <img src="{{ asset('img/deco/logo.png') }}" alt="" width="130">
                     </a>
+                    <div class="d-block d-lg-none" style="font-size: 25px; ">
+                        @if ($menu == 'accueil')
+                            <img src="{{ asset('img/deco/logo.png') }}" alt="" width="90">
+                        @else
+                        <a href="{{url()->previous()}}">
+
+                            <i style="color: black" class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        @endif
+                    </div>
+                    <div class="d-xs-block d-lg-none">
+                        {{ $menu}}
+                    </div>
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav align-items-center">
+                        <div class="navbar-nav align-items-center contenu_du_menu">
                             <a href="{{ route('depart') }}"
                                 class="nav-item nav-link  {{ $menu == 'accueil' ? 'active' : null }}">Tableau de bord
                             </a>
@@ -169,7 +178,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                             </div>
                             <div id="modeDecouverte"
                                 class="{{ Auth::user() && Auth::user()->is_abonne() ? 'd-none' : null }}">
-                                <button class="btnModeDecouverte">Mode découverte</button>
+                                <button class="btnModeDecouverte" data-bs-toggle="modal" data-bs-target="#InfoDemoMain" >Mode découverte</button>
                             </div>
 
                         </div>
@@ -178,7 +187,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                             $params = in_array($menu, ['monprofil', 'contact']);
                         @endphp
 
-                        <div class="nav-item dropdown ms-auto">
+                            <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu">
                             <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
                                 data-bs-toggle="dropdown">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</a>
                             <div class="dropdown-menu" style="left: inherit !important; right: 0">
@@ -298,6 +307,24 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
              pleinement de votre application
             <div>
                 <button class="btnAction mx-auto" data-bs-dismiss="modal" aria-label="Close">J'ai compris</button>
+            </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="InfoDemoMain" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top: 200px;">
+      <div class="modal-content  position-relative">
+        <div class="modal-body text-center">
+            Vous utilisez un version "découverte" de l'application<br>
+            Cette version est limitée à 10 notations.<br><br>
+            Abonnez-vous pour 12€99 / an pour profiter<br>
+             pleinement de votre application
+            <div>
+                <a href="/app/register/start" class="btnAction mx-auto" style="background-color: rgb(116, 205, 116)">Je m'abonne</a>
+                <button class="btnAction mx-auto" data-bs-dismiss="modal" aria-label="Close">je teste l'application</button>
             </div>
         </div>
   

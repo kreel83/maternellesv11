@@ -91,7 +91,7 @@ class ItemController extends Controller
             $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
 
             $compte = Resultat::where('user_id', $user->id)->count();
-            if ($compte == 5 && !$search) {
+            if ($compte == 10 && !$search) {
                 return 'demo';
             }
 

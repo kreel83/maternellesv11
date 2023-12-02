@@ -138,7 +138,7 @@
         </div>
         <div class="mb-3">
         @foreach ($enfants as $enfant)
-            {{ $enfant->prenom.' '.$enfant->nom }}<br>
+            {{ $enfant->prenom}} <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$enfant->nom}}</span><br>
         @endforeach
         </div>
         <div>

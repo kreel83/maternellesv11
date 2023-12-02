@@ -24,7 +24,7 @@ class GroupeController extends Controller
         return view('groupes.index')
             ->with('ct', $ct)
             ->with('nbGroupe', $nbGroupe)
-            ->with('groupes', $groupes);
+            ->with('groupes', $groupes ?? []);
     }
     // public function index() {
     //     $type = Auth::user()->type_groupe;
@@ -173,18 +173,15 @@ class GroupeController extends Controller
     public function supprimerUnGroupe($id, Request $request) {
 
         $token = md5(Auth::id().$id.env('HASH_SECRET'));        
-        if($token != $request->token) {
-            return redirect()->route('groupe')
-                ->with('status', 'danger')
-                ->with('msg', 'Token invalide.');
-        }
+
         
         $groupes = Auth::user()->configuration->groupes;
 
 
+        $groupes = json_decode($groupes, true); 
         
-        $groupes = json_decode($groupes, true);          
-        unset($groupes[$id]);
+        unset($groupes[$id -1]);
+        
         $nbGroupe = sizeof($groupes) ?? 0;
         $config = Configuration::where('user_id', Auth::id())->first();
         if (!$config) {
@@ -195,7 +192,7 @@ class GroupeController extends Controller
         $config->groupes = json_encode(array_values($groupes));        
         $config->save();
 
-        Enfant::where('user_id', Auth::id())->update(
+        Enfant::where('user_id', Auth::id())->where('groupe', $id-1 )->update(
             ['groupe' => null]
         );
 

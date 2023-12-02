@@ -72,7 +72,7 @@
                             @endif
                             <div class="ms-3 d-flex flex-column justify-content-center">
                                 <div style="font-size: 24px;font-weight: bolder; color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">{{ $enfant->prenom }}</div>
-                                <div style="font-weight: 400; font-size: 14px">{{ $enfant->nom }}</div>
+                                <div style="font-weight: 400; font-size: 14px" class="{{ env('App_DEMO') ? 'blur' : null}}">{{ $enfant->nom }}</div>
                             </div>
                         </div>
                     </div>

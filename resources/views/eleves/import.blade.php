@@ -100,7 +100,7 @@
                         <input type="checkbox" class="choix choix_liste" data-id="{{$enfant->id}}">
                     </td>
                     <td>
-                        {{ $enfant->nom}} {{ $enfant->prenom}} <span class="psmsgs">{{$enfant->psmsgs}}</span>
+                        <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$enfant->nom}}</span> {{ $enfant->prenom}} <span class="psmsgs">{{$enfant->psmsgs}}</span>
                     </td>
                 </tr>
                 @endforeach
@@ -115,7 +115,7 @@
                 @foreach ($profs as $prof)
                 <tr class="prof" data-prof="{{$prof->id}}">
                     <td class="ps-5">    
-                        {{ $prof->name}} {{$prof->prenom}} 
+                        <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$prof->name}}</span> {{$prof->prenom}} 
                     </td>
                 </tr>
                 @endforeach
