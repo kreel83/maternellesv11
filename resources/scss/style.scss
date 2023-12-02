@@ -2,7 +2,7 @@
 
 	body {
 		font-family: $font-family-sans-serif;
-		background-color: #fff;
+		background-color: var(--back-color);
 
 		height: 100%;
 		min-height: 100vh;

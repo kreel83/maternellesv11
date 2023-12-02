@@ -32,9 +32,7 @@
  
         <div class="alert alert-info" role="alert">
             <ul>
-                @if ($ct > 0) 
-                <li>La suppression d'un groupe réinialisera l'affectation de groupe des enfants</li>
-                @endif
+
                 @if (4 - $nbGroupe == 0)
                 <li>Vous pouvez ne pouvez plus créer de groupe</li>
                 @else
@@ -104,10 +102,13 @@
                     @endphp
                 <div class="d-flex mb-3 groupe_card position-relative">
                     <div class="groupe_titre">{{$key +1 }}</div>
-                    <div class="groupe_controle d-flex w-25 justify-content-between">
+                    <div class="groupe_controle d-flex w-25 justify-content-center">
                         <a  style="color: black" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><i class="fa-solid fa-edit"></i></a>
-                        <a  style="color: black" href="{{ route('supprimerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><span style="cursor: pointer"><i class="fa-solid fa-trash"></i></a>
+                        @if ($key == sizeof($groupes) -1)
+                        <div data-bs-toggle="modal" data-bs-target="#ModalSupprimerGroupe" class="ms-3" style="color: black" ><span style="cursor: pointer"><i class="fa-solid fa-trash"></i></div>
+                        @endif
                     </div>
+                    
                         <div class="apercu-groupe mb-3" style="background-color: {{ $groupes[$loop->index]['backgroundColor'] }}; color: {{ $groupes[$loop->index]['textColor'] }}">{{ $groupes[$loop->index]['name'] ?? null }}</div>
                     {{-- <div class="d-flex justify-content-between w-100">
                         <a class="btnAction" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}">Modifier</a>
@@ -129,6 +130,25 @@
             @endif
         </div>
 
-
+<!-- Modal -->
+<div class="modal fade" id="ModalSupprimerGroupe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top: 120px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation de suppression</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>Voulez-vous supprimer ce groupe? </div>
+            <br>
+            <small>Si oui, vous deverez réaffecter les enfants de ce groupe</small>
+            
+        </div>
+        <div class="modal-footer">
+                    <a class="btnAction" href="{{ route('supprimerUnGroupe', ['id' => sizeof($groupes)]) }}" >Supprimer</a>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
     

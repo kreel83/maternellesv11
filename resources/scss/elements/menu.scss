@@ -40,4 +40,36 @@
         border-radius: 4px;
     }
 
+    @media only screen and (max-width: 994px) {
+        // .navbar  {
+        //     background-color: var(--main-color) !important;
+        //     color: white !important
+        // }
+        .contenu_du_menu {
+            padding-top: 40px;
+        }
+        #modeDecouverte {
+            margin-top: 30px;
+        }
+        .nom_dans_menu {
+            margin-top: 50px !important;
+            margin-bottom: 20px;
+        }
+        .nav-item.active, .nav-link.active, .nav-link:hover  {
+            border-bottom: 3px solid transparent !important;
+            background-color: transparent !important;
+            color: black !important;
+            border-radius: 0%  !important;
+            text-align: center;
+            
+            
+        }  
+        .dropdown-menu {
+            border: none !important;
+            box-shadow: none !important;
+        }  
+    }
+
+
+
 }

@@ -1,9 +1,10 @@
 @php
     $degrades = App\Models\Enfant::DEGRADE;
     $lesgroupes = json_decode(Auth::user()->groupes, true);
+
 @endphp
 
-
+    @if (!isset($is_dashboard))
     <nav class="my5" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
     aria-label="breadcrumb">
     
@@ -14,11 +15,14 @@
     </ol>
     
     </nav>
+    @endif
 
+    @if (!isset($is_dashboard) || $listeDesEleves->isEmpty())
     <div class="mb-3 d-flex">
         <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
         <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
     </div>
+    @endif
 
 <div class="row">
     <div class="col-md-6">
@@ -41,9 +45,16 @@
                         </td>
                         <td class="name {{ $eleve->genre }}">
                             <div>
-                                <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
-                                    {{ $eleve->prenom . ' ' . $eleve->nom }}
+                                @if (env('APP_DEMO'))
+                                <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">                                   
+                                    {{$eleve->prenom. ' ' }}
+                                    <span class="blur">{{$eleve->nom}}</span>
                                 </a>
+                                @else
+                                <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
+                                    {{$eleve->prenom . ' ' . $eleve->nom}}
+                                </a>
+                                @endif
 
                             </div>
                             <div style="color: lightgrey;">
@@ -99,9 +110,17 @@
                         </td>
                         <td class="name {{ $eleve->genre }}">
                             <div>
-                                <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
-                                    {{ $eleve->prenom . ' ' . $eleve->nom }}
+
+                                @if (env('APP_DEMO'))
+                                <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">                                   
+                                    {{$eleve->prenom. ' ' }}
+                                    <span class="blur">{{$eleve->nom}}</span>
                                 </a>
+                                @else
+                                <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
+                                    {{$eleve->prenom . ' ' . $eleve->nom}}
+                                </a>
+                                @endif
 
                             </div>
                             <div style="color: lightgrey;">
