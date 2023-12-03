@@ -783,7 +783,7 @@ class CahierController extends Controller
         $phrases = Phrase::where('enfant_id', $enfant->id)->get();
         $exclusion = $phrases->pluck('commentaire_id');
         if ($section_id == 99) {
-            
+            $section = null;
             $phrases = Commentaire::where(function($query) {
                 $query->where('user_id', Auth::id())->orWhereNull('user_id');})
                 ->whereNotIn('id', $exclusion)

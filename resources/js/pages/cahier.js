@@ -313,6 +313,7 @@ const clickOnDefinif = (quill) => {
         } else {
             $('.labelDefinitifGauche').addClass('active')
         }
+        console.log('test method post definitif');
         var enfant = $(this).data('enfant')
         $.ajaxSetup({
             headers: {
