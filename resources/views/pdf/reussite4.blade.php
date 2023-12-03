@@ -457,7 +457,7 @@ $degrades = App\Models\Enfant::DEGRADE;
         </tr>
         <tr>
             <td>
-                <div class="section p_osition-section"  style="font-family:'frenchScript';font-size:50px">
+                <div class="section p_osition-section"  style="font-family: frenchScript; font-size:50px">
                     {{$enfant->section()}}
                 </div>
             </td>

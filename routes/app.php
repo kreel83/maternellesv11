@@ -197,7 +197,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/groupe/saveTermes',[GroupeController::class,'saveTermes'])->name('saveTermes');
     Route::get('/groupe/edit/{id}',[GroupeController::class,'editerUnGroupe'])->name('editerUnGroupe');
     Route::get('/groupe/supprimer/{id}',[GroupeController::class,'supprimerUnGroupe'])->name('supprimerUnGroupe');
-    // Route::post('/groupe/edit',[GroupeController::class,'editerUnGroupePost'])->name('editerUnGroupePost');
+    Route::post('/groupe/edit',[GroupeController::class,'editerUnGroupePost'])->name('editerUnGroupePost');
     // Route::get('/groupe/remove/{id}',[GroupeController::class,'supprimerUnGroupe'])->name('supprimerUnGroupe');
     // Route::post('/groupe/remove',[GroupeController::class,'supprimerUnGroupePost'])->name('supprimerUnGroupePost');
 

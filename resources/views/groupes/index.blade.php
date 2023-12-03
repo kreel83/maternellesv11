@@ -31,16 +31,11 @@
 
  
         <div class="alert alert-info" role="alert">
-            <ul>
-
-                @if (4 - $nbGroupe == 0)
-                <li>Vous pouvez ne pouvez plus créer de groupe</li>
-                @else
-                <li>Vous pouvez créer encore {{ 4 - $nbGroupe}} groupe{{ 4 - $nbGroupe == 1 ? null : 's'}}</li>
-                @endif
-
-            </ul>
-            
+            @if (4 - $nbGroupe == 0)
+                Vous pouvez ne pouvez plus créer de groupe (4 maximum)
+            @else
+                Vous pouvez créer encore {{ 4 - $nbGroupe}} groupe{{ 4 - $nbGroupe == 1 ? null : 's'}}
+            @endif
         </div>   
     
 
