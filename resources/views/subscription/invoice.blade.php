@@ -23,7 +23,7 @@
                             {{--<td>{{ $invoice->date()->format('d/m/Y') }}</td>--}}
                             <td>{{ $invoice->amount }}</td>
                             {{--<td>{{ $invoice->total() }}</td>--}}
-                            <td><a href="{{ route('user.invoice.download', ['number' => $invoice->number]) }}"><span class="fa fa-download"></span></a></td>
+                            <td><a href="{{ route('user.invoice.download', ['facture_number' => $invoice->number]) }}"><span class="fa fa-download"></span></a></td>
                         </tr>
                     @endforeach
                 @else

@@ -34,7 +34,7 @@ class SubscriptionController extends Controller
                 $status = $licence ? 'actif' : 'expiré';
                 $expirationDate = $licence->expires_at;
                 $onGracePeriode = false;
-                $message = "Licence numéro $licence->name gérée par votre établissement.";
+                $message = "Licence n° $licence->name gérée par votre établissement.";
                 break;
             case 'self':
                 $status = Auth::user()->subscribed('default') ? 'actif' : 'expiré';

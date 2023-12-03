@@ -119,7 +119,7 @@
 
         <div class="d-flex flex-column mb-3">
             <div class="p-2">
-                <label for="">Nom du groupe</label>
+                <label for="">Nom du groupe (facultatif)</label>
                 <input type="text" class="form-control p-2" name="groupName" id="groupName" value="{{ $id != 'new' ? $groupes[$id]['name'] : null}}">
                 <small for="groupName">12 caractères maximum</small>
             </div>
