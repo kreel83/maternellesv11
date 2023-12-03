@@ -21,7 +21,7 @@ $degrades = App\Models\Enfant::DEGRADE;
             font-family: 'agba';
             src: url({{ storage_path('fonts\Agbalumo-Regular.ttf') }}) format("truetype");
 
-            font-weight: 400; 
+  
             font-style: normal; 
         }
 
@@ -30,7 +30,7 @@ $degrades = App\Models\Enfant::DEGRADE;
             font-family: 'script';
             src: url({{ storage_path('fonts\DancingScript-VariableFont_wght.ttf') }}) format("truetype");
 
-            font-weight: 800; 
+       
             font-style: normal; 
         }
         @font-face {
@@ -38,7 +38,6 @@ $degrades = App\Models\Enfant::DEGRADE;
             font-family: 'frenchScript';
             src: url({{ storage_path('fonts\FrenchScriptMT.ttf') }}) format("truetype");
 
-            font-weight: 400; 
             font-style: normal; 
         }
 
@@ -283,7 +282,6 @@ $degrades = App\Models\Enfant::DEGRADE;
 
             .periode {
                 font-size: 25px;
-                font-weight: 400;
                 text-align: center;
                 margin-top: -2px;
                 color: grey;
@@ -291,7 +289,6 @@ $degrades = App\Models\Enfant::DEGRADE;
             }
             .annee {
                 font-size: 15px;
-                font-weight: 800;
                 text-align: center;
                 margin-top: -40px;
                 color: grey;
@@ -300,7 +297,6 @@ $degrades = App\Models\Enfant::DEGRADE;
 
             .section {
                 font-size: 25px;
-                font-weight: 800;
                 text-align: center;
                 
                 margin-top: 25px;
