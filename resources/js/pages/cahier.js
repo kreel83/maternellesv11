@@ -322,7 +322,7 @@ const clickOnDefinif = (quill) => {
         });
         $.ajax({
             method: 'POST',
-            url : '/app/enfants/' + enfant + '/cahier/definitif',
+            url : '/app/definitif/' + enfant,
             data: {
                 state: definitif,
                 quill: quill.root.innerHTML

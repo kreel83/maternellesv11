@@ -146,7 +146,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{enfant_id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
-    Route::post('/enfants/{enfant_id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
+    Route::post('/definitif/{enfant_id}', [CahierController::class, 'definitif'])->name('definitif');
     /*
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
