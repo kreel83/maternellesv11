@@ -326,7 +326,7 @@ const clickOnDefinif = (quill) => {
             url : '/app/enfants/' + enfant + '/cahier/definitif',
             data: {
                 state: definitif,
-                quill: encodeURIComponent(quill.root.innerHTML)
+                quill: quill.root.innerHTML
             },
             success: function(data) {
                 if (definitif == true) {

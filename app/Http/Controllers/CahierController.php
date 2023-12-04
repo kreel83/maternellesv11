@@ -579,7 +579,7 @@ class CahierController extends Controller
 
        
             $reussite->definitif = $request->state == "true" ? true : false;
-            $reussite->texte_integral = urldecode($request->quill);
+            $reussite->texte_integral = $request->quill;
             $reussite->save();
             return 'ok';
     }
