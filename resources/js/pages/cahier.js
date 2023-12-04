@@ -322,10 +322,10 @@ const clickOnDefinif = (quill) => {
         });
         $.ajax({
             method: 'POST',
-            url : '/app/definitif/' + enfant,
+            url : '/app/enfants/' + enfant + '/cahier/definitif',
             data: {
                 state: definitif,
-                quill: quill.root.innerHTML
+                quill: encodeURIComponent(quill.root.innerHTML)
             },
             success: function(data) {
                 if (definitif == true) {
