@@ -317,7 +317,8 @@ const clickOnDefinif = (quill) => {
         var enfant = $(this).data('enfant')
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+               'Content-Type': 'text/html'
             }
         });
         $.ajax({
