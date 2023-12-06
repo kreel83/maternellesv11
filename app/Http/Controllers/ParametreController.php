@@ -7,6 +7,7 @@ use App\Models\Commentaire;
 use App\Models\Ecole;
 use App\Models\Enfant;
 use App\Models\Equipe;
+use App\Models\Classe;
 use App\Models\Resultat;
 use App\Models\Fiche;
 use App\Models\Image;
@@ -356,7 +357,11 @@ class ParametreController extends Controller
         }
         // ----
 
+        $classeActive = Classe::where('user_id', Auth::id())->first();
+        session(['nom_de_la_classe' => $classeActive->description]);
+        session(['id_de_la_classe' => $classeActive->id]);
 
+        
 
         $date = Carbon::now();
         $mois = $date->locale('fr')->monthName;
