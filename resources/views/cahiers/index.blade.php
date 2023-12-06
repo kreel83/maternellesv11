@@ -140,9 +140,9 @@
                 <a target="_blank" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id,'periode' => $enfant->periode]) }}"
                     data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $reussite && $reussite->definitif == 0 ? 'd-none' : null }}"
                     id="pdf" style="margin-top: 0 !important">Voir le PDF</a>
-                <div 
+                {{-- <div 
                     data-enfant="{{ $enfant->id }}" class="btnSelection violet {{ $reussite && $reussite->definitif == 1 ? 'd-none' : null }}"
-                    id="reactualiser" style="margin-top: 0 !important">Réactualiser le texte</div>
+                    id="reactualiser" style="margin-top: 0 !important">Réactualiser le texte</div> --}}
                 {{-- <button data-enfant="{{ $enfant->id }}" class="btn btn-sm btn-primary"
                     id="reformuler">Reformuler</button> --}}
                 {{-- <a target="_blank" href="{{route('seepdf',['id' => $enfant->id, 'state' => 'save'])}}" data-enfant="{{$enfant->id}}"

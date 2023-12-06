@@ -36,30 +36,30 @@ class Resultat extends Model
     ];
 
 
-    public static function boot() {
+    // public static function boot() {
 
-	    parent::boot();
+	//     parent::boot();
 
-	    static::created(function($resultat) {
-	        $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
-            if ($r)  {
-                $r->texte_integral = null;
-                $r->save();
+	//     static::created(function($resultat) {
+	//         $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+    //         if ($r)  {
+    //             $r->texte_integral = null;
+    //             $r->save();
 
-            }
-	    });
+    //         }
+	//     });
 
-	    static::updating(function($resultat) {
-	        $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+	//     static::updating(function($resultat) {
+	//         $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
 
-            if ($r)  {
-                $r->texte_integral = null;
-                $r->save();
+    //         if ($r)  {
+    //             $r->texte_integral = null;
+    //             $r->save();
 
-            }
-	    });
+    //         }
+	//     });
     
-	}
+	// }
 
 
     public function notation() {

@@ -567,9 +567,10 @@ class CahierController extends Controller
         $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $sections, 'enfant' => $enfant]);
     }
 
-    public function definitif($enfant_id, $definitif, Request $request)
+    public function definitif($enfant_id, Request $request)
     {
         $reussite = Reussite::where('enfant_id', $enfant_id)->first();
+       
 
         if (!$reussite) {
             $reussite = new Reussite();
@@ -577,9 +578,11 @@ class CahierController extends Controller
             $reussite->user_id = Auth::id();
         }
 
-       
-            $reussite->definitif = $definitif == "true" ? true : false;
-            $reussite->texte_integral = $request->quill;
+
+        
+        $reussite->definitif = $request->state == "true" ? true : false;
+        $reussite->texte_integral = $request->quill;
+
             $reussite->save();
             return 'ok';
     }
@@ -830,6 +833,7 @@ class CahierController extends Controller
 
 
     public function saveTexte($enfant_id, Request $request) {
+        if (!$request->texte) return 'ko';
         $enfant = Enfant::find($enfant_id);
         $reussite = $enfant->hasReussite();
         if ($reussite) {
