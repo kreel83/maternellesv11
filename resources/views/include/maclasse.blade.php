@@ -1,6 +1,6 @@
 @php
     $degrades = App\Models\Enfant::DEGRADE;
-    $lesgroupes = json_decode(Auth::user()->groupes, true);
+    $lesgroupes = json_decode(Auth::user()->groupes(), true);
 
 @endphp
 

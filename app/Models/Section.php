@@ -58,7 +58,7 @@ class Section extends Model
     }
 
     public function nbSection() {
-        return Fiche::where('section_id', $this->id)->where('user_id', Auth::id())->count();
+        return Fiche::where('section_id', $this->id)->where('classe_id', session()->get('id_de_la_classe'))->count();
     }
 
     public function commentaires() {

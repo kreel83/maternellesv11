@@ -225,7 +225,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/fiches/populate/categorie', [ficheController::class, 'populateCategorie'])->name('populateCategorie');
     Route::post('/fiches/setSection', [ficheController::class, 'setSection'])->name('setSection');
 
+    Route::get('/changerclasse',[ClasseController::class,'changerclasse'])->name('changerClasse');
     Route::get('/createclasse',[ClasseController::class,'createclasse'])->name('createclasse');
+    Route::post('/saveclasse',[ClasseController::class,'saveclasse'])->name('saveNewClasse');
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::get('/maclasse',[EnfantController::class,'maclasse'])->name('maclasse');
