@@ -7,6 +7,7 @@ use App\Models\Commentaire;
 use App\Models\Ecole;
 use App\Models\Enfant;
 use App\Models\Equipe;
+use App\Models\Classe;
 use App\Models\Resultat;
 use App\Models\Fiche;
 use App\Models\Image;
@@ -34,6 +35,17 @@ use Illuminate\Http\JsonResponse;
 
 class ParametreController extends Controller
 {
+
+    public $maclasseactuelle;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {   
+            
+            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            return $next($request);
+            });
+    }
 
     public function aidematernelle() {
         $equipes = Auth::user()->configuration->equipes;
@@ -67,17 +79,8 @@ class ParametreController extends Controller
         }
         $liste = json_encode($liste);
         
-
-        $user = Auth::user();
-        $config = Configuration::where('user_id', $user->id)->first();
-        if (!$config) {
-            $config = new Configuration();
-            $config->user_id = $user->id;            
-        }
-
-
-        $config->equipes = $liste;
-        $config->save();
+        $this->maclasseactuelle->equipes = $liste;
+        $this->maclasseactuelle->save();
         // if ($request->id) {
         //     $equipe = Equipe::find($request->id);
 
@@ -232,7 +235,7 @@ class ParametreController extends Controller
         // }
 
         $user = Auth::user();
-        $equipes = json_decode($user->equipes, true);
+
         
         
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
@@ -243,15 +246,15 @@ class ParametreController extends Controller
         if($ecole->adresse_2 != '') { $adresseEcole[] = $ecole->adresse_2; }
         if($ecole->adresse_3 != '') { $adresseEcole[] = $ecole->adresse_3; }
         $user->photo = Storage::url($user->photo);
-        $conf = Configuration::where('user_id', Auth::id())->first();
-        $directeur = json_decode($user->configuration->direction);
+        
+        $directeur = json_decode($this->maclasseactuelle->direction);
         $sections = Section::orderBy('ordre','ASC')->get();
-        
-        
+        $equipes = json_decode($this->maclasseactuelle->equipes, true);
+
 
         return view('monprofil.index')
             ->with('request', $request->all() ?? [])
-            ->with('periodes', $conf->periodes)
+            ->with('periodes', $this->maclasseactuelle->periodes)
             ->with('directeur', $directeur)
             ->with('sections', $sections)
             ->with('user', $user)
@@ -288,18 +291,9 @@ class ParametreController extends Controller
         ]);
         $r = $request->except(['_token']);
         $r = json_encode($r);
-        
-        
 
-        
-        $user = Auth::user();
-        $conf = Configuration::where('user_id', Auth::id())->first();
-        $conf->direction = $r;
-
-        $conf->save();
-
-        
-        
+        $this->maclasseactuelle->direction = $r;
+        $this->maclasseactuelle->save();
         return redirect()->back()->withInput();
     }
 
@@ -356,7 +350,11 @@ class ParametreController extends Controller
         }
         // ----
 
+        $classeActive = Classe::find(Auth::user()->classe_id);
+        session(['nom_de_la_classe' => $classeActive->description]);
+        session(['id_de_la_classe' => $classeActive->id]);
 
+        
 
         $date = Carbon::now();
         $mois = $date->locale('fr')->monthName;
@@ -460,10 +458,10 @@ class ParametreController extends Controller
 
         //dd($top5AdvancedKids);
         $anniversaires = $anniversaires->sortBy('jour');
-        $info[1] = Enfant::where('user_id', Auth::id())->count();
-        $info[2] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('notation',2)->count();        
-        $info[22] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('autonome',0)->where('notation',2)->count();        
-        $info[3] = Fiche::where('user_id', Auth::id())->count();
+        $info[1] = Enfant::where('classe_id', session()->get('id_de_la_classe'))->count();
+        $info[2] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('notation',2)->where('enfants.classe_id', session()->get('id_de_la_classe'))->count();        
+        $info[22] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('autonome',0)->where('enfants.classe_id', session()->get('id_de_la_classe'))->where('notation',2)->count();        
+        $info[3] = Fiche::where('classe_id', session()->get('id_de_la_classe'))->count();
 
         $middle = (int) $listeDesEleves->count() / 2;
 

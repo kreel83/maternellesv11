@@ -24,7 +24,7 @@
 
 
 @php
-$lesgroupes = json_decode(Auth::user()->groupes, true);
+$lesgroupes = json_decode(Auth::user()->groupes(), true);
 
 $groupe = null;
 if (!is_null($enfant->groupe)){
@@ -107,7 +107,8 @@ if (!is_null($enfant->groupe)){
   @endif
   @if ($type == "affectation_groupe")
   @php
-  $groupes = json_decode(Auth::user()->groupes, true);
+  
+  $groupes = json_decode(Auth::user()->groupes(), true);
       if (is_null($enfant->groupe)) {
           $c = 'transparent';
       } else {

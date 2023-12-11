@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\Models\Configuration;
 use App\Models\Enfant;
+use App\Models\classe;
 use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -53,15 +54,24 @@ class EleveEvent
 
         // PDF pour Parent pas de Auth::
         
-        $conf = Configuration::where('user_id', $enfant->user_id)->first();
-        $lesgroupes = [];
-        if ($conf)  {
-            $lesgroupes = json_decode($conf->groupes, true);
-            $enfant->groupeFormatted = $enfant->groupe ? $lesgroupes[$enfant->groupe] : null;
-
+        //$conf = Configuration::where('user_id', $enfant->user_id)->first();
+        $classe = Classe::find(session()->get('id_de_la_classe')); 
+        
+        if ($classe->groupes) {
+            $lesgroupes = json_decode($classe->groupes, true);
+            if (!isset($lesgroupes[$enfant->groupe])) {
+                $enfant->groupeFormatted = null;
+            } else {
+                $enfant->groupeFormatted = $lesgroupes[$enfant->groupe];
+            }
+                
+            
         } else {
             $enfant->groupeFormatted = null;
         }
+
+
+
         //$lesgroupes = json_decode(Auth::user()->groupes, true);
         
 

@@ -313,19 +313,27 @@ const clickOnDefinif = (quill) => {
         } else {
             $('.labelDefinitifGauche').addClass('active')
         }
+        console.log('test method post definitif');
         var enfant = $(this).data('enfant')
+
+
+        // Construct the data object
+        var data = {
+            quill: quill.root.innerHTML,
+            state: definitif
+        };
+        var jsonData = JSON.stringify(data);
+
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+               'Content-Type': 'application/json'
             }
         });
         $.ajax({
             method: 'POST',
             url : '/app/enfants/' + enfant + '/cahier/definitif',
-            data: {
-                state: definitif,
-                quill: quill.root.innerHTML
-            },
+            data: jsonData,
             success: function(data) {
                 if (definitif == true) {
                     quill.enable(false)

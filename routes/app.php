@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\AdminLicenceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnfantController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupeController;
 use App\Http\Controllers\UserController;
@@ -234,6 +235,10 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/fiches/populate/classification', [ficheController::class, 'populateClassification'])->name('populateClassification');
     Route::post('/fiches/populate/categorie', [ficheController::class, 'populateCategorie'])->name('populateCategorie');
     Route::post('/fiches/setSection', [ficheController::class, 'setSection'])->name('setSection');
+
+    Route::get('/changerclasse',[ClasseController::class,'changerclasse'])->name('changerClasse');
+    Route::get('/createclasse',[ClasseController::class,'createclasse'])->name('createclasse');
+    Route::post('/saveclasse',[ClasseController::class,'saveclasse'])->name('saveNewClasse');
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::get('/maclasse',[EnfantController::class,'maclasse'])->name('maclasse');

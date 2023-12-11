@@ -6,6 +6,7 @@ use App\Models\Myperiode;
 use App\Models\Configuration;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Classe;
 use App\Models\Vacance;
 use App\utils\Utils;
 use Carbon\Carbon;
@@ -16,9 +17,18 @@ class CalendrierController extends Controller
 {
 
 
+    public $maclasseactuelle;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {   
+            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            return $next($request);
+            });
+    }
     public function periode() {
         //$periodes = Myperiode::where('user_id', Auth::id())->orderBy('periode')->get()->toArray();
-        $periodes = Auth::user()->configuration->periodes;
+        $periodes = $this->maclasseactuelle->periodes;
   
         
 
@@ -93,9 +103,8 @@ class CalendrierController extends Controller
     }
 
     public  function periode_save(Request $request) {
-        $conf = Configuration::where('user_id', Auth::id())->first();
-        $conf->periodes = (int) $request->periode;
-        $conf->save();
+        $this->maclasseactuelle->periodes = (int) $request->periode;
+        $this->maclasseactuelle->save();
         return redirect()->back()->withInput();
         // dd($request);
         // $datas = $request->except('_token');

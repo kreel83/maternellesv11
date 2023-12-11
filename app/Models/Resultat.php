@@ -36,30 +36,30 @@ class Resultat extends Model
     ];
 
 
-    public static function boot() {
+    // public static function boot() {
 
-	    parent::boot();
+	//     parent::boot();
 
-	    static::created(function($resultat) {
-	        $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
-            if ($r)  {
-                $r->texte_integral = null;
-                $r->save();
+	//     static::created(function($resultat) {
+	//         $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+    //         if ($r)  {
+    //             $r->texte_integral = null;
+    //             $r->save();
 
-            }
-	    });
+    //         }
+	//     });
 
-	    static::updating(function($resultat) {
-	        $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+	//     static::updating(function($resultat) {
+	//         $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
 
-            if ($r)  {
-                $r->texte_integral = null;
-                $r->save();
+    //         if ($r)  {
+    //             $r->texte_integral = null;
+    //             $r->save();
 
-            }
-	    });
+    //         }
+	//     });
     
-	}
+	// }
 
 
     public function notation() {
@@ -76,7 +76,7 @@ class Resultat extends Model
     public function top5ElevesLesPlusAvances() {
         return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
-        ->where('enfants.user_id', Auth::id())
+        ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->groupBy('enfant_id')
         ->orderByDesc('total')
         ->limit(5)
@@ -86,7 +86,7 @@ class Resultat extends Model
     public function top5ElevesLesMoinsAvances() {
         return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
-        ->where('enfants.user_id', Auth::id())
+        ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->groupBy('enfant_id')
         ->orderBy('total')
         ->limit(5)
@@ -97,7 +97,8 @@ class Resultat extends Model
         return self::selectRaw('count(*) as total, items.name, sections.id')
         ->join('items', 'items.id', '=', 'item_id')
         ->join('sections', 'sections.id', '=', 'items.section_id')
-        ->where('resultats.user_id', Auth::id())
+        ->join('enfants', 'enfants.id', '=', 'resultats.enfant_id') 
+        ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->groupBy('item_id')
         ->orderByDesc('total')
         ->limit(5)
@@ -108,7 +109,8 @@ class Resultat extends Model
         return self::selectRaw('count(*) as total, items.name, sections.id')
         ->join('items', 'items.id', '=', 'item_id')
         ->join('sections', 'sections.id', '=', 'items.section_id')
-        ->where('resultats.user_id', Auth::id())
+        ->join('enfants', 'enfants.id', '=', 'resultats.enfant_id') 
+        ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->groupBy('item_id')
         ->orderBy('total')
         ->limit(5)
@@ -119,7 +121,7 @@ class Resultat extends Model
         $r = Enfant::where('user_id', Auth::id())->count();
         // dd($r);
         $c = self::rightJoin('enfants','enfants.id','enfant_id')
-        ->where('enfants.user_id', Auth::id())
+        ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->whereNull('resultats.enfant_id')
         ->count();
 

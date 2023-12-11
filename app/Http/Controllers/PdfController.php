@@ -171,7 +171,7 @@ class PdfController extends Controller
 
     public function cahierManage(Request $request) {
         $ordre = Auth::user()->configuration->ordre_pdf;
-        $enfants = Enfant::where('user_id', Auth::id())->orderBy($ordre)->get();
+        $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy($ordre)->get();
         $reussites = Reussite::where('user_id', Auth::id())->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();

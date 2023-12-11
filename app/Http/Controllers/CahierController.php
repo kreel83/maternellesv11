@@ -570,16 +570,19 @@ class CahierController extends Controller
     public function definitif($enfant_id, Request $request)
     {
         $reussite = Reussite::where('enfant_id', $enfant_id)->first();
-        //dd($request);
+       
+
         if (!$reussite) {
             $reussite = new Reussite();
             $reussite->enfant_id = $enfant_id;
             $reussite->user_id = Auth::id();
         }
 
-       
-            $reussite->definitif = $request->state == "true" ? true : false;
-            $reussite->texte_integral = $request->quill;
+
+        
+        $reussite->definitif = $request->state == "true" ? true : false;
+        $reussite->texte_integral = $request->quill;
+
             $reussite->save();
             return 'ok';
     }
@@ -783,7 +786,7 @@ class CahierController extends Controller
         $phrases = Phrase::where('enfant_id', $enfant->id)->get();
         $exclusion = $phrases->pluck('commentaire_id');
         if ($section_id == 99) {
-            
+            $section = null;
             $phrases = Commentaire::where(function($query) {
                 $query->where('user_id', Auth::id())->orWhereNull('user_id');})
                 ->whereNotIn('id', $exclusion)
@@ -830,6 +833,7 @@ class CahierController extends Controller
 
 
     public function saveTexte($enfant_id, Request $request) {
+        if (!$request->texte) return 'ko';
         $enfant = Enfant::find($enfant_id);
         $reussite = $enfant->hasReussite();
         if ($reussite) {

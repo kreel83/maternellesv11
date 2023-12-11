@@ -38,6 +38,14 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
 </head>
 
+
+@php
+    $hasClassActive = 'disabled';
+    if (session()->get('id_de_la_classe')) {
+        $hasClassActive = null;
+    } 
+@endphp
+
 <body id="backEndUser">
 
     <input type="hidden" id="tuto" value="{{ Auth::user()->configuration->tuto ?? null }}">
@@ -84,18 +92,21 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 <div class="dropdown-menu">
 
 
+                                    <a href="{{ route('createclasse') }} "
+                                        class="nav-item nav-link {{ $menu == 'createclasse' ? 'active' : null }}">Je crée une classe
+                                       </a>
                                     <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
-                                        class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }}">J'édite
+                                        class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite
                                         ma classe</a>
                                     @if (Auth::user()->is_enfants())
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
-                                            class="nav-item nav-link ">J'évalue mes élèves</a>
+                                            class="nav-item nav-link  {{$hasClassActive}} ">J'évalue mes élèves</a>
 
                                         <a href="{{ route('enfants', ['type' => 'avatar']) }}"
-                                            class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}">Je
+                                            class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}  {{$hasClassActive}}">Je
                                             choisis les avatars</a>
                                         <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}"
-                                            class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}">J'affecte
+                                            class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}  {{$hasClassActive}}">J'affecte
                                             mes groupes</a>
                                     @endif
                                 </div>
@@ -190,7 +201,10 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                             <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu">
                             <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
                                 data-bs-toggle="dropdown">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</a>
+
                             <div class="dropdown-menu" style="left: inherit !important; right: 0">
+                                <a href="#"
+                                    class="nav-item  {{ $menu == 'monprofil' ? 'active' : null }}">{{session()->get('nom_de_la_classe')}}</a>
                                 <a href="{{ route('monprofil') }}"
                                     class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}">Mon
                                     profil</a>
@@ -212,6 +226,15 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                             href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
                                         @endif
                                     @endif
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <a href="{{ route('changerLeMotDePasse') }}"
+                                class="nav-item nav-link disabled commentaire" style="font-size: 14px; color: lightgray">Changer de classe</a>                               
+                                @foreach (Auth::user()->autresClasses() as $classe)
+                                    <a href="{{ route('changerClasse',['classe' => $classe->id]) }}"
+                                    class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
+                                @endforeach
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

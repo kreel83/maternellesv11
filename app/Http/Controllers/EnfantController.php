@@ -113,9 +113,9 @@ class EnfantController extends Controller
         
         if (in_array($request->type,["evaluation","reussite"])) {
 
-            $enfants = Enfant::where('user_id', Auth::id())->where("reussite_disabled",0);
+            $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->where("reussite_disabled",0);
         } else {
-            $enfants = Enfant::where('user_id', Auth::id());
+            $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'));
             if (!Auth::user()->groupes) {
                 return view('enfants.no_groupes')->with('type', $request->type);
             }
@@ -435,6 +435,7 @@ class EnfantController extends Controller
         //$datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
         $datas['prenom'] = ucfirst($datas['prenom']);
+        $datas['classe_id'] = session()->get('id_de_la_classe');
         $degrade = Enfant::DEGRADE;
         $datas['background'] = array_rand($degrade);
         $files = File::files(public_path('img/animaux'));

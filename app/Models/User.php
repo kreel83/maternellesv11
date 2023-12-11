@@ -15,6 +15,8 @@ use Laravel\Cashier\Billable;
 use App\Models\Event;
 use App\Models\Configuration;
 use App\Models\Resultat;
+use App\Models\Classe;
+use App\Models\ClasseUser;
 use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Support\Facades\Mail;
@@ -160,11 +162,22 @@ class User extends Authenticatable
     public $periodes;
     public $equipes;
 
+    public function groupes() {
+
+        return Classe::find(session()->get('id_de_la_classe'))->groupes;
+
+    }
+
 
     public function configuration() {
         return $this->hasOne('App\Models\Configuration','user_id','id');
     }
 
+    public function autresClasses() {
+        $actual = session()->get('id_de_la_classe');
+        $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
+        return Classe::whereIn('id', $t)->where('id','!=',$actual)->get();
+    }
 
     public function sendPasswordResetNotification($token): void
     {
@@ -272,7 +285,7 @@ class User extends Authenticatable
     // $user->config->aides;
 
     public function liste() {
-        return Enfant::where('user_id', $this->id)->orderBy('prenom')->get();
+        return Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy('prenom')->get();
     }
 
     public function profs() {
