@@ -184,7 +184,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                         </div>
 
                         @php
-                            $params = in_array($menu, ['monprofil', 'contact']);
+                            $params = in_array($menu, ['monprofil', 'contact', 'partager']);
                         @endphp
 
                             <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu">
@@ -203,6 +203,15 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     mot de passe</a>
                                 <a class="nav-item nav-link  {{ $menu == 'contact' ? 'active' : null }}"
                                     href="{{ route('contact') }}">Nous contacter</a>
+                                    @if(session()->has('lienPourPartageDansMenu'))
+                                        @if(session('lienPourPartageDansMenu') == true)
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
+                                            href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
+                                        @endif
+                                    @endif
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

@@ -13,61 +13,70 @@
     transform: none !important;
   }
 </style>
-<div id="detail_abo">
 
-<h3>Détail de mon abonnement</h3>
+<div class="container my-5 page" id="">
 
-{{--@if (!$is_abonne)--}}
-<div class="card mx-auto w-75">
-  <div class="card-body">
-    <h4 class="card-title mb-3">Détail de mon abonnement</h4>
-    {{-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> --}}
-    @if ($status != 'actif')
-        <div class="mb-3">
-          Vous n'avez pas d'abonnement en cours.
-        </div>
-        <div class="mb-3">
-          <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}">Je souhaite m'abonner au service <i>{{ env('APP_NAME') }}</i></a>
-        </div>
-    @else
-        <div class="mb-3">
-          Statut : {{ $status }}
-        </div>
-                        
-        @if($status == 'actif')
+  <nav class="pb-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
+        <li class="breadcrumb-item active" aria-current="page">Mon abonnement</li>
+      </ol>
+  </nav>
+
+  <div id="detail_abo">
+
+  {{--@if (!$is_abonne)--}}
+  <div class="card mx-auto w-75">
+    <div class="card-body">
+      <h4 class="card-title mb-3">Détail de mon abonnement</h4>
+      {{-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> --}}
+      @if ($status != 'actif')
           <div class="mb-3">
-            Votre abonnement se terminera le {{ Carbon\Carbon::parse($expirationDate)->format('d/m/Y')}}.
+            Vous n'avez pas d'abonnement en cours.
           </div>
-        @endif
-
-        <div class="mb-3">{{ $message }}</div>
-        <div class="mb-3">{{ $msgIfCanceled }}</div>
-    @endif
-    {{-- <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a> --}}
-
-    <div class="d-flex flex-row">
-        @if($licenceType == 'self' && $status == 'actif')
-            <div class="me-3">
-            @if($onGracePeriode)
-                <a class="btn btn-primary" href="{{ route('subscribe.resume') }}">Réactiver mon abonnement</a>
-            @else
-                <a class="btn btn-outline-primary" href="{{ route('subscribe.cancel') }}">Résilier mon abonnement</a>
-            @endif
+          <div class="mb-3">
+            <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}">Je souhaite m'abonner au service <i>{{ env('APP_NAME') }}</i></a>
+          </div>
+      @else
+          <div class="mb-3">
+            Statut : {{ $status }}
+          </div>
+                          
+          @if($status == 'actif')
+            <div class="mb-3">
+              Votre abonnement se terminera le {{ Carbon\Carbon::parse($expirationDate)->format('d/m/Y')}}.
             </div>
-        @endif
+          @endif
 
-        @if($invoices > 0)
-            <div class="me-3">
-                <a class="btn btn-primary" href="{{ route('subscribe.invoice') }}">Mes factures</a>
-            </div>
-        @endif
+          <div class="mb-3">{{ $message }}</div>
+          <div class="mb-3">{{ $msgIfCanceled }}</div>
+      @endif
+      {{-- <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a> --}}
+
+      <div class="d-flex flex-row">
+          @if($licenceType == 'self' && $status == 'actif')
+              <div class="me-3">
+              @if($onGracePeriode)
+                  <a class="btn btn-primary" href="{{ route('subscribe.resume') }}">Réactiver mon abonnement</a>
+              @else
+                  <a class="btn btn-outline-secondary" href="{{ route('subscribe.cancel') }}">Résilier mon abonnement</a>
+              @endif
+              </div>
+          @endif
+
+          @if($invoices > 0)
+              <div class="me-3">
+                  <a class="btn btn-primary" href="{{ route('subscribe.invoice') }}">Mes factures</a>
+              </div>
+          @endif
+      </div>
+      
     </div>
-    
+
   </div>
 
 </div>
-
 
 {{-- @if ($status != 'actif')
     <p>Vous n'avez pas d'abonnement en cours.</p>
@@ -104,7 +113,7 @@
 @endif --}}
 
     
-      <div class="d-flex justify-content-center align-items-center vh-100">
+      {{-- <div class="d-flex justify-content-center align-items-center vh-100">
         
           <div class="card_login" style="border-radius: 1rem; overflow: hidden">
             <div class="row g-0 h-100">
@@ -141,7 +150,7 @@
           
         </div>
       </div>
-    </div>
+    </div> --}}
 
 
   </div>

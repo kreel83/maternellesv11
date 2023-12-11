@@ -60,16 +60,11 @@ class AdminController extends Controller
         //return redirect(route('admin.login'));
     }
 
-    public function register()
-    {
-        return view('admin.register');
-    }
-
-    public function checkcode($code)
-    {
-        $ecole = new Ecole;
-        return $ecole->checkcode($code);
-    }
+    // public function checkcode($code)
+    // {
+    //     $ecole = new Ecole;
+    //     return $ecole->checkcode($code);
+    // }
 
     public function contact(): View
     {

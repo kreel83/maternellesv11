@@ -317,4 +317,8 @@ class User extends Authenticatable
     }
     */
 
+    public function maClasse() {
+        return Classe::where('user_id', Auth::id())->first();
+    }
+
 }

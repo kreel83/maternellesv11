@@ -15,6 +15,7 @@ use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TutoController;
 use App\Http\Controllers\NewaccountController;
+use App\Http\Controllers\PartageController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
@@ -80,8 +81,6 @@ Route::middleware(['admin'])->group(function()
 
 // Admin registration URLs
 /*
-Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
-Route::get('/admin/checkcode/{code}', [AdminController::class, 'checkcode'])->name('admin.checkcode');  // utilisé dans admin.js
 // User Validation url from admin creation
 Route::get('/user/validation/{token}', [UserController::class, 'valideUserFromAdminCreatePassword'])->name('user.valideUserFromAdminCreatePassword');  // utilisé pour valider une adresse mail depuis email
 Route::post('/user/validation/store', [UserController::class, 'valideUserFromAdminSavePassword'])->name('user.valideUserFromAdminSavePassword');  // sauve le mot de passe et active le compte
@@ -101,9 +100,29 @@ Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
     
+//     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+//     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
+//     Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
+//     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+//     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+//     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+//     Route::get('/home', [HomeController::class, 'index'])->name('home');
+//     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
+//     Route::get('/error', [parametreController::class, 'error'])->name('error');
+// });
+
+//Route::middleware(['auth'])->group(function () {
+    // Les URLs ci-dessous nécessitent authentification + abonnement en cours
+    Route::middleware(['auth','user'])->group(function () {
+        //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
+        
+        //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+
+    Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
+
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
@@ -112,15 +131,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
-    Route::get('/error', [parametreController::class, 'error'])->name('error');
-});
-
-//Route::middleware(['auth'])->group(function () {
-    // Les URLs ci-dessous nécessitent authentification + abonnement en cours
-    Route::middleware(['auth','user'])->group(function () {
-        //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
-        
-        //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+    Route::get('/error', [parametreController::class, 'error'])->name('error');        
         
     Route::get('/tutos', [TutoController::class, 'index'])->name('tutos');
     Route::get('/tutos/ajax', [TutoController::class, 'ajax'])->name('ajax');
@@ -281,6 +292,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/recupClasse', [AdminController::class, 'recupClasse'])->name('recupClasse');
 
     Route::get('/avatar', [EnfantController::class, 'avatar'])->name('avatar');
+
+    Route::get('/partage', [PartageController::class, 'index'])->name('partager');
+    Route::post('/partage/add', [PartageController::class, 'ajoutePartage'])->name('ajoutePartage');
+    Route::post('/partage/sendmail', [PartageController::class, 'sendMailPartage'])->name('sendMailPartage');
+    Route::get('/partage/remove/{classeuser_id}', [PartageController::class, 'supprimePartage'])->name('supprimePartage');
+    Route::post('/partage/remove/final', [PartageController::class, 'supprimePartageFinal'])->name('supprimePartageFinal');
+    Route::get('/partage/create/{token}', [PartageController::class, 'acceptePartage'])->name('acceptePartage');
+    Route::get('/partage/code/{classeuser_id}', [PartageController::class, 'sendCodePartage'])->name('sendCodePartage');
 
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
