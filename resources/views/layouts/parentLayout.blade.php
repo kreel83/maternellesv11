@@ -31,10 +31,22 @@
         -->
     </head>
 
-    <body>
+    <body id="backEndUser">
 
     <div class="container mt-3">
+
+        <div class="d-flex justify-content-center mb-3">
+           
+            <div>
+                <a href="{{route('vitrine.index')}}" class="brand-logo">
+                    <img src="{{asset('img/deco/logo.png')}}" alt="" width="250">
+                </a>
+            </div>
+    
+        </div>
+
         @yield('content')
+
     </div>
 
     {{-- @include('footer.footer');   --}}

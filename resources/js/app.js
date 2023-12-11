@@ -49,6 +49,8 @@ import {choix_equipe} from "./pages/equipe";
 // import {adminRegistration} from "./pages/admin";
 import {achatLicences,assigneLicence} from "./pages/subscription";
 import {envoiCahierIndividuel} from "./pages/pdf";
+import {partageDeClasse} from "./pages/partage";
+import {creationCompte} from "./pages/register";
 
 window.Alpine = Alpine;
 
@@ -254,3 +256,6 @@ assigneLicence()
 
 tutos()
 envoiCahierIndividuel()
+
+partageDeClasse()
+creationCompte()

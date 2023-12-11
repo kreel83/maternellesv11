@@ -11,20 +11,20 @@
 
     </head>
 
-    <body>
+    <body id="backEndUser">
 
     <div class="container">
 
-        <div class="d-flex justify-content-center">
-           
+        <div class="d-flex justify-content-center mt-1 mb-3">
+        
+            <div>
                 <a href="{{route('vitrine.index')}}" class="brand-logo">
-                <img src="{{asset('img/deco/logo.png')}}" alt="" width="250" class="d-bloc mx-auto">
+                    <img src="{{asset('img/deco/logo.png')}}" alt="" width="250">
                 </a>
+            </div>
         
         </div>    
           
-        <p class="mt-3 h3 text-center">Création de mon compte {{ env('APP_NAME') }}</p>
-
         @yield('content')
 
     </div>

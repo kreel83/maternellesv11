@@ -1,27 +1,30 @@
-@extends('layouts.createAccount')
+@extends('layouts.parentLayout', ['titre' => env('APP_NAME')])
 
 @section('content')
 
 
-<div class="card mx-auto p-0 text-center" style="width: 36rem; height: 20rem">
-    <div class="card-body p-5">
-    @if($user)
-        <h2>Félicitation !</h2>
-        <br>
-        <h4>Votre compte est maintenant activé</h4>
-        
-
-    @else
-
-        <h3>La validation a échouée !</h3>
-        <p>Aucun compte trouvé.</p>
-
-    @endif        
+<div class="card mx-auto p-0 text-center w-75">
+    <div class="card-body">
+        <div class="mt-2">
+            @if($user)
+                <h2>Félicitations !</h2>
+                <h4>Votre compte est maintenant activé</h4>
+                @if($acceptePartage)
+                    <div class="alert alert-info mt-4 mb-0" role="alert">
+                        Vous avez maintenant accès à la classe de {{ $nomTitulaire }}.
+                    </div>
+                @endif
+            @else
+                <h3>La validation a échouée !</h3>
+                <p>Aucun compte trouvé.</p>
+            @endif    
+        </div>    
     </div>
+
     @if($user)
-    <div class="card-footer">
-        <a class="btnAction mx-auto" href="{{ route('login') }}">Accéder à l'application</a>
-    </div>
+        <div class="card-footer pb-4">
+            <a class="btnAction mx-auto" href="{{ route('login') }}">Accéder à l'application</a>
+        </div>
     @endif
 
 </div>

@@ -19,7 +19,7 @@ $degrades = App\Models\Enfant::DEGRADE;
         @font-face {
 
             font-family: 'agba';
-            src: url({{ storage_path('fonts\Agbalumo-Regular.ttf') }}) format("truetype");
+            src: url({{ storage_path('fonts/Agbalumo-Regular.ttf') }}) format("truetype");
 
   
             font-style: normal; 
@@ -28,7 +28,7 @@ $degrades = App\Models\Enfant::DEGRADE;
         @font-face {
 
             font-family: 'script';
-            src: url({{ storage_path('fonts\DancingScript-VariableFont_wght.ttf') }}) format("truetype");
+            src: url({{ storage_path('fonts/DancingScript-VariableFont_wght.ttf') }}) format("truetype");
 
        
             font-style: normal; 
@@ -36,7 +36,7 @@ $degrades = App\Models\Enfant::DEGRADE;
         @font-face {
 
             font-family: 'frenchScript';
-            src: url({{ storage_path('fonts\FrenchScriptMT.ttf') }}) format("truetype");
+            src: url({{ storage_path('fonts/FrenchScriptMT.ttf') }}) format("truetype");
 
             font-style: normal; 
         }
@@ -46,7 +46,7 @@ $degrades = App\Models\Enfant::DEGRADE;
         @font-face {
 
             font-family: 'roboto';
-            src: url({{ storage_path('fonts\Roboto-Regular.ttf') }}) format("truetype");
+            src: url({{ storage_path('fonts/Roboto-Regular.ttf') }}) format("truetype");
             f_ont-weight: 400; 
             f_ont-style: normal; 
             }

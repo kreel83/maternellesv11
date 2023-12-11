@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Classe;
 use App\Models\Enfant;
 use Closure;
 use Illuminate\Http\Request;
@@ -22,8 +23,10 @@ class UserAuthenticated
         if ($request->route('enfant_id')) $id_enfant = $request->route('enfant_id');
         if ($request->enfant_id) $id_enfant = $request->enfant_id;
         
-
-
+        if (!$request->session()->exists('lienPourPartageDansMenu')) {
+            $partage = Classe::where('user_id', Auth::id())->first();
+            $request->session()->put('lienPourPartageDansMenu', $partage);
+        }
         
         // Récupération des paramètres passés dans les routes :
         // tous : $request->route()->parameters() / 1 seul : $request->route('nom_parametre')

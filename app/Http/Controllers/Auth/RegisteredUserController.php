@@ -5,21 +5,15 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Ecole;
 use App\Models\User;
-use App\Models\UserDirection;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\UserEmailVerificationSelfRegistration;
-use App\utils\Utils;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Str;
+use App\Models\Classe;
+use App\Models\ClasseUser;
 
 class RegisteredUserController extends Controller
 {
@@ -32,26 +26,6 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register_user');
     }
-
-    /**
-     * Display the registration view.
-     *
-     * @return \Illuminate\View\View
-     */
-    // public function createProf()
-    // {
-    //     return view('auth.register_prof');
-    // }
-
-    /**
-     * Display the registration view.
-     *
-     * @return \Illuminate\View\View
-     */
-    // public function createDirection()
-    // {
-    //     return view('auth.register_direction');
-    // }
 
     /**
      * Handle an incoming registration request.
@@ -84,146 +58,11 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    // public function storeProf(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'prenom' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    //     ]);
-
-    //     $validationKey = md5(microtime(TRUE)*100000);
-
-    //     $user = User::create([
-    //         'name' => $request->name,
-    //         'prenom' => $request->prenom,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //         'validation_key' => $validationKey,
-    //         'licence' => 'self'
-    //     ]);
-
-    //     // Envoi d'un email de vérification
-    //     $token = md5($user->id.$validationKey.env('HASH_SECRET'));
-    //     $url = route('user.validUserFromSelfRegistration').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
-    //     Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
-
-    //     return view('auth.register_user_sendmail')
-    //         ->with('email', $request->email);
-
-    //     /*
-    //     event(new Registered($user));
-    //     Auth::login($user);
-    //     return redirect(RouteServiceProvider::HOME);
-    //     */
-    // }
-
-     /**
-     * Handle an incoming registration request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    // public function storeDirection(Request $request)
-    // {
-    //     $request->validate([
-    //         'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'prenom' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    //     ]);
-
-    //     $user = UserDirection::create([
-    //         'ecole_id' => $request->ecole_id,
-    //         'name' => $request->name,
-    //         'prenom' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //     ]);
-
-    //     //event(new Registered($user));
-
-    //     Auth::guard('direction')->login($user);
-    //     //dd(Auth::check());
-    //     return redirect(RouteServiceProvider::DASHBOARDPRO);
-    // }
-
-    /**
-     * Display the registration view for Admin.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function adminCreationForm(Request $request): View
-    {
-        $ecole = Ecole::where('identifiant_de_l_etablissement', $request->codeEtablissement)->first();
-        return view('auth.register-admin')
-            ->with('email',$ecole->mail)
-            ->with('ecole_id',$request->codeEtablissement);
-    }
-
-    /**
-     * Handle an incoming registration request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    // public function createAdminUser(Request $request)
-    // {
-    //     //dd($request);
-    //     $request->validate([
-    //         'ecole_id' => ['required', 'string', 'min:8', 'max:8', 'exists:ecoles,identifiant_de_l_etablissement'],
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'prenom' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    //     ]);
-
-    //     $validationKey = md5(microtime(TRUE)*100000);
-
-    //     $user = User::create([
-    //         'ecole_id' => $request->ecole_id,
-    //         'name' => $request->name,
-    //         'prenom' => $request->prenom,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //         'validation_key' => $validationKey,
-    //         'role' => 'admin'
-    //     ]);
-
-    //     // Envoi d'un email de vérification
-    //     $token = md5($user->id.$validationKey.env('HASH_SECRET'));
-    //     $url = route('user.validUserFromSelfRegistration').'?'.'uID='.$user->id.'&key='.$validationKey.'&token='.$token;
-    //     //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
-    //     //Mail::to('thierry.thevenoud@gmail.com')->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
-
-    //     return view('auth.register_user_sendmail')
-    //         ->with('email', $request->email);
-    //     /*
-    //     event(new Registered($user));
-    //     Auth::login($user);
-    //     return redirect(route('admin.index'));
-    //     */
-    // }
-
     /** ----------------------------------------- */
     /** Fonctions création de compte Admin / User */
     /** ----------------------------------------- */
 
-    public function registrationStart(): View
+    public function registrationStart()
     {
         return view('registration.start');
     }
@@ -239,8 +78,7 @@ class RegisteredUserController extends Controller
 
     public function registrationStep1Post(Request $request)
     {
-        $rules = ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'];
-
+        $rules = ['exclude_if:switch,1','required', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'];
         $msg = array(
             'ecole_id.required' => 'Veuillez indiquer un identifiant.',
             'ecole_id.min' => 'L\'identifiant doit avoir 8 caractères minimum.',
@@ -250,49 +88,30 @@ class RegisteredUserController extends Controller
 
         if($request->role == 'admin') {
             array_push($rules, 'unique:users,ecole_identifiant_de_l_etablissement');
-            $msg = Arr::add($msg, 'ecole_id.unique', 'Un compte administrateur existe déjà pour cet établissement.');
+            $msg['ecole_id.unique'] = 'Un compte administrateur existe déjà pour cet établissement.';
         }
 
         $request->validate([
             'ecole_id' => $rules,
         ], $msg);
 
-        /*
-        $request->validate([
-            'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
-            'role' => ['required', 'string', Rule::in(['admin', 'user'])],
-        ], [
-            'ecole_id.required' => 'Veuillez indiquer un identifiant.',
-            'ecole_id.min' => 'L\'identifiant doit avoir 8 caractères minimum.',
-            'ecole_id.max' => 'L\'identifiant doit avoir 8 caractères maximum.',
-            'ecole_id.exists' => 'Identifiant introuvable. Vérifiez votre saisie.',
-            'role.in' => 'Fonction non reconnue.',
-        ]);
-        */
-
-        /*
-        $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
-        return view('registration.step2')
-            ->with('role', $request->role)
-            ->with('ecole', $ecole);
-        */
-        $ecole_id = strtoupper($request->ecole_id);
-
+        // ecole_id = 0 si le user n'est pas rattaché à un établissement
+        $ecole_id = ($request->switch == '1') ? '0' : strtoupper($request->ecole_id);
         $token = md5($request->role.$ecole_id.env('HASH_SECRET'));
-        // dd(md5($request->role.$request->ecole_id.env('HASH_SECRET')), $request->role, $request->ecole_id);
-        return redirect()->route('registration.step2', [
+        $route = ($request->switch == '1') ? 'registration.step3' : 'registration.step2';
+
+        return redirect()->route($route, [
             'role' => $request->role, 
             'ecole_id' => $ecole_id,
             'token' => $token,
         ]);
+
     }
     
     public function registrationStep2($role, $ecole_id, $token)
     {
-        
-        // verification Token
+        // verification du Token
         if($token != md5($role.$ecole_id.env('HASH_SECRET'))) {
-            
             return redirect()->route('registration.start')
                 ->with('status', 'danger')
                 ->with('msg', 'Token invalide.');
@@ -313,24 +132,29 @@ class RegisteredUserController extends Controller
                 ->with('status', 'danger')
                 ->with('msg', 'Token invalide.');
         }
+        
+        if($request->ecole_id != '0') {
+            $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
+            $email = $ecole->mail;
+        } else {
+            $email = '';
+        }
 
-        $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
-        // test si l'email de l'ecole est sur un domaine académique
-        //$academique = Str::contains($ecole->mail, '@ac-');
-        $academique = Str::containsAll($ecole->mail, ['@ac-', '.fr']);
-        $domain = Str::after($ecole->mail, '@');
+        // // test si l'email de l'ecole est sur un domaine académique
+        // $academique = Str::containsAll($ecole->mail, ['@ac-', '.fr']);
+        // $domain = Str::after($ecole->mail, '@');
         return view('registration.step3')
-            ->with('academique', $academique)
-            ->with('domain', $domain)
+            //->with('academique', $academique)
+            //->with('domain', $domain)
             ->with('role', $request->role)
             ->with('ecole_id', $request->ecole_id)
-            ->with('email', $ecole->mail)
+            ->with('email', $email)
             ->with('token', $request->token);
     }
     
     public function registrationStep3Post(Request $request)
     {
-        // verification Token
+        // verification du Token
         if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
             return redirect()->route('registration.start')
                 ->with('status', 'danger')
@@ -338,16 +162,17 @@ class RegisteredUserController extends Controller
         }     
            
         $request->validate([
-            'emailondomain' => ['exclude_if:role,admin', 'required'],
+            //'emailondomain' => ['exclude_if:role,admin', 'required'],
             'role' => ['required', 'string', 'in:admin,user'],
-            'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
+            //'ecole_id' => ['required', 'string', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
+            'ecole_id' => ['required', 'string'],
             'civilite' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
-            'emailondomain.required' => 'Veuillez indiquer si votre adresse de courrier électronique est sur le domaine académique ou un service tiers.',
+            //'emailondomain.required' => 'Veuillez indiquer si votre adresse de courrier électronique est sur le domaine académique ou un service tiers.',
             'role.required' => 'Fonction manquante.',
             'role.in' => 'Fonction invalide.',
             'ecole_id.required' => 'Identifiant établissement manquant.',
@@ -367,20 +192,20 @@ class RegisteredUserController extends Controller
         ]);
 
         // test si email sur domaine académique dans le cas d'un user
-        if($request->role == 'user') {
-            if($request->emailondomain == '1') {                
-                $domain = Str::after($request->email, '@');
-                if($domain != $request->domain) {
-                    return Redirect::back()->withInput()->withErrors(['msg' => "L'adresse email ne correspond pas au domain académique : $domain"]);
-                }
-            }
-        }
+        // if($request->role == 'user') {
+        //     if($request->emailondomain == '1') {                
+        //         $domain = Str::after($request->email, '@');
+        //         if($domain != $request->domain) {
+        //             return Redirect::back()->withInput()->withErrors(['msg' => "L'adresse email ne correspond pas au domain académique : $domain"]);
+        //         }
+        //     }
+        // }
 
         $token = md5(microtime(TRUE)*100000);
 
         $user = User::create([
             'role' => $request->role,
-            'ecole_identifiant_de_l_etablissement' => $request->ecole_id,
+            'ecole_identifiant_de_l_etablissement' => ($request->ecole_id == '0') ? null : $request->ecole_id,
             'civilite' => $request->civilite,
             'name' => strtoupper($request->name),
             'prenom' => ucfirst($request->prenom),
@@ -392,10 +217,10 @@ class RegisteredUserController extends Controller
         // Envoi d'un email de vérification
         $verificationLink = route('registration.validation', ['token' => $token]);
         if($request->role == 'user') {
-            Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
+            //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         if($request->role == 'admin') {
-            Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
+            //Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
 
@@ -403,7 +228,8 @@ class RegisteredUserController extends Controller
         // php artisan config:cache
         // php artisan config:clear
         // php artisan cache:clear
-
+        $request->session()->put('email', $request->email);
+        $request->session()->put('role', $request->role);
         return redirect()->route('registration.step4')->with('email', $request->email);
     }
 
@@ -411,19 +237,6 @@ class RegisteredUserController extends Controller
     {
         return view('registration.step4');
     }
-
-    /*
-    public function registrationStep4(Request $request)
-    {
-        // verification Token
-        if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
-            return redirect()->route('registration.start');
-        }
-        $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
-        return view('registration.step4')
-            ->with('email', $ecole->mail);
-    }
-    */
 
     public function valideUser(Request $request): View
     {
@@ -433,10 +246,36 @@ class RegisteredUserController extends Controller
             $user->actif = 1;
             //$user->validation_key = null;
             $user->save();
-            // Auth::login($user);  // A VOIR si on log automatiquement à la validation
+            // Check si une demande de partage est en attente
+            $partage = ClasseUser::where('user_id', null)
+                ->where('email', $user->email)
+                ->first();
+            if($partage) {
+                $classe = Classe::find($partage->classe_id);
+                $titulaire = User::find($classe->user_id);
+                $nomTitulaire = $titulaire->prenom.' '.$titulaire->name;
+                $partage->user_id = $user->id;
+                $partage->save();
+                $acceptePartage = true;
+            }
         }
         return view("registration.validation_self")
+            ->with('acceptePartage', $acceptePartage ?? false)
+            ->with('nomTitulaire', $nomTitulaire ?? '')
             ->with('user', $user);
+    }
+
+    public function registrationChercheEtablissement(Request $request)
+    {
+        $ecoles = Ecole::where('code_postal', $request->search)->get();
+        $str = '<option value="" selected>Choisissez un établissement...</option>';
+        foreach ($ecoles as $ecole) {
+            $str .= '<option value="'.$ecole->identifiant_de_l_etablissement.'">'.$ecole->identifiant_de_l_etablissement.' - '.$ecole->nom_etablissement.' ('.$ecole->adresse_1.' '.$ecole->adresse_3.')'.'</option>';
+        }
+        $result = array();
+        $result['count'] = $ecoles->count();
+        $result['option'] = $str;
+        return json_encode($result);
     }
 
     /** Fin fonctions création de compte Admin / User */
