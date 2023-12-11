@@ -4,7 +4,8 @@
 
 @php
 $degrades = App\Models\Enfant::DEGRADE;
-$lesgroupes = json_decode(Auth::user()->groupes, true);
+
+$lesgroupes = Auth::user()->groupes();
 $is_dashboard = true;
 @endphp
 
@@ -104,7 +105,7 @@ $is_dashboard = true;
             <div class="titre_welcome">Les prochains évenements</div>
             @if ($anniversaires->isEmpty())
             <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
-                Aucun eventment à venir.
+                Aucun événement à venir.
             </div>
             @else
 

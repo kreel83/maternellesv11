@@ -277,6 +277,7 @@ class ficheController extends Controller
             $fiche->parent_type = $request->table;
             $fiche->section_id = $request->section;
             $fiche->user_id = Auth::id();
+            $fiche->classe_id = session()->get('id_de_la_classe');
             $fiche->save();
             $t = $fiche->id;
 

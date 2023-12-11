@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Enfant;
 use App\Models\Configuration;
+use App\Models\Classe;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 class GroupeController extends Controller
 {
     public function index() {
-        $groupes = Auth::user()->configuration->groupes;
+        $groupes = Auth::user()->groupes();
         if ($groupes) {
             $groupes = json_decode($groupes, true);
             $nbGroupe = sizeof($groupes);
@@ -63,20 +63,15 @@ class GroupeController extends Controller
 
     public function saveColor(Request $request) {
         $user = Auth::user();
+        $classe = Classe::find(session()->get('id_de_la_classe'));
 
         $liste = json_decode($request->tableau);
        
         $coll = new Collection($liste);
         $n = $coll->sortBy('order')->pluck('color')->toArray();
 
-        $config = Configuration::where('user_id', $user)->first();
-        if (!$config) {
-            $config = new Configuration();
-            $config->user_id = $user;            
-        }
-
-        $config->groupes = join('/', $n);
-        $config->save();
+        $classe->groupes = join('/', $n);
+        $classe->save();
         return 'ok';
     }
 
@@ -88,14 +83,10 @@ class GroupeController extends Controller
             $arr[$i]['textColor'] = $request->font[$i];
         }
 
-        $user = Auth::user();      
-        $config = Configuration::where('user_id', $user->id)->first();
-        if (!$config) {
-            $config = new Configuration();
-            $config->user_id = $user->id;            
-        }        
-        $config->groupes = json_encode($arr);
-        $config->save();
+        $classe = Classe::find(session()->get('id_de_la_classe'));     
+       
+        $classe->groupes = json_encode($arr);
+        $classe->save();
 
         session()->flash('success','Les groupes ont bien été enregistrés');
         return redirect()->back();
@@ -110,7 +101,7 @@ class GroupeController extends Controller
                 ->with('status', 'danger')
                 ->with('msg', 'Token invalide.');
         }
-        $groupes = Auth::user()->configuration->groupes;
+        $groupes = Auth::user()->groupes();
         if ($groupes) {
             $groupes = json_decode($groupes, true);          
         } else {
@@ -137,7 +128,8 @@ class GroupeController extends Controller
             'groupName.max' => 'Le nom est limité à 12 caractères.',
         ]);
 
-        $groupes = Auth::user()->configuration->groupes;
+        $classe = Classe::find(session()->get('id_de_la_classe'));
+        $groupes = $classe->groupes;
         if ($groupes) {
             $groupes = json_decode($groupes, true);          
         } else {
@@ -156,13 +148,10 @@ class GroupeController extends Controller
         }
         //$groupes[] = $newGroup;
         //dd($groupes);
-        $config = Configuration::where('user_id', Auth::id())->first();
-        if (!$config) {
-            $config = new Configuration();
-            $config->user_id = Auth::id();            
-        }        
-        $config->groupes = json_encode($groupes);
-        $config->save();
+        
+      
+        $classe->groupes = json_encode($groupes);
+        $classe->save();
 
         session()->flash('success','Les groupes ont bien été enregistrés');
         return redirect()->route('groupe');
@@ -175,7 +164,7 @@ class GroupeController extends Controller
         $token = md5(Auth::id().$id.env('HASH_SECRET'));        
 
         
-        $groupes = Auth::user()->configuration->groupes;
+        $groupes = Auth::user()->groupes();
 
 
         $groupes = json_decode($groupes, true); 
@@ -183,14 +172,11 @@ class GroupeController extends Controller
         unset($groupes[$id -1]);
         
         $nbGroupe = sizeof($groupes) ?? 0;
-        $config = Configuration::where('user_id', Auth::id())->first();
-        if (!$config) {
-            $config = new Configuration();
-            $config->user_id = Auth::id();            
-        }   
+        $classe = Classe::find(session()->get('id_de_la_classe'));   
 
-        $config->groupes = json_encode(array_values($groupes));        
-        $config->save();
+
+        $classe->groupes = json_encode(array_values($groupes));        
+        $classe->save();
 
         Enfant::where('user_id', Auth::id())->where('groupe', $id-1 )->update(
             ['groupe' => null]
