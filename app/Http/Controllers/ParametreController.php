@@ -475,6 +475,7 @@ class ParametreController extends Controller
             ->with('sections', $sections)
             ->with('conges', $conges)
             ->with('middle', $middle)
+            ->with('lesgroupes', $$this->maclasseactuelle->groupes)
             ->with('info', $info)
             ->with('listeDesEleves', $listeDesEleves)
             ->with('top5DisciplinesLesPlusAvances', $top5DisciplinesLesPlusAvances)
