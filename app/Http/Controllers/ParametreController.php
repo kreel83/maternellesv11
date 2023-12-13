@@ -239,7 +239,7 @@ class ParametreController extends Controller
         
         
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
-            ->where('identifiant_de_l_etablissement', $user->ecole_identifiant_de_l_etablissement)
+            ->where('identifiant_de_l_etablissement', $this->maclasseactuelle->ecole_identifiant_de_l_etablissement)
             ->first();
         $adresseEcole[] = $ecole->nom_etablissement;
         if($ecole->adresse_1 != '') { $adresseEcole[] = $ecole->adresse_1; }
@@ -475,7 +475,7 @@ class ParametreController extends Controller
             ->with('sections', $sections)
             ->with('conges', $conges)
             ->with('middle', $middle)
-            ->with('lesgroupes', $$this->maclasseactuelle->groupes)
+            ->with('lesgroupes', $this->maclasseactuelle->groupes)
             ->with('info', $info)
             ->with('listeDesEleves', $listeDesEleves)
             ->with('top5DisciplinesLesPlusAvances', $top5DisciplinesLesPlusAvances)

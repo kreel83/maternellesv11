@@ -72,11 +72,12 @@
                 </div>
                 <div class="icone-input my-4 little">
                     <i class="fa-solid fa-envelope"></i>
-                    <input type="text" class="custom-input" name="email" value="{{$user->ecole->mail}}" disabled/>
+
+                    <input type="text" class="custom-input" name="email" value="{{$user->classe_active()->ecole->mail}}" disabled/>
                 </div>
                 <div class="icone-input my-4 little">
                     <i class="fa-solid fa-phone"></i>
-                    <input type="text" class="custom-input" name="email" value="{{$user->ecole->telephone}}" disabled/>
+                    <input type="text" class="custom-input" name="email" value="{{$user->classe_active()->ecole->telephone}}" disabled/>
                 </div>
             </div>       
         </div>
@@ -177,7 +178,7 @@
                 <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
             </form>    
         </div>
-        <div class="gridcadre grid6 d-flex justify-content-center align-items-center tuto_tutoriel">
+        {{-- <div class="gridcadre grid6 d-flex justify-content-center align-items-center tuto_tutoriel">
             <div class="gridTitre">Tutoriel</div>
             <form action="{{route('modeTuto')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
                 <div class="form-check form-switch">
@@ -186,7 +187,7 @@
                   </div>
                 <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
             </form>    
-        </div>
+        </div> --}}
 
         <style>
             .section_ligne {

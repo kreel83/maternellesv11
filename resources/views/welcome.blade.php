@@ -104,9 +104,9 @@ $is_dashboard = true;
             @endphp
             <div class="titre_welcome">Les prochains évenements</div>
             @if ($anniversaires->isEmpty())
-            <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
-                Aucun événement à venir.
-            </div>
+                <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
+                    Aucun événement à venir.
+                </div>
             @else
 
                 <div class="anniversaires1 w-100 d-flex justify-content-between">
@@ -135,6 +135,7 @@ $is_dashboard = true;
                 </div>
             @endif
         </div>
+
         <div class="div2 cadre_welcome"> 
             <div class="titre_welcome">Les 5 élèves les plus avancés</div>
             <div class="">
