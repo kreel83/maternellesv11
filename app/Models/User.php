@@ -163,9 +163,11 @@ class User extends Authenticatable
     public $equipes;
 
     public function groupes() {
-
         return Classe::find(session()->get('id_de_la_classe'))->groupes;
+    }
 
+    public function classe_active() {
+        return Classe::find(session()->get('id_de_la_classe'));
     }
 
 
@@ -175,8 +177,10 @@ class User extends Authenticatable
 
     public function autresClasses() {
         $actual = session()->get('id_de_la_classe');
+        $i = Classe::where('user_id', Auth::id())->pluck('id');
         $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
-        return Classe::whereIn('id', $t)->where('id','!=',$actual)->get();
+        $merged = $i->merge($t);
+        return Classe::whereIn('id', $merged)->where('id','!=',$actual)->get();
     }
 
     public function sendPasswordResetNotification($token): void

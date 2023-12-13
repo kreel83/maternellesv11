@@ -22,7 +22,7 @@
 
 
             @foreach ($sections as $sec)
-            @if ($sec->id == 9 && Auth::user()->configuration->desactive_devenir_eleve == 1)
+            @if ($sec->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
             @else
             <div class="d-flex flex-column align-items-center">
                     <div class="tiret_selection {{ $sec->id == $section ? null : 'd-none' }}"

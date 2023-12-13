@@ -82,7 +82,7 @@ if (!is_null($enfant->groupe)){
         <a href="enfants/{{$enfant->id}}/items?sectionID=5"  ><i style="font-size: 18px" class="fa-light fa-shapes"></i></a>
         <a href="enfants/{{$enfant->id}}/items?sectionID=6"  ><i style="font-size: 18px" class="fa-light fa-clock"></i></a>
         <a href="enfants/{{$enfant->id}}/items?sectionID=8"  ><i style="font-size: 18px" class="fa-light fa-heart"></i></a>
-        @if (Auth::user()->configuration->desactive_devenir_eleve == 0)
+        @if (Auth::user()->classe_active()->desactive_devenir_eleve == 0)
         <a href="enfants/{{$enfant->id}}/items?sectionID=7"  ><i style="font-size: 18px" class="fa-light fa-child-reaching"></i></a>
         @endif
         

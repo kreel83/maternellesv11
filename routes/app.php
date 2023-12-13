@@ -239,6 +239,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/changerclasse',[ClasseController::class,'changerclasse'])->name('changerClasse');
     Route::get('/createclasse',[ClasseController::class,'createclasse'])->name('createclasse');
     Route::post('/saveclasse',[ClasseController::class,'saveclasse'])->name('saveNewClasse');
+    Route::post('/modifyclasse',[ClasseController::class,'modifyclasse'])->name('modifyclasse');
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::get('/maclasse',[EnfantController::class,'maclasse'])->name('maclasse');
