@@ -367,7 +367,11 @@ class ParametreController extends Controller
             }
         })->values();
 
-        $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->where('start_date','>=', $date)->get();
+        // $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->where('start_date','>=', $date)->get();
+        $classe = Classe::find(session('id_de_la_classe'));
+        $ecole = Ecole::select('code_academie')->where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
+        $vacances = Vacance::where('ecole_code_academie', $ecole->code_academie)->get();
+
         $conges = array();
         foreach($vacances as $vacance) {
             $conges[] = array(

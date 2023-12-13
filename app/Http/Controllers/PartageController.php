@@ -70,7 +70,7 @@ class PartageController extends Controller
         //$user = User::where('email', $request->email)->first();
         // enregistrement du partage sans user_id qui sera complété à l'acceptation par le user
         $partage = new ClasseUser;
-        $partage->classe_id = 1;        // ****************  A CHANGER *************************
+        $partage->classe_id = Auth::user()->classe_id;
         $partage->token = $token;
         $partage->email = $request->email;
         $partage->code = $request->code;

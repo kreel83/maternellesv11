@@ -7,6 +7,7 @@ use App\Models\Configuration;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Classe;
+use App\Models\Ecole;
 use App\Models\Vacance;
 use App\utils\Utils;
 use Carbon\Carbon;
@@ -153,7 +154,12 @@ class CalendrierController extends Controller
         $start_year = $month->year;
         $start_year_nb_days = $month->daysInYear;
 
-        $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->get();
+        // $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->get();
+
+        $classe = Classe::find(session('id_de_la_classe'));
+        $ecole = Ecole::select('code_academie')->where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
+        $vacances = Vacance::where('ecole_code_academie', $ecole->code_academie)->get();
+
         $conges = array();
         $key = 0;
         foreach($vacances as $vacance) {
