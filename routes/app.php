@@ -236,11 +236,13 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/fiches/populate/categorie', [ficheController::class, 'populateCategorie'])->name('populateCategorie');
     Route::post('/fiches/setSection', [ficheController::class, 'setSection'])->name('setSection');
 
+
     Route::get('/classe/changer',[ClasseController::class,'changerclasse'])->name('changerClasse');
     Route::get('/classe/create',[ClasseController::class,'createclasse'])->name('createclasse');
     Route::post('/classe/confirme',[ClasseController::class,'confirmeClasse'])->name('confirmeClasse');
     Route::post('/classe/save',[ClasseController::class,'saveclasse'])->name('saveNewClasse');
     Route::get('/classe/edit',[ClasseController::class,'updateclasse'])->name('updateClasse');
+
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::get('/maclasse',[EnfantController::class,'maclasse'])->name('maclasse');

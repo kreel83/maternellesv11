@@ -30,6 +30,7 @@ class ClasseController extends Controller
             ->with('title', 'Création de ma classe');
     }
 
+
     public function updateclasse() {
         $classe = Classe::find(session('id_de_la_classe'));
         return view('classes.createclasse')
@@ -76,6 +77,7 @@ class ClasseController extends Controller
             $classe = Classe::find($request->classe_id);
         }
         $classe->ecole_identifiant_de_l_etablissement = $request->ecole_id;
+
         $classe->user_id = Auth::id();
 
         $section = json_decode($request->section, true);
@@ -95,6 +97,7 @@ class ClasseController extends Controller
         $classe->description = $request->description;
         $classe->save();
 
+
         // if($request->classe_id == 'new') {
         //     $classe->save();
         // } else {
@@ -112,5 +115,16 @@ class ClasseController extends Controller
             ->with('classe_id', $request->classe_id)
             ->with('title', $request->classe_id == 'new' ? 'Création de ma classe' : 'Modification de ma classe')
             ->with('description', $request->description);        
+
+    }
+
+    public function modifyclasse(Request $request) {
+        $classe = Classe::find($request->id);
+        foreach ($request->section as $s) {
+            $classe->$s = 1;
+        }
+        $classe->description = $request->description;
+        $classe->save();
+        return redirect()->back()->withInput();        
     }
 }

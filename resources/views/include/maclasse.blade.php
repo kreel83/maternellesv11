@@ -18,6 +18,7 @@
     @endif
 
     @if (!isset($is_dashboard) || $listeDesEleves->isEmpty())
+
         <div class="mb-3 d-flex justify-content-between">
             <div class="d-flex">
                 <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
@@ -27,6 +28,7 @@
                 <a class="btnAction" href="{{ route('updateClasse') }}">Modifier la classe</a>
             </div>
         </div>        
+
     @endif
 
 <div class="row">

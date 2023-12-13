@@ -6,6 +6,7 @@
 
 @section('content')
 
+
 <div class="mt-5 container">
 
     <div class="card mx-auto w-75">
@@ -78,6 +79,7 @@
         </div>        
 
     </div>
+
 
 </div>
 
