@@ -278,7 +278,7 @@ class User extends Authenticatable
         return $ecole;
     }
 
-    public function ecole() {
+    public function ecole() { $ecole = $this->classe_active()->ecole_identifiant_de_l_etablissement;
         return $this->hasOne('App\Models\Ecole','identifiant_de_l_etablissement','ecole_identifiant_de_l_etablissement');
     }
 

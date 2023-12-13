@@ -96,6 +96,10 @@ class ClasseController extends Controller
 
         $classe->description = $request->description;
         $classe->save();
+        
+        $user = Auth::user();
+        $user->classe_id = $classe->id;
+        $user->save();
 
 
         // if($request->classe_id == 'new') {

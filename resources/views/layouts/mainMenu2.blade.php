@@ -214,12 +214,16 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
                             <div class="dropdown-menu" style="left: inherit !important; right: 0">
                                 <a href="#"
-                                    class="nav-item  {{ $menu == 'monprofil' ? 'active' : null }}">{{session()->get('nom_de_la_classe')}}</a>
-                                <a href="{{ route('monprofil') }}"
+                                    class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session()->get('nom_de_la_classe')}}</a>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <a href="{{ route('monprofil') }}"
                                     class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}  {{$hasClassActive}}">Mon
                                     profil</a>
+    
                                 <a href="{{ route('subscribe.index') }}"
-                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{$hasClassActive}}">Mon
+                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ Auth::user() && Auth::user()->is_abonne() ? null : 'disabled'}}">Mon
                                     abonnement</a>
 
                                 <a href="{{ route('changerLeMotDePasse') }}"
