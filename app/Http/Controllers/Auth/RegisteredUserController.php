@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserEmailVerificationSelfRegistration;
 use App\Models\Ecole;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -14,6 +15,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\Classe;
 use App\Models\ClasseUser;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -217,10 +219,10 @@ class RegisteredUserController extends Controller
         // Envoi d'un email de vérification
         $verificationLink = route('registration.validation', ['token' => $token]);
         if($request->role == 'user') {
-            //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
+            Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         if($request->role == 'admin') {
-            //Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
+            Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
 
