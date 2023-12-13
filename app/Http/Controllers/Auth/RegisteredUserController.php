@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserEmailVerificationSelfRegistration;
 use App\Models\Ecole;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -14,6 +15,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\Classe;
 use App\Models\ClasseUser;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -80,10 +82,10 @@ class RegisteredUserController extends Controller
     {
         $rules = ['exclude_if:switch,1','required', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'];
         $msg = array(
-            'ecole_id.required' => 'Veuillez indiquer un identifiant.',
-            'ecole_id.min' => 'L\'identifiant doit avoir 8 caractères minimum.',
-            'ecole_id.max' => 'L\'identifiant doit avoir 8 caractères maximum.',
-            'ecole_id.exists' => 'Identifiant introuvable. Vérifiez votre saisie.',
+            'ecole_id.required' => 'Veuillez indiquer l\'identifiant de votre établissement.',
+            'ecole_id.min' => 'L\'identifiant de l\'établissement doit avoir 8 caractères minimum.',
+            'ecole_id.max' => 'L\'identifiant de l\'établissement doit avoir 8 caractères maximum.',
+            'ecole_id.exists' => 'L\'identifiant de votre établissement est introuvable. Vérifiez votre saisie.',
         );
 
         if($request->role == 'admin') {
@@ -217,10 +219,10 @@ class RegisteredUserController extends Controller
         // Envoi d'un email de vérification
         $verificationLink = route('registration.validation', ['token' => $token]);
         if($request->role == 'user') {
-            //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
+            Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         if($request->role == 'admin') {
-            //Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
+            Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
         }
         //Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($url, $request->prenom));
 

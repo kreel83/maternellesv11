@@ -18,44 +18,22 @@
     @endif
 
     @if (!isset($is_dashboard) || $listeDesEleves->isEmpty())
-    <div class="row mb-3 d-flex align-items-center justify-content-between">
-        <div class="col-xs-12 col-xl-4 d-flex ">
-            <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
-            <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
-        </div>
-        {{-- <form action="{{ route('modifyclasse') }}" method="post" class="col-xs-12 col-xl-8 d-flex align-items-end justify-content-end">
-            @csrf
-            <input type="hidden" name="id" value="{{Auth::user()->classe_active()->id}}">
-        
-            <div class="me-4">
 
-                <input type="text" name="description" class="form-control input-sm" style="width: 300px" value="{{Auth::user()->classe_active()->description}}">
+        <div class="mb-3 d-flex justify-content-between">
+            <div class="d-flex">
+                <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
+                <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
             </div>
-            <div class="form-group">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="ps" name="section[]" {{ Auth::user()->classe_active()->ps == 1 ? 'checked' : null}}>
-                    <label class="form-check-label" for="inlineCheckbox1">PS</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="ms" name="section[]" {{ Auth::user()->classe_active()->ms == 1 ? 'checked' : null}}>
-                    <label class="form-check-label" for="inlineCheckbox2">MS</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="gs" name="section[]" {{ Auth::user()->classe_active()->gs == 1 ? 'checked' : null}}>
-                    <label class="form-check-label" for="inlineCheckbox3">GS</label>
-                </div>
+            <div>
+                <a class="btnAction" href="{{ route('updateClasse') }}">Modifier la classe</a>
             </div>
-            <button class="btnAction" type="submit">Sauvegarder la classe</button>
-
-               
-    </form> --}}
-    </div>
+        </div>        
 
     @endif
 
 <div class="row">
     <div class="col-md-6">
-        <table class="table  table-sm classe_dashboard white">
+        <table class="table table-sm classe_dashboard white">
             <tbody>
                 @foreach ($listeDesEleves->take($middle) as $eleve)
                     @php
@@ -64,7 +42,7 @@
                             $groupe = $lesgroupes[$eleve->groupe];
                         }
                     @endphp
-                    <tr class="">
+                    <tr>
                         <td>
                             <div class="m-2 degrade_card_enfant animaux"
                                 style="background-image: {{ $degrades[$eleve->background] ?? $degrades['b1'] }}; width: 27px; height: 27px"

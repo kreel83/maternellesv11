@@ -70,7 +70,7 @@ class EleveEvent
             $enfant->groupeFormatted = null;
         }
 
-
+        //$enfant->groupeFormatted = null;
 
         //$lesgroupes = json_decode(Auth::user()->groupes, true);
         
