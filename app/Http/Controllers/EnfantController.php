@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Enfant;
 use App\Models\Resultat;
 use App\Models\Section;
+use App\Models\Classe;
 use PDF;
 use Illuminate\Http\Request;
 use App\Models\Reussite;
@@ -23,6 +24,16 @@ class EnfantController extends Controller
 
 {
 
+    public $maclasseactuelle;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {   
+            
+            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            return $next($request);
+            });
+    }
     private  function generateRandomString($length1, $length2) {
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $numbers = '0123456789';
@@ -306,8 +317,8 @@ class EnfantController extends Controller
     private function getPeriode($a) {
 
        
-        $conf = Auth::user()->configuration;
-        $periodes = $conf->periodes;
+        
+        $periodes = $this->maclasseactuelle->periodes;
 
         $periode = 
         [ 1 => [
@@ -482,7 +493,7 @@ class EnfantController extends Controller
         $sections = Section::all();
         return view('eleves.fiche')
             ->with('flag', 'disabled')
-            ->with('periodes', $this->getPeriode($user->configuration->periodes))        
+            ->with('periodes', $this->getPeriode($this->maclasseactuelle->periodes))        
             ->with('files', $liste)
             ->with('professeur', "null")
             ->with('profs', $user->profs())

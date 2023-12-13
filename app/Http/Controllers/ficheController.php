@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Models\Fiche;
 use App\Models\Item;
+use App\Models\Classe;
+
 use App\Models\Resultat;
 use App\Models\Personnel;
 use App\Models\Enfant;
@@ -23,6 +25,18 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 class ficheController extends Controller
 {
+
+    public $maclasseactuelle;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {   
+            
+            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            return $next($request);
+            });
+    }
+
     public function index(Request $request) {
         
         if ($request->section) {
@@ -213,7 +227,7 @@ class ficheController extends Controller
         Fiche::where('user_id',Auth::id())->delete();
         foreach ($total as $line) {
             $section_id = Item::find($line)->section_id;
-        if (Auth::user()->configuration->desactive_devenir_eleve == 1 && $section_id == 9 ) {
+        if ($this->maclasseactuelle->desactive_devenir_eleve == 1 && $section_id == 9 ) {
 
         } else {
             $fiche = new Fiche();

@@ -486,7 +486,7 @@ class ParametreController extends Controller
             ->with('anniversaires', $anniversaires)
             ->with('moisActuel', $mois);
         } else {
-            return view('classes.createclasse');
+            return view('classes.createclasse')->with('title','Création de ma classe');
         }
     }
 
