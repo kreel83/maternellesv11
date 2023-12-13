@@ -5,7 +5,7 @@
 @php
 $degrades = App\Models\Enfant::DEGRADE;
 
-$lesgroupes = Auth::user()->groupes();
+
 $is_dashboard = true;
 @endphp
 
