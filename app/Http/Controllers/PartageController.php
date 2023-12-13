@@ -17,11 +17,11 @@ class PartageController extends Controller
     
     public function index(Request $request) {
         $partages = ClasseUser::select('classe_users.id', 'classe_users.code', 'users.name', 'users.prenom')
-            ->where('classe_id', $request->user()->maClasse()->id)
+            ->where('classe_users.classe_id', $request->user()->maClasse()->id)
             ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
             ->get();
         $pendings = ClasseUser::select('classe_users.id', 'classe_users.email', 'users.name', 'users.prenom')
-            ->where('classe_id', $request->user()->maClasse()->id)
+            ->where('classe_users.classe_id', $request->user()->maClasse()->id)
             ->where('classe_users.user_id', null)
             ->leftJoin('users', 'users.email', '=', 'classe_users.email')
             ->get();

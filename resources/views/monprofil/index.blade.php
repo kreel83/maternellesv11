@@ -202,7 +202,7 @@
             <div class="mt-3">
                 <form action="{{route('activeDomaineEleve')}}" class=" d-flex flex-column justify-content-center align-items-center">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->configuration->desactive_devenir_eleve == 0 ? 'checked' : null}}>
+                        <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->classe_active()->desactive_devenir_eleve == 0 ? 'checked' : null}}>
                         <label class="form-check-label" for="activeDomaineEleve">Activé le domaine "Devenir "élève"</label>
                     </div>
                     <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>

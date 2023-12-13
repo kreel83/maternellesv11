@@ -264,12 +264,11 @@ class ParametreController extends Controller
 
 
     public function activeDomaineEleve(Request $request) {
-        $conf = Configuration::where('user_id',Auth::id())->first();
-        if ($conf) {
-            $conf->desactive_devenir_eleve = ($request->activeDomaineEleve == 'on' ? 0 : 1);
-            $conf->save();
-        }
-        return redirect()->back()->with('success','Le domaine a bien étédésactivé');
+
+            $this->maclasseactuelle->desactive_devenir_eleve = ($request->activeDomaineEleve == 'on' ? 0 : 1);
+            $this->maclasseactuelle->save();
+        
+        return redirect()->back()->with('success','Le domaine a bien été désactivé');
     }
 
     public function get_phrases(Request $request) {
@@ -341,6 +340,9 @@ class ParametreController extends Controller
 
     public function welcome(): View
     {
+        if (session()->get('id_de_la_classe') !== null) {
+
+        
         // Check for a subscription and calculate end date
         // dd(Auth::user()->subscription('default')->asStripeSubscription());
         if (Auth::user()->subscribed('default')) {
@@ -350,9 +352,7 @@ class ParametreController extends Controller
         }
         // ----
 
-        $classeActive = Classe::find(Auth::user()->classe_id);
-        session(['nom_de_la_classe' => $classeActive->description]);
-        session(['id_de_la_classe' => $classeActive->id]);
+
 
         
 
@@ -481,6 +481,9 @@ class ParametreController extends Controller
             ->with('finsouscription', $finsouscription)
             ->with('anniversaires', $anniversaires)
             ->with('moisActuel', $mois);
+        } else {
+            return view('classes.createclasse');
+        }
     }
 
     public function error() {

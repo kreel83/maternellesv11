@@ -26,8 +26,6 @@ class ClasseController extends Controller
     }
 
     public function saveclasse(Request $request) {
-
-        
         $classe = new Classe();
         $classe->ecole_identifiant_de_l_etablissement = $request->ecole;
         $classe->user_id = Auth::id();
@@ -40,9 +38,17 @@ class ClasseController extends Controller
         $classeLink->user_id = Auth::id();
         $classeLink->classe_id = $classe->id;
         $classeLink->save();
-
-
         return redirect()->back()->withInput();
         
+    }
+
+    public function modifyclasse(Request $request) {
+        $classe = Classe::find($request->id);
+        foreach ($request->section as $s) {
+            $classe->$s = 1;
+        }
+        $classe->description = $request->description;
+        $classe->save();
+        return redirect()->back()->withInput();        
     }
 }

@@ -27,6 +27,13 @@ class UserAuthenticated
             $partage = Classe::where('user_id', Auth::id())->first();
             $request->session()->put('lienPourPartageDansMenu', $partage);
         }
+
+        $classeActive = Classe::find(Auth::user()->classe_id);
+        if ($classeActive) {
+            session(['nom_de_la_classe' => $classeActive->description]);
+            session(['id_de_la_classe' => $classeActive->id]);
+        }
+        
         
         // Récupération des paramètres passés dans les routes :
         // tous : $request->route()->parameters() / 1 seul : $request->route('nom_parametre')
