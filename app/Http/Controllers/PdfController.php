@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
 //use App\Models\Configuration;
 use App\Models\Enfant;
-//use App\Models\Image;
+use App\Models\Classe;
 //use App\Models\Resultat;
 use App\Models\Reussite;
 use App\Models\Configuration;
@@ -29,7 +29,20 @@ use function PHPUnit\Framework\isEmpty;
 //use function PHPUnit\Framework\isEmpty;
 
 class PdfController extends Controller
+
+
 {
+
+    public $maclasseactuelle;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {   
+            
+            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            return $next($request);
+            });
+    }
     public static function genereLienVersCahierEnPdf(Enfant $enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
         // $enfant = Enfant::find($enfant_id);
@@ -163,14 +176,14 @@ class PdfController extends Controller
 
 
     public function set_ordre(Request $request) {
-        $conf = Configuration::where('user_id', Auth::id())->first();
-        $conf->ordre_pdf = $request->ordre;
-        $conf->save();
+        $classe = $this->maclasseactuelle;
+        $classe->ordre_pdf = $request->ordre;
+        $classe->save();
         return 'ok';
     }
 
     public function cahierManage(Request $request) {
-        $ordre = Auth::user()->configuration->ordre_pdf;
+        $ordre = $this->maclasseactuelle->ordre_pdf;
         $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy($ordre)->get();
         $reussites = Reussite::where('user_id', Auth::id())->get();
         $maxPeriode = $request->user()->periodes;
