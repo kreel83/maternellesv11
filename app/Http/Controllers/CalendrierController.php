@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Myperiode;
-use App\Models\Configuration;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Classe;
@@ -156,9 +155,9 @@ class CalendrierController extends Controller
 
         // $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->get();
 
-        $classe = Classe::find(session('id_de_la_classe'));
-        $ecole = Ecole::select('code_academie')->where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
-        $vacances = Vacance::where('ecole_code_academie', $ecole->code_academie)->get();
+        // $classe = Classe::find(session('id_de_la_classe'));
+        // $ecole = Ecole::select('code_academie')->where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
+        $vacances = Vacance::where('ecole_code_academie', $this->maclasseactuelle->code_academie)->get();
 
         $conges = array();
         $key = 0;
@@ -312,14 +311,9 @@ class CalendrierController extends Controller
         
         $p = $this->build_periodes($dates);
 
-        $config = Configuration::where('user_id', Auth::id())->first();
-        if (!$config) {
-            $config = new Configuration();
-            $config->user_id = Auth::id();
 
-        }
-        $config->periodes = $request->dates;
-        $config->save();
+        $this->maclasseactuelle->periodes = $request->dates;
+        $this->maclasseactuelle->save();
        
         
 

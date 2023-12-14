@@ -240,7 +240,7 @@ class EnfantController extends Controller
 
 
         return view('eleves.liste')
-            ->with('periodes', $this->getPeriode($user->configuration->periodes))
+            ->with('periodes', $this->getPeriode($this->maclasseactuelle->periodes))
             ->with('files', $liste)
             ->with('modif', $request->enfant_id)
             ->with('professeur', "null")
@@ -337,8 +337,8 @@ class EnfantController extends Controller
 
 
     public function getAnneeEnCours() {
-        $conf = Auth::user()->configuration;
-        $periodes = $conf->periodes;
+        
+        $periodes = $this->maclasseactuelle->periodes;
 
         return view('eleves.include.getAnneeEnCours')->with('periodes', $this->getPeriode($periodes));
     }
@@ -534,7 +534,7 @@ class EnfantController extends Controller
         session(['backUrl' => URL::previous()]);
         return view('eleves.fiche')
             ->with('flag', 'disabled')
-            ->with('periodes', $this->getPeriode($user->configuration->periodes))        
+            ->with('periodes', $this->getPeriode($this->maclasseactuelle->periodes))        
             ->with('files', $liste)
             ->with('professeur', "null")
             ->with('profs', $user->profs())

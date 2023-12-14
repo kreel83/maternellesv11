@@ -11,7 +11,6 @@ use App\Models\Classe;
 use App\Models\Resultat;
 use App\Models\Fiche;
 use App\Models\Image;
-use App\Models\Configuration;
 use App\Models\Section;
 use App\Models\Phrase;
 use App\Models\Item;
@@ -368,9 +367,11 @@ class ParametreController extends Controller
         })->values();
 
         // $vacances = Vacance::where('ecole_code_academie', Auth::user()->ecole->code_academie)->where('start_date','>=', $date)->get();
-        $classe = Classe::find(session('id_de_la_classe'));
-        $ecole = Ecole::select('code_academie')->where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
-        $vacances = Vacance::where('ecole_code_academie', $ecole->code_academie)->get();
+        
+        
+        // $ecole = Ecole::where('identifiant_de_l_etablissement', $this->maclasseactuelle->ecole_identifiant_de_l_etablissement)->first();
+        // dd($this->maclasseactuelle->ecole_identifiant_de_l_etablissement);
+        $vacances = Vacance::where('ecole_code_academie', $this->maclasseactuelle->ecole_identifiant_de_l_etablissement)->get();
 
         $conges = array();
         foreach($vacances as $vacance) {
