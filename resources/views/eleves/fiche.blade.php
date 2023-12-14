@@ -109,7 +109,8 @@
                                 </ul>
 
                                 <div class="mb-2 mt-3">
-                                    <img width="40" class="img-fluid" src="{{ asset('img/illustrations/'.$resultat->sectionLogo) }}">
+                                    {{-- <img width="40" class="img-fluid" src="{{ asset('img/illustrations/'.$resultat->sectionLogo) }}"> --}}
+                                    <img width="40" class="img-fluid" src="{{ asset('img/illustrations/'.$resultat->section_id.'.png') }}">
                                     <strong>{{ $resultat->sectionName }}</strong>
                                 </div>
                             
