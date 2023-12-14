@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enfant;
-use App\Models\Configuration;
 use App\Models\Classe;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;

@@ -209,8 +209,16 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                         @endphp
 
                             <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu">
-                            <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
-                                data-bs-toggle="dropdown">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</a>
+                            <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center"
+                                data-bs-toggle="dropdown">
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    <div style="font-size: 14px; font-weight: bolder;line-height: 14px">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</div>
+                                    @if (session()->get('id_de_la_classe'))
+                                    <div style="font-size: 12px">{{session()->get('nom_de_la_classe')}}</div>
+                                    @endif
+                                </div>
+                                
+                            </a>
 
                             <div class="dropdown-menu" style="left: inherit !important; right: 0">
                                 <a href="#"

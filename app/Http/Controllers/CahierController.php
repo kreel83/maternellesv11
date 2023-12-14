@@ -12,6 +12,7 @@ use App\Models\Item;
 use App\Models\Myperiode;
 use App\Models\Phrase;
 use App\Models\Resultat;
+use App\Models\Classe;
 use App\Models\Reussite;
 use App\Models\Section;
 use App\Models\User;
@@ -29,6 +30,15 @@ use Illuminate\Support\Str;
 class CahierController extends Controller
 {
 
+    public $maclasseactuelle;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {   
+            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            return $next($request);
+            });
+    }
 
 
     private function format_apercu($resultats, $enfant) {
@@ -62,8 +72,8 @@ class CahierController extends Controller
     private function getPeriode($enfant) {
 
        
-            $conf = Auth::user()->configuration;
-            $periodes = $conf->periodes;
+            
+            $periodes = $this->maclasseactuelle->periodes;
             $periode_actuelle = $enfant->periode;
 
 
@@ -247,7 +257,7 @@ class CahierController extends Controller
 
         // PDF pour Parent pas de Auth::
         // $equipes = Auth::user()->equipes();
-        $equipes = json_decode(Auth::user()->configuration->equipes, true);        
+        $equipes = json_decode($this->maclasseactuelle->equipes, true);        
         // dd($equipes);
 
         // PDF pour Parent pas de Auth::

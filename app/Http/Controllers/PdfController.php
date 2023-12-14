@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
-//use App\Models\Configuration;
 use App\Models\Enfant;
 use App\Models\Classe;
 //use App\Models\Resultat;
 use App\Models\Reussite;
-use App\Models\Configuration;
 //use App\Models\Section;
 //use App\Models\User;
 use Carbon\Carbon;

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Classe;
-use App\Models\Configuration;
 use App\Models\ClasseUser;
 use App\Models\Ecole;
 use Illuminate\Support\Facades\Auth;
