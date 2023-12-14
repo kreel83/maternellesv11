@@ -32,18 +32,19 @@ class PartageController extends Controller
 
     public function ajoutePartage(Request $request) {
         $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'notIn:'.Auth::user()->email],
             'code' => ['required', 'integer', 'digits:6'],
         ], [
             'email.required' => 'Adresse mail obligatoire.',
-            'email.max' => 'Adresse mail limitée à 255 caractères.',
-            'email.email' => 'Adresse mail incorrecte.',
+            'email.max' => 'Adresse e-mail limitée à 255 caractères.',
+            'email.email' => 'Adresse e-mail incorrecte.',
+            'email.not_in' => 'Adresse e-mail incorrecte. Vous ne pouvez pas partager une classe avec vous-même.',
             'code.required' => 'Code de sécurité obligatoire.',
             'code.integer' => 'Le code de sécurité doit être composé de 6 chiffres.',
             'code.digits' => 'Le code de sécurité doit être composé de 6 chiffres.',
         ]);
 
-        // test pour savoir si la calsse est déjà partagée avec cet utilisateur
+        // test pour savoir si la classe est déjà partagée avec cet utilisateur
         $partage = ClasseUser::where('classe_id', $request->user()->maClasse()->id)
             ->where('email', $request->email)
             ->first();
@@ -118,6 +119,14 @@ class PartageController extends Controller
             ->with('msg', 'Token error');
         }
         $partage = ClasseUser::find($request->classeuser_id);
+        // Si cette classe est la dernière classe ouverte par le user : 
+        // si il a une classe à lui on lui mets sa classe sinon null
+        $user = User::find($partage->user_id);
+        if($user->classe_id == $partage->classe_id) {
+            $existingClasse = Classe::where('user_id', $user->id)->first();
+            $user->classe_id = $existingClasse ? $existingClasse->id : null;
+            $user->save();
+        }
         $partage->delete();
         return redirect()->route('partager')
             ->with('status', 'success')
