@@ -472,6 +472,7 @@ class ParametreController extends Controller
 
         $sections =Section::orderBy('ordre')->get();
         
+        
         return view('welcome')
             ->with('sections', $sections)
             ->with('conges', $conges)

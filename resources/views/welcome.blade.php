@@ -78,7 +78,7 @@ $is_dashboard = true;
                         @foreach($anniversaires as $enfant)
                             @php
                                 $groupe = null;
-                                if (!is_null($enfant->groupe)){                    
+                                if (!is_null($enfant->groupe) && !is_null($lesgroupes)){                    
                                 $groupe = $lesgroupes[$enfant->groupe];
                                 }
                             @endphp 
@@ -145,7 +145,7 @@ $is_dashboard = true;
 
                         @php
                             $groupe = null;
-                            if (!is_null($enfant->groupe)){                    
+                            if (!is_null($enfant->groupe) && !is_null($lesgroupes)){                   
                             $groupe = $lesgroupes[$enfant->groupe];
                             }
                         @endphp 
@@ -172,7 +172,7 @@ $is_dashboard = true;
                     @foreach($top5ElevesLesMoinsAvances as $enfant)
                     @php
                     $groupe = null;
-                    if (!is_null($enfant->groupe)){                    
+                    if (!is_null($enfant->groupe) && !is_null($lesgroupes)){                    
                     $groupe = $lesgroupes[$enfant->groupe];
                     }
                 @endphp 
