@@ -38,7 +38,7 @@
                 @foreach ($listeDesEleves->take($middle) as $eleve)
                     @php
                         $groupe = null;
-                        if (!is_null($eleve->groupe)) {
+                        if (!is_null($enfant->groupe) && !is_null($lesgroupes)){ 
                             $groupe = $lesgroupes[$eleve->groupe];
                         }
                     @endphp
@@ -103,7 +103,7 @@
                 @foreach ($listeDesEleves->skip($middle) as $eleve)
                     @php
                         $groupe = null;
-                        if (!is_null($eleve->groupe)) {
+                        if (!is_null($eleve->groupe) && (!is_null($lesgroupes))) {
                             $groupe = $lesgroupes[$eleve->groupe];
                         }
                     @endphp
