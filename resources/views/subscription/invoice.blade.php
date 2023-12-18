@@ -16,6 +16,8 @@
     <div class="card mx-auto w-75">
         <div class="card-body">
 
+            @include('include.display_msg_error')
+
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
 
@@ -28,6 +30,9 @@
                     <th>Date</th>
                     <th>Montant</th>
                     <th>Télécharger</th>
+                    @if(Auth::user()->ecole_identifiant_de_l_etablissement != '')
+                        <th>Transmettre</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -37,9 +42,12 @@
                             <td>{{ $invoice->number }}</td>
                             <td>{{ Carbon\Carbon::parse($invoice->createdAt)->format('d/m/Y')}}</td>
                             {{--<td>{{ $invoice->date()->format('d/m/Y') }}</td>--}}
-                            <td>{{ $invoice->amount }}</td>
+                            <td>{{ $invoice->amount }} €</td>
                             {{--<td>{{ $invoice->total() }}</td>--}}
-                            <td><a href="{{ route('user.invoice.download', ['facture_number' => $invoice->number]) }}"><span class="fa fa-download"></span></a></td>
+                            <td><a href="{{ route('user.invoice.download', ['facture_number' => $invoice->number]) }}" target="_blank"><i class="fa-solid fa-download"></i></a></td>
+                            @if(Auth::user()->ecole_identifiant_de_l_etablissement != '')
+                                <td><a href="{{ route('subscribe.invoice.send', ['facture_number' => $invoice->number]) }}" title="Envoyer à votre établissement"><i class="fa-solid fa-envelope"></i></a></td>
+                            @endif
                         </tr>
                     @endforeach
                 @else

@@ -15,13 +15,16 @@ use Illuminate\Support\Facades\Mail;
 class PartageController extends Controller
 {
     
+    
     public function index(Request $request) {
-        $partages = ClasseUser::select('classe_users.id', 'classe_users.code', 'users.name', 'users.prenom')
-            ->where('classe_users.classe_id', $request->user()->maClasse()->id)
+        $partages = ClasseUser::select('classe_users.id', 'classe_users.code', 'users.name', 'users.prenom')        
+            // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
+            ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
             ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
             ->get();
         $pendings = ClasseUser::select('classe_users.id', 'classe_users.email', 'users.name', 'users.prenom')
-            ->where('classe_users.classe_id', $request->user()->maClasse()->id)
+            // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
+            ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
             ->where('classe_users.user_id', null)
             ->leftJoin('users', 'users.email', '=', 'classe_users.email')
             ->get();
@@ -33,19 +36,20 @@ class PartageController extends Controller
     public function ajoutePartage(Request $request) {
         $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'notIn:'.Auth::user()->email],
-            'code' => ['required', 'integer', 'digits:6'],
+            // 'code' => ['required', 'integer', 'digits:6'],
         ], [
             'email.required' => 'Adresse mail obligatoire.',
             'email.max' => 'Adresse e-mail limitée à 255 caractères.',
             'email.email' => 'Adresse e-mail incorrecte.',
             'email.not_in' => 'Adresse e-mail incorrecte. Vous ne pouvez pas partager une classe avec vous-même.',
-            'code.required' => 'Code de sécurité obligatoire.',
-            'code.integer' => 'Le code de sécurité doit être composé de 6 chiffres.',
-            'code.digits' => 'Le code de sécurité doit être composé de 6 chiffres.',
+            // 'code.required' => 'Code de sécurité obligatoire.',
+            // 'code.integer' => 'Le code de sécurité doit être composé de 6 chiffres.',
+            // 'code.digits' => 'Le code de sécurité doit être composé de 6 chiffres.',
         ]);
 
         // test pour savoir si la classe est déjà partagée avec cet utilisateur
-        $partage = ClasseUser::where('classe_id', $request->user()->maClasse()->id)
+        // $partage = ClasseUser::where('classe_id', $request->user()->maClasse()->id)
+        $partage = ClasseUser::where('classe_id', session()->get('id_de_la_classe'))
             ->where('email', $request->email)
             ->first();
         if($partage) {
@@ -58,7 +62,7 @@ class PartageController extends Controller
         $valueForSubmitBtn = ($newUser) ? 'exist' : 'new';
         return view('partage.confirmAjout')
             ->with('email', $request->email)
-            ->with('code', $request->code)
+            // ->with('code', $request->code)
             ->with('valueForSubmitBtn', $valueForSubmitBtn)
             ->with('newUser', $newUser);
     }
@@ -74,7 +78,7 @@ class PartageController extends Controller
         $partage->classe_id = Auth::user()->classe_id;
         $partage->token = $token;
         $partage->email = $request->email;
-        $partage->code = $request->code;
+        // $partage->code = $request->code;
         $partage->save();
         // Envoi d'un email au user
         if($request->btnsubmit == 'exist') {
@@ -93,8 +97,8 @@ class PartageController extends Controller
         $token = md5($classeuser_id.env('HASH_SECRET'));
         if($token != $request->token) {
             return redirect()->route('partager')
-            ->with('status', 'danger')
-            ->with('msg', 'Token error');
+                ->with('status', 'danger')
+                ->with('msg', 'Erreur de Token');
         }
         $partage = ClasseUser::find($classeuser_id);
         $user = User::find($partage->user_id);
@@ -116,7 +120,7 @@ class PartageController extends Controller
         if($token != $request->token) {
             return redirect()->route('partager')
             ->with('status', 'danger')
-            ->with('msg', 'Token error');
+            ->with('msg', 'Erreur de Token');
         }
         $partage = ClasseUser::find($request->classeuser_id);
         // Si cette classe est la dernière classe ouverte par le user : 
@@ -158,7 +162,7 @@ class PartageController extends Controller
         if($token != $request->token) {
             return redirect()->route('partager')
             ->with('status', 'danger')
-            ->with('msg', 'Token error');
+            ->with('msg', 'Erreur de Token');
         }
         $partage = ClasseUser::find($classeuser_id);
         $user = User::find($partage->user_id);

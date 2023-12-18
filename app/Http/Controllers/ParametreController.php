@@ -474,6 +474,7 @@ class ParametreController extends Controller
         
         
         return view('welcome')
+            ->with('is_abonne', Auth::user()->is_abonne())
             ->with('sections', $sections)
             ->with('conges', $conges)
             ->with('middle', $middle)

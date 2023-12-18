@@ -13,12 +13,14 @@ $is_dashboard = true;
 
 <div class="container mt-5 py-4" id="welcome">
 
+    @include('include.display_msg_error')
+
     {{-- depuis le midlleware 'abo' --}}
-    @if (session('nolicence'))
+    {{-- @if (session('nolicence'))
         <div class="alert alert-danger">
             Cette page n'est pas autorisée. <a href="{{ route('subscribe.cardform') }}" class="alert-link">Cliquez ici</a> pour souscrire un abonnement et profiter de toute la puissance de cette application.
         </div>
-    @endif
+    @endif --}}
 
 
 
@@ -191,25 +193,39 @@ $is_dashboard = true;
 
             </div>
         </div>
+
         <div class="div4 cadre_welcome">
             <div class="titre_welcome">Votre abonnement</div> 
-            <div class="d-flex justify-content-center align-items-center pt-5">
-            @if (!$finsouscription)
-  
-                    <div class="abonnement">
-                        Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.index') }}">Cliquez ici</a> pour vous abonner
+            {{-- <div class="d-flex justify-content-center align-items-center pt-5"> --}}
+            <div class="align-items-center pt-5">
+                @if ($is_abonne)
+                    <div class="abonnement_ok mb-3">
+                        <i class="fa-solid fa-circle-check"></i> Abonnement actif
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="btnAction" href="{{ route('subscribe.index') }}">Voir le détail</a>
+                    </div>
+                @else
+                    <div class="abonnement_notOk mb-3">
+                        <i class="fa-solid fa-circle-exclamation"></i> Aucun abonnement
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="btnAction" href="{{ route('subscribe.index') }}">S'abonner au service</a>
+                    </div>
+                @endif
 
-            @else
- 
-                    <div class="abonnement">
-                        Votre abonnement <br> se termine le <br>{{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}
-                    </div>
-        
-            @endif                
+                {{-- @if (!$finsouscription)
+                        <div class="abonnement">
+                            Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.index') }}">Cliquez ici</a> pour vous abonner
+                        </div>
+                @else
+                        <div class="abonnement">
+                            Votre abonnement <br> se termine le <br>{{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}
+                        </div>
+                @endif                 --}}
             </div> 
-
         </div>
+
         <div class="div5 cadre_welcome"> 
             <div class="titre_welcome">Les 5 activités les plus acquises</div>
             <div class="">

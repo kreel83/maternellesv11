@@ -37,4 +37,9 @@ class TestController extends Controller
         Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($logo, $url, 'test'));
     }
 
+    public function waitingStripe()
+    {
+        return view('subscription.waiting');
+    }
+
 }

@@ -87,10 +87,11 @@ class ClasseController extends Controller
                 }
             }
         } else {
-            //$classe->id = $request->classe_id;
-            $classe->ps = in_array('ps', $section) ? 1 : 0;
-            $classe->ms = in_array('ms', $section) ? 1 : 0;
-            $classe->gs = in_array('gs', $section) ? 1 : 0;
+            if(isset($section)) {
+                $classe->ps = in_array('ps', $section) ? 1 : 0;
+                $classe->ms = in_array('ms', $section) ? 1 : 0;
+                $classe->gs = in_array('gs', $section) ? 1 : 0;
+            }
         }
 
         $classe->description = $request->description;
@@ -100,34 +101,29 @@ class ClasseController extends Controller
         $user->classe_id = $classe->id;
         $user->save();
 
-
-        // if($request->classe_id == 'new') {
-        //     $classe->save();
-        // } else {
-        //     $classe->id = $request->classe_id;
-        //     $classe->update();
-        // }
-
         // // enregistrement aussi dans la table de relations - désactivé
         // $classeLink = new ClasseUser();
         // $classeLink->user_id = Auth::id();
         // $classeLink->classe_id = $classe->id;
         // $classeLink->save();
 
-        return view('classes.succesCreation')
-            ->with('classe_id', $request->classe_id)
-            ->with('title', $request->classe_id == 'new' ? 'Création de ma classe' : 'Modification de ma classe')
-            ->with('description', $request->description);        
-
-    }
-
-    public function modifyclasse(Request $request) {
-        $classe = Classe::find($request->id);
-        foreach ($request->section as $s) {
-            $classe->$s = 1;
+        if($request->classe_id == 'new') {
+            $msg = 'Félicitations ! vous avez crée et activé la classe : '.$request->description;
+        } else {
+            $msg = 'Félicitations ! les modifications ont bien été sauvegardées pour la classe : '.$request->description;
         }
-        $classe->description = $request->description;
-        $classe->save();
-        return redirect()->back()->withInput();        
+        return redirect()->route('depart')
+            ->with('status', 'success')
+            ->with('msg', $msg);
     }
+
+    // public function modifyclasse(Request $request) {
+    //     $classe = Classe::find($request->id);
+    //     foreach ($request->section as $s) {
+    //         $classe->$s = 1;
+    //     }
+    //     $classe->description = $request->description;
+    //     $classe->save();
+    //     return redirect()->back()->withInput();        
+    // }
 }
