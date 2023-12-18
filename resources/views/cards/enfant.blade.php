@@ -93,7 +93,7 @@ if (!is_null($enfant->groupe) && $lesgroupes){
     <div class="footer p-2 d-flex justify-item-around position-relative"  style="background-color: var(--main-color)">
         {{-- <div class="position-absolute" style="top: 5px; left: 55px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div>
         <div class="position-absolute" style="top: 5px; left: 127px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_definitif()}}</div> --}}
-        <div class="position-absolute" style="top: 5px; left: 206px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_last()}}</div>
+        {{-- <div class="position-absolute" style="top: 5px; left: 206px; font-size: 10px; font-weight: bolder; color: white">{{$enfant->state_reussite_last()}}</div> --}}
         
         {{-- <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-paper-plane-top"></i></a>
         <a href="enfants/{{$enfant->id}}/cahier/seepdf/see"  ><i class="fa-light fa-file-pdf"></i></a> --}}

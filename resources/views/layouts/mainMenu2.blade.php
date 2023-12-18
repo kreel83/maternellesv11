@@ -54,7 +54,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
 <body id="backEndUser">
 
-    <input type="hidden" id="tuto" value="{{ Auth::user()->configuration->tuto ?? null }}">
+    {{-- <input type="hidden" id="tuto" value="{{ Auth::user()->configuration->tuto ?? null }}"> --}}
     <input type="hidden" id="type" value="{{ $tuto ?? null }}">
     <input type="hidden" id="page" value="{{ $menu }}">
     @if (!isset($log))
