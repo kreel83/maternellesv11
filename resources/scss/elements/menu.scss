@@ -23,6 +23,10 @@
         border-radius: 4px;
     }
 
+    .nav-link:hover {
+        color: white !important;
+    }
+
 
 
     .dropdown-menu {
@@ -30,13 +34,20 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
             a {
                 width: 250px;    
-            }    
+            }  
+            .nav-item, .nav-link {
+                color: var(--main-color) !important;
+            }  
     }
 
 
-    .nav-item.active, .nav-link.active {
-        background-color: var(--main-color) !important;
+    .nav-item, .nav-link {
         color: white !important;
+    }
+    .nav-item.active, .nav-link.active {
+        background-color: var(--second-color) !important;
+        color: white !important;
+        font-weight: bolder;
         border-radius: 4px;
     }
 

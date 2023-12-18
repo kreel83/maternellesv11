@@ -176,6 +176,10 @@
         font-weight: 400;;
     }
     .breadcrumb-item.active {
+        color: var(--main-color);
+        
+    }
+    .breadcrumb-item.active {
         
         font-weight: 600;
     }

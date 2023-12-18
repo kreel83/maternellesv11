@@ -27,7 +27,7 @@
 $lesgroupes = json_decode(Auth::user()->groupes(), true);
 
 $groupe = null;
-if (!is_null($enfant->groupe)){
+if (!is_null($enfant->groupe) && $lesgroupes){
   
   $groupe = $lesgroupes[$enfant->groupe];
 
@@ -109,7 +109,7 @@ if (!is_null($enfant->groupe)){
   @php
   
   $groupes = json_decode(Auth::user()->groupes(), true);
-      if (is_null($enfant->groupe)) {
+      if (is_null($enfant->groupe) || !$lesgroupes) {
           $c = 'transparent';
       } else {
         $c = $groupes[$enfant->groupe]['backgroundColor'];
