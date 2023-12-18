@@ -253,9 +253,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-
-                                        <a href="{{ route('changerLeMotDePasse') }}"
-                                        class="nav-item nav-link disabled commentaire" style="font-size: 14px; color: lightgray">Changer de classe</a>                               
+										<span class="nav-item disabled">Autres classes :</span>
                                         @foreach (Auth::user()->autresClasses() as $classe)
                                             <a href="{{ route('changerClasse',['classe' => $classe->id]) }}"
                                             class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>

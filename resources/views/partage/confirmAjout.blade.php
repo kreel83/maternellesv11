@@ -20,7 +20,7 @@
                 @csrf
 
                 <input type="hidden" name="email" value="{{ $email }}">
-                <input type="hidden" name="code" value="{{ $code }}">
+                {{-- <input type="hidden" name="code" value="{{ $code }}"> --}}
                 <input type="hidden" name="prenom" value="{{ $newUser->prenom ?? '' }}">
 
                 @if($newUser)
