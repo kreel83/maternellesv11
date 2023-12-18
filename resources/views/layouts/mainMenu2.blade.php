@@ -60,9 +60,9 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
     @if (!isset($log))
         <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: var(--main-color) !important">
                 <div class="container-fluid">
-                    <a href="{{ route('home') }}" class="brand-logo d-none d-lg-block">
+                    <a href="{{ route('depart') }}" class="brand-logo d-none d-lg-block">
                         <img src="{{ asset('img/deco/logo.png') }}" alt="" width="130">
                     </a>
                     <div class="d-block d-lg-none" style="font-size: 25px; ">
