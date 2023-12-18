@@ -317,12 +317,10 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");
     Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
     Route::post('subscribe/resume', [SubscriptionController::class, 'resumeSubscription'])->name("subscribe.resumesubscription");
+    Route::get('subscribe/waiting', [SubscriptionController::class, 'stripeAttenteFinalisation'])->name("subscribe.waiting");
+
     Route::get('/invoice/download/{facture_number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
-    /*
-    Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
-        return $request->user()->downloadInvoice($invoiceId);
-    });
-    */
+    Route::get('invoice/send/{facture_number}', [SubscriptionController::class, 'sendInvoice'])->name("subscribe.invoice.send");    
 
 });
 

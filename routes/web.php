@@ -52,6 +52,7 @@ Route::get('/cahier/download/{token}', [CahierController::class, 'seepdf'])->nam
 */
 Route::get('/testemail', [TestController::class, 'testemaillogo']);
 Route::get('/crondeleteuser', [TestController::class, 'crondeleteusers']);
+Route::get('/waitpayment', [TestController::class, 'waitingStripe']);
 
 /*
 |--------------------------------------------------------------------------

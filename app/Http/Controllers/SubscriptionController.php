@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ConfirmationResumeSubscription;
+use App\Mail\SendInvoiceToSchool;
 use App\Models\Ecole;
 use App\Models\Facture;
 use App\Models\FactureLigne;
@@ -21,7 +22,6 @@ class SubscriptionController extends Controller
 {
     public function index(): View
     {
-        //$is_abonne = Auth::user()->is_abonne();
         $invoices = Facture::where('user_id', Auth::id())->count();
         $licenceType = Auth::user()->licence;
         $msgIfCanceled = "";
@@ -32,9 +32,11 @@ class SubscriptionController extends Controller
                     ['actif', 1],
                 ])->first();                
                 $status = $licence ? 'actif' : 'expiré';
-                $expirationDate = $licence->expires_at;
-                $onGracePeriode = false;
-                $message = "Licence n° $licence->name gérée par votre établissement.";
+                if($licence) {
+                    $expirationDate = $licence->expires_at;
+                    $onGracePeriode = false;
+                    $message = "Licence n° $licence->name gérée par votre établissement.";
+                }
                 break;
             case 'self':
                 $status = Auth::user()->subscribed('default') ? 'actif' : 'expiré';
@@ -53,22 +55,15 @@ class SubscriptionController extends Controller
                 $message = "Aucun abonnement en cours.";
         }
         return view("subscription.index")
-            //->with('is_abonne', $is_abonne)
             ->with('licenceType', $licenceType)
             ->with('invoices', $invoices)
             ->with('status', $status)
-            ->with('expirationDate', $expirationDate)
-            ->with('onGracePeriode', $onGracePeriode)
-            //->with('cancelled', $cancelled)
-            ->with('message', $message)
+            ->with('expirationDate', $expirationDate ?? null)
+            ->with('onGracePeriode', $onGracePeriode ?? false)
+            ->with('message', $message ?? '')
             ->with('msgIfCanceled', $msgIfCanceled);
     }
 
-    /**
-     * affiche l'écran de paiement
-     *
-     * @return View
-     */
     public function cardform(): View
     {
         $product = Produit::produitAbonnementUser();
@@ -76,12 +71,6 @@ class SubscriptionController extends Controller
         return view('subscription.cardform', compact("intent","product"));
     }
 
-    /**
-     * achat d'un abonnement par un User
-     *
-     * @param Request $request
-     * @return View
-     */
     public function subscribe(Request $request)
     {
         $product = Produit::produitAbonnementUser();
@@ -99,8 +88,12 @@ class SubscriptionController extends Controller
                         'amount' => $product->price,
                     ]
                 ]);
-            return view("subscription.result")
-                ->with('result', 'succeeded');
+                return redirect()->route('subscribe.waiting');
+            // return redirect()->route('depart')
+            //     ->with('status', 'success')
+            //     ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.');
+            // return view("subscription.result")
+            //     ->with('result', 'succeeded');
         }
         catch (IncompletePayment $exception) {
             return redirect()->route(
@@ -111,14 +104,44 @@ class SubscriptionController extends Controller
         catch (CardException $exception) {
             $json = $exception->getJsonBody();
             $message = $json['error']['message'].' ('.$json['error']['type'].')';
-            return view("subscription.result")
-                ->with('result', $message);
+            return redirect()->route('depart')
+                ->with('status', 'danger')
+                ->with('msg', $message);
+            // return view("subscription.result")
+            //     ->with('result', $message);
         }
     } 
 
     public function stripeRedirect(Request $request) {
-        return view("subscription.result")
-                ->with('result', $request->success);
+        if($request->success) {
+            return redirect()->route('subscribe.waiting');
+        } else {
+            return redirect()->route('depart')
+                ->with('status', 'danger')
+                ->with('msg', 'Une erreur est survenue.');
+        }
+        // if($request->success) {
+        //     $status = 'success';
+        //     $msg = 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.';
+        // } else {
+        //     $status = 'danger';
+        //     $msg = 'Une erreur est survenue.';
+        // }
+        // return redirect()->route('depart')
+        //         ->with('status', $status)
+        //         ->with('msg', $msg);
+        // return view("subscription.result")
+        //         ->with('result', $request->success);
+    }
+
+    public function stripeAttenteFinalisation(Request $request) {
+        if(Auth::user()->subscribed('default')) {
+            return redirect()->route('depart')
+            ->with('status', 'success')
+            ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.');
+        } else {
+            return view("subscription.waiting");
+        }
     }
 
     /**
@@ -186,8 +209,7 @@ class SubscriptionController extends Controller
      */
     public function invoice(): View
     {
-        //$invoices = Auth::user()->invoices();
-        $invoices = Facture::where('user_id', Auth::id())->orderByDesc('id')->get();
+        $invoices = Facture::select('number', 'created_at', 'amount')->where('user_id', Auth::id())->orderByDesc('id')->get();
         return view("subscription.invoice")
             ->with('invoices', $invoices);
     }
@@ -203,9 +225,35 @@ class SubscriptionController extends Controller
             $lignes = FactureLigne::where('facture_id', $invoice->id)
                 ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
                 ->get();
-                //dd($lignes);
             $pdf = PDF::loadView('pdf.facture', ['user' => Auth::user(), 'invoice' => $invoice, 'ecole' => $ecole, 'lignes' => $lignes]);
             return $pdf->stream('Facture_'.$invoice->number.'.pdf');
+        } else {
+            return redirect()->route('subscribe.invoice')
+                ->with('status', 'danger')
+                ->with('msg', 'Facture introuvable.');
+        }
+    }
+
+    public function sendInvoice($number)
+    {
+        $invoice = Facture::select('factures.id','factures.number','factures.created_at','transactions.payment_method')->where([
+            ['factures.number', $number],
+            ['factures.user_id', Auth::id()],
+        ])->leftJoin('transactions', 'factures.transaction_id', '=', 'transactions.id')->first();
+        if($invoice) {
+            $ecole = Ecole::where('identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)->first();
+            $lignes = FactureLigne::where('facture_id', $invoice->id)
+                ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
+                ->get();
+            $pdf = PDF::loadView('pdf.facture', ['user' => Auth::user(), 'invoice' => $invoice, 'ecole' => $ecole, 'lignes' => $lignes]);
+            Mail::to($ecole->mail)->send(new SendInvoiceToSchool($pdf->output(),'Facture_'.$invoice->number.'.pdf'));
+            return redirect()->route('subscribe.invoice')
+                ->with('status', 'success')
+                ->with('msg', 'Votre facture n° '.$number.' a été envoyée à votre établissement.');
+        } else {
+            return redirect()->route('subscribe.invoice')
+                ->with('status', 'danger')
+                ->with('msg', 'Facture introuvable.');
         }
     }
 
