@@ -166,6 +166,10 @@ class User extends Authenticatable
         return Classe::find(session()->get('id_de_la_classe'))->groupes;
     }
 
+    public function periodes() {
+        return Classe::find(session()->get('id_de_la_classe'))->periodes;
+    }
+
     public function classe_active() {
         return Classe::find(session()->get('id_de_la_classe'));
     }
