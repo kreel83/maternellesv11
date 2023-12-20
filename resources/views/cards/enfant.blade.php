@@ -25,6 +25,7 @@
 
 @php
 $lesgroupes = json_decode(Auth::user()->groupes(), true);
+// dd($lesgroupes);
 
 $groupe = null;
 if (!is_null($enfant->groupe) && $lesgroupes){

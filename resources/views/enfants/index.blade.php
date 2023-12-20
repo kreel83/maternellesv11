@@ -1,6 +1,7 @@
 @extends('layouts.mainMenu2', ['titre' => 'Ma classe', 'menu' => $type])
 @php
     $degrades = App\Models\Enfant::DEGRADE;
+    
 
 @endphp
 @section('content')
