@@ -1,9 +1,6 @@
 @extends('layouts.mainMenu2', ['titre' => 'Mes fiches', 'menu' => 'item'])
 
 @section('content')
-    <style>
-
-    </style>
 
 
     <div id="fichesView" class="row">
@@ -41,6 +38,9 @@
                 <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
                     <i class="fa-solid fa-file-import fs-3"></i>
                 </div>
+                {{-- <div title="Sauvegarder votre template" class="btnAction" id="saveTemplatesBtn" data-bs-toggle="modal" data-bs-target="#saveTemplate" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
+                    <i class="fa-solid fa-floppy-disk fs-3"></i>
+                </div> --}}
                 @endif
             
         </div>
@@ -65,8 +65,13 @@
 
                     <div data-type="autresfiches" data-position="left"
                         class="btnSelectionType violet droit selected les_fiches text-center">Liste des fiches</div>
-                    <div data-type="mesfiches" data-position="right" class="btnSelectionType violet droit ma_selection  text-center">Ma
-                        sélection</div>
+                    <div data-type="mesfiches" data-position="right" class="btnSelectionType violet droit ma_selection  text-center">
+                        @if (isset($template))
+                        {{$template->nom}}
+                        @else
+                        Ma sélection {{$template->nom ?? ''}}
+                        @endif
+                    </div>
                 </div>
                 <div class="d-flex pb-3 justify-content-end w-100">
                     <select name="" id="categories" class="w-75">
@@ -114,13 +119,50 @@
     </div>
 
 
-        <div class="modal fade" id="importSection" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="saveTemplate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="top: 70px">
                 <div class="modal-content" style="height: 250px">
 
                     <div class="modal-header">
                         <h5 class="modal-title fs-5" id="title">
                             Selectionnez votre ou vos sections
+                        </h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        
+
+                    </div>
+                    <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="overflow: hidden; overflow-y: auto">
+                        <form action="{{route('saveTemplate')}}" method="POST">
+                            @csrf
+
+                            <div class="form-group">
+                                <label for="">template</label>
+                                <input type="text" class="form-control" name="name" style="width: 400px">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="tous" id="tous" checked>
+                                <label class="form-check-label" for="tous">
+                                  Seulement mes sélections
+                                </label>
+                              </div>
+                          <button type="submit" class="btnAction">Sauvegarder</button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="importSection" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="top: 70px">
+                <div class="modal-content" style="height: 250px">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-5" id="title">
+                            Importer des sections
                         </h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -149,12 +191,31 @@
                           </div>
                           <button type="submit" class="btnAction">Selectionner</button>
                         </form>
+                          {{-- <hr>
+                          <form action="{{route('importTemplate')}}" method="POST">
+                            @csrf
+                          <div class="form-group">
+                            <label for="">Template</label>
+                            <select name="template" id="" class="form-select" style="width: 400px">
+                                <option value="null">Veuillez selectionner</option>
+                                @foreach ($templates as $template)
+                                <option value="{{$template->id}}">{{$template->nom}}</option>
+                                @endforeach
+                               
+                            </select>
+                            <button type="submit" class="btnAction mx-auto">Importer</button>
+
+                          </div>
+                        </form> --}}
+
 
                     </div>
 
                 </div>
             </div>
         </div>
+
+
         <div class="modal fade" id="biblioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" style="top: 70px">
                 <div class="modal-content" style="height: 600px">

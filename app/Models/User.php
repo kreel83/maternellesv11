@@ -163,10 +163,12 @@ class User extends Authenticatable
     public $equipes;
 
     public function groupes() {
+        if (session()->get('id_de_la_classe') == null) return null;
         return Classe::find(session()->get('id_de_la_classe'))->groupes;
     }
 
     public function periodes() {
+        if (session()->get('id_de_la_classe') == null) return null;
         return Classe::find(session()->get('id_de_la_classe'))->periodes;
     }
 

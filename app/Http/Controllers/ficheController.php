@@ -13,6 +13,8 @@ use App\Models\Enfant;
 use App\Models\Section;
 use App\Models\Classification;
 use App\Models\Image as ImageTable;
+use App\Models\Template;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -57,6 +59,7 @@ class ficheController extends Controller
         $classifications = $classifications->groupBy('section_id')->toArray();
         $categories = Categorie::where('section_id', $section->id)->get();
         $categories = $categories->groupBy('section1');
+        $templates = Template::where('user_id', Auth::id())->get();
 
 
         
@@ -65,6 +68,8 @@ class ficheController extends Controller
 
         return view('fiches.index')
             ->with('type', $request->type)
+            ->with('templates', $templates)
+            ->with('template', $request->template ?? null)
             ->with('categories', $categories)
             ->with('section', $section)
             ->with('fiches', $fiches)
@@ -211,20 +216,76 @@ class ficheController extends Controller
         return 'ok';
     }
 
+    public function importTemplate(Request $request) {
+        
+        $template = Template::find($request->template);
+        $liste = json_decode($template->items_liste);
+        Fiche::where('classe_id',$this->maclasseactuelle)->delete();
+        $order = 1;
+        foreach ($liste as $line) {
+            $section_id = Item::find($line)->section_id;
+                if ($this->maclasseactuelle->desactive_devenir_eleve == 1 && $section_id == 9 ) {
+
+                } else {
+                    $fiche = new Fiche();
+                    $fiche->user_id = Auth::id();
+                    $fiche->classe_id = $this->maclasseactuelle;
+                    $fiche->item_id = $line;
+                    $fiche->order = $order;
+                    $fiche->perso = 1;
+                    $fiche->parent_type = 'items';
+                    $fiche->section_id = $section_id;
+                    $fiche->save();
+                    $order++;            
+                }
+
+            }
+        $request = new Request();  
+        $request->merge(['template' => $template]); 
+        return $this->index($request);
+
+    }
+
+    public function saveTemplate(Request $request) {
+
+        if ($request->tous == 'on') { 
+
+            $f = Fiche::where('classe_id',session()->get('id_de_la_classe'))->where('user_id', Auth::id())->pluck('item_id')->toArray();
+        } else {
+            $f = Fiche::where('classe_id',session()->get('id_de_la_classe'))->pluck('item_id')->toArray();
+
+        }
+        $n = new Template();
+        $n->user_id = Auth::id();
+        $n->nom = $request->name;
+        $n->items_liste = json_encode($f);
+        $n->created_at = Carbon::now();
+        $n->updated_at = Carbon::now();
+        $n->save();
+        return redirect()->back();
+
+    }
+
     public function setSection(Request $request) {
         $ps = $ms = $gs = null;
         $total = [];
         foreach ($request->section as $section) {
-            if ($section == 'ps')  $total[] = Item::whereRaw('substr(lvl,1,1) = 1')->whereNull('user_id')->pluck('id');
-            if ($section == 'ms')  $total[] = Item::whereRaw('substr(lvl,2,1) = 1')->whereNull('user_id')->pluck('id');
-            if ($section == 'gs')  $total[] = Item::whereRaw('substr(lvl,3,1) = 1')->whereNull('user_id')->pluck('id');                           
+            if ($section == 'ps')  $total[] = Item::whereRaw('substr(lvl,1,1) = 1')->where(function($query) {
+                $query->whereNull('user_id')->orWhere('user_id', Auth::id());
+            })->pluck('id');
+            if ($section == 'ms')  $total[] = Item::whereRaw('substr(lvl,2,1) = 1')->where(function($query) {
+                $query->whereNull('user_id')->orWhere('user_id', Auth::id());
+            })->pluck('id');
+            if ($section == 'gs')  $total[] = Item::whereRaw('substr(lvl,3,1) = 1')->where(function($query) {
+                $query->whereNull('user_id')->orWhere('user_id', Auth::id());
+            })->pluck('id');                           
         }
         
         $total = new Collection($total);
         $total = $total->flatten();
         $total = $total->unique();
         $order = 1;
-        Fiche::where('user_id',Auth::id())->delete();
+        Fiche::where('classe_id',$this->maclasseactuelle)->delete();
         foreach ($total as $line) {
             $section_id = Item::find($line)->section_id;
         if ($this->maclasseactuelle->desactive_devenir_eleve == 1 && $section_id == 9 ) {
