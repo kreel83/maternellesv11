@@ -1,6 +1,7 @@
 @extends('layouts.mainMenu2', ['titre' => 'Ma classe', 'menu' => 'avatar'])
 @php
     $degrades = App\Models\Enfant::DEGRADE;
+
 @endphp
 @section('content')
 <div id="page_enfants" class="row d-flex p-5 gx-0 mt-5 " >
