@@ -235,6 +235,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/fiches/populate/classification', [ficheController::class, 'populateClassification'])->name('populateClassification');
     Route::post('/fiches/populate/categorie', [ficheController::class, 'populateCategorie'])->name('populateCategorie');
     Route::post('/fiches/setSection', [ficheController::class, 'setSection'])->name('setSection');
+    Route::post('/fiches/importTemplate', [ficheController::class, 'importTemplate'])->name('importTemplate');
+    Route::post('/fiches/saveTemplate', [ficheController::class, 'saveTemplate'])->name('saveTemplate');
 
 
     Route::get('/classe/changer',[ClasseController::class,'changerclasse'])->name('changerClasse');
