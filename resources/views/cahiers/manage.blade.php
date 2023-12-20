@@ -4,7 +4,8 @@
 
 @php
 $degrades = App\Models\Enfant::DEGRADE;
-$lesgroupes = json_decode(Auth::user()->groupes, true);
+$lesgroupes = json_decode(Auth::user()->groupes(), true);
+
 @endphp
 
 <div class="container my-5 page">
@@ -64,7 +65,9 @@ $lesgroupes = json_decode(Auth::user()->groupes, true);
         @foreach ($enfants as $enfant)
             @php
                 $groupe = null;
-                if (!is_null($enfant->groupe) && !$lesgroupes){
+                // dd($lesgroupes);
+                
+                if (!is_null($enfant->groupe) && $lesgroupes){
                     $groupe = $lesgroupes[$enfant->groupe];
                 }
             @endphp 

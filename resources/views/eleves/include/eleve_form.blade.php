@@ -61,7 +61,7 @@
 
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
-            <input type="text" class="form-control form-control-lg" id="nom_form" name="nom" placeholder="Nom de l'élève" value="{{ old('nom') ?? $eleve['nom'] }}">
+            <input type="text" class="form-control form-control-sm" id="nom_form" name="nom" placeholder="Nom de l'élève" value="{{ old('nom') ?? $eleve['nom'] }}">
 
             @error('nom')
                 <div class="error_message">{{ $message }}</div>                                        
@@ -72,7 +72,7 @@
 
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
-            <input type="text" class="form-control form-control-lg" id="prenom_form" name="prenom" placeholder="Prénom de l'élève" value="{{ old('prenom') ?? $eleve['prenom'] }}">
+            <input type="text" class="form-control form-control-sm" id="prenom_form" name="prenom" placeholder="Prénom de l'élève" value="{{ old('prenom') ?? $eleve['prenom'] }}">
             @error('prenom')
             <div class="error_message">{{ $message }}</div>                                        
             @enderror
@@ -80,7 +80,7 @@
 
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-cake-candles"></i></span>
-            <input type="date" class="form-control form-control-lg" id="ddn_form" name="ddn" placeholder="Date de naissance de l'élève" value="{{ old('ddn') ?? $eleve['ddn'] }}">
+            <input type="date" class="form-control form-control-sm" id="ddn_form" name="ddn" placeholder="Date de naissance de l'élève" value="{{ old('ddn') ?? $eleve['ddn'] }}">
             @error('ddn')
             <div class="error_message">{{ $message }}</div>                                        
             @enderror
@@ -93,22 +93,22 @@
 
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
-            <input type="email" class="form-control form-control-lg" id="mail1_form" name="mail1" id="mail1" value="{{ old('mail1') ?? $eleve['mail1'] }}" placeholder="Mail principal">
+            <input type="email" class="form-control form-control-sm" id="mail1_form" name="mail1" id="mail1" value="{{ old('mail1') ?? $eleve['mail1'] }}" placeholder="Mail principal">
         </div>
 
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
-            <input type="email" class="form-control form-control-lg" id="mail2_form" name="mail2" id="mail2" value="{{ old('mail2') ?? $eleve['mail2'] }}" placeholder="Mail secondaire">
+            <input type="email" class="form-control form-control-sm" id="mail2_form" name="mail2" id="mail2" value="{{ old('mail2') ?? $eleve['mail2'] }}" placeholder="Mail secondaire">
         </div>
 
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
-            <input type="email" class="form-control form-control-lg" id="mail3_form" name="mail3" id="mail3" value="{{ old('mail3') ?? $eleve['mail3'] }}" placeholder="Mail supplementaire">
+            <input type="email" class="form-control form-control-sm" id="mail3_form" name="mail3" id="mail3" value="{{ old('mail3') ?? $eleve['mail3'] }}" placeholder="Mail supplementaire">
         </div>
 
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
-            <input type="email" class="form-control form-control-lg" id="mail4_form" name="mail4" id="mail4" value="{{ old('mail4') ?? $eleve['mail4'] }}" placeholder="Mail supplementaire">
+            <input type="email" class="form-control form-control-sm" id="mail4_form" name="mail4" id="mail4" value="{{ old('mail4') ?? $eleve['mail4'] }}" placeholder="Mail supplementaire">
         </div>
         <div class="form-check mb-2 ">
             <input type="checkbox" class="form-check-input" name="sh" id="sh"

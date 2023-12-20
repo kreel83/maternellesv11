@@ -141,7 +141,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    background-color: var(--main-color);
+    background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);
     font-weight: 400;;
     width: fit-content;
     padding: 4px 24px;
