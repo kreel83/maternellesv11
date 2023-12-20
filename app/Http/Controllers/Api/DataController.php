@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Models\Classe;
 use App\Models\Enfant;
 use App\Models\Item;
 use App\Models\Resultat;
@@ -11,32 +12,69 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+use function PHPUnit\Framework\isNull;
+
 class DataController extends Controller
 {
     
     public function chargerLaClasse() {
         try {
             $user = auth('sanctum')->user();
-            $groupes = $user->configuration->groupes;
-            $groupes = json_decode($groupes);
-            foreach ($groupes as $key=>$groupe) {
-                $groupe->id = $key;
-                $groupes[$key] = $groupe;
+            //dd($user->classe_id);
+            $classes = Classe::where('user_id', $user->id)->get();
+            //dd($classes);
+            //$groupes = $user->configuration->groupes;
+            //$key = 0;
+            foreach ($classes as $classe) {
+                if($classe->id == $user->classe_id) {
+                    $groupes = $classe->groupes;
+                    $groupes = json_decode($groupes);
+                    // if(!isNull($groupes)) {
+                    // foreach ($groupes as $key => $groupe) {
+                    //         $groupe->id = $key;
+                    //         $groupes[$key] = $groupe;
+                    //     }
+                    // }
+                    //dd($groupes);
+                    //dd($key);
+                    break;
+                }
             }
             $all['name']='Tous';
             $all['backgroundColor'] = '#cccccc';
             $all['textColor'] = '#000000';
             $all['id'] = -1;
-            $groupes[$key+1] = json_decode(json_encode($all));
+            $groupes[] = json_decode(json_encode($all));
 
-	        $user->setVisible(['id','name','prenom']);
+            // $classe = Classe::find($user->classe_id);
+
+            // //$groupes = $user->configuration->groupes;
+            // $groupes = $classe->groupes;
+            // $groupes = json_decode($groupes);
+            // $key = 0;
+            // if(!isNull($groupes)) {
+            //     foreach ($groupes as $key=>$groupe) {
+            //         $groupe->id = $key;
+            //         $groupes[$key] = $groupe;
+            //     }
+            // }
+            // $all['name']='Tous';
+            // $all['backgroundColor'] = '#cccccc';
+            // $all['textColor'] = '#000000';
+            // $all['id'] = -1;
+            // $groupes[$key+1] = json_decode(json_encode($all));
+
+	        $user->setVisible(['id','classe_id','name','prenom']);
+            $classes->setVisible(['id','description']);
             
             $dispatcher = Enfant::getEventDispatcher();
             Enfant::unsetEventDispatcher();
-            $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('user_id', $user->id)->get();
+            //$enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('user_id', $user->id)->get();
+            $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('classe_id', $user->classe_id)->get();
             Enfant::setEventDispatcher($dispatcher);
 
             $sections = Section::select('id','court')->get();
+
             $resultats = Resultat::select('id','item_id','enfant_id','notation','section_id','autonome')
                 ->where('user_id', $user->id)
                 ->get();
@@ -48,6 +86,7 @@ class DataController extends Controller
                 
             return response()->json([
                 'success' => true,
+                'classes' => $classes,
 	            'groupes' => $groupes,
                 'user' => $user,
                 'enfants' => $enfants,

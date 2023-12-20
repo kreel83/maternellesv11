@@ -135,12 +135,14 @@ class GroupeController extends Controller
             $groupes = array();
         }
         if($request->id == 'new') {
-            $groupes[] = array(
+            $groupes[] = array(         
+                'id' => (int)count($groupes),       
                 'name' => $request->groupName,
                 'backgroundColor' => $request->groupBackgroundColor,
-                'textColor' => $request->groupTextColor
+                'textColor' => $request->groupTextColor,
             );
         } else {
+            $groupes[$request->id]['id'] = (int)$request->id;
             $groupes[$request->id]['name'] = $request->groupName;
             $groupes[$request->id]['backgroundColor'] = $request->groupBackgroundColor;
             $groupes[$request->id]['textColor'] = $request->groupTextColor;

@@ -15,13 +15,13 @@
     
     <div class="card ">
         <div class="card-body">
-            <h4 class="mb-3">Je partager ma classe</h4>
+            <h4 class="mb-3">Je partage ma classe</h4>
 
             <form action="{{ route('ajoutePartage') }}" method="post">
                 @csrf
 
                 <div class="mb-3">
-                    <label for="email">Indiquez ici l'adresse de courrier électronique de la personne qui pourra accèder à votre classe pour collaborer</label>
+                    <label for="email">Indiquez ici l'adresse de courrier électronique de la personne qui pourra accéder à votre classe pour collaborer</label>
                     <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" placeholder="Adresse e-mail">
                 </div>
 

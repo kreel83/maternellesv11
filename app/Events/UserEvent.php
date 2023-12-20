@@ -27,6 +27,7 @@ class UserEvent
     public function __construct(User $user)
     {
 
+
         $user->groupes = $user->groupes() ?? null;
         $user->equipes = $user->equipes() ?? null ;
         $user->periodes = $user->periodes() ?? null;
