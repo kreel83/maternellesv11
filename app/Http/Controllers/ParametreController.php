@@ -46,12 +46,12 @@ class ParametreController extends Controller
             });
     }
 
-    public function aidematernelle() {
-        $equipes = Auth::user()->configuration->equipes;
-        $photo = asset('img/avatar/avatarF.jpg');
+    // public function aidematernelle() {
+    //     $equipes = Auth::user()->configuration->equipes;
+    //     $photo = asset('img/avatar/avatarF.jpg');
 
-        return view('aidematernelle.index')->with('equipes', $equipes)->with('photo', $photo);
-    }
+    //     return view('aidematernelle.index')->with('equipes', $equipes)->with('photo', $photo);
+    // }
 
     public function saveaidematernelle(Request $request) {
 

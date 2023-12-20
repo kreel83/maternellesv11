@@ -65,9 +65,10 @@
 
         <div class="card-footer" style="font-size: 12px;border-color: {{$fiche->section()->color}} !important">
             <div style="font-weight: bolder;" class="st">{{$fiche->categorie->section2 ?? null}}</div>
-            <div>{{$fiche->name}} <span style="color: red">{{$fiche->image_name}}</span></div>
+            <div>{{$fiche->name}}</div>
         </div>
-        <div class="card-footer2" style="padding: 0; background-color: {{$fiche->section()->color}}" data-id="{{$fiche->id}}">
+        <div class="card-footer2" style="padding: 0; background: linear-gradient(164deg, {{$fiche->section()->color}} 23%, #ecf0f1 74%)" data-id="{{$fiche->id}}">
+        {{-- <div class="card-footer2" style="padding: 0; background-color: {{$fiche->section()->color}}; background: linear-gradient(to bottom, {{$fiche->section()->color}}, #ecf0f1); " data-id="{{$fiche->id}}; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"> --}}
            
                 <style>
                     .caseLvl.ps.active {
@@ -87,9 +88,9 @@
                     }
                 </style>
                 
-                    <div class="p-0 caseLvl ps {{ $ps == "1" ? 'active' : null }}" style="cursor: pointer">PS</div>
-                    <div class="p-0 caseLvl ms {{ $ms == "1" ? 'active' : null }}" style="cursor: pointer">MS</div>
-                    <div class="p-0 caseLvl gs {{ $gs == "1" ? 'active' : null }}" style="cursor: pointer">GS</div>
+                    <div class="p-0 caseLvl ps {{ $ps == "1" ? 'active' : null }}" >PS</div>
+                    <div class="p-0 caseLvl ms {{ $ms == "1" ? 'active' : null }}" >MS</div>
+                    <div class="p-0 caseLvl gs {{ $gs == "1" ? 'active' : null }}" >GS</div>
                     {{-- <div class="ms-5">{{$fiche->id}}</div> --}}
                     {{-- <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}" class="btnSelection }} modifier my-1">Modifier</button>
                     <div>{{$fiche->id}}</div> --}}

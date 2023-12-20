@@ -257,8 +257,13 @@ class CahierController extends Controller
 
         // PDF pour Parent pas de Auth::
         // $equipes = Auth::user()->equipes();
-        $equipes = json_decode($this->maclasseactuelle->equipes, true);        
-        // dd($equipes);
+        $equipes = $this->maclasseactuelle->equipes   ;  
+        if ($equipes) {
+            $equipes = json_decode($equipes, true);
+        } else {
+            $equipes = array();
+        }
+
 
         // PDF pour Parent pas de Auth::
         $user = User::find($enfant->user_id);

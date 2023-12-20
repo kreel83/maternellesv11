@@ -79,10 +79,10 @@
                         @include('fiches.include.categories')
                     </select>
 
-                    <button data-type=""
+                    {{-- <button data-type=""
                         class="deletefiches d-none mx-2 btnSelection  p-0 violet {{ $type == 'createfiche' ? 'active' : 'null' }}">
                         RAZ
-                    </button>
+                    </button> --}}
                     <button data-type=""
                         class="createfiche mx-2 btnSelection  p-0 violet {{ $type == 'createfiche' ? 'active' : 'null' }}">
                         <i class="fa-solid fa-plus"></i>
