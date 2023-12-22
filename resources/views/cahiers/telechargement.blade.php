@@ -51,7 +51,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, rgb(255, 168, 168) 10%, rgb(252, 255, 0) 100%);
+            background: linear-gradient(135deg, var(--main-color) 10%, var(--third-color) 100%);
         }
 
         .label_jour {
@@ -155,7 +155,7 @@
     <div id="espaceParent">
 
 
-        <div class="d-flex justify-content-center flex-column">
+        <div class="d-flex justify-content-center flex-column" style="color: white">
             <div class="mb-5 text-center">
                 <img src="{{asset('img/deco/logo.png')}}" alt="" width="240">
             </div>

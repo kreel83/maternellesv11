@@ -7,8 +7,8 @@
         <title>{{ $titre }}</title>
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
-        {{-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"> --}}
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 
         <!-- Fonts -->
         <!--<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">-->
@@ -33,17 +33,9 @@
 
     <body id="backEndUser">
 
-    <div class="container mt-3">
+    <div class="container m-0 p-0">
 
-        <div class="d-flex justify-content-center mb-3">
-           
-            <div>
-                <a href="{{route('vitrine.index')}}" class="brand-logo">
-                    <img src="{{asset('img/deco/logo.png')}}" alt="" width="250">
-                </a>
-            </div>
-    
-        </div>
+
 
         @yield('content')
 
@@ -51,8 +43,8 @@
 
     {{-- @include('footer.footer');   --}}
 
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script> --}}
+    {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  --}}
 
 </body>
 </html>
