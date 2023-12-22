@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\utils\Utils;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -15,12 +16,16 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $logo, $url;
+
     /**
      * Create a new message instance.
      */
-    public function __construct(
-        public $url)
-    {}
+    public function __construct($url)
+    {
+        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->url = $url;
+    }
 
     /**
      * Get the message envelope.
@@ -29,7 +34,7 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
     {
         return new Envelope(
             from: new Address(Auth::user()->email, Auth::user()->prenom.' '.Auth::user()->name),
-            subject: '[école] Téléchargement du cahier de progrès de votre enfant',
+            subject: 'Téléchargement du cahier de réussites de votre enfant',
         );
     }
 
