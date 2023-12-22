@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\DemandePartageClasseUserExistant;
 use App\Mail\DemandePartageClasseUserInconnu;
-use App\Mail\envoiCodeSecuritePartage;
+use App\Mail\EnvoiCodeSecuritePartage;
 use App\Models\Classe;
 use App\Models\ClasseUser;
 use App\Models\User;
@@ -167,8 +167,8 @@ class PartageController extends Controller
         $partage = ClasseUser::find($classeuser_id);
         $user = User::find($partage->user_id);
         $nomDemandeur = $user->prenom.' '.$user->name;
-        //Mail::to('contact.clickweb@gmail.com')->send(new envoiCodeSecuritePartage($partage->code, $nomDemandeur));
-        Mail::to(Auth::user()->email)->send(new envoiCodeSecuritePartage($partage->code, $nomDemandeur));
+        //Mail::to('contact.clickweb@gmail.com')->send(new EnvoiCodeSecuritePartage($partage->code, $nomDemandeur));
+        Mail::to(Auth::user()->email)->send(new EnvoiCodeSecuritePartage($partage->code, $nomDemandeur));
         return redirect()->route('partager')
             ->with('status', 'success')
             ->with('msg', 'Vous allez recevoir un courrier électronique avec votre code de sécurité.');

@@ -23,6 +23,7 @@ Route::post('/classe', [DataController::class, 'chargerLaClasse']);
 Route::post('/resultat/store', [DataController::class, 'ajouterUnResultat']);
 Route::post('/resultat/update', [DataController::class, 'modifierUnResultat']);
 Route::post('/section', [DataController::class, 'chargerLesSections']);
+Route::post('/classe/set', [DataController::class, 'nouvelleClasseParDefaut']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

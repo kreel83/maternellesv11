@@ -20,49 +20,25 @@ class DataController extends Controller
     public function chargerLaClasse() {
         try {
             $user = auth('sanctum')->user();
-            //dd($user->classe_id);
             $classes = Classe::where('user_id', $user->id)->get();
-            //dd($classes);
-            //$groupes = $user->configuration->groupes;
-            //$key = 0;
+            $groupes = array();
             foreach ($classes as $classe) {
                 if($classe->id == $user->classe_id) {
-                    $groupes = $classe->groupes;
-                    $groupes = json_decode($groupes);
-                    // if(!isNull($groupes)) {
-                    // foreach ($groupes as $key => $groupe) {
-                    //         $groupe->id = $key;
-                    //         $groupes[$key] = $groupe;
-                    //     }
-                    // }
-                    //dd($groupes);
-                    //dd($key);
+                    if(!is_null($classe->groupes)) {
+                        $groupes = $classe->groupes;
+                        $groupes = json_decode($groupes);
+                        if(count($groupes) > 0) {
+                            $all['name']='Tous';
+                            $all['backgroundColor'] = '#cccccc';
+                            $all['textColor'] = '#000000';
+                            $all['id'] = -1;
+                            //$groupes[] = json_decode(json_encode($all));
+                            $groupes[] = $all;
+                        }
+                    }
                     break;
                 }
             }
-            $all['name']='Tous';
-            $all['backgroundColor'] = '#cccccc';
-            $all['textColor'] = '#000000';
-            $all['id'] = -1;
-            $groupes[] = json_decode(json_encode($all));
-
-            // $classe = Classe::find($user->classe_id);
-
-            // //$groupes = $user->configuration->groupes;
-            // $groupes = $classe->groupes;
-            // $groupes = json_decode($groupes);
-            // $key = 0;
-            // if(!isNull($groupes)) {
-            //     foreach ($groupes as $key=>$groupe) {
-            //         $groupe->id = $key;
-            //         $groupes[$key] = $groupe;
-            //     }
-            // }
-            // $all['name']='Tous';
-            // $all['backgroundColor'] = '#cccccc';
-            // $all['textColor'] = '#000000';
-            // $all['id'] = -1;
-            // $groupes[$key+1] = json_decode(json_encode($all));
 
 	        $user->setVisible(['id','classe_id','name','prenom']);
             $classes->setVisible(['id','description']);
@@ -103,6 +79,23 @@ class DataController extends Controller
             ], 500);
         }
     }
+
+	public function nouvelleClasseParDefaut(Request $request) {
+		try {
+            $user = auth('sanctum')->user();
+            $user->classe_id = $request->classe_id;
+            $user->save();
+            return response()->json([
+                'success' => true,
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+            'message' => $th->getMessage()
+            ], 500);
+        }
+	}
 
     public function ajouterUnResultat(Request $request) {
         try {
