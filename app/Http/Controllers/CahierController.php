@@ -14,6 +14,7 @@ use App\Models\Phrase;
 use App\Models\Resultat;
 use App\Models\Classe;
 use App\Models\Reussite;
+use App\Models\ReussiteSection;
 use App\Models\Section;
 use App\Models\User;
 use App\utils\Utils;
@@ -35,11 +36,15 @@ class CahierController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {   
-            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            // $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            $this->maclasseactuelle = session('classe_active');
             return $next($request);
             });
     }
 
+    public function toto() {
+        return true;
+    }
 
     private function format_apercu($resultats, $enfant) {
         $bloc = '';
@@ -198,6 +203,181 @@ class CahierController extends Controller
         if(!is_null($enfant_id)) {
             $enfant = Enfant::where('id', $enfant_id)->where('user_id', Auth::id())->first();
             if($enfant && filter_var($periode, FILTER_VALIDATE_INT) !== false) {
+				//$maxPeriode = Reussite::where('enfant_id', $enfant_id)->max('periode');
+                $id = $enfant->id;
+				// if((int)$periode <= $maxPeriode) {
+				// } else {
+				// 	return redirect()->route('error')->with('msg', 'Il n\'y a aucun cahier de réussites pour cette période.');
+				// }
+            } else {
+                return redirect()->route('error')->with('msg', 'Données incorrectes.');
+            }
+        } else {
+            $enfant = Enfant::where('token', $token)->first();
+            if($enfant) {
+                $id = $enfant->id;
+                $periode = Str::substr($token, 0, 1);
+            } else {
+                return redirect()->route('cahier.predownload', ['token' => $token])
+                    ->withErrors(['msg' => 'Token error']);
+            }
+        }
+
+        // PDF pour Parent pas de Auth::
+        //$rep = Auth::user()->repertoire;
+
+        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color','sections.texte')
+            ->join('items','items.id','resultats.item_id')
+            ->join('sections','sections.id','resultats.section_id')
+            ->where('enfant_id', $id)
+            ->where('periode', $periode)
+            ->orderBy('resultats.section_id')
+            ->get();
+         
+        // $resultats_personnels = Resultat::select('personnels.*','resultats.*','sections.name as name_section','sections.color')->join('personnels','personnels.id','resultats.item_id')
+        //    ->join('sections','sections.id','resultats.section_id')
+        //     ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
+        //     $resultats = $resultats_items->merge($resultats_personnels);
+
+        foreach ($resultats as $resultat) {
+            $p = Image::find($resultat->image_id);
+            $resultat->image = null;
+            if ($p) {
+                $resultat->image = 'storage/items/'.$resultat->section_id.'/'.$p->name;
+            }
+        }
+
+        $resultats = $resultats->groupBy('section_id')->toArray();
+
+        // PDF pour Parent pas de Auth::
+        $user = User::find($enfant->user_id);
+
+        $reussite = Reussite::select('id', 'commentaire_general')
+            ->where('enfant_id', $id)
+            ->where('periode', $periode)
+            ->first();
+
+        // Chargement des textes par section
+        $reussiteSections = ReussiteSection::select('section_id', 'description')
+            ->where('reussite_id', $reussite->id)
+            ->get();            
+
+        $sections = Section::orderBy('ordre')->get()->toArray();
+        $s = array();
+        $rs = array();
+        foreach ($sections as $section) {
+            $s[$section['id']] = $section;
+            // on met les textes dans un tableau pour affichage plus pratique dans la vue
+            $reussiteSection = $reussiteSections->firstWhere('section_id', $section['id']);
+            $rs[$section['id']] = $reussiteSection ? $reussiteSection->description : '';
+        }
+        //dd($rs);
+        //dd($s);
+        //$enfant = Enfant::find($id);
+        $name = $enfant->prenom.' '.$enfant->nom;
+        $n = explode(' ', $name);
+        $n = join('-', $n);
+
+        // PDF pour Parent pas de Auth::
+        // $equipes = Auth::user()->equipes();
+        $equipes = $this->maclasseactuelle->equipes;
+        if ($equipes) {
+            $equipes = json_decode($equipes, true);
+        } else {
+            $equipes = array();
+        }
+
+
+        
+        //$reussite = $r ? $r->texte_integral : '';
+
+        // dd($reussite);
+        //$reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
+
+        
+
+        // // Extraction des textes correspondant à chaque section
+        // $textes = array();
+        // $titres = array();
+        // $textes = explode('<h2 contenteditable="false">', $reussite);
+        // for ($i=1; $i < count($textes); $i++) { 
+        //     $textes[$i] = '<h2 contenteditable="false">'.$textes[$i];
+        //     preg_match('/<h2 contenteditable="false">(.*?)<\/h2>/s', $textes[$i], $match);
+        //     $titres[$i] = $match[1];
+        // }
+        // $textesParSection = array();
+        // foreach ($s as $sec) {
+        //     $findText = false;
+        //     for ($i=1; $i < count($titres); $i++) { 
+        //         if($titres[$i] == $sec['name']) {
+        //             $textesParSection[$sec['id']] = str_replace('<h2 contenteditable="false">'.$titres[$i].'</h2>', '', $textes[$i]);
+        //             $textesParSection[$sec['id']] = str_replace(chr(10), '<br>', $textesParSection[$sec['id']]);
+        //             $findText = true;
+        //         }
+        //     }
+        //     if(!$findText) {
+        //         $textesParSection[$sec['id']] = '';
+        //     }
+        // }
+        // // L'indice 0 contient le commentaire général
+        // $textesParSection[0] = $textes[count($textes)-1];
+        // $textesParSection[0] = str_replace('<h2 contenteditable="false">Commentaire général</h2>', '', $textesParSection[0]);
+        // //dd($textesParSection);
+
+        // css class pour le pdf
+        $customClass = array();
+        foreach ($resultats as $resultat) {
+            foreach ($resultat as $item) {
+                //dd($resultat);
+                // dd(public_path($item["section_id"].'\\'.$item['image_nom']));
+                //$class = '.section'.$item['section_id'].' {border-radius: 15px; padding-top: 10px; padding-bottom: 10px; text-align: center; font-size: 20px; background-color: '.$item['color'].'}';
+                $class = '.titre'.$item['section_id'].' {color: '.$item['texte'].'; background-color: '.$item['color'].'}';
+                if(!in_array($class, $customClass)) {
+                    $customClass[] = $class;
+                }
+            }
+        }
+        // header pour commentaire général
+        $class = ".titre0 {color: #000; background-color: #f5e342}";
+        $customClass[] = $class;
+
+        $periode = Utils::periode($enfant, $periode);
+
+        if ($state == 'see') {
+
+            $pdf = PDF::loadView('pdf.reussite5', [
+                'reussiteSections' => $rs,
+                //'textesParSection' => $textesParSection,
+                'customClass' => implode(' ', $customClass),
+                'reussite' => $reussite,
+                'resultats' => $resultats,
+                'sections' => $s,
+                'enfant' => $enfant,
+                'equipes' => $equipes,
+                'user' => $user,
+                'periode' => $periode
+            ]);
+            //$pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
+            // download PDF file with download method
+            //return $pdf->stream('test_cahier.pdf');     
+            $pdf->add_info('Title', 'Cahier de reussites de '.ucfirst($enfant->prenom));
+            return $pdf->stream('Cahier de reussites de '.ucfirst($enfant->prenom.'.pdf'));
+        } else {
+            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
+            $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
+            return redirect()->back()->with('success','le fichier a bine été enregistré');
+        }
+
+
+    }
+    /*
+    // OK avec reussite4.blade et colonne texte_integral dans reussites
+    public function seepdf($token, $enfant_id = null, $periode = null, $state = 'see') {
+        // si enfant_id contient l'ID de l'enfant alors token doit avoir la valeur 0 dans la route
+
+        if(!is_null($enfant_id)) {
+            $enfant = Enfant::where('id', $enfant_id)->where('user_id', Auth::id())->first();
+            if($enfant && filter_var($periode, FILTER_VALIDATE_INT) !== false) {
 				$maxPeriode = Reussite::where('enfant_id', $enfant_id)->max('periode');
                 $id = $enfant->id;
 				// if((int)$periode <= $maxPeriode) {
@@ -347,6 +527,7 @@ class CahierController extends Controller
 
 
     }
+    */
 	/*
     // OK avec Token
 	public function seepdf($token, $state = 'see') {

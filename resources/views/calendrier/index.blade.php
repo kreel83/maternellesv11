@@ -39,7 +39,7 @@
         <li class="breadcrumb-item active" aria-current="page">Calendrier</li>
       </ol>
     <div class="d-none d-xl-block" data-bs-toggle="modal" data-bs-target="#EventModal">
-      <a href="#">Ajouter un événement</a>
+      <a href="#">Ajouter un évènement</a>
       </div>  
   </div>
 
@@ -125,7 +125,7 @@
   <div class="modal-dialog" style="top: 120px">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Evenement</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Évènement</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="{{route('event')}}" method="POST" >
@@ -135,16 +135,16 @@
                 <input type="hidden" name="id" value="new" >
                 <div class="form-floating mt-3">
                     <input type="date" class="form-control" name="date" id="date_event">
-                    <label for="">Date de l'evenement</label>
+                    <label for="">Date de l'évènement</label>
                 </div>
                 <div class="form-floating">
                     <input type="text" class="form-control" name="name">
-                        <label for="">Nom de l'evenement</label>
+                        <label for="">Nom de l'évènement</label>
 
                 </div>
                 <div class="form-floating mt-3">
                     <textarea class="form-control" name="comment" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">commentaire</label>
+                    <label for="floatingTextarea2">Commentaire</label>
                 </div>
 
                 

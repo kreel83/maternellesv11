@@ -41,23 +41,24 @@ $is_dashboard = true;
             <div>fiches sélectionnées</div>
         </div>
         <div class="info4 cadre_info">
-            @foreach ($sections as $sec)
-            @if ($sec->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
-            @else
-            <div class="d-flex flex-column align-items-center">
+            @foreach ($sections as $section)
+                @if ($section->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
+                @else
+                <div class="d-flex flex-column align-items-center">
+                 
+                    {{-- <div class="nbSection" style="color: {{$sec->color}}">{{$sec->nbSection()}}</div> --}}
+                    <div class="nbSection" style="color: {{$section->color}}">{{ $nombreDeFichesParSection[$section->id] }}</div>
+                    <div class='selectSectionFiche selectSectionItem'
+                        data-value="{{ $section->id }}" title="{{$section->name}}">
+                        <img src="{{ asset('img/illustrations/' . $section->logo) }}" alt="" width="45px"
+                            height="45px">
+                    </div>
 
-                <div class="nbSection" style="color: {{$sec->color}}">{{$sec->nbSection()}}</div>
-                <div class='selectSectionFiche selectSectionItem'
-                    data-value="{{ $sec->id }}" title="{{$sec->name}}">
-                    <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
-                        height="45px">
+                    <div class="petit_texte" style="color: {{$section->color}}">{{$section->icone}}</div>
+            
                 </div>
-
-                <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
-          
-            </div>
-            @endif
-        @endforeach
+                @endif
+            @endforeach
         </div>
         {{-- <div class="info5 cadre_info">
         </div>
@@ -65,9 +66,6 @@ $is_dashboard = true;
         </div> --}}
 
         <div class="div1 cadre_welcome"> 
-            @php
-                
-            @endphp
             <div class="titre_welcome">Les anniversaires {{ in_array(substr($moisActuel,0,1), ['o','a']) ? "d'" : 'de '}}{{$moisActuel}}</div>
             @if ($anniversaires->isEmpty())
             <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
@@ -101,39 +99,31 @@ $is_dashboard = true;
         </div>
 
         <div class="div8 cadre_welcome "> 
-            @php
-                
-            @endphp
-            <div class="titre_welcome">Les prochains évenements</div>
-            @if ($anniversaires->isEmpty())
+            <div class="titre_welcome">Les prochains évènements</div>
+            @if ($conges->isEmpty())
                 <div class="anniversaire d-flex justify-content-center align-items-center pt-5">
-                    Aucun événement à venir.
+                    Aucun évènement à venir.
                 </div>
             @else
-
                 <div class="anniversaires1 w-100 d-flex justify-content-between">
                     <ul class="w-100 pe-3">
                         @foreach ($conges as $ev )
-                            
-
-                        <li class="d-flex justify-content-between align-items-center w-100">
-                            <div class="d-flex align-items-center justify-content-between w-100">
-                                <div class="m-2 degrade_card_enfant animaux" style="width: 27px; height: 27px">
-                                    @if ($ev['type'] == 'conges')
-                                        <i class="fa-solid fa-plane"></i>
-                                    @else
-                                    
-                                        <i class="fa-solid fa-calendar-check"></i>
-                                    @endif    
+                            <li class="d-flex justify-content-between align-items-center w-100">
+                                <div class="d-flex align-items-center justify-content-between w-100">
+                                    <div class="m-2 degrade_card_enfant animaux" style="width: 27px; height: 27px">
+                                        @if ($ev['type'] == 'conges')
+                                            <i class="fa-solid fa-plane"></i>
+                                        @else
+                                        
+                                            <i class="fa-solid fa-calendar-check"></i>
+                                        @endif    
+                                    </div>
+                                    <div class="name text-start">{{ $ev['description']}}</div>
+                                    <div class="">{{Carbon\Carbon::parse($ev['date'])->format('d/m')}}</div>
                                 </div>
-                                <div class="name text-start">{{ $ev['description']}}</div>
- 
-                                <div class="">{{Carbon\Carbon::parse($ev['date'])->format('d/m')}}</div>
-                            </div>
-                         </li>
+                            </li>
                         @endforeach                        
                     </ul>
-
                 </div>
             @endif
         </div>
@@ -213,16 +203,6 @@ $is_dashboard = true;
                         <a class="btnAction" href="{{ route('subscribe.index') }}">S'abonner au service</a>
                     </div>
                 @endif
-
-                {{-- @if (!$finsouscription)
-                        <div class="abonnement">
-                            Vous n'avez pas d'abonnement en cours. <a class="alert-link" href="{{ route('subscribe.index') }}">Cliquez ici</a> pour vous abonner
-                        </div>
-                @else
-                        <div class="abonnement">
-                            Votre abonnement <br> se termine le <br>{{ Carbon\Carbon::parse($finsouscription)->format('d/m/Y')}}
-                        </div>
-                @endif                 --}}
             </div> 
         </div>
 

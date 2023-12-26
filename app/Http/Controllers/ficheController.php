@@ -34,7 +34,8 @@ class ficheController extends Controller
     {
         $this->middleware(function ($request, $next) {   
             
-            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            // $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            $this->maclasseactuelle = session('classe_active');
             return $next($request);
             });
     }
@@ -250,9 +251,11 @@ class ficheController extends Controller
 
         if ($request->tous == 'on') { 
 
-            $f = Fiche::where('classe_id',session()->get('id_de_la_classe'))->where('user_id', Auth::id())->pluck('item_id')->toArray();
+            // $f = Fiche::where('classe_id',session()->get('id_de_la_classe'))->where('user_id', Auth::id())->pluck('item_id')->toArray();
+            $f = Fiche::where('classe_id',session('classe_active')->id)->where('user_id', Auth::id())->pluck('item_id')->toArray();
         } else {
-            $f = Fiche::where('classe_id',session()->get('id_de_la_classe'))->pluck('item_id')->toArray();
+            // $f = Fiche::where('classe_id',session()->get('id_de_la_classe'))->pluck('item_id')->toArray();
+            $f = Fiche::where('classe_id',session('classe_active')->id)->pluck('item_id')->toArray();
 
         }
         $n = new Template();
@@ -352,7 +355,8 @@ class ficheController extends Controller
             $fiche->parent_type = $request->table;
             $fiche->section_id = $request->section;
             $fiche->user_id = Auth::id();
-            $fiche->classe_id = session()->get('id_de_la_classe');
+            // $fiche->classe_id = session()->get('id_de_la_classe');
+            $fiche->classe_id = session('classe_active')->id;
             $fiche->save();
             $t = $fiche->id;
 

@@ -55,7 +55,8 @@ class EleveEvent
         // PDF pour Parent pas de Auth::
         
         //$conf = Configuration::where('user_id', $enfant->user_id)->first();
-        $classe = Classe::find(session()->get('id_de_la_classe')); 
+        //$classe = Classe::find(session()->get('id_de_la_classe'));
+        $classe = session('classe_active');
         
         if ($classe->groupes) {
             $lesgroupes = json_decode($classe->groupes, true);

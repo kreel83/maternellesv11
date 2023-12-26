@@ -197,7 +197,8 @@ class Enfant extends Model
     }
 
     public static function listeDesEleves() {
-        $liste = self::where('classe_id', session()->get('id_de_la_classe'))->get();
+        // $liste = self::where('classe_id', session()->get('id_de_la_classe'))->get();
+        $liste = self::where('classe_id', session('classe_active')->id)->get();
         return $liste;
     }
 

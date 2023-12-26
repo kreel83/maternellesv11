@@ -139,6 +139,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/tutos/modetuto', [TutoController::class, 'modetuto'])->name('modeTuto');
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
 
+    Route::get('/toto', [CahierController::class, 'toto'])->name('cahiertoto');
+
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{enfant_id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{enfant_id}/cahier', [CahierController::class, 'index'])->name('cahier');

@@ -22,7 +22,8 @@ class CalendrierController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {   
-            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            // $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            $this->maclasseactuelle = session('classe_active');
             return $next($request);
             });
     }

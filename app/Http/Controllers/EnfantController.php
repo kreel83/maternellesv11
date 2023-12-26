@@ -30,7 +30,8 @@ class EnfantController extends Controller
     {
         $this->middleware(function ($request, $next) {   
             
-            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            // $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            $this->maclasseactuelle = session('classe_active');
             return $next($request);
             });
     }
@@ -125,9 +126,11 @@ class EnfantController extends Controller
         
         if (in_array($request->type,["evaluation","reussite"])) {
 
-            $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->where("reussite_disabled",0);
+            // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->where("reussite_disabled",0);
+            $enfants = Enfant::where('classe_id', session('classe_active')->id)->where("reussite_disabled",0);
         } else {
-            $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'));
+            // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'));
+            $enfants = Enfant::where('classe_id', session('classe_active')->id);
             
             
             if ($this->maclasseactuelle->groupes && $request->type == 'affectation_groupe') {
@@ -450,7 +453,8 @@ class EnfantController extends Controller
         //$datas['sh'] = $datas['sh'] == 'true' ? 1 : 0;
         $datas['nom'] = mb_strtoupper($datas['nom']);
         $datas['prenom'] = ucfirst($datas['prenom']);
-        $datas['classe_id'] = session()->get('id_de_la_classe');
+        // $datas['classe_id'] = session()->get('id_de_la_classe');
+        $datas['classe_id'] = session('classe_active')->id;
         $degrade = Enfant::DEGRADE;
         $datas['background'] = array_rand($degrade);
         $files = File::files(public_path('img/animaux'));

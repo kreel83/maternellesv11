@@ -37,7 +37,8 @@ class PdfController extends Controller
     {
         $this->middleware(function ($request, $next) {   
             
-            $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            // $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
+            $this->maclasseactuelle = session('classe_active');
             return $next($request);
             });
     }
@@ -181,8 +182,10 @@ class PdfController extends Controller
     }
 
     public function cahierManage(Request $request) {
+        //dd($this->maclasseactuelle);
         $ordre = $this->maclasseactuelle->ordre_pdf;
-        $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy($ordre)->get();
+        // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy($ordre)->get();
+        $enfants = Enfant::where('classe_id', session('classe_active')->id)->orderBy($ordre)->get();
         $reussites = Reussite::where('user_id', Auth::id())->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();

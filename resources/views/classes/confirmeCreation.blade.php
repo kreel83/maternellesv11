@@ -39,6 +39,7 @@
                     @csrf
                     <input type="hidden" name="classe_id" value="{{ $classe_id }}">
                     <input type="hidden" name="ecole_id" value="{{ $ecole->identifiant_de_l_etablissement }}">
+                    <input type="hidden" name="code_academie" value="{{ $ecole->code_academie }}">
                     <input type="hidden" name="description" value="{{ $description }}">
                     <input type="hidden" name="section" value="{{ $section }}">
                     <button class="btn btn-primary">{{ $classe_id == 'new' ? 'Créer la classe' : 'Sauvegarder'}}</button>

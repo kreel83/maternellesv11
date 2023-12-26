@@ -18,9 +18,11 @@ class ClasseController extends Controller
         $user = Auth::user();
         $user->classe_id = $request->classe;
         $user->save();
-        session(['id_de_la_classe' => $classe->id]);
-        session(['nom_de_la_classe' => $classe->description]);
-
+        // session(['id_de_la_classe' => $classe->id]);
+        // session(['nom_de_la_classe' => $classe->description]);
+        session(['classe_active' => $classe]);
+        session(['is_enfants' => $classe->is_enfants()]);
+        session(['autres_classes' => Auth::user()->autresClasses()]);
         return redirect()->route('depart');
     }
 
@@ -31,7 +33,8 @@ class ClasseController extends Controller
 
 
     public function updateclasse() {
-        $classe = Classe::find(session('id_de_la_classe'));
+        // $classe = Classe::find(session('id_de_la_classe'));
+        $classe = session('classe_active');
         return view('classes.createclasse')
             ->with('title', 'Modification de ma classe')            
             ->with('classe', $classe);
@@ -76,6 +79,7 @@ class ClasseController extends Controller
             $classe = Classe::find($request->classe_id);
         }
         $classe->ecole_identifiant_de_l_etablissement = $request->ecole_id;
+        $classe->ecole_code_academie = $request->code_academie;
 
         $classe->user_id = Auth::id();
 
@@ -96,6 +100,9 @@ class ClasseController extends Controller
 
         $classe->description = $request->description;
         $classe->save();
+
+        $request->session()->put('classe_active', $classe);
+        $request->session()->save();
         
         $user = Auth::user();
         $user->classe_id = $classe->id;
@@ -117,13 +124,4 @@ class ClasseController extends Controller
             ->with('msg', $msg);
     }
 
-    // public function modifyclasse(Request $request) {
-    //     $classe = Classe::find($request->id);
-    //     foreach ($request->section as $s) {
-    //         $classe->$s = 1;
-    //     }
-    //     $classe->description = $request->description;
-    //     $classe->save();
-    //     return redirect()->back()->withInput();        
-    // }
 }
