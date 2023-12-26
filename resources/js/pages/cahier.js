@@ -1,6 +1,17 @@
 
 
-
+var origine = {
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+    9: true,
+    10: true,
+    99: true
+}
 
 const choicePhrase = (quill) => {
     $(document).on('keyup', '.searchPhrase', function (e) {
@@ -257,93 +268,97 @@ const saveCommentaireGeneral = (quill) => {
 }
 
 
-const clickOnDefinif = (quill) => {
+const clickOnDefinif = (quill, section) => {
 
     var debounce = null
+    
 
-    quill.on('text-change', function() {
 
-        clearTimeout(debounce);
-        debounce = setTimeout(function(){
-            var texte = quill.root.innerHTML
-            var enfant = $('#editorApercu').data('enfant')
-            console.log('done')
-            
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                method: 'POST',
-                url: '/app/enfants/'+enfant+"/cahier/save",
-                data: {
-                    texte: texte,                    
-                },
-                success: function(data) {
-                    console.log(data)
+        
+        quill.on('text-change', function() {
+            if (!origine[section]) {
+                $('.saisie[data-section="'+section+'"]').removeClass('d-none')
+                clearTimeout(debounce);
+                            debounce = setTimeout(function(){
+                                var texte = quill.root.innerHTML
+                                texte = texte.replace('<p><br></p>', "")
+                                
+                                var enfant = $('#cahierView').data('enfant');
+                                console.log('texte', texte)
+                               
+                                    
+                                    console.log('done')
+                                    
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        }
+                                    });
+                                    $.ajax({
+                                        method: 'POST',
+                                        url: '/app/enfants/'+enfant+"/cahier/save/"+section,
+                                        data: {
+                                            texte: texte,                    
+                                        },
+                                        success: function(data) {
+                                            $('.saisie[data-section="'+section+'"]').addClass('d-none')
+                                            $('.sauvegarde[data-section="'+section+'"]').removeClass('d-none')
+                                            setTimeout(() => {
+                                                $('.sauvegarde[data-section="'+section+'"]').addClass('d-none')
+                                            }, 3000);
 
-                }
-            })
-        }, 2000);
-    });
+                                        }
+                                    })                    
+                               
+
+                            }, 2000);                
+            }    else {
+                origine[section] = false;
+            }
+
+           
+        });
+        
+
 
     
 
-    $(document).on('click','#reactualiser', function() {
-        var enfant = $(this).data('enfant')
-        quill.setText('');
+    // $(document).on('click','#reactualiser', function() {
+    //     var enfant = $(this).data('enfant')
+    //     quill.setText('');
 
             
-            $.get('/app/enfants/'+enfant+'/cahier/reactualiser', function(data) {
-                var selection = quill.getSelection(true);
-                quill.root.innerHTML = data               
-                $('.progress-container').addClass('d-none')                          
-            })
+    //         $.get('/app/enfants/'+enfant+'/cahier/reactualiser', function(data) {
+    //             var selection = quill.getSelection(true);
+    //             quill.root.innerHTML = data               
+    //             $('.progress-container').addClass('d-none')                          
+    //         })
       
 
 
-    })
+    // })
 
-    $(document).on('change','#definitif', function() {
+    $(document).on('change','.seePdf', function() {
         const definitif = $(this).prop('checked')
-        $('.labelDefinitif').removeClass('active')
-        if (definitif) {
-            $('.labelDefinitifDroit').addClass('active')
-        } else {
-            $('.labelDefinitifGauche').addClass('active')
-        }
-        console.log('test method post definitif');
-        var enfant = $(this).data('enfant')
+        const reussite = $(this).data('reussite')
+        console.log('definitif', definitif)
 
 
-        // Construct the data object
-        var data = {
-            quill: quill.root.innerHTML,
-            state: definitif
-        };
-        var jsonData = JSON.stringify(data);
 
-        $.ajaxSetup({
-            headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-               'Content-Type': 'application/json'
-            }
-        });
         $.ajax({
-            method: 'POST',
-            url : '/app/enfants/' + enfant + '/cahier/definitif',
-            data: jsonData,
+            method: 'get',
+            url : '/app/cahier/'+reussite+'/definitif?state='+definitif,
+            
             success: function(data) {
-                if (definitif == true) {
-                    quill.enable(false)
-                    $('#reactualiser').addClass('d-none')
-                    $('#pdf').removeClass('d-none')
+                $('.seePdf').prop('checked', definitif)
+                if (definitif == true)  {
+
+                    $('.definitifPDF').removeClass('d-none')
                 } else {
-                    $('#reactualiser').removeClass('d-none')
-                    $('#pdf').addClass('d-none')
-                    quill.enable(true)
+
+                    $('.definitifPDF').addClass('d-none')
                 }
+                
             }
         })
     })
@@ -351,7 +366,50 @@ const clickOnDefinif = (quill) => {
 
 
 
-const apercu = (quill) => {
+const apercu = (quill, section) => {
+
+    if ($('.editorApercu').length) {
+        console.log(section)
+        var t = $('.editorApercu[data-section="'+section+'"]').data('texte')
+        console.log('tttttt', t)
+        if (t) {
+            quill.setText(t);
+            var data = t;
+            quill.clipboard.dangerouslyPasteHTML(data)            
+        }
+
+
+    }
+    
+    $(document).on('change', '.selectionCommentaire', function() {
+        var sec = $(this).data('section')
+        if (section == sec ) {
+            var prenom = $(this).data('prenom')
+            var genre = $(this).data('genre') == 'F' ? 'Elle' : 'Il';
+            var isText = quill.getText()
+
+            var p = $(this).val();
+            if (isText.trim() != '') {
+                console.log('test', isText)
+                console.log(prenom, genre, p )
+                p = p.replace(prenom, genre) 
+
+            }
+            console.log('current', isText)
+
+            origine[section] = false;
+            var currentContent = quill.root.innerHTML+p;
+
+            // Append the new text
+            // currentContent.ops.push({ insert: p }); // You may need to adjust the format based on your needs
+        
+            // Set the updated content back to the editor
+            quill.clipboard.dangerouslyPasteHTML(currentContent) 
+            $(this).val('null')            
+        }
+
+    })
+
     $(document).on('click', '.nav-link', function() {
         if ($(this).attr('id') == 'apercu') {
             var enfant = $(this).data('enfant')
@@ -372,7 +430,10 @@ const apercu = (quill) => {
 }
 
 const onload = (quill) => {
+    
     $(document).ready(function() {
+
+
 
         if ($('#motCle').length) {
 

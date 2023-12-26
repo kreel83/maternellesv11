@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class ResultatController extends Controller
 {
     public function setNote(Request $request) {
-        //dd($request);
+        
         $resultat = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
         $enfant = Enfant::find($request->enfant);
         $item = Item::find($request->item);

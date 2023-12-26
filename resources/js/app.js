@@ -117,55 +117,60 @@ if ($('.alerteMessage').length) {
 }
 
 
-if ($('#editorApercu').length) {
+if ($('.editorApercu').length) {
+    $('.editorApercu').each((index, el) => {
+        var section = $(el).data('section')
+        var ColorClass = Quill.import('attributors/class/color');
+        var SizeStyle = Quill.import('attributors/style/size');
+        Quill.register(ColorClass, true);
+        Quill.register(SizeStyle, true);
+        Quill.register("modules/resize", window.QuillResizeImage);
+        var toolbarOptions = ['bold', 'italic', 'underline', 'strike'];
+        var quill = new Quill(el, {
+            modules: {
 
-    var ColorClass = Quill.import('attributors/class/color');
-    var SizeStyle = Quill.import('attributors/style/size');
-    Quill.register(ColorClass, true);
-    Quill.register(SizeStyle, true);
-    Quill.register("modules/resize", window.QuillResizeImage);
-    var toolbarOptions = ['bold', 'italic', 'underline', 'strike','image'];
-    var quill = new Quill('#editorApercu', {
-        modules: {
-
-            toolbar: toolbarOptions,
-            resize: {
-                locale: {
-                  center: "center",
+                toolbar: toolbarOptions,
+                resize: {
+                    locale: {
+                    center: "center",
+                    },
                 },
-              },
 
-          },
-          theme: 'snow',
-          ImageResize: {}
+            },
+            theme: 'snow',
+            // ImageResize: {}
 
-    });
-    console.log('2')
-    const myModal = new Modal('#informationPDF', {})
-    clickOnCahier(quill, myModal)
-    clickOnDefinif(quill)
-    console.log('def')
+        });
+        console.log('2')
+        const myModal = new Modal('#informationPDF', {})
+        clickOnCahier(quill, myModal)
+        clickOnDefinif(quill, section)
+        console.log('def')   
+        console.log('1')
+        choicePhrase()
+    
+    
+    
+        console.log('2')
+        clickOnNav()
+        console.log('3')
+        saveTexte(quill)
+        console.log('4')
+        onload(quill)
+        console.log('5')
+        apercu(quill, section)
+        console.log('6')
+    
+        saveTexteReussite(quill)
+        console.log('8')
+        saveCommentaireGeneral(quill)
+        console.log('8')     
+    })
+
+
 
 }
-    console.log('1')
-    choicePhrase()
 
-
-
-    console.log('2')
-    clickOnNav()
-    console.log('3')
-    saveTexte(quill)
-    console.log('4')
-    onload(quill)
-    console.log('5')
-    apercu(quill)
-    console.log('6')
-
-    saveTexteReussite(quill)
-    console.log('8')
-    saveCommentaireGeneral(quill)
-    console.log('8')
 
 
 if ($('#editor2').length) {
@@ -197,11 +202,21 @@ if ($('#editor3').length) {
     setMotCleFiche(quill3)
 }
 
+if ($('#editorModif').length) {
+
+    var quill4 = new Quill('#editorModif', {
+        modules: {
+            toolbar: false    // Snow includes toolbar by default
+        },
+        theme: 'snow'
+    });
+    selectItem(Modal, quill4)
+}
+
 window.section_active = null
 
 
 
-selectItem(Modal)
 hamburger()
 
 

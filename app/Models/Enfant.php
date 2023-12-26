@@ -128,7 +128,7 @@ class Enfant extends Model
     }
 
     public function resultat($item) {
-        $r =  Resultat::where('enfant_id', $this->id)->where('item_id', $item)->where('notation',2)->first();
+        $r =  Resultat::where('enfant_id', $this->id)->where('item_id', $item)->where('notation',2)->where('autonome',1)->first();
 
         return $r;
     }
@@ -146,7 +146,7 @@ class Enfant extends Model
     }
 
     public function resultats() {
-        $r = Resultat::where('enfant_id', $this->id)->where('notation',2)->get();
+        $r = Resultat::where('enfant_id', $this->id)->where('notation',2)->where('autonome',1)->get();
         $r = $r->groupBy('section_id');
         return $r;
 
@@ -193,7 +193,7 @@ class Enfant extends Model
     }
 
     public function hasReussite() {
-        return $this->hasOne('App\Models\Reussite')->first();
+        return $this->hasOne('App\Models\Reussite')->where('periode', $this->periode)->first();
     }
 
     public static function listeDesEleves() {

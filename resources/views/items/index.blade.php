@@ -109,28 +109,40 @@
             </div>
 
 
-            <div id="mesfiches" class="listItems d-flex justify-content-center">
-                <div class="fiche_container fiches mesitems">
-
-                    
+            <div id="mesfiches" class="listItems d-flex justify-content-center" >
+                <div class="fiche_container fiches mesitems">                    
                     @foreach ($fiches as $fiche)
                         @include('cards.item')
-                    @endforeach
-                    
+                    @endforeach                    
                     <div class="noFiche d-none">
                         <div>Aucune activité sélectionnée</div>
                         <a class="linkNoFiche btnAction mt-5" href="">Ajouter des activités</a>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
-
         </div>
-
         </div>
 
 
     </div>
+
+    <div class="modal fade" id="modifResultat" tabindex="-1" aria-labelledby="modifResultat" aria-hidden="true">
+        <div class="modal-dialog" style="top: 150px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Information suppression</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div id="editorModif"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-height: 420px; overflow-y: auto" class="ql-container ql-snow position-relative"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="CommitSaveReussite" data-bs-dismiss="modal">Sauvegarder</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 

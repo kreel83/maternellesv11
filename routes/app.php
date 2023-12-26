@@ -142,11 +142,12 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{enfant_id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{enfant_id}/cahier', [CahierController::class, 'index'])->name('cahier');
+    Route::get('/enfants/{enfant_id}/cahierV2', [CahierController::class, 'indexv2'])->name('cahierV2');
     Route::get('/enfants/{enfant_id}/pdfview', [CahierController::class, 'pdfview'])->name('pdfview');
     Route::get('/enfants/{enfant_id}/redoPdf', [CahierController::class, 'redoPdf'])->name('redoPdf');
     Route::post('/enfants/{enfant_id}/cahier/saveCommentaireGeneral', [CahierController::class, 'saveCommentaireGeneral'])->name('saveCommentaireGeneral');
     Route::post('/enfants/{enfant_id}/translate', [CahierController::class, 'translate'])->name('translate');
-    Route::post('/enfants/{enfant_id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
+    Route::post('/enfants/{enfant_id}/cahier/save/{section_id}', [CahierController::class, 'saveTexte'])->name('saveTexte');
     Route::post('/enfants/{enfant_id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
     Route::post('/enfants/{enfant_id}/cahier/reformuler', [CahierController::class, 'reformuler'])->name('reformuler');
     Route::get('/enfants/{enfant_id}/cahier/reactualiser', [CahierController::class, 'reactualiser'])->name('reactualiser');
@@ -158,7 +159,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{enfant_id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
-    Route::post('/enfants/{enfant_id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
+    Route::get('/cahier/{reussite_id}/definitif', [CahierController::class, 'definitif'])->name('definitif');
     /*
     Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
     Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
@@ -201,6 +202,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/setNewCategories', [FicheController::class, 'setNewCategories'])->name('setNewCategories');
     Route::get('/set_ordre', [PdfController::class, 'set_ordre'])->name('set_ordre');
     Route::get('/getFiche', [ItemController::class, 'getFiche'])->name('getFiche');
+    Route::post('/cahier/CommitSaveReussite', [ItemController::class, 'CommitSaveReussite'])->name('CommitSaveReussite');
+    Route::get('/enfants/{enfant_id}/cahier/getReussite', [ItemController::class, 'getReussite'])->name('getReussite');
 
     Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
     Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');
