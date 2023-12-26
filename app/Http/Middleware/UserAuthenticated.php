@@ -23,19 +23,31 @@ class UserAuthenticated
         if ($request->route('enfant_id')) $id_enfant = $request->route('enfant_id');
         if ($request->enfant_id) $id_enfant = $request->enfant_id;
         
-        if (!$request->session()->exists('lienPourPartageDansMenu')) {
-            $partage = Classe::where('user_id', Auth::id())->first();
-            $request->session()->put('lienPourPartageDansMenu', $partage);
+        // if (!$request->session()->has('lienPourPartageDansMenu')) {
+        //     $partage = Classe::where('user_id', Auth::id())->first();
+        //     $request->session()->put('lienPourPartageDansMenu', $partage);
+        //     $request->session()->save();
+        // }
+
+        // $classeActive = Classe::find(Auth::user()->classe_id);
+        // if ($classeActive) {
+        //     session(['nom_de_la_classe' => $classeActive->description]);
+        //     session(['id_de_la_classe' => $classeActive->id]);
+        // } 
+
+        if (!$request->session()->has('classe_active')) {
+            $classeActive = Classe::find(Auth::user()->classe_id);
+            if ($classeActive) {
+                session(['classe_active' => $classeActive]);
+                session(['is_enfants' => Classe::is_enfants()]);
+                session(['autres_classes' => Auth::user()->autresClasses()]);
+            }
         }
 
-        $classeActive = Classe::find(Auth::user()->classe_id);
+        if (!$request->session()->has('is_abonne')) {
+            session(['is_abonne' => Auth::user()->is_abonne()]);
+        }
 
-        if ($classeActive) {
-            session(['nom_de_la_classe' => $classeActive->description]);
-            session(['id_de_la_classe' => $classeActive->id]);
-        } 
-        
-        
         // Récupération des paramètres passés dans les routes :
         // tous : $request->route()->parameters() / 1 seul : $request->route('nom_parametre')
         // $request->route()->getActionMethod()  ->  renvoi le nom de la route : ->name('')

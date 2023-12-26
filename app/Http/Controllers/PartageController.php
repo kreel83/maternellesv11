@@ -19,12 +19,14 @@ class PartageController extends Controller
     public function index(Request $request) {
         $partages = ClasseUser::select('classe_users.id', 'classe_users.code', 'users.name', 'users.prenom')        
             // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
-            ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
+            // ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
+            ->where('classe_users.classe_id', session('classe_active')->id)
             ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
             ->get();
         $pendings = ClasseUser::select('classe_users.id', 'classe_users.email', 'users.name', 'users.prenom')
             // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
-            ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
+            // ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
+            ->where('classe_users.classe_id', session('classe_active')->id)
             ->where('classe_users.user_id', null)
             ->leftJoin('users', 'users.email', '=', 'classe_users.email')
             ->get();
@@ -49,7 +51,8 @@ class PartageController extends Controller
 
         // test pour savoir si la classe est déjà partagée avec cet utilisateur
         // $partage = ClasseUser::where('classe_id', $request->user()->maClasse()->id)
-        $partage = ClasseUser::where('classe_id', session()->get('id_de_la_classe'))
+        // $partage = ClasseUser::where('classe_id', session()->get('id_de_la_classe'))
+        $partage = ClasseUser::where('classe_id', session('classe_active')->id)
             ->where('email', $request->email)
             ->first();
         if($partage) {

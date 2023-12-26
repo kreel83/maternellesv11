@@ -41,7 +41,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
 @php
     $hasClassActive = 'disabled';
-    if (session()->get('id_de_la_classe')) {
+    // if (session()->get('id_de_la_classe')) {
+    if (session('classe_active')) {
         $hasClassActive = null;
     } 
 @endphp
@@ -102,7 +103,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
                                         class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite
                                         ma classe</a>
-                                    @if (Auth::user()->is_enfants())
+                                    {{-- @if (Auth::user()->is_enfants()) --}}
+                                    @if (session('is_enfants'))
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
                                             class="nav-item nav-link  {{$hasClassActive}} ">J'évalue mes élèves</a>
 
@@ -126,7 +128,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 $params = in_array($menu, ['manage', 'reussite']);
                             @endphp
 
-                            @if (Auth::user()->is_enfants())
+                            {{-- @if (Auth::user()->is_enfants()) --}}
+                            @if (session('is_enfants'))
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
                                         data-bs-toggle="dropdown">Les cahiers de réussites</a>
@@ -198,7 +201,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 <button class="btnModeTuto">Desactiver le mode tutoriel</button>
                             </div> --}}
                             <div id="modeDecouverte"
-                                class="{{ Auth::user() && Auth::user()->is_abonne() ? 'd-none' : null }}">
+                                class="{{ session('is_abonne') ? 'd-none' : null }}">
+                                {{-- class="{{ Auth::user() && Auth::user()->is_abonne() ? 'd-none' : null }}"> --}}
                                 <button class="btnModeDecouverte" data-bs-toggle="modal" data-bs-target="#InfoDemoMain" >Mode découverte</button>
                             </div>
 
@@ -213,25 +217,34 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 data-bs-toggle="dropdown">
                                 <div class="d-flex flex-column justify-content-center align-items-center">
                                     <div style="font-size: 14px; font-weight: bolder;line-height: 14px">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</div>
-                                    @if (session()->get('id_de_la_classe'))
-                                    <div style="font-size: 12px">{{session()->get('nom_de_la_classe')}}</div>
+                                    {{-- @if (session()->get('id_de_la_classe')) --}}
+                                    @if (session('classe_active'))
+                                        {{-- <div style="font-size: 12px">{{session()->get('nom_de_la_classe')}}</div> --}}
+                                        <div style="font-size: 12px">{{session('classe_active')->description}}</div>
                                     @endif
                                 </div>
                                 
                             </a>
 
                             <div class="dropdown-menu" style="left: inherit !important; right: 0">
-                                <a href="#"
-                                    class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session()->get('nom_de_la_classe')}}</a>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <a href="{{ route('monprofil') }}"
-                                    class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}  {{$hasClassActive}}">Mon
-                                    profil</a>
+                                {{-- <a href="#" --}}
+                                {{-- class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session()->get('nom_de_la_classe')}}</a> --}}
+                                @if (session('classe_active'))
+                                    <span class="nav-item disabled" style="color: var(--main-color) !important">{{session('classe_active')->description ?? ''}}</span>
+                                    {{-- <a href="#" class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session('classe_active')->description ?? ''}}</a> --}}
+                                @else
+                                    <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe crée</a>
+                                @endif
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <a href="{{ route('monprofil') }}"
+                                class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}  {{$hasClassActive}}">Mon
+                                profil</a>
     
                                 <a href="{{ route('subscribe.index') }}"
-                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ Auth::user() && Auth::user()->is_abonne() ? null : 'disabled'}}">Mon
+                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ session('is_abonne') ? null : 'disabled'}}">Mon
+                                    {{-- class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ Auth::user() && Auth::user()->is_abonne() ? null : 'disabled'}}">Mon --}}
                                     abonnement</a>
 
                                 <a href="{{ route('changerLeMotDePasse') }}"
@@ -239,7 +252,14 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     mot de passe</a>
                                 <a class="nav-item nav-link  {{ $menu == 'contact' ? 'active' : null }}"
                                     href="{{ route('contact') }}">Nous contacter</a>
-                                    @if(session()->has('lienPourPartageDansMenu'))
+                                    @if(session()->has('classe_active'))
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
+                                        href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
+                                    @endif
+                                    {{-- @if(session()->has('lienPourPartageDansMenu'))
                                         @if(session('lienPourPartageDansMenu') == true)
                                             <li>
                                                 <hr class="dropdown-divider">
@@ -247,14 +267,16 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                             <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
                                             href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
                                         @endif
-                                    @endif
+                                    @endif --}}
 
-                                    @if (!Auth::user()->autresClasses()->isEmpty())
+                                    {{-- @if (!Auth::user()->autresClasses()->isEmpty()) --}}
+                                    @if (session('autres_classes'))
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
 										<span class="nav-item disabled">Autres classes :</span>
-                                        @foreach (Auth::user()->autresClasses() as $classe)
+                                        {{-- @foreach (Auth::user()->autresClasses() as $classe) --}}
+                                        @foreach (session('autres_classes') as $classe)
                                             <a href="{{ route('changerClasse',['classe' => $classe->id]) }}"
                                             class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
                                         @endforeach

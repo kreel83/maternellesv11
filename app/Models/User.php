@@ -163,17 +163,22 @@ class User extends Authenticatable
     public $equipes;
 
     public function groupes() {
-        if (session()->get('id_de_la_classe') == null) return null;
-        return Classe::find(session()->get('id_de_la_classe'))->groupes;
+        // if (session()->get('id_de_la_classe') == null) return null;
+        // return Classe::find(session()->get('id_de_la_classe'))->groupes;
+        if (session()->get('classe_active') == null) return null;
+        return session('classe_active')->groupes;
     }
 
     public function periodes() {
-        if (session()->get('id_de_la_classe') == null) return null;
-        return Classe::find(session()->get('id_de_la_classe'))->periodes;
+        // if (session()->get('id_de_la_classe') == null) return null;
+        // return Classe::find(session()->get('id_de_la_classe'))->periodes;
+        if (session()->get('classe_active') == null) return null;
+        return session('classe_active')->periodes;
     }
 
     public function classe_active() {
-        return Classe::find(session()->get('id_de_la_classe'));
+        // return Classe::find(session()->get('id_de_la_classe'));
+        return session('classe_active');
     }
 
 
@@ -182,7 +187,8 @@ class User extends Authenticatable
     }
 
     public function autresClasses() {
-        $actual = session()->get('id_de_la_classe');
+        // $actual = session()->get('id_de_la_classe');
+        $actual = session('classe_active')->id ?? null;
         $i = Classe::where('user_id', Auth::id())->pluck('id');
         $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
         $merged = $i->merge($t);
@@ -273,11 +279,10 @@ class User extends Authenticatable
         return Event::where('user_id', $this->id);
     }
 
-    public function is_enfants() {
-        $enfant = Enfant::where('user_id', $this->id)->first();
-        return $enfant;
-    }
-
+    // public function is_enfants() {
+    //     $enfant = Enfant::where('user_id', $this->id)->first();
+    //     return $enfant;
+    // }
 
     public function name_ecole() {
         $ecole = Ecole::where('identifiant_de_l_etablissement', $this->ecole_identifiant_de_l_etablissement)->first();
@@ -295,7 +300,8 @@ class User extends Authenticatable
     // $user->config->aides;
 
     public function liste() {
-        return Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy('prenom')->get();
+        // return Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy('prenom')->get();
+        return Enfant::where('classe_id', session('classe_active')->id)->orderBy('prenom')->get();
     }
 
     public function profs() {

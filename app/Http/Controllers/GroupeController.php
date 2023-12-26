@@ -62,7 +62,8 @@ class GroupeController extends Controller
 
     public function saveColor(Request $request) {
         $user = Auth::user();
-        $classe = Classe::find(session()->get('id_de_la_classe'));
+        // $classe = Classe::find(session()->get('id_de_la_classe'));
+        $classe = Classe::find(session('classe_active')->id);
 
         $liste = json_decode($request->tableau);
        
@@ -82,7 +83,8 @@ class GroupeController extends Controller
             $arr[$i]['textColor'] = $request->font[$i];
         }
 
-        $classe = Classe::find(session()->get('id_de_la_classe'));     
+        // $classe = Classe::find(session()->get('id_de_la_classe'));
+        $classe = session('classe_active');
        
         $classe->groupes = json_encode($arr);
         $classe->save();
@@ -127,7 +129,8 @@ class GroupeController extends Controller
             'groupName.max' => 'Le nom est limité à 12 caractères.',
         ]);
 
-        $classe = Classe::find(session()->get('id_de_la_classe'));
+        // $classe = Classe::find(session()->get('id_de_la_classe'));
+        $classe = session('classe_active');
         $groupes = $classe->groupes;
         if ($groupes) {
             $groupes = json_decode($groupes, true);          
@@ -173,7 +176,8 @@ class GroupeController extends Controller
         unset($groupes[$id -1]);
         
         $nbGroupe = sizeof($groupes) ?? 0;
-        $classe = Classe::find(session()->get('id_de_la_classe'));   
+        // $classe = Classe::find(session()->get('id_de_la_classe'));   
+        $classe = session('classe_active');
 
 
         $classe->groupes = json_encode(array_values($groupes));        
