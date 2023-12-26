@@ -147,12 +147,12 @@ class ParametreController extends Controller
         // }
         // $c = Commentaire::all();
         // foreach ($c as $cc) {
-        //     if (str_contains($cc->phrase_masculin, "Léon ")) {
-        //         $cc->phrase_masculin = str_replace("Léon ", "Tom ", $cc->phrase_masculin);
+        //     if (str_contains($cc->phrase_masculin, "l'élève ")) {
+        //         $cc->phrase_masculin = str_replace("l'élève ", "Tom ", $cc->phrase_masculin);
                 
         //     }
-        //     if (str_contains($cc->phrase_feminin, "Elle ")) {
-        //         $cc->phrase_feminin = str_replace("Elle ", "Lucie ", $cc->phrase_feminin);
+        //     if (str_contains($cc->phrase_feminin, "l'élève ")) {
+        //         $cc->phrase_feminin = str_replace("l'élève ", "Lucie ", $cc->phrase_feminin);
         //     }
         //     $cc->save();
 

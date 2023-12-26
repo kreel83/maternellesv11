@@ -26,26 +26,33 @@ class Utils {
     }
 
 
-    public static function periode($enfant, $p) {
-        
-        
-        $periodes = $enfant->user_rel->periodes;
-        
-          $periode =    [   1 => ['Année entière'], 
-                            2 => ['Premier semestre','Second semestre'], 
-                            3 => ['Premier trimestre','Deuxième trimestre','Troisième trimestre']
+
+
+    function periode($enfant, $p) {             
+        $periodes = $enfant->user_rel->periodes;        
+        $periode =    [   1 => ['Année entière'], 
+                          2 => ['Premier semestre','Second semestre'], 
+                          3 => ['Premier trimestre','Deuxième trimestre','Troisième trimestre']
                         ];  
         return $periode[$periodes][(int)$p -1];
-    }         
-
-
+    }   
+    
+    public static function formatWithPrenom($texte, $enfant) {
+        if ($enfant->genre == 'F') {            
+            $search = '/'.preg_quote('Elle ', '/').'/';
+            return preg_replace($search, $enfant->prenom.' ', $texte, 1);           
+        } else {
+            $search = '/'.preg_quote('Il ', '/').'/';
+            return preg_replace($search, $enfant->prenom.' ', $texte, 1);
+        }
+    }
 
     public static function commentaire(&$commentaire, $prenom, $genre) {
 
             if ($genre == 'F') {
-                $commentaire->phrase_feminin = str_replace('Lucie ', $prenom.' ', $commentaire->phrase_feminin);
+                $commentaire->phrase_feminin = str_replace('Lucie ', 'Elle ', $commentaire->phrase_feminin);
             } else {
-                $commentaire->phrase_masculin = str_replace('Tom ', $prenom.' ', $commentaire->phrase_masculin);
+                $commentaire->phrase_masculin = str_replace('Tom ', 'Il ', $commentaire->phrase_masculin);
             }
 
         return true;

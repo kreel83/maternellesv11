@@ -1,6 +1,6 @@
 
 
-const selectItem = (Modal) => {
+const selectItem = (Modal, quill) => {
 
     $('.note').on('click', function() {
         const card = $(this).closest('.card_item')
@@ -24,6 +24,27 @@ const selectItem = (Modal) => {
 
         }
         
+    })
+
+    $(document).on('click','#CommitSaveReussite', function() {
+        var id = $(this).attr('data-reussite')
+        var texte = quill.root.innerHTML;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            method: 'POST',
+            url: '/app/cahier/CommitSaveReussite',
+            data: {
+                texte: texte,
+                id: id
+            },
+            success: function(data) {
+            console.log(data)
+            }
+        })
     })
 
     $(document).on('click','.notation', function() {
@@ -55,6 +76,22 @@ const selectItem = (Modal) => {
         }
         $.get('/app/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+notation, function(data) {
             console.log(data)
+            if (data == 'modif') {
+                var section = $('.tiret_selection:visible').data('id')
+                $.get('/app/enfants/'+enfant+'/cahier/getReussite?section='+section, function(data) {
+                    $('#CommitSaveReussite').attr('data-reussite', data[1])
+                    console.log(data)              
+                    var myModalEl = document.getElementById('modifResultat');
+                    var modal = new Modal(myModalEl,{
+                        backdrop: 'static', keyboard: false
+                    })
+                    var texte = $('#mesfiches').data('reussite_text')
+                    quill.root.innerHTML = data[0]
+                    modal.show()                    
+                })
+
+               
+            }
             if (data == 'demo') {
                 var myModalEl = document.getElementById('InfoDemo');
                 var modal = new Modal(myModalEl,{

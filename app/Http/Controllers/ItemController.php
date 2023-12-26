@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Enfant;
 use App\Models\Configuration;
 use App\Models\Section;
+use App\Models\Reussite;
+use App\Models\ReussiteSection;
 use App\Models\Resultat;
 use App\Models\Item;
 use App\Models\Fiche;
@@ -65,6 +67,7 @@ class ItemController extends Controller
         $sections = Section::orderBy('ordre')->get();
         $fiches = Auth::user()->mesfiches();
 
+
         foreach ($fiches as $fiche) {
             $resultat = $fiche->resultat($enfant->id);
             if ($resultat) {
@@ -84,17 +87,36 @@ class ItemController extends Controller
                 ->with('section', $section);
     }
 
+    public function getReussite($enfant_id, Request $request) {
+        $enfant = Enfant::find($enfant_id);
+
+        $reussite = Reussite::where('enfant_id', $enfant_id)->where('periode', $enfant->periode)->first();
+        if ($reussite) {
+            $r = ReussiteSection::where('section_id', $request->section)->where('reussite_id', $reussite->id)->first();
+            
+
+        }
+        return [$r->description ?? null, $r->id ?? null];
+    }
+
+    public function CommitSaveReussite(Request $request) {
+
+        $r = ReussiteSection::find($request->id);
+        $r->description = $request->texte;
+        $r->save();
+        return 'ok';
+    }
+
     public function saveResultat(Request $request) {
+        
         $user = Auth::user();
         
         if (!$user->is_abonne()) {
             $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
-
             $compte = Resultat::where('user_id', $user->id)->count();
             if ($compte == 10 && !$search) {
                 return 'demo';
             }
-
         }
 
         $autonome = 0;
@@ -103,6 +125,9 @@ class ItemController extends Controller
             $autonome = 1;
         }
         $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
+        $acquis = ($search->notation == 2 && $search->autonome == 1) ? true : false;
+        $newnote = ($search->notation == 2 && $search->autonome == 1) ? true : false;
+        
         if ($search && $request->note == 0) {
             $search->delete();
             return 'deleted';
@@ -121,11 +146,15 @@ class ItemController extends Controller
             $search->section_id = $item->section()->id;
             $search->user_id = Auth::id();
             $search->periode = $enfant->periode;
+        }
 
+        $search->save();
+
+        if ($acquis) {
+            return 'modif';        
+        } else {
+            return 'super';        
 
         }
-        
-        $search->save();
-        return 'super';
     }
 }

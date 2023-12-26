@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reussite;
+use App\Models\Enfant;
+use App\Models\ReussiteSection;
 use App\utils\Utils;
 
 class Resultat extends Model
@@ -36,30 +38,59 @@ class Resultat extends Model
     ];
 
 
-    // public static function boot() {
+    public static function boot() {
 
-	//     parent::boot();
+	    parent::boot();
 
-	//     static::created(function($resultat) {
-	//         $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
-    //         if ($r)  {
-    //             $r->texte_integral = null;
-    //             $r->save();
+	    static::created(function($resultat) {
+            if ($resultat->notation == 2 && $resultat->autonome == 1) {
+                $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+                if ($r)  {
+                    $s = ReussiteSection::where('section_id', $resultat->section_id)->where('reussite_id', $r->id)->first();           
+                    if ($s) {
+                        $enfant = Enfant::find($resultat->enfant_id);                    
+                        $exp = explode('</p>',$s->description);                        
+                        array_splice($exp, 1, 0, '<p>'.$resultat->item($enfant));                    
+                        foreach ($exp as $key=>$e) {
+                            if (str_contains($e,'<p>')) {
+                                $exp[$key] =  $exp[$key].'</p>';
+                            }
+                        }
+                        $exp = join($exp);
+                        $s->description = $exp;
+                        $s->save();
+                    }              
+                }                
+            }
 
-    //         }
-	//     });
+	    });
 
-	//     static::updating(function($resultat) {
-	//         $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+	    static::updating(function($resultat) {
+            if ($resultat->notation == 2 && $resultat->autonome == 1) {
+                $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+                if ($r)  {
+                    $s = ReussiteSection::where('section_id', $resultat->section_id)->where('reussite_id', $r->id)->first();           
+                    if ($s) {
+                        $enfant = Enfant::find($resultat->enfant_id);                    
+                        $exp = explode('</p>',$s->description);                        
+                        array_splice($exp, 1, 0, '<p>'.$resultat->item($enfant));                    
+                        foreach ($exp as $key=>$e) {
+                            if (str_contains($e,'<p>')) {
+                                $exp[$key] =  $exp[$key].'</p>';
+                            } 
 
-    //         if ($r)  {
-    //             $r->texte_integral = null;
-    //             $r->save();
-
-    //         }
-	//     });
+                        }
+                        $exp = join($exp);
+                        $s->description = $exp;
+                        $s->save();
+                    }              
+                }                
+            }
+	    });
     
-	// }
+	}
+
+
 
 
     public function notation() {

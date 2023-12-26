@@ -9,6 +9,7 @@ use App\Models\Equipe;
 use App\Models\Configuration;
 use App\Models\Image;
 use App\Models\Item;
+use App\Models\ReussiteSection;
 use App\Models\Myperiode;
 use App\Models\Phrase;
 use App\Models\Resultat;
@@ -582,21 +583,13 @@ class CahierController extends Controller
         $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $sections, 'enfant' => $enfant]);
     }
 
-    public function definitif($enfant_id, Request $request)
+    public function definitif($reussite_id, Request $request)
     {
-        $reussite = Reussite::where('enfant_id', $enfant_id)->first();
+        $reussite = Reussite::find($reussite_id);
        
-
-        if (!$reussite) {
-            $reussite = new Reussite();
-            $reussite->enfant_id = $enfant_id;
-            $reussite->user_id = Auth::id();
-        }
-
-
         
         $reussite->definitif = $request->state == "true" ? true : false;
-        $reussite->texte_integral = $request->quill;
+        
 
             $reussite->save();
             return 'ok';
@@ -718,6 +711,94 @@ class CahierController extends Controller
         return '<li class="badge_phrase" data-value="'.$commentaire->id.'">'.$texte.'</li>' ;       
     }
 
+    public function indexV2($enfant_id) {
+
+        $enfant = Enfant::find($enfant_id);
+
+        $resultats = $enfant->resultats();
+        $reussite = Reussite::where('enfant_id', $enfant_id)->where('periode', $enfant->periode)->first();
+
+        //dd($resultats);
+
+
+        $commentaires = Commentaire::where(function($query) {
+            $query->where('user_id', Auth::id())->orWhereNull('user_id');})->get();
+
+        $sections = Section::orderBy('ordre')->get();
+
+        $s = array();
+        $s = new Section();
+        $s->id = 99;
+        $s->color = "red";
+        $s->name = "Commentaire général";
+        $s->logo = "99.png";
+        $sections->push($s);
+
+
+
+        $r = array();
+        foreach ($resultats as $key=>$result) {
+            $s = "";            
+            foreach($result as $rr) $s .= '<p>'.$rr->item($enfant).'<p>';
+            $r[$key] = Utils::formatWithPrenom($s, $enfant);
+        }
+
+
+        
+        
+        $commentaires = $commentaires->groupBy('section_id');
+        foreach ($commentaires as $key=>$commentaire) {
+
+            Utils::commentaires($commentaires[$key], $enfant->prenom, $enfant->genre);
+        }
+
+        $search_reussite = Reussite::where('enfant_id', $enfant->id)->where('periode',$enfant->periode)->first();
+
+        if (!$search_reussite) {
+            $search_reussite = new Reussite();
+            $search_reussite->enfant_id = $enfant_id;
+            $search_reussite->user_id = Auth::id();
+            $search_reussite->commentaire_general = null;
+            $search_reussite->definitif = 0;
+            $search_reussite->periode = $enfant->periode;
+            $search_reussite->created_at = Carbon::now();
+            $search_reussite->updated_at = Carbon::now();
+            $search_reussite->save();
+
+        }
+        foreach ($r as $key=>$result) {
+                $rel =  ReussiteSection::where('reussite_id', $search_reussite->id)->where('section_id', $key)->first();
+                if (!$rel) {
+                    $rel = new ReussiteSection();
+                    $rel->section_id = $key;
+                    $rel->reussite_id = $search_reussite->id;
+                    $rel->description = $result;
+                    $rel->created_at = Carbon::now();
+                    $rel->updated_at = Carbon::now();
+                    $rel->save();
+                }            
+        } 
+     
+
+        $r = $search_reussite->reussitesListe();
+
+//  dd($phrases_selection, $grouped);
+        
+        
+        return view('cahiers.indexV2')
+            ->with('titre','Cahier')
+            ->with('isChrome',Browser::isChrome())
+            ->with('enfant',$enfant)
+            ->with('commentaires',$commentaires)
+            ->with('reussite',$reussite)
+            ->with('isreussite',$r)
+            ->with('resultats',$r)  
+            ->with('type', 'reussite')
+            ->with('page', 'reussite')
+            ->with('periode', $this->getPeriode($enfant)[1])
+            ->with('title', $this->getPeriode($enfant)[0])
+            ->with('sections', $sections);
+    }
     public function index($enfant_id) {
 
         $enfant = Enfant::find($enfant_id);
@@ -847,21 +928,51 @@ class CahierController extends Controller
     }
 
 
-    public function saveTexte($enfant_id, Request $request) {
+    public function saveTexte($enfant_id, $section_id,  Request $request) {
+        
         if (!$request->texte) return 'ko';
         $enfant = Enfant::find($enfant_id);
         $reussite = $enfant->hasReussite();
-        if ($reussite) {
-            $reussite->texte_integral = $request->texte;
-            $reussite->save();
-        } else {
+        if (!$reussite) {
             $reussite = new Reussite();
-            $reussite->texte_integral = $request->texte;
             $reussite->enfant_id = $enfant->id;
             $reussite->user_id = Auth::id();
+            $reussite->periode = $enfant->periode;
             $reussite->definitif = 0;
             $reussite->save();
-        }        
+        } 
+
+        if ($section_id == 99) {
+
+            $reussite->commentaire_general = trim(strip_tags($request->texte)) == "" ? null   : $request->texte;
+            $reussite->save();
+        } else {
+            $rel = ReussiteSection::where('reussite_id', $reussite->id)->where('section_id', $section_id)->first();
+
+            if (!$rel) {
+                $rel = new ReussiteSection();
+                $rel->section_id = $section_id;
+                $rel->reussite_id = $reussite->id;
+                $rel->created_at = Carbon::now();
+            }
+
+            $rel->description = $request->texte;
+            $rel->updated_at = Carbon::now();
+            if (trim(strip_tags($request->texte)) == '') {
+                $rel->delete();
+                $rel = ReussiteSection::where('reussite_id', $reussite->id)->where('section_id', $section_id)->first();
+                if (!$rel) {
+                    $reussite->delete();
+                }
+            } else {
+                $rel->save();
+            }            
+        }
+
+
+        
+
+
         return 'ok';            
     }
 

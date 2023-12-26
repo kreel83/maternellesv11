@@ -98,7 +98,7 @@ if (!is_null($enfant->groupe) && $lesgroupes){
         
         {{-- <a href="enfants/{{$enfant->id}}/cahier"  ><i class="fa-light fa-paper-plane-top"></i></a>
         <a href="enfants/{{$enfant->id}}/cahier/seepdf/see"  ><i class="fa-light fa-file-pdf"></i></a> --}}
-        <a href="enfants/{{$enfant->id}}/cahier" style="font-size: 14px; padding-top: 7px"  ><i class="fa-light fa-notes me-2"></i>Créer le cahier de réussite</a>
+        <a href="enfants/{{$enfant->id}}/cahierV2" style="font-size: 14px; padding-top: 7px"  ><i class="fa-light fa-notes me-2"></i>Créer le cahier de réussite</a>
     </div>
   @endif
   @if ($type == "avatar")
