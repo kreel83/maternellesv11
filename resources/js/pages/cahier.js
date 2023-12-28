@@ -369,9 +369,7 @@ const clickOnDefinif = (quill, section) => {
 const apercu = (quill, section) => {
 
     if ($('.editorApercu').length) {
-        console.log(section)
         var t = $('.editorApercu[data-section="'+section+'"]').data('texte')
-        console.log('tttttt', t)
         if (t) {
             quill.setText(t);
             var data = t;
@@ -390,12 +388,9 @@ const apercu = (quill, section) => {
 
             var p = $(this).val();
             if (isText.trim() != '') {
-                console.log('test', isText)
-                console.log(prenom, genre, p )
                 p = p.replace(prenom, genre) 
 
             }
-            console.log('current', isText)
 
             origine[section] = false;
             var currentContent = quill.root.innerHTML+p;
@@ -443,6 +438,7 @@ const onload = (quill) => {
         }
         if ($('#nav-apercu').length) {
             var reussite = $('#nav-apercu').data('reussite')
+            console.log(reussite);
                     $('#editor').css('height','700px')
                     quill.setText('');
                     quill.root.innerHTML = reussite

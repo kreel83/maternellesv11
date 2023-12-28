@@ -57,8 +57,8 @@ class ItemController extends Controller
 
     public function index($enfant_id, Request $request) {
 
-        if($request->sectionID) {
-            $section = Section::skip((int)$request->sectionID)->take(1)->first();
+        if($request->section_id) {
+            $section = Section::find($request->section_id);
         } else {
             $section = Section::first();
         }
@@ -125,16 +125,22 @@ class ItemController extends Controller
             $autonome = 1;
         }
         $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
-        $acquis = ($search->notation == 2 && $search->autonome == 1) ? true : false;
-        $newnote = ($search->notation == 2 && $search->autonome == 1) ? true : false;
+
+        $acquis = ($search && $search->notation == 2 && $search->autonome == 1) ? true : false;
+        $newnote = ($search && $search->notation == 2 && $search->autonome == 1) ? true : false;
         
+
         if ($search && $request->note == 0) {
             $search->delete();
-            return 'deleted';
+           
         }
         if ($search) {
-            $search->notation = $request->note;
-            $search->autonome = $autonome;
+            if ($request->note != 0) {
+                $search->notation = $request->note;
+                $search->autonome = $autonome;                
+                $search->save();
+            }
+
         } else {
             $item = Item::find($request->item);
             $enfant = Enfant::find($request->enfant);
@@ -146,9 +152,9 @@ class ItemController extends Controller
             $search->section_id = $item->section()->id;
             $search->user_id = Auth::id();
             $search->periode = $enfant->periode;
+            $search->save();
         }
 
-        $search->save();
 
         if ($acquis) {
             return 'modif';        

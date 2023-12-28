@@ -147,7 +147,12 @@
     padding: 4px 24px;
     border: none;
     outline: none;
-    cursor: pointer;    
+    cursor: pointer;  
+    &.inverse {
+        color: var(--main-color);
+        background: white;
+        border: 1px solid var(--main-color); 
+    }  
 } 
 
 

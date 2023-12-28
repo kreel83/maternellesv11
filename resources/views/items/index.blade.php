@@ -43,6 +43,7 @@
         </style>
 
         @php
+        
             $degrades = App\Models\Enfant::DEGRADE;
         @endphp
 
@@ -79,6 +80,7 @@
                     
                     <div data-section="{{ $section->id }}" class="liste_section pe-5 d-flex">
                         
+
     
                             @foreach ($sections as $sec)
                                 @if ($sec->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
@@ -130,15 +132,19 @@
         <div class="modal-dialog" style="top: 150px">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Information suppression</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Modification du cahier de réussite de la section</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div style="font-size: 12px;margin-bottom: 10px">
+                    La modification de l'évaluation de cet activité n'implique pas de mise à jour automatique du résumé de la section <span id="sectionLabel"></span>.
+                    Vous pouvez ici, mettre à jour manuellement le texte correspondant à la section.
+                </div>
               <div id="editorModif"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-height: 420px; overflow-y: auto" class="ql-container ql-snow position-relative"></div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id="CommitSaveReussite" data-bs-dismiss="modal">Sauvegarder</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btnAction inverse" data-bs-dismiss="modal">Annuler</button>
+              <button type="button" class="btnAction" id="CommitSaveReussite" data-bs-dismiss="modal">Sauvegarder</button>
             </div>
           </div>
         </div>

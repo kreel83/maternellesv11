@@ -114,9 +114,15 @@ const selectSectionFiche = (ficheSelect) => {
             type: "post",
            
             success: function(data) {   
-                console.log(data)                      
-                data = '<option value="null">Toutes les fiches</option>'+data;
-                $("#categories").html(data);
+                if($('#mesfiches').length) {
+                   
+                    if (history.replaceState) history.replaceState({}, document.title, "?section_id="+id)
+                } else {
+                    console.log(data)                      
+                    data = '<option value="null">Toutes les fiches</option>'+data;
+                    $("#categories").html(data);                    
+                }
+
             }
         })  
 
