@@ -346,16 +346,16 @@ class ParametreController extends Controller
             $date = Carbon::now();
             $mois = $date->locale('fr')->monthName;
             $nb = $date->month;
-            $enfants = Auth::user()->liste();
-            $anniversaires = $enfants->filter(function ($enfant) use ($nb) {
+            $listeDesEleves = Auth::user()->liste();
+            $anniversaires = $listeDesEleves->filter(function ($enfant) use ($nb) {
                 if ($enfant->ddn) {
                     $m = explode('-', $enfant->ddn);
                     return ($m[1] == $nb);
                 }
             })->values();
 
-            $vacances = Vacance::where('ecole_code_academie', $this->maclasseactuelle->ecole_code_academie)->get();
             $conges = array();
+            $vacances = Vacance::listeDesProchainesVacances();
             foreach($vacances as $vacance) {
                 $conges[] = array(
                     'date' => $vacance->start_date, 
@@ -363,82 +363,67 @@ class ParametreController extends Controller
                     'type' => 'conges'
                 );
             }
-
-            $coll = new Collection($conges);
-            $conges = $coll->sortBy('date')->take(5);
-            $events = Event::where('user_id', Auth::id())->where('date','>=', $date)->get()->take(5);
-            foreach($events as $vacance) {
+            // Récupération des prochains évènements du calendrier
+            $events = Event::listeDesProchainsEvenements();
+            foreach($events as $event) {
                 $conges[] = array(
-                    'date' => $vacance->date, 
-                    'description' => $vacance->name,
+                    'date' => $event->date, 
+                    'description' => $event->name,
                     'type' => 'event'
                 );
             }
-            $conges = $conges->sortBy('date')->take(5);
-
-            //dd($conges);
-
-            /*
-            $academie = Auth::user()->ecole->libelle_academie;
-            $c = Utils::calcul_annee_scolaire().'-'.((int)Utils::calcul_annee_scolaire()+1);
-
-
-
-            $url = "https://data.education.gouv.fr/api/records/1.0/search/?dataset=fr-en-calendrier-scolaire&q=&facet=description&facet=population&facet=start_date&facet=end_date&facet=location&facet=zones&refine.annee_scolaire=2025-2026&refine.location=Dijon";
-            $r = file_get_contents($url);
-            $r = json_decode($r, true);
-
-
-            $evenement = array();
-            foreach ($r['records'] as $ligne)  {
-
-                $l = array();
-                if (Carbon::parse($ligne['fields']['start_date']) > $date) {
-                    $l['date'] = Carbon::parse($ligne['fields']['start_date']);
-                    $l['description'] = $ligne['fields']['description'];
-                    $l['type'] = 'conges';
-                    $conges[] = $l;                
-                }
-
-                
-            }
-            foreach ($events as $event)  {
-                $l = array();
-                $l['date'] = Carbon::parse($event->date);
-                $l['description'] = $event->name;
-                $l['type'] = 'evenement';
-                $conges[] = $l;
-                
-            }
-            */
+            // Mise en collection / tri par date / 5 prochains à venir
+            $conges = collect($conges)->sortBy('date')->take(5);
 
             $resultat = new Resultat;
-            $top5ElevesLesPlusAvances = $resultat->top5ElevesLesPlusAvances();
-            // dd($top5ElevesLesPlusAvances);
-            $top5ElevesLesMoinsAvances = $resultat->top5ElevesLesMoinsAvances();
-            $top5DisciplinesLesPlusAvances = $resultat->top5DisciplinesLesPlusAvances();
-            $top5DisciplinesLesMoinsAvances = $resultat->top5DisciplinesLesMoinsAvances();
+            $top5Eleves = $resultat->top5Eleves();
+            //dd($top5Eleves);
+            $top5ElevesLesPlusAvances = $top5Eleves->sortByDesc('total')->take(5);
+            $top5ElevesLesMoinsAvances = $top5Eleves->sortBy('total')->take(5);
+            //dd($top5ElevesLesPlusAvances);
+            // $top5ElevesLesPlusAvances = $resultat->top5ElevesLesPlusAvances();
+            // $top5ElevesLesMoinsAvances = $resultat->top5ElevesLesMoinsAvances();
+
+            $top5Disciplines = $resultat->top5Disciplines();
+            $top5DisciplinesLesPlusAvances = $top5Disciplines->sortByDesc('total')->take(5);
+            $top5DisciplinesLesMoinsAvances = $top5Disciplines->sortBy('total')->take(5);
+            // $top5DisciplinesLesPlusAvances = $resultat->top5DisciplinesLesPlusAvances();
+            // $top5DisciplinesLesMoinsAvances = $resultat->top5DisciplinesLesMoinsAvances();
+
             $listeDesEnfantsSansNote = $resultat->listeDesEnfantsSansNote();
-            $listeDesEleves = Enfant::listeDesEleves();
+            //$listeDesEleves = Enfant::listeDesEleves();
 
             //dd($top5AdvancedKids);
             $anniversaires = $anniversaires->sortBy('jour');
 
-            $fiches = Fiche::where('classe_id', session('classe_active')->id)->get();
+            $fiches = Fiche::select('section_id')->where('classe_id', session('classe_active')->id)->get();
 
             // $info[1] = Enfant::where('classe_id', session()->get('id_de_la_classe'))->count();
             // $info[2] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('notation',2)->where('enfants.classe_id', session()->get('id_de_la_classe'))->count();        
             // $info[22] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('autonome',0)->where('enfants.classe_id', session()->get('id_de_la_classe'))->where('notation',2)->count();        
             // $info[3] = Fiche::where('classe_id', session()->get('id_de_la_classe'))->count();
-            $info[1] = Enfant::where('classe_id', session('classe_active')->id)->count();
-            $info[2] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('notation',2)->where('enfants.classe_id', session('classe_active')->id)->count();        
-            $info[22] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('autonome',0)->where('enfants.classe_id', session('classe_active')->id)->where('notation',2)->count();        
+            
+            // $info[1] = Enfant::where('classe_id', session('classe_active')->id)->count();
+            $info[1] = $listeDesEleves->count();
+
+            $res = Resultat::select('notation', 'autonome')
+                ->join('enfants', 'enfants.id' ,'enfant_id')
+                ->where('enfants.classe_id', session('classe_active')->id)
+                ->get();
+            $info[2] = $res->where('notation',2)->count();
+            $info[22] = $res->where('notation',2)->where('autonome',0)->count();
+            //dd($info[22]);
+            // $info[2] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('notation',2)->where('enfants.classe_id', session('classe_active')->id)->count();        
+            // $info[22] = Resultat::join('enfants', 'enfants.id' ,'enfant_id')->where('notation',2)->where('autonome',0)->where('enfants.classe_id', session('classe_active')->id)->count();        
+            
             // $info[3] = Fiche::where('classe_id', session('classe_active')->id)->count();
             $info[3] = $fiches->count();
 
             $middle = (int) $listeDesEleves->count() / 2;
 
-            $sections = Section::orderBy('ordre')->get();
+            $sections = Section::select('id', 'color', 'name', 'logo', 'icone')
+                ->orderBy('ordre')
+                ->get();
 
             // Calcul le nombre de fiches par section en avance pour optimiser le blade
             $nombreDeFichesParSection = array();
@@ -448,7 +433,6 @@ class ParametreController extends Controller
             }
             
             return view('welcome')
-                // ->with('is_abonne', Auth::user()->is_abonne())
                 ->with('is_abonne', session('is_abonne'))
                 ->with('sections', $sections)
                 ->with('nombreDeFichesParSection', $nombreDeFichesParSection)
@@ -465,7 +449,8 @@ class ParametreController extends Controller
                 ->with('anniversaires', $anniversaires)
                 ->with('moisActuel', $mois);
         } else {
-            return view('classes.createclasse')->with('title','Création de ma classe');
+            return view('classes.createclasse')
+                ->with('title','Création de ma classe');
         }
     }
 

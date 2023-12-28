@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\utils\Utils;
 
+/**
+ * @mixin IdeHelperPersonnel
+ */
 class Personnel extends Model
 {
     use HasFactory;

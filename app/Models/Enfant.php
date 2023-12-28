@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isEmpty;
 
+/**
+ * @mixin IdeHelperEnfant
+ */
 class Enfant extends Model
 {
     use HasFactory;
@@ -198,8 +201,7 @@ class Enfant extends Model
 
     public static function listeDesEleves() {
         // $liste = self::where('classe_id', session()->get('id_de_la_classe'))->get();
-        $liste = self::where('classe_id', session('classe_active')->id)->get();
-        return $liste;
+        return self::where('classe_id', session('classe_active')->id)->get();
     }
 
     public function tableauDesMailsEnfant() {

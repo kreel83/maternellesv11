@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\utils\Utils;
 
+/**
+ * @mixin IdeHelperPhrase
+ */
 class Phrase extends Model
 {
     use HasFactory;

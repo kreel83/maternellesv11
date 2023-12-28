@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperVacance
+ */
 class Vacance extends Model
 {
     use HasFactory;
@@ -24,6 +28,18 @@ class Vacance extends Model
         'zones',
         'annee_scolaire',
     ];
+
+    /**
+     * Liste des prochaines vacances pour le code_academie en session 'classe_active'
+     *
+     * @return App\Models\Vacances
+     */
+    public static function listeDesProchainesVacances() {
+        return self::select('start_date', 'description')
+        ->where('ecole_code_academie', session('classe_active')->code_academie)
+        ->whereDate('start_date', '>=', Carbon::now())
+        ->get();
+    }
 
 
 }

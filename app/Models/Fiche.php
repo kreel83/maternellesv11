@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
+/**
+ * @mixin IdeHelperFiche
+ */
 class Fiche extends Model
 {
     use HasFactory;

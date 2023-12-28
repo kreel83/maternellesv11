@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Events\SectionEvent;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @mixin IdeHelperSection
+ */
 class Section extends Model
 {
     use HasFactory;

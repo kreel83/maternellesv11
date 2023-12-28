@@ -8,6 +8,9 @@ use App\utils\Utils;
 use App\Events\ItemEvent;
 use App\Models\Resultat;
 
+/**
+ * @mixin IdeHelperItem
+ */
 class Item extends Model
 {
     public static $FIRE_EVENTS = true;
