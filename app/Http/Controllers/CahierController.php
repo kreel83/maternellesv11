@@ -15,7 +15,6 @@ use App\Models\Phrase;
 use App\Models\Resultat;
 use App\Models\Classe;
 use App\Models\Reussite;
-use App\Models\ReussiteSection;
 use App\Models\Section;
 use App\Models\User;
 use App\utils\Utils;
@@ -897,7 +896,7 @@ class CahierController extends Controller
         $enfant = Enfant::find($enfant_id);
 
         $resultats = $enfant->resultats();
-        $reussite = Reussite::where('enfant_id', $enfant_id)->where('periode', $enfant->periode)->first();
+        // $reussite = Reussite::where('enfant_id', $enfant_id)->where('periode', $enfant->periode)->first();
 
         //dd($resultats);
 
@@ -971,7 +970,7 @@ class CahierController extends Controller
             ->with('isChrome',Browser::isChrome())
             ->with('enfant',$enfant)
             ->with('commentaires',$commentaires)
-            ->with('reussite',$reussite)
+            ->with('reussite',$search_reussite)
             ->with('isreussite',$r)
             ->with('resultats',$r)  
             ->with('type', 'reussite')

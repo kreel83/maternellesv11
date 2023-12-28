@@ -118,7 +118,9 @@ if ($('.alerteMessage').length) {
 
 
 if ($('.editorApercu').length) {
-    $('.editorApercu').each((index, el) => {
+    $($('.editorApercu').get().reverse()).each((index, el) => {
+        
+
         var section = $(el).data('section')
         var ColorClass = Quill.import('attributors/class/color');
         var SizeStyle = Quill.import('attributors/style/size');
@@ -141,30 +143,17 @@ if ($('.editorApercu').length) {
             // ImageResize: {}
 
         });
-        console.log('2')
+
         const myModal = new Modal('#informationPDF', {})
         clickOnCahier(quill, myModal)
         clickOnDefinif(quill, section)
-        console.log('def')   
-        console.log('1')
-        choicePhrase()
-    
-    
-    
-        console.log('2')
+        choicePhrase() 
         clickOnNav()
-        console.log('3')
         saveTexte(quill)
-        console.log('4')
         onload(quill)
-        console.log('5')
-        apercu(quill, section)
-        console.log('6')
-    
+        apercu(quill, section)    
         saveTexteReussite(quill)
-        console.log('8')
         saveCommentaireGeneral(quill)
-        console.log('8')     
     })
 
 

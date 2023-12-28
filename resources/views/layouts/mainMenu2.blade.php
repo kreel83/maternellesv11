@@ -270,7 +270,10 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     @endif --}}
 
                                     {{-- @if (!Auth::user()->autresClasses()->isEmpty()) --}}
-                                    @if (session('autres_classes'))
+                                    {{-- @php
+                                        dd(session('autres_classes')->isEmpty());
+                                    @endphp --}}
+                                    @if (!session('autres_classes')->isEmpty())
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

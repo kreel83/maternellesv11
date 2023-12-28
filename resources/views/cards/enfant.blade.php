@@ -75,16 +75,16 @@ if (!is_null($enfant->groupe) && $lesgroupes){
   @if ($type == "evaluation")
     <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">
 
-        <a href="enfants/{{$enfant->id}}/items?sectionID=0"  ><i style="font-size: 18px" class="fa-light fa-comment"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=1"  ><i style="font-size: 18px" class="fa-light fa-pen"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=2"  ><i style="font-size: 18px" class="fa-light fa-volleyball"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=3"  ><i style="font-size: 18px" class="fa-light fa-paintbrush-pencil"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=4"  ><i style="font-size: 18px" class="fa-light fa-hundred-points"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=5"  ><i style="font-size: 18px" class="fa-light fa-shapes"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=6"  ><i style="font-size: 18px" class="fa-light fa-clock"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?sectionID=8"  ><i style="font-size: 18px" class="fa-light fa-heart"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=2"  ><i style="font-size: 18px" class="fa-light fa-comment"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=3"  ><i style="font-size: 18px" class="fa-light fa-pen"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=4"  ><i style="font-size: 18px" class="fa-light fa-volleyball"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=5"  ><i style="font-size: 18px" class="fa-light fa-paintbrush-pencil"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=6"  ><i style="font-size: 18px" class="fa-light fa-hundred-points"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=7"  ><i style="font-size: 18px" class="fa-light fa-shapes"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=8"  ><i style="font-size: 18px" class="fa-light fa-clock"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=10"  ><i style="font-size: 18px" class="fa-light fa-heart"></i></a>
         @if (Auth::user()->classe_active()->desactive_devenir_eleve == 0)
-        <a href="enfants/{{$enfant->id}}/items?sectionID=7"  ><i style="font-size: 18px" class="fa-light fa-child-reaching"></i></a>
+        <a href="enfants/{{$enfant->id}}/items?section_id=9"  ><i style="font-size: 18px" class="fa-light fa-child-reaching"></i></a>
         @endif
         
     </div>
