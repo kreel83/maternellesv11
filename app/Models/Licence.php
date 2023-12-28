@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Subscription;
 
+/**
+ * @mixin IdeHelperLicence
+ */
 class Licence extends Model
 {
     use HasFactory;

@@ -11,6 +11,9 @@ use Laravel\Cashier\Payment;
 use Laravel\Cashier\Subscription;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * @mixin IdeHelperTransaction
+ */
 class Transaction extends Model
 {
     use HasFactory;

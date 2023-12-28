@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ReussiteSection;
 
+/**
+ * @mixin IdeHelperReussite
+ */
 class Reussite extends Model
 {
     use HasFactory, SoftDeletes;
