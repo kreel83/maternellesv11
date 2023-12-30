@@ -120,61 +120,64 @@
             <div class="d-flex justify-content-center mx-auto">
                 <div class="form-check form-switch mt-2 ">
                     <input class="form-check-input seePdf" type="checkbox" id="seePdf1" {{ $reussite->definitif == 1 ? "checked" : null}} data-reussite="{{$reussite->id}}">
-                    <label class="form-check-label" for="seePdf1">Definitif</label>
+                    <label class="form-check-label" for="seePdf1">Prét à l'envoi</label>
                 </div> 
                 <div style="font-size: 25px; color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
-                    <i class="fa-solid fa-file-pdf"></i>
+                    <a href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
                 </div>  
             </div>
             @foreach ($sections as $sec)
-            <div class="position-relative my-5 mx-auto">
-                
-                <div class="d-flex align-items-center mb-3">
-                    <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
-                    height="45px" >
-                    <div class="d-flex flex-column ms-3">
-                        
-                        <div style="color: {{$sec->color}}; font-size: 18px">
-                            {{$sec->name}}
-                        </div>
-                        <div class="row">
-                            @if (isset($commentaires[$sec->id]))
-                            <div class="col-auto">
-                                <label for="" style="font-size: 12px">Phrases prédéfinies : </label>
+                @if ($sec->id == 9 && session('classe_active')->desactive_devenir_eleve == 1)
+                @else
+                <div class="position-relative my-5 mx-auto">
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
+                        height="45px" >
+                        <div class="d-flex flex-column ms-3">
+                            
+                            <div style="color: {{$sec->color}}; font-size: 18px">
+                                {{$sec->name}}
                             </div>
-                            <div class="col-auto">
-                                <select name="" id="" class="selectionCommentaire form-control form-control-sm" data-prenom="{{$enfant->prenom}}" data-genre="{{$enfant->genre}}" data-section="{{$sec->id}}" style="width: 300px; font-size: 12px">
-                                    <option value="null">Veuillez selectionner</option>
-                                    @foreach ($commentaires[$sec->id] as $commentaire)
-                                    
-                                    <option value="{{$commentaire->phrase_masculin}}">{{$commentaire->phrase_masculin}}</option>
-                                    @endforeach
-                                    
-                                </select>                                
-                            </div>
+                            <div class="row">
+                                @if (isset($commentaires[$sec->id]))
+                                <div class="col-auto">
+                                    <label for="" style="font-size: 12px">Phrases prédéfinies : </label>
+                                </div>
+                                <div class="col-auto">
+                                    <select name="" id="" class="selectionCommentaire form-control form-control-sm" data-prenom="{{$enfant->prenom}}" data-genre="{{$enfant->genre}}" data-section="{{$sec->id}}" style="width: 300px; font-size: 12px">
+                                        <option value="null">Veuillez selectionner</option>
+                                        @foreach ($commentaires[$sec->id] as $commentaire)
+                                        
+                                        <option value="{{$commentaire->phrase_masculin}}">{{$commentaire->phrase_masculin}}</option>
+                                        @endforeach
+                                        
+                                    </select>                                
+                                </div>
 
-                            @endif
+                                @endif
+                            </div>
                         </div>
+                    </div class="position-relative">
+                    <div class="position-absolute d-none sauvegarde" data-section="{{$sec->id}}" style="right: 20px; top: 85px">
+                        <div style="font-size: 12px; color: green">Sauvegardé </div>
                     </div>
-                </div class="position-relative">
-                <div class="position-absolute d-none sauvegarde" data-section="{{$sec->id}}" style="right: 20px; top: 85px">
-                    <div style="font-size: 12px; color: green">Sauvegardé </div>
-                </div>
-                <div class="position-absolute d-none saisie" data-section="{{$sec->id}}" style="right: 20px; top: 85px">
-                    <div style="font-size: 12px; color: red">Saisie en cours</div>
-                </div>
-                
-                <div id="editorApercu{{$sec->id}}"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$sec->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-width: 820px" class="ql-container ql-snow editorApercu position-relative">
+                    <div class="position-absolute d-none saisie" data-section="{{$sec->id}}" style="right: 20px; top: 85px">
+                        <div style="font-size: 12px; color: red">Saisie en cours</div>
+                    </div>
+                    
+                    <div id="editorApercu{{$sec->id}}"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$sec->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-width: 820px" class="ql-container ql-snow editorApercu position-relative">
 
-                </div>
+                    </div>
+                    @endif
                 @endforeach
                 <div class="d-flex justify-content-center mx-auto mt-5">
                     <div class="form-check form-switch mt-2 ">
                         <input class="form-check-input seePdf" type="checkbox" id="seePdf2" {{ $reussite->definitif == 1 ? "checked" : null}} data-reussite="{{$reussite->id}}">
-                        <label class="form-check-label" for="seePdf2">Definitif</label>
+                        <label class="form-check-label" for="seePdf2">Prét à l'envoi</label>
                     </div> 
                     <div style="font-size: 25px; color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
-                        <i class="fa-solid fa-file-pdf"></i>
+                        <a href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
                     </div>  
                 </div>
         </div>

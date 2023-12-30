@@ -47,63 +47,7 @@ const selectItem = (Modal, quill) => {
         })
     })
 
-    $(document).on('click','.notation', function() {
-        const notation = $(this).data('notation')
-        const text = $(this).text()
-        const el = $(this).closest('.card_item')
-        const item = $(el).data('item')
-        const enfant = $('#enfant').val()
-        $(el).find('.lanote').text(text)
-        $(el).find('.card-footer2').removeClass('niveau_0 niveau_3 niveau_2 niveau_1')
-        switch (notation) {
-            case 0 : $(el).find('.autonome').addClass('d-none')
-                     $(el).find('.lanote').text('')
-                     $(el).find('.card-footer2').addClass('niveau_0')
-                     break;   
-            case 1 : $(el).find('.autonome').addClass('d-none')
-                     $(el).find('.lanote').text(text)
-                     $(el).find('.card-footer2').addClass('niveau_1')
-                     break;   
-            case 2 : $(el).find('.autonome').removeClass('d-none').addClass('autonome_0').removeClass('autonome_1')
-                     $(el).find('.lanote').text(text)
-                     $(el).find('.card-footer2').addClass('niveau_2')
-                     break;   
-            case 3 : $(el).find('.autonome').removeClass('d-none').addClass('autonome_1').removeClass('autonome_0')
-                     $(el).find('.lanote').text(text)
-                     $(el).find('.card-footer2').addClass('niveau_3')
-                     break;   
 
-        }
-        $.get('/app/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+notation, function(data) {
-            console.log(data)
-            if (data == 'modif') {
-                var section = $('.tiret_selection:visible').data('id')
-                $.get('/app/enfants/'+enfant+'/cahier/getReussite?section='+section, function(data) {
-                    $('#CommitSaveReussite').attr('data-reussite', data[1])
-                    console.log(data)              
-                    var myModalEl = document.getElementById('modifResultat');
-                    var modal = new Modal(myModalEl,{
-                        backdrop: 'static', keyboard: false
-                    })
-                    var texte = $('#mesfiches').data('reussite_text')
-                    quill.root.innerHTML = data[0]
-                    modal.show()                    
-                })
-
-               
-            }
-            if (data == 'demo') {
-                var myModalEl = document.getElementById('InfoDemo');
-                var modal = new Modal(myModalEl,{
-                    backdrop: 'static', keyboard: false
-                })
-                modal.show()
-            }
-            if ($(el).parent().hasClass('fiche_modify')) {
-                location.reload()
-            }
-        })
-    })
 }
 
 const hamburger = () => {
