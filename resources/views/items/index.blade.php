@@ -140,7 +140,8 @@
                     La modification de l'évaluation de cet activité n'implique pas de mise à jour automatique du résumé de la section <span id="sectionLabel"></span>.
                     Vous pouvez ici, mettre à jour manuellement le texte correspondant à la section.
                 </div>
-              <div id="editorModif"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-height: 420px; overflow-y: auto" class="ql-container ql-snow position-relative"></div>
+              <div id="editorModif"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$section->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-height: 420px; overflow-y: auto" class="ql-container ql-snow position-relative">
+            </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btnAction inverse" data-bs-dismiss="modal">Annuler</button>

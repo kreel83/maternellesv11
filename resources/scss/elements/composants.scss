@@ -1,5 +1,25 @@
 #backEndUser {
 
+    .label-genre-check.checked {
+        background-color: var(--second-color) !important;
+        color: white;
+    }
+
+    .label-genre-check {
+        border: 1px solid var(--second-color) !important;
+    
+    }
+    .list-group-item-info {
+        font-size: 13px;
+    }
+
+    .liste_eleves strong {
+        color: var(--main-color) !important;
+    }
+    #fiche_eleve h4 {
+        color: var(--second-color) !important;
+    }
+
     /* Définir la classe pour l'icône dans la balise <i> */
 
     // input[type='email']::placeholder {
@@ -90,9 +110,11 @@
         background-color: var(--main-color);
     }
 
+
+
     .input-group-text
     {
-        background-color: #9251C9 !important;
+        background-color: var(--main-color) !important;
         i {
             color: white !important;
             

@@ -147,8 +147,7 @@ if ($('.editorApercu').length) {
         const myModal = new Modal('#informationPDF', {})
         clickOnCahier(quill, myModal)
         clickOnDefinif(quill, section)
-        choicePhrase() 
-        clickOnNav()
+
         saveTexte(quill)
         onload(quill)
         apercu(quill, section)    
@@ -160,7 +159,8 @@ if ($('.editorApercu').length) {
 
 }
 
-
+choicePhrase() 
+clickOnNav()
 
 if ($('#editor2').length) {
         var quill2 = new Quill('#editor2', {
@@ -221,7 +221,7 @@ var ficheSelect;
 selectSectionFiche(ficheSelect)
 selectFiche(Modal)
 choixTypeFiches(Modal)
-choixFiltre(Modal)
+choixFiltre(Modal, quill4)
 jechoisislaselection()
 photoEnfant()
 photoEnfantTrigger()

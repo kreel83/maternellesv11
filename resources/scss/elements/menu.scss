@@ -1,5 +1,15 @@
 #backEndUser {
 
+    #photos {
+        .nav-link {
+            background-color: var(--second-color) !important;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+            background-color: var(--main-color) !important;
+        }
+    }
+
     .dropdown-menu {
         width: fit-content !important;
         padding: 8px !important;
@@ -23,9 +33,7 @@
         border-radius: 4px;
     }
 
-    .nav-link:hover {
-        color: white !important;
-    }
+
 
 
 
