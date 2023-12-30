@@ -196,4 +196,9 @@ class Utils {
         return "data:image/png;base64,".base64_encode(file_get_contents($logoPath));
     }
 
+    public static function getLogoForMail() {
+        $logoPath = public_path('img/deco/logo-mail.png');
+        return "data:image/png;base64,".base64_encode(file_get_contents($logoPath));
+    }
+
 }

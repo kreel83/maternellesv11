@@ -33,9 +33,7 @@
 
     <body id="backEndUser">
 
-    <div class="container m-0 p-0">
-
-
+    <div class="container">
 
         @yield('content')
 

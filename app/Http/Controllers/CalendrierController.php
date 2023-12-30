@@ -106,7 +106,8 @@ class CalendrierController extends Controller
     public  function periode_save(Request $request) {
         $this->maclasseactuelle->periodes = (int) $request->periode;
         $this->maclasseactuelle->save();
-        return redirect()->back()->withInput();
+        return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
+        //return redirect()->back()->withInput();
         // dd($request);
         // $datas = $request->except('_token');
 

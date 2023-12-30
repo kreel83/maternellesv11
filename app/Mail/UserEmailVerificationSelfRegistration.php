@@ -21,7 +21,7 @@ class UserEmailVerificationSelfRegistration extends Mailable
      */
     public function __construct($verificationLink, $prenom)
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
         $this->verificationLink = $verificationLink;
         $this->prenom = $prenom;
     }

@@ -21,7 +21,7 @@ class UserLicenceActiveeDepuisAdmin extends Mailable
      */
     public function __construct($prenom)
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
         $this->prenom = $prenom;
     }
 

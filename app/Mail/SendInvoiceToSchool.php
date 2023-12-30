@@ -24,7 +24,7 @@ class SendInvoiceToSchool extends Mailable
      */
     public function __construct($pdf, $filename)
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
         $this->pdf = $pdf;
         $this->filename = $filename;
     }
