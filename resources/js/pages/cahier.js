@@ -14,6 +14,31 @@ var origine = {
 }
 
 const choicePhrase = (quill) => {
+    $(document).on('change','.seePdf', function() {
+        const definitif = $(this).prop('checked')
+        const reussite = $(this).data('reussite')
+        console.log('definitif', definitif)
+
+
+
+        $.ajax({
+            method: 'get',
+            url : '/app/cahier/'+reussite+'/definitif?state='+definitif,
+            
+            success: function(data) {
+                $('.seePdf').prop('checked', definitif)
+                if (definitif == true)  {
+
+                    $('.definitifPDF').removeClass('d-none')
+                } else {
+
+                    $('.definitifPDF').addClass('d-none')
+                }
+                
+            }
+        })
+    })
+    
     $(document).on('keyup', '.searchPhrase', function (e) {
         var text = $(this).val()
         var element = $(this).closest('.partieDroite')
@@ -338,30 +363,7 @@ const clickOnDefinif = (quill, section) => {
 
     // })
 
-    $(document).on('change','.seePdf', function() {
-        const definitif = $(this).prop('checked')
-        const reussite = $(this).data('reussite')
-        console.log('definitif', definitif)
 
-
-
-        $.ajax({
-            method: 'get',
-            url : '/app/cahier/'+reussite+'/definitif?state='+definitif,
-            
-            success: function(data) {
-                $('.seePdf').prop('checked', definitif)
-                if (definitif == true)  {
-
-                    $('.definitifPDF').removeClass('d-none')
-                } else {
-
-                    $('.definitifPDF').addClass('d-none')
-                }
-                
-            }
-        })
-    })
 }
 
 

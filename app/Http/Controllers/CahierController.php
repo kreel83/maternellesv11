@@ -341,7 +341,9 @@ class CahierController extends Controller
         $class = ".titre0 {color: #000; background-color: #f5e342}";
         $customClass[] = $class;
 
-        $periode = Utils::periode($enfant, $periode);
+        $utils = new Utils;
+        $periode = $utils->periode($enfant, $periode);
+        //$periode = Utils::periode($enfant, $periode);
 
         if ($state == 'see') {
 

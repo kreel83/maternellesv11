@@ -27,15 +27,19 @@
         <div class="d-flex justify-content-between mb-2 px-5">
             <div class="input-group text-center" style="border-right: 3px solid var(--main-color)">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-venus"></i></span> 
-                <input type="radio" class="btn-check" name="genre" id="genref" value="F" {{$eleve['genre'] == 'F' ? 'checked' : null}}>
-                <label class="btn" for="genref">Fille</label>
+                <input type="radio" class="btn-check genre-check" name="genre" id="genref" value="F" {{$eleve['genre'] == 'F' ? 'checked' : null}}>
+                <label class="btn label-genre-check {{$eleve['genre'] == 'F' ? 'checked' : null}}" for="genref"  >Fille</label>
             </div>
             
             <div class="input-group d-flex justify-content-end ">
                 <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-mars"></i></span> 
-                <input type="radio" class="btn-check" name="genre" id="genreg" autocomplete="off" value="G" {{$eleve['genre'] == 'G' ? 'checked' : null}}>
-                <label class="btn" for="genreg">Garcon</label>
+                <input type="radio" class="btn-check genre-check" name="genre" id="genreg" autocomplete="off" value="G" {{$eleve['genre'] == 'G' ? 'checked' : null}}>
+                <label class="btn label-genre-check {{$eleve['genre'] == 'G' ? 'checked' : null}}" for="genreg"  >Garcon</label>
             </div>
+
+            {{-- .genre-check:checked {
+                background-color: red !important;
+            } --}}
             
             
         </div>

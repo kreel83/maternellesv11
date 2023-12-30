@@ -35,7 +35,7 @@
     }
 </style>
 
-<li class="card_fiche {{$key==0 ? 'fiche_exemple' : null}} shadowDepth1 ui-state-default position-relative {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-table="{{$fiche->getTable()}}" data-categorie="{{$fiche->categorie_id}}" data-section="{{$fiche->section_id}}" data-type="{{$type}}" data-level="{{$lvl}}" data-fiche="{{$fiche->id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}" data-classe="{{json_encode($classifications[$fiche->section_id] ?? [])}}">
+<li class="card_fiche {{$key==0 ? 'fiche_exemple' : null}} shadowDepth1 ui-state-default position-relative {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-table="{{$fiche->getTable()}}" data-categorie="{{$fiche->categorie_id}}" data-section="{{$fiche->section_id}}" data-type="{{$type}}" data-level="{{$lvl}}" data-fiche="{{$fiche->id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
 {{-- <div class="actiontemp">
     @foreach ($classification as $classe)
     <div class="coder {{ $fiche->classification_id == $classe['id'] ? 'active' : null}}" title="{{$classe['section1']}}" data-fiche={{$fiche->id}} data-id={{$classe['id']}}>{{$classe['code']}}</div>
