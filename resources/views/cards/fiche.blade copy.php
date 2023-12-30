@@ -7,29 +7,23 @@
 
 
 ?>
-
+<!-- fonctionne avec beaucoup de requetes -->
 
 <li class="card_fiche {{$key == 0 ? 'fiche_selection' : null}} ui-state-default   {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-type="{{$type}}" data-level="{{$lvl}}" data-section="{{$fiche->section_id}}" data-fiche="{{$fiche->id}}" data-selection="{{$fiche->fiche_id}}"  data-categorie="{{$fiche->categorie_id}}" data-ps="{{$ps}}" data-ms="{{$ms}}" data-gs="{{$gs}}">
 <div class="action d-flex flex-column justify-content-center align-items-center">
-    <button class="btnSelection   retirer"  style="background-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }}">Retirer</button>
-    <button class="btnSelection   d-none selectionner"  style="background-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }}">Selectionner</button>
+    <button class="btnSelection   retirer"  style="background-color: {{$fiche->section()->color}}">Retirer</button>
+    <button class="btnSelection   d-none selectionner"  style="background-color: {{$fiche->section()->color}}">Selectionner</button>
     </div>
 
         <div class="card__image">
             <img src="{{asset($fiche->image_name)}}" alt="image" class="border-tlr-radius">
         </div>
 
-        <div class="card-footer" style="font-size: 12px; border-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }} !important">
-            @php
-                //dd($fiche);
-            @endphp
-            {{-- <div style="font-weight: bolder;">{{$fiche->categorie->section2 ?? null}}</div> --}}
-            {{-- <div style="font-weight: bolder;">{{ $sectionsData[$fiche->section_id]['name'] }}</div> --}}
-            <div style="font-weight: bolder;">{{ $sections->where('id', $fiche->section_id)->first()->name ?? '' }}</div>
-            
+        <div class="card-footer" style="font-size: 12px; border-color: {{$fiche->section()->color}} !important">
+            <div style="font-weight: bolder;">{{$fiche->categorie->section2 ?? null}}</div>
             <div>{{$fiche->name}}</div>
         </div>
-        <div class="card-footer2" style="padding: 0; background: linear-gradient(164deg, {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }} 23%, #ecf0f1 74%)">
+        <div class="card-footer2" style="padding: 0; background: linear-gradient(164deg, {{$fiche->section()->color}} 23%, #ecf0f1 74%)">
            
             <style>
                 .caseLvl.ps.active {

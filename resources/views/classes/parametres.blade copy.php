@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="container my-5 page" id="monprofil">
 
     <nav class="pb-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -17,69 +16,10 @@
             @include('include.display_msg_error')
         </div>
     @endif
-    
+
     <div class="grid_profil">
 
-        <div class="gridcadre grid1">
-            <div class="gridTitre">Mon profil</div>
-            <form action="{{route('monprofil')}}" method="post">
-                @csrf
-                {{-- <div class="icone-input-login my-4">
-                    <i class="fa-solid fa-key"></i>
-                    <input type="email" class="custom-input" name="email" value="" placeholder="Votre adresse mail" />
-                </div>  --}}
-                <select class="custom-select mt-4 little" name="civilite">
-                    <option value="">Veuillez sélectionner</option>
-                    <option value="Mme" {{$user->civilite == "Mme" ? 'selected' :null}}>Madame</option>
-                    <option value="M." {{$user->civilite == "M." ? 'selected' :null}}>Monsieur</option>
-                </select> 
-                <div class="icone-input my-2 little">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" class="custom-input" name="prenom" value="{{$user->prenom}}" placeholder="Prénom" />
-                </div> 
-                <div class="icone-input my-2 little">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" class="custom-input" name="name" value="{{$user->name}}" placeholder="Nom" />
-                </div>
-                <div class="icone-input my-2 little">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="text" class="custom-input" name="email" value="{{$user->email}}" placeholder="Nom" disabled/>
-                </div>
-                <div class="icone-input my-2 little">
-                    <i class="fa-solid fa-phone"></i>
-                        <input type="text" class="custom-input" name="phone" value="{{$user->phone}}" placeholder="Téléphone" />
-                </div>
-
-                <div class="d-flex align-items-center">
-                    <button type="submit" class="btnAction me-4">Sauvegarder</button>
-                    @if(Session::has('error_profil'))
-                    <div class="error_message">{{Session::get('error_profil_message')}}</div>
-                    @endif
-
-                </div>
-            </form>
-        </div>
-
-        <div class="gridcadre grid2">
-            <div class="gridTitre">Mon établissement</div>
-            <div class="mt-4 text-center">
-                <h3><span class="badge bg-secondary">{{$user->ecole_id}}</span></h3>
-                <div class="custom-area">
-                    <textarea name="" id="" cols="30" rows="10" disabled>{{ $adresseEcole }}</textarea>            
-                </div>
-                <div class="icone-input my-4 little">
-                    <i class="fa-solid fa-envelope"></i>
-
-                    <input type="text" class="custom-input" name="email" value="{{$user->classe_active()->ecole->mail}}" disabled/>
-                </div>
-                <div class="icone-input my-4 little">
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="text" class="custom-input" name="email" value="{{$user->classe_active()->ecole->telephone}}" disabled/>
-                </div>
-            </div>       
-        </div>
-
-        {{-- <div class="gridcadre grid3 d-flex justify-content-between w-100 tuto_aides">
+        <div class="gridcadre grid1 d-flex justify-content-between w-100 tuto_aides">
             <div class="gridTitre">Mes aides maternelles</div>
             <form action="{{route('aidematernelle.post')}}" method="post" class="d-flex justify-content-between w-100">
                 @csrf
@@ -117,7 +57,7 @@
         </div>
 
 
-        <div class="gridcadre grid4 d-flex flex-column justify-content-between align-items-center tuto_direction">
+        <div class="gridcadre grid3 d-flex flex-column justify-content-between align-items-center tuto_direction">
             <div class="gridTitre">Direction</div>
 
 
@@ -164,7 +104,7 @@
 
 
         </div>
-        <div class="gridcadre grid5 d-flex justify-content-center align-items-center tuto_periodicite">
+        <div class="gridcadre grid4 d-flex justify-content-center align-items-center tuto_periodicite">
             <div class="gridTitre">Périodocité</div>
             <form action="{{route('periode_save')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
                 <select name="periode" class="custom-select">
@@ -174,7 +114,7 @@
                 </select>
                 <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
             </form>    
-        </div> --}}
+        </div>
         {{-- <div class="gridcadre grid6 d-flex justify-content-center align-items-center tuto_tutoriel">
             <div class="gridTitre">Tutoriel</div>
             <form action="{{route('modeTuto')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
@@ -186,7 +126,7 @@
             </form>    
         </div> --}}
 
-        {{-- <style>
+        <style>
             .section_ligne {
                 font-size: 12px;
                 font-weight: bolder;
@@ -195,19 +135,32 @@
             }
         </style>
 
-        <div class="gridcadre grid7 d-flex justify-content-center align-items-center tuto_tutoriel">
+        <div class="gridcadre grid5 d-flex justify-content-center align-items-center tuto_tutoriel">
+            <div class="gridTitre">Acquis avec aide</div>
+            <div class="mt-3">
+                <form action="{{route('activeAcquisAide')}}" class=" d-flex flex-column justify-content-center align-items-center">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="activeAcquisAide" name="activeAcquisAide" {{Auth::user()->classe_active()->desactive_acquis_aide == 0 ? 'checked' : null}}>
+                        <label class="form-check-label" for="activeAcquisAide">Afficher les activités <strong>acquises avec aide</strong> dans le cahier de réussites</label>
+                    </div>
+                    <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="gridcadre grid6 d-flex justify-content-center align-items-center tuto_tutoriel">
             <div class="gridTitre">Domaine optionnel</div>
             <div class="mt-3">
                 <form action="{{route('activeDomaineEleve')}}" class=" d-flex flex-column justify-content-center align-items-center">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->classe_active()->desactive_devenir_eleve == 0 ? 'checked' : null}}>
-                        <label class="form-check-label" for="activeDomaineEleve">Activé le domaine "Devenir "élève"</label>
+                        <label class="form-check-label" for="activeDomaineEleve">Activer le domaine " Devenir élève " dans le cahier de réussites</label>
                     </div>
                     <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
                 </form>
             </div>
               
-        </div> --}}
+        </div>
 
     </div>
 

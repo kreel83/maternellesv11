@@ -21,7 +21,7 @@ class EnvoiCodeSecuritePartage extends Mailable
      */
     public function __construct($code, $nomDemandeur)
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
         $this->code = $code;
         $this->nomDemandeur = $nomDemandeur;
     }

@@ -21,7 +21,7 @@ class DemandePartageClasseUserInconnu extends Mailable
      */
     public function __construct($nomDemandeur, $verificationLink)
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
         $this->nomDemandeur = $nomDemandeur;
         $this->verificationLink = $verificationLink;
     }

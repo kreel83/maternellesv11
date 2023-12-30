@@ -101,7 +101,7 @@
 
     <div class="header">
         {{--<h1>Les Maternelles</h1>--}}
-        <img src="{{ $message->embed($logo) }}" alt="" width="200">
+        <img src="{{ $message->embed($logo) }}">
     </div>
 
     <div id="body">

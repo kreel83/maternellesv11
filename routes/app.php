@@ -224,6 +224,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/parametres/phrases/{commentaire_id}/delete', [parametreController::class, 'deletePhrase'])->name('deletePhrase');
     Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
     Route::get('/parametres/activeDomaineEleve', [parametreController::class, 'activeDomaineEleve'])->name('activeDomaineEleve');
+    Route::get('/parametres/activeAcquisAide', [parametreController::class, 'activeAcquisAide'])->name('activeAcquisAide');
+    Route::get('/parametres/classe',[parametreController::class,'parametresClasse'])->name('parametresClasse');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
     Route::get('/fiches/setClassification', [ficheController::class, 'setClassification'])->name('setClassification');
@@ -249,7 +251,6 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/classe/confirme',[ClasseController::class,'confirmeClasse'])->name('confirmeClasse');
     Route::post('/classe/save',[ClasseController::class,'saveclasse'])->name('saveNewClasse');
     Route::get('/classe/edit',[ClasseController::class,'updateclasse'])->name('updateClasse');
-
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::get('/maclasse',[EnfantController::class,'maclasse'])->name('maclasse');

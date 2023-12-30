@@ -233,7 +233,7 @@ class CahierController extends Controller
             ->where('periode', $periode)
             ->orderBy('resultats.section_id')
             ->get();
-         
+        
         // $resultats_personnels = Resultat::select('personnels.*','resultats.*','sections.name as name_section','sections.color')->join('personnels','personnels.id','resultats.item_id')
         //    ->join('sections','sections.id','resultats.section_id')
         //     ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();
@@ -246,8 +246,9 @@ class CahierController extends Controller
                 $resultat->image = 'storage/items/'.$resultat->section_id.'/'.$p->name;
             }
         }
-
+        //dd($resultats);
         $resultats = $resultats->groupBy('section_id')->toArray();
+        //dd($resultats);
 
         // PDF pour Parent pas de Auth::
         $user = User::find($enfant->user_id);
@@ -256,11 +257,13 @@ class CahierController extends Controller
             ->where('enfant_id', $id)
             ->where('periode', $periode)
             ->first();
-
+        //dd($reussite);
         // Chargement des textes par section
         $reussiteSections = ReussiteSection::select('section_id', 'description')
             ->where('reussite_id', $reussite->id)
-            ->get();            
+            ->get();   
+            
+        //dd($reussiteSections);
 
         $sections = Section::orderBy('ordre')->get()->toArray();
         $s = array();
@@ -341,7 +344,9 @@ class CahierController extends Controller
         $class = ".titre0 {color: #000; background-color: #f5e342}";
         $customClass[] = $class;
 
-        $periode = Utils::periode($enfant, $periode);
+        $utils = new Utils;
+        $periode = $utils->periode($enfant, $periode);
+        //$periode = Utils::periode($enfant, $periode);
 
         if ($state == 'see') {
 

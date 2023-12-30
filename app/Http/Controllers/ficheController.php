@@ -41,6 +41,45 @@ class ficheController extends Controller
     }
 
     public function index(Request $request) {
+
+        $sections = Section::orderBy('ordre')->get();
+
+        if ($request->section_id) {
+            $section = $sections->find($request->section_id);
+        } else {
+            $section = $sections->first();
+        }
+
+        if (!isset($request->type)) {
+            $request->type = "mesfiches";
+        }
+
+        $fiches = Auth::user()->mesfiches();
+        $universelles = Auth::user()->items();
+        
+        $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
+        $classifications = Classification::all();
+        $classifications = $classifications->groupBy('section_id')->toArray();
+        $categories = Categorie::where('section_id', $section->id)->get();
+        $categories = $categories->groupBy('section1');
+        //$templates = Template::where('user_id', Auth::id())->get();
+
+        return view('fiches.index')
+            ->with('type', $request->type)
+            //->with('templates', $templates)
+            ->with('template', $request->template ?? null)
+            ->with('categories', $categories)
+            ->with('section', $section)
+            ->with('fiches', $fiches)
+            ->with('itemactuel', $itemactuel)
+            ->with('classifications', $classifications)
+            ->with('universelles', $universelles)
+            ->with('sections', $sections)
+            ->with('user', Auth::id());
+    }
+    /*
+    // fonctionne mais enormement de requetes
+    public function index(Request $request) {
         
         if ($request->section) {
 
@@ -80,6 +119,7 @@ class ficheController extends Controller
             ->with('user', Auth::id())
             ->with('sections', Section::orderBy('ordre')->get());
     }
+    */
 
 
 

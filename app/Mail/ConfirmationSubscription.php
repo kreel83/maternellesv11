@@ -21,7 +21,7 @@ class ConfirmationSubscription extends Mailable
      */
     public function __construct()
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
     }
 
     /**

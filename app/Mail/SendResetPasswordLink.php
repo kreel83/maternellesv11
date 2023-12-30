@@ -21,7 +21,7 @@ class SendResetPasswordLink extends Mailable
      */
     public function __construct($resetLink, $prenom)
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
         $this->resetLink = $resetLink;
         $this->prenom = $prenom;
     }

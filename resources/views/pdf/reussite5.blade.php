@@ -537,7 +537,9 @@ $degrades = App\Models\Enfant::DEGRADE;
 </div>
 
 <div class="page-break"></div>
-
+@php
+    //dd($resultats);
+@endphp
 @foreach($resultats as $k => $section)
 
     {{-- <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header> --}}
@@ -609,7 +611,9 @@ $degrades = App\Models\Enfant::DEGRADE;
         $texte = $reussiteSection ? $reussiteSection->description : '';
         //dd($texte);
     @endphp --}}
-
+@php
+    //dd($reussiteSections);
+@endphp
     <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div>
     {{-- <div class="text-container">{!! $textesParSection[$k] !!}</div> --}}
 
@@ -646,7 +650,7 @@ $degrades = App\Models\Enfant::DEGRADE;
 <div class="page">
 <div class="body">
     {{-- <div class="titre-page titre0">{{ $enfant->prenom }}</div> --}}
-    <div class="titre-page titre0">Commentaire général</div>
+    <div class="titre-page titre0">Commentaire général et signature</div>
 
     {!! $reussite->commentaire_general !!}
     {{-- {!! $textesParSection[0] !!} --}}

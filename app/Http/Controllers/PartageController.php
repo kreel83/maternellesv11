@@ -129,10 +129,12 @@ class PartageController extends Controller
         // Si cette classe est la dernière classe ouverte par le user : 
         // si il a une classe à lui on lui mets sa classe sinon null
         $user = User::find($partage->user_id);
-        if($user->classe_id == $partage->classe_id) {
-            $existingClasse = Classe::where('user_id', $user->id)->first();
-            $user->classe_id = $existingClasse ? $existingClasse->id : null;
-            $user->save();
+        if($user) {
+            if($user->classe_id == $partage->classe_id) {
+                $existingClasse = Classe::where('user_id', $user->id)->first();
+                $user->classe_id = $existingClasse ? $existingClasse->id : null;
+                $user->save();
+            }
         }
         $partage->delete();
         return redirect()->route('partager')

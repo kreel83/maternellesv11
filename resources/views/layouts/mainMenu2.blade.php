@@ -209,7 +209,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                         </div>
 
                         @php
-                            $params = in_array($menu, ['monprofil', 'contact', 'partager']);
+                            $params = in_array($menu, ['paramclasse', 'monprofil', 'contact', 'partager']);
                         @endphp
 
                             <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu">
@@ -230,11 +230,31 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 {{-- <a href="#" --}}
                                 {{-- class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session()->get('nom_de_la_classe')}}</a> --}}
                                 @if (session('classe_active'))
-                                    <span class="nav-item disabled" style="color: var(--main-color) !important">{{session('classe_active')->description ?? ''}}</span>
+                                    {{-- <span class="nav-item disabled" style="color: var(--main-color) !important">{{session('classe_active')->description ?? ''}}</span> --}}
                                     {{-- <a href="#" class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session('classe_active')->description ?? ''}}</a> --}}
+                                    <a href="{{ route('parametresClasse') }}"
+                                    class="nav-item nav-link  {{ $menu == 'paramclasse' ? 'active' : null }}">Paramètres de ma classe</a>
                                 @else
                                     <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe crée</a>
                                 @endif
+                                @if(session()->has('classe_active'))
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
+                                    href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
+                                @endif
+                                @if (!session('autres_classes')->isEmpty())
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+										<span class="nav-item disabled">Autres classes :</span>
+                                        {{-- @foreach (Auth::user()->autresClasses() as $classe) --}}
+                                        @foreach (session('autres_classes') as $classe)
+                                            <a href="{{ route('changerClasse',['classe' => $classe->id]) }}"
+                                            class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
+                                        @endforeach
+                                    @endif
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -252,13 +272,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     mot de passe</a>
                                 <a class="nav-item nav-link  {{ $menu == 'contact' ? 'active' : null }}"
                                     href="{{ route('contact') }}">Nous contacter</a>
-                                    @if(session()->has('classe_active'))
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
-                                        href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
-                                    @endif
+                                    
                                     {{-- @if(session()->has('lienPourPartageDansMenu'))
                                         @if(session('lienPourPartageDansMenu') == true)
                                             <li>
@@ -273,17 +287,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     {{-- @php
                                         dd(session('autres_classes')->isEmpty());
                                     @endphp --}}
-                                    @if (!session('autres_classes')->isEmpty())
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-										<span class="nav-item disabled">Autres classes :</span>
-                                        {{-- @foreach (Auth::user()->autresClasses() as $classe) --}}
-                                        @foreach (session('autres_classes') as $classe)
-                                            <a href="{{ route('changerClasse',['classe' => $classe->id]) }}"
-                                            class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
-                                        @endforeach
-                                    @endif
+                                    
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

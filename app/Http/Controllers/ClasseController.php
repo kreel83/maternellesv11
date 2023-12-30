@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Classe;
 use App\Models\ClasseUser;
 use App\Models\Ecole;
+use App\Models\Section;
 use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isEmpty;
@@ -13,6 +14,7 @@ use function PHPUnit\Framework\isNull;
 
 class ClasseController extends Controller
 {
+
     public function changerclasse(Request $request) {
         $classe = Classe::find($request->classe);
         $user = Auth::user();

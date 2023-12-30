@@ -268,8 +268,16 @@ class ParametreController extends Controller
             $this->maclasseactuelle->desactive_devenir_eleve = ($request->activeDomaineEleve == 'on' ? 0 : 1);
             $this->maclasseactuelle->save();
         
-        return redirect()->back()->with('success','Le domaine a bien été désactivé');
+        //return redirect()->back()->with('success','Le domaine a bien été désactivé');
+        return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
     }
+
+    public function activeAcquisAide(Request $request) {
+        $this->maclasseactuelle->desactive_acquis_aide = ($request->activeAcquisAide == 'on' ? 0 : 1);
+        $this->maclasseactuelle->save();
+    
+    return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
+}
 
     public function get_phrases(Request $request) {
         $c = Commentaire::find($request->id);
@@ -293,7 +301,8 @@ class ParametreController extends Controller
 
         $this->maclasseactuelle->direction = $r;
         $this->maclasseactuelle->save();
-        return redirect()->back()->withInput();
+        return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
+        //return redirect()->back()->withInput();
     }
 
     public function savemonprofil(Request $request) {
@@ -334,7 +343,8 @@ class ParametreController extends Controller
 
 
         $user->save();
-        return redirect()->back()->withInput();
+        //return redirect()->back()->withInput();
+        return redirect()->back()->with('status','success')->with('msg','Votre profil a été mis à jour.');
 
     }
 
@@ -581,5 +591,16 @@ class ParametreController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->back()->with('result', 'success');
+    }
+
+    public function parametresClasse() {
+        $directeur = json_decode($this->maclasseactuelle->direction);
+        $sections = Section::orderBy('ordre','ASC')->get();
+        $equipes = json_decode($this->maclasseactuelle->equipes, true);
+        return view('classes.parametres')
+            ->with('periodes', $this->maclasseactuelle->periodes)
+            ->with('directeur', $directeur)
+            ->with('sections', $sections)
+            ->with('equipes', $equipes);
     }
 }

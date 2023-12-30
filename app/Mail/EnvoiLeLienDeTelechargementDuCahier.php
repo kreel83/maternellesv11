@@ -23,7 +23,7 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
      */
     public function __construct($url)
     {
-        $this->logo = Utils::getBase64Image('img/deco/logo.png');
+        $this->logo = Utils::getLogoForMail();
         $this->url = $url;
     }
 

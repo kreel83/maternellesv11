@@ -16,31 +16,31 @@
         <div data-section="{{ $section->id }}" class="liste_section d-flex align-items-end" style="width: 1000px !important">
             
                 @foreach ($sections as $sec)
-                @if ($sec->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
-                @else
-                <div class="d-flex flex-column align-items-center">
-                        <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
-                            data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
-                        <div class='selectSectionFiche {{ $sec->id == $section->id ? 'selected' : null }}'
-                            data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}">
-                            <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
-                                height="45px">
+                    @if ($sec->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
+                    @else
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
+                                data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
+                            <div class='selectSectionFiche {{ $sec->id == $section->id ? 'selected' : null }}'
+                                data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}">
+                                <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
+                                    height="45px">
+                            </div>
+                            @if ($sec->id == 99)
+                                <div class="petit_texte" style="color: {{$sec->color}}">Général</div>
+                            @else
+                                <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
+                            @endif
                         </div>
-                        @if ($sec->id == 99)
-                        <div class="petit_texte" style="color: {{$sec->color}}">Général</div>
-                        @else
-                        <div class="petit_texte" style="color: {{$sec->color}}">{{$sec->icone}}</div>
-                        @endif
-                    </div>
                     @endif
                 @endforeach
                 @if (Auth::user()->hasResultats() ==  0)
-                <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
-                    <i class="fa-solid fa-file-import fs-3"></i>
-                </div>
-                {{-- <div title="Sauvegarder votre template" class="btnAction" id="saveTemplatesBtn" data-bs-toggle="modal" data-bs-target="#saveTemplate" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
-                    <i class="fa-solid fa-floppy-disk fs-3"></i>
-                </div> --}}
+                    <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
+                        <i class="fa-solid fa-file-import fs-3"></i>
+                    </div>
+                    {{-- <div title="Sauvegarder votre template" class="btnAction" id="saveTemplatesBtn" data-bs-toggle="modal" data-bs-target="#saveTemplate" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
+                        <i class="fa-solid fa-floppy-disk fs-3"></i>
+                    </div> --}}
                 @endif
             
         </div>
@@ -67,9 +67,9 @@
                         class="btnSelectionType violet droit selected les_fiches text-center">Liste des fiches</div>
                     <div data-type="mesfiches" data-position="right" class="btnSelectionType violet droit ma_selection  text-center">
                         @if (isset($template))
-                        {{$template->nom}}
+                            {{$template->nom}}
                         @else
-                        Ma sélection {{$template->nom ?? ''}}
+                            Ma sélection {{$template->nom ?? ''}}
                         @endif
                     </div>
                 </div>
@@ -98,7 +98,13 @@
                         <ul class="fiche_container fiches autresfiches m-0 p-0">
 
                             @foreach ($universelles as $key => $fiche)
+                            @php
+                                //dd($fiche);
+                                //dd($universelles);
+                                //dd($key);
+                            @endphp
                                 @include('cards.universelle', [
+                                    //'color' => $sections->where('id', '')->first()->color;
                                     'type' => 'autresfiches',
                                     'classifications' => $classifications,
                                 ])
