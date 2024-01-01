@@ -149,7 +149,11 @@ class Enfant extends Model
     }
 
     public function resultats() {
-        $r = Resultat::where('enfant_id', $this->id)->where('notation',2)->where('autonome',1)->get();
+        if (session('classe_active')->desactive_acquis_aide == 1) {
+            $r = Resultat::where('enfant_id', $this->id)->where('notation',2)->where('autonome',1)->get();            
+        } else {
+            $r = Resultat::where('enfant_id', $this->id)->where('notation',2)->get();
+        }
         $r = $r->groupBy('section_id');
         return $r;
 

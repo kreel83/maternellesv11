@@ -174,7 +174,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                         groupes</a>
                                     <a href="{{ route('phrases') }}"
                                         class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}  {{$hasClassActive}}">Mes
-                                        phrases pré-enregistrées</a>
+                                        phrases prédéfinies</a>
                                 </div>
                             </div>
                             {{-- @php
@@ -378,6 +378,27 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
   </div>
 </div> --}}
 
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnAction inverse" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btnAction action" data-bs-dismiss="modal">Save changes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade" id="InfoDemo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="top: 200px;">
       <div class="modal-content  position-relative">
@@ -416,6 +437,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
       </div>
     </div>
   </div>
+
+
 
 
 

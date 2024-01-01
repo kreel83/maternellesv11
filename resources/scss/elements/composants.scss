@@ -9,6 +9,14 @@
         border: 1px solid var(--second-color) !important;
     
     }
+
+
+    .list-group-item {
+        font-size: 13px !important;        
+        cursor: pointer;
+    }
+
+
     .list-group-item-info {
         font-size: 13px;
     }
@@ -92,6 +100,21 @@
     
     }
 
+    .form-check-input {
+        background-color:lightgrey !important;
+        border-color: lightgrey !important;
+        color: var(--third-color);
+    }
+    .form-check-input:checked {
+        background-color: var(--main-color) !important;
+        border-color: var(--main-color) !important;
+    }
+
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.25rem var(--second-color) !important;
+        outline: 0 !important;
+    }
+
     .liste_eleves {
         padding-right: 16px;
     }
@@ -103,10 +126,10 @@
     .list-group-item:hover {
         
         font-weight: bolder !important;
-        .list-group-item-info {
+        
             color: white !important;
 
-        }
+     
         background-color: var(--main-color);
     }
 

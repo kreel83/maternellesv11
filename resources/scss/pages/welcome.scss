@@ -5,6 +5,70 @@
     font-weight: bolder;
 }
 
+#parametres_classe {
+    .grid_profil {
+        display: grid;
+        grid-template-columns:1fr 1fr; 
+        grid-template-rows: 300px 220px 220px;
+        grid-gap: 35px; 
+    }
+    .grid1 {
+        grid-column: 1/3;
+        grid-row: 1
+    }
+
+    .grid3 {
+        grid-column: 1;
+        grid-row: 2
+
+    }
+    .grid4 {
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .grid5 {
+        grid-column: 2;
+        grid-row: 3
+    }
+    .grid6 {
+        grid-column: 1;
+        grid-row:3
+    }
+    .grid7 {
+        grid-column: 2;
+        grid-row: 4;
+        height: auto;
+    }
+    .gridcadre {
+        width: 100%;
+        border-radius: 40px;
+        position: relative;
+        padding: 10px 40px;
+        background-color: white;
+    }
+    .gridTitre {
+        position: absolute;
+        top: -16px;
+        left: 30px;
+        font-weight: 400;
+        font-size: 16px;
+        padding: 4px 16px;
+        background-color: white;
+        border-radius: 14px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+    }
+    .groupeAide {
+        position: relative;
+       
+        padding: 5px;
+        margin: 5px;
+    }
+
+}
+
+
+
 #welcome, #monprofil {
     .parent {
         display: grid;
@@ -197,7 +261,7 @@
     .grid_profil {
         display: grid;
         grid-template-columns:1fr 1fr; 
-        grid-template-rows: 370px 220px 220px 220px;
+        grid-template-rows: 370px !important;
         grid-gap: 35px; 
     }
     .grid1 {

@@ -29,9 +29,7 @@
     }
 </style>
 
-@php
-    // dd($resultats);
-@endphp
+
 
 @section('content')
 
@@ -47,12 +45,11 @@
         <li class="breadcrumb-item active" aria-current="page">Mon élève</li>
     </ol>
 
-
-    <div class="d-none d-xxl-block  gx-0 navigateur" style="width: 100%; height: 100vh; max-height: 100vh">
+    <div class="gx-0 navigateur" style="width: 100%; height: 100vh; max-height: 100vh">
         {{-- <img src="{{asset('img/deco/fond_1.jpg')}}" alt="" class="position-absolute" width="100%" style="top:0;bottom:0;left:0;right:0"> --}}
 
-     <div class="row">
-            <div class="col-md-6" style="border: 1px solid var(--main-color); border-radius: 8px">
+     <div class="row justify-content-center">
+            <div class="col-12 col-xl-6 mb-5" style="border: 1px solid var(--main-color); border-radius: 8px">
                 <style>
                     .croix {
                         right: 50px; top: 50px; cursor: pointer;
@@ -83,10 +80,19 @@
 
             @if ($eleve['id'] != 'new' && !$resultats->isEmpty())
 
-                <div class="col-md-6" style="">
+                <div class="col-12 col-xl-6 mb-5" style="">
 
 
                     <h4 class="text-center">Compétences acquises</h4>
+
+                    <div style="font-size: 12px; background-color: var(--main-color); color: white; padding: 4px 8px; border-radius: 8px"  class="text-center">
+                        @if (session('classe_active')->desactive_acquis_aide == 1)
+                        Les activités acquises avec aide <span class="mx-1" style="color: var(--niveau_2)"><i class="fa-solid fa-circle"></i></span> apparaissent dans le cahier de réussite
+                        @else
+                        Les activités acquises avec aide <span class="mx-1" style="color: var(--niveau_2)"><i class="fa-solid fa-circle"></i>'</span> n'apparaissent pas  dans le cahier de réussite
+                        @endif
+
+                    </div>
 
                     @php
                         $section_id = 0;
@@ -111,51 +117,26 @@
                                     <ul class="list-group">
                                     @php
                                         $section_id = $resultat->section_id;
+                                        // dd($resultat);
                                     @endphp
                                 @endif
 
-                                <!--<div class="mb-2 ml-5">-->
-                                    <li class="list-group-item">
 
-                                    
-                                        <div class="list-group-item-info" data-fiche="{{$resultat->id}}">
-                                
-
-                                    {{--
-                                    @if ($resultat->notation == 2 && $resultat->autonome == 1) 
-                                    <li class="list-group-item list-group-item-success">
-                                    @elseif ($resultat->notation == 2 && $resultat->autonome == 0)
-                                    <li class="list-group-item list-group-item-info">
-                                    @elseif ($resultat->notation == 1)
-                                    <li class="list-group-item list-group-item-warning">
-                                    @endif
-                                    --}}
-
-                                    @php
-                                        if ($resultat->notation == 2 && $resultat->autonome == 1) {
-                                            $resultat->notation = 3 ;
-                                        }
-                                    @endphp
-
-                                        <span class="me-2" style="color: var(--niveau_{{$resultat->notation}})"><i class="fa-solid fa-circle"></i></span>{{ $resultat->itemName }}
-                                        {{-- @if($resultat->autonome == 0)
-                                            (acquis avec aide)
-                                        @endif --}}
-
-                                        
-                        
-
-                                    </li>
-
-                                    {{--
-                                    <div class="collapse" id="collapseExample{{$resultat->id}}">
-                                        <div class="card card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                                    <li class="list-group-item" data-id="{{$resultat->id}}"> 
+                                        @if ($resultat->autonome)   
+                                            <div class="">
+                                        @else
+                                            <div  data-do_action="upgradeResultat" data-fiche="{{$resultat->id}}" data-color="var(--niveau_3)" data-autonome="{{$resultat->autonome}}"  class="{{$resultat->autonome == 0 ? "confirmation" : null}}" data-action="Modifier" data-title="Modification de notation" data-texte='Voulez-vous passer cette activité à "Acquis avec autonomie"  ?' data-href="{{route('upgradeResultat',['id' => $resultat->id])}}" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                        @endif                                
+                                        @php
+                                            if ($resultat->notation == 2 && $resultat->autonome == 1) {
+                                                $resultat->notation = 3 ;
+                                            }
+                                        @endphp
+                                        <span class="me-2" style="color: var(--niveau_{{$resultat->autonome == 1 ? "3" : "2" }})"><i class="fa-solid fa-circle"></i></span>{{ $resultat->itemName }}
                                         </div>
-                                    </div>
-                                    --}}
-                                <!--</div>-->
-                                
+                                    </li>
+                              
                             @endforeach
                                 </ul>
 
@@ -169,7 +150,7 @@
 
     </div>
 
-    <div class="d-xs-block d-xxl-none phone">
+    {{-- <div class="d-xs-block d-xxl-none phone">
         <div class="row">
             <div class="col-12 col-lg-6">
                 <div class="form_bloc">
@@ -193,67 +174,36 @@
                             <input type="hidden" id="enfant" value="{{$eleve['id']}}">
 
                                 <ul class="list-group">
-                                @foreach($resultats as $resultat)
+                                    @foreach($resultats as $resultat)
 
-                                    @if($section_id != $resultat->section_id)
-                                        
-                                        </ul>
-
-                                        <div class="mb-2 mt-3">
-                                            <img width="40" class="img-fluid" src="{{ asset('img/illustrations/'.$resultat->section_id.'.png') }}">
-                                            <strong>{{ $resultat->sectionName }}</strong>
-                                        </div>
-                                    
-                                        <ul class="list-group">
-                                        @php
-                                            $section_id = $resultat->section_id;
-                                        @endphp
-                                    @endif
-
-                                    <!--<div class="mb-2 ml-5">-->
-                                        <li class="list-group-item">
-
-                                        
-                                            <div class="list-group-item-info" data-fiche="{{$resultat->id}}">
-                                    
-
-                                        {{--
-                                        @if ($resultat->notation == 2 && $resultat->autonome == 1) 
-                                        <li class="list-group-item list-group-item-success">
-                                        @elseif ($resultat->notation == 2 && $resultat->autonome == 0)
-                                        <li class="list-group-item list-group-item-info">
-                                        @elseif ($resultat->notation == 1)
-                                        <li class="list-group-item list-group-item-warning">
-                                        @endif
-                                        --}}
-
-                                        @php
-                                            if ($resultat->notation == 2 && $resultat->autonome == 1) {
-                                                $resultat->notation = 3 ;
-                                            }
-                                        @endphp
-
-                                            <span class="me-2" style="color: var(--niveau_{{$resultat->notation}})"><i class="fa-solid fa-circle"></i></span>{{ $resultat->itemName }}
-                                            {{-- @if($resultat->autonome == 0)
-                                                (acquis avec aide)
-                                            @endif --}}
-
+                                        @if($section_id != $resultat->section_id)
                                             
-                            
+                                            </ul>
 
-                                        </li>
-
-                                        {{--
-                                        <div class="collapse" id="collapseExample{{$resultat->id}}">
-                                            <div class="card card-body">
-                                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                                            <div class="mb-2 mt-3">
+                                                <img width="40" class="img-fluid" src="{{ asset('img/illustrations/'.$resultat->section_id.'.png') }}">
+                                                <strong>{{ $resultat->sectionName }}</strong>
                                             </div>
-                                        </div>
-                                        --}}
-                                    <!--</div>-->
-                                    
-                                @endforeach
-                                    </ul>
+                                        
+                                            <ul class="list-group">
+                                            @php
+                                                $section_id = $resultat->section_id;
+                                            @endphp
+                                        @endif
+                                        @php
+                                        if ($resultat->notation == 2 && $resultat->autonome == 1) {
+                                            $resultat->notation = 3 ;
+                                        }                                  
+                                        @endphp
+
+                                            <li class="list-group-item" id="{{$resultat->autonome}}">                                        
+                                                <div class="list-group-item-info" data-fiche="{{$resultat->id}}">  
+                                                <span class="me-2" style="color: var(--niveau_{{$resultat->notation}})"><i class="fa-solid fa-circle"></i></span>
+                                                {{ $resultat->itemName }}
+                                                </div>
+                                            </li>                                      
+                                    @endforeach
+                                </ul>
 
                         </div>
 
@@ -268,12 +218,33 @@
         </div>
 
         
-    </div>
+    </div> --}}
 
 </div>
 
+
+
 <!-- Modal -->
-<div class="modal fade" id="modifyFicheModal" tabindex="-1" aria-labelledby="modifyFicheModal" aria-hidden="true">
+<div class="modal fade" id="modifyFicheModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="width: 300px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nouvelle notation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-footer">
+
+            <button type="button" class="btnAction" data-bs-dismiss="modal">Passer cette activité à acquis en autonomie</button>
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+
+<!-- Modal -->
+{{-- <div class="modal fade" id="modifyFicheModal" tabindex="-1" aria-labelledby="modifyFicheModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
       <div class="modal-content justify-content-center fiche_modify" style="background-color: transparent !important; border: none !important" >
 
@@ -281,6 +252,6 @@
 
       </div>
     </div>
-  </div>
+  </div> --}}
 
 @endsection

@@ -184,7 +184,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
     */
 
-    Route::get('/item/saveResultat', [ItemController::class, 'saveResultat']);
+    Route::get('/item/saveResultat', [ItemController::class, 'saveResultat'])->name('saveResultat');
+    Route::get('/item/upgradeResultat', [ItemController::class, 'upgradeResultat'])->name('upgradeResultat');
     //Route::get('/home', [HomeController::class, 'index'])->name('home');
     //Route::get('/deco', [UserController::class, 'deco'])->name('deco');
     Route::get('/choix_enfant_select', [EnfantController::class, 'choix_enfant_select'])->name('choix_enfant_select');
