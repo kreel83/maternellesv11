@@ -107,6 +107,16 @@ class ItemController extends Controller
         return 'ok';
     }
 
+    public function upgradeResultat(Request $request) {
+        $resultat = Resultat::find($request->id);
+        $resultat->autonome = 1;
+        $resultat->save();
+        return 'done';
+    }
+
+
+
+
     public function saveResultat(Request $request) {
         
         $user = Auth::user();
@@ -124,17 +134,25 @@ class ItemController extends Controller
             $request->note = 2;
             $autonome = 1;
         }
+
+
         $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
 
-        $acquis = ($search && $search->notation == 2 && $search->autonome == 1) ? true : false;
-        $newnote = ($search && $search->notation == 2 && $search->autonome == 1) ? true : false;
+        if (session('classe_active')->desactive_acquis_aide == 1) {
+            $acquis = ($search && $search->notation == 2 && $search->autonome == 1) ? true : false;
+        } else {
+            $acquis = ($search && $search->notation == 2) ? true : false;
+        }
         
 
         if ($search && $request->note == 0) {
             $search->delete();
            
         }
+
+        $ancienne_note = null;
         if ($search) {
+            $ancienne_note=[$search->notation, $search->autonome];
             if ($request->note != 0) {
                 $search->notation = $request->note;
                 $search->autonome = $autonome;                
@@ -155,8 +173,10 @@ class ItemController extends Controller
             $search->save();
         }
 
+        // dd(session('classe_active')->desactive_acquis_aide, $request->note, $ancienne_note);
 
         if ($acquis) {
+            if (session('classe_active')->desactive_acquis_aide == 0 && $request->note == 2 && $ancienne_note && $ancienne_note[0] == 2 && $ancienne_note[1] == 1) return 'super';
             return 'modif';        
         } else {
             return 'super';        

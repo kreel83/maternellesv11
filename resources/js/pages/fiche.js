@@ -387,23 +387,26 @@ const choixFiltre = (Modal, quill) => {
         }
     }
 
-    $(document).on('click', '.list-group-item-info', function() {
-        var myModalEl = document.getElementById('modifyFicheModal');
-        var modal = new Modal(myModalEl,{
+    // $(document).on('click', '.list-group-item-info', function() {
+    //     var autonome = $(this).data('autonome')
+    //     console.log(autonome);
+    //     if (autonome == "1") return false;
+    //     var myModalEl = document.getElementById('modifyFicheModal');
+    //     var modal = new Modal(myModalEl,{
            
-        })
-        var resultat = $(this).data('fiche')
-        var enfant = $('#enfant').val()
-        $.get('/app/getFiche?resultat='+resultat+'&enfant='+enfant, function(data) {
+    //     })
+    //     var resultat = $(this).data('fiche')
+    //     var enfant = $('#enfant').val()
+    //     $.get('/app/getFiche?resultat='+resultat+'&enfant='+enfant, function(data) {
 
-            $('#modifyFicheModal .modal-content').html(data)
+    //         $('#modifyFicheModal .modal-body').html(data)
 
-            modal.show()
+    //         modal.show()
 
             
-        }) 
+    //     }) 
         
-    })
+    // })
 
     // $(document).on('click','.list-group-item-info', function() {
     //     var resultat = $(this).data('fiche')

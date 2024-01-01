@@ -65,7 +65,9 @@ class EnfantController extends Controller
 
     public function import() {
         $ecole = $this->maclasseactuelle->ecole_identifiant_de_l_etablissement;
-        $enfants = Enfant::whereNull('user_id')->get();
+        $users = User::where('ecole_identifiant_de_l_etablissement', $ecole)->pluck('id');
+
+        $enfants = Enfant::whereNull('user_id')->whereIn('user_n1_id', $users)->get();
         $profs = User::where('ecole_identifiant_de_l_etablissement', $ecole)->get();
         return view('eleves.import')
             ->with('profs', $profs)
@@ -155,7 +157,7 @@ class EnfantController extends Controller
         $canSendPDF = ($nbEnfants == $nbReussite);
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
        
-       
+
         
         return view('enfants.index')
             ->with('type', $request->type)
@@ -232,6 +234,7 @@ class EnfantController extends Controller
     }
 
     public function liste(Request $request) {
+
         if ($request->enfant_id) {
             $e = Enfant::find($request->enfant_id);
             if (!$e || $e->user_id != Auth::id()) {
@@ -283,6 +286,7 @@ class EnfantController extends Controller
             $prof = $e->user_n1_id;
             if ($prof) {
                 $e->user_id = null;
+                $e->classe_id = null;
                 $e->psmsgs = $e->prevSection($e->psmsgs);
                 $e->save();
                 return redirect()->route('maclasse')
@@ -314,6 +318,7 @@ class EnfantController extends Controller
         foreach ($eleves as $eleve) {
             $e = Enfant::find($eleve);
             $e->user_id = Auth::id();
+            $e->classe_id = $this->maclasseactuelle->id;
             $e->psmsgs = $e->nextSection($e->psmsgs);
             $e->save();
         }

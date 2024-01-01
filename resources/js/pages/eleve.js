@@ -380,6 +380,46 @@ const photo_eleve = () => {
 
     })
 
+    $(document).on('click','.confirmation', function() {
+        var myModalEl = document.getElementById('confirmationModal')
+        var modal = bootstrap.Modal.getInstance(myModalEl)
+        var texte = $(this).data('texte')
+        var title = $(this).data('title')
+        var id = $(this).data('fiche')
+        var action = $(this).data('action')
+        var doAction = $(this).data('do_action')
+
+        var url = $(this).data('href')
+        $('#confirmationModal .action').attr('href', url)
+        console.log(doAction)
+
+        $('#confirmationModal .modal-body').html(texte)
+        $('#confirmationModal h5').html(title)
+        $('#confirmationModal .action').text(action)
+        $('#confirmationModal .action').attr('id',doAction)
+        $('#confirmationModal .action').attr('data-id',id)
+
+    })
+
+    $(document).on('click', '#confirmationModal #upgradeResultat', function(event) {
+        var id = $(this).attr('data-id')
+        console.log('id')
+
+        $.get('/app/item/upgradeResultat?id='+id, function(data) {
+            $('.list-group-item[data-id="'+id+'"]').find('span').css('color', 'var(--niveau_3)')
+        })
+
+    });
+    $(document).on('click', '#confirmationModal #retirerEleve', function(event) {
+        event.preventDefault();
+        var el = $(this).attr('href')
+        console.log(el)
+        document.location.href=el
+
+    });
+
+
+
     $(document).on('click','.remove_eleve', function(e) {
         e.stopImmediatePropagation()
         var id = $('.remove_eleve').data("id")

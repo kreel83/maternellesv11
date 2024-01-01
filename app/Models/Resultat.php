@@ -209,9 +209,11 @@ class Resultat extends Model
     }
 
     public static function resultatsPourUnEleve($id) {
-        $resultats = Resultat::select('resultats.id','resultats.section_id','notation','autonome','items.name as itemName','sections.name as sectionName','resultats.section_id',
+        
+        $resultats = Resultat::select('resultats.id','resultats.section_id', 'resultats.enfant_id', 'resultats.item_id' ,'notation','autonome','items.name as itemName','sections.name as sectionName','resultats.section_id',
             'sections.logo as sectionLogo')
             ->where('enfant_id', $id)
+            ->where('notation',2)
             ->leftJoin('items', 'item_id', '=', 'items.id')
             ->leftJoin('sections', 'resultats.section_id', '=', 'sections.id')
             ->orderBy('resultats.section_id')

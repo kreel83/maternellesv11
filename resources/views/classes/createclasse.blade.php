@@ -7,12 +7,18 @@
 @section('content')
 
 
-<div class="mt-5 container">
 
-    <div class="card mx-auto w-75">
-        <div class="card-header">
+{{-- <div class="input-group mb-2">
+    <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
+    <input type="email" class="form-control form-control-sm" id="mail4_form" name="mail4" id="mail4" value="{{ old('mail4') ?? $eleve['mail4'] }}" placeholder="Mail supplementaire">
+</div> --}}
+
+<div class="mt-5 container" id="creation_classe">
+
+    <div class="card mx-auto w-75" style="border: none; border-radius: 40px; margin-top: 100px">
+        <div class="ms-3" style="border: none; border-radius: 40px">
             <div class="d-flex justify-content-between pt-2">
-                <h5>{{ $title }}</h5>
+                <h5>{{ $title }} -  1/2</h5>
             </div>
         </div>
         <div class="card-body">
@@ -29,20 +35,24 @@
             <div class="row">
                 <div class="col">
                     <label for="ecole_id" class="form-label">Identifiant de votre établissement :</label>
-                    <input type="text" class="form-control codeIdentifiantEtablissement" id="ecole_id" name="ecole_id" value="{{ old('ecole_id', isset($classe) ? $classe->ecole_identifiant_de_l_etablissement : '') }}" aria-describedby="codeHelp">
-                    <div id="codeHelp" class="form-text mb-4">Celui-ci se compose de 7 chiffres et une lettre.</div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-school"></i></span>
+                        <input type="text" class="form-control codeIdentifiantEtablissement" id="ecole_id" name="ecole_id" value="{{ old('ecole_id', isset($classe) ? $classe->ecole_identifiant_de_l_etablissement : '') }}" aria-describedby="codeHelp">
+                    </div>
+                    <small id="codeHelp" class="form-text mb-4">Celui-ci se compose de 7 chiffres et une lettre.</small>
                 </div>
                 <div class="col">
                     <label for="register_search" class="form-label">Recherche d'établissement par code postal :</label>
-                    <div class="d-flex">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
                         <input type="text" class="form-control me-2" id="register_search" name="register_search" value="{{ old('register_search') }}">
-                        <a class="btn btn-primary boutonRechercheEtablissementParCP"><i class="fa-solid fa-magnifying-glass"></i></a>
                     </div>
+                    <a class="btnAction boutonRechercheEtablissementParCP">Rechercher</a>
                 </div>
             </div>
 
             <div id="register_afficheLaListeDesEtablissements" class="mb-3" style="display:none">
-                <div class="p-4" style="background:yellow; border-radius: 8px">
+                <div class="p-4" style="background:var(--second-color); border-radius: 8px">
                 <select class="form-select" id="register_listeDesEcoles"></select>
                 </div>
             </div>
@@ -72,7 +82,7 @@
                 </div>
             </div>
             
-            <button class="btn btn-primary" type="submit">Continuer</button>
+            <button class="btnAction" type="submit">Continuer</button>
             
             </form>
 

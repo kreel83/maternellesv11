@@ -1,8 +1,8 @@
-@extends('layouts.mainMenu2',['titre' => 'Mon profil', 'menu' => 'monprofil'])
+@extends('layouts.mainMenu2',['titre' => 'Mon profil', 'menu' => 'paramclasse'])
 
 @section('content')
 
-<div class="container my-5 page" id="monprofil">
+<div class="container my-5 page" id="parametres_classe">
 
     <nav class="pb-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -141,7 +141,7 @@
                 <form action="{{route('activeAcquisAide')}}" class=" d-flex flex-column justify-content-center align-items-center">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="activeAcquisAide" name="activeAcquisAide" {{Auth::user()->classe_active()->desactive_acquis_aide == 0 ? 'checked' : null}}>
-                        <label class="form-check-label" for="activeAcquisAide">Afficher les activités <strong>acquises avec aide</strong> dans le cahier de réussites</label>
+                        <label class="form-check-label text-center" for="activeAcquisAide">Afficher les activités <strong>acquises avec aide</strong> <br>dans le cahier de réussites</label>
                     </div>
                     <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
                 </form>
@@ -154,7 +154,7 @@
                 <form action="{{route('activeDomaineEleve')}}" class=" d-flex flex-column justify-content-center align-items-center">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->classe_active()->desactive_devenir_eleve == 0 ? 'checked' : null}}>
-                        <label class="form-check-label" for="activeDomaineEleve">Activer le domaine " Devenir élève " dans le cahier de réussites</label>
+                        <label class="form-check-label text-center" for="activeDomaineEleve">Activer le domaine " Devenir élève " <br>dans le cahier de réussites</label>
                     </div>
                     <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
                 </form>
