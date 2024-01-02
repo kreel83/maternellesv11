@@ -35,7 +35,7 @@ class UserAuthenticated
         //     session(['id_de_la_classe' => $classeActive->id]);
         // } 
 
-        if (!$request->session()->has('classe_active')) {
+        if (!$request->session()->has('classe_active') && !is_null(Auth::user()->classe_id)) {
             $classeActive = Classe::find(Auth::user()->classe_id);
             if ($classeActive) {
                 session(['classe_active' => $classeActive]);

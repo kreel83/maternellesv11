@@ -133,7 +133,7 @@ class EnfantController extends Controller
             $enfants = Enfant::where('classe_id', session('classe_active')->id);
             
             
-            if ($this->maclasseactuelle->groupes && $request->type == 'affectation_groupe') {
+            if (!$this->maclasseactuelle->groupes && $request->type == 'affectation_groupe') {
                 return view('enfants.no_groupes')->with('type', $request->type);
             }
 

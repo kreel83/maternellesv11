@@ -1,8 +1,8 @@
-@extends('layouts.login')
+@extends('layouts.template1', ['titre' => 'Connexion à mon compte '.env('APP_NAME')])
 
 @section('content')
 
-<style>
+{{-- <style>
 .gradient-custom-2 {
 /* fallback for old browsers */
 background: #fccb90;
@@ -26,11 +26,65 @@ border-bottom-right-radius: .3rem;
 }
 }
 
-</style>
+</style> --}}
 
-<div id="loginform">
+{{-- <div id="_l_oginform"> --}}
 
-<section class="h-100 gradient-form" style="b_ackground-color: #eee;">
+    <div class="card w-75 mx-auto p-5">
+
+
+        <form action="{{ route('login.post') }}" method="post">
+        @csrf
+
+        <div class="mb-3">
+            <h4>Connectez-vous à votre compte</h4>
+        </div>
+
+        <div class="mb-3">
+            <p>Vous n'avez pas encore de compte {{ env('APP_NAME') }} ? <a href="{{ route('registration.start') }}">Créez un compte.</a></p>
+        </div>
+
+        @include('include.display_msg_error')
+
+        <div class="form-outline mb-4">
+            <input type="email" id="email" name="email" class="form-control"
+            placeholder="Adresse e-mail" autofocus />
+            <!--<label class="form-label" for="form2Example11">Username</label>-->
+        </div>
+
+        <div class="form-outline mb-4">
+            <input type="password" name="password" id="password" class="form-control" 
+            placeholder="Mot de passe"/>
+            <!--<label class="form-label" for="form2Example22">Password</label>-->
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btnAction" style="display: block; width: 100%">Se connecter</button>
+        </div>
+
+        <div class="mb-3">
+            <a href="{{ route('password.request') }}">Vous avez oublié votre mot de passe ?</a>
+        </div>
+
+        {{-- <div class="text-center pt-1 mb-3 pb-1">
+            @if (Route::has('password.request'))
+            <a class="text-muted" href="{{ route('password.request') }}">Mot de passe oublié ?</a>
+            @endif
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center pb-4">
+            <p class="mb-0 me-2">Vous n'avez pas de compte ?</p>
+            <a href="{{ route('registration.start') }}" class="btn btn-outline-danger">Créer un compte</a>
+        </div> --}}
+
+        </form>
+
+    </div>
+
+
+
+
+{{-- <section class="h-100 gradient-form" style="b_ackground-color: #eee;">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-10">
@@ -91,12 +145,12 @@ border-bottom-right-radius: .3rem;
         </div>
       </div>
     </div>
-  </section>
+  </section> --}}
 
 
 
 
-</div>
+{{-- </div> --}}
 
 
 

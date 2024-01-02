@@ -62,7 +62,11 @@ class ItemController extends Controller
         } else {
             $section = Section::first();
         }
-        
+
+        if(!$section) {
+            return redirect()->route('error')->with('msg', 'Section introuvable.');
+        }
+
         $enfant = Enfant::find($enfant_id);
         $sections = Section::orderBy('ordre')->get();
         $fiches = Auth::user()->mesfiches();

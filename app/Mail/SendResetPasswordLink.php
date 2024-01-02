@@ -32,7 +32,7 @@ class SendResetPasswordLink extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '['.env('APP_NAME').'] Réinitialisez votre mot de passe',
+            subject: 'Réinitialisez votre mot de passe',
         );
     }
 

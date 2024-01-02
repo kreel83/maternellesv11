@@ -36,18 +36,9 @@
 </x-guest-layout> --}}
 
 
-
-@extends('layouts.parentLayout', ['titre' => 'Réinitialisation du mot de passe', 'menu' => 'item', 'log' => true])
+@extends('layouts.template1', ['titre' => 'Réinitialisation du mot de passe '.env('APP_NAME')])
 
 @section('content')
-
-<div class="mb-3 d-flex justify-content-center">
-           
-  <a href="{{route('vitrine.index')}}" class="brand-logo">
-  <img src="{{asset('img/deco/logo.png')}}" alt="" width="250" class="d-bloc mx-auto">
-  </a>
-
-</div>    
 
 <div class="card mx-auto w-75">
 
@@ -77,11 +68,11 @@
 
         <div class="input-group mb-3">
             <span class="input-group-text bg-light" id="email">@</span>
-            <input type="email" class="form-control" id="email" name="email" value="" placeholder="Votre adresse mail" required>
+            <input type="email" class="form-control" id="email" name="email" value="" placeholder="Votre adresse e-mail" required>
         </div>
 
         <div class="mb-3 gap-2 d-grid">
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <button type="submit" class="btnAction" style="display: block; width: 100%">Envoyer</button>
         </div>
 
         </form>

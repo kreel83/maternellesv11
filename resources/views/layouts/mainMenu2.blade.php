@@ -244,17 +244,18 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
                                     href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
                                 @endif
-                                @if (!session('autres_classes')->isEmpty())
+                                @if (!is_null(session('autres_classes')))
+                                    @if (!session('autres_classes')->isEmpty())
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-										<span class="nav-item disabled">Autres classes :</span>
-                                        {{-- @foreach (Auth::user()->autresClasses() as $classe) --}}
+                                        <span class="nav-item disabled">Autres classes :</span>
                                         @foreach (session('autres_classes') as $classe)
                                             <a href="{{ route('changerClasse',['classe' => $classe->id]) }}"
                                             class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
                                         @endforeach
                                     @endif
+                                @endif
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

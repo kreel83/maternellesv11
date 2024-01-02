@@ -192,11 +192,23 @@ class User extends Authenticatable
     public function autresClasses() {
         // $actual = session()->get('id_de_la_classe');
         $actual = session('classe_active')->id ?? null;
+        $i = Classe::where('user_id', Auth::id())
+            ->where('classes.id', '<>', $actual)
+            ->pluck('id');
+        $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
+        $merged = $i->merge($t);
+        return Classe::whereIn('id', $merged)->get();
+    }
+    /*
+    public function autresClasses() {
+        // $actual = session()->get('id_de_la_classe');
+        $actual = session('classe_active')->id ?? null;
         $i = Classe::where('user_id', Auth::id())->pluck('id');
         $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
         $merged = $i->merge($t);
         return Classe::whereIn('id', $merged)->where('id','!=',$actual)->get();
     }
+    */
 
     public function sendPasswordResetNotification($token): void
     {
