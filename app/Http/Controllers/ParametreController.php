@@ -539,8 +539,8 @@ class ParametreController extends Controller
     function changerLeMotDePasse(): View
     {
 
-        return view('parametres.reset-password');
-        // return view('monprofil.motdepasse');
+        //return view('parametres.reset-password');
+        return view('monprofil.motdepasse');
     }
 
     public function sauverLeMotDePasse(Request $request)
@@ -558,9 +558,9 @@ class ParametreController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         // session()->flash('success', 'Le mot de passe a bien été réinitalisé');
-        session()->flash('message', 'Le mot de passe a bien été réinitalisé'); 
-        session()->flash('alert-class', 'alert-success'); 
-        return redirect()->route('depart');
+        //session()->flash('message', 'Le mot de passe a bien été réinitalisé'); 
+        //session()->flash('alert-class', 'alert-success'); 
+        return redirect()->route('depart')->with('status','success')->with('msg','Le mot de passe a bien été modifié.');
     }
 
 

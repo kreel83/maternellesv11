@@ -159,7 +159,9 @@ class CalendrierController extends Controller
 
         // $classe = Classe::find(session('id_de_la_classe'));
         // $ecole = Ecole::select('code_academie')->where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
-        $vacances = Vacance::where('ecole_code_academie', $this->maclasseactuelle->code_academie)->get();
+        $vacances = Vacance::where('ecole_code_academie', $this->maclasseactuelle->ecole_code_academie)
+            ->orderBy('start_date')
+            ->get();
 
         $conges = array();
         $key = 0;

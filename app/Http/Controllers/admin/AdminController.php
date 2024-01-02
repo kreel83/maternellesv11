@@ -134,7 +134,6 @@ class AdminController extends Controller
      */
     function changerLeMotDePasse(): View
     {
-
         return view('admin.motdepasse');
     }
 

@@ -1,4 +1,4 @@
-@extends('layouts.parentLayout', ['titre' => 'Finalisation de votre compte'])
+@extends('layouts.template1', ['titre' => 'Mon compte '.env('APP_NAME')])
 
 @section('content')
 

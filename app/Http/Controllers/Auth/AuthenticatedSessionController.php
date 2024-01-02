@@ -18,8 +18,9 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         //return view('auth.login');
-       
-        return view('auth.login-user2');
+        return view('auth.login-user');
+        //return view('auth.login-user1');
+        //return view('auth.login-user2');
     }
 
     /**
@@ -30,6 +31,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
         $request->authenticate();
 
         $request->session()->regenerate();

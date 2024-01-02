@@ -1,6 +1,6 @@
 @php
 use Carbon\Carbon;
-$m = $month->locale('fr')->monthName;
+$m = ucfirst($month->locale('fr')->monthName);
 $nb = $month->month;
 $annee = $month->year;
 
