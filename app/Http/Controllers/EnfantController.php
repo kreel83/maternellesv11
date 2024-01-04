@@ -67,10 +67,14 @@ class EnfantController extends Controller
         $ecole = $this->maclasseactuelle->ecole_identifiant_de_l_etablissement;
         $users = User::where('ecole_identifiant_de_l_etablissement', $ecole)->pluck('id');
 
-        $enfants = Enfant::whereNull('user_id')->whereIn('user_n1_id', $users)->get();
-        $profs = User::where('ecole_identifiant_de_l_etablissement', $ecole)->get();
+        $enfants = Enfant::whereNull('classe_id')->whereIn('classe_n1_id', $users)->get();
+        $classes = Classe::where('ecole_identifiant_de_l_etablissement', $ecole)->get();
+        $classes_array = Classe::where('ecole_identifiant_de_l_etablissement', $ecole)->pluck('id');
+        $enfants = Enfant::whereIn('classe_n1_id', $classes_array)->whereNull('classe_id')->get();
+       
+        
         return view('eleves.import')
-            ->with('profs', $profs)
+            ->with('classes', $classes)
             ->with('enfants', $enfants);
     }
 
@@ -134,7 +138,7 @@ class EnfantController extends Controller
             // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'));
             $enfants = Enfant::where('classe_id', session('classe_active')->id);
             
-            
+
             if (!$this->maclasseactuelle->groupes && $request->type == 'affectation_groupe') {
                 return view('enfants.no_groupes')->with('type', $request->type);
             }
@@ -283,8 +287,8 @@ class EnfantController extends Controller
 
     public function removeEleve(Request $request) {               
             $e = Enfant::find($request->eleve);
-            $prof = $e->user_n1_id;
-            if ($prof) {
+            $classe = $e->classe_n1_id;
+            if ($classe) {
                 $e->user_id = null;
                 $e->classe_id = null;
                 $e->psmsgs = $e->prevSection($e->psmsgs);
@@ -536,11 +540,11 @@ class EnfantController extends Controller
             'prenom' => $enfant->prenom,
             'ddn' => $enfant->ddn,
             'comment' => $enfant->comment,
-            'user_n1_id' => $enfant->user_n1_id,
             'mail1' => $enfant->mail1,
             'mail2' => $enfant->mail2,
             'mail3' => $enfant->mail3,
             'mail4' => $enfant->mail4,
+            'classe_n1_id' => $enfant->classe_n1_id
         );
         $resultats = Resultat::resultatsPourUnEleve($enfant_id);
         $sections = Section::all();
@@ -550,8 +554,6 @@ class EnfantController extends Controller
             ->with('periodes', $this->getPeriode($this->maclasseactuelle->periodes))        
             ->with('files', $liste)
             ->with('professeur', "null")
-            ->with('profs', $user->profs())
-            ->with('tous', $user->tous())
             ->with('role', Auth::user()->role)
             ->with('resultats', $resultats)
             ->with('sections', $sections)

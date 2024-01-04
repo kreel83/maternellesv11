@@ -164,13 +164,13 @@ class GroupeController extends Controller
     }
 
     public function supprimerUnGroupe($id, Request $request) {
-
+        
         $token = md5(Auth::id().$id.env('HASH_SECRET'));        
-
+        
         
         $groupes = Auth::user()->groupes();
-
-
+        
+        
         $groupes = json_decode($groupes, true); 
         
         unset($groupes[$id -1]);
@@ -178,9 +178,10 @@ class GroupeController extends Controller
         $nbGroupe = sizeof($groupes) ?? 0;
         // $classe = Classe::find(session()->get('id_de_la_classe'));   
         $classe = session('classe_active');
+        
+        $gr = array_values($groupes);
 
-
-        $classe->groupes = json_encode(array_values($groupes));        
+        $classe->groupes = empty($gr) ? null : json_encode($gr);        
         $classe->save();
 
         Enfant::where('user_id', Auth::id())->where('groupe', $id-1 )->update(

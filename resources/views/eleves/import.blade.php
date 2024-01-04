@@ -47,7 +47,7 @@
 
     <style>
 
-        .prof:hover, .prof.selected {
+        .classe:hover, .classe.selected {
             color: white;
             background-color: var(--main-color);
             cursor: pointer;
@@ -62,13 +62,14 @@
         <div class="col-md-6" style="color: var(--main-color); font-weight: bolder; width: 474px;padding: 16px;height: 617px; border: 1px solid var(--main-color); border-radius: 8px">
             <div class="my-2">Les instituteurs de mon école</div>
             <table class="table table-bordered">
-                <tr class="prof selected" data-prof="tous">
-                    <td>Tous les instituteurs</td>                    
+                <tr class="classe selected" data-classe="tous">
+                    <td>Toutes les classes</td>                    
                 </tr>
-                @foreach ($profs as $prof)
-                <tr class="prof" data-prof="{{$prof->id}}">
+                @foreach ($classes as $classe)
+                <tr class="classe" data-classe="{{$classe->id}}">
                     <td class="ps-5">    
-                        <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$prof->name}}</span> {{$prof->prenom}} 
+                        <span>{{$classe->description}}</span> 
+                        <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$classe->name}}</span> {{$classe->prenom}} 
                     </td>
                 </tr>
                 @endforeach
@@ -108,7 +109,7 @@
                         }
                     </style>
                     @foreach ($enfants as $enfant)
-                    <tr class="enfant" data-prof="{{$enfant->user_n1_id}}" data-texte="{{ $enfant->nom}} {{ $enfant->prenom}}">
+                    <tr class="enfant" data-classe="{{$enfant->classe_n1_id}}" data-texte="{{ $enfant->nom}} {{ $enfant->prenom}}">
                         <td>
                             <input type="checkbox" class="choix choix_liste" data-id="{{$enfant->id}}">
                         </td>

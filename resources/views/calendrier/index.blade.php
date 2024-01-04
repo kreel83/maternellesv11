@@ -39,7 +39,7 @@
         <li class="breadcrumb-item active" aria-current="page">Calendrier</li>
       </ol>
     <div class="d-none d-xl-block" data-bs-toggle="modal" data-bs-target="#EventModal">
-      <a href="#">Ajouter un évènement</a>
+      <a href="#" style="color: var(--main-color)"><i class="fa-light fa-calendar-plus me-2"></i>Ajouter un évènement</a>
       </div>  
   </div>
 
@@ -125,7 +125,7 @@
   <div class="modal-dialog" style="top: 120px">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Évènement</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color: var(--main-color)">Évènement</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="{{route('event')}}" method="POST" >
@@ -133,7 +133,7 @@
                 @csrf
                 <input type="hidden" name="user_id" value="{{Auth::id()}}" >
                 <input type="hidden" name="id" value="new" >
-                <div class="form-floating mt-3">
+                <div class="form-floating my-3">
                     <input type="date" class="form-control" name="date" id="date_event">
                     <label for="">Date de l'évènement</label>
                 </div>
@@ -150,8 +150,8 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="submit" class="btn btn-primary" id="saveEvent">Sauvegarder</button>
+                <button type="button" class="btnAction inverse" data-bs-dismiss="modal">Fermer</button>
+                <button type="submit" class="btnAction" id="saveEvent">Sauvegarder</button>
             </div>
         </form>
     </div>

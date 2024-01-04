@@ -30,29 +30,37 @@ border-bottom-right-radius: .3rem;
 
 {{-- <div id="_l_oginform"> --}}
 
-    <div class="card w-75 mx-auto p-5">
+    <div class="card w-50 mx-auto p-5" style="margin-top: 150px">
 
 
         <form action="{{ route('login.post') }}" method="post">
         @csrf
 
-        <div class="mb-3">
+        <div class="mb-3 text-center"  style="color: var(--main-color)">
             <h4>Connectez-vous à votre compte</h4>
         </div>
 
-        <div class="mb-3">
-            <p>Vous n'avez pas encore de compte {{ env('APP_NAME') }} ? <a href="{{ route('registration.start') }}">Créez un compte.</a></p>
+        <div class="mb-3 text-center">
+            <p>Vous n'avez pas encore de compte {{ env('APP_NAME') }} ? <br><a href="{{ route('registration.start') }}">Créez un compte.</a></p>
         </div>
 
         @include('include.display_msg_error')
 
-        <div class="form-outline mb-4">
+{{-- 
+        <div class="input-group mb-2">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
+          <input type="email" class="form-control form-control-sm" id="mail3_form" name="mail3" id="mail3" value="{{ old('mail3') ?? $eleve['mail3'] }}" placeholder="Mail supplementaire">
+      </div> --}}
+
+        <div class="input-group mb-4">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-user"></i></span>
             <input type="email" id="email" name="email" class="form-control"
             placeholder="Adresse e-mail" autofocus />
             <!--<label class="form-label" for="form2Example11">Username</label>-->
         </div>
 
-        <div class="form-outline mb-4">
+        <div class="input-group mb-4">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-key"></i></span>
             <input type="password" name="password" id="password" class="form-control" 
             placeholder="Mot de passe"/>
             <!--<label class="form-label" for="form2Example22">Password</label>-->
@@ -62,7 +70,7 @@ border-bottom-right-radius: .3rem;
             <button type="submit" class="btnAction" style="display: block; width: 100%">Se connecter</button>
         </div>
 
-        <div class="mb-3">
+        <div class="mt-5">
             <a href="{{ route('password.request') }}">Vous avez oublié votre mot de passe ?</a>
         </div>
 

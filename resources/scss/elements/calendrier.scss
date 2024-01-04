@@ -145,13 +145,14 @@
                     font-size: 16px;
                     color: #52a5ff;
                     font-weight: bolder;
-
+                    
                 }
                 &.ddj {
-
-                    background-color: var(--vert);
+                    
+                    color: green !important;
+                    font-size: 25px;
                     font-weight: bolder;
-                    border-radius: 50%;
+
 
                 }
                 &.start {
