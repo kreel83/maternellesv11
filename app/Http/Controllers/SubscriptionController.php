@@ -27,6 +27,7 @@ class SubscriptionController extends Controller
         $msgIfCanceled = "";
         switch($licenceType) {
             case 'admin':
+                $produit = null;
                 $licence = Licence::where([
                     ['user_id', Auth::user()->id],
                     ['actif', 1],
@@ -39,6 +40,7 @@ class SubscriptionController extends Controller
                 }
                 break;
             case 'self':
+                $produit = null;
                 $status = Auth::user()->subscribed('default') ? 'actif' : 'expiré';
                 $expirationDate = Auth::user()->subscription('default')->asStripeSubscription()->current_period_end;
                 $onGracePeriode = Auth::user()->subscription('default')->onGracePeriod();
@@ -49,12 +51,14 @@ class SubscriptionController extends Controller
                 }
                 break;
             default:
+                $produit = Produit::produitAbonnementUser();
                 $status = 'inactif';
                 $expirationDate = null;
                 $onGracePeriode = false;
                 $message = "Aucun abonnement en cours.";
         }
         return view("subscription.index")
+            ->with('produit', $produit)
             ->with('licenceType', $licenceType)
             ->with('invoices', $invoices)
             ->with('status', $status)
@@ -225,7 +229,13 @@ class SubscriptionController extends Controller
             $lignes = FactureLigne::where('facture_id', $invoice->id)
                 ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
                 ->get();
-            $pdf = PDF::loadView('pdf.facture', ['user' => Auth::user(), 'invoice' => $invoice, 'ecole' => $ecole, 'lignes' => $lignes]);
+            $pdf = PDF::loadView('pdf.facture', [
+                'user' => Auth::user(),
+                'invoice' => $invoice,
+                'ecole' => $ecole,
+                'lignes' => $lignes
+            ]);
+            $pdf->add_info('Title', 'Facture n° '.ucfirst($invoice->number));
             return $pdf->stream('Facture_'.$invoice->number.'.pdf');
         } else {
             return redirect()->route('subscribe.invoice')
