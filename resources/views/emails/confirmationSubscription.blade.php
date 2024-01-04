@@ -106,7 +106,7 @@
 
     <div id="body">
         <p>
-            Bonjour,
+            Bonjour {{ $prenom }},
             <br><br>
             Nous vous informons que votre abonnement au service {{env('APP_NAME')}} est maintenant actif.
             <br><br>

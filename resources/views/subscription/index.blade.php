@@ -35,7 +35,15 @@
             Vous n'avez pas d'abonnement en cours.
           </div>
           <div class="mb-3">
-            <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}">Je souhaite m'abonner au service <i>{{ env('APP_NAME') }}</i></a>
+            L'abonnement au service {{ env('APP_NAME') }} est au prix de {{ $produit->price }} € pour 1 an et sera prolongé automatiquement à la fin de la période.
+          </div>
+          <div class="mb-3">
+            Vous pourrez résilier votre abonnement à tout moment.
+          </div>
+          <div class="mb-3">
+            <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}">
+              Je souhaite m'abonner
+            </a>
           </div>
       @else
           <div class="mb-3">

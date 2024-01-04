@@ -59,7 +59,7 @@ class UserAuthenticated
             ]);
             */
             $enfant = Enfant::find($id_enfant);
-            if(!$enfant || $enfant->user_id != Auth::id()) {
+            if(!$enfant) {
                 return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
             }
         }

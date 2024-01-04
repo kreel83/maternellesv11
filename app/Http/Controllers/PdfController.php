@@ -56,7 +56,8 @@ class PdfController extends Controller
         }
         if($is_sent) {
             $reussite = Reussite::where([
-                ['user_id', Auth::id()],
+                //['user_id', Auth::id()],
+                ['user_id', session('classe_active')->user_id],
                 ['enfant_id', $enfant->id],
                 ['periode', $periode],
             ])->update(['send_at' => Carbon::now()]);
@@ -65,7 +66,8 @@ class PdfController extends Controller
                 // Si renvoi ou cahier existant pour une période supérieure, on n'incrémente pas la période de l'enfant
                 if($status == 'E') {
                     $checkReussite = Reussite::where([
-                        ['user_id', Auth::id()],
+                        //['user_id', Auth::id()],
+                        ['user_id', session('classe_active')->user_id],
                         ['enfant_id', $enfant->id],
                         ['periode', '>', $periode],
                     ]);
@@ -186,7 +188,8 @@ class PdfController extends Controller
         $ordre = $this->maclasseactuelle->ordre_pdf;
         // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy($ordre)->get();
         $enfants = Enfant::where('classe_id', session('classe_active')->id)->orderBy($ordre)->get();
-        $reussites = Reussite::where('user_id', Auth::id())->get();
+        //$reussites = Reussite::where('user_id', Auth::id())->get();
+        $reussites = Reussite::where('user_id', session('classe_active')->user_id)->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();
         $statutEmail = array();        
@@ -251,7 +254,8 @@ class PdfController extends Controller
         $error = array();
         //$periode = $request->btnSubmit;
         $periode = $request->periode;
-        $reussites = Reussite::where('user_id', Auth::id())
+        //$reussites = Reussite::where('user_id', Auth::id())
+        $reussites = Reussite::where('user_id', session('classe_active')->user_id)
             ->where('definitif', 1)
             ->where('send_at', null)
             ->where('periode', $periode)
