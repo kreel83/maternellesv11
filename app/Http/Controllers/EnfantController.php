@@ -588,10 +588,11 @@ class EnfantController extends Controller
 
     public function maclasse() {
         $listeDesEleves = Enfant::listeDesEleves();                
-
+        $is_creator = Auth::id() == $this->maclasseactuelle->user_id;
         $middle = (int) $listeDesEleves->count() / 2;
         return view('maclasse.index')
-                    ->with('middle', $middle)
-                    ->with('listeDesEleves', $listeDesEleves);
+            ->with('middle', $middle)
+            ->with('is_creator', $is_creator)
+            ->with('listeDesEleves', $listeDesEleves);
     }
 }

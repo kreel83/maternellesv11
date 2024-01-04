@@ -16,13 +16,12 @@ class Produit extends Model
     /**
      * Renvoi le produit en cours pour créer les licences par un administrateur
      *
-     * @return void
+     * @return Produit
      */
     public static function produitEnCoursLicenceAdmin()
     {
         $dateDuJour = Carbon::now();
-        $product = Produit::whereRaw('"'.$dateDuJour.'" between `available_from` and `available_to`')->first();
-        return $product;
+        return Produit::whereRaw('"'.$dateDuJour.'" between `available_from` and `available_to`')->first();
     }
 
     /**
@@ -32,7 +31,6 @@ class Produit extends Model
      */
     public static function produitAbonnementUser()
     {
-        $product = Produit::where('active_from', null)->first();
-        return $product;
+        return Produit::where('active_from', null)->first();
     }
 }

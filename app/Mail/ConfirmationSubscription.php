@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\utils\Utils;
+use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -14,7 +15,7 @@ class ConfirmationSubscription extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $logo;
+    public $logo, $prenom;
 
     /**
      * Create a new message instance.
@@ -22,6 +23,7 @@ class ConfirmationSubscription extends Mailable
     public function __construct()
     {
         $this->logo = Utils::getLogoForMail();
+        $this->prenom = Auth::user()->prenom;
     }
 
     /**
@@ -30,7 +32,7 @@ class ConfirmationSubscription extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Confirmation de votre abonnement',
+            subject: 'Confirmation de votre abonnement au service '.env('APP_NAME'),
         );
     }
 

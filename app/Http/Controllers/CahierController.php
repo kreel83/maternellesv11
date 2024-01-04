@@ -201,7 +201,8 @@ class CahierController extends Controller
         // si enfant_id contient l'ID de l'enfant alors token doit avoir la valeur 0 dans la route
 
         if(!is_null($enfant_id)) {
-            $enfant = Enfant::where('id', $enfant_id)->where('user_id', Auth::id())->first();
+            //$enfant = Enfant::where('id', $enfant_id)->where('user_id', Auth::id())->first();
+            $enfant = Enfant::where('id', $enfant_id)->where('user_id', session('classe_active')->user_id)->first();            
             if($enfant && filter_var($periode, FILTER_VALIDATE_INT) !== false) {
 				//$maxPeriode = Reussite::where('enfant_id', $enfant_id)->max('periode');
                 $id = $enfant->id;

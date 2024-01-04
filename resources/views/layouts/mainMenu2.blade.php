@@ -264,9 +264,9 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 profil</a>
     
                                 <a href="{{ route('subscribe.index') }}"
-                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ session('is_abonne') ? null : 'disabled'}}">Mon
+                                    {{-- class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ session('is_abonne') ? null : 'disabled'}}">Mon --}}
                                     {{-- class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ Auth::user() && Auth::user()->is_abonne() ? null : 'disabled'}}">Mon --}}
-                                    abonnement</a>
+                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon abonnement</a>
 
                                 <a href="{{ route('changerLeMotDePasse') }}"
                                     class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le

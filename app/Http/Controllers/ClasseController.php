@@ -36,10 +36,14 @@ class ClasseController extends Controller
 
     public function updateclasse() {
         // $classe = Classe::find(session('id_de_la_classe'));
-        $classe = session('classe_active');
+        //$classe = session('classe_active');
+        if(Auth::id() != session('classe_active')->user_id) {
+            return redirect()->route('error')->with('msg', 'Vous n\'avez pas les droits pour modifier cette classe.');
+        }
         return view('classes.createclasse')
             ->with('title', 'Modification de ma classe')            
-            ->with('classe', $classe);
+            ->with('classe', session('classe_active'));
+
     }
 
     public function confirmeClasse(Request $request) {
