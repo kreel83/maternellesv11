@@ -40,7 +40,7 @@
 
 @section('content')
 
-<div class="card mx-auto w-75">
+<div class="card mx-auto w-50" style="margin-top: 150px">
 
     <div class="card-body">
 
@@ -62,7 +62,7 @@
         </div>
         @endif
 
-        <h4 class="mb-3">Mot de passe oublié ?</h4>
+        <h4 class="mb-3 text-center" style="color: var(--main-color)">Mot de passe oublié ?</h4>
 
         <p>Indiquez ci-dessous votre adresse e-mail pour recevoir un lien de réinitialisation de votre mot de passe.</p>
 

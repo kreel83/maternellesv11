@@ -20,15 +20,15 @@ const importation = () => {
 
     
 
-    $(document).on('click','.prof', function() {
-        var prof = $(this).data('prof')
-        if (prof == "tous") {
+    $(document).on('click','.classe', function() {
+        var classe = $(this).data('classe')
+        if (classe == "tous") {
             $('.enfant').removeClass('d-none')
         } else {
             $('.enfant').addClass('d-none')
-            $('.enfant[data-prof="'+prof+'"]').removeClass('d-none')            
+            $('.enfant[data-classe="'+classe+'"]').removeClass('d-none')            
         }
-        $('.prof').removeClass('selected')
+        $('.classe').removeClass('selected')
         $(this).addClass('selected')
         $('.searchChoix').val('')
         $('.choix').prop('checked', false)

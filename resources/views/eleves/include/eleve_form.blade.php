@@ -148,16 +148,14 @@
         </div>
         <div class="d-flex justify-content-between">
             
-            <a href="" id="btnRetourFicheEnfant" type="button" class="btnAction inverse">Annuler</a>
+            {{-- <a href="" id="btnRetourFicheEnfant" type="button" class="btnAction inverse mt-1">Annuler</a> --}}
 
-                @if (isset($eleve['user_n1_id']) && $eleve['user_n1_id'] != null)
-                <button style="width: 300px !important; font-size: 14px; line-height: 20px" type="button" data-do_action="retirerEleve"  data-action="Retirer" data-title="Demande de confirmation" data-texte="Voulez-vous vraiment retirer cet élève de la classe ?" data-href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btnAction inverse btn-sm w-100 mt-2 confirmation" data-id="{{$eleve['id']}}" data-bs-toggle="modal" data-bs-target="#confirmationModal">Retirer l'élève de ma classe</button>
+                @if (isset($eleve['classe_n1_id']) && $eleve['classe_n1_id'] != null)
+                <button style="width: 300px !important; font-size: 14px;margin: 0 auto" type="button" data-do_action="retirerEleve"  data-action="Retirer" data-title="Demande de confirmation" data-texte="Voulez-vous vraiment retirer cet élève de la classe ?" data-href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btnAction inverse btn-sm mt-2 confirmation" data-id="{{$eleve['id']}}" data-bs-toggle="modal" data-bs-target="#confirmationModal">Retirer l'élève de ma classe</button>
                 @endif
 
-             
-
-                @if (!isset($eleve['user_n1_id']))
-                <button type="button" data-do_action="retirerEleve" data-action="Supprimer" data-title="Demande de confirmation" data-texte="Voulez-vous vraiment supprimer la fiche de cet élève ?" data-href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btnAction inverse btn-sm w-100 mt-2 confirmation" data-id="{{$eleve['id']}}" data-bs-toggle="modal" data-bs-target="#confirmationModal">Supprimer l'élève de ma classe</button>
+                @if (!isset($eleve['classe_n1_id']))
+                <button style="width: 300px !important; font-size: 14px;margin: 0 auto"  type="button" data-do_action="retirerEleve" data-action="Supprimer" data-title="Demande de confirmation" data-texte="Voulez-vous vraiment supprimer la fiche de cet élève ?" data-href="{{route('removeEleve',['eleve' => $eleve['id']])}}" class="btnAction inverse btn-sm w-100 mt-2 confirmation" data-id="{{$eleve['id']}}" data-bs-toggle="modal" data-bs-target="#confirmationModal">Supprimer l'élève de ma classe</button>
                 @endif
          
         </div>
