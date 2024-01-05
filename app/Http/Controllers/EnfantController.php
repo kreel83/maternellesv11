@@ -56,6 +56,13 @@ class EnfantController extends Controller
     }
 
 
+    public function removeGroupe($enfant_id) {
+        $enfant = Enfant::find($enfant_id);        
+        $enfant->groupe = null;
+        $enfant->save();
+        return 'ok';
+    }
+
     public function parent_mdp(Request $request) {
         $enfant = Enfant::where('mdp', $request->mdp)->first();
         if ($enfant) return view('parent.pdf');
