@@ -484,6 +484,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                         @else
                             <td style="font-weight: bolder; color: black">Le maître</td>
                         @endif
+
                         <td style='padding-left: 15px'>{{ucfirst(strtolower($user->prenom))}} {{strtoupper($user->name)}}</td>                
                     </tr>
                     @if ($classeUsers)

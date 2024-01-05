@@ -997,6 +997,7 @@ class CahierController extends Controller
     public function index($enfant_id) {
 
         $enfant = Enfant::find($enfant_id);
+        dd($enfant);
 
         $phrases = Phrase::where('enfant_id', $enfant_id)->get();
         $exclusion = $phrases->pluck('commentaire_id');
@@ -1125,7 +1126,7 @@ class CahierController extends Controller
 
     public function saveTexte($enfant_id, $section_id,  Request $request) {
         
-        if (!$request->texte) return 'ko';
+        // if (!$request->texte) return 'ko';
         $enfant = Enfant::find($enfant_id);
         $reussite = $enfant->hasReussite();
         if (!$reussite) {
@@ -1153,7 +1154,7 @@ class CahierController extends Controller
 
             $rel->description = $request->texte;
             $rel->updated_at = Carbon::now();
-            if (trim(strip_tags($request->texte)) == '') {
+            if (!$request->texte || trim(strip_tags($request->texte)) == '') {
                 $rel->delete();
                 $rel = ReussiteSection::where('reussite_id', $reussite->id)->where('section_id', $section_id)->first();
                 if (!$rel) {

@@ -380,6 +380,14 @@ const photo_eleve = () => {
 
     })
 
+    $(document).on('click','.deleteGroupeAffecte', function() {
+        var enfant_id = $(this).closest('.card-enfant').data('enfant')
+        var el = $(this).closest('.groupe-terme')
+        $.get('/app/enfants/'+enfant_id+'/removeGroupe', function(data) {
+            $(el).addClass('d-none')
+        })
+    })
+
     $(document).on('click','.confirmation', function() {
         var myModalEl = document.getElementById('confirmationModal')
         var modal = bootstrap.Modal.getInstance(myModalEl)
