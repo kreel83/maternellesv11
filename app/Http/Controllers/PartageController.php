@@ -16,14 +16,14 @@ class PartageController extends Controller
 {
     
     
-    public function index(Request $request) {
-        $partages = ClasseUser::select('classe_users.id', 'classe_users.code', 'users.name', 'users.prenom')        
+    public function index() {
+        $partages = ClasseUser::select('classe_users.id', 'classe_users.role', 'classe_users.code', 'users.name', 'users.prenom')        
             // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
             // ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
             ->where('classe_users.classe_id', session('classe_active')->id)
             ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
             ->get();
-        $pendings = ClasseUser::select('classe_users.id', 'classe_users.email', 'users.name', 'users.prenom')
+        $pendings = ClasseUser::select('classe_users.id', 'classe_users.email', 'classe_users.role', 'users.name', 'users.prenom')
             // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
             // ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
             ->where('classe_users.classe_id', session('classe_active')->id)
@@ -38,12 +38,14 @@ class PartageController extends Controller
     public function ajoutePartage(Request $request) {
         $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'notIn:'.Auth::user()->email],
+            'role' => ['required', 'string'],
             // 'code' => ['required', 'integer', 'digits:6'],
         ], [
-            'email.required' => 'Adresse mail obligatoire.',
+            'email.required' => 'Adresse e-mail obligatoire.',
             'email.max' => 'Adresse e-mail limitée à 255 caractères.',
             'email.email' => 'Adresse e-mail incorrecte.',
             'email.not_in' => 'Adresse e-mail incorrecte. Vous ne pouvez pas partager une classe avec vous-même.',
+            'role.required' => 'Veuillez choisir un rôle pour la personnes qui aura accès à votre classe.',
             // 'code.required' => 'Code de sécurité obligatoire.',
             // 'code.integer' => 'Le code de sécurité doit être composé de 6 chiffres.',
             // 'code.digits' => 'Le code de sécurité doit être composé de 6 chiffres.',
@@ -65,6 +67,7 @@ class PartageController extends Controller
         $valueForSubmitBtn = ($newUser) ? 'exist' : 'new';
         return view('partage.confirmAjout')
             ->with('email', $request->email)
+            ->with('role', $request->role)
             // ->with('code', $request->code)
             ->with('valueForSubmitBtn', $valueForSubmitBtn)
             ->with('newUser', $newUser);
@@ -81,6 +84,7 @@ class PartageController extends Controller
         $partage->classe_id = Auth::user()->classe_id;
         $partage->token = $token;
         $partage->email = $request->email;
+        $partage->role = $request->role;
         // $partage->code = $request->code;
         $partage->save();
         // Envoi d'un email au user
