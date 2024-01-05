@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    $roles = array('co' => 'cotitulaire', 'su' => 'suppléant');
+@endphp
+
 <div class="container my-5 page" id="">
 
     <nav class="pb-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -21,8 +25,17 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="email">Indiquez ici l'adresse de courrier électronique de la personne qui pourra accéder à votre classe pour collaborer</label>
+                    <label for="email">Indiquez ici l'adresse de courrier électronique de la personne qui pourra accéder à votre classe pour collaborer :</label>
                     <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" placeholder="Adresse e-mail">
+                </div>
+
+                <div class="mb-3">
+                    <label for="role">La personne qui aura accès à votre classe sera considérée comme :</label>
+                    <select class="form-select" id="role" name="role">
+                        <option value="" selected>Choisissez un rôle...</option>
+                        <option value="co" {{ old('role') == "co" ? "selected" : "" }}>Cotitulaire</option>
+                        <option value="su" {{ old('role') == "su" ? "selected" : "" }}>Suppléant</option>
+                    </select>
                 </div>
 
                 {{-- <div class="mb-3">
@@ -31,7 +44,7 @@
 					<div id="codeHelp" class="form-text">Ce code devra être communiqué à la personne qui partagera votre classe par le moyen de votre choix.</div>
                 </div> --}}
 
-                <button class="btn btn-primary" role="submit">Ajouter</button>
+                <button class="btnAction" role="submit">Ajouter</button>
 
             </form>
         </div>
@@ -58,7 +71,7 @@
                                 @endphp
                             @endif
                             {{-- <span class="me-2">{{ isnul($pending->prenom) && isnull($pending->name) ? $pending->email : $pending->prenom.' '.$pending->name }}</span> --}}
-                            <span class="me-2">{{ $nomComplet }}</span>
+                            <span class="me-2">{{ $nomComplet }} ({{ $roles[$pending->role] }})</span>
                             <a class="me-2" href="{{ route('supprimePartage', ['classeuser_id' => $pending->id, 'token' => $token]) }}" title="Supprimer le partage">
                                 Supprimer le partage
                             </a>
@@ -81,7 +94,7 @@
                             $token = md5($partage->id.env('HASH_SECRET'));
                         @endphp
                         <li>
-							<span class="me-2">{{ $partage->prenom.' '.$partage->name }}</span> 
+							<span class="me-2">{{ $partage->prenom.' '.$partage->name }} ({{ $roles[strval($partage->role)] }})</span> 
                             <a class="me-2" href="{{ route('supprimePartage', ['classeuser_id' => $partage->id, 'token' => $token]) }}" title="Supprimer le partage">
                                 {{--<i class="fa-solid fa-trash fa-sm"></i>--}}Supprimer le partage
                             </a>

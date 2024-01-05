@@ -14,6 +14,7 @@ use App\Models\Myperiode;
 use App\Models\Phrase;
 use App\Models\Resultat;
 use App\Models\Classe;
+use App\Models\ClasseUser;
 use App\Models\Reussite;
 use App\Models\Section;
 use App\Models\User;
@@ -252,8 +253,15 @@ class CahierController extends Controller
         //dd($resultats);
 
         // PDF pour Parent pas de Auth::
-        $user = User::find($enfant->user_id);
+        //$user = User::find($enfant->user_id);
+        $user = User::find(session('classe_active')->user_id);
 
+        // cotitulaires / suppléant
+        $classeUsers = ClasseUser::select('civilite', 'name', 'prenom', 'classe_users.role')
+            ->where('classe_users.classe_id', session('classe_active')->id)
+            ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
+            ->get();
+        //dd($classeUsers);
         $reussite = Reussite::select('id', 'commentaire_general')
             ->where('enfant_id', $id)
             ->where('periode', $periode)
@@ -361,6 +369,7 @@ class CahierController extends Controller
                 'enfant' => $enfant,
                 'equipes' => $equipes,
                 'user' => $user,
+                'classeUsers' => $classeUsers,
                 'periode' => $periode
             ]);
             //$pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);

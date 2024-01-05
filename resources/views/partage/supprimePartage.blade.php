@@ -28,8 +28,8 @@
                 <p>Vous êtes sur le point de supprimer le partage de votre classe avec : <strong>{{ $nomDemandeur }}</strong></p>
 
                 <div class="d-flex">
-                    <a href="{{ route('partager') }}" class="btn btn-outline-secondary me-3">Annuler</a>
-                    <button class="btn btn-primary" role="submit">Supprimer le partage</button>
+                    <a href="{{ route('partager') }}" class="btnAction inverse me-3">Annuler</a>
+                    <button class="btnAction" role="submit">Supprimer le partage</button>
                 </div>
 
             </form>

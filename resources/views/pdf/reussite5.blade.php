@@ -479,42 +479,59 @@ $degrades = App\Models\Enfant::DEGRADE;
 
                 <table align="center" class="e_quipe_array" style="font-size: 12px;position: absolute; top: 670px; left: 130px; transform: rotate(3deg)">
                     <tr>
-                        {{-- @if ($user->civilite == 'Mme')
+                        @if ($user->civilite == 'Mme')
                             <td style="font-weight: bolder; color: black">La maitresse</td>
                         @else
                             <td style="font-weight: bolder; color: black">Le maître</td>
-                        @endif --}}
-                            <td style="font-weight: bolder; color: black">L'enseignant(e)</td>
+                        @endif
 
-                        
                         <td style='padding-left: 15px'>{{ucfirst(strtolower($user->prenom))}} {{strtoupper($user->name)}}</td>                
                     </tr>
-                    @if ($equipes)
-                    @foreach ($equipes as $equipe)
-                    <tr>
-                    @if ($equipe[2] == 'aesh' )
-                        @if ($enfant->sh == 1) 
-
-                            <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
-                            <td style='padding-left: 15px'>{{$equipe[0]}}</td>
-                    
-                        @endif
-                    @else
-                
-                            <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
-                            <td style='padding-left: 15px'>{{$equipe[0]}}</td>
-
-                
+                    @if ($classeUsers)
+                        @foreach ($classeUsers as $classeUser)
+                            <tr>
+                            @if ($classeUser->civilite == 'Mme')
+                                <td style="font-weight: bolder; color: black">
+                                    La maitresse<br>
+                                    @if ($classeUser->role == 'co')
+                                        cotitulaire
+                                    @else
+                                        suppléante
+                                    @endif
+                                </td>
+                            @else
+                                <td style="font-weight: bolder; color: black">
+                                    Le maître<br>
+                                    @if ($classeUser->role == 'co')
+                                        cotitulaire
+                                    @else
+                                        suppléant
+                                    @endif
+                                </td>
+                            @endif
+                            <td style='padding-left: 15px'>{{ucfirst(strtolower($classeUser->prenom))}} {{strtoupper($classeUser->name)}}</td>
+                            </tr>
+                        @endforeach
                     @endif
-                        
-                        
-                    </tr>
-                    @endforeach
+                    @if ($equipes)
+                        @foreach ($equipes as $equipe)
+                            <tr>
+                            @if ($equipe[2] == 'aesh' )
+                                @if ($enfant->sh == 1) 
+                                    <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
+                                    <td style='padding-left: 15px'>{{$equipe[0]}}</td>
+                                @endif
+                            @else
+                                <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
+                                <td style='padding-left: 15px'>{{$equipe[0]}}</td>
+                            @endif
+                            </tr>
+                        @endforeach
                     @endif
 
                     @if ($enfant->directeur())
                     <tr>
-                        <td style="font-weight: bolder; color: black">{{$enfant->directeur()[0] == 'mr' ? 'Le directeur' : 'La directrice'}}</td>
+                        <td style="font-weight: bolder; color: black">{{$enfant->directeur()[0] == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
                         <td style='padding-left: 15px'>{{$enfant->directeur()[1]}}</td>
                     </tr>
                     @endif
@@ -542,6 +559,7 @@ $degrades = App\Models\Enfant::DEGRADE;
     //dd($resultats);
 @endphp
 @foreach($resultats as $k => $section)
+@break
 
     {{-- <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header> --}}
 
