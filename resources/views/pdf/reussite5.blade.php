@@ -479,11 +479,12 @@ $degrades = App\Models\Enfant::DEGRADE;
 
                 <table align="center" class="e_quipe_array" style="font-size: 12px;position: absolute; top: 670px; left: 130px; transform: rotate(3deg)">
                     <tr>
-                        @if ($user->civilite == 'Mme')
+                        {{-- @if ($user->civilite == 'Mme')
                             <td style="font-weight: bolder; color: black">La maitresse</td>
                         @else
                             <td style="font-weight: bolder; color: black">Le maître</td>
-                        @endif
+                        @endif --}}
+                            <td style="font-weight: bolder; color: black">L'enseignant(e)</td>
 
                         
                         <td style='padding-left: 15px'>{{ucfirst(strtolower($user->prenom))}} {{strtoupper($user->name)}}</td>                

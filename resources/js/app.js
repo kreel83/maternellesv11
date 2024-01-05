@@ -120,8 +120,9 @@ if ($('.alerteMessage').length) {
 if ($('.editorApercu').length) {
     $($('.editorApercu').get().reverse()).each((index, el) => {
         
-
+        
         var section = $(el).data('section')
+        console.log('section : '+section)
         var ColorClass = Quill.import('attributors/class/color');
         var SizeStyle = Quill.import('attributors/style/size');
         Quill.register(ColorClass, true);

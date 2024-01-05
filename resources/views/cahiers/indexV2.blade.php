@@ -123,7 +123,7 @@
                     <label class="form-check-label" for="seePdf1">Prét à l'envoi</label>
                 </div> 
                 <div style="font-size: 25px; color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
-                    <a href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
+                    <a target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
                 </div>  
             </div>
             @foreach ($sections as $sec)
@@ -177,7 +177,7 @@
                         <label class="form-check-label" for="seePdf2">Prét à l'envoi</label>
                     </div> 
                     <div style="font-size: 25px; color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
-                        <a href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
+                        <a taget="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
                     </div>  
                 </div>
         </div>

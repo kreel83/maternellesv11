@@ -296,12 +296,15 @@ const saveCommentaireGeneral = (quill) => {
 const clickOnDefinif = (quill, section) => {
 
     var debounce = null
-    
 
-
-        
-        quill.on('text-change', function() {
+    quill.on('text-change', function() {
+            console.log(origine[section])
+            if (origine[section]) {
+                origine[section] = false;
+                return false;
+            }
             if (!origine[section]) {
+                console.log('coucou', section)
                 $('.saisie[data-section="'+section+'"]').removeClass('d-none')
                 clearTimeout(debounce);
                             debounce = setTimeout(function(){
@@ -339,6 +342,7 @@ const clickOnDefinif = (quill, section) => {
                             }, 2000);                
             }    else {
                 origine[section] = false;
+                return false;
             }
 
            
