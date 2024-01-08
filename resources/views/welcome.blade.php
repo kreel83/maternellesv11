@@ -87,7 +87,7 @@ $is_dashboard = true;
                                     <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{ ($enfant->background) ? $degrades[$enfant->background] : null }}; width: 27px; height: 27px">
                                         <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
                                     </div>
-                                    <div class="name text-start">{{ $enfant->prenom}} <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$enfant->nom}}</span></div>
+                                    <div class="name text-start">{{ $enfant->prenom}} <span class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$enfant->nom}}</span></div>
                                 </div>
                                 <div class="ddn">{{Carbon\Carbon::parse($enfant->ddn)->format('d')}}</div>
                             </li>
@@ -146,7 +146,7 @@ $is_dashboard = true;
                                 <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{ ($enfant->background) ? $degrades[$enfant->background] : null }}; width: 27px; height: 27px">
                                     <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
                                 </div>
-                                <div class="name text-start">{{ $enfant->prenom}} <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$enfant->nom}}</span></div>
+                                <div class="name text-start">{{ $enfant->prenom}} <span class="{{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$enfant->nom}}</span></div>
 
                             </div>
                                 <div>{{$enfant->total}} activité{{$enfant->total > 1 ? 's' : null}}</div>
@@ -173,7 +173,7 @@ $is_dashboard = true;
                                 <div class="m-2 degrade_card_enfant animaux"  style="background-image: {{ ($enfant->background) ? $degrades[$enfant->background] : null }}; width: 27px; height: 27px">
                                     <img src="{{asset('/img/animaux/'.$enfant->photo)}}" alt="" width="30">    
                                 </div>
-                                <div class="name text-start">{{ $enfant->prenom}} <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{$enfant->nom}}</span></div>
+                                <div class="name text-start">{{ $enfant->prenom}} <span class="{{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$enfant->nom}}</span></div>
  
                             </div>
                              <div>{{$enfant->total}} activité{{$enfant->total > 1 ? 's' : null}}</div>
