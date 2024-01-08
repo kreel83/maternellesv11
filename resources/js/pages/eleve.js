@@ -170,7 +170,7 @@ const preview_photo = (event) => {
         $(card).find('.groupe-terme').css('background-color', $(this).data('color'))
         $(card).find('.groupe-terme').css('color', $(this).data('textcolor'))
         $(card).find('.groupe-terme').css('border-color', $(this).data('textcolor'))
-        $(card).find('.groupe-terme').text($(this).text())
+        $(card).find('.groupe-terme span').text($(this).text())
         $(card).find('.groupe-terme').removeClass('d-none')
 
 
@@ -380,9 +380,9 @@ const photo_eleve = () => {
 
     })
 
-    $(document).on('click','.deleteGroupeAffecte', function() {
+    $(document).on('click','.groupe-terme', function() {
         var enfant_id = $(this).closest('.card-enfant').data('enfant')
-        var el = $(this).closest('.groupe-terme')
+        var el = $(this)
         $.get('/app/enfants/'+enfant_id+'/removeGroupe', function(data) {
             $(el).addClass('d-none')
         })

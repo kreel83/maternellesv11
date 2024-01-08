@@ -58,7 +58,7 @@
                         </div>                   
                     @endif
                     <div class="ms-1 ms-2 pt-2" style="font-size: 14px">
-                        <div  style="font-size: 24px;font-weight: bolder; color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">{{ $enfant->prenom }} <span class="{{ env('App_DEMO') ? 'blur' : null}}">{{ $enfant->nom }}</span></div>
+                        <div  style="font-size: 24px;font-weight: bolder; color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">{{ $enfant->prenom }} <span class="{{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{ $enfant->nom }}</span></div>
                         <div>Cahier de réussite | {{ $title }}</div>                                                                  
                     </div>
                     
@@ -129,7 +129,7 @@
             @foreach ($sections as $sec)
                 @if ($sec->id == 9 && session('classe_active')->desactive_devenir_eleve == 1)
                 @else
-                <div class="position-relative my-5 mx-auto">
+                <div class="position-relative my-2 mx-auto bloc_editon">
                     
                     <div class="d-flex align-items-center mb-3">
                         <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
@@ -158,16 +158,18 @@
                                 @endif
                             </div>
                         </div>
+                    
                     </div class="position-relative">
-                    <div class="position-absolute d-none sauvegarde" data-section="{{$sec->id}}" style="right: 20px; top: 85px">
+                    <div class="position-absolute d-none sauvegarde" data-section="{{$sec->id}}" style="right: 20px; top: 97px">
                         <div style="font-size: 12px; color: green">Sauvegardé </div>
                     </div>
-                    <div class="position-absolute d-none saisie" data-section="{{$sec->id}}" style="right: 20px; top: 85px">
+                    <div class="position-absolute d-none saisie" data-section="{{$sec->id}}" style="right: 20px; top: 97px">
                         <div style="font-size: 12px; color: red">Saisie en cours</div>
                     </div>
                     
-                    <div id="editorApercu{{$sec->id}}"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$sec->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-width: 820px" class="ql-container ql-snow editorApercu position-relative">
-
+                    <div id="editorApercu{{$sec->id}}" data-origine="true"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$sec->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-width: 820px" class="ql-container ql-snow editorApercu position-relative">
+                        {!! $resultats[$sec->id] ?? null!!}
+                    </div>
                     </div>
                     @endif
                 @endforeach

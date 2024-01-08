@@ -59,7 +59,7 @@ if (!is_null($enfant->groupe) && $lesgroupes){
         <div class="name d-flex flex-column justify-content-center align-items-center" style="color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
           <div style="line-height: 15px; margin-top: 10px">{{$enfant->prenom}}</div>
 
-          <div style="font-size: 0.9rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 {{ env('App_DEMO') ? 'blur' : null}}">{{$enfant->nom}}</div>
+          <div style="font-size: 0.9rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 {{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$enfant->nom}}</div>
           </div>
         <div class="title" style="font-size: 0.8rem; font-weight: bold;border-color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
 
@@ -68,9 +68,12 @@ if (!is_null($enfant->groupe) && $lesgroupes){
         </div>
   </div>
 
-    <div class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">
-      {{$groupe["name"] ?? ''}}
-      <i class="fa-solid fa-times ms-3 deleteGroupeAffecte" style="cursor: pointer; color: red;"></i>
+    <div title="cliquer pour retirer l'élève du groupe" class="groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}}; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">
+      <span>{{$groupe["name"] ?? ''}}</span>
+      {{-- <div class="ms-2" style="position: relative; top: 1px; right:-44px;width: 12px; height: 12px; border-radius: 50%; display: flex; justify-content: center; align-items: center;border: 1px solid black; color: black">
+
+        <i class="fa-solid fa-times deleteGroupeAffecte" style="cursor: pointer"></i>
+      </div> --}}
     </div>
 
 

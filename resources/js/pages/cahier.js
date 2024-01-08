@@ -298,12 +298,7 @@ const clickOnDefinif = (quill, section) => {
     var debounce = null
 
     quill.on('text-change', function() {
-            console.log(origine[section])
-            if (origine[section]) {
-                origine[section] = false;
-                return false;
-            }
-            if (!origine[section]) {
+
                 console.log('coucou', section)
                 $('.saisie[data-section="'+section+'"]').removeClass('d-none')
                 clearTimeout(debounce);
@@ -340,10 +335,7 @@ const clickOnDefinif = (quill, section) => {
                                
 
                             }, 2000);                
-            }    else {
-                origine[section] = false;
-                return false;
-            }
+        
 
            
         });
@@ -374,16 +366,17 @@ const clickOnDefinif = (quill, section) => {
 
 const apercu = (quill, section) => {
 
-    if ($('.editorApercu').length) {
-        var t = $('.editorApercu[data-section="'+section+'"]').data('texte')
-        if (t) {
-            quill.setText(t);
-            var data = t;
-            quill.clipboard.dangerouslyPasteHTML(data)            
-        }
+    // if ($('.editorApercu').length) {
+    //     var t = $('.editorApercu[data-section="'+section+'"]').data('texte')
+    //     if (t) {
+    //         quill.setText(t);
+    //         var data = t;
+    //         origine[section] = t;
+    //         quill.clipboard.dangerouslyPasteHTML(data)            
+    //     }
 
 
-    }
+    // }
     
     $(document).on('change', '.selectionCommentaire', function() {
         var sec = $(this).data('section')

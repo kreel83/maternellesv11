@@ -338,7 +338,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
 //middleware['auth','abo']  pour le reste
 // dans abon  mettre fonction qui verifie la licence et redirige sur une vue pour dire non abonné
 
-route::get('/resultat/setNote',  [\App\Http\Controllers\ResultatController::class, 'setNote']);
+// route::get('/resultat/setNote',  [\App\Http\Controllers\ResultatController::class, 'setNote']);
 
 Route::get('/newaccount', [NewaccountController::class, 'index'])->name('index');
 //Route::get('/newaccount', 'RegistrationController@create');
