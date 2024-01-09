@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Ecole;
 use App\utils\Utils;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,8 +33,11 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
      */
     public function envelope(): Envelope
     {
+        $ecole = Ecole::where('identifiant_de_l_etablissement', session('classe_active')->ecole_identifiant_de_l_etablissement)
+            ->first();
         return new Envelope(
-            from: new Address(Auth::user()->email, Auth::user()->prenom.' '.Auth::user()->name),
+            // from: new Address(Auth::user()->email, Auth::user()->prenom.' '.Auth::user()->name),
+            from: new Address(Auth::user()->email, $ecole->nom_etablissement),
             subject: 'Téléchargement du cahier de réussites de votre enfant',
         );
     }

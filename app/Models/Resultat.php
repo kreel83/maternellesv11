@@ -36,8 +36,8 @@ class Resultat extends Model
         'notation',
         'section_id',
         'user_id',
-        'groupe',
         'autonome',
+        'periode',
     ];
 
 

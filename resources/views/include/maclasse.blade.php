@@ -24,11 +24,13 @@
                 <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
                 <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
             </div>
-            @if($is_creator)
-                <div>
-                    <a class="btnAction" href="{{ route('updateClasse') }}">Modifier la classe</a>
-                </div>
-            @endif
+            @isset($is_creator)
+                @if($is_creator)
+                    <div>
+                        <a class="btnAction" href="{{ route('updateClasse') }}">Modifier la classe</a>
+                    </div>
+                @endif
+            @endisset
         </div>        
 
     @endif

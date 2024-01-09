@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Classe;
+use App\Models\ClasseUser;
 use App\Models\Enfant;
 use App\Models\Item;
 use App\Models\Resultat;
@@ -20,7 +21,13 @@ class DataController extends Controller
     public function chargerLaClasse() {
         try {
             $user = auth('sanctum')->user();
-            $classes = Classe::where('user_id', $user->id)->get();
+
+            $i = Classe::where('user_id', $user->id)->pluck('id');
+            $t = ClasseUser::where('user_id', $user->id)->pluck('classe_id');
+            $merged = $i->merge($t);
+            $classes = Classe::whereIn('id', $merged)->get();
+            //$classes = Classe::where('user_id', $user->id)->get();
+
             $groupes = array();
             foreach ($classes as $classe) {
                 if($classe->id == $user->classe_id) {
@@ -40,13 +47,13 @@ class DataController extends Controller
                 }
             }
 
-	        $user->setVisible(['id','classe_id','name','prenom']);
-            $classes->setVisible(['id','description']);
+	        $user->setVisible(['id', 'classe_id', 'name', 'prenom']);
+            $classes->setVisible(['id', 'description']);
             
             $dispatcher = Enfant::getEventDispatcher();
             Enfant::unsetEventDispatcher();
             //$enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('user_id', $user->id)->get();
-            $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('classe_id', $user->classe_id)->get();
+            $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe','periode')->where('classe_id', $user->classe_id)->get();
             Enfant::setEventDispatcher($dispatcher);
 
             $sections = Section::select('id','court')->get();
@@ -72,7 +79,6 @@ class DataController extends Controller
             ], 200);
 
         } catch (\Throwable $th) {
-            dd($th);
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage()
@@ -99,20 +105,17 @@ class DataController extends Controller
 
     public function ajouterUnResultat(Request $request) {
         try {
-            //Log::info($request);
+            Log::info($request);
             $user = auth('sanctum')->user();
-            $enfant = Enfant::find($request->enfant_id);
-            $resultat = Resultat::create([
-                'item_id' => $request->item_id,
-                'enfant_id' => $request->enfant_id,
-                'notation' => $request->notation,
-                'section_id' => $request->section_id,
-                'user_id' => $user->id,
-                'groupe' => $request->groupe,
-                'autonome' => $request->autonome,
-                'periode' => $enfant->periode,
-                //'periode' => $user->configuration->periode,
-            ]);
+            $resultat = new Resultat();
+            $resultat->item_id = $request->item_id;
+            $resultat->enfant_id = $request->enfant_id;
+            $resultat->notation = $request->notation;
+            $resultat->section_id = $request->section_id;
+            $resultat->user_id = $user->id;
+            $resultat->autonome = $request->autonome;
+            $resultat->periode = $request->periode;
+            $resultat->save();
 
             return response()->json([
                 'success' => true,
@@ -122,15 +125,16 @@ class DataController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th->getMessage()
+                'message' => 'ajouteresultat'.$th->getMessage()
             ], 500);
         }
     }
 
     public function modifierUnResultat(Request $request) {
         try {
-            //Log::info($request);
+            Log::info($request);
             $resultat = Resultat::find($request->id);
+             if($resultat) {
             $resultat->notation = $request->notation;
             $resultat->autonome = $request->autonome;
             $resultat->save();
@@ -138,6 +142,12 @@ class DataController extends Controller
             return response()->json([
                 'success' => true,
             ], 200);
+	} else {
+	return response()->json([
+                'success' => false,
+                'message' => 'Erreur : impossible de changer le résultat de l\'activité'
+            ], 500);
+	}
 
         } catch (\Throwable $th) {
             return response()->json([
