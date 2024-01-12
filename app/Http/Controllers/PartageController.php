@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AjoutePartageRequest;
 use App\Mail\DemandePartageClasseUserExistant;
 use App\Mail\DemandePartageClasseUserInconnu;
 use App\Mail\EnvoiCodeSecuritePartage;
@@ -18,14 +19,10 @@ class PartageController extends Controller
     
     public function index() {
         $partages = ClasseUser::select('classe_users.id', 'classe_users.role', 'classe_users.code', 'users.name', 'users.prenom')        
-            // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
-            // ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
             ->where('classe_users.classe_id', session('classe_active')->id)
             ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
             ->get();
         $pendings = ClasseUser::select('classe_users.id', 'classe_users.email', 'classe_users.role', 'users.name', 'users.prenom')
-            // ->where('classe_users.classe_id', $request->user()->maClasse()->id)
-            // ->where('classe_users.classe_id', session()->get('id_de_la_classe'))
             ->where('classe_users.classe_id', session('classe_active')->id)
             ->where('classe_users.user_id', null)
             ->leftJoin('users', 'users.email', '=', 'classe_users.email')
@@ -35,25 +32,8 @@ class PartageController extends Controller
             ->with('partages', $partages);
     }
 
-    public function ajoutePartage(Request $request) {
-        $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255', 'notIn:'.Auth::user()->email],
-            'role' => ['required', 'string'],
-            // 'code' => ['required', 'integer', 'digits:6'],
-        ], [
-            'email.required' => 'Adresse e-mail obligatoire.',
-            'email.max' => 'Adresse e-mail limitée à 255 caractères.',
-            'email.email' => 'Adresse e-mail incorrecte.',
-            'email.not_in' => 'Adresse e-mail incorrecte. Vous ne pouvez pas partager une classe avec vous-même.',
-            'role.required' => 'Veuillez choisir un rôle pour la personnes qui aura accès à votre classe.',
-            // 'code.required' => 'Code de sécurité obligatoire.',
-            // 'code.integer' => 'Le code de sécurité doit être composé de 6 chiffres.',
-            // 'code.digits' => 'Le code de sécurité doit être composé de 6 chiffres.',
-        ]);
-
+    public function ajoutePartage(AjoutePartageRequest $request) {
         // test pour savoir si la classe est déjà partagée avec cet utilisateur
-        // $partage = ClasseUser::where('classe_id', $request->user()->maClasse()->id)
-        // $partage = ClasseUser::where('classe_id', session()->get('id_de_la_classe'))
         $partage = ClasseUser::where('classe_id', session('classe_active')->id)
             ->where('email', $request->email)
             ->first();
@@ -80,7 +60,7 @@ class PartageController extends Controller
         $prenom = $request->prenom;
         //$user = User::where('email', $request->email)->first();
         // enregistrement du partage sans user_id qui sera complété à l'acceptation par le user
-        $partage = new ClasseUser;
+        $partage = new ClasseUser();
         $partage->classe_id = Auth::user()->classe_id;
         $partage->token = $token;
         $partage->email = $request->email;

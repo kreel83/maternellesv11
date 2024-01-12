@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConfirmeClasseRequest;
 use Illuminate\Http\Request;
 use App\Models\Classe;
 use App\Models\ClasseUser;
@@ -46,18 +47,7 @@ class ClasseController extends Controller
 
     }
 
-    public function confirmeClasse(Request $request) {
-        $request->validate([
-            'ecole_id' => ['required', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
-            'description' => ['required', 'string'],
-        ], [
-            'ecole_id.required' => 'Veuillez indiquer l\'identifiant de votre établissement.',
-            'ecole_id.min' => 'L\'identifiant de l\'établissement doit avoir 8 caractères minimum.',
-            'ecole_id.max' => 'L\'identifiant de l\'établissement doit avoir 8 caractères maximum.',
-            'ecole_id.exists' => 'L\'identifiant de votre établissement est introuvable. Vérifiez votre saisie.',
-            'description.required' => 'Veuillez donner un nom à votre classe.',
-        ]);
-
+    public function confirmeClasse(ConfirmeClasseRequest $request) {
         $ecole = Ecole::where('identifiant_de_l_etablissement', $request->ecole_id)->first();
         if(isset($request->section)) {
             $sections = array('ps' => 'Petite section', 'ms' => 'Moyenne section', 'gs' => 'Grande section');

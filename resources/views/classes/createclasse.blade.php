@@ -18,7 +18,7 @@
     <div class="card mx-auto w-75" style="border: none; border-radius: 40px; margin-top: 100px">
         <div class="ms-3" style="border: none; border-radius: 40px">
             <div class="d-flex justify-content-between pt-2">
-                <h5>{{ $title }} -  1/2</h5>
+                <h5>{{ $title }} - Etape 1/2</h5>
             </div>
         </div>
         <div class="card-body">
@@ -45,13 +45,13 @@
                     <label for="register_search" class="form-label">Recherche d'établissement par code postal :</label>
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <input type="text" class="form-control me-2" id="register_search" name="register_search" value="{{ old('register_search') }}">
+                        <input type="text" class="form-control me-2" id="register_search" name="register_search">
                     </div>
                     <a class="btnAction boutonRechercheEtablissementParCP">Rechercher</a>
                 </div>
             </div>
 
-            <div id="register_afficheLaListeDesEtablissements" class="mb-3" style="display:none">
+            <div id="register_afficheLaListeDesEtablissements" class="mt-3 mb-3" style="display:none">
                 <div class="p-4" style="background:var(--second-color); border-radius: 8px">
                 <select class="form-select" id="register_listeDesEcoles"></select>
                 </div>
