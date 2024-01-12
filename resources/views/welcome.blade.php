@@ -27,18 +27,18 @@ $is_dashboard = true;
     <div class="parent">
         <div class="info1 cadre_info d-flex justify-content flex-column align-items-center">
             <div style="font-size: 40px; font-weight: bold">{{ $info[1]}}</div>
-            <div>élèves</div>
+            <div>élève{{ $info[1] > 1 ? 's' : null}}</div>
         </div>
         <div class="info2 cadre_info d-flex justify-content flex-column align-items-center">
             <div  style="font-size: 40px; font-weight: bold">{{ $info[2]}}</div>
-            <div>activités acquises</div>
+            <div>activité{{ $info[2] > 1 ? 's' : null}} acquise{{ $info[2] > 1 ? 's' : null}}</div>
             @if ($info[22] > 0)
             <small style="font-weight:bold; font-size: 12px; color: var(--main-color)">dont {{$info[22]}} avec aide</small>
             @endif
         </div>
         <div class="info3 cadre_info d-flex justify-content flex-column align-items-center">
             <div style="font-size: 40px; font-weight: bold">{{ $info[3]}}</div>
-            <div>fiches sélectionnées</div>
+            <div>fiche{{ $info[3] > 1 ? 's' : null}}  sélectionnée{{ $info[3] > 1 ? 's' : null}}</div>
         </div>
         <div class="info4 cadre_info">
             @foreach ($sections as $section)
