@@ -276,6 +276,7 @@ class ficheController extends Controller
                     $fiche->perso = 1;
                     $fiche->parent_type = 'items';
                     $fiche->section_id = $section_id;
+                    $fiche->classe_id = session('classe_active')->id;
                     $fiche->save();
                     $order++;            
                 }
@@ -588,6 +589,7 @@ class ficheController extends Controller
                 $fiche->perso = 1;
                 $fiche->user_id = Auth::id();
                 $fiche->section_id = $request->section_id;
+                $fiche->classe_id = session('classe_active')->id;
                 $item->categorie_id = $request->categorie_id;
                 //$item->classification_id = $request->classification_id;
                 $fiche->save();

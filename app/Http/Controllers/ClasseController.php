@@ -21,6 +21,7 @@ class ClasseController extends Controller
         $user = Auth::user();
         $user->classe_id = $request->classe;
         $user->save();
+
         // session(['id_de_la_classe' => $classe->id]);
         // session(['nom_de_la_classe' => $classe->description]);
         session(['classe_active' => $classe]);

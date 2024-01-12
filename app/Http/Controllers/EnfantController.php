@@ -300,11 +300,13 @@ class EnfantController extends Controller
                 $e->classe_id = null;
                 $e->psmsgs = $e->prevSection($e->psmsgs);
                 $e->save();
+                session(['is_enfants' => Classe::is_enfants()]);
                 return redirect()->route('maclasse')
                     ->with('message', "L'élève a été retiré de votre classe")
                     ->with('alert-class', 'alert-danger');
             } else {
                 $e->delete();
+                session(['is_enfants' => Classe::is_enfants()]);
                 return redirect()->route('maclasse')
                     ->with('message', "La fiche de l'élève a été supprimée")
                     ->with('alert-class', 'alert-danger');
@@ -333,11 +335,13 @@ class EnfantController extends Controller
             $e->psmsgs = $e->nextSection($e->psmsgs);
             $e->save();
         }
+        session(['is_enfants' => Classe::is_enfants()]);
         return view('eleves.include.tableau_eleves')->with('eleves', Auth::user()->liste());
 
     }
 
     private function getPeriode($a) {
+        
 
        
         
@@ -489,6 +493,7 @@ class EnfantController extends Controller
         //dd($datas);
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
         //return ['state'=>true];
+        session(['is_enfants' => Classe::is_enfants()]);
         return redirect()->route('maclasse');
     }
 
@@ -515,13 +520,13 @@ class EnfantController extends Controller
         );
         $resultats = new Resultat();
         $sections = Section::all();
+       
         return view('eleves.fiche')
             ->with('flag', 'disabled')
             ->with('periodes', $this->getPeriode($this->maclasseactuelle->periodes))        
             ->with('files', $liste)
             ->with('professeur', "null")
             ->with('profs', $user->profs())
-            ->with('tous', $user->tous())
             ->with('role', Auth::user()->role)
             ->with('resultats', $resultats)
             ->with('sections', $sections)
