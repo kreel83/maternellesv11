@@ -11,7 +11,7 @@
     <div class="card mx-auto w-75"  style="border: none; border-radius: 40px; margin-top: 100px">
         <div class="ms-3" style="border: none; border-radius: 40px">
             <div class="d-flex justify-content-between pt-2" style="color: var(--main-color)">
-                <h5>{{ $title }} -  2/2</h5>
+                <h5>{{ $title }} - Etape 2/2</h5>
             </div>
         </div>
         <div class="card-body">
@@ -20,10 +20,10 @@
                 <div class="mb-3">
                     Etablissement trouvé :
                 </div>
-                <strong>{{ $ecole->nom_etablissement }} ({{$ecole->identifiant_de_l_etablissement }})<br>
+                {{ $ecole->nom_etablissement }} ({{$ecole->identifiant_de_l_etablissement }})<br>
                 {{ $ecole->adresse_1 }}<br>
                 {{ $ecole->adresse_3 }}
-                </strong>
+                
             </div>
             <div class="mb-3">
                 Nom de ma classe : <strong>{{ $description }}</strong>
