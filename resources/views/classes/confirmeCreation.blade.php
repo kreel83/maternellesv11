@@ -16,7 +16,7 @@
         </div>
         <div class="card-body">
             {{-- <h5 class="card-title mb-3">Etape 2 / 3 : validation de l'établissement</h5> --}}
-            <div class="alert alert-success mb-3" style="background-color: var(--second-color); color: white; border: none">
+            <div class="alert alert-success mb-3" style="background-color: var(--main-color); color: white; border: none">
                 <div class="mb-3">
                     Etablissement trouvé :
                 </div>

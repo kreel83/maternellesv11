@@ -116,14 +116,17 @@
 
 
         
-        <div class="d-flex justify-content-center flex-column" >
+        <div class="d-flex justify-content-center flex-column mb-5" >
             <div class="d-flex justify-content-center mx-auto">
                 <div class="form-check form-switch mt-2 ">
                     <input class="form-check-input seePdf" type="checkbox" id="seePdf1" {{ $reussite->definitif == 1 ? "checked" : null}} data-reussite="{{$reussite->id}}">
                     <label class="form-check-label" for="seePdf1">Prét à l'envoi</label>
                 </div> 
-                <div style="font-size: 25px; color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
-                    <a target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
+                <div style="color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
+
+                    <a style="font-size: 25px" target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i>
+                        <span style="font-size: 14px; color: black">Voir le cahier de réussite</span>
+                    </a>
                 </div>  
             </div>
             @foreach ($sections as $sec)
@@ -178,8 +181,12 @@
                         <input class="form-check-input seePdf" type="checkbox" id="seePdf2" {{ $reussite->definitif == 1 ? "checked" : null}} data-reussite="{{$reussite->id}}">
                         <label class="form-check-label" for="seePdf2">Prét à l'envoi</label>
                     </div> 
-                    <div style="font-size: 25px; color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
-                        <a taget="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i></a>
+                    <div style="color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
+                        <a style="font-size: 25px" target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i>
+                        <span style="font-size: 14px; color: black">Voir le cahier de réussite</span>
+
+                        </a>
+
                     </div>  
                 </div>
         </div>

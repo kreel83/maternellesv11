@@ -216,7 +216,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                             <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center"
                                 data-bs-toggle="dropdown">
                                 <div class="d-flex flex-column justify-content-center align-items-center">
-                                    <div style="font-size: 14px; font-weight: bolder;line-height: 14px">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</div>
+                                    <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</div>
                                     {{-- @if (session()->get('id_de_la_classe')) --}}
                                     @if (session('classe_active'))
                                         {{-- <div style="font-size: 12px">{{session()->get('nom_de_la_classe')}}</div> --}}
@@ -242,7 +242,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                         <hr class="dropdown-divider">
                                     </li>
                                     <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
-                                    href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
+                                    href="{{ route('partager') }}"><i class="fa-light fa-arrow-up-from-bracket me-2"></i> Partager ma classe</a>
                                 @endif
                                 @if (!is_null(session('autres_classes')))
                                     @if (!session('autres_classes')->isEmpty())
@@ -293,7 +293,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     <hr class="dropdown-divider">
                                 </li>
                                 <a href="{{ route('deco') }}" class="nav-item nav-link"><i
-                                        class="fal fa-sign-out-alt"></i>
+                                        class="fal fa-sign-out-alt me-2"></i>
                                     Se déconnecter</a>
                             </div>
                         </div>
