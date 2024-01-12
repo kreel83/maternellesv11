@@ -55,6 +55,7 @@ class ficheController extends Controller
         }
 
         $fiches = Auth::user()->mesfiches();
+
         $universelles = Auth::user()->items();
         
         $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
@@ -342,6 +343,7 @@ class ficheController extends Controller
             $fiche->perso = 1;
             $fiche->parent_type = 'items';
             $fiche->section_id = $section_id;
+            $fiche->classe_id = session('classe_active')->id;
             $fiche->save();
             $order++;            
         }
