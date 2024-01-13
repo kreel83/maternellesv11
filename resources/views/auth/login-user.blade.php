@@ -67,11 +67,11 @@ border-bottom-right-radius: .3rem;
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btnAction" style="display: block; width: 100%">Se connecter</button>
+            <button type="submit" class="btnAction mx-auto" style="display: block; width: 50%">Se connecter</button>
         </div>
 
-        <div class="mt-5">
-            <a href="{{ route('password.request') }}">Vous avez oublié votre mot de passe ?</a>
+        <div class="mt-5 d-flex justify-content-center">
+            <a class="mx-auto" href="{{ route('password.request') }}">Vous avez oublié votre mot de passe ?</a>
         </div>
 
         {{-- <div class="text-center pt-1 mb-3 pb-1">

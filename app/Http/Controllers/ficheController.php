@@ -371,7 +371,10 @@ class ficheController extends Controller
     public function retirerChoix(Request $request) {
 
         $item_id = Fiche::find($request->fiche)->item_id;
-        $check = Resultat::where('item_id', $item_id)->get();
+        $enfants = Enfant::where('classe_id', session('classe_active')->id)->pluck('id');
+        
+        $check = Resultat::where('item_id', $item_id)->whereIn('enfant_id', $enfants)->get();
+
 
         if ($check->count() == 0 || $request->state == 'confirmation') {
             $fiche = Fiche::find($request->fiche);
