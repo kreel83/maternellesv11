@@ -354,9 +354,13 @@ class User extends Authenticatable
 
 
     public function hasResultats() {
-         return Resultat::join('enfants','enfants.id', 'resultats.enfant_id')->where('enfants.user_id', $this->id)->count();
+        return Resultat::select('notation', 'autonome')
+        ->join('enfants', 'enfants.id' ,'enfant_id')
+        ->where('enfants.classe_id', session('classe_active')->id)
+        ->count();
          
     }
+
     /*
     public function getSchool() {
         $ecole = Ecole::where('identifiant_de_l_etablissement', $this->ecole_id)->first();
