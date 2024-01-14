@@ -559,7 +559,7 @@ $degrades = App\Models\Enfant::DEGRADE;
     //dd($resultats);
 @endphp
 @foreach($resultats as $k => $section)
-@break
+
 
     {{-- <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header> --}}
 
