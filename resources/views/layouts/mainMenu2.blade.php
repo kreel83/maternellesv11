@@ -60,20 +60,15 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
     <input type="hidden" id="page" value="{{ $menu }}">
     @if (!isset($log))
         <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
                 <div class="container-fluid">
-                    <a href="{{ route('depart') }}" class="brand-logo d-none d-lg-block">
-                        <img src="{{ asset('img/deco/logo.png') }}" alt="" width="130">
-                    </a>
-                    <div class="d-block d-lg-none" style="font-size: 25px; ">
+
+                    <a href="{{ route('depart') }}" class="brand-logo d-none d-lg-block"><img src="{{ asset('img/deco/logo.png') }}" alt="" width="130"></a>
+                    <div class="d-block d-lg-none" style="font-size: 25px;">
                         @if ($menu == 'accueil')
                             <img src="{{ asset('img/deco/logo.png') }}" alt="" width="90">
                         @else
-                        <a href="{{url()->previous()}}">
-
-                            <i style="color: black" class="fa-solid fa-arrow-left"></i>
-                        </a>
+                            <a href="{{url()->previous()}}"><i style="color: black" class="fa-solid fa-arrow-left"></i></a>
                         @endif
                     </div>
                     <div class="d-xs-block d-lg-none">
@@ -83,44 +78,30 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                         data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+
                     <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav align-items-center contenu_du_menu">
-                            <a href="{{ route('depart') }}"
-                                class="nav-item nav-link  {{ $menu == 'accueil' ? 'active' : null }}">Tableau de bord
-                            </a>
+
+                        {{-- <div class="navbar-nav align-items-center contenu_du_menu"> --}}
+                        {{-- <div class="navbar-nav me-auto mb-2 mb-lg-0"> --}}
+                        <div class="navbar-nav me-auto align-items-center contenu_du_menu">
+
+                            <a href="{{ route('depart') }}" class="nav-item nav-link  {{ $menu == 'accueil' ? 'active' : null }}">Tableau de bord</a>
                             @php
                                 $params = in_array($menu, ['evaluation', 'affectation_groupe', 'avatar', 'maclasse']);
                             @endphp
-
-
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
-                                    data-bs-toggle="dropdown">Ma classe</a>
+                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}" data-bs-toggle="dropdown">Ma classe</a>
                                 <div class="dropdown-menu">
-
-
-
-                                    <a href="{{ route('maclasse', ['type' => 'maclasse']) }} "
-                                        class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite
-                                        ma classe</a>
-                                    {{-- @if (Auth::user()->is_enfants()) --}}
+                                    <a href="{{ route('maclasse', ['type' => 'maclasse']) }}" class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite ma classe</a>
                                     @if (session('is_enfants'))
-                                        <a href="{{ route('enfants', ['type' => 'evaluation']) }} "
-                                            class="nav-item nav-link  {{$hasClassActive}} ">J'évalue mes élèves</a>
-
-                                        <a href="{{ route('enfants', ['type' => 'avatar']) }}"
-                                            class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}  {{$hasClassActive}}">Je
-                                            choisis les avatars</a>
-                                        <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}"
-                                            class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}  {{$hasClassActive}}">J'affecte
-                                            mes groupes</a>
+                                        <a href="{{ route('enfants', ['type' => 'evaluation']) }}" class="nav-item nav-link  {{$hasClassActive}} ">J'évalue mes élèves</a>
+                                        <a href="{{ route('enfants', ['type' => 'avatar']) }}" class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}  {{$hasClassActive}}">Je choisis les avatars</a>
+                                        <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}" class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}  {{$hasClassActive}}">J'affecte mes groupes</a>
                                     @endif
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <a href="{{ route('createclasse') }} "
-                                    class="nav-item nav-link {{ $menu == 'createclasse' ? 'active' : null }}">Je crée une classe
-                                   </a>
+                                    <a href="{{ route('createclasse') }}" class="nav-item nav-link {{ $menu == 'createclasse' ? 'active' : null }}">Je crée une classe</a>
                                 </div>
                             </div>
 
@@ -128,179 +109,105 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 $params = in_array($menu, ['manage', 'reussite']);
                             @endphp
 
-                            {{-- @if (Auth::user()->is_enfants()) --}}
                             @if (session('is_enfants'))
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
-                                        data-bs-toggle="dropdown">Les cahiers de réussites</a>
+                                    <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}" data-bs-toggle="dropdown">Les cahiers de réussites</a>
                                     <div class="dropdown-menu">
-                                        <a href="{{ route('enfants', ['type' => 'reussite']) }}"
-                                            class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite
-                                            les
-                                            cahiers de réussite</a>
-                                        <a href="{{ route('cahierManage') }}"
-                                            class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère
-                                            les
-                                            cahiers de réussite</a>
+                                        <a href="{{ route('enfants', ['type' => 'reussite']) }}" class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les cahiers de réussite</a>
+                                        <a href="{{ route('cahierManage') }}" class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère les cahiers de réussite</a>
                                     </div>
-
                                 </div>
                             @endif
+
                             @php
                                 $params = in_array($menu, ['calendrier', 'event', 'periode']);
                             @endphp
-                            <a href="{{ route('calendrier') }}"
-                                class="nav-item nav-link  {{ $params ? 'active' : null }}  {{$hasClassActive}}">Calendrier</a>
+
+                            <a href="{{ route('calendrier') }}" class="nav-item nav-link  {{ $params ? 'active' : null }}  {{$hasClassActive}}">Calendrier</a>
 
                             @php
                                 $params = in_array($menu, ['commentaire', 'periode', 'eleve', 'item', 'create_item', 'aide', 'ecole', 'groupe']);
                             @endphp
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
-                                    data-bs-toggle="dropdown">Paramètres</a>
-                                <div class="dropdown-menu">
 
-                                    {{-- <a href="{{ route('eleves') }}"
-                                        class="nav-item nav-link {{ $menu == 'eleve' ? 'active' : null }}">Mes
-                                        élèves</a> --}}
-                                    <a href="{{ route('fiches') }}"
-                                        class="nav-item nav-link {{ $menu == 'item' ? 'active' : null }}  {{$hasClassActive}}">Je
-                                        sélectionne mes activités</a>
-                                    <a href="{{ route('createFiche') }}"
-                                        class="nav-item nav-link {{ $menu == 'create_item' ? 'active' : null }}  {{$hasClassActive}}">Je
-                                        crée mes activités</a>
-                                    <a href="{{ route('groupe') }}"
-                                        class="nav-item nav-link {{ $menu == 'groupe' ? 'active' : null }}  {{$hasClassActive}}">Mes
-                                        groupes</a>
-                                    <a href="{{ route('phrases') }}"
-                                        class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}  {{$hasClassActive}}">Mes
-                                        phrases prédéfinies</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}" data-bs-toggle="dropdown">Paramètres</a>
+                                <div class="dropdown-menu">
+                                    {{-- <a href="{{ route('eleves') }}" class="nav-item nav-link {{ $menu == 'eleve' ? 'active' : null }}">Mes élèves</a> --}}
+                                    <a href="{{ route('fiches') }}" class="nav-item nav-link {{ $menu == 'item' ? 'active' : null }}  {{$hasClassActive}}">Je sélectionne mes activités</a>
+                                    <a href="{{ route('createFiche') }}" class="nav-item nav-link {{ $menu == 'create_item' ? 'active' : null }}  {{$hasClassActive}}">Je crée mes activités</a>
+                                    <a href="{{ route('groupe') }}" class="nav-item nav-link {{ $menu == 'groupe' ? 'active' : null }}  {{$hasClassActive}}">Mes groupes</a>
+                                    <a href="{{ route('phrases') }}" class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}  {{$hasClassActive}}">Mes phrases prédéfinies</a>
                                 </div>
                             </div>
-                            {{-- @php
-                                $params = in_array($menu, ['monprofil', 'lock']);
-                            @endphp
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}"
-                                    data-bs-toggle="dropdown">Mon profil</a>
-                                <div class="dropdown-menu">
-                                    <a href="{{ route('monprofil') }}"
-                                        class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}">Mon
-                                        profil</a>
-                                    <a href="{{ route('changerLeMotDePasse') }}"
-                                        class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le
-                                        mot de passe</a>
-                                </div>
-                            </div> --}}
-
-
-
-                            <div class="nav-item-divider"></div>
+  
+                            {{-- <div class="nav-item-divider"></div> --}}
                             {{-- <div id="modeTuto"
                                 class="{{ Auth::user() && Auth::user()->configuration->tuto == 0 ? 'd-none' : null }}">
                                 <button class="btnModeTuto">Desactiver le mode tutoriel</button>
                             </div> --}}
-                            <div id="modeDecouverte"
-                                class="{{ session('is_abonne') ? 'd-none' : null }}">
-                                {{-- class="{{ Auth::user() && Auth::user()->is_abonne() ? 'd-none' : null }}"> --}}
+                            <div id="modeDecouverte" class="{{ session('is_abonne') ? 'd-none' : null }}">
                                 <button class="btnModeDecouverte" data-bs-toggle="modal" data-bs-target="#InfoDemoMain" >Mode découverte</button>
                             </div>
 
-                        </div>
+                            @php
+                                $params = in_array($menu, ['paramclasse', 'monprofil', 'contact', 'partager']);
+                            @endphp
 
-                        @php
-                            $params = in_array($menu, ['paramclasse', 'monprofil', 'contact', 'partager']);
-                        @endphp
+                        </div>  <!-- navbar-nav -->
 
-                            <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu">
-                            <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center"
-                                data-bs-toggle="dropdown">
-                                <div class="d-flex flex-column justify-content-center align-items-center">
-                                    <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</div>
-                                    {{-- @if (session()->get('id_de_la_classe')) --}}
+                        <div class="navbar-nav align-items-center contenu_du_menu">
+
+                            {{-- <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu"> --}}
+                            <div class="nav-item dropdown nom_dans_menu">
+
+                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        {{-- <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}"> --}}
+                                        <div class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">
+                                            <strong>{{ ucfirst(strtolower(Auth::user()->prenom)) }} {{ strtoupper(Auth::user()->name) }}</strong>
+                                        </div>
+                                        @if (session('classe_active'))
+                                            {{-- <div style="font-size: 12px">{{session('classe_active')->description}}</div> --}}
+                                            <div><small>{{session('classe_active')->description}}</small></div>
+                                        @endif
+                                    </div>
+                                </a>
+
+                                <div class="dropdown-menu" style="left: inherit !important; right: 0">
                                     @if (session('classe_active'))
-                                        {{-- <div style="font-size: 12px">{{session()->get('nom_de_la_classe')}}</div> --}}
-                                        <div style="font-size: 12px">{{session('classe_active')->description}}</div>
+                                        <a href="{{ route('parametresClasse') }}" class="nav-item nav-link  {{ $menu == 'paramclasse' ? 'active' : null }}">Paramètres de ma classe</a>
+                                    @else
+                                        <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe crée</a>
                                     @endif
-                                </div>
-                                
-                            </a>
-
-                            <div class="dropdown-menu" style="left: inherit !important; right: 0">
-                                {{-- <a href="#" --}}
-                                {{-- class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session()->get('nom_de_la_classe')}}</a> --}}
-                                @if (session('classe_active'))
-                                    {{-- <span class="nav-item disabled" style="color: var(--main-color) !important">{{session('classe_active')->description ?? ''}}</span> --}}
-                                    {{-- <a href="#" class="nav-item  {{ $menu == 'rien' ? 'active' : null }} disabled" style="color: var(--main-color) !important">{{session('classe_active')->description ?? ''}}</a> --}}
-                                    <a href="{{ route('parametresClasse') }}"
-                                    class="nav-item nav-link  {{ $menu == 'paramclasse' ? 'active' : null }}">Paramètres de ma classe</a>
-                                @else
-                                    <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe crée</a>
-                                @endif
-                                @if(session()->has('classe_active'))
+                                    @if(session()->has('classe_active'))
+                                        <li><hr class="dropdown-divider"></li>
+                                        <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}" href="{{ route('partager') }}"><i class="fa-light fa-arrow-up-from-bracket me-2"></i> Partager ma classe</a>
+                                    @endif
+                                    @if (!is_null(session('autres_classes')))
+                                        @if (!session('autres_classes')->isEmpty())
+                                            <li><hr class="dropdown-divider"></li>
+                                            <span class="nav-item navbar-text">Autres classes :</span>
+                                            @foreach (session('autres_classes') as $classe)
+                                                <a href="{{ route('changerClasse',['classe' => $classe->id]) }}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
+                                            @endforeach
+                                        @endif
+                                    @endif
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
-                                    href="{{ route('partager') }}"><i class="fa-light fa-arrow-up-from-bracket me-2"></i> Partager ma classe</a>
-                                @endif
-                                @if (!is_null(session('autres_classes')))
-                                    @if (!session('autres_classes')->isEmpty())
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <span class="nav-item disabled">Autres classes :</span>
-                                        @foreach (session('autres_classes') as $classe)
-                                            <a href="{{ route('changerClasse',['classe' => $classe->id]) }}"
-                                            class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
-                                        @endforeach
-                                    @endif
-                                @endif
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <a href="{{ route('monprofil') }}"
-                                class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}  {{$hasClassActive}}">Mon
-                                profil</a>
-    
-                                <a href="{{ route('subscribe.index') }}"
-                                    {{-- class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ session('is_abonne') ? null : 'disabled'}}">Mon --}}
-                                    {{-- class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}  {{ Auth::user() && Auth::user()->is_abonne() ? null : 'disabled'}}">Mon --}}
-                                    class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon abonnement</a>
-
-                                <a href="{{ route('changerLeMotDePasse') }}"
-                                    class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le
-                                    mot de passe</a>
-                                <a class="nav-item nav-link  {{ $menu == 'contact' ? 'active' : null }}"
-                                    href="{{ route('contact') }}">Nous contacter</a>
-                                    
-                                    {{-- @if(session()->has('lienPourPartageDansMenu'))
-                                        @if(session('lienPourPartageDansMenu') == true)
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}"
-                                            href="{{ route('partager') }}"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Partager ma classe</a>
-                                        @endif
-                                    @endif --}}
-
-                                    {{-- @if (!Auth::user()->autresClasses()->isEmpty()) --}}
-                                    {{-- @php
-                                        dd(session('autres_classes')->isEmpty());
-                                    @endphp --}}
-                                    
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <a href="{{ route('deco') }}" class="nav-item nav-link"><i
-                                        class="fal fa-sign-out-alt me-2"></i>
-                                    Se déconnecter</a>
+                                    <a href="{{ route('monprofil') }}" class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}  {{$hasClassActive}}">Mon profil</a>
+                                    <a href="{{ route('subscribe.index') }}" class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon abonnement</a>
+                                    <a href="{{ route('changerLeMotDePasse') }}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le mot de passe</a>
+                                    <a class="nav-item nav-link  {{ $menu == 'contact' ? 'active' : null }}" href="{{ route('contact') }}">Nous contacter</a>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <a href="{{ route('deco') }}" class="nav-item nav-link"><i class="fal fa-sign-out-alt me-2"></i>Se déconnecter</a>
+                                </div>
                             </div>
-                        </div>
-
-
+                        </div>  <!-- navbar-nav -->
                     </div>
-                </div>
+                </div>  <!-- container-fluid -->
             </nav>
 
         </header>
