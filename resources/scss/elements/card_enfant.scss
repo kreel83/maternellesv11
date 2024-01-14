@@ -82,7 +82,6 @@
 
     background-color: var(--main-color);
     border: 1px solid transparent;
-    color: white;
     width: fit-content;
     height: 20px;
     font-size: 14px;
@@ -91,7 +90,7 @@
     align-items: center;
     border-radius: 30px;
     font-weight: 600;
-    min-width: 120px;
+    max-width: 144px;
     cursor: pointer;
 
 
@@ -173,7 +172,6 @@
       transform: translate(-50%);
       background-color: var(--main-color);
       padding: 4px 24px;
-      color: white;
       width: fit-content;
       height: 20px;
       font-size: 14px;
@@ -182,7 +180,8 @@
       align-items: center;
       border-radius: 30px;
       font-weight: 600;
-      min-width: 120px;
+      min-width: 144px;
+      //min-width: 44px;
       cursor: pointer;
 
     }
