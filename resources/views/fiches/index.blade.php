@@ -35,8 +35,8 @@
                     @endif
                 @endforeach
                 @if (Auth::user()->hasResultats() ==  0)
-                    <div title="Importer vos activités par section" class="btnAction" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
-                        <i class="fa-solid fa-file-import fs-3"></i>
+                    <div title="Importer vos activités par section" style="font-size: 14px; color: var(--main-color);line-height: 80px; margin-left: 40px; cursor: pointer" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
+                        <i class="fa-solid fa-file-import me-1"></i><span>Importer des fiches "activités"</span>
                     </div>
                     {{-- <div title="Sauvegarder votre template" class="btnAction" id="saveTemplatesBtn" data-bs-toggle="modal" data-bs-target="#saveTemplate" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
                         <i class="fa-solid fa-floppy-disk fs-3"></i>
