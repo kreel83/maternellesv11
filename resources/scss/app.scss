@@ -52,6 +52,12 @@
         background-color: var(--back-color) !important;
     }
 
+    @media only screen and (max-width: 994px) {
+        #appli {
+            margin-top: -50px;
+        }
+    }
+
     .titre {
         font-size: 40px;
         position: absolute;

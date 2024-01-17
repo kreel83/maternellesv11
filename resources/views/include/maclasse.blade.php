@@ -19,7 +19,7 @@
 
     @if (!isset($is_dashboard) || $listeDesEleves->isEmpty())
 
-        <div class="mb-3 d-flex justify-content-between">
+        <div class="mb-3 d-flex justify-content-between bloc_controle_classe">
             <div class="d-flex">
                 <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
                 <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
