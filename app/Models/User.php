@@ -261,6 +261,7 @@ class User extends Authenticatable
         //$items = Item::join('fiches','fiches.item_id','id')->where('fiches.section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
         //dd($items);
 
+
         //$fiches = Fiche::where('user_id', Auth::id())->pluck('item_id');
 
         $mesfiches = Item::selectRaw('items.*, fiches.id as fiche_id, fiches.user_id')
@@ -275,6 +276,19 @@ class User extends Authenticatable
 
         // return Item::whereIn('id', $fiches)->get();
 
+
+
+    }
+
+    public function items() {
+        $fiches = Fiche::where('classe_id', session('classe_active')->id)->orderBy('order')->pluck('item_id');
+
+
+        $result = Item::where(function($query) {
+            $query->where('user_id', $this->id)->orWhereNull('user_id');
+        })->whereNotIn('id', $fiches)->orderBy('categorie_id')->get();
+        
+        return $result;
     }
 
     public function autresfiches($section) {
@@ -329,6 +343,11 @@ class User extends Authenticatable
         return User::where('ecole_identifiant_de_l_etablissement', $ecole)->get();
     }
 
+    // public function tous() {
+    //     $ecole = Auth()->user()->ecole_identifiant_de_l_etablissement;
+    //     $users = User::where('ecole_identifiant_de_l_etablissement', $ecole)->pluck('id');
+    //     return Enfant::whereNull('user_id')->whereIn('user_n1_id', $users)->get();
+    // }
 
     public function calcul_annee_scolaire() {
 
@@ -339,21 +358,14 @@ class User extends Authenticatable
 
     }
 
-    public function items() {
-        $fiches = Fiche::where('user_id', Auth::id())->orderBy('order')->pluck('item_id');
-
-        $result = Item::where(function($query) {
-            $query->where('user_id', $this->id)->orWhereNull('user_id');
-        })->whereNotIn('id', $fiches)->orderBy('categorie_id')->get();
-        
-        return $result;
-    }
-
-
     public function hasResultats() {
-         return Resultat::join('enfants','enfants.id', 'resultats.enfant_id')->where('enfants.user_id', $this->id)->count();
+        return Resultat::select('notation', 'autonome')
+        ->join('enfants', 'enfants.id' ,'enfant_id')
+        ->where('enfants.classe_id', session('classe_active')->id)
+        ->count();
          
     }
+
     /*
     public function getSchool() {
         $ecole = Ecole::where('identifiant_de_l_etablissement', $this->ecole_id)->first();
