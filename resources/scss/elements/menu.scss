@@ -68,10 +68,29 @@
             margin-top: 50px !important;
             margin-bottom: 20px;
         }
+
+        hr {
+            display: none !important;
+
+        }
+        .nom_dans_menu>a {
+            text-align: center;
+        }
+
+        .navbar-toggler span {
+            color: white;;
+        }
+
+        .nav-item.nav-link {
+            color: white !important;
+            text-align: center !important;
+            display: block;
+        }
         .nav-item.active, .nav-link.active, .nav-link:hover  {
             border-bottom: 3px solid transparent !important;
             background-color: transparent !important;
-            color: black !important;
+            color: white !important;
+            font-weight: bolder;
             border-radius: 0%  !important;
             text-align: center;
             

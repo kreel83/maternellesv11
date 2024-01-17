@@ -50,10 +50,12 @@
     <button class="btnSelection   d-none retirer my-2" style="background-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }}" >Retirer</button>
     <button class="btnSelection   selectionner my-2" style="background-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }}" >Selectionner</button>
     <button data-id="{{$fiche->id ?? null}}" style="background-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }}"  class="btnSelection  dupliquer my-2">Dupliquer</button>
-    {{-- <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}"  class="biblioModalFiche btnSelection changer my-2" data-bs-toggle="modal"
-        data-bs-target="#biblioModal">image</button> --}}
-    {{-- <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}"  class="biblioModalCategories btnSelection changer my-2" data-bs-toggle="modal"
-        data-bs-target="#biblioModalCategories" data-categories="{{$fiche->categories()}}">categories</button> --}}
+    @if (in_array(auth::id(),[61,47]))
+        <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}"  class="biblioModalFiche btnSelection changer my-2" data-bs-toggle="modal"
+            data-bs-target="#biblioModal">image</button>
+        <button data-id="{{$fiche->id ?? null}}" style="background-color: {{$fiche->section()->color}}"  class="biblioModalCategories btnSelection changer my-2" data-bs-toggle="modal"
+            data-bs-target="#biblioModalCategories" data-categories="{{$fiche->categories()}}">categories</button>
+    @endif
     <button data-id="{{$fiche->id ?? null}}" style="background-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }}" class="btnSelection {{$fiche->user_id ? null : 'd-none'}} modifier my-2">Modifier</button>
 </div>
     <div class="perso_card">

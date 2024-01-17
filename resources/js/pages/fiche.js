@@ -105,6 +105,7 @@ const selectSectionFiche = (ficheSelect) => {
         $('.card_fiche').addClass('d-none')
         $('.card_fiche[data-section="'+id+'"]').removeClass('d-none')
         $('#SectionName').addClass('big')
+        console.log('coucou')
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
@@ -117,15 +118,15 @@ const selectSectionFiche = (ficheSelect) => {
                 dataType:"html",
             type: "post",
            
-            success: function(data) {   
+            success: function(data) {
+                console.log($('#mesfiches').length)   
+                console.log(data)                      
+                data = '<option value="null">Toutes les fiches</option>'+data;
+                $("#categories").html(data);   
                 if($('#mesfiches').length) {
                    
                     if (history.replaceState) history.replaceState({}, document.title, "?section_id="+id)
-                } else {
-                    console.log(data)                      
-                    data = '<option value="null">Toutes les fiches</option>'+data;
-                    $("#categories").html(data);                    
-                }
+                } 
 
             }
         })  
@@ -252,7 +253,7 @@ const choixTypeFiches = (Modal) => {
             $('.deletefiches').addClass('d-none')
 
         } else {
-            $('#categories').addClass('d-none')
+            // $('#categories').addClass('d-none')
             $('.deletefiches').removeClass('d-none')
         }
 
@@ -281,7 +282,7 @@ const initFiche = () => {
                 $(this).find('.action').addClass('d-none')
 
             },
-            top: function() {
+            stop: function() {
                 $('#sortable').css('background-color', 'transparent')
                 $(this).find('.action').removeClass('d-none')
                 let pos = []
