@@ -260,13 +260,21 @@ class User extends Authenticatable
     public function mesfiches() {
         //$items = Item::join('fiches','fiches.item_id','id')->where('fiches.section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
         //dd($items);
-        
 
-        // $fiches = Fiche::where('classe_id', session('classe_active')->id)->pluck('item_id');
-        $mesfiches = Item::selectRaw('items.*, fiches.id as fiche_id, fiches.user_id')->join('fiches','fiches.item_id', 'items.id')->where('fiches.classe_id', session('classe_active')->id)->orderBy('fiches.order')->get();
 
+        //$fiches = Fiche::where('user_id', Auth::id())->pluck('item_id');
+
+        $mesfiches = Item::selectRaw('items.*, fiches.id as fiche_id, fiches.user_id')
+            ->join('fiches','fiches.item_id', 'items.id')
+            ->where('fiches.user_id', Auth::id())
+            ->orderBy('items.categorie_id')
+            ->orderBy('fiches.order')
+            ->get();
+            // ->orderBy('fiches.order')
 
         return $mesfiches;
+
+        // return Item::whereIn('id', $fiches)->get();
 
 
 
@@ -278,7 +286,7 @@ class User extends Authenticatable
 
         $result = Item::where(function($query) {
             $query->where('user_id', $this->id)->orWhereNull('user_id');
-        })->whereNotIn('id', $fiches)->get();
+        })->whereNotIn('id', $fiches)->orderBy('categorie_id')->get();
         
         return $result;
     }
@@ -349,9 +357,6 @@ class User extends Authenticatable
         return $year;
 
     }
-
-
-
 
     public function hasResultats() {
         return Resultat::select('notation', 'autonome')

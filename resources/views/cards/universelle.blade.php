@@ -67,14 +67,16 @@
     </div>
 
         <div class="card__image">
-            <img src="{{asset($fiche->image_name)}}" alt="image" class="border-tlr-radius">
+            <img src="{{asset($fiche->image_name)}}" class="border-tlr-radius">
         </div>
 
         <div class="card-footer" style="font-size: 12px;border-color: {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }} !important">
             {{-- <div style="font-weight: bolder;" class="st">{{$fiche->categorie->section2 ?? null}}</div> --}}
             {{-- <div style="font-weight: bolder;" class="st">{{ $section2[$fiche->section_id] }}</div> --}}
             {{-- <div style="font-weight: bolder;" class="st">{{ $sectionsData[$fiche->section_id]['name'] }}</div> --}}
-            <div style="font-weight: bolder;" class="st">{{ $sections->where('id', $fiche->section_id)->first()->name ?? '' }}</div>
+            
+            {{-- <div style="font-weight: bolder;" class="st">{{ $sections->where('id', $fiche->section_id)->first()->name ?? '' }}</div> --}}
+            <div style="font-weight: bolder;" class="st">{{ $fiche->categorie->section2 ?? '' }}</div>
             <div>{{$fiche->name}}</div>
         </div>
         <div class="card-footer2" style="padding: 0; background: linear-gradient(164deg, {{ $sections->where('id', $fiche->section_id)->first()->color ?? '' }} 23%, #ecf0f1 74%)" data-id="{{$fiche->id}}">

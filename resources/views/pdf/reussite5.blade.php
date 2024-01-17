@@ -8,7 +8,7 @@ $degrades = App\Models\Enfant::DEGRADE;
 <html lang="fr">
 
     <head>
-
+        <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
         <style>
             
             @page {
@@ -168,8 +168,8 @@ $degrades = App\Models\Enfant::DEGRADE;
             }
 
             .table-carte {
-                margin-left: auto;
-                margin-right: auto;
+                m_argin-left: auto;
+                m_argin-right: auto;
                 margin-bottom: 20px;
             }
 
@@ -560,7 +560,6 @@ $degrades = App\Models\Enfant::DEGRADE;
 @endphp
 @foreach($resultats as $k => $section)
 
-
     {{-- <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header> --}}
 
     <div class="page">
@@ -570,21 +569,23 @@ $degrades = App\Models\Enfant::DEGRADE;
 
         @php
             $carte = 1;
+            //dd($section);
         @endphp
         {{-- <table style="margin-top:20px; border-spacing: 10px"> --}}
             {{-- <table style="margin-top:20px;" cellpadding="0"> --}}
             <table class="table-carte" cellpadding="0">
             <tr>
-            @foreach ($section as $key =>$resultat)
+            @foreach ($section as $key => $resultat)
                 <td style="width: 160px; padding-right: 10px; padding-bottom:10px">
                     <div class="card-pdf" style="border-color: {{$resultat['color']}}">
                         <div class="haut_carte" style="background-color: {{$resultat['color']}}">
-                            <p class="titre1 " >{{$resultat['name_section']}}</p>
+                            {{-- <p class="titre1 " >{{$resultat['name_section']}}</p> --}}
+                            <p class="titre1 " >{{$resultat['section2']}}</p>
                         </div>
                         @if ($resultat['image_nom'])
-                        <img src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
+                            <img width="160" height="120" src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
                         @else
-                        <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
+                            <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
                         @endif
                         <p class="body">{{$resultat['name']}}</p>
                     </div>
