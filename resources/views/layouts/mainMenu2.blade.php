@@ -139,6 +139,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     <a href="{{ route('phrases') }}" class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}  {{$hasClassActive}}">Mes phrases prédéfinies</a>
                                 </div>
                             </div>
+
+
   
                             {{-- <div class="nav-item-divider"></div> --}}
                             {{-- <div id="modeTuto"

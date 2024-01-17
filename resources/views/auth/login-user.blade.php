@@ -7,7 +7,7 @@
 <section class="h-100 gradient-form" style="b_ackground-color: #eee;">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-xl-10">
+        <div class="col-xl-12 w-50">
           <div class="card rounded-3 text-black">
             <div class="row g-0">
               <div class="col-lg-12">
@@ -21,7 +21,7 @@
                     </div>
             
                     <div class="mb-3 text-center">
-                        <p>Vous n'avez pas encore de compte {{ env('APP_NAME') }} ? <br><a href="{{ route('registration.start') }}">Créez un compte.</a></p>
+                        <p>Vous n'avez pas encore de compte {{ env('APP_NAME') }} ? <br><a href="{{ route('registration.start') }}"   style="color: var(--main-color)">Créez un compte.</a></p>
                     </div>
             
                     @include('include.display_msg_error')
@@ -38,12 +38,12 @@
                         placeholder="Mot de passe"/>
                     </div>
   
-                    <div class="mb-4">
+                    <div class="mb-4 w-50 mx-auto">
                       <button type="submit" class="btnAction" style="display: block; width: 100%">Se connecter</button>
                     </div>
             
                     <div>
-                        <a href="{{ route('password.request') }}">Vous avez oublié votre mot de passe ?</a>
+                        <a href="{{ route('password.request') }}" class="text-center"   style="color: var(--main-color)">Vous avez oublié votre mot de passe ?</a>
                     </div>
   
                   </form>
