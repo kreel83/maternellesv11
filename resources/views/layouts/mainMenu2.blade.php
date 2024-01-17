@@ -33,7 +33,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
     <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet">
-
+    <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
 
 
 </head>

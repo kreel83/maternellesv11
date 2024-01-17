@@ -228,14 +228,16 @@ class CahierController extends Controller
         // PDF pour Parent pas de Auth::
         //$rep = Auth::user()->repertoire;
 
-        $resultats = Resultat::select('items.*','resultats.*','sections.name as name_section','sections.color','sections.texte')
+        $resultats = Resultat::select('categories.section2','items.*','resultats.*','sections.name as name_section','sections.color','sections.texte')
             ->join('items','items.id','resultats.item_id')
+            ->leftJoin('categories','categories.id', '=', 'items.categorie_id')
             ->join('sections','sections.id','resultats.section_id')
             ->where('enfant_id', $id)
             ->where('periode', $periode)
             ->orderBy('resultats.section_id')
+            ->orderBy('items.categorie_id')
             ->get();
-        
+
         // $resultats_personnels = Resultat::select('personnels.*','resultats.*','sections.name as name_section','sections.color')->join('personnels','personnels.id','resultats.item_id')
         //    ->join('sections','sections.id','resultats.section_id')
         //     ->where('enfant_id', $id)->orderBy('resultats.section_id')->get();

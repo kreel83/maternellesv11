@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>Création de mon compte sur {{ env('APP_NAME') }}</title>
         <meta name="robots" content="noindex, nofollow" />
-
+        <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
     </head>

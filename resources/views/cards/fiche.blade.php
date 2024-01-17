@@ -25,7 +25,9 @@
             @endphp
             {{-- <div style="font-weight: bolder;">{{$fiche->categorie->section2 ?? null}}</div> --}}
             {{-- <div style="font-weight: bolder;">{{ $sectionsData[$fiche->section_id]['name'] }}</div> --}}
-            <div style="font-weight: bolder;">{{ $sections->where('id', $fiche->section_id)->first()->name ?? '' }}</div>
+
+            {{-- <div style="font-weight: bolder;">{{ $sections->where('id', $fiche->section_id)->first()->name ?? '' }}</div> --}}
+            <div style="font-weight: bolder;">{{ $fiche->categorie->section2 ?? '' }}</div>
             
             <div>{{$fiche->name}}</div>
         </div>
