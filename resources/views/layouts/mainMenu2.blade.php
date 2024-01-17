@@ -74,7 +74,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                     <div class="d-xs-block d-lg-none">
                         {{ $menu}}
                     </div>
-                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse"
+                    <button type="button" class="navbar-toggler toggler" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -83,7 +83,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
                         {{-- <div class="navbar-nav align-items-center contenu_du_menu"> --}}
                         {{-- <div class="navbar-nav me-auto mb-2 mb-lg-0"> --}}
-                        <div class="navbar-nav me-auto align-items-center contenu_du_menu">
+                        <div class="navbar-nav me-auto align-items-center contenu_du_menu justify-content-center">
 
                             <a href="{{ route('depart') }}" class="nav-item nav-link  {{ $menu == 'accueil' ? 'active' : null }}">Tableau de bord</a>
                             @php
@@ -162,8 +162,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                             {{-- <div class="nav-item dropdown ms-auto d-flex justify-content-center nom_dans_menu"> --}}
                             <div class="nav-item dropdown nom_dans_menu">
 
-                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center" data-bs-toggle="dropdown">
-                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center justify-content-center" data-bs-toggle="dropdown">
+                                    <div class="d-flex flex-column justify-content-center align-items-center justify-content-center">
                                         {{-- <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}"> --}}
                                         <div class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">
                                             <strong>{{ ucfirst(strtolower(Auth::user()->prenom)) }} {{ strtoupper(Auth::user()->name) }}</strong>
@@ -214,7 +214,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
         </header>
 
-        <div class="position-relative">
+        {{-- <div class="position-relative"> --}}
 
             @if (Session::has('message'))
                 <p class="alerteMessage mt-4 alert {{ Session::get('alert-class', 'alert-info') }}">
@@ -226,7 +226,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                 @yield('content')
             </div>
 
-        </div>
+        {{-- </div> --}}
     @else
             <div class='h-100'>
                 @yield('content')
