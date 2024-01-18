@@ -263,14 +263,16 @@ class User extends Authenticatable
 
 
         //$fiches = Fiche::where('user_id', Auth::id())->pluck('item_id');
+        
 
-        $mesfiches = Item::selectRaw('items.*, fiches.id as fiche_id, fiches.user_id')
+        $mesfiches = Item::selectRaw('items.*, fiches.id as fiche_id, fiches.classe_id')
             ->join('fiches','fiches.item_id', 'items.id')
-            ->where('fiches.user_id', Auth::id())
+            ->where('fiches.classe_id', session('classe_active')->id)
             ->orderBy('items.categorie_id')
             ->orderBy('fiches.order')
             ->get();
             // ->orderBy('fiches.order')
+
 
         return $mesfiches;
 
@@ -293,7 +295,7 @@ class User extends Authenticatable
 
     public function autresfiches($section) {
         $user = Auth::id();
-        $mesfiches = Fiche::where('user_id', $this->id)->where('section_id', $section->id)->get();
+        $mesfiches = Fiche::where('classe_id', session('classe_active')->id)->where('section_id', $section->id)->get();
         $ll = $mesfiches->pluck('item_id');
         $items = Item::whereNotIn('id', $ll)->where('section_id', $section->id)->where(function($query) use($user) {
             $query->whereNull('status')->orWhere('status', $user);
@@ -305,9 +307,9 @@ class User extends Authenticatable
 
     }
 
-    public function equipes() {
-        return Equipe::where('user_id', $this->id)->get();
-    }
+    // public function equipes() {
+    //     return Equipe::where('user_id', $this->id)->get();
+    // }
 
     public function evenements() {
         return Event::where('user_id', $this->id);
