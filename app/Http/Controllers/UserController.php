@@ -123,7 +123,7 @@ class UserController extends Controller
     public function contact(): View
     {
         return view('contact.user')
-            ->with('route', route('contact'));
+            ->with('route', route('user.contact.post'));
     }
 
 }

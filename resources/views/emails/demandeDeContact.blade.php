@@ -8,11 +8,15 @@
 </head>
 <body>
 
-    <p>Nom : {{ $user->name }}</p>
+    <p>{{ $body }}</p>
+    <hr>
+    <p>Etablissement : {{ $user->ecole_identifiant_de_l_etablissement }} ({{ $user->id }})</p>
+
+    {{-- <p>Nom : {{ $user->name }}</p>
     <p>Prénom : {{ $user->prenom }}</p>
     <p>Rôle : {{ $user->role }}</p>
     <p>Etablissement : {{ $user->ecole_identifiant_de_l_etablissement }}</p>
-    <p>Message : {{ $body }}</p>
+    <p>Message : {{ $body }}</p> --}}
 
 </body>
 </html>

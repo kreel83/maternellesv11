@@ -129,7 +129,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
-    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::post('/contact', [ContactController::class, 'envoiLaDemandeDeContact'])->name('user.contact.post');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
     Route::get('/error', [parametreController::class, 'error'])->name('error');        

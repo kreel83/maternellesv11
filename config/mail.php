@@ -92,8 +92,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@kreel.fr'),
-        'name' => env('MAIL_FROM_NAME', 'Les Maternelles'),
+        'address' => env('MAIL_FROM_ADDRESS', 'contact@maternellefacile.fr'),
+        'name' => env('MAIL_FROM_NAME', 'Maternelle Facile'),
     ],
 
     /*
