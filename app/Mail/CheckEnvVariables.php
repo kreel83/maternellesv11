@@ -27,7 +27,7 @@ class CheckEnvVariables extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[URGENT] ENV variables vides',
+            subject: '[URGENT] ENV variables restaurées',
         );
     }
 
