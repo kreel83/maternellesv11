@@ -44,14 +44,14 @@
 
                 <div class="row mt-5 d-flex justify-content-around">
 
-                    <div class="col">
+                    {{-- <div class="col">
                         <i class="fas fa-map-marker-alt fa-2x"></i>
                         <p>83000 Toulon</p>
-                    </div>
+                    </div> --}}
 
                     <div class="col">
                         <i class="fas fa-phone fa-2x"></i>
-                        <p>06 06 06 06 06</p>
+                        <p>06 64 17 41 99</p>
                     </div>
 
                     <div class="col">

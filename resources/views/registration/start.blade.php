@@ -15,14 +15,14 @@
       </div>
     </div>
 
-    <div class="card mb-3">
+    {{-- <div class="card mb-3">
       <img width="95%" src="{{asset('img/account/compte-admin.jpg')}}" class="mx-auto img-fluid" alt="Création d'un compte directeur">
       <div class="card-body text-center">
         <h5 class="card-title">Directeur / Directrice</h5>
         <p class="card-text">Administration des licences <br> pour les enseignant(e)s de votre établissement</p>
         <a href="{{ route('registration.step1', ['role' => 'admin']) }}" class="btnAction mx-auto d-block w-50">Je m'inscris</a>
       </div>
-    </div>
+    </div> --}}
  
 </div>
 
