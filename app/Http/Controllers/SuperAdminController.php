@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CheckEnvVariables;
 use App\Models\Ecole;
 use App\Models\Vacance;
-use App\utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
-class MasterController extends Controller
+class SuperAdminController extends Controller
 {
     
     public function chargementDesVacancesScolaires() {
@@ -48,6 +49,13 @@ class MasterController extends Controller
         $academies = Ecole::distinct()->get(['libelle_academie','code_academie']);
         foreach ($academies as $academie) {
             Vacance::where('location', $academie->libelle_academie)->update(['ecole_code_academie' => $academie->code_academie]);
+        }
+    }
+
+    public function checkEnvVariables() {
+        if(trim(env('APP_NAME')) == '') {
+            Mail::to('thierry.thevenoud@gmail.com')->send(new CheckEnvVariables());
+            Mail::to('marc.borgna@gmail.com')->send(new CheckEnvVariables());
         }
     }
 
