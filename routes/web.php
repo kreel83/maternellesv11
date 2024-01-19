@@ -2,9 +2,9 @@
 
 //use App\Http\Controllers\admin\AdminLicenceController;
 //use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\MasterController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CahierController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VitrineController;
@@ -62,8 +62,8 @@ Route::get('/waitpayment', [TestController::class, 'waitingStripe']);
 | Fonctions de gestion de l'application
 |
 */
-Route::get('/chargevacances', [MasterController::class, 'chargementDesVacancesScolaires']);
-
+Route::get('/sa-chargevacances', [SuperAdminController::class, 'chargementDesVacancesScolaires']);
+Route::get('/sa-checkenv', [SuperAdminController::class, 'checkEnvVariables']);
 
 
 /*
