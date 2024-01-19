@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <p>Les variables environnement sont vides.</p>
+    <p>Les variables environnement ont été restaurées.</p>
 
 </body>
 </html>
