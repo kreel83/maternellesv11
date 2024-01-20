@@ -454,7 +454,7 @@ class ficheController extends Controller
         }
 
         function chatpht($reussite) {            
-            $content = "Met au féminin la phrase suivante : ".$reussite;
+            $content = "Can you transform the following sentence with the first name \"Lucie\" who is a girl : ".$reussite;
             $result = OpenAI::chat()->create([
                 'model' => 'gpt-3.5-turbo',
                 'messages' => [
