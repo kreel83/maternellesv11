@@ -321,7 +321,8 @@ class User extends Authenticatable
     // }
 
     public function name_ecole() {
-        $ecole = Ecole::where('identifiant_de_l_etablissement', $this->ecole_identifiant_de_l_etablissement)->first();
+
+        $ecole = Ecole::where('identifiant_de_l_etablissement', session('classe_active')->ecole_identifiant_de_l_etablissement)->first();
         return $ecole;
     }
 

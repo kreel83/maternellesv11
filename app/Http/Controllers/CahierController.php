@@ -234,6 +234,7 @@ class CahierController extends Controller
             ->join('sections','sections.id','resultats.section_id')
             ->where('enfant_id', $id)
             ->where('periode', $periode)
+            ->orderBy('sections.ordre')
             ->orderBy('resultats.section_id')
             ->orderBy('items.categorie_id')
             ->get();
@@ -252,7 +253,7 @@ class CahierController extends Controller
         }
         //dd($resultats);
         $resultats = $resultats->groupBy('section_id')->toArray();
-        //dd($resultats);
+        // dd($resultats);
 
         // PDF pour Parent pas de Auth::
         //$user = User::find($enfant->user_id);
@@ -351,6 +352,8 @@ class CahierController extends Controller
                 }
             }
         }
+
+        // dd($resultats, $sections);
         // header pour commentaire général
         $class = ".titre0 {color: #000; background-color: #f5e342}";
         $customClass[] = $class;
