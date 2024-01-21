@@ -142,15 +142,6 @@
             }
 
             /* .titre-page {
-                border-radius: 10px; 
-                padding: 32px 8px 32px 8px;
-                margin-bottom: 25px;
-                text-align: left; 
-                font-size: 22px;
-                width: 560px
-            } */
-
-            .titre-page {
                 margin-left: auto;
                 margin-right: auto;
                 border-radius: 10px; 
@@ -158,6 +149,30 @@
                 margin-bottom: 25px;
                 text-align: center; 
                 font-size: 26px;
+                width: 663px;
+                font-family: 'script';
+            } */
+
+            .titre-page-1-ligne {
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 10px; 
+                padding: 28px 8px 32px 8px;
+                margin-bottom: 25px;
+                text-align: center; 
+                font-size: 27px;
+                width: 663px;
+                font-family: 'script';
+            }
+
+            .titre-page-2-lignes {
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 10px; 
+                padding: 9px 8px 14px 8px;
+                margin-bottom: 25px;
+                text-align: center; 
+                font-size: 27px;
                 width: 663px;
                 font-family: 'script';
             }
@@ -533,7 +548,8 @@
     <div class="page">
     <div class="body">
 
-        <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
+        {{-- <div class="titre-page titre{{$k}}">{!! $sections[$k]['name'] !!}</div> --}}
+        <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
 
         @php
             $carte = 1;
@@ -571,7 +587,8 @@
 
                         <div class="page">
                         <div class="body">
-                            <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
+                            {{-- <div class="titre-page titre{{$k}}">{!! $sections[$k]['name'] !!}</div> --}}
+                            <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
                             <table class="table-carte" cellpadding="0">
                     @endif
                     <tr>
@@ -593,7 +610,8 @@
     <div class="page">
         <div class="body">
 
-            <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
+            {{-- <div class="titre-page titre{{$k}}">{!! $sections[$k]['name'] !!}</div> --}}
+            <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
             <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div>
             
         </div>  <!-- class="body"> -->
@@ -611,7 +629,7 @@
 <div class="page">
     <div class="body">
 
-        <div class="titre-page titre0">Commentaire général et signature</div>
+        <div class="titre-page-1-ligne titre0">Commentaire général et signature</div>
 
         {!! $reussite->commentaire_general !!}
 
@@ -620,9 +638,9 @@
             <table style="border-spacing: 10px; bordert: 1px solid lightgray">
                 <tr>
                     @if ($user->civilite == 'Mme')
-                        <td style="width: 210px"><div class="contenu_signature">la maîtresse</div></td>
+                        <td style="width: 210px"><div class="contenu_signature">La maîtresse</div></td>
                     @else
-                        <td style="width: 210px"><div class="contenu_signature">le maître</div></td>
+                        <td style="width: 210px"><div class="contenu_signature">Le maître</div></td>
                     @endif
                     @if ($user->directeur == 0)
                         <td style="width: 210px"><div class="contenu_signature">Le directeur</div></td>
