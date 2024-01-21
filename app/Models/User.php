@@ -184,6 +184,14 @@ class User extends Authenticatable
         return session('classe_active');
     }
 
+    public function directeur_civilite() {
+        
+        $directeur = session('classe_active')->direction;        
+        $d = json_decode($directeur);
+        return $d->civilite ?? null;
+    
+    }
+
 
     public function configuration() {
         return $this->hasOne('App\Models\Configuration','user_id','id');

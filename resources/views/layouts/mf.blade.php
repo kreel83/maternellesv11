@@ -72,10 +72,10 @@
                                 <li class="active">
                                     <a href="index.html">Accueil</a>
                                 </li>
-                                <li><a href="{{route('mf.about')}}">l'application</a></li>
-                                <li><a href="{{route('mf.about')}}">le compagnon</a></li>
-                                <li><a href="{{route('mf.about')}}">tarification</a></li>
-                                <li><a href="{{route('mf.about')}}">contact</a></li>
+                                <li><a href="{{route('mf.cahier')}}">l'application</a></li>
+                                <li><a href="{{route('mf.cahier')}}">le compagnon</a></li>
+                                <li><a href="{{route('mf.cahier')}}">tarification</a></li>
+                                <li><a href="{{route('mf.cahier')}}">contact</a></li>
                             </ul>
                         </div>
                         <div class="right-part">

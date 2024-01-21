@@ -191,6 +191,7 @@
                 border: 2px solid grey;
                 border-radius: 15px;
                 position: relative;
+                background-color: white;
             }
 
             .card-pdf .body {
@@ -213,6 +214,8 @@
                 top:-1px;
                 left:0
             }
+
+
 
             .card-pdf .titre1 {
                 font-size: 10px;
@@ -548,12 +551,15 @@
                         <div class="haut_carte" style="background-color: {{$resultat['color']}}">
                             <p class="titre1 " >{{$resultat['section2']}}</p>
                         </div>
-                        @if ($resultat['image_nom'])
-                            <img width="160" height="120" src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
-                        @else
-                            <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
-                        @endif
-                        <p class="body">{{$resultat['name']}}</p>
+                        <div class="bas_carte">
+                            @if ($resultat['image_nom'])
+                                <img width="160" height="120" src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
+                            @else
+                                <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
+                            @endif
+                            <p class="body">{{$resultat['name']}}</p>                            
+                        </div>
+
                     </div>
                 </td>
                 @if ($key != 0 && (($key - 3)  % 4 == 0))
@@ -619,12 +625,13 @@
             <div class="signature_title">Les signatures</div>
             <table style="border-spacing: 10px; bordert: 1px solid lightgray">
                 <tr>
+
                     @if ($user->civilite == 'Mme')
-                        <td style="width: 210px"><div class="contenu_signature">la maîtresse</div></td>
+                        <td style="width: 210px"><div class="contenu_signature">La maîtresse</div></td>
                     @else
-                        <td style="width: 210px"><div class="contenu_signature">le maître</div></td>
+                        <td style="width: 210px"><div class="contenu_signature">Le maître</div></td>
                     @endif
-                    @if ($user->directeur == 0)
+                    @if ($user->directeur_civilite() == 'M.')
                         <td style="width: 210px"><div class="contenu_signature">Le directeur</div></td>
                     @else
                         <td style="width: 210px"><div class="contenu_signature">La directrice</div></td>
