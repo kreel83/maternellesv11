@@ -84,8 +84,9 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                     <td>{{ $enfant->prenom.' '.$enfant->nom}}</td>
                     <td>{{ strtoupper($enfant->psmsgs) }}</td>
                     <td class="mx-auto">
-                        <div class="text-center groupe-terme {{isset($groupe) ? null : 'd-none'}}"  style="background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">{{$groupe["name"] ?? ''}}</div>
-
+                        <div class="text-center groupe-terme {{isset($groupe) ? null : 'd-none'}}" style="border-radius: 4px; background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">
+                            {{$groupe["name"] ?? ''}}
+                        </div>
                     </td>
 
                     <td>
@@ -164,7 +165,7 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
     </div>
 </div>
 
-<!-- Modal pour l'envoi en masse des cahiers (bouton sous periode) -->
+<!-- Modal pour l'envoi en masse des cahiers (bouton sous période) -->
 <div class="modal fade" id="envoiTousLesCahiersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
