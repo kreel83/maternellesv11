@@ -278,10 +278,17 @@ class CahierController extends Controller
         //dd($reussiteSections);
 
         $sections = Section::orderBy('ordre')->get()->toArray();
+        //dd($sections);
         $s = array();
         $rs = array();
         foreach ($sections as $section) {
             $s[$section['id']] = $section;
+            if(mb_strlen($s[$section['id']]['name']) > 70) {
+                $s[$section['id']]['name'] = str_replace(': ', ':<br>', $s[$section['id']]['name']);
+                $s[$section['id']]['class'] = 'titre-page-2-lignes titre'.$section['id'];
+            } else {
+                $s[$section['id']]['class'] = 'titre-page-1-ligne titre'.$section['id'];
+            }
             // on met les textes dans un tableau pour affichage plus pratique dans la vue
             $reussiteSection = $reussiteSections->firstWhere('section_id', $section['id']);
             $rs[$section['id']] = $reussiteSection ? $reussiteSection->description : '';
