@@ -63,7 +63,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
             <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
                 <div class="container-fluid">
 
-                    <a href="{{ route('depart') }}" class="brand-logo d-none d-lg-block"><img src="{{ asset('img/deco/logo.png') }}" alt="" width="130"></a>
+                    <a href="{{ route('depart') }}" class="brand-logo d-none d-lg-block"><img src="{{ asset('img/deco/logo.png') }}" alt="" width="150"></a>
                     <div class="d-block d-lg-none" style="font-size: 25px;">
                         @if ($menu == 'accueil')
                             <img src="{{ asset('img/deco/logo.png') }}" alt="" width="90">
@@ -148,7 +148,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                 <button class="btnModeTuto">Desactiver le mode tutoriel</button>
                             </div> --}}
                             <div id="modeDecouverte" class="{{ session('is_abonne') ? 'd-none' : null }}">
-                                <button class="btnModeDecouverte" data-bs-toggle="modal" data-bs-target="#InfoDemoMain" >Mode découverte</button>
+                                <button style="border: 1px solid white" class="btnModeDecouverte" data-bs-toggle="modal" data-bs-target="#InfoDemoMain" >Mode découverte</button>
                             </div>
 
                             @php
@@ -177,13 +177,13 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
                                 <div class="dropdown-menu" style="left: inherit !important; right: 0">
                                     @if (session('classe_active'))
-                                        <a href="{{ route('parametresClasse') }}" class="nav-item nav-link  {{ $menu == 'paramclasse' ? 'active' : null }}">Paramètres de ma classe</a>
+                                        <a href="{{ route('parametresClasse') }}" class="nav-item nav-link  {{ $menu == 'paramclasse' ? 'active' : null }}"><i class="fa-solid fa-gear me-2"></i> Paramètres de ma classe</a>
                                     @else
                                         <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe crée</a>
                                     @endif
                                     @if(session()->has('classe_active'))
                                         <li><hr class="dropdown-divider"></li>
-                                        <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}" href="{{ route('partager') }}"><i class="fa-light fa-arrow-up-from-bracket me-2"></i> Partager ma classe</a>
+                                        <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}" href="{{ route('partager') }}"><i class="fa-solid fa-share me-2"></i> Partager ma classe</a>
                                     @endif
                                     @if (!is_null(session('autres_classes')))
                                         @if (!session('autres_classes')->isEmpty())
@@ -334,13 +334,13 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
     <div class="modal-dialog" style="top: 200px;">
       <div class="modal-content  position-relative">
         <div class="modal-body text-center">
-            Vous utilisez un version "découverte" de l'application<br>
+            Vous utilisez une version " découverte " de l'application<br>
             Cette version est limitée à 10 notations.<br><br>
-            Abonnez-vous pour 12€99 / an pour profiter<br>
-             pleinement de votre application
+            Abonnez-vous pour {{ env('PRIX_ABONNEMENT') }} € / an pour profiter<br>
+            pleinement de l'application <strong>{{ env('APP_NAME') }}</strong>
             <div>
-                <a href="/app/register/start" class="btnAction mx-auto" style="background-color: rgb(116, 205, 116)">Je m'abonne</a>
-                <button class="btnAction mx-auto" data-bs-dismiss="modal" aria-label="Close">je teste l'application</button>
+                <a href="{{ route('subscribe.index') }}" class="btnAction mx-auto" style="background-color: rgb(116, 205, 116)">Je m'abonne</a>
+                <button class="btnAction mx-auto" data-bs-dismiss="modal" aria-label="Close">Je teste l'application</button>
             </div>
         </div>
   

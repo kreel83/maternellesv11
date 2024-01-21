@@ -113,20 +113,20 @@ class Enfant extends Model
     public function user() {
         return $this->hasOne('App\Models\User','id','user_id')->first();
     }
-
+    
     public function formatPdf() {
         function rand_color() {
             $colors = ['#F3DA24','#F15E61','#51C5CF','#00B04C', '#FF914D', '#66ACE2', '#C9E265']; 
-
+    
             $index = array_rand($colors);
             return $colors[$index];
         }
+
         $s = '';
         $prenom = ucfirst(strtolower($this->prenom));
-        for ($i = 0; $i<strlen($prenom); $i++) {
-            $s .= '<span style="color: '.rand_color().'">'.substr($prenom,$i,1).'<span>';
+        for ($i = 0; $i<mb_strlen($prenom); $i++) {
+            $s .= '<span style="color: '.rand_color().'">'.mb_substr($prenom,$i,1).'<span>';
         }
-
         return $s;
     }
 

@@ -380,8 +380,8 @@ class CahierController extends Controller
             //$pdf = PDF::loadView('pdf.reussite3', ['textesParSection' => $textesParSection, 'customClass' => implode(' ', $customClass),'reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'equipes' => $equipes, 'user' => $user, 'periode' => $periode]);
             // download PDF file with download method
             //return $pdf->stream('test_cahier.pdf');     
-            $pdf->add_info('Title', 'Cahier de reussites de '.ucfirst($enfant->prenom));
-            return $pdf->stream('Cahier de reussites de '.ucfirst($enfant->prenom.'.pdf'));
+            $pdf->add_info('Title', 'Cahier de réussites de '.ucfirst($enfant->prenom));
+            return $pdf->stream('Cahier de réussites de '.ucfirst($enfant->prenom.'.pdf'));
         } else {
             $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
             $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    

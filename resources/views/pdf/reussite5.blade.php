@@ -1,14 +1,9 @@
-@php
-$degrades = App\Models\Enfant::DEGRADE;
-//dd($degrades);
-//dd($degrades[$enfant->background]);
-@endphp
-
 <!DOCTYPE html>
 <html lang="fr">
 
     <head>
         <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
             
             @page {
@@ -271,40 +266,45 @@ $degrades = App\Models\Enfant::DEGRADE;
                 text-align: center;
             }
 
-            .enfant {
+            /* .enfant {
                 font-size: 40px;
                 font-weight: 600;
                 text-align: center;
                 margin-bottom: 34px;
                 margin-top: 6px;
                 color: lightgrey;
-            }
-
-            .periode {
-                font-size: 25px;
+            } */
+            .enfant {
                 text-align: center;
-                margin-top: -2px;
-                color: grey;
-                /* width: 250px; */
-            }
-            .annee {
-                font-size: 15px;
-                text-align: center;
-                margin-top: -40px;
-                color: grey;
-                /* width: 250px; */
+                font-family:'script';
+                font-size:80px;
             }
 
             .section {
                 font-size: 25px;
                 text-align: center;
-                
                 margin-top: 25px;
                 color: black;
+                font-family: frenchScript; 
+                font-size:50px;
             }
-            .enfant span {
-                font-size: 60px;
+
+            .periode {
+                margin-top: -2px;
+                text-align: center;
+                color: grey;
+                font-family: 'frenchScript';
+                font-size: 50px;
             }
+
+            .annee {
+                text-align: center;
+                margin-top: -40px;
+                color: grey;
+                font-family: 'frenchScript';
+                font-size: 50px;
+            }
+
             .photo_enfant{
                 width: 160px;
                 height: 160px;
@@ -316,7 +316,6 @@ $degrades = App\Models\Enfant::DEGRADE;
                 border-radius: 50%;
                 /*background-color: white;*/
                 overflow: hidden;
-                /*background-image: {{ $degrades[$enfant->background]}}*/
             }
 
             .equipes {
@@ -376,34 +375,7 @@ $degrades = App\Models\Enfant::DEGRADE;
                 top: 480px;
                 left: 400px;
             } */
-            .position-prenom {
-                position: absolute;
-                top: 480px;
-                left: 50%;
-                /* transform: translate(-50%); */
-            }
-
             
-            .position-periode {
-                position: absolute;
-                top: 630px;
-                left: 45%;
-                /* transform: translate(-50%); */
-            }
-            .position-annee {
-                position: absolute;
-                top: 660px;
-                left: 45%;
-                /* transform: translate(-50%); */
-            }
-
-            .position-section {
-                position: absolute;
-                top: 550px;
-                left: 50%;
-                /* transform: translate(-50%); */
-            }
-
             .equipe_array {
                 width: 100vw;
             }
@@ -443,31 +415,33 @@ $degrades = App\Models\Enfant::DEGRADE;
 
     <table width="100%" style="margin-top:168px;">
         <tr>
-            <td align="center">
-                <div class="e_nfant p_osition-prenom">
-                    <span class="p_renom" style="font-family:'script';font-size:80px">
-                         {!! $enfant->formatPdf() !!}
-                    </span>
+            <td>
+                {{-- <div class="enfant" style="font-family:'script';font-size:80px"> --}}
+                <div class="enfant">
+                    {!! $enfant->formatPdf() !!}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div class="section p_osition-section"  style="font-family: frenchScript; font-size:50px">
+                {{-- <div class="section" style="font-family: frenchScript; font-size:50px"> --}}
+                <div class="section">
                     {{$enfant->section()}}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div class="periode p_osition-periode"  style="font-family: frenchScript; font-size: 50px">
+                {{-- <div class="periode" style="font-family: frenchScript; font-size: 50px"> --}}
+                <div class="periode">
                     {{$periode}}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div class="annee p_osition-annee"  style="font-family:'frenchScript';font-size:50px">
+                {{-- <div class="annee" style="font-family:'frenchScript';font-size:50px"> --}}
+                <div class="annee">
                     {{App\utils\Utils::calcul_annee_scolaire_formated()}}
                 </div>
             </td>
@@ -540,8 +514,6 @@ $degrades = App\Models\Enfant::DEGRADE;
         </tr>
 
     </table>
-
-
     
     <div class="position-adresse-ecole">
         <div class="nom_ecole">{{$user->name_ecole()->nom_etablissement}}</div>
@@ -555,12 +527,8 @@ $degrades = App\Models\Enfant::DEGRADE;
 </div>
 
 <div class="page-break"></div>
-@php
-    //dd($resultats);
-@endphp
-@foreach($resultats as $k => $section)
 
-    {{-- <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header> --}}
+@foreach($resultats as $k => $section)
 
     <div class="page">
     <div class="body">
@@ -571,15 +539,13 @@ $degrades = App\Models\Enfant::DEGRADE;
             $carte = 1;
             //dd($section);
         @endphp
-        {{-- <table style="margin-top:20px; border-spacing: 10px"> --}}
-            {{-- <table style="margin-top:20px;" cellpadding="0"> --}}
+
             <table class="table-carte" cellpadding="0">
             <tr>
             @foreach ($section as $key => $resultat)
                 <td style="width: 160px; padding-right: 10px; padding-bottom:10px">
                     <div class="card-pdf" style="border-color: {{$resultat['color']}}">
                         <div class="haut_carte" style="background-color: {{$resultat['color']}}">
-                            {{-- <p class="titre1 " >{{$resultat['name_section']}}</p> --}}
                             <p class="titre1 " >{{$resultat['section2']}}</p>
                         </div>
                         @if ($resultat['image_nom'])
@@ -592,15 +558,17 @@ $degrades = App\Models\Enfant::DEGRADE;
                 </td>
                 @if ($key != 0 && (($key - 3)  % 4 == 0))
                     </tr>
-                    @if ($carte % 12 ==0)
+                    {{-- Saut de page si 12 fiches sur la page ET d'autres fiches a imprimer --}}
+                    @if ($carte % 12 == 0 && count($section) > 12)
                         @php
                             $carte = 1;
                         @endphp
                         </table>
                         </div>  <!-- class="body"> -->
                         </div>  <!-- class="page"> -->
+
                         <div class="page-break"></div>
-                        {{-- <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header> --}}
+
                         <div class="page">
                         <div class="body">
                             <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
@@ -619,45 +587,19 @@ $degrades = App\Models\Enfant::DEGRADE;
 
     </div>  <!-- class="body"> -->
     </div> <!-- class="page"> -->
+
     <div class="page-break"></div>
 
     <div class="page">
-    <div class="body">
-    <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
-    
-    {{-- @php
-        //dd($resultats);
-        $reussiteSection = $reussiteSections->firstWhere('section_id', $k);
-        $texte = $reussiteSection ? $reussiteSection->description : '';
-        //dd($texte);
-    @endphp --}}
-@php
-    //dd($reussiteSections);
-@endphp
-    <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div>
-    {{-- <div class="text-container">{!! $textesParSection[$k] !!}</div> --}}
+        <div class="body">
 
-        {{-- @if ($carte > 8 )
-            <!-- Si + de 8 cartes sur la page en cours on change de page pour écrire le commentaire -->
-            </div>  <!-- class="body"> -->
-            </div> <!-- class="page"> -->
-            <div class="page-break"></div>
-            <header><div class="titre-header titre{{$k}}">{{$sections[$k]['name']}}</div></header>
-            <div class="page">
-            <div class="body">
             <div class="titre-page titre{{$k}}">{{$sections[$k]['name']}}</div>
-            {!! $textesParSection[$k] !!}
-        @else
-            <div class="contenu">
-            {!! $textesParSection[$k] !!}
-            </div>
-        @endif --}}
-        
-    </div>  <!-- class="body"> -->
+            <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div>
+            
+        </div>  <!-- class="body"> -->
     </div> <!-- class="page"> -->
 
     <footer class="pagenum"></footer>
-    {{-- <img src="{{ public_path('/img/pdf/gauche.jpg') }}" class="footerimgleft" height="50"> --}}
 
     <div class="page-break">
     </div>
@@ -665,35 +607,33 @@ $degrades = App\Models\Enfant::DEGRADE;
 
 @endforeach
 
-<!-- Commentaire général -->
-{{-- <header><div class="titre-header titre0">{{ $enfant->prenom }}</div></header> --}}
+{{-- Commentaire général --}}
 <div class="page">
-<div class="body">
-    {{-- <div class="titre-page titre0">{{ $enfant->prenom }}</div> --}}
-    <div class="titre-page titre0">Commentaire général et signature</div>
+    <div class="body">
 
-    {!! $reussite->commentaire_general !!}
-    {{-- {!! $textesParSection[0] !!} --}}
+        <div class="titre-page titre0">Commentaire général et signature</div>
 
-    <div class="signature">
-        <div class="signature_title">Les signatures</div>
-        <table style="border-spacing: 10px; bordert: 1px solid lightgray">
-            <tr>
-                @if ($user->civilite == 'Mme')
-                    <td style="width: 210px"><div class="contenu_signature">la maîtresse</div></td>
-                @else
-                    <td style="width: 210px"><div class="contenu_signature">le maître</div></td>
-                @endif
-                @if ($user->directeur == 0)
-                    <td style="width: 210px"><div class="contenu_signature">Le directeur</div></td>
-                @else
-                    <td style="width: 210px"><div class="contenu_signature">La directrice</div></td>
-                @endif
-                <td style="width: 210px"><div class="contenu_signature">Les parents</div></td>
-            </tr>
-        </table>
+        {!! $reussite->commentaire_general !!}
+
+        <div class="signature">
+            <div class="signature_title">Les signatures</div>
+            <table style="border-spacing: 10px; bordert: 1px solid lightgray">
+                <tr>
+                    @if ($user->civilite == 'Mme')
+                        <td style="width: 210px"><div class="contenu_signature">la maîtresse</div></td>
+                    @else
+                        <td style="width: 210px"><div class="contenu_signature">le maître</div></td>
+                    @endif
+                    @if ($user->directeur == 0)
+                        <td style="width: 210px"><div class="contenu_signature">Le directeur</div></td>
+                    @else
+                        <td style="width: 210px"><div class="contenu_signature">La directrice</div></td>
+                    @endif
+                    <td style="width: 210px"><div class="contenu_signature">Les parents</div></td>
+                </tr>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 
 </body>

@@ -35,14 +35,16 @@
             Vous n'avez pas d'abonnement en cours.
           </div>
           <div class="mb-3">
-            L'abonnement au service {{ env('APP_NAME') }} est au prix de {{ $produit->price }} € pour 1 an et sera prolongé automatiquement à la fin de la période.
+            L'abonnement au service {{ env('APP_NAME') }} est au prix de {{ env('PRIX_ABONNEMENT') }} € pour 1 an et sera prolongé automatiquement à la fin de la période.
           </div>
           <div class="mb-3">
             Vous pourrez résilier votre abonnement à tout moment.
           </div>
           <div class="mb-3">
-            <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}">
-              Je souhaite m'abonner
+            {{-- <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}"> --}}
+              <div class="alert alert-info">L'abonnement au service sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
+            <a class="btn btn-secondary">
+              Je souhaite m'abonner au service
             </a>
           </div>
       @else
