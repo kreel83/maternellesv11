@@ -132,6 +132,26 @@ const selectSectionFiche = (ficheSelect) => {
         })  
 
     })
+
+
+
+    $(document).on('keydown','#titre', function(e) {
+        console.log(e.key)
+        var texte = $(this).val();
+        if (texte.length == 90 && e.key != "Backspace" && e.key != "Delete") {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+        }
+
+    })
+
+    $(document).on('keyup','#titre', function(e) {
+        var texte = $(this).val();
+        $('#compteur').text(texte.length)
+
+    })
+
+
     $(document).on('mouseenter','.selectSectionFiche', function() {
         var titre = $(this).data('titre')
         $('#SectionName').html(titre)

@@ -164,12 +164,13 @@
                         @error('section')
                         <div class="error_message">{{ $message }}</div>                                        
                         @enderror
-                        <div class="field field_v1 my-3 form_titre form-group w-100">
+                        <div class="field field_v1 my-3 form_titre form-group w-100 d-flex flex-column">
 
                             <input id="titre" class="form-control" name="name" placeholder="titre de la fiche"
                                 style="font-size: 1rem !important" value="{{ $itemactuel ? $itemactuel->name : null }}"
                                 >
-                            </div>
+                            <div class="text-end" style="font-size: 12px; color: var(--main-color)"><span id="compteur">0</span>/90</div>
+                        </div>
                             @error('name')
                             <div class="error_message">{{ $message }}</div>                                        
                             @enderror
