@@ -319,7 +319,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/partage/remove/final', [PartageController::class, 'supprimePartageFinal'])->name('supprimePartageFinal');
     Route::get('/partage/create/{token}', [PartageController::class, 'acceptePartage'])->name('acceptePartage');
     Route::get('/partage/code/{classeuser_id}', [PartageController::class, 'sendCodePartage'])->name('sendCodePartage');
-
+    
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
@@ -328,10 +328,15 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
     Route::post('subscribe/resume', [SubscriptionController::class, 'resumeSubscription'])->name("subscribe.resumesubscription");
     Route::get('subscribe/waiting', [SubscriptionController::class, 'stripeAttenteFinalisation'])->name("subscribe.waiting");
-
+    
     Route::get('/invoice/download/{facture_number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
     Route::get('invoice/send/{facture_number}', [SubscriptionController::class, 'sendInvoice'])->name("subscribe.invoice.send");    
-
+    
+    
+   
+    Route::get('/partage/agreeShare/{id}',  [PartageController::class, 'agreeShare'])->name('agreeShare');
+    Route::get('/partage/rejectShare/{id}',  [PartageController::class, 'rejectShare'])->name('rejectShare');
+    Route::get('/partage/liste_partage',  [PartageController::class, 'liste_partage'])->name('liste_partage');
 });
 
 // un middleware 'abo'  qui est come le auth

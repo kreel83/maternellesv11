@@ -12,11 +12,37 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Session;
 
 class PartageController extends Controller
 {
     
     
+    public function liste_partage() {
+        $is_partage_en_cours = Auth::user()->check_is_partage_en_cours();
+        return view('classes.partage')->with('liste', $is_partage_en_cours);
+    }
+
+    public function agreeShare($id) {
+       $cu = ClasseUser::find($id);
+       $cu->user_id = Auth::id();
+       $cu->save();
+       if (!Auth()->user()->classe_id) {
+            Auth()->user()->classe_id = $cu->classe_id;
+            Auth::user()->save();
+            $classe = Classe::find($cu->classe_id);
+            session(['classe_active' => $classe ]);        
+       }
+
+       return 'done';
+    }
+
+    public function rejectShare($id) {
+       $cu = ClasseUser::find($id);
+       $cu->delete();
+       return 'done';
+    }
+
     public function index() {
         $partages = ClasseUser::select('classe_users.id', 'classe_users.role', 'classe_users.code', 'users.name', 'users.prenom')        
             ->where('classe_users.classe_id', session('classe_active')->id)

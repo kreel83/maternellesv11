@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\UserEvent;
 use App\Mail\SendResetPasswordLink;
 use Carbon\Carbon;
+use Session; 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -190,6 +191,30 @@ class User extends Authenticatable
         $d = json_decode($directeur);
         return $d->civilite ?? null;
     
+    }
+
+    public function directeur() {
+        
+        $directeur = session('classe_active')->direction;        
+        return json_decode($directeur);
+    
+    }
+
+    public function check_partage() {
+        $p = ClasseUser::where('email', $this->email)->whereNotNull('user_id')->first();
+        
+        if ($p) {
+            $classe = Classe::find($p->classe_id);
+            $this->classe_id = $p->classe_id;
+            $this->save();
+            Session::get(['classe_active', $classe]);
+            return 'rewind';
+        }
+        return ClasseUser::where('email', $this->email)->whereNull('user_id')->get();
+    }
+
+    public function check_is_partage_en_cours() {
+        return ClasseUser::where('email', $this->email)->whereNull('user_id')->get();
     }
 
 

@@ -179,7 +179,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     @if (session('classe_active'))
                                         <a href="{{ route('parametresClasse') }}" class="nav-item nav-link  {{ $menu == 'paramclasse' ? 'active' : null }}"><i class="fa-solid fa-gear me-2"></i> Paramètres de ma classe</a>
                                     @else
-                                        <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe crée</a>
+                                        <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe créée</a>
                                     @endif
                                     @if(session()->has('classe_active'))
                                         <li><hr class="dropdown-divider"></li>

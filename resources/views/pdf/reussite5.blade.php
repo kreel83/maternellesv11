@@ -233,7 +233,7 @@
 
 
             .card-pdf .titre1 {
-                font-size: 10px;
+                font-size: 12px;
                 padding: 4px;
                 font-weight: bold;
                 text-align: center;
@@ -521,10 +521,11 @@
                         @endforeach
                     @endif
 
-                    @if ($enfant->directeur())
+
+                    @if ($user->directeur())
                     <tr>
-                        <td style="font-weight: bolder; color: black">{{$enfant->directeur()[0] == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
-                        <td style='padding-left: 15px'>{{$enfant->directeur()[1]}}</td>
+                        <td style="font-weight: bolder; color: black">{{$user->directeur()->civilite == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
+                        <td style='padding-left: 15px'>{{$user->directeur()->prenom.' '.$user->directeur()->nom}}</td>
                     </tr>
                     @endif
                 </table>

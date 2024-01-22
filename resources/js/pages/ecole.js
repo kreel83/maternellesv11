@@ -19,11 +19,25 @@ const chercheEcole = () => {
     })
 }
 
+
+
 const choixEcole = () => {
     if ($('#confirmationEcole').length) var myModal = new bootstrap.Modal(document.getElementById('confirmationEcole'), {})
     if ($('#myToast').length) var toast = new bootstrap.Toast(document.getElementById('myToast'), {})
 
+    $(document).on('click','.agreeShare', function() {
+        var id = $(this).data('id')
+        $.get('/app/partage/agreeShare/'+id, function() {
+            window.open('/app','_self')
+        })
+    })
 
+    $(document).on('click','.rejectShare', function() {
+        var id = $(this).data('id')
+        $.get('/app/partage/rejectShare/'+id, function() {
+            location.reload();
+        })
+    })
 
     $(document).on('click','.ecole', function() {
                 var choixEcole = $(this).data('num')
