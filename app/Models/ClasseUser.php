@@ -15,4 +15,8 @@ class ClasseUser extends Model
     
     protected $table = "classe_users";
 
+    public function classe() {
+        return $this->hasOne('App\Models\Classe','id','classe_id');
+    }
+
 }

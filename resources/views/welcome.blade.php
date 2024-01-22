@@ -16,11 +16,11 @@ $is_dashboard = true;
     @include('include.display_msg_error')
 
     {{-- depuis le midlleware 'abo' --}}
-    {{-- @if (session('nolicence'))
+    @if (!$is_partage_en_cours->isEmpty())
         <div class="alert alert-danger">
-            Cette page n'est pas autorisée. <a href="{{ route('subscribe.cardform') }}" class="alert-link">Cliquez ici</a> pour souscrire un abonnement et profiter de toute la puissance de cette application.
+            Vous avez une demande de partage de classe en attente d'acceptation. <a href="{{route('liste_partage')}}">Acceder aux partages</a>
         </div>
-    @endif --}}
+    @endif
 
 
 
