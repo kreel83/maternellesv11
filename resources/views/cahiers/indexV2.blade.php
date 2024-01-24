@@ -203,6 +203,24 @@
 
 
 <!-- Modal -->
+<div class="modal fade" id="informationcommentairePDF" tabindex="-1" aria-labelledby="informationcommentairePDF" aria-hidden="true">
+    <div class="modal-dialog" style="top: 200px">
+      <div class="modal-content">
+        <div class="modal-header"  style="color: var(--main-color) !important">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Information importante</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"  style="color: var(--main-color) !important">
+            Vous n'avez rien noté dans la section commentaire général.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btnAction inverse poursuite" data-bs-dismiss="modal">C'est normal</button>
+          <button type="button" class="btnAction correction" data-bs-dismiss="modal">Je corrige</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Modal -->
 <div class="modal fade" id="informationPDF" tabindex="-1" aria-labelledby="informationPDF" aria-hidden="true">
     <div class="modal-dialog" style="top: 200px">
       <div class="modal-content">

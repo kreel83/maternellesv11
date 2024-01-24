@@ -160,7 +160,7 @@ if ($('.editorApercu').length) {
 
 }
 
-choicePhrase() 
+choicePhrase(Modal) 
 clickOnNav()
 
 if ($('#editor2').length) {

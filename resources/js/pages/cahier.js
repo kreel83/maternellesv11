@@ -13,30 +13,51 @@ var origine = {
     99: true
 }
 
-const choicePhrase = (quill) => {
-    $(document).on('change','.seePdf', function() {
-        const definitif = $(this).prop('checked')
-        const reussite = $(this).data('reussite')
+const choicePhrase = (Modal) => {
+
+    function traitement() {
+        const definitif = $('.seePdf:first').prop('checked')
+        const reussite = $('.seePdf:first').data('reussite')
         console.log('definitif', definitif)
-
-
-
+        var check = $('#editorApercu99').attr('data-texte')
         $.ajax({
             method: 'get',
-            url : '/app/cahier/'+reussite+'/definitif?state='+definitif,
-            
+            url : '/app/cahier/'+reussite+'/definitif?state='+definitif,            
             success: function(data) {
                 $('.seePdf').prop('checked', definitif)
                 if (definitif == true)  {
-
                     $('.definitifPDF').removeClass('d-none')
                 } else {
-
                     $('.definitifPDF').addClass('d-none')
-                }
-                
+                }                
             }
         })
+    }
+
+    $(document).on('click','.poursuite', function() {
+        traitement()
+    })
+
+    $(document).on('click','.correction', function() {
+        $('.seePdf').prop('checked',false)
+        $('.definitifPDF').addClass('d-none')
+    })
+
+
+    $(document).on('change','.seePdf', function() {
+        const definitif = $('.seePdf:first').prop('checked')
+        const reussite = $('.seePdf:first').data('reussite')
+        console.log('definitif', definitif)
+        var check = $('#editorApercu99').attr('data-texte')
+        if (!check && definitif) {
+            
+            var myModal = new Modal(document.getElementById('informationcommentairePDF'))
+            myModal.show()
+        } else {
+            traitement()
+        }
+
+
     })
     
     $(document).on('keyup', '.searchPhrase', function (e) {
@@ -324,6 +345,7 @@ const clickOnDefinif = (quill, section) => {
                                             texte: texte,                    
                                         },
                                         success: function(data) {
+                                            $('.editorApercu').attr('data-texte', texte)
                                             $('.saisie[data-section="'+section+'"]').addClass('d-none')
                                             $('.sauvegarde[data-section="'+section+'"]').removeClass('d-none')
                                             setTimeout(() => {
