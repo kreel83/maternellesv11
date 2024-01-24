@@ -60,7 +60,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
     <input type="hidden" id="page" value="{{ $menu }}">
     @if (!isset($log))
         <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top p-0" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
                 <div class="container-fluid">
 
                     <a href="{{ route('depart') }}" class="brand-logo d-none d-lg-block"><img src="{{ asset('img/deco/logo.png') }}" alt="" width="150"></a>
@@ -166,10 +166,15 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     <div class="d-flex flex-column justify-content-center align-items-center justify-content-center">
                                         {{-- <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}"> --}}
                                         <div class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">
-                                            <strong>{{ ucfirst(strtolower(Auth::user()->prenom)) }} {{ strtoupper(Auth::user()->name) }}</strong>
+                                            <strong style="font-size: 13px">{{ ucfirst(strtolower(Auth::user()->prenom)) }} {{ strtoupper(Auth::user()->name) }}</strong>
                                         </div>
                                         @if (session('classe_active'))
-                                            <small>{{session('classe_active')->description}}</small>
+
+                                            {{-- <div style="font-size: 12px">{{session('classe_active')->description}}</div> --}}
+                                            <div>
+                                                <small style="font-size: 12px">{{session('classe_active')->description}}</small>
+                                            </div>
+
                                         @endif
                                     </div>
                                 </a>
@@ -178,9 +183,9 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     @if (session('classe_active'))
                                         <a href="{{ route('parametresClasse') }}" class="nav-item nav-link  {{ $menu == 'paramclasse' ? 'active' : null }}"><i class="fa-solid fa-gear me-2"></i> Paramètres de ma classe</a>
                                     @else
-                                        <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe crée</a>
+                                        <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe créée</a>
                                     @endif
-                                    @if(session()->has('classe_active'))
+                                    @if(session()->has('classe_active') && session('classe_active')->user_id == Auth()->id())
                                         <li><hr class="dropdown-divider"></li>
                                         <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}" href="{{ route('partager') }}"><i class="fa-solid fa-share me-2"></i> Partager ma classe</a>
                                     @endif

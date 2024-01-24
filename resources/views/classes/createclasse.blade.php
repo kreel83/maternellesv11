@@ -15,7 +15,11 @@
 
 <div class="mt-5 container" id="creation_classe">
 
-    <div class="card mx-auto w-75" style="border: none; border-radius: 40px; margin-top: 100px">
+    @if (isset($liste) && !$liste->isEmpty())
+
+        @include('partage.include_partage')
+    @endif
+    <div class="card mx-auto w-75 p-3" style="border: none; border-radius: 40px; margin-top: 100px">
         <div class="ms-3" style="border: none; border-radius: 40px">
             <div class="d-flex justify-content-between pt-2">
                 <h5>{{ $title }} - Etape 1/2</h5>

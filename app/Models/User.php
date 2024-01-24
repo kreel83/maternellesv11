@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\UserEvent;
 use App\Mail\SendResetPasswordLink;
 use Carbon\Carbon;
+use Session; 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -192,20 +193,61 @@ class User extends Authenticatable
     
     }
 
+    public function directeur() {
+        
+        $directeur = session('classe_active')->direction;        
+        return json_decode($directeur);
+    
+    }
+
+    public function check_partage() {
+        $p = ClasseUser::where('email', $this->email)->whereNotNull('user_id')->first();
+        
+        if ($p) {
+            $classe = Classe::find($p->classe_id);
+            $this->classe_id = $p->classe_id;
+            $this->save();
+            Session::get(['classe_active', $classe]);
+            return 'rewind';
+        }
+        return ClasseUser::where('email', $this->email)->whereNull('user_id')->get();
+    }
+
+    public function check_is_partage_en_cours() {
+        return ClasseUser::where('email', $this->email)->whereNull('user_id')->get();
+    }
+
 
     public function configuration() {
         return $this->hasOne('App\Models\Configuration','user_id','id');
     }
 
+    public function is_titulaire() {
+        $c = Classe::find(session('classe_active')->id);
+        if ($c->user_id == $this->id) return true;
+        return false;
+    }
+
     public function autresClasses() {
         // $actual = session()->get('id_de_la_classe');
-        $actual = session('classe_active')->id ?? null;
-        $i = Classe::where('user_id', Auth::id())
-            ->where('classes.id', '<>', $actual)
-            ->pluck('id');
-        $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
-        $merged = $i->merge($t);
-        return Classe::whereIn('id', $merged)->get();
+        $classe_partage = ClasseUser::where('user_id', Auth::id())->pluck('classe_id');
+        $classe_perso = Classe::where('user_id', $this->id)->pluck('id');
+        $classe_totale =  $classe_partage->merge($classe_perso)->toArray();
+        $classe_actuelle = Auth::user()->classe_id; 
+        if (($key = array_search($classe_actuelle, $classe_totale)) !== false) {
+            unset($classe_totale[$key]);
+        }
+        // dd($classe_totale, $classe_actuelle);
+
+
+        // $actual = session('classe_active')->id ?? null;
+        // $i = Classe::where('user_id', Auth::id())
+        //     ->where('classes.id', '<>', $actual)
+        //     ->pluck('id');
+        //     dd($i);
+        // $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
+        // $merged = $i->merge($t);
+        return Classe::whereIn('id', $classe_totale)->get();
     }
     /*
     public function autresClasses() {

@@ -19,4 +19,8 @@ class Classe extends Model
     public static function is_enfants() {
         return Enfant::where('classe_id', session('classe_active')->id)->count() > 0;
     }
+
+    public function state() {
+        return $this;
+    }
 }

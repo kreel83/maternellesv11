@@ -243,6 +243,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/fiches/saveTemplate', [ficheController::class, 'saveTemplate'])->name('saveTemplate');
 
 
+
+
     Route::get('/classe/changer',[ClasseController::class,'changerclasse'])->name('changerClasse');
     Route::get('/classe/create',[ClasseController::class,'createclasse'])->name('createclasse');
     Route::post('/classe/confirme',[ClasseController::class,'confirmeClasse'])->name('confirmeClasse');
@@ -294,6 +296,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/monprofil', [ParametreController::class, 'savemonprofil'])->name('savemonprofil');
     Route::get('/pwd', [ParametreController::class, 'changerLeMotDePasse'])->name('changerLeMotDePasse');
     Route::post('/pwd', [ParametreController::class, 'sauverLeMotDePasse'])->name('sauverLeMotDePasse');
+    Route::get('/activeSectionDevenirEleve',[ParametreController::class,'activeSectionDevenirEleve'])->name('activeSectionDevenirEleve');
 
     Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
     Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle.post');
@@ -315,12 +318,14 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/partage/create/{token}', [PartageController::class, 'acceptePartage'])->name('acceptePartage');
     Route::get('/partage/code/{classeuser_id}', [PartageController::class, 'sendCodePartage'])->name('sendCodePartage');
 
+
     // Gestion des abonnements
     Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
     Route::get('/subscribe-checkout', [SubscriptionController::class, 'subscribeWithStripeCheckout'])->name('subscribe.checkout');
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
+
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
@@ -332,7 +337,12 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     
     Route::get('/invoice/download/{facture_number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
     Route::get('invoice/send/{facture_number}', [SubscriptionController::class, 'sendInvoice'])->name("subscribe.invoice.send");    
-
+    
+    
+   
+    Route::get('/partage/agreeShare/{id}',  [PartageController::class, 'agreeShare'])->name('agreeShare');
+    Route::get('/partage/rejectShare/{id}',  [PartageController::class, 'rejectShare'])->name('rejectShare');
+    Route::get('/partage/liste_partage',  [PartageController::class, 'liste_partage'])->name('liste_partage');
 });
 
 // un middleware 'abo'  qui est come le auth
