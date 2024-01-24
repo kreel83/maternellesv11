@@ -60,7 +60,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
     <input type="hidden" id="page" value="{{ $menu }}">
     @if (!isset($log))
         <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top p-0" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
                 <div class="container-fluid">
 
                     <a href="{{ route('depart') }}" class="brand-logo d-none d-lg-block"><img src="{{ asset('img/deco/logo.png') }}" alt="" width="150"></a>
@@ -183,7 +183,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     @else
                                         <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe créée</a>
                                     @endif
-                                    @if(session()->has('classe_active') && Auth::user()->is_titulaire())
+                                    @if(session()->has('classe_active') && session('classe_active')->user_id == Auth()->id())
                                         <li><hr class="dropdown-divider"></li>
                                         <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}" href="{{ route('partager') }}"><i class="fa-solid fa-share me-2"></i> Partager ma classe</a>
                                     @endif
