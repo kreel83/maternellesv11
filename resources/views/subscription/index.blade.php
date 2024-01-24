@@ -27,27 +27,83 @@
 
   {{--@if (!$is_abonne)--}}
   <div class="card mx-auto w-75">
+
     <div class="card-body">
-      <h4 class="card-title mb-3">Détail de mon abonnement</h4>
+      
       {{-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> --}}
       @if ($status != 'actif')
-          <div class="mb-3">
-            Vous n'avez pas d'abonnement en cours.
-          </div>
-          <div class="mb-3">
-            L'abonnement au service {{ env('APP_NAME') }} est au prix de {{ env('PRIX_ABONNEMENT') }} € pour 1 an et sera prolongé automatiquement à la fin de la période.
-          </div>
-          <div class="mb-3">
-            Vous pourrez résilier votre abonnement à tout moment.
-          </div>
+
+        <h3 class="mb-3">Abonnez-vous à notre service de gestion de classe de maternelle</h3>
+
+        @if ($checkout == 'cancel')
+            <div class="mb-3">
+              <div class="alert alert-warning">Votre paiement a été annulé et aucun abonnement n'a été souscrit.</div>
+            </div>     
+        @endif
+
+        <p>Bienvenue sur {{ env('APP_NAME') }}, la plateforme complète de gestion de classe de maternelle qui simplifie votre quotidien éducatif. Nous comprenons l'importance de créer un environnement pédagogique fluide et efficace pour vous, enseignants de maternelle.</p>
+
+        <div class="mb-4">
+          {{-- <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}"> --}}
+            <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ env('APP_NAME' )}} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
+          <a class="btn btn-secondary">
+            Je souhaite m'abonner au service
+          </a>
+
+          @if (Auth::id() == 47)
+            <a class="btn btn-primary" href="{{ route('subscribe.checkout') }}" target="_blank">Checkout</a>
+          @endif
+        </div>
+
+        <div class="row">
+
+            {{-- <div class="col-lg-6">
+                <img src="chemin/vers/votre/image.jpg" class="img-fluid" alt="Image d'illustration">
+            </div> --}}
+
+            <div class="col-lg-12">
+
+                <h3 class="mb-4"  style="color: var(--main-color)">Pourquoi choisir {{ env('APP_NAME') }} ?</h3>
+
+                <h4><i class="fa-regular fa-star me-1" style="color: var(--main-color)"></i> Une gestion de classe simplifiée</h4>
+                <p>Notre plateforme a été spécialement conçue pour répondre aux besoins uniques des enseignants de maternelle. Gérez facilement votre classe, suivez les progrès des élèves et organisez vos activités en quelques clics.</p>
+
+                <h4><i class="fa-regular fa-pen-to-square me-1" style="color: var(--main-color)"></i> Édition des cahiers de réussites intuitive</h4>
+                <p>Créez des cahiers de réussites personnalisés en un rien de temps. Notre interface conviviale vous permet de documenter les réalisations de chaque élève de manière simple et visuelle.</p>
+
+                <h4><i class="fa-brands fa-cc-stripe me-1" style="color: var(--main-color)"></i> Sécurité de paiement garantie</h4>
+                <p>La sécurité de vos transactions est notre priorité. Nous utilisons des méthodes de paiement sécurisées pour assurer la protection totale de vos informations financières. Vous pouvez vous abonner en toute confiance, en sachant que vos données sont entre de bonnes mains.</p>
+
+                <h4><i class="fa-regular fa-face-smile me-1" style="color: var(--main-color)"></i></i> Garantie de satisfaction</h4>
+                <p>Nous sommes convaincus que vous adorerez notre service, c'est pourquoi nous offrons une garantie de satisfaction. Si, pour quelque raison que ce soit, vous n'êtes pas entièrement satisfait(e) dans les 30 jours, nous vous rembourserons intégralement.</p>
+
+                <h3 class="mb-3" style="color: var(--main-color)">Comment s'abonner ?</h3>
+
+                <ol>
+                    <li><strong>Aucun frais cachés</strong> : l'abonnement au service {{ env('APP_NAME') }} est au prix de {{ env('PRIX_ABONNEMENT') }} € pour 1 an et sera reconduit automatiquement à la fin de chaque période sauf résiliation de votre part. Vous pourrez résilier votre abonnement à tout moment.</li>
+                    <li><strong>Informations de paiement sécurisé</strong> : saisissez vos informations de paiement en toute confiance grâce à notre système sécurisé.</li>
+                    <li><strong>Commencez à profiter de tous les avantages</strong> : une fois votre abonnement confirmé, plongez dans l'univers simplifié de la gestion de classe avec {{ env('APP_NAME') }}.</li>
+                </ol>
+
+            </div>
+
+        </div>
+
           <div class="mb-3">
             {{-- <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}"> --}}
-              <div class="alert alert-info">L'abonnement au service sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
+              <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ env('APP_NAME' )}} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
             <a class="btn btn-secondary">
               Je souhaite m'abonner au service
             </a>
+
+            @if (Auth::id() == 47)
+              <a class="btn btn-primary" href="{{ route('subscribe.checkout') }}" target="_blank">Checkout</a>
+            @endif
           </div>
       @else
+
+          <h4 class="card-title mb-3">Mon abonnement</h4>
+
           <div class="mb-3">
             Statut : {{ $status }}
           </div>
@@ -68,16 +124,16 @@
           @if($licenceType == 'self' && $status == 'actif')
               <div class="me-3">
               @if($onGracePeriode)
-                  <a class="btn btn-primary" href="{{ route('subscribe.resume') }}">Réactiver mon abonnement</a>
+                  <a class="btnAction" href="{{ route('subscribe.resume') }}">Réactiver mon abonnement</a>
               @else
-                  <a class="btn btn-outline-secondary" href="{{ route('subscribe.cancel') }}">Résilier mon abonnement</a>
+                  <a class="btnAction" href="{{ route('subscribe.cancel') }}">Résilier mon abonnement</a>
               @endif
               </div>
           @endif
 
           @if($invoices > 0)
               <div class="me-3">
-                  <a class="btn btn-primary" href="{{ route('subscribe.invoice') }}">Mes factures</a>
+                  <a class="btnAction" href="{{ route('subscribe.invoice') }}">Mes factures</a>
               </div>
           @endif
       </div>

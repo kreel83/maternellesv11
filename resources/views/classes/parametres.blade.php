@@ -62,42 +62,39 @@
 
 
             <div class="d-flex flex-column w-100 pt-4">
-                <div class="">
-                    <form action="{{route('directeur.post')}}" method="POST" class="w-100 d-flex justify-content-between align-items-center flex-column flex-md-row">
-                        @csrf
-                        <div class="d-flex flex-column w-100 justify-content-end align-items-center ">
 
-                            <div class="form-group my-1 ">            
-                                <select style="width: 220px" class="custom-select little" name="civilite">
+                <form action="{{route('directeur.post')}}" method="POST" class="w-100 d-flex justify-content-between align-items-center flex-column flex-md-row">
+                    @csrf
+                    <div class="d-flex flex-column w-100 justify-content-end align-items-center ">
 
-                                    <option value="">Veuillez sélectionner</option>
-                                    <option value="M." {{ $directeur && $directeur->civilite == 'M.' ? 'selected' : null}}>Monsieur</option>
-                                    <option value="Mme" {{ $directeur && $directeur->civilite == 'Mme' ? 'selected' : null}}>Madame</option>
-                                </select>
-                            </div> 
-                            <div class="icone-input little my-1">
-                                <i class="fa-solid fa-user"></i>
-                                <input type="text" class="custom-input" name="prenom" value="{{$directeur->prenom ?? null}}" placeholder="Prénom" />
-                            </div> 
-                            <div class="icone-input little" my-1>
-                                <i class="fa-solid fa-user"></i>
-                                <input type="text" class="custom-input" name="nom" value="{{$directeur->nom ?? null}}" placeholder="Nom" />
-                            </div>                
+                        <div class="form-group my-1 ">            
+                            <select style="width: 220px" class="custom-select little" name="civilite">
 
-                        </div>
-                        
-                        <button type="submit" style="" class="btnAction ">Sauvegarder</button>
-                    </form>
-                </div>
+                                <option value="">Veuillez sélectionner</option>
+                                <option value="M." {{ $directeur && $directeur->civilite == 'M.' ? 'selected' : null}}>Monsieur</option>
+                                <option value="Mme" {{ $directeur && $directeur->civilite == 'Mme' ? 'selected' : null}}>Madame</option>
+                            </select>
+                        </div> 
+                        <div class="icone-input little my-1">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" class="custom-input" name="prenom" value="{{$directeur->prenom ?? null}}" placeholder="Prénom" />
+                        </div> 
+                        <div class="icone-input little my-1">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" class="custom-input" name="nom" value="{{$directeur->nom ?? null}}" placeholder="Nom" />
+                        </div>                
+
+                    </div>
+                    
+                    <button type="submit" style="" class="btnAction ">Sauvegarder</button>
+                </form>
+
                 <div>
                     @if ($errors->any())
-                    <div class="error_message">                               
-                        
-                                {{ $errors->first() }}
-                        
-                    
-                    </div>
-                @endif
+                        <div class="error_message">                               
+                            {{ $errors->first() }}
+                        </div>
+                    @endif
                 </div>
 
             </div>

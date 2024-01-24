@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        {{-- <meta http-equiv="refresh" content="3"> --}}
+        <meta http-equiv="refresh" content="3">
         <title>Finalisation de l'abonnement</title>
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
@@ -100,7 +100,7 @@
            
             <div>
                 <a href="{{route('vitrine.index')}}" class="brand-logo">
-                    <img src="{{asset('img/deco/logo.png')}}" alt="" width="250">
+                    <img class="img-fluid" src="{{asset('img/deco/logo-mail.png')}}" alt="" width="250">
                 </a>
             </div>
     

@@ -20,7 +20,7 @@ use PDF;
 
 class SubscriptionController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $invoices = Facture::where('user_id', Auth::id())->count();
         $licenceType = Auth::user()->licence;
@@ -58,6 +58,7 @@ class SubscriptionController extends Controller
                 $message = "Aucun abonnement en cours.";
         }
         return view("subscription.index")
+            ->with('checkout', $request->checkout)  // retour de stripe checkout
             ->with('produit', $produit)
             ->with('licenceType', $licenceType)
             ->with('invoices', $invoices)
@@ -136,16 +137,6 @@ class SubscriptionController extends Controller
         //         ->with('msg', $msg);
         // return view("subscription.result")
         //         ->with('result', $request->success);
-    }
-
-    public function stripeAttenteFinalisation(Request $request) {
-        if(Auth::user()->subscribed('default')) {
-            return redirect()->route('depart')
-            ->with('status', 'success')
-            ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.');
-        } else {
-            return view("subscription.waiting");
-        }
     }
 
     /**
@@ -264,6 +255,38 @@ class SubscriptionController extends Controller
             return redirect()->route('subscribe.invoice')
                 ->with('status', 'danger')
                 ->with('msg', 'Facture introuvable.');
+        }
+    }
+
+    public function subscribeWithStripeCheckout(Request $request)
+    {
+        // https://stripe.com/docs/api/checkout/sessions/create
+        $product = Produit::produitAbonnementUser();
+        return $request->user()->newSubscription('default', $product->stripe_product_id)
+            ->checkout([
+                'success_url' => route('subscribe.waiting'),
+                'cancel_url' => route('subscribe.index', ['checkout' => 'cancel']),
+                'subscription_data' => [
+                    'metadata' => [
+                        'user_id' => $request->user()->id,
+                        'produit_id' => $product->id,
+                        'method' => 'subscription',
+                        'price' => $product->price,
+                        'quantity' => 1,
+                        'amount' => $product->price,
+                    ]
+                ]
+            ]);
+    } 
+
+    public function stripeAttenteFinalisation(Request $request) {
+        if(Auth::user()->subscribed('default')) {
+            session(['is_abonne' => true]);
+            return redirect()->route('depart')
+            ->with('status', 'success')
+            ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.');
+        } else {
+            return view("subscription.waiting");
         }
     }
 

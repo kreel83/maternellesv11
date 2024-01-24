@@ -169,8 +169,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                             <strong>{{ ucfirst(strtolower(Auth::user()->prenom)) }} {{ strtoupper(Auth::user()->name) }}</strong>
                                         </div>
                                         @if (session('classe_active'))
-                                            {{-- <div style="font-size: 12px">{{session('classe_active')->description}}</div> --}}
-                                            <div><small>{{session('classe_active')->description}}</small></div>
+                                            <small>{{session('classe_active')->description}}</small>
                                         @endif
                                     </div>
                                 </a>

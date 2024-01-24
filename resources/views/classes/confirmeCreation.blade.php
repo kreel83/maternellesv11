@@ -31,10 +31,16 @@
             <div class="mb-3">
                 Section(s) : <strong>{{ $sectionTexte }}</strong>
             </div>
+            <div class="mb-3">
+                @php
+                    $dir = json_decode($direction, true);
+                @endphp
+                Direction : <strong>{{ $dir['civilite'].' '.$dir['prenom'].' '.$dir['nom'] }}</strong>
+            </div>
         </div>
         <div class="pb-3 pt-3 px-5">
             <div class="d-flex justify-content-between align-items-center">
-                <a class="btnAction inverse"  href="{{ route('createclasse') }}">Annuler</a>
+                <a class="btnAction inverse" href="{{ $classe_id == 'new' ? route('createclasse') : route('updateClasse') }}">Annuler</a>
                 <form action="{{ route('saveNewClasse') }}" method="post">
                     @csrf
                     <input type="hidden" name="classe_id" value="{{ $classe_id }}">
@@ -42,6 +48,7 @@
                     <input type="hidden" name="code_academie" value="{{ $ecole->code_academie }}">
                     <input type="hidden" name="description" value="{{ $description }}">
                     <input type="hidden" name="section" value="{{ $section }}">
+                    <input type="hidden" name="direction" value="{{ $direction }}">
                     <button class="btnAction">{{ $classe_id == 'new' ? 'Créer la classe' : 'Sauvegarder'}}</button>
                 </form>
             </div>

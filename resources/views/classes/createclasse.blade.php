@@ -34,7 +34,7 @@
 
             <div class="row">
                 <div class="col">
-                    <label for="ecole_id" class="form-label">Identifiant de votre établissement :</label>
+                    <label for="ecole_id" class="form-label"><strong>Identifiant de votre établissement :</strong></label>
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-school"></i></span>
                         <input type="text" class="form-control codeIdentifiantEtablissement" id="ecole_id" name="ecole_id" value="{{ old('ecole_id', isset($classe) ? $classe->ecole_identifiant_de_l_etablissement : '') }}" aria-describedby="codeHelp">
@@ -58,11 +58,11 @@
             </div>
 
             <div class="mb-3">
-                <label for="description">Nom de la classe</label>
+                <label for="description"><strong>Nom de la classe :</strong></label>
                 <input type="text" class="form-control" id="description" name="description" value="{{ old('description', isset($classe) ? $classe->description : '') }}"">
             </div>
 
-            <div class="mb-2">
+            <div class="mb-3">
                 Vous pouvez indiquer la ou les sections de votre classe (facultatif)
             </div>
 
@@ -81,8 +81,35 @@
                     <label class="form-check-label" for="inlineCheckbox3">Grande section</label>
                 </div>
             </div>
+
+            <div class="mb-1">
+                <strong>Direction de l'établissement :</strong>
+            </div>
+
+            <div class="mb-3">
+                <div class="d-flex flex-row">
+
+                    <div class="form-group me-2">            
+                        <select class="form-select" name="civilite">
+                            <option value="">Veuillez sélectionner</option>
+                            <option value="M." {{ old('civilite', isset($direction) ? $direction['civilite'] : '') == 'M.' ? 'selected' : null}}>Monsieur</option>
+                            <option value="Mme" {{ old('civilite', isset($direction) ? $direction['civilite'] : '') == 'Mme' ? 'selected' : null}}>Madame</option>
+                        </select>
+                    </div> 
+                    <div class="me-2">
+                        <input type="text" class="form-control" name="prenom" value="{{ old('prenom', isset($direction) ? $direction['prenom'] : '') }}" placeholder="Prénom" />
+                    </div> 
+                    <div>
+                        <input type="text" class="form-control" name="nom" value="{{ old('nom', isset($direction) ? $direction['nom'] : '') }}" placeholder="Nom" />
+                    </div>                
+
+                </div>
+            </div>
             
-            <button class="btnAction" type="submit">Continuer</button>
+            <div class="d-flex justify-content-between align-items-center">
+                <a class="btnAction inverse" href="{{ isset($classe) ? route('maclasse') : route('depart') }}">Annuler</a>
+                <button class="btnAction" type="submit">Continuer</button>
+            </div>
             
             </form>
 

@@ -121,12 +121,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
         //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
         
         //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
-
-    Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
-
-    Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
-    Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
-    Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
+   
     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
     Route::post('/contact', [ContactController::class, 'envoiLaDemandeDeContact'])->name('user.contact.post');
@@ -320,6 +315,12 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/partage/create/{token}', [PartageController::class, 'acceptePartage'])->name('acceptePartage');
     Route::get('/partage/code/{classeuser_id}', [PartageController::class, 'sendCodePartage'])->name('sendCodePartage');
 
+    // Gestion des abonnements
+    Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
+    Route::get('/subscribe-checkout', [SubscriptionController::class, 'subscribeWithStripeCheckout'])->name('subscribe.checkout');
+    Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
+    Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
+    Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
     Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
@@ -328,7 +329,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
     Route::post('subscribe/resume', [SubscriptionController::class, 'resumeSubscription'])->name("subscribe.resumesubscription");
     Route::get('subscribe/waiting', [SubscriptionController::class, 'stripeAttenteFinalisation'])->name("subscribe.waiting");
-
+    
     Route::get('/invoice/download/{facture_number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
     Route::get('invoice/send/{facture_number}', [SubscriptionController::class, 'sendInvoice'])->name("subscribe.invoice.send");    
 

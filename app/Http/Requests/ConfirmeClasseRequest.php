@@ -24,6 +24,9 @@ class ConfirmeClasseRequest extends FormRequest
         return [
             'ecole_id' => ['required', 'max:8', 'min:8', 'exists:ecoles,identifiant_de_l_etablissement'],
             'description' => ['required', 'string'],
+            'civilite' => ['required', 'string'],
+            'prenom' => ['required', 'string'],
+            'nom' => ['required', 'string'],
         ];
     }
 
@@ -40,6 +43,9 @@ class ConfirmeClasseRequest extends FormRequest
             'ecole_id.max' => 'L\'identifiant de l\'établissement doit avoir 8 caractères maximum.',
             'ecole_id.exists' => 'L\'identifiant de votre établissement est introuvable. Vérifiez votre saisie.',
             'description.required' => 'Veuillez donner un nom à votre classe.',
+            'civilite.required' => 'Veuillez indiquer la civilité du directeur ou de la directrice.',
+            'prenom.required' => 'Veuillez indiquer le prenom du directeur ou de la directrice',
+            'nom.required' => 'Veuillez indiquer le nom du directeur ou de la directrice',
         ];
     }
 }
