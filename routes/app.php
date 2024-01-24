@@ -248,6 +248,8 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/fiches/saveTemplate', [ficheController::class, 'saveTemplate'])->name('saveTemplate');
 
 
+
+
     Route::get('/classe/changer',[ClasseController::class,'changerclasse'])->name('changerClasse');
     Route::get('/classe/create',[ClasseController::class,'createclasse'])->name('createclasse');
     Route::post('/classe/confirme',[ClasseController::class,'confirmeClasse'])->name('confirmeClasse');
@@ -299,6 +301,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/monprofil', [ParametreController::class, 'savemonprofil'])->name('savemonprofil');
     Route::get('/pwd', [ParametreController::class, 'changerLeMotDePasse'])->name('changerLeMotDePasse');
     Route::post('/pwd', [ParametreController::class, 'sauverLeMotDePasse'])->name('sauverLeMotDePasse');
+    Route::get('/activeSectionDevenirEleve',[ParametreController::class,'activeSectionDevenirEleve'])->name('activeSectionDevenirEleve');
 
     Route::get('/aidematernelle', [ParametreController::class, 'aidematernelle'])->name('aidematernelle');
     Route::post('/aidematernelle', [ParametreController::class, 'saveaidematernelle'])->name('aidematernelle.post');

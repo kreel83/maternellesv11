@@ -17,8 +17,8 @@ $is_dashboard = true;
 
     {{-- depuis le midlleware 'abo' --}}
     @if (!$is_partage_en_cours->isEmpty())
-        <div class="alert alert-danger">
-            Vous avez une demande de partage de classe en attente d'acceptation. <a href="{{route('liste_partage')}}">Acceder aux partages</a>
+        <div class="alert alert-info">
+            Vous avez une demande de partage de classe en attente d'acceptation. <a href="{{route('liste_partage')}}">Accepter le partage</a>
         </div>
     @endif
 
