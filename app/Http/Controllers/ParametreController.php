@@ -54,6 +54,12 @@ class ParametreController extends Controller
     //     return view('aidematernelle.index')->with('equipes', $equipes)->with('photo', $photo);
     // }
 
+    public function activeSectionDevenirEleve() {
+        session('classe_active')->desactive_devenir_eleve = 0;
+        session('classe_active')->save();
+        return 'ok';
+    }
+
     public function saveaidematernelle(Request $request) {
 
         $aide = array();

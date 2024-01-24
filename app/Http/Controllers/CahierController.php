@@ -200,6 +200,7 @@ class CahierController extends Controller
     
     public function seepdf($token, $enfant_id = null, $periode = null, $state = 'see') {
         // si enfant_id contient l'ID de l'enfant alors token doit avoir la valeur 0 dans la route
+       
 
         if(!is_null($enfant_id)) {
             //$enfant = Enfant::where('id', $enfant_id)->where('user_id', Auth::id())->first();
@@ -265,7 +266,7 @@ class CahierController extends Controller
             ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
             ->get();
         //dd($classeUsers);
-        $reussite = Reussite::select('id', 'commentaire_general')
+        $reussite = Reussite::select('id', 'commentaire_general', 'equipes')
             ->where('enfant_id', $id)
             ->where('periode', $periode)
             ->first();
@@ -302,7 +303,9 @@ class CahierController extends Controller
 
         // PDF pour Parent pas de Auth::
         // $equipes = Auth::user()->equipes();
-        $equipes = $this->maclasseactuelle->equipes;
+        // $equipes = $this->maclasseactuelle->equipes;
+        $equipes = $reussite->equipes;
+      
         if ($equipes) {
             $equipes = json_decode($equipes, true);
         } else {
@@ -311,42 +314,6 @@ class CahierController extends Controller
 
 
         
-        //$reussite = $r ? $r->texte_integral : '';
-
-        // dd($reussite);
-        //$reussite = str_replace('</p><h2>','</p><div class="page-break"></div><h2>', $reussite);
-
-        
-
-        // // Extraction des textes correspondant à chaque section
-        // $textes = array();
-        // $titres = array();
-        // $textes = explode('<h2 contenteditable="false">', $reussite);
-        // for ($i=1; $i < count($textes); $i++) { 
-        //     $textes[$i] = '<h2 contenteditable="false">'.$textes[$i];
-        //     preg_match('/<h2 contenteditable="false">(.*?)<\/h2>/s', $textes[$i], $match);
-        //     $titres[$i] = $match[1];
-        // }
-        // $textesParSection = array();
-        // foreach ($s as $sec) {
-        //     $findText = false;
-        //     for ($i=1; $i < count($titres); $i++) { 
-        //         if($titres[$i] == $sec['name']) {
-        //             $textesParSection[$sec['id']] = str_replace('<h2 contenteditable="false">'.$titres[$i].'</h2>', '', $textes[$i]);
-        //             $textesParSection[$sec['id']] = str_replace(chr(10), '<br>', $textesParSection[$sec['id']]);
-        //             $findText = true;
-        //         }
-        //     }
-        //     if(!$findText) {
-        //         $textesParSection[$sec['id']] = '';
-        //     }
-        // }
-        // // L'indice 0 contient le commentaire général
-        // $textesParSection[0] = $textes[count($textes)-1];
-        // $textesParSection[0] = str_replace('<h2 contenteditable="false">Commentaire général</h2>', '', $textesParSection[0]);
-        // //dd($textesParSection);
-
-        // css class pour le pdf
         $customClass = array();
         foreach ($resultats as $resultat) {
             foreach ($resultat as $item) {
@@ -360,8 +327,7 @@ class CahierController extends Controller
             }
         }
 
-        // dd($resultats, $sections);
-        // header pour commentaire général
+
         $class = ".titre0 {color: #000; background-color: #f5e342}";
         $customClass[] = $class;
 
@@ -710,7 +676,8 @@ class CahierController extends Controller
         $commentaires = Commentaire::where('user_id', Auth::id())->where('section_id', 99)->get();
         $reussite = join(' ', $mots);
 
-        $r = Reussite::where('enfant_id', $enfant->id)->first();
+        $r = Reussite::where('enfant_id', $enfant->id)->where('periode', $enfant->periode)->first();
+
         $definitif = ($r) ? $r->definitif : null;
         return view('cahiers.apercu')
             ->with('enfant', $enfant)
@@ -793,9 +760,12 @@ class CahierController extends Controller
     public function definitif($reussite_id, Request $request)
     {
         $reussite = Reussite::find($reussite_id);
+
        
         
         $reussite->definitif = $request->state == "true" ? true : false;
+        $reussite->equipes = session('classe_active')->equipes;
+        
         
 
             $reussite->save();
@@ -827,6 +797,7 @@ class CahierController extends Controller
 
     // Normalement remplacé par un appel a seepdf
     public function apercu($enfant, $calcul = true) {
+
         $reussite = Reussite::where('enfant_id', $enfant->id)->first();
 
         $resultats = array();

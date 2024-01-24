@@ -222,15 +222,32 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Configuration','user_id','id');
     }
 
+    public function is_titulaire() {
+        $c = Classe::find(session('classe_active')->id);
+        if ($c->user_id == $this->id) return true;
+        return false;
+    }
+
     public function autresClasses() {
         // $actual = session()->get('id_de_la_classe');
-        $actual = session('classe_active')->id ?? null;
-        $i = Classe::where('user_id', Auth::id())
-            ->where('classes.id', '<>', $actual)
-            ->pluck('id');
-        $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
-        $merged = $i->merge($t);
-        return Classe::whereIn('id', $merged)->get();
+        $classe_partage = ClasseUser::where('user_id', Auth::id())->pluck('classe_id');
+        $classe_perso = Classe::where('user_id', $this->id)->pluck('id');
+        $classe_totale =  $classe_partage->merge($classe_perso)->toArray();
+        $classe_actuelle = Auth::user()->classe_id; 
+        if (($key = array_search($classe_actuelle, $classe_totale)) !== false) {
+            unset($classe_totale[$key]);
+        }
+        // dd($classe_totale, $classe_actuelle);
+
+
+        // $actual = session('classe_active')->id ?? null;
+        // $i = Classe::where('user_id', Auth::id())
+        //     ->where('classes.id', '<>', $actual)
+        //     ->pluck('id');
+        //     dd($i);
+        // $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
+        // $merged = $i->merge($t);
+        return Classe::whereIn('id', $classe_totale)->get();
     }
     /*
     public function autresClasses() {

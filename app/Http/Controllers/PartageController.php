@@ -32,7 +32,8 @@ class PartageController extends Controller
             Auth::user()->save();
             $classe = Classe::find($cu->classe_id);
             session(['classe_active' => $classe ]);        
-       }
+        }
+        session(['autres_classes' => Auth::user()->autresClasses()]);       
 
        return 'done';
     }

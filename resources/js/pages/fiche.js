@@ -96,6 +96,12 @@ const selectSectionFiche = (ficheSelect) => {
     })
 
 
+    $(document).on('click','#activeSectionDevenirEleve', function() {
+        $.get('/app/activeSectionDevenirEleve', function() {
+            location.reload()
+        })
+    })
+
     $(document).on('click','.selectSectionFiche', function() {
         $('.selectSectionFiche').removeClass('selected')
         $(this).addClass('selected')
