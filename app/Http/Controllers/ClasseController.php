@@ -35,15 +35,16 @@ class ClasseController extends Controller
             ->with('title', 'Création de ma classe');
     }
 
-
     public function updateclasse() {
         // $classe = Classe::find(session('id_de_la_classe'));
         //$classe = session('classe_active');
         if(Auth::id() != session('classe_active')->user_id) {
             return redirect()->route('error')->with('msg', 'Vous n\'avez pas les droits pour modifier cette classe.');
         }
+        $direction = json_decode(session('classe_active')->direction, true);
         return view('classes.createclasse')
-            ->with('title', 'Modification de ma classe')            
+            ->with('title', 'Modification de ma classe')
+            ->with('direction', $direction)
             ->with('classe', session('classe_active'));
 
     }
@@ -60,9 +61,13 @@ class ClasseController extends Controller
         } else {
             $sectionTexte = 'aucune section définie.';
         }
+        $direction = json_encode(
+            array('civilite' => $request->civilite, 'prenom' => ucfirst($request->prenom), 'nom' => strtoupper($request->nom))
+        );
         return view('classes.confirmeCreation')
             ->with('classe_id', $request->classe_id)
             ->with('title', $request->classe_id == 'new' ? 'Création de ma classe' : 'Modification de ma classe')
+            ->with('direction', $direction)
             ->with('description', $request->description)
             ->with('sectionTexte', $sectionTexte)
             ->with('section', json_encode($request->section))
@@ -96,6 +101,7 @@ class ClasseController extends Controller
         }
 
         $classe->description = $request->description;
+        $classe->direction = $request->direction;
         $classe->save();
 
         $request->session()->put('classe_active', $classe);
@@ -104,12 +110,6 @@ class ClasseController extends Controller
         $user = Auth::user();
         $user->classe_id = $classe->id;
         $user->save();
-
-        // // enregistrement aussi dans la table de relations - désactivé
-        // $classeLink = new ClasseUser();
-        // $classeLink->user_id = Auth::id();
-        // $classeLink->classe_id = $classe->id;
-        // $classeLink->save();
 
         if($request->classe_id == 'new') {
             $msg = 'Félicitations ! vous avez crée et activé la classe : '.$request->description;
