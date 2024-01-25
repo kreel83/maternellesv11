@@ -5,25 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ConfirmeClasseRequest;
 use Illuminate\Http\Request;
 use App\Models\Classe;
-use App\Models\ClasseUser;
 use App\Models\Ecole;
-use App\Models\Section;
 use Illuminate\Support\Facades\Auth;
-
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
 
 class ClasseController extends Controller
 {
 
     public function changerclasse(Request $request) {
+        // vérification du token de sécurité initialisé dans le menu
+        $token = md5(Auth::id().$request->classe.env('HASH_SECRET'));
+        if($token != $request->token) {
+            return redirect()->route('error')->with('msg', 'Token incorrect.');
+        }
+        
         $classe = Classe::find($request->classe);
         $user = Auth::user();
         $user->classe_id = $request->classe;
         $user->save();
 
-        // session(['id_de_la_classe' => $classe->id]);
-        // session(['nom_de_la_classe' => $classe->description]);
         session(['classe_active' => $classe]);
         session(['is_enfants' => $classe->is_enfants()]);
         session(['autres_classes' => Auth::user()->autresClasses()]);
@@ -99,20 +98,30 @@ class ClasseController extends Controller
                 $classe->gs = in_array('gs', $section) ? 1 : 0;
             }
         }
-
+        
         $classe->description = $request->description;
         $classe->direction = $request->direction;
         $classe->save();
 
-        $request->session()->put('classe_active', $classe);
-        $request->session()->save();
-        
-        $user = Auth::user();
-        $user->classe_id = $classe->id;
-        $user->save();
+        $is_classeActive = session()->has('classe_active');
+
+        if(!$is_classeActive) {
+            // si le user n'a pas de classe active on lui active la nouvelle classe d'office
+            $user = Auth::user();
+            $user->classe_id = $classe->id;
+            $user->save();
+            session(['classe_active' => $classe]);
+        }
+
+        session(['autres_classes' => Auth::user()->autresClasses()]);
 
         if($request->classe_id == 'new') {
-            $msg = 'Félicitations ! vous avez crée et activé la classe : '.$request->description;
+            if(!$is_classeActive) {
+                $msg = 'Félicitations ! vous avez crée et activé la classe : '.$request->description;
+            } else {
+                $msg = 'Félicitations ! vous avez crée la classe : '.$request->description.'. ';
+                $msg .= 'Si vous voulez basculer sur cette nouvelle classe, <a href="'.route('changerClasse',['classe' => $classe->id]).'" class="alert-link">cliquez ici.</a>';
+            }
         } else {
             $msg = 'Félicitations ! les modifications ont bien été sauvegardées pour la classe : '.$request->description;
         }

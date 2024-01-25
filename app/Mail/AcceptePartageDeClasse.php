@@ -9,21 +9,23 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
-class EnvoiCodeSecuritePartage extends Mailable
+class AcceptePartageDeClasse extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $logo, $code, $nomDemandeur;
+    public $logo, $prenom, $accepteurName, $accepteurPrenom;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($code, $nomDemandeur)
+    public function __construct($prenom, $accepteurName, $accepteurPrenom)
     {
         $this->logo = Utils::getLogoForMail();
-        $this->code = $code;
-        $this->nomDemandeur = $nomDemandeur;
+        $this->prenom = $prenom;
+        $this->accepteurName = $accepteurName;
+        $this->accepteurPrenom = $accepteurPrenom;
     }
 
     /**
@@ -32,7 +34,7 @@ class EnvoiCodeSecuritePartage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre code de sécurité',
+            subject: 'Votre demande de partage de classe a été acceptée',
         );
     }
 
@@ -42,7 +44,7 @@ class EnvoiCodeSecuritePartage extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.envoiCodeSecuritePartage',
+            view: 'emails.acceptePartageDeClasse',
         );
     }
 

@@ -127,7 +127,6 @@ class RegisteredUserController extends Controller
 
     public function registrationStep3(Request $request)
     {
-        // dd($request->token, $request->role, $request->ecole_id,env('HASH_SECRET'), md5($request->role.$request->ecole_id.env('HASH_SECRET')));
         // verification Token
         if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
             return redirect()->route('registration.start')

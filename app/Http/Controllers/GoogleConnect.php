@@ -11,20 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class GoogleConnect extends Controller
 {
     public function connect(Request $request) {
-        //dd($request);
         $client = new Google();
         $endpoint_token = $client->endpoint('token');
         $endpoint_userinfo = $client->endpoint('userinfo');
 
-
-//dd($endpoint_userinfo);
         $code = $request->code;
 
-
-
-
         $token = $client->token($endpoint_token, $code);
-
 
         $userinfo = $client->userinfo($endpoint_userinfo, $token);
         if ($userinfo->email_verified) {

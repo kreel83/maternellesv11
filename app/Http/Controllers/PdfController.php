@@ -4,31 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
 use App\Models\Enfant;
-use App\Models\Classe;
-//use App\Models\Resultat;
 use App\Models\Reussite;
-//use App\Models\Section;
-//use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
-//use PDF;
-//use Browser;
-//use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-
-use function PHPUnit\Framework\isEmpty;
-
-//use function PHPUnit\Framework\isEmpty;
 
 class PdfController extends Controller
-
-
 {
 
     public $maclasseactuelle;
@@ -36,15 +21,13 @@ class PdfController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {   
-            
-            // $this->maclasseactuelle = Classe::find(session()->get('id_de_la_classe'));
             $this->maclasseactuelle = session('classe_active');
             return $next($request);
-            });
+        });
     }
+
     public static function genereLienVersCahierEnPdf(Enfant $enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
-        // $enfant = Enfant::find($enfant_id);
         $token = $periode . md5($enfant->id.uniqid().env('HASH_SECRET'));
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
@@ -56,7 +39,6 @@ class PdfController extends Controller
         }
         if($is_sent) {
             $reussite = Reussite::where([
-                //['user_id', Auth::id()],
                 ['user_id', session('classe_active')->user_id],
                 ['enfant_id', $enfant->id],
                 ['periode', $periode],
@@ -66,7 +48,6 @@ class PdfController extends Controller
                 // Si renvoi ou cahier existant pour une période supérieure, on n'incrémente pas la période de l'enfant
                 if($status == 'E') {
                     $checkReussite = Reussite::where([
-                        //['user_id', Auth::id()],
                         ['user_id', session('classe_active')->user_id],
                         ['enfant_id', $enfant->id],
                         ['periode', '>', $periode],
@@ -83,58 +64,6 @@ class PdfController extends Controller
         return $is_sent;
     }
 
-    /*
-    // avec model enfant entrant
-    public static function genereLienVersCahierEnPdf($enfant) {
-        // Mise à jour du token dans la table ' enfants '
-        //$enfant = Enfant::find($enfant_id);
-        $token = uniqid();
-        $url = route('cahier.predownload', ['token' => $token]);
-        $is_sent = false;
-        if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
-            $is_sent = true;
-        }
-        if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
-            $is_sent = true;
-        }
-        if($is_sent) {
-            $reussite = Reussite::where([
-                ['user_id', Auth::id()],
-                ['enfant_id', $enfant->id],
-                ['periode', $enfant->periode],
-            ])->update(['send_at' => Carbon::now()]);
-            if($reussite > 0) {
-                $enfant->token = $token;
-                $enfant->periode = $enfant->periode + 1;
-                $enfant->save();
-            } else {
-                $is_sent = false;
-            }
-        }
-        return $is_sent;
-    }
-    */
-
-    /*
-    public static function genereLienVersCahierEnPdf($enfant) {
-        //$enfant = DB::select('select user_id from enfants where id = ?', [$id]);
-        //$user = DB::select('select email,name,prenom from users where id = ?', [$enfant[0]->id]);
-        // Mise à jour du token dans la table ' enfants '
-        $token = uniqid();
-        Enfant::where('id', $enfant->id)->update(['token' => $token]);
-        $url = route('cahier.predownload', ['token' => $token]);
-        if(filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL)) {        
-            //Mail::to($enfant->mail1)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
-        }
-        if(filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-            //Mail::to($enfant->mail2)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
-        }
-    }
-    */
-
-    
     public function telechargementDuCahierParLesParents($token) {
         $enfant = Enfant::where('token', $token)->first()->prenom;
         return view('cahiers.telechargement')
@@ -144,12 +73,6 @@ class PdfController extends Controller
     }
 
     public function telechargementDuCahierParLesParentsPost(Request $request) {
-
-
-
-
-     
-        
         $date = Carbon::create($request->annee, $request->mois, $request->jour);
         $ddn = $date->format('Y-m-d');
         /*
@@ -170,11 +93,8 @@ class PdfController extends Controller
         }
 
         return Redirect::back()->with(['success' => true, 'token' => $request->token]);
-        //return redirect()->action([PdfController::class, 'telechargeLeCahier'],['id' => $request->id]);
 
     }
-
-
 
     public function set_ordre(Request $request) {
         $classe = $this->maclasseactuelle;
@@ -184,11 +104,8 @@ class PdfController extends Controller
     }
 
     public function cahierManage(Request $request) {
-        //dd($this->maclasseactuelle);
         $ordre = $this->maclasseactuelle->ordre_pdf;
-        // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->orderBy($ordre)->get();
         $enfants = Enfant::where('classe_id', session('classe_active')->id)->orderBy($ordre)->get();
-        //$reussites = Reussite::where('user_id', Auth::id())->get();
         $reussites = Reussite::where('user_id', session('classe_active')->user_id)->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();
@@ -252,9 +169,7 @@ class PdfController extends Controller
     public function cahierManagePost(Request $request) {
         Log::info($request);
         $error = array();
-        //$periode = $request->btnSubmit;
         $periode = $request->periode;
-        //$reussites = Reussite::where('user_id', Auth::id())
         $reussites = Reussite::where('user_id', session('classe_active')->user_id)
             ->where('definitif', 1)
             ->where('send_at', null)
@@ -263,39 +178,13 @@ class PdfController extends Controller
         foreach ($reussites as $reussite) {
             $enfant = Enfant::find($reussite->enfant_id);
             $isMailSent = $this->genereLienVersCahierEnPdf($enfant, $periode);
-            
             if(!$isMailSent) {
                 $error[] = "L'envoi a échoué pour la période $periode de $enfant->prenom $enfant->nom";
             }
-            
-            //$tt[] = $reussite->enfant_id;
         }
         if($reussites->isEmpty()) {
             $error[] = "Aucun cahier à envoyer";
         }
-        //dd($tt);
-        /*
-        $tt=array();
-        $error = array();
-        $periode = $request->btnSubmit;
-        $enfants = Enfant::where('user_id', Auth::id())->get();
-        $reussites = Reussite::where('user_id', Auth::id())->get();
-        foreach ($enfants as $enfant) {
-            $r = $reussites->where('definitif', 1)
-                    ->where('send_at', null)
-                    ->where('periode', $periode)
-                    ->where('enfant_id', $enfant->id)
-                    ->first();
-            if(!empty($r)) {
-                $isMailSent = PdfController::genereLienVersCahierEnPdf($enfant);
-                if(!$isMailSent) {
-                    $error[] = "L'envoi a échoué pour la période $enfant->periode de $enfant->prenom $enfant->nom";
-                }
-                //$tt[] = $enfant->prenom.' '.$enfant->nom;
-            }
-        }
-        */
-        //return back()->with('success', (count($error) == 0))->with('error', $error);
         Session::flash('success', (count($error) == 0));
         Session::flash('error', $error);
         return route('cahierManage');

@@ -557,7 +557,6 @@
 
         @php
             $carte = 1;
-            //dd($section);
         @endphp
 
             <table class="table-carte" cellpadding="0">

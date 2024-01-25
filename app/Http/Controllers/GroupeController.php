@@ -6,7 +6,6 @@ use App\Models\Classe;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class GroupeController extends Controller
 {
@@ -25,20 +24,6 @@ class GroupeController extends Controller
             ->with('nbGroupe', $nbGroupe)
             ->with('groupes', $groupes ?? []);
     }
-    // public function index() {
-    //     $type = Auth::user()->type_groupe;
-    //     $groupes = Auth::user()->configuration->groupes;
-    //     $nbGroupe = 2;           
-       
-    //     if ($groupes) {
-    //         $groupes = json_decode($groupes, true);
-    //         $nbGroupe = sizeof($groupes);           
-    //     }
-
-    //     return view('groupes.index')
-    //         ->with('nbGroupe', $nbGroupe)
-    //         ->with('groupes', $groupes);
-    // }
 
     public function affectation_groupe() {
         $eleves = Auth::user()->liste();
@@ -150,17 +135,13 @@ class GroupeController extends Controller
             $groupes[$request->id]['backgroundColor'] = $request->groupBackgroundColor;
             $groupes[$request->id]['textColor'] = $request->groupTextColor;
         }
-        //$groupes[] = $newGroup;
-        //dd($groupes);
-        
-      
+
         $classe->groupes = json_encode($groupes);
         $classe->save();
 
         session()->flash('success','Les groupes ont bien été enregistrés');
         return redirect()->route('groupe');
 
-        // [{"name":"dfgfdg","backgroundColor":"#B71C1C","textColor":"#FFFFFF"},{"name":"dfgfdg","backgroundColor":"#311B92","textColor":"#FFFFFF"},{"name":"dfgfd","backgroundColor":"#009688","textColor":"#FFFFFF"},{"name":"hhjjghjg","backgroundColor":"#F44336","textColor":"#FFFFFF"}]
     }
 
     public function supprimerUnGroupe($id, Request $request) {

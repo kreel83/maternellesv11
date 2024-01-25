@@ -84,7 +84,6 @@ class Utils {
             $start = $pos + strlen($prenom);
             $c = substr($comment, 0, strlen($prenom)) . str_replace($prenom, $pronom, substr($comment, $start, -1));
         }
-        //dd($c);
         return $c;
     }
 

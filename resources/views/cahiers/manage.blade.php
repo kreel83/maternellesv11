@@ -68,8 +68,6 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
             @foreach ($enfants as $enfant)
                 @php
                     $groupe = null;
-                    // dd($lesgroupes);
-                    
                     if (!is_null($enfant->groupe) && $lesgroupes){
                         $groupe = $lesgroupes[$enfant->groupe];
                     }

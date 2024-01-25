@@ -158,15 +158,6 @@
                             <textarea type="date" class="custom-input" id="commentaire_form" name="comment" placeholder="Commentaire" {{$readonly}}>{{ $eleve->comment }}</textarea>
                         </div>
                         
-                        @php
-                            /*
-                            dd($eleve);
-                            $mail = explode(';', $eleve->mail);
-                            $mail1 = (!empty($mail[0])) ? $mail[0] : '';
-                            $mail2 = (!empty($mail[1])) ? $mail[1] : '';
-                            */
-                        @endphp
-
                         <div class="icone-input my-4">
                             <i class="fa-sharp fa-solid fa-envelope"></i>
                             <input type="email" class="custom-input" id="mail1_form" name="mail[]" value="{{ $eleve->mail1 }}" placeholder="Mail principal" {{$readonly}} />

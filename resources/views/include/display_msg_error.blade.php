@@ -20,7 +20,7 @@ Gestion des succès / erreurs avec variable session 'status'
     <div class="alert alert-{{ session('status') }}" role="alert">
         <span class="me-1">{!! $iconAlert[session('status')] !!}</span>
         @if(session()->has('msg'))
-            {{ session('msg') }}
+            {!! session('msg') !!}
         @endif
     </div>
 

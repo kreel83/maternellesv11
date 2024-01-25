@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Models\Fiche;
 use App\Models\Item;
-use App\Models\Classe;
-
 use App\Models\Resultat;
 use App\Models\Personnel;
 use App\Models\Enfant;
@@ -21,8 +19,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
-use Intervention\Image\ImageManager;
-use SebastianBergmann\Type\TrueType;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class ficheController extends Controller
@@ -78,53 +74,7 @@ class ficheController extends Controller
             ->with('sections', $sections)
             ->with('user', Auth::id());
     }
-    /*
-    // fonctionne mais enormement de requetes
-    public function index(Request $request) {
-        
-        if ($request->section) {
-
-            $section = Section::find($request->section);
-        } else {
-
-            $section = Section::first();
-        }
-        
-        if (!isset($request->type)) $request->type = "mesfiches";
-
-        $fiches = Auth::user()->mesfiches();
-        $universelles = Auth::user()->items();
-        
-        $itemactuel = (isset($request->item)) ? Item::find($request->item) : null;
-        $classifications = Classification::all();
-        $classifications = $classifications->groupBy('section_id')->toArray();
-        $categories = Categorie::where('section_id', $section->id)->get();
-        $categories = $categories->groupBy('section1');
-        $templates = Template::where('user_id', Auth::id())->get();
-
-
-        
-
-  
-
-        return view('fiches.index')
-            ->with('type', $request->type)
-            ->with('templates', $templates)
-            ->with('template', $request->template ?? null)
-            ->with('categories', $categories)
-            ->with('section', $section)
-            ->with('fiches', $fiches)
-            ->with('itemactuel', $itemactuel)
-            ->with('classifications', $classifications)
-            ->with('universelles', $universelles)
-            ->with('user', Auth::id())
-            ->with('sections', Section::orderBy('ordre')->get());
-    }
-    */
-
-
-
-
+    
     public function setNewCategories(Request $request) {
         $item = Item::find($request->fiche);
         $item->categorie_id = $request->cat;
@@ -621,24 +571,7 @@ class ficheController extends Controller
         $last_id = $this->set_last_id();
         $item = Item::find($request->item)->toArray();
         $item['id'] = $this->set_last_id();
-
-
         Personnel::create($item);
-
-
-//        if ($request->provenance == "fiche") {
-//            $fiche = new Fiche();
-//            $fiche->parent_type = 'personnels';
-//            $fiche->item_id = $last_id;
-//            $fiche->order = Fiche::lastOrder();
-//            $fiche->user_id = Auth::id();
-//            $fiche->section_id = $request->section;
-//            $fiche->save();
-//        }
-
-
-
-
         return 'ok';
 
     }

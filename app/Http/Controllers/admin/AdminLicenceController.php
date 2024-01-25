@@ -71,7 +71,6 @@ class AdminLicenceController extends Controller
         // Récupère le produit en vente en ce moment
         $product = Produit::produitEnCoursLicenceAdmin();
         $intent = auth()->user()->createSetupIntent();
-        //dd($intent);
         return view('admin.licence.achat')
             ->with('product', $product)
             ->with('method', 'purchase')
@@ -162,45 +161,6 @@ class AdminLicenceController extends Controller
                 ->with('result', $request->success)
                 ->with('method', $method);
     }
-
-    /*
-    // anciennement utilisé si achat de licence par souscription stripe
-    public function create(Request $request)
-    {
-        
-        foreach (json_decode($request->licenceSelection) as $licence_id)
-        {
-            //$licence = new Licence;
-            $licence = Licence::find($licence_id);
-            $newExpirationDate = $licence->expires_at;
-            dd($licence);
-            //$licence->stripe_id = $stripe_id;
-            //$licence->actif = 1;
-            //$licence->expires_at = $expires_at; // avoir si on ajoute +1 an a la date actuelle
-
-        }
-        
-        try {
-            $internal_name = $this->getInternalName();
-            $subscription = $request->user()->newSubscription($internal_name, 'price_1NEXRRF73qwd826kHYATzqgl')
-                ->quantity($request->quantity)
-                ->create($request->token);
-            $expires_at = Auth::user()->subscription($internal_name)->asStripeSubscription()->current_period_end;
-            $licence = new Licence;
-            if($request->method == 'buy') {
-                $licence->createUserLicence($request->quantity, $subscription->stripe_id, $expires_at);
-            } elseif($request->method == 'renew') {
-                $licence->renewUserLicence($request->quantity, $subscription->stripe_id, $expires_at, $request->licenceSelection);
-            }
-            return view("admin.subscription.result");
-        } catch (IncompletePayment $exception) {
-            return redirect()->route(
-                'cashier.payment',
-                [$exception->payment->id, 'redirect' => route('home')]  // A VOIR la route en cas d'echec de paiement
-            );
-        }
-    }
-    */
 
     public function assign(Request $request)
     {
@@ -345,7 +305,6 @@ class AdminLicenceController extends Controller
             $lignes = FactureLigne::where('facture_id', $invoice->id)
                 ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
                 ->get();
-                //dd($lignes);
             $pdf = PDF::loadView('pdf.facture', ['user' => Auth::user(), 'invoice' => $invoice, 'ecole' => $ecole, 'lignes' => $lignes]);
             return $pdf->stream('Facture_'.$invoice->number.'.pdf');
         }

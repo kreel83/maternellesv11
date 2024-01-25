@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Enfant;
-use App\Models\Configuration;
 use App\Models\Section;
 use App\Models\Reussite;
 use App\Models\ReussiteSection;
 use App\Models\Resultat;
 use App\Models\Item;
-use App\Models\Fiche;
-
-use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
@@ -42,7 +39,6 @@ class ItemController extends Controller
         $r = $fiche->resultat($request->enfant);
         $fiche = Item::find($resultat->item_id);
         if ($resultat) {
-            // dd($fiche->resultat($enfant->id));
             $fiche->notation = $fiche->resultat($request->enfant)[0];
             $fiche->autonome = $fiche->resultat($request->enfant)[1];
             $fiche->textnote = $fiche->resultat($request->enfant)[2];
@@ -75,7 +71,6 @@ class ItemController extends Controller
         foreach ($fiches as $fiche) {
             $resultat = $fiche->resultat($enfant->id);
             if ($resultat) {
-                // dd($fiche->resultat($enfant->id));
                 $fiche->notation = $fiche->resultat($enfant->id)[0];
                 $fiche->autonome = $fiche->resultat($enfant->id)[1];
                 $fiche->textnote = $fiche->resultat($enfant->id)[2];
@@ -104,7 +99,7 @@ class ItemController extends Controller
     }
 
     public function CommitSaveReussite(Request $request) {
-
+        Log::info('CommitSaveReussite (itemcontroller) '.$request);        
         $r = ReussiteSection::find($request->id);
         $r->description = $request->texte;
         $r->save();
@@ -176,8 +171,6 @@ class ItemController extends Controller
             $search->periode = $enfant->periode;
             $search->save();
         }
-
-        // dd(session('classe_active')->desactive_acquis_aide, $request->note, $ancienne_note);
 
         if ($acquis) {
             if (session('classe_active')->desactive_acquis_aide == 0 && $request->note == 2 && $ancienne_note && $ancienne_note[0] == 2 && $ancienne_note[1] == 1) return 'super';

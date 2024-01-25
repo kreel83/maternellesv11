@@ -29,10 +29,6 @@
     }
 </style>
 
-@php
-    // dd($resultats);
-@endphp
-
 @section('content')
 <div class="mt-5">
     <ol class="breadcrumb">

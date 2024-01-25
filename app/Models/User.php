@@ -210,7 +210,14 @@ class User extends Authenticatable
             Session::get(['classe_active', $classe]);
             return 'rewind';
         }
-        return ClasseUser::where('email', $this->email)->whereNull('user_id')->get();
+
+        $partage = ClasseUser::select('classe_users.id', 'users.name', 'users.prenom', 'classes.description')
+            ->where('classe_users.email', $this->email)
+            ->leftJoin('classes', 'classes.id', 'classe_users.classe_id')
+            ->leftJoin('users', 'users.id', 'classes.user_id')
+            ->whereNull('classe_users.user_id')
+            ->get();
+        return $partage;
     }
 
     public function check_is_partage_en_cours() {
@@ -229,7 +236,6 @@ class User extends Authenticatable
     }
 
     public function autresClasses() {
-        // $actual = session()->get('id_de_la_classe');
         $classe_partage = ClasseUser::where('user_id', Auth::id())->pluck('classe_id');
         $classe_perso = Classe::where('user_id', $this->id)->pluck('id');
         $classe_totale =  $classe_partage->merge($classe_perso)->toArray();
@@ -237,40 +243,14 @@ class User extends Authenticatable
         if (($key = array_search($classe_actuelle, $classe_totale)) !== false) {
             unset($classe_totale[$key]);
         }
-        // dd($classe_totale, $classe_actuelle);
-
-
-        // $actual = session('classe_active')->id ?? null;
-        // $i = Classe::where('user_id', Auth::id())
-        //     ->where('classes.id', '<>', $actual)
-        //     ->pluck('id');
-        //     dd($i);
-        // $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
-        // $merged = $i->merge($t);
         return Classe::whereIn('id', $classe_totale)->get();
     }
-    /*
-    public function autresClasses() {
-        // $actual = session()->get('id_de_la_classe');
-        $actual = session('classe_active')->id ?? null;
-        $i = Classe::where('user_id', Auth::id())->pluck('id');
-        $t = ClasseUser::where('user_id', $this->id)->pluck('classe_id');
-        $merged = $i->merge($t);
-        return Classe::whereIn('id', $merged)->where('id','!=',$actual)->get();
-    }
-    */
 
     public function sendPasswordResetNotification($token): void
     {
-        /*
-        $url = 'https://example.com/reset-password?token='.$token;
-        $this->notify(new ResetPassword($this));
-        */
         $url = route('password.reset', ['token' => $token]);
         Mail::to($this->email)->send(new SendResetPasswordLink($url, $this->prenom));
     }
-
-
 
     public function nom_complet() {
         return $this->prenom.' '.$this->name;
@@ -308,28 +288,13 @@ class User extends Authenticatable
     }
 
     public function mesfiches() {
-        //$items = Item::join('fiches','fiches.item_id','id')->where('fiches.section_id', $section->id)->where('user_id', Auth::id())->orderBy('order')->get();
-        //dd($items);
-
-
-        //$fiches = Fiche::where('user_id', Auth::id())->pluck('item_id');
-        
-
         $mesfiches = Item::selectRaw('items.*, fiches.id as fiche_id, fiches.classe_id')
             ->join('fiches','fiches.item_id', 'items.id')
             ->where('fiches.classe_id', session('classe_active')->id)
             ->orderBy('items.categorie_id')
             ->orderBy('fiches.order')
             ->get();
-            // ->orderBy('fiches.order')
-
-
         return $mesfiches;
-
-        // return Item::whereIn('id', $fiches)->get();
-
-
-
     }
 
     public function items() {

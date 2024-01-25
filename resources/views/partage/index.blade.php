@@ -38,12 +38,6 @@
                     </select>
                 </div>
 
-                {{-- <div class="mb-3">
-                    <label for="email">Indiquez un code de sécurité composé de 6 chiffres</label>
-                    <input type="number" name="code" id="code" class="form-control" value="{{ old('code') }}" placeholder="Code de sécurité" aria-describedby="codeHelp">
-					<div id="codeHelp" class="form-text">Ce code devra être communiqué à la personne qui partagera votre classe par le moyen de votre choix.</div>
-                </div> --}}
-
                 <button class="btnAction" role="submit">Ajouter</button>
 
             </form>
@@ -58,7 +52,6 @@
                     @foreach ($pendings as $pending)
                         @php
                             $token = md5($pending->id.env('HASH_SECRET'));
-                            //dd($pending);
                         @endphp
                         <li>
                             @if(isset($pending->prenom))
@@ -70,7 +63,6 @@
                                     $nomComplet = $pending->email;
                                 @endphp
                             @endif
-                            {{-- <span class="me-2">{{ isnul($pending->prenom) && isnull($pending->name) ? $pending->email : $pending->prenom.' '.$pending->name }}</span> --}}
                             <span class="me-2">{{ $nomComplet }} ({{ $roles[$pending->role] }})</span>
                             <a class="me-2" href="{{ route('supprimePartage', ['classeuser_id' => $pending->id, 'token' => $token]) }}" title="Supprimer le partage">
                                 Supprimer le partage
@@ -96,16 +88,8 @@
                         <li>
 							<span class="me-2">{{ $partage->prenom.' '.$partage->name }} ({{ $roles[strval($partage->role)] }})</span> 
                             <a class="me-2" href="{{ route('supprimePartage', ['classeuser_id' => $partage->id, 'token' => $token]) }}" title="Supprimer le partage">
-                                {{--<i class="fa-solid fa-trash fa-sm"></i>--}}Supprimer le partage
+                                Supprimer le partage
                             </a>
-                            {{-- <span class="me-2">|</span>
-                            <a class="me-2" href="{{ route('sendCodePartage', ['classeuser_id' => $partage->id, 'token' => $token]) }}">
-                                Recevoir le code de sécurité par mail
-                            </a>
-                            <span class="me-2">|</span>
-                            <a role="button" class="me-2 codeDeSecuritePartage" data-code="{{ $partage->code }}">
-                                Voir le code de sécurité
-                            </a> --}}
                         </li>
                     @endforeach
                 @else
@@ -114,7 +98,6 @@
             </ul>
         </div>
     </div>
-
 
 </div>
 
