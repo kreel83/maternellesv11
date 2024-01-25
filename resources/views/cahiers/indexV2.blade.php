@@ -122,10 +122,11 @@
                     <input class="form-check-input seePdf" type="checkbox" id="seePdf1" {{ $reussite->definitif == 1 ? "checked" : null}} data-reussite="{{$reussite->id}}">
                     <label class="form-check-label" for="seePdf1">Prét à l'envoi</label>
                 </div> 
-                <div style="color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
+                <div class="{{$reussite->definitif == 0 ? 'desactive' : 'active'}} ms-5 definitifPDF">
 
-                    <a style="font-size: 25px" target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i>
-                        <span style="font-size: 14px; color: black">Voir le cahier de réussite</span>
+                    <a style="font-size: 25px" target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>Voir le cahier de réussite</span>
                     </a>
                 </div>  
             </div>
@@ -177,17 +178,18 @@
                     @endif
                 @endforeach
                 <div class="d-flex justify-content-center mx-auto mt-5">
-                    <div class="form-check form-switch mt-2 ">
+                    <button class="btnAction" id="retourHautDePage">Retour haut de page</button>
+                    {{-- <div class="form-check form-switch mt-2 ">
                         <input class="form-check-input seePdf" type="checkbox" id="seePdf2" {{ $reussite->definitif == 1 ? "checked" : null}} data-reussite="{{$reussite->id}}">
                         <label class="form-check-label" for="seePdf2">Prét à l'envoi</label>
                     </div> 
-                    <div style="color: rgb(244, 112, 112); cursor: pointer" class="{{$reussite->definitif == 0 ? 'd-none' : null}} ms-5 definitifPDF">
+                    <div class="{{$reussite->definitif == 0 ? 'desactive' : 'active'}} ms-5 definitifPDF">
                         <a style="font-size: 25px" target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}"><i class="fa-solid fa-file-pdf"></i>
                         <span style="font-size: 14px; color: black">Voir le cahier de réussite</span>
 
                         </a>
 
-                    </div>  
+                    </div>   --}}
                 </div>
         </div>
 
@@ -208,7 +210,7 @@
       <div class="modal-content">
         <div class="modal-header"  style="color: var(--main-color) !important">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Information importante</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
         </div>
         <div class="modal-body"  style="color: var(--main-color) !important">
             Vous n'avez rien noté dans la section commentaire général.

@@ -1,5 +1,30 @@
 
 #backEndUser {
+
+
+
+.definitifPDF {
+    span {
+
+        font-size: 14px;
+    }
+    &.active {
+
+        
+        a {
+            color: var(--main-color);
+        }
+    }
+    &.desactive {        
+        a {
+            color: grey;
+            cursor:not-allowed;
+            pointer-events: none;
+        }
+    }
+}
+
+
 #pdf, #reactualiser {
     position: absolute;
     top:0;
