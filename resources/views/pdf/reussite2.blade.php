@@ -1,7 +1,5 @@
 @php
 $degrades = App\Models\Enfant::DEGRADE;
-//dd($degrades);
-//dd($degrades[$enfant->background]);
 @endphp
 
 <!DOCTYPE html>

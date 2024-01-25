@@ -70,53 +70,10 @@
                             $readonly = ($role == 'admin') ? 'readonly' : '';
                         @endphp
 
-                        {{-- @if($role == 'user')
-                            <div class="d-flex justify-content-center">
-                                <div class="avatar avatar_form pink me-5 {{$selectedF}}" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
-                                <div class="avatar avatar_form blue {{$selectedG}}" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
-                            </div>
-                        @else
-                            <div class="d-flex justify-content-center">
-                                @if($eleve->genre == 'F')
-                                    <div class="avatar avatar_form pink {{$selectedF}}" data-genre="F"><i class="fa-thin fa-user-tie-hair-long"></i></div>
-                                @else
-                                    <div class="avatar avatar_form blue {{$selectedG}}" data-genre="G"><i class="fa-thin fa-user-tie-hair"></i></div>
-                                @endif
-                            </div>
-                        @endif --}}
-
-                        {{-- <div class="row">
-                            <div class="col">
-                                <div class="icone-input my-4">
-                                    <i class="fa-solid fa-user"></i>
-                                    <input type="text" class="custom-input" id="nom_form" name="nom" value="{{ $eleve->nom }}" placeholder="Nom de l'élève" {{$readonly}} />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="icone-input my-4">
-                                    <i class="fa-solid fa-user"></i>
-                                    <input type="text" class="custom-input" id="prenom_form" name="prenom" value="{{ $eleve->prenom }}" placeholder="Prénom de l'élève" {{$readonly}} />
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="icone-input my-4">
-                            <i class="fa-solid fa-cake-candles"></i>
-                            <input type="date" class="custom-input" id="ddn_form" name="ddn" value="{{ $eleve->ddn }}" placeholder="Date de naissance de l'élève" {{$readonly}} />
-                        </div>     --}}
                         <div class="custom-area">                                       
                             <textarea type="date" class="custom-input" id="commentaire_form" name="comment" placeholder="Commentaire" {{$readonly}}>{{ $eleve->comment }}</textarea>
                         </div>
                         
-                        @php
-                            /*
-                            dd($eleve);
-                            $mail = explode(';', $eleve->mail);
-                            $mail1 = (!empty($mail[0])) ? $mail[0] : '';
-                            $mail2 = (!empty($mail[1])) ? $mail[1] : '';
-                            */
-                        @endphp
-
                         <div class="icone-input my-4">
                             <i class="fa-sharp fa-solid fa-envelope"></i>
                             <input type="email" class="custom-input" id="mail1_form" name="mail[]" value="{{ $eleve->mail1 }}" placeholder="Mail principal" {{$readonly}} />

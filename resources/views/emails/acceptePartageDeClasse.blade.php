@@ -106,19 +106,14 @@
 <body id="BodyMail">
 
     <div class="header">
-        {{--<h1>Les Maternelles</h1>--}}
         <img src="{{ $message->embed($logo) }}">
     </div>
 
     <div id="body">
         <p>
-            Bonjour,
+            Bonjour {{ $prenom }},
             <br><br>
-            <span class="code">{{ $code }}</span> est le code de sécurité pour le partage de votre classe avec :
-            <br><br>
-            {{ $nomDemandeur }}
-            <br><br><br><br>
-            Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer ce message et ne communiquer ce code à quiconque.
+            Nous vous informons que {{ $accepteurPrenom.' '.$accepteurName }} a accepté votre demande de partage de classe.
             <br><br>
             L'équipe <a href="{{ route('vitrine.index') }}">{{env('APP_NAME')}}</a> se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>

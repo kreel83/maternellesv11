@@ -45,7 +45,7 @@ class StripeEventListener
     public function handle(WebhookReceived $event): void
     {
         if ($event->payload['type'] === 'charge.succeeded') {
-            Log::info($event->payload);
+            // Log::info($event->payload);
             $transaction = Transaction::ajouterUneTransactionStripe($event->payload);
             if(array_key_exists('method', $event->payload['data']['object']['metadata'])) {
                 $method = $event->payload['data']['object']['metadata']['method'];
@@ -75,7 +75,7 @@ class StripeEventListener
 
         // paiement d'un abonnement. on prend le dernier évènement en référence
         if ($event->payload['type'] === 'invoice.payment_succeeded') {
-            Log::info($event->payload);
+            // Log::info($event->payload);
             switch ($event->payload['data']['object']['billing_reason']) {
                 case 'subscription_create':
                     // on complete la transaction précédemment crée dans l'event charge.succeeded

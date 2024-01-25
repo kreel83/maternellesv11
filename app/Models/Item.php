@@ -38,9 +38,6 @@ class Item extends Model
     }
 
     public function categorie() { 
-        // $c = Categorie::find($this->categorie_id);
-        // dd($c, $this);
-        // return $c ? $c->section_2 : null;
         return $this->belongsTo('App\Models\Categorie');
     }
 

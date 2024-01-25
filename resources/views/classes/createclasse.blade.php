@@ -1,17 +1,6 @@
 @extends('layouts.mainMenu2',['titre' => 'Ma classe', 'menu' => 'createClasse'])
 
-@php
-    // dd($resultats);
-@endphp
-
 @section('content')
-
-
-
-{{-- <div class="input-group mb-2">
-    <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-envelope"></i></span>
-    <input type="email" class="form-control form-control-sm" id="mail4_form" name="mail4" id="mail4" value="{{ old('mail4') ?? $eleve['mail4'] }}" placeholder="Mail supplementaire">
-</div> --}}
 
 <div class="mt-5 container" id="creation_classe">
 
@@ -19,15 +8,13 @@
 
         @include('partage.include_partage')
     @endif
-    <div class="card mx-auto w-75 p-3" style="border: none; border-radius: 40px; margin-top: 100px">
+    <div class="card mx-auto w-75 p-3 mt-3" style="border: none; border-radius: 40px">
         <div class="ms-3" style="border: none; border-radius: 40px">
             <div class="d-flex justify-content-between pt-2">
                 <h5>{{ $title }} - Etape 1/2</h5>
             </div>
         </div>
         <div class="card-body">
-
-            {{-- <h5 class="card-title mb-3">Vous pouvez créer plusieurs classes si besoin</h5> --}}
 
             <form action="{{ route('confirmeClasse') }}" method="post">
             @csrf
@@ -72,7 +59,6 @@
 
             <div class="mb-3">
                 <div class="form-check form-check-inline">
-                    {{-- <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="ps" name="section[]" @checked(in_array('ps', old('section', [])))> --}}
                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="ps" name="section[]" @checked(in_array('ps', old('section', isset($classe) ? ($classe->ps == 1) ? array_fill(0, 1, 'ps') : [] : [])))>
                     <label class="form-check-label" for="inlineCheckbox1">Petite section</label>
                 </div>

@@ -53,12 +53,6 @@ class UserAuthenticated
         // tous : $request->route()->parameters() / 1 seul : $request->route('nom_parametre')
         // $request->route()->getActionMethod()  ->  renvoi le nom de la route : ->name('')
         if($id_enfant) {
-            /*
-            Benchmark::dd([
-                    'scenario 1' => fn () => Enfant::where('id', $request->route('id'))->where('user_id', Auth::id())->first(),
-                    'scenario 2' => fn () => Enfant::find($request->route('id')),
-            ]);
-            */
             $enfant = Enfant::find($id_enfant);
             if(!$enfant) {
                 return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');

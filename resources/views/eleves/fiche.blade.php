@@ -117,8 +117,8 @@
                                     <ul class="list-group">
                                     @php
                                         $section_id = $resultat->section_id;
-                                        // dd($resultat);
                                     @endphp
+                                    
                                 @endif
 
 

@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Configuration;
 use Illuminate\Http\Request;
-use App\Models\Tuto;
 use App\Models\Tutoriel;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class TutoController extends Controller
 {
     public function index(Request $request) {
             
-        //dd($request->tuto_type);
         $liste = Tutoriel::where('page', $request->page)->get();
         $t = $liste->first();
         $next = $liste->skip(1)->first();

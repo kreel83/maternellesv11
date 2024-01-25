@@ -194,7 +194,10 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                             <li><hr class="dropdown-divider"></li>
                                             <span class="nav-item navbar-text">Autres classes :</span>
                                             @foreach (session('autres_classes') as $classe)
-                                                <a href="{{ route('changerClasse',['classe' => $classe->id]) }}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
+                                                @php
+                                                    $token = md5(Auth::id().$classe->id.env('HASH_SECRET'));
+                                                @endphp
+                                                <a href="{{ route('changerClasse',['classe' => $classe->id, 'token' => $token]) }}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
                                             @endforeach
                                         @endif
                                     @endif

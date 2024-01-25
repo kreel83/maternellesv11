@@ -32,7 +32,6 @@ class TestController extends Controller
     {
         $logoPath = public_path('img/deco/logo.png');
         $logo = "data:image/png;base64,".base64_encode(file_get_contents($logoPath));
-        //dd($logo);
         $url = "";
         Mail::to('contact.clickweb@gmail.com')->send(new UserEmailVerificationSelfRegistration($logo, $url, 'test'));
     }

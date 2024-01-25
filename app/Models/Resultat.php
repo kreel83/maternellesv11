@@ -133,7 +133,6 @@ class Resultat extends Model
     public function top5Eleves() {
         return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
-        // ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->where('enfants.classe_id', session('classe_active')->id)
         ->groupBy('enfant_id')
         ->get();
@@ -142,7 +141,6 @@ class Resultat extends Model
     public function top5ElevesLesPlusAvances() {
         return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
-        // ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->where('enfants.classe_id', session('classe_active')->id)
         ->groupBy('enfant_id')
         ->orderByDesc('total')
@@ -153,7 +151,6 @@ class Resultat extends Model
     public function top5ElevesLesMoinsAvances() {
         return self::selectRaw('count(*) as total, enfants.nom, enfants.prenom, enfants.groupe, enfants.background, enfants.photo')
         ->join('enfants', 'enfants.id', '=', 'enfant_id')
-        // ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->where('enfants.classe_id', session('classe_active')->id)
         ->groupBy('enfant_id')
         ->orderBy('total')
@@ -166,7 +163,6 @@ class Resultat extends Model
         ->join('items', 'items.id', '=', 'item_id')
         ->join('sections', 'sections.id', '=', 'items.section_id')
         ->join('enfants', 'enfants.id', '=', 'resultats.enfant_id') 
-        // ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->where('enfants.classe_id', session('classe_active')->id)
         ->groupBy('item_id')
         ->get();
@@ -177,7 +173,6 @@ class Resultat extends Model
         ->join('items', 'items.id', '=', 'item_id')
         ->join('sections', 'sections.id', '=', 'items.section_id')
         ->join('enfants', 'enfants.id', '=', 'resultats.enfant_id') 
-        // ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->where('enfants.classe_id', session('classe_active')->id)
         ->groupBy('item_id')
         ->orderByDesc('total')
@@ -190,7 +185,6 @@ class Resultat extends Model
         ->join('items', 'items.id', '=', 'item_id')
         ->join('sections', 'sections.id', '=', 'items.section_id')
         ->join('enfants', 'enfants.id', '=', 'resultats.enfant_id') 
-        // ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->where('enfants.classe_id', session('classe_active')->id)
         ->groupBy('item_id')
         ->orderBy('total')
@@ -199,10 +193,7 @@ class Resultat extends Model
     }
 
     public function listeDesEnfantsSansNote() {
-        //$r = Enfant::where('user_id', Auth::id())->count();   // a voir si necessaire !
-        // dd($r);
         return self::rightJoin('enfants','enfants.id','enfant_id')
-        // ->where('enfants.classe_id', session()->get('id_de_la_classe'))
         ->where('enfants.classe_id', session('classe_active')->id)
         ->whereNull('resultats.enfant_id')
         ->count();

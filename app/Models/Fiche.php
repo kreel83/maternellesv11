@@ -58,6 +58,5 @@ class Fiche extends Model
 
             }
         }
-        //dd('done');
     }
 }

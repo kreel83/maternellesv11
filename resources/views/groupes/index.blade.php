@@ -34,7 +34,7 @@
             @if (4 - $nbGroupe == 0)
                 Vous pouvez ne pouvez plus créer de groupe (4 maximum)
             @else
-                Vous pouvez créer encore {{ 4 - $nbGroupe}} groupe{{ 4 - $nbGroupe == 1 ? null : 's'}}
+                Vous pouvez encore créer {{ 4 - $nbGroupe}} groupe{{ 4 - $nbGroupe == 1 ? null : 's'}}.
             @endif
         </div>   
     

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnfantController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ClasseController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CahierController;
@@ -15,12 +14,9 @@ use App\Http\Controllers\ficheController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TutoController;
-use App\Http\Controllers\NewaccountController;
 use App\Http\Controllers\PartageController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SubscriptionController;
-use Illuminate\Http\Request;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -100,32 +96,14 @@ Route::get('/parent',[EnfantController::class, 'parent']);
 Route::post('/parent',[EnfantController::class, 'parent_mdp'])->name('parent');
 Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect');
 
+// N'est pas dans middleware car appelé depuis un email hors authentification
+Route::get('/partage/create/{token}', [PartageController::class, 'acceptePartage'])->name('acceptePartage');
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
-    
-//     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
-//     Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
-//     Route::get('/subscribe/result', [SubscriptionController::class, 'stripeRedirect'])->name('user.stripe.redirect');
-//     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
-//     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
-//     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-//     Route::get('/home', [HomeController::class, 'index'])->name('home');
-//     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
-//     Route::get('/error', [parametreController::class, 'error'])->name('error');
-// });
-
-//Route::middleware(['auth'])->group(function () {
-    // Les URLs ci-dessous nécessitent authentification + abonnement en cours
-    Route::middleware(['auth','user'])->group(function () {
-        //Route::get('/', [parametreController::class, 'welcome'])->name('depart');
-        
-        //Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+Route::middleware(['auth','user'])->group(function () {
    
     Route::get('/', [parametreController::class, 'welcome'])->name('depart');
     Route::get('/contact', [UserController::class, 'contact'])->name('contact');
     Route::post('/contact', [ContactController::class, 'envoiLaDemandeDeContact'])->name('user.contact.post');
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/deco', [UserController::class, 'deco'])->name('deco');
     Route::get('/error', [parametreController::class, 'error'])->name('error');        
         
@@ -158,40 +136,16 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
     Route::get('/enfants/{enfant_id}/removeGroupe', [EnfantController::class, 'removeGroupe'])->name('removeGroupe'); // voir doublon avec seepdf
     Route::get('/cahier/{reussite_id}/definitif', [CahierController::class, 'definitif'])->name('definitif');
-    /*
-    Route::get('/enfants/{id}/items', [ItemController::class, 'index'])->name('items');
-    Route::get('/enfants/{id}/cahier', [CahierController::class, 'index'])->name('cahier');
-    Route::get('/enfants/{id}/pdfview', [CahierController::class, 'pdfview'])->name('pdfview');
-    Route::get('/enfants/{id}/redoPdf', [CahierController::class, 'redoPdf'])->name('redoPdf');
-    Route::post('/enfants/{id}/cahier/saveCommentaireGeneral', [CahierController::class, 'saveCommentaireGeneral'])->name('saveCommentaireGeneral');
-    Route::post('/enfants/{id}/translate', [CahierController::class, 'translate'])->name('translate');
-    Route::post('/enfants/{id}/cahier/save', [CahierController::class, 'saveTexte'])->name('saveTexte');
-    Route::post('/enfants/{id}/cahier/saveTexteReussite', [CahierController::class, 'definitif'])->name('saveTexteReussite');
-    Route::post('/enfants/{id}/cahier/reformuler', [CahierController::class, 'reformuler'])->name('reformuler');
-    Route::get('/enfants/{id}/cahier/reactualiser', [CahierController::class, 'reactualiser'])->name('reactualiser');
-    Route::get('/enfants/{id}/cahier/calcul_duration', [CahierController::class, 'calcul_duration'])->name('calcul_duration');
-    Route::get('/enfants/{id}/cahier/seepdf/{state}', [CahierController::class, 'seepdf'])->name('seepdf');
-    Route::get('/enfants/{id}/add_phrase/{phrase}', [CahierController::class, 'add_phrase'])->name('add_phrase');
-    Route::get('/enfants/{id}/remove_phrase/{phrase}', [CahierController::class, 'remove_phrase'])->name('remove_phrase');
-    Route::get('/cahiers/get_apercu/{id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
-    Route::get('/enfants/{id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
-    Route::get('/enfants/{id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
-    Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu');
-    Route::post('/enfants/{id}/cahier/definitif', [CahierController::class, 'definitif'])->name('definitif');
-    */
 
     Route::get('/item/saveResultat', [ItemController::class, 'saveResultat'])->name('saveResultat');
     Route::get('/item/upgradeResultat', [ItemController::class, 'upgradeResultat'])->name('upgradeResultat');
-    //Route::get('/home', [HomeController::class, 'index'])->name('home');
-    //Route::get('/deco', [UserController::class, 'deco'])->name('deco');
     Route::get('/choix_enfant_select', [EnfantController::class, 'choix_enfant_select'])->name('choix_enfant_select');
-    Route::get('/enfants/cahier/envoi', [CahierController::class, 'envoiCahier'])->name('envoiCahier');
-    Route::post('/enfants/cahier/envoi', [CahierController::class, 'envoiCahierPost'])->name('envoiCahier.post');
+    // Route::get('/enfants/cahier/envoi', [CahierController::class, 'envoiCahier'])->name('envoiCahier');
+    // Route::post('/enfants/cahier/envoi', [CahierController::class, 'envoiCahierPost'])->name('envoiCahier.post');
         
     Route::get('/enfants/cahier/manage', [PdfController::class, 'cahierManage'])->name('cahierManage');
     Route::post('/enfants/cahier/manage', [PdfController::class, 'cahierManagePost'])->name('cahierManage.post');
     Route::get('/enfants/cahier/apercu/{token}/{enfant_id}/{periode}', [CahierController::class, 'seepdf'])->name('cahierApercu');
-    //Route::get('/enfants/cahier/apercu', [CahierController::class, 'seepdf'])->name('cahierApercu');
     // cette route est utilisée dans pdf.js :
     Route::post('/enfants/cahier/envoi/individuel', [PdfController::class, 'envoiCahierIndividuel'])->name('cahierManage.individuel');
 
@@ -241,9 +195,6 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/fiches/setSection', [ficheController::class, 'setSection'])->name('setSection');
     Route::post('/fiches/importTemplate', [ficheController::class, 'importTemplate'])->name('importTemplate');
     Route::post('/fiches/saveTemplate', [ficheController::class, 'saveTemplate'])->name('saveTemplate');
-
-
-
 
     Route::get('/classe/changer',[ClasseController::class,'changerclasse'])->name('changerClasse');
     Route::get('/classe/create',[ClasseController::class,'createclasse'])->name('createclasse');
@@ -315,9 +266,10 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     Route::post('/partage/sendmail', [PartageController::class, 'sendMailPartage'])->name('sendMailPartage');
     Route::get('/partage/remove/{classeuser_id}', [PartageController::class, 'supprimePartage'])->name('supprimePartage');
     Route::post('/partage/remove/final', [PartageController::class, 'supprimePartageFinal'])->name('supprimePartageFinal');
-    Route::get('/partage/create/{token}', [PartageController::class, 'acceptePartage'])->name('acceptePartage');
-    Route::get('/partage/code/{classeuser_id}', [PartageController::class, 'sendCodePartage'])->name('sendCodePartage');
-
+    Route::get('/partage/agreeShare/{id}',  [PartageController::class, 'agreeShare'])->name('agreeShare');
+    Route::get('/partage/rejectShare/{id}',  [PartageController::class, 'rejectShare'])->name('rejectShare');
+    Route::get('/partage/liste_partage',  [PartageController::class, 'liste_partage'])->name('liste_partage');
+    // La route pour accepter un partage depuis un email est hors du middleware car publique : name('acceptePartage')
 
     // Gestion des abonnements
     Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
@@ -337,22 +289,7 @@ Route::get('/connect', [GoogleConnect::class, 'connect'])->name('GoogleConnect')
     
     Route::get('/invoice/download/{facture_number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
     Route::get('invoice/send/{facture_number}', [SubscriptionController::class, 'sendInvoice'])->name("subscribe.invoice.send");    
-    
-    
-   
-    Route::get('/partage/agreeShare/{id}',  [PartageController::class, 'agreeShare'])->name('agreeShare');
-    Route::get('/partage/rejectShare/{id}',  [PartageController::class, 'rejectShare'])->name('rejectShare');
-    Route::get('/partage/liste_partage',  [PartageController::class, 'liste_partage'])->name('liste_partage');
+
 });
-
-// un middleware 'abo'  qui est come le auth
-//middleware['auth','abo']  pour le reste
-// dans abon  mettre fonction qui verifie la licence et redirige sur une vue pour dire non abonné
-
-// route::get('/resultat/setNote',  [\App\Http\Controllers\ResultatController::class, 'setNote']);
-
-Route::get('/newaccount', [NewaccountController::class, 'index'])->name('index');
-//Route::get('/newaccount', 'RegistrationController@create');
-//Route::post('newaccount', 'RegistrationController@store');
 
 require __DIR__.'/auth.php';

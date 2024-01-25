@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ecole;
@@ -18,16 +17,11 @@ class EcoleController extends Controller
             $ecole = json_decode($r)->records[0];
 
         }
-//        dd($ecole);
         return view('ecole.index')->with('ecole', $ecole);
     }
 
     public function chercheCommune(Request $request) {
-        
-        
-      
- 
-       $search = $request->search;
+        $search = $request->search;
         if (is_numeric($search)) {
             
             switch (strlen($search)) {
@@ -41,21 +35,8 @@ class EcoleController extends Controller
             $communes = Ecole::select('nom_commune', 'adresse_3','code_departement','code_commune')->groupBy('nom_commune')->where('nom_etablissement','LIKE', '%'.$search.'%' )->orWhere('nom_commune','LIKE','%'.$search.'%');
         }
         $communes = $communes->orderBy('nom_commune')->get();
-        
-
-        // $communes = $commune->distinct('commune')->selectRaw('commune, code_postal, code_commune')->where('commune', 'LIKE', '%'.$request->commune.'%')->orderBy('commune')->get();
-        // dd($communes);
-        // $ecoles = Ecole::where('commune', 'LIKE', '%'.$request->commune.'%')->where('code_departement', $dpt)->get();
-        
-        // $ecoles = $ecoles->groupBy('nature')->toArray();
-        // return view('ecole.include.ecoles')
-        //     ->with('ecoles', $ecoles);
-            
-
         return view('ecole.include.communes')->with('communes', $communes);
-
     }
-
 
     public function chercheEcoles(Request $request) {
         $commune = $request->commune;
@@ -72,7 +53,6 @@ class EcoleController extends Controller
         return view('ecole.confirmation')->with('ecole', $ecole);
     }
 
-
     public function choixEcole(Request $request) {
        $user = Auth::user();
        $ecole = Ecole::where('identifiant_de_l_etablissement',$request->ecole)->first();
@@ -82,6 +62,5 @@ class EcoleController extends Controller
        $user->save();
        return 'ok';
     }
-
     
 }

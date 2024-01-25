@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Licence;
-use App\Models\Subscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
-use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 
@@ -23,7 +20,6 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login');
-        //return redirect()->route('enfants');
     }
 
     /**
@@ -112,7 +108,6 @@ class UserController extends Controller
     public function deleteInactiveUser(): void
     {
         $enddate = Carbon::now()->subMinutes(30)->toDateTimeString();
-        //dd($enddate);
         $deleted = User::where('actif', 0)
             ->where('created_at', '<=', $enddate)
             ->where('password', '<>', '')   // pour ne pas supprimer les Users crées depuis admin/licence

@@ -3,18 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Facture;
-use Illuminate\Http\Request;
 
 class FactureController extends Controller
 {
     
     public function ajouterUneFacture(array $stripeObject)
     {
-
         $facture = new Facture();
         $facture -> user_id = '';
-
-        
         Facture::create([
             'user_id' => $stripeObject['data']['object']['metadata']['user_id'],
             'produit_id' => $stripeObject['data']['object']['metadata']['produit_id'],

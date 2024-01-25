@@ -106,13 +106,7 @@
                         <ul class="fiche_container fiches autresfiches m-0 p-0">
 
                             @foreach ($universelles as $key => $fiche)
-                            @php
-                                //dd($fiche);
-                                //dd($universelles);
-                                //dd($key);
-                            @endphp
                                 @include('cards.universelle', [
-                                    //'color' => $sections->where('id', '')->first()->color;
                                     'type' => 'autresfiches',
                                     'classifications' => $classifications,
                                 ])

@@ -45,8 +45,7 @@ $is_dashboard = true;
                 @if ($section->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
                 @else
                 <div class="d-flex flex-column align-items-center">
-                 
-                    {{-- <div class="nbSection" style="color: {{$sec->color}}">{{$sec->nbSection()}}</div> --}}
+
                     <div class="nbSection" style="color: {{$section->color}}">{{ $nombreDeFichesParSection[$section->id] }}</div>
                     <div class='selectSectionFiche selectSectionItem'
                         data-value="{{ $section->id }}" title="{{$section->name}}">
@@ -60,10 +59,6 @@ $is_dashboard = true;
                 @endif
             @endforeach
         </div>
-        {{-- <div class="info5 cadre_info">
-        </div>
-        <div class="info6 cadre_info">
-        </div> --}}
 
         <div class="div1 cadre_welcome"> 
             <div class="titre_welcome">Les anniversaires {{ in_array(substr($moisActuel,0,1), ['o','a']) ? "d'" : 'de '}}{{$moisActuel}}</div>
@@ -211,9 +206,6 @@ $is_dashboard = true;
             <div class="">
                 <ul>
                     @foreach($top5DisciplinesLesPlusAvances as $discipline)
-                    @php
-                        // dd($discipline);
-                    @endphp
                         <div class="d-flex justify-content-between align-items-center border-bottom my-1">
                             <div class="me-2">
                                 <img src="{{ asset('img/illustrations/' . $discipline->id.'.png') }}" alt="" width="25px"
@@ -223,11 +215,8 @@ $is_dashboard = true;
                             <div class="w-25 text-end">{{$discipline->total}} élève{{$discipline->total > 1 ? 's' : null }}</div>
 
                         </div>
-                        @endforeach
-                        
-                                      
+                    @endforeach
                 </ul>
-
             </div>
         </div>
         <div class="div6 cadre_welcome"> 

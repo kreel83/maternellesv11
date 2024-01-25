@@ -14,12 +14,6 @@ $day = $month->startOfMonth();
 $mois_precedent = $month->clone()->addMonths(-1)->daysInMonth;
 $debut_mois_precedent = $mois_precedent - $start;
 $actual_year = $day->year;
-//dd($start_year, $actual_year);
-
-
-//dd($jour, $day);
-
-
 
 @endphp
 
