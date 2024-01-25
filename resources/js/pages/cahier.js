@@ -26,9 +26,9 @@ const choicePhrase = (Modal) => {
             success: function(data) {
                 $('.seePdf').prop('checked', definitif)
                 if (definitif == true)  {
-                    $('.definitifPDF').removeClass('d-none')
+                    $('.definitifPDF').toggleClass('active desactive')
                 } else {
-                    $('.definitifPDF').addClass('d-none')
+                    $('.definitifPDF').toggleClass('active desactive')
                 }                
             }
         })
@@ -40,15 +40,22 @@ const choicePhrase = (Modal) => {
 
     $(document).on('click','.correction', function() {
         $('.seePdf').prop('checked',false)
-        $('.definitifPDF').addClass('d-none')
+        $('.definitifPDF').toggleClass('active desactive')
+    })
+
+    $(document).on('click','#retourHautDePage', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     })
 
 
     $(document).on('change','.seePdf', function() {
+        
         const definitif = $('.seePdf:first').prop('checked')
+        $('.seePdf').prop('checked',definitif)
+
         const reussite = $('.seePdf:first').data('reussite')
-        console.log('definitif', definitif)
         var check = $('#editorApercu99').attr('data-texte')
+        console.log('definitif', definitif, check)
         if (!check && definitif) {
             
             var myModal = new Modal(document.getElementById('informationcommentairePDF'))
