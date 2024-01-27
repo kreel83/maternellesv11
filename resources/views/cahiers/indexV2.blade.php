@@ -152,8 +152,11 @@
                                     <select name="" id="" class="selectionCommentaire form-control form-control-sm" data-prenom="{{$enfant->prenom}}" data-genre="{{$enfant->genre}}" data-section="{{$sec->id}}" style="width: 300px; font-size: 12px">
                                         <option value="null">Veuillez selectionner</option>
                                         @foreach ($commentaires[$sec->id] as $commentaire)
-                                        
+                                        @if ($enfant->genre == 'F')
+                                        <option value="{{$commentaire->phrase_feminin}}">{{$commentaire->phrase_feminin}}</option>
+                                        @else
                                         <option value="{{$commentaire->phrase_masculin}}">{{$commentaire->phrase_masculin}}</option>
+                                        @endif
                                         @endforeach
                                         
                                     </select>                                

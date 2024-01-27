@@ -468,6 +468,7 @@ class ParametreController extends Controller
     public function savePhrases(Request $request) {
         $user = Auth::id();
         $section = $request->section;
+
         
         if ($request->id == 'new') {
             $phrase = new Commentaire();

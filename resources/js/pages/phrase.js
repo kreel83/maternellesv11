@@ -205,21 +205,20 @@ const editPhrase = (quill) => {
 
 
     $('.seeExemple').on('click', function() {
+        var el = $(this).closest('.phrase_bloc')
         $('#bloc_2phrases').addClass('d-flex').removeClass('d-none')
         $('#controleNouvellePhrase').addClass('d-none').removeClass('d-flex')
         $('#bloc_editor').addClass('d-none').removeClass('d-flex')
         $('#controle_editor').removeClass('d-none').addClass('d-flex')
 
-        var id = $(this).data('id')
-        $.get('/app/parametres/get_phrases?id='+id, function(data) {
-            $('.masculin').text(data[0])
-            $('.feminin').text(data[1])
-        })
+            $('.masculin').text($(el).attr('data-masculin'))
+            $('.feminin').text($(el).attr('data-feminin'))
+    
     })
 
     $('.editPhrase').on('click', function() {
 
-            var data = $(this).closest('.phrase_bloc').find('.texte').html()
+            var data = $(this).closest('.phrase_bloc').attr('data-masculin')
             var id = $(this).closest('.controlePhrase').data('id')
             console.log('iddd', id)
             $('#bloc_editor').removeClass('d-none')

@@ -28,7 +28,7 @@
 
 
     @foreach ($commentaires as $commentaire)
-    <div class="phrase_bloc d-flex" data-id="{{$commentaire->id}}">
+    <div class="phrase_bloc d-flex" data-id="{{$commentaire->id}}" data-masculin="{{$commentaire->phrase_masculin}}"  data-feminin="{{$commentaire->phrase_feminin}}">
         <div class="texte">{{  $commentaire->phrase_masculin }}</div>
         <div class="seeExemple ms-2" style="cursor: pointer" data-id="{{$commentaire->id}}"><i class="fas fa-eye"></i></div>
         @if ($commentaire->user_id)
