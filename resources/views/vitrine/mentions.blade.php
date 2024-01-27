@@ -14,11 +14,11 @@
 
         <h3>Mentions légales</h3>
 
-        <p>En vigueur au 01/01/2023.</p>
+        <p>En vigueur au 01/01/2024.</p>
 
         <p>Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la
         Confiance dans l’économie numérique, dite L.C.E.N., il est porté à la connaissance des utilisateurs et
-        visiteurs, ci-après l""Utilisateur", du site https://www.lesmaternelles.com , ci-après le "Site", les
+        visiteurs, ci-après l""Utilisateur", du site {{ env('APP_URL') }} , ci-après le "Site", les
         présentes mentions légales.</p>
 
         <p>La connexion et la navigation sur le Site par l’Utilisateur implique acceptation intégrale et sans réserve
@@ -28,21 +28,19 @@
 
         <h4>ARTICLE 1 - L'EDITEUR</h4>
 
-        <p>L'édition du Site est assurée par Les maternelles SAS au capital de 1000 euros, immatriculée au
-        Registre du Commerce et des Sociétés de TOULON sous le numéro 123456789 dont le siège social
-        est situé au Mon adresse,<br>
-        Numéro de téléphone 0606060606,<br>
-        Adresse e-mail : contact@.<br>
-        N° de TVA intracommunautaire : FR123456789<br>
-        Le Directeur de la publication est JOHN DOE<br>
+        <p>L'édition du Site est assurée par ET BAM Solutions, SAS au capital de 1000 euros, immatriculée au
+        Registre du Commerce et des Sociétés de TOULON sous le numéro 983 750 118 dont le siège social
+        est situé au 33 Rue Claire Joie, 83200 Toulon.<br>
+        Adresse e-mail : {{ env('MAIL_FROM_ADDRESS') }}<br>
+        N° de TVA intracommunautaire : **************<br>
+        Le Directeur de la publication est **************<br>
         ci-après l'"Editeur".
         </p>
 
         <h4>ARTICLE 2 - L'HEBERGEUR</h4>
 
-        <p>L'hébergeur du Site est la société Planethoster, dont le siège social est situé au PlanetHoster 4416
-        Louis-B.-Mayer Laval, Québec Canada H7P 0G1 , avec le numéro de téléphone : 33176604143 +
-        adresse mail de contact</p>
+        <p>L'hébergeur du Site est la société Planethoster, dont le siège social est situé au 4416
+        Louis-B.-Mayer Laval, Québec Canada H7P 0G1, avec le numéro de téléphone : +33176604143.</p>
 
         <h4>ARTICLE 3 - ACCES AU SITE</h4>
 
