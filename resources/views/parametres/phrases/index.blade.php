@@ -6,7 +6,7 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
-        <li class="breadcrumb-item active" aria-current="page">Création des phrases pré-enregistrées</li>
+        <li class="breadcrumb-item active" aria-current="page">Création des phrases prédéfinies</li>
       </ol>
     </nav>
     @php
