@@ -9,6 +9,7 @@ use App\Models\Resultat;
 use App\Models\Fiche;
 use App\Models\Section;
 use App\Models\Phrase;
+use App\Models\Enfant;
 use App\Models\Event;
 use App\Models\Vacance;
 use Carbon\Carbon;
@@ -432,10 +433,7 @@ class ParametreController extends Controller
     }
 
     public function deletePhrase($commentaire_id) {
-        $c = Commentaire::find($commentaire_id);
-        $search = Phrase::where('commentaire_id', $commentaire_id)->first();
-        if ($search) return 'ko';
-        $c->delete();
+        $c = Commentaire::find($commentaire_id);        
         return 'ok';
     }
 

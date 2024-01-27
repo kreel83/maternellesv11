@@ -246,6 +246,12 @@ class User extends Authenticatable
         return Classe::whereIn('id', $classe_totale)->get();
     }
 
+    public function toutes_mes_classes() {
+        $mesclasse = $this->autresClasses();
+
+        return $mesclasse->push(session('classe_active'));
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $url = route('password.reset', ['token' => $token]);
