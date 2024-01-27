@@ -101,9 +101,7 @@ const deletePhrase = () => {
             console.log('data', data)
             if (data == 'ok') {
                 $(el).remove()
-            } else {
-                alert('impossible : commentaire deja unitilsé')
-            }
+            } 
         })
     })
 }
