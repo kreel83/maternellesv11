@@ -9,7 +9,7 @@
 
 
 
-<body>
+
     <!-- start preloader area -->
     <div class="preloader">
         <div class="circle1"></div>
@@ -38,7 +38,7 @@
     </style>
 
     <!-- start banner area -->
-    <section class="home1 banner" data-img="assets/images/home1/banner/banner-bg.png">
+    <section class="home1 banner" data-img="{{asset('assets/images/home1/banner/banner-bg.png')}}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -210,8 +210,8 @@
                                             <i class="flaticon-24-hours"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Mode multi-classe</h6>
-                                            <p>****************************************************************************************************************.</p>
+                                            <h6>Mode multi-classes</h6>
+                                            <p>Un professeur peut gérer plusieurs classes.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -220,7 +220,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Classes Partagées</h6>
-                                            <p>****************************************************************************************************************.</p>
+                                            <p>Notre système de partage de classe permet à un professeur titulaire de partager la gestion de sa classe avec un professeur co-titulaire ou suppleant</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -732,114 +732,7 @@
     </section> -->
     <!-- end blog area -->
 
-    <!-- start footer area -->
-    <footer class="footer" data-img="assets/images/footer-bg.jpg">
-        <!-- start footer-top area -->
-        <section class="footer-top pt-100 pb-60">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="content">
-                            <div class="title">
-                                <h5>Get in Touch</h5>
-                            </div>
-                            <p class="desc">Lorem ipsum dolor sit am co adipisicing elit, sed do eiusmod tempor</p>
-                            <ul class="address">
-                                <li class="d-flex align-items-center">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <p>24/A New California</p>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <i class="fas fa-phone-alt"></i>
-                                    <p>+1 800 123 4567</p>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <i class="far fa-envelope"></i>
-                                    <p>demo@example.com</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-6">
-                        <div class="content">
-                            <div class="title">
-                                <h5>quick links</h5>
-                            </div>
-                            <ul class="navigation">
-                                <li><a href="index.html">home</a></li>
-                                <li><a href="service.html">service</a></li>
-                                <li><a href="team.html">our team</a></li>
-                                <li><a href="#portfolio" class="scroll-down">project</a></li>
-                                <li><a href="service-detail.html">android</a></li>
-                                <li><a href="service-detail.html">development</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="content">
-                            <div class="title">
-                                <h5>follow us</h5>
-                            </div>
-                            <ul class="follow">
-                                <li><a href="#!">facebook</a></li>
-                                <li><a href="#!">twitter</a></li>
-                                <li><a href="#!">google+</a></li>
-                                <li><a href="#!">youtube</a></li>
-                                <li><a href="#!">instagram</a></li>
-                                <li><a href="#!">dribbble</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="content">
-                            <div class="title">
-                                <h5>subscribe</h5>
-                            </div>
-                            <p>Lorem ipsum dolor si  consectetur adipisicing elit, sed eiusmotempor incididunt ut labore et</p>
-                            <div class="form-area">
-                                <input type="email" placeholder="your email" class="inputs">
-                                <button><i class="fab fa-telegram-plane"></i></button>
-                            </div>
-                            <ul class="d-flex social">
-                                <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-linkedin-in"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- end footer-top area -->
 
-        <!-- start footer-bottom area -->
-        <section class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="bg">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <p>Copyright &copy; 2021 Al Right Reserved</p>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <ul class="d-flex justify-content-end">
-                                        <li><a href="index.html">home</a></li>
-                                        <li><a href="about.html">about</a></li>
-                                        <li><a href="service.html">service</a></li>
-                                        <li><a href="contact.html">contact</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- end footer-bottom area -->
-    </footer>
-    <!-- end footer area -->
 
     <!-- start modal area -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -867,42 +760,6 @@
         </div>
     </div>
     <!-- end custom cursor area -->
+    @endsection
 
-    <!-- jquery -->
-    <script src="assets/plugins/jquery-3.4.1.min.js"></script>
 
-    <!-- bootstrap -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-
-    <!-- menu -->
-    <script src="assets/plugins/menu.min.js"></script>
-
-    <!-- odometer -->
-    <script src="assets/plugins/appear.min.js"></script>
-    <script src="assets/plugins/odometer.min.js"></script>
-
-    <!-- mixitup -->
-    <script src="assets/plugins/mixitup.min.js"></script>
-
-    <!-- directional hover -->
-    <script src="assets/plugins/jquery.directional-hover.min.js"></script>
-
-    <!-- cursor move -->
-    <script src="assets/plugins/tweenmax.js"></script>
-
-    <!-- venobox -->
-    <script src="assets/plugins/venobox.min.js"></script>
-
-    <!-- swiper-slider -->
-    <script src="assets/plugins/swiper-bundle.min.js"></script>
-
-    <!-- wow js -->
-    <script src="assets/plugins/wow.min.js"></script>
-
-    <!-- Google map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjkssBA3hMeFtClgslO2clWFR6bRraGz0"></script>
-
-    <!-- script -->
-    <script src="assets/js/script.js"></script>
-</body>
-</html>
