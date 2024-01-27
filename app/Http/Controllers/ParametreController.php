@@ -434,6 +434,8 @@ class ParametreController extends Controller
 
     public function deletePhrase($commentaire_id) {
         $c = Commentaire::find($commentaire_id);        
+
+        $c->delete();
         return 'ok';
     }
 
