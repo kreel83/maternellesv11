@@ -23,17 +23,17 @@ use App\Http\Controllers\MfController;
 */
 
 Route::get('/mf', [MfController::class, 'index'])->name('mf.index');
-Route::get('/mf/cahier', [MfController::class, 'cahier'])->name('mf.cahier');
-Route::get('/mf/eleves', [MfController::class, 'eleves'])->name('mf.eleves');
-Route::get('/mf/fiches', [MfController::class, 'fiches'])->name('mf.fiches');
-Route::get('/mf/calendrier', [MfController::class, 'calendrier'])->name('mf.calendrier');
-Route::get('/mf/parametrage', [MfController::class, 'parametrage'])->name('mf.parametrage');
+Route::get('/mf/application', [MfController::class, 'application'])->name('mf.application');
 Route::get('/mf/compagnon', [MfController::class, 'compagnon'])->name('mf.compagnon');
-Route::get('/mf/tarif', [MfController::class, 'tarif'])->name('mf.tarif');
-Route::get('/mf/conditions', [MfController::class, 'conditions'])->name('mf.conditions');
-Route::get('/mf/mentions', [MfController::class, 'mentions'])->name('mf.mentions');
-Route::get('/mf/confidentialite', [MfController::class, 'confidentialite'])->name('mf.confidentialite');
-Route::get('/mf/cookies', [MfController::class, 'cookies'])->name('mf.cookies');
+Route::get('/mf/tarification', [MfController::class, 'tarification'])->name('mf.tarification');
+Route::get('/mf/contact', [MfController::class, 'contact'])->name('mf.contact');
+// Route::get('/mf/parametrage', [MfController::class, 'parametrage'])->name('mf.parametrage');
+// Route::get('/mf/compagnon', [MfController::class, 'compagnon'])->name('mf.compagnon');
+// Route::get('/mf/tarif', [MfController::class, 'tarif'])->name('mf.tarif');
+// Route::get('/mf/conditions', [MfController::class, 'conditions'])->name('mf.conditions');
+// Route::get('/mf/mentions', [MfController::class, 'mentions'])->name('mf.mentions');
+// Route::get('/mf/confidentialite', [MfController::class, 'confidentialite'])->name('mf.confidentialite');
+// Route::get('/mf/cookies', [MfController::class, 'cookies'])->name('mf.cookies');
 
 
 Route::get('/', [VitrineController::class, 'index'])->name('vitrine.index');
