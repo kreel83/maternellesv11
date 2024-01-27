@@ -17,7 +17,7 @@
 		<p>En vigueur au 01/01/2023</p>
 
 		<p>Les présentes conditions générales d'utilisation (dites « CGU ») ont pour objet l'encadrement juridique
-		des modalités de mise à disposition du site et des services par Les Maternelles et de définir les
+		des modalités de mise à disposition du site et des services par {{ env('APP_NAME') }} et de définir les
 		conditions d’accès et d’utilisation des services par « l'Utilisateur ».</p>
 
 		<p>Les présentes CGU sont accessibles sur le site à la rubrique « Conditions d'utilisation ».</p>
