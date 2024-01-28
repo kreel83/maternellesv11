@@ -89,7 +89,9 @@
                                     <div class="tiret_selection {{ $sec->id == $section->id ? null : 'd-none' }}"
                                         data-id="{{ $sec->id }}" style="background-color: {{ $sec->color }}"></div>
                                     <div class='selectSectionFiche selectSectionItem {{ $sec->id == $section->id ? 'selected' : null }}'
-                                        data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}" title="{{$sec->name}}">
+                                        data-value="{{ $sec->id }}" style="background-color: {{ $sec->color }}" title="{{$sec->name}}"
+                                        data-reussite="{{$listeReussiteSection[$sec->id] ?? false}}"
+                                        >
                                         <img src="{{ asset('img/illustrations/' . $sec->logo) }}" alt="" width="45px"
                                             height="45px">
                                     </div>
@@ -111,7 +113,7 @@
             </div>
 
 
-            <div id="mesfiches" class="listItems d-flex justify-content-center" >
+            <div id="mesfiches" class="listItems d-flex justify-content-center">
                 <div class="fiche_container fiches mesitems">                    
                     @foreach ($fiches as $fiche)
                         @include('cards.item')

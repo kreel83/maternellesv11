@@ -66,6 +66,25 @@ class ItemController extends Controller
         $enfant = Enfant::find($enfant_id);
         $sections = Section::orderBy('ordre')->get();
         $fiches = Auth::user()->mesfiches();
+        
+
+        $has_reussite = Reussite::where('enfant_id', $enfant_id)->where('periode', $enfant->periode)->first();
+        if ($has_reussite) $has_reussite_section = ReussiteSection::where('reussite_id', $has_reussite->id)->groupBy('section_id')->pluck('section_id')->toArray();
+
+        
+        
+        $liste_reussite_section = [];
+        foreach ($sections as $sec) {
+            $liste_reussite_section[$sec->id] = ($has_reussite && in_array($sec->id, $has_reussite_section)) ? 1 : 0; 
+           
+        }
+
+        
+ 
+
+        // $has_reussite = ($h:as_reussite) ? true : false;
+         
+
 
 
         foreach ($fiches as $fiche) {
@@ -79,6 +98,7 @@ class ItemController extends Controller
 
         return view('items.index')
                 ->with("user", Auth::user())
+                ->with("listeReussiteSection", $liste_reussite_section)
                 ->with('fiches', $fiches)
                 ->with('sections',$sections)
                 ->with('enfant', $enfant)

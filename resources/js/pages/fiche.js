@@ -347,6 +347,7 @@ const choixFiltre = (Modal, quill) => {
         const el = $(this).closest('.card_item')
         const item = $(el).data('item')
         const enfant = $('#enfant').val()
+        
         $(el).find('.lanote').text(text)
         $(el).find('.card-footer2').removeClass('niveau_0 niveau_3 niveau_2 niveau_1')
         switch (notation) {
@@ -369,9 +370,10 @@ const choixFiltre = (Modal, quill) => {
 
         }
         $.get('/app/item/saveResultat?enfant='+enfant+'&item='+item+'&note='+notation, function(data) {
-            console.log(data)
-            if (data == 'modif') {
-                var section = $('.tiret_selection:visible').data('id')
+            var section = $('.tiret_selection:visible').data('id')
+            const listeReussiteSection = $('.selectSectionFiche[data-value="'+section+'"]').data('reussite')
+            console.log(listeReussiteSection, section)
+            if (listeReussiteSection && data == 'modif') {
                 $.get('/app/enfants/'+enfant+'/cahier/getReussite?section='+section, function(data) {
                     $('#CommitSaveReussite').attr('data-reussite', data[1])
                     console.log(data)              
