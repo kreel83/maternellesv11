@@ -6,12 +6,12 @@
 @endsection
 
 @section('content')
-    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-bg7.jpg')}}">
+    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner_tarif.png')}}">
         <div class="overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="content text-center">
+                        <div class="content text-center mx-auto titre_banner">
                             <h2>Nos tarifs</h2>
 
                         </div>

@@ -28,7 +28,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="content text-center">
+                        <div class="content text-center mx-auto titre_banner">
                             <h2>L'application</h2>
 
                         </div>
@@ -47,7 +47,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img1.png" alt="About">
+                                <img src="{{asset('assets/images/home1/application/1.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -117,7 +117,7 @@
                         </div>
                         <div class="col-lg-5 order-0 order-lg-1">
                             <div class="image text-center wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img2.png" alt="About">
+                                <img src="{{asset('assets/images/home1/application/2.jpg')}}" alt="About">
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img1.png" alt="About">
+                                <img src="{{asset('assets/images/home1/application/3.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -194,7 +194,7 @@
                         </div>
                         <div class="col-lg-5 order-0 order-lg-1">
                             <div class="image text-center wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img2.png" alt="About">
+                                <img src="{{asset('assets/images/home1/application/4.jpg')}}" alt="About">
                             </div>
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img1.png" alt="About">
+                                <img src="{{asset('assets/images/home1/application/5.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -279,7 +279,7 @@
                         </div>
                         <div class="col-lg-5 order-0 order-lg-1">
                             <div class="image text-center wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img2.png" alt="About">
+                                <img src="{{asset('assets/images/home1/application/6.jpg')}}" alt="About">
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img1.png" alt="About">
+                                <img src="{{asset('assets/images/home1/application/7.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">

@@ -22,12 +22,12 @@
 
 
     <!-- start banner area -->
-    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-bg6.jpg')}}">
+    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-bg6.png')}}">
         <div class="overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="content text-center">
+                        <div class="content text-center mx-auto titre_banner">
                             <h2>Le compagnon</h2>
 
                         </div>

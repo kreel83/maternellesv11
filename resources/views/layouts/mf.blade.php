@@ -88,6 +88,18 @@
 
 
 <body>
+
+<style>
+   
+   .btn_custom {
+    background-color: rgba(126,227,177,1) !important;
+    color: white !important;
+    padding: 0 10px !important;
+    line-height: 30px !important;
+    border-radius: 15px !important;
+   }
+</style>
+
 <header>
     <!-- start menubar area -->
     <section class="menubar">
@@ -115,8 +127,8 @@
                                 {{-- <li>
                                     <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="flaticon-loupe"></i></button>
                                 </li> --}}
-                                <li><a href="{{route('login')}}">Se connecter</a></li>
-                                <li><a href="{{route('registration.start')}}">Essayez gratuitement</a></li>
+                                <li><a class="btn_custom" href="{{route('login')}}">Se connecter</a></li>
+                                <li><a class="btn_custom" href="{{route('registration.start')}}">Essayez gratuitement</a></li>
                             </ul>
                         </div>
                     </nav>

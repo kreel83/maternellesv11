@@ -431,7 +431,7 @@
     <!-- end portfolio area -->
 
     <!-- start team area -->
-    <section class="home1 team p-120">
+    {{-- <section class="home1 team p-120">
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
@@ -497,7 +497,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- end team area -->
 
     <!-- start mobile area -->
@@ -514,17 +514,17 @@
                             </div>
                             <div class="col-lg-7">
                                 <div class="content">
-                                    <h3>Get Mobile App Only Here</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+                                    <h3>Télécharger l'application mobile</h3>
+                                    <p>L'application mobile vous permet de noter vos élèves directement dans votre classe ou tout simplement, quand vous le voulez :) </p>
                                     <ul class="d-flex">
                                         <li>
                                             <a href="#!">
-                                                <img src="assets/images/home1/banner/applestore.png" alt="Apple Store">
+                                                <img src="{{asset('assets/images/inner/google-play-badge.png')}}" alt="Apple Store" width="194">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#!">
-                                                <img src="assets/images/home1/banner/playstore.png" alt="Play Store">
+                                                <img src="{{asset('assets/images/inner/appstore.png')}}" alt="Play Store"  width="194">
                                             </a>
                                         </li>
                                     </ul>
@@ -539,7 +539,7 @@
     <!-- end mobile area -->
 
     <!-- start video area -->
-    <section class="home1 video" data-img="assets/images/home1/video-bg.jpg">
+    <section class="home1 video" data-img="assets/images/home1/bear.png">
         <div class="overlay">
             <div class="container">
                 <div class="row">
