@@ -46,15 +46,23 @@
                         <div class="row">
                             <div class="col-lg-10 order-1 order-lg-0">
                                 <div class="text-area">
-                                    <h1 class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">L'application concue pour vous</h1>
+                                    <h1 class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">L'application conçue pour vous</h1>
                                     <h1 class="wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">simplifier la conception des </h1>
-                                    <h1 class="wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">cahiers de réussite </h1>
-                                    
+                                    <h1 class="wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">cahiers de réussites</h1>
                                 </div>
                             </div>
-                            <div class="mt-5">
-                                <a class="button_cherche_ecole">Chercher votre ecole</a>
+                            <div class="mt-4">
+                                <a href="{{ route('mf.etablissement') }}" class="button_cherche_ecole">Chercher votre établissement</a>
                             </div>
+                            
+                            {{-- <label class="mb-2" for="searchSchoolOnHomepage" style="font-size:1.2em; color: white">Chercher votre école parmi plus de 36,000 établissements référencés :</label>
+                            <div class="d-flex">
+                                <input type="text" class="form-control" name="searchSchoolOnHomepage" id="searchSchoolOnHomepage" placeholder="Code établissement, code postal, nom école, mot clé...">
+                                <a class="btn btn-primary boutonSearchSchoolOnHomepage">Chercher votre école</a>
+                            </div>
+
+                            <div id="afficheLaListeDesEtablissementsHomepage" class="mt-3" style="display:none; overflow: auto; height: 150px; color:white">
+                            </div> --}}
 
                         </div>
                     </div>
@@ -81,7 +89,7 @@
 
                                 <span>01</span>
                                 <h4>Créer <br> votre classe</h4>
-                                <p>Saisissez vos élèves ou récupérer la classe de l'année précédente d'un professeur de votre école. </p>
+                                <p>Saisissez vos élèves ou récupérer la classe de l'année précédente d'un professeur de votre école.</p>
                                 <a href="service-detail.html"><i class="flaticon-arrow-pointing-to-right"></i></a>
                             </div>
                         </div>
@@ -90,7 +98,7 @@
 
                                 <span>02</span>
                                 <h4>Choisissiez <br> vos activités</h4>
-                                <p>Sélectionner les fiches d'activités que vous allez traiter pendant l'année scolaire parmi les 8 domaines du programmes officiels</p>
+                                <p>Sélectionnez les fiches d'activités que vous allez traiter pendant l'année scolaire parmi les 8 domaines du programme officiel.</p>
                                 <a href="service-detail.html"><i class="flaticon-arrow-pointing-to-right"></i></a>
                             </div>
                         </div>
@@ -99,7 +107,7 @@
 
                                 <span>03</span>
                                 <h4>Evaluer <br> vos élèves</h4>
-                                <p>Notez vos élèves au cours de l'année sur 3 critéres : Acquis, Acquis avec aide, En voie d'acquisition. </p>
+                                <p>Notez vos élèves au cours de l'année sur 3 critères : Acquis, Acquis avec aide, En voie d'acquisition.</p>
                                 <a href="service-detail.html"><i class="flaticon-arrow-pointing-to-right"></i></a>
                             </div>
                         </div>
@@ -108,7 +116,7 @@
 
                                 <span>04</span>
                                 <h4>Editer vos cahiers <br>de réussite</h4>
-                                <p>completez vos cahiers de réussite qui seront générés automatiquement en fonction des activités acquises. </p>
+                                <p>Complétez vos cahiers de réussites qui seront générés automatiquement en fonction des activités acquises.</p>
                                 <a href="service-detail.html"><i class="flaticon-arrow-pointing-to-right"></i></a>
                             </div>
                         </div>

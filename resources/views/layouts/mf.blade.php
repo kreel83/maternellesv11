@@ -80,6 +80,7 @@
     <script src="{{asset('assets/plugins/wow.min.js')}}" defer></script>
 
     <script src="{{asset('assets/js/script.js')}}" defer></script>
+    <script src="{{asset('assets/js/index.js')}}" defer></script>
 
     <!-- Google map -->
     </head>
@@ -105,16 +106,17 @@
                                 </li>
                                 <li><a href="{{route('mf.application')}}">l'application</a></li>
                                 <li><a href="{{route('mf.compagnon')}}">le compagnon</a></li>
-                                <li><a href="{{route('mf.tarification')}}">tarification</a></li>
+                                <li><a href="{{route('mf.tarifs')}}">tarifs</a></li>
                                 <li><a href="{{route('mf.contact')}}">contact</a></li>
                             </ul>
                         </div>
                         <div class="right-part">
                             <ul class="d-flex align-items-center">
-                                <li>
+                                {{-- <li>
                                     <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="flaticon-loupe"></i></button>
-                                </li>
-                                <li><a href="{{route('login')}}">Essayez gratuitement</a></li>
+                                </li> --}}
+                                <li><a href="{{route('login')}}">Se connecter</a></li>
+                                <li><a href="{{route('registration.start')}}">Essayez gratuitement</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -135,44 +137,47 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="content">
                             <div class="title">
-                                <h5>Get in Touch</h5>
+                                <h5>A propos</h5>
                             </div>
-                            <p class="desc">Lorem ipsum dolor sit am co adipisicing elit, sed do eiusmod tempor</p>
+                            <p class="desc">{{ env('APP_NAME') }} est un service en ligne pour faciliter la gestion d'une classe de maternelle et la conception des cahiers de réussites.</p>
                             <ul class="address">
-                                <li class="d-flex align-items-center">
+                                {{-- <li class="d-flex align-items-top">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <p>24/A New California</p>
-                                </li>
-                                <li class="d-flex align-items-center">
+                                    <p>ET BAM Solutions<br>33 rue Claire Joie<br>83200 Toulon<br>France</p>
+                                </li> --}}
+                                {{-- <li class="d-flex align-items-center">
                                     <i class="fas fa-phone-alt"></i>
                                     <p>+1 800 123 4567</p>
-                                </li>
+                                </li> --}}
                                 <li class="d-flex align-items-center">
                                     <i class="far fa-envelope"></i>
-                                    <p>demo@example.com</p>
+                                    <p><a href="{{ route('mf.contact') }}">Nous contacter</a></p>
                                 </li>
+                            </ul>
+                            <p class="mt-4">
+                                &copy; 2023 ET BAM Solutions.<br>Tous droits réservés.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="content">
+                            <div class="title">
+                                <h5>quick links</h5>
+                            </div>
+                            <ul class="navigation">
+                                <li><a href="{{ route('mf.index') }}">Accueil</a></li>
+                                <li><a href="{{ route('mf.conditions') }}">Conditions générales de vente</a></li>
+                                <li><a href="{{ route('mf.mentions') }}">Mentions légales</a></li>
+                                <li><a href="{{ route('mf.confidentialite') }}">Politique de confidentialité</a></li>
+                                <li><a href="{{ route('mf.cookies') }}">Politique de cookies (UE)</a></li>
+                                <li><a href="service-detail.html">development</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-6">
                         <div class="content">
                             <div class="title">
-                                <h5>quick links</h5>
-                            </div>
-                            <ul class="navigation">
-                                <li><a href="index.html">home</a></li>
-                                <li><a href="service.html">service</a></li>
-                                <li><a href="team.html">our team</a></li>
-                                <li><a href="project-detail.html">project</a></li>
-                                <li><a href="service-detail.html">android</a></li>
-                                <li><a href="service-detail.html">development</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="content">
-                            <div class="title">
-                                <h5>follow us</h5>
+                                <h5>Suivez nous</h5>
                             </div>
                             <ul class="follow">
                                 <li><a href="#!">facebook</a></li>
@@ -187,12 +192,25 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="content">
                             <div class="title">
-                                <h5>subscribe</h5>
+                                <h5>Inscription à la Newsletter</h5>
                             </div>
-                            <p>Lorem ipsum dolor si  consectetur adipisicing elit, sed eiusmotempor incididunt ut labore et</p>
+                            <p>Entrez votre email et recevez les dernières mises à jour et informations sur notre plateforme.</p>
+
+                            {{-- Affiche les erreurs suite à un POST de formulaire --}}
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <i class="fa-solid fa-circle-exclamation me-1"></i> {{ $error }}<br>
+                                @endforeach
+                            </div>
+                            @endif
+
                             <div class="form-area">
-                                <input type="email" placeholder="your email" class="inputs">
-                                <button><i class="fab fa-telegram-plane"></i></button>
+                                <form action="{{ route('mf.newsletter') }}" method="post">
+                                @csrf
+                                    <input type="email" name="email" placeholder="Votre adresse mail" class="inputs">
+                                    <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+                                </form>
                             </div>
                             <ul class="d-flex social">
                                 <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li>

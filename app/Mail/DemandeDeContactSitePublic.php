@@ -10,20 +10,22 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
-class DemandeDeContact extends Mailable
+class DemandeDeContactSitePublic extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user, $subject, $body;
+    public $subject, $body, $phone, $name, $email;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($user, $subject, $body)
-    {
-        $this->user = $user;
+    public function __construct($subject, $body, $phone, $name, $email)
+    {        
         $this->subject = $subject;
         $this->body = $body;
+        $this->phone = $phone;
+        $this->name = $name;
+        $this->email = $email;
     }
 
     /**
@@ -32,9 +34,8 @@ class DemandeDeContact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            // from: new Address($this->user->email, $this->user->prenom.' '.$this->user->name),
-            from: new Address(env('MAIL_FROM_ADDRESS'), $this->user->prenom.' '.$this->user->name),
-            replyTo: [$this->user->email],
+            from: new Address(env('MAIL_FROM_ADDRESS'), $this->name),
+            replyTo: [$this->email],
             subject: $this->subject.' - '.env('APP_NAME'),
         );
     }
@@ -45,7 +46,7 @@ class DemandeDeContact extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.demandeDeContact',
+            view: 'emails.demandeDeContactSitePublic',
         );
     }
 

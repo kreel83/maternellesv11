@@ -1,7 +1,7 @@
 @extends('layouts.mf')
 
 @section('seo')
-    <title>Gestion de votre classe de maternelle en ligne</title>
+    <title>Les tarifs de l'application {{ env('APP_NAME') }}</title>
     <meta name="description" content="Les Maternelles est un service en ligne pour optimiser la gestion d'une classe de maternelle">
 @endsection
 
@@ -29,8 +29,8 @@
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                     <div class="section-title wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="1s">
                         <h2>un prix unique <br> un abonnement sécurisé</h2>
-                        <p>Votre application complete vous est proposée au prix de 14,90 € / an</p>
-                        <p>Les abonnement se fait par Carte bancaire ou par PayPal</p>
+                        <p>Votre application complète vous est proposée au prix de {{ env('PRIX_ABONNEMENT') }} € TTC</p>
+                        <p>Les abonnements se font par carte bancaire ou par PayPal</p>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -43,30 +43,30 @@
                                 </div>
                                 <ul>
                                     <li><i class="fas fa-check"></i>10 évaluations par classe</li>
-                                    <li><i class="fas fa-check"></i>Accéder à toute l'application sans aucune autre restriction</li>
+                                    <li><i class="fas fa-check"></i>Accès à toute les fonctionnalités de l'application</li>
 
                                 </ul>
                                 <div class="purchase">
                                     <h3>Gratuit</h3>
-                                    <a href="#!">Je teste</a>
+                                    <a href="{{ route('registration.start') }}">Je teste</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="item text-center active wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
                                 <div class="price-title">
-                                    <span>prémium</span>
+                                    <span>PREMIUM</span>
                                   
                                     <!-- <h4>"business"</h4> -->
                                 </div>
                                 <ul>
                                     <li><i class="fas fa-check"></i>Evaluation illimités</li>
-                                    <li><i class="fas fa-check"></i>Accéder à toute les fonctionnalités de l'application.</li>
+                                    <li><i class="fas fa-check"></i>Accès à toute les fonctionnalités de l'application</li>
 
                                 </ul>
                                 <div class="purchase">
-                                    <h3>14,90 € / an <span>TTC</span></h3>
-                                    <a href="#!">je m'abonne</a>
+                                    <h3>{{ env('PRIX_ABONNEMENT') }} € / an <span>TTC</span></h3>
+                                    <a href="{{ route('registration.start') }}">je m'abonne</a>
                                 </div>
                             </div>
                         </div>

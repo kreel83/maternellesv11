@@ -23,6 +23,7 @@ class Contact extends Model
         'message',
         'email',
         'name',
+        'phone',
     ];
 
 }
