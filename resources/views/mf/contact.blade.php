@@ -44,32 +44,60 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="content wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                        <h6>contact us</h6>
-                        <h2>Get every single update here</h2>
-                        <form action="#!">
+                        <h6>Nous contacter</h6>
+                        <h2>Envoyez nous votre message</h2>
+
+                        <p>Notre équipe est à votre service du lundi au vendredi de 9H à 17H. Nous nous efforçons de répondre dans les plus brefs délais.</p>
+                        {{-- <form action="#!">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" placeholder="your name*" required class="inputs">
+                                <div class="col-md-12">
+                                    <input type="text" placeholder="Votre nom" required class="inputs">
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="email" placeholder="your email*" required class="inputs">
+                                <div class="col-md-12">
+                                    <input type="email" placeholder="Votre adresse mail*" required class="inputs">
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="tel" placeholder="phone*" required class="inputs">
+                                <div class="col-md-12">
+                                    <input type="tel" placeholder="Votre numéro de téléphone" required class="inputs">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input type="text" placeholder="website*" required class="inputs">
                                 </div>
                                 <div class="col-md-12">
                                     <button type="submit">submit now</button>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
                 <div class="col-xl-5 offset-xl-1 col-lg-6">
                     <div class="content address wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                        <h3>Get Answers Advices</h3>
+                        
+                        @include('include.display_msg_error')
+
+                        <form action="{{ route('mf.contact.send') }}" method="post">
+                        @csrf
+                        <div class="col-md-12">
+                            <input type="email" name="email" placeholder="Votre adresse mail*" required class="inputs" value="{{ old('email') }}">
+                        </div>
+                        <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="name" placeholder="Votre nom" class="inputs" value="{{ old('name') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="phone" placeholder="Téléphone" class="inputs" value="{{ old('phone') }}">
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="text" name="subject" placeholder="Objet du message*" required class="inputs" value="{{ old('subject') }}">
+                        </div>
+                        <div class="col-md-12">
+                            <textarea class="inputs" name="message" placeholder="Votre message*" required>{{ old('message') }}</textarea>
+                            {{-- <input type="text" placeholder="Votre message*" required class="inputs"> --}}
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit">Envoyer</button>
+                        </div>
+                        {{-- <h3>Get Answers Advices</h3>
                         <ul>
                             <li class="d-flex">
                                 <div class="icon">
@@ -100,7 +128,8 @@
                                     <p>demo@example.com</p>
                                 </div>
                             </li>
-                        </ul>
+                        </ul> --}}
+                        </form>
                     </div>
                 </div>
             </div>

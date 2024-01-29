@@ -23,17 +23,23 @@ use App\Http\Controllers\MfController;
 */
 
 Route::get('/mf', [MfController::class, 'index'])->name('mf.index');
+Route::get('/mf/etablissement', [MfController::class, 'etablissement'])->name('mf.etablissement');
 Route::get('/mf/application', [MfController::class, 'application'])->name('mf.application');
 Route::get('/mf/compagnon', [MfController::class, 'compagnon'])->name('mf.compagnon');
-Route::get('/mf/tarification', [MfController::class, 'tarification'])->name('mf.tarification');
+Route::get('/mf/tarifs', [MfController::class, 'tarifs'])->name('mf.tarifs');
 Route::get('/mf/contact', [MfController::class, 'contact'])->name('mf.contact');
+Route::post('/mf/contact', [MfController::class, 'contactSend'])->name('mf.contact.send');
+Route::get('/mf/mentions', [MfController::class, 'mentions'])->name('mf.mentions');
+Route::get('/mf/confidentialite', [MfController::class, 'confidentialite'])->name('mf.confidentialite');
+Route::get('/mf/cookies', [MfController::class, 'cookies'])->name('mf.cookies');
+Route::get('/mf/conditions', [MfController::class, 'conditions'])->name('mf.conditions');
+Route::post('/mf/newsletter', [MfController::class, 'newsletter'])->name('mf.newsletter');
+
+// utilisé dans js/pages/mf/index.js pour la recherche d'établissement en Homepage
+Route::post('/mf/search-school', [MfController::class, 'searchSchool'])->name('mf.searchSchool');
 // Route::get('/mf/parametrage', [MfController::class, 'parametrage'])->name('mf.parametrage');
 // Route::get('/mf/compagnon', [MfController::class, 'compagnon'])->name('mf.compagnon');
 // Route::get('/mf/tarif', [MfController::class, 'tarif'])->name('mf.tarif');
-// Route::get('/mf/conditions', [MfController::class, 'conditions'])->name('mf.conditions');
-// Route::get('/mf/mentions', [MfController::class, 'mentions'])->name('mf.mentions');
-// Route::get('/mf/confidentialite', [MfController::class, 'confidentialite'])->name('mf.confidentialite');
-// Route::get('/mf/cookies', [MfController::class, 'cookies'])->name('mf.cookies');
 
 
 Route::get('/', [VitrineController::class, 'index'])->name('vitrine.index');
