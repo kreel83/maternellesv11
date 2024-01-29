@@ -2039,7 +2039,10 @@ p {
 .inner-page.banner .overlay{
   padding-top: 215px;
   padding-bottom: 125px;
-  background: rgba(0, 0, 0, 0.6);
+  /* background: rgba(0, 0, 0, 0.6); */
+}
+.inner-page.banner .titre_banner{
+  background-color: rgba(0,0,0,0.5); border-radius: 8px; width: fit-content;padding: 20px 32px 0 32px;
 }
 .inner-page.banner h2{
   font-family: var(--josefin);

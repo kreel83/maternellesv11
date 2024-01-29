@@ -22,12 +22,12 @@
 
 
     <!-- start banner area -->
-    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-bg4.png')}}">
+    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner_contact.png')}}">
         <div class="overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="content text-center">
+                        <div class="content text-center mx-auto titre_banner">
                             <h2>nous contacter</h2>
 
                         </div>
