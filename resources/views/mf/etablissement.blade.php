@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-lg-12">
 
-                    <label class="mb-2" for="searchSchool" style="font-size:1.2em;">Chercher votre établissement parmi plus de 36,000 référencés dans l'application :</label>
+                    <label class="mb-2" for="searchSchool" style="font-size:1.2em;">Chercher votre établissement parmi plus de 36,000 établissements référencés dans l'application {{ env('APP_NAME') }} :</label>
                     <div class="d-flex">
                         <input type="text" class="form-control" name="searchSchool" id="searchSchool" placeholder="Code établissement, code postal, nom école, ville...">
                         <a class="btn btn-primary boutonSearchSchool">Lancer la recherche</a>

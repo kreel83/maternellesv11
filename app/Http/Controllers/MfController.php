@@ -106,10 +106,8 @@ class MfController extends Controller
             'message' => $request->message
         ]);
 
-        //$to = explode(',', env('ADMIN_EMAILS'));
-        //Mail::to($to)->send(new DemandeDeContactSitePublic($request->subject, $request->message, $request->phone, $request->name, $request->email));
-
-        //Mail::to('clickweb@gmail.com')->send(new DemandeDeContactSitePublic($request->subject, $request->message, $request->phone, $request->name, $request->email));
+        $to = explode(',', env('ADMIN_EMAILS'));
+        Mail::to($to)->send(new DemandeDeContactSitePublic($request->subject, $request->message, $request->phone, $request->name, $request->email));
 
         return view('mf.contact-sent');
 

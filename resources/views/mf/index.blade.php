@@ -115,7 +115,7 @@
                             <div class="item wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="1s">
 
                                 <span>04</span>
-                                <h4>Editer vos cahiers <br>de réussite</h4>
+                                <h4>Editer vos cahiers <br>de réussites</h4>
                                 <p>Complétez vos cahiers de réussites qui seront générés automatiquement en fonction des activités acquises.</p>
                                 <a href="service-detail.html"><i class="flaticon-arrow-pointing-to-right"></i></a>
                             </div>
@@ -173,7 +173,7 @@
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                     <div class="section-title wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="1s">
                         <h2>Fonctionalités clés</h2>
-                        <p>Ces fonctionnalités garantissent une expérience fluide et efficace pour les enseignantes de maternelle, leur permettant de se concentrer pleinement sur l'éducation et le développement de leurs élèves.</p>
+                        <p>Ces fonctionnalités garantissent une expérience fluide et efficace pour les enseignant(e)s de maternelle, leur permettant de se concentrer pleinement sur l'éducation et le développement de leurs élèves.</p>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -201,7 +201,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Importation de Classes Antérieures</h6>
-                                            <p>Gagnez du temps en important les données de votre classe de l'année précédente. Un processus simple pour garantir une continuité fluide d'une année à l'autre..</p>
+                                            <p>Gagnez du temps en important les données de votre classe de l'année précédente. Un processus simple pour garantir une continuité fluide d'une année à l'autre.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -228,7 +228,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Classes Partagées</h6>
-                                            <p>Notre système de partage de classe permet à un professeur titulaire de partager la gestion de sa classe avec un professeur co-titulaire ou suppleant</p>
+                                            <p>Notre système de partage de classe permet à un professeur titulaire de partager la gestion de sa classe avec un professeur co-titulaire ou suppléant</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -265,7 +265,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Suivi des Activités Tout au Long de l'Année</h6>
-                                            <p>Enregistrez les progrès des élèves sur chaque activité tout au long de l'année. Un moyen efficace de documenter les réussites individuelles et de suivre le développement global de la classe..</p>
+                                            <p>Enregistrez les progrès des élèves sur chaque activité tout au long de l'année. Un moyen efficace de documenter les réussites individuelles et de suivre le développement global de la classe.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">

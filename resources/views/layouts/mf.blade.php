@@ -134,7 +134,7 @@
         <section class="footer-top pt-100 pb-60">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="content">
                             <div class="title">
                                 <h5>A propos</h5>
@@ -162,7 +162,21 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="content">
                             <div class="title">
-                                <h5>quick links</h5>
+                                <h5>Liens rapides</h5>
+                            </div>
+                            <ul class="navigation">
+                                <li><a href="{{ route('mf.index') }}">Accueil</a></li>
+                                <li><a href="{{route('mf.application')}}">l'application</a></li>
+                                <li><a href="{{route('mf.compagnon')}}">le compagnon</a></li>
+                                <li><a href="{{route('mf.tarifs')}}">tarifs</a></li>
+                                <li><a href="{{route('registration.start')}}">Créer un compte</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="content">
+                            <div class="title">
+                                <h5>Support</h5>
                             </div>
                             <ul class="navigation">
                                 <li><a href="{{ route('mf.index') }}">Accueil</a></li>
@@ -170,11 +184,10 @@
                                 <li><a href="{{ route('mf.mentions') }}">Mentions légales</a></li>
                                 <li><a href="{{ route('mf.confidentialite') }}">Politique de confidentialité</a></li>
                                 <li><a href="{{ route('mf.cookies') }}">Politique de cookies (UE)</a></li>
-                                <li><a href="service-detail.html">development</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-6">
+                    {{-- <div class="col-lg-2 col-md-6">
                         <div class="content">
                             <div class="title">
                                 <h5>Suivez nous</h5>
@@ -188,15 +201,14 @@
                                 <li><a href="#!">dribbble</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
+                    </div> --}}
+                    {{-- <div class="col-lg-3 col-md-6">
                         <div class="content">
                             <div class="title">
                                 <h5>Inscription à la Newsletter</h5>
                             </div>
                             <p>Entrez votre email et recevez les dernières mises à jour et informations sur notre plateforme.</p>
 
-                            {{-- Affiche les erreurs suite à un POST de formulaire --}}
                             @if ($errors->any())
                             <div class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
@@ -219,7 +231,7 @@
                                 <li><a href="#!"><i class="fab fa-linkedin-in"></i></a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
