@@ -11,7 +11,7 @@
       <div class="card-body text-center">
         <h5 class="card-title">Enseignant(e)</h5>
         <p class="card-text">Gestion de votre classe <br> de maternelle et des cahiers de réussites</p>
-        <a href="{{ route('registration.step1', ['role' => 'user']) }}" class="btnAction mx-auto d-block w-50 mx-auto d-block w-50">Je m'inscris</a>
+        <a href="{{ route('registration.step1', ['role' => 'user']) }}" class="btnAction mx-auto d-block w-75 mx-auto d-block">Je crée mon compte</a>
       </div>
     </div>
 
