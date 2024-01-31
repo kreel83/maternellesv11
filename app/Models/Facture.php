@@ -26,8 +26,8 @@ class Facture extends Model
 
     private static function genereNumeroDeFacture() {
         $number = Facture::max('number') + 1;
-        if($number < env('START_INVOICE_NUMBER')) {
-            $number = env('START_INVOICE_NUMBER');
+        if($number < config('app.custom.start_invoice_number')) {
+            $number = config('app.custom.start_invoice_number');
         }
         return $number;
     }

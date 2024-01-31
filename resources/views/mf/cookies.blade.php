@@ -2,7 +2,7 @@
 
 @section('seo')
     <title>Politique en matière de cookies</title>
-    <meta name="description" content="La politique en matière de cookies du site internet {{ env('APP_NAME') }}">
+    <meta name="description" content="La politique en matière de cookies du site internet {{ config('app.name') }}">
 @endsection
 
 @section('content')
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                     <div class="section-title wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="1s">
-                        <h2>Politique en matière de cookies pour {{ env('APP_NAME') }}</h2>
+                        <h2>Politique en matière de cookies pour {{ config('app.name') }}</h2>
                         <p>En vigueur au 01/01/2024</p>
                     </div>
                 </div>

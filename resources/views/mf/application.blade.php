@@ -47,12 +47,12 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="{{asset('assets/images/home1/application/1.jpg')}}" alt="About">
+                                <img class="rounded" src="{{asset('assets/images/home1/application/1.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
                             <div class="content wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <h3>Je créé ma classe</h3>
+                                <h3>Je crée ma classe</h3>
                                 <p></p>
                                 <ul>
                                     <li class="d-flex">
@@ -61,7 +61,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Fiche de création d'élève</h6>
-                                            <p>Medixer Care will be administered through plan-based omizable   incorporate partnership between family.</p>
+                                            <p>Une fiche simple et pratique pour créer et modifier un élève.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Module d'importation de classe</h6>
-                                            <p>Le module d'importation permet de récupérer les elèves d'une classe de l'année précédente de la m^meme école.</p>
+                                            <p>Le module d'importation permet de récupérer les elèves d'une classe de l'année précédente de la même école.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>J'alloue un avatar à un élève</h6>
-                                            <p>Un systeme de choix d'avatar vous permettra de personnaliser votre fiche élève. Vous pouvez même faire choisr son avatar à chaque élève :)</p>
+                                            <p>Un système de choix d'avatar vous permettra de personnaliser votre fiche élève. Vous pouvez même faire choisr son avatar à chaque élève :)</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -92,7 +92,7 @@
                         <div class="col-lg-7 order-1 order-lg-0">
                             <div class="content wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
                                 <h3>Je choisis mes activités</h3>
-                                <p>parmi les 192 fiches existantes réparties dans 8 domaines officiels</p>
+                                <p>Parmi plus de 190 fiches existantes réparties dans 8 domaines officiels.</p>
                                 <ul>
                                     <li class="d-flex">
                                         <div class="icon">
@@ -100,7 +100,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Importation des fiches par section</h6>
-                                            <p>Selection rapide de fiches correspondant au programmes de PS, MS et GS.</p>
+                                            <p>Sélection rapide de fiches correspondant au programmes de PS, MS et GS.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -109,7 +109,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Création et duplication de fiches</h6>
-                                            <p>Personalisation de fiches existantes et cr"ation de vos propros fiches d'activité.</p>
+                                            <p>Personalisation de fiches existantes et création de vos propros fiches d'activité.</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -117,7 +117,7 @@
                         </div>
                         <div class="col-lg-5 order-0 order-lg-1">
                             <div class="image text-center wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="{{asset('assets/images/home1/application/2.jpg')}}" alt="About">
+                                <img class="rounded" src="{{asset('assets/images/home1/application/2.jpg')}}" alt="About">
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="{{asset('assets/images/home1/application/3.jpg')}}" alt="About">
+                                <img class="rounded" src="{{asset('assets/images/home1/application/3.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -145,8 +145,8 @@
                                             <i class="flaticon-ribbon"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Periodicité des cahiers de réussite</h6>
-                                            <p>Definissez sir vous voulez éditer les cahiers de réussite par trimestre, semestre ou annuellement</p>
+                                            <h6>Périodicité des cahiers de réussites</h6>
+                                            <p>Définissez si vous voulez éditer les cahiers de réussites par trimestre, semestre ou annuellement.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -155,7 +155,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Saisie de vos aides maternelles et de la direction</h6>
-                                            <p>Ces données seront présente dans la section "équipe pédagogique" du cahier de réussite.</p>
+                                            <p>Ces données seront présentes dans la section " équipe pédagogique " du cahier de réussites.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -163,8 +163,8 @@
                                             <i class="flaticon-24-hours"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Choisir d'inclure le domaine "Devenir Eleve" si vous désirez le traiter</h6>
-                                            <p>Plus au programme officiel depuis 2015, de nombreux d'instituteurs veulent le encore traiter. 26 giches répartis dans les trois sections sont disponibles après activation</p>
+                                            <h6>Choisir d'inclure le domaine " Devenir élève " si vous souhaitez le traiter</h6>
+                                            <p>Plus au programme officiel depuis 2015, de nombreux instituteurs veulent le encore traiter. 26 fiches réparties dans les trois sections sont disponibles après activation.</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -177,15 +177,15 @@
                         <div class="col-lg-7 order-1 order-lg-0">
                             <div class="content wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
                                 <h3>J'évalue mes élèves</h3>
-                                <p>Une interface conviviale vous permettra rapidement d'évaluer vos élèves</p>
+                                <p>Une interface conviviale vous permettra rapidement d'évaluer vos élèves.</p>
                                 <ul>
                                     <li class="d-flex">
                                         <div class="icon">
                                             <i class="flaticon-mobile-app-developing"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Système de notation rapide et intuitive que ce soit sur l'application téléphone ou sur votre ordinateur</h6>
-                                            <p>Notez vos élèves selon 3 niveaux : Acquis, Acquis avec aide, En voie d'acquisition</p>
+                                            <h6>Système de notation rapide et intuitive que ce soit sur l'application mobile ou sur votre ordinateur.</h6>
+                                            <p>Notez vos élèves selon 3 niveaux : Acquis, Acquis avec aide, En voie d'acquisition.</p>
                                         </div>
                                     </li>
 
@@ -194,7 +194,7 @@
                         </div>
                         <div class="col-lg-5 order-0 order-lg-1">
                             <div class="image text-center wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="{{asset('assets/images/home1/application/4.jpg')}}" alt="About">
+                                <img class="rounded" src="{{asset('assets/images/home1/application/4.jpg')}}" alt="About">
                             </div>
                         </div>
                     </div>
@@ -209,12 +209,12 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="{{asset('assets/images/home1/application/5.jpg')}}" alt="About">
+                                <img class="rounded" src="{{asset('assets/images/home1/application/5.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
                             <div class="content wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <h3>Je rédige le cahier de réussite </h3>
+                                <h3>Je rédige le cahier de réussites</h3>
                                 <p></p>
                                 <ul>
                                     <li class="d-flex">
@@ -223,7 +223,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Editeur de texte par section</h6>
-                                            <p>A l'aide d' éditeur de texte par section pré-rempli des activités acquises par l'élève, vous rédigerz vos commentaires par section ainsi qu'un commentaire général</p>
+                                            <p>A l'aide d'un éditeur de texte par section pré-rempli des activités acquises par l'élève, vous rédigerez vos commentaires par section ainsi qu'un commentaire général.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -232,7 +232,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Sauvegarde automatique</h6>
-                                            <p>Durant la saisie, la sauvegarde de vos texte se fera automatiquement. Aucun rique de perdre votre travail</p>
+                                            <p>Durant la saisie, la sauvegarde de vos textes se fera automatiquement. Aucun rique de perdre votre travail.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -240,8 +240,8 @@
                                             <i class="flaticon-24-hours"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Apercu du cahier de réussite</h6>
-                                            <p>la cahier de réussite terminé et notifié "pret à l"envoi", vous povez alors consulter le cahier de réussite que recevra les parents</p>
+                                            <h6>Apercu du cahier de réussites</h6>
+                                            <p>Le cahier de réussites terminé et notifié " Prêt à l'envoi ", vous pourrez alors le consulter avant de l'envoyer aux parents</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -253,8 +253,8 @@
                     <div class="row align-items-center">
                         <div class="col-lg-7 order-1 order-lg-0">
                             <div class="content wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <h3>Administration des cahiers de réussite</h3>
-                                <p>We work with the public sector to build thriving communities. And we ork with regulators and financial institutions to build trust and integrity in ets uis aliqua sunt nisi consectetur anim.</p>
+                                <h3>Administration des cahiers de réussites</h3>
+                                <p>Une interface simple et intuitive pour l'envoi des cahiers de réussites aux parents.</p>
                                 <ul>
                                     <li class="d-flex">
                                         <div class="icon">
@@ -262,7 +262,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Gestionnaire d'envoi</h6>
-                                            <p>Un tableau en temps réel vous permettra d'envoyer par lot ou individuellement un mail contenant un lien d'acces à l'espace parent.</p>
+                                            <p>Un tableau en temps réel vous permettra d'envoyer par lot ou individuellement un mail contenant un lien d'accès à l'espace parent.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -270,8 +270,8 @@
                                             <i class="flaticon-setup"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>L'Espace Parent</h6>
-                                            <p>Un espace personalisé et sécurisé permettra aux parents de télécharger le cahier de réussite de leurs enfants.</p>
+                                            <h6>L'espace Parent</h6>
+                                            <p>Un espace personalisé et sécurisé permettra aux parents de télécharger le cahier de réussites de leur enfant.</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -279,7 +279,7 @@
                         </div>
                         <div class="col-lg-5 order-0 order-lg-1">
                             <div class="image text-center wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="{{asset('assets/images/home1/application/6.jpg')}}" alt="About">
+                                <img class="rounded" src="{{asset('assets/images/home1/application/6.jpg')}}" alt="About">
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="{{asset('assets/images/home1/application/7.jpg')}}" alt="About">
+                                <img class="rounded" src="{{asset('assets/images/home1/application/7.jpg')}}" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -308,7 +308,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Votre tableau de bord</h6>
-                                            <p>Un tableau de bord vous permettra d'avoir l'état en temps réel de l'activité de votre classe </p>
+                                            <p>Un tableau de bord vous permettra d'avoir l'état en temps réel de l'activité de votre classe.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -326,7 +326,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Le partage de classe</h6>
-                                            <p>Un instituteur titulaire pourra partager sa classe avec un suppleant ou un co-titulaire.</p>
+                                            <p>Un instituteur titulaire pourra partager sa classe avec un suppléant ou un co-titulaire.</p>
                                         </div>
                                     </li>
                                 </ul>

@@ -111,7 +111,7 @@ $degrades = App\Models\Enfant::DEGRADE;
             }
 
             .pagenum:after {
-                content: '{{ env('APP_NAME') }} - Page ' + counter(page);
+                content: '{{ config('app.name') }} - Page ' + counter(page);
             }
 
             Body {

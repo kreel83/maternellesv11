@@ -1,15 +1,11 @@
 <?php
 
-//use App\Http\Controllers\admin\AdminLicenceController;
-//use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CahierController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VitrineController;
 use App\Http\Controllers\MfController;
-//use App\Models\Facture;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,41 +18,38 @@ use App\Http\Controllers\MfController;
 |
 */
 
-Route::get('/mf', [MfController::class, 'index'])->name('mf.index');
-Route::get('/mf/etablissement', [MfController::class, 'etablissement'])->name('mf.etablissement');
-Route::get('/mf/application', [MfController::class, 'application'])->name('mf.application');
-Route::get('/mf/compagnon', [MfController::class, 'compagnon'])->name('mf.compagnon');
-Route::get('/mf/tarifs', [MfController::class, 'tarifs'])->name('mf.tarifs');
-Route::get('/mf/contact', [MfController::class, 'contact'])->name('mf.contact');
-Route::post('/mf/contact', [MfController::class, 'contactSend'])->name('mf.contact.send');
-Route::get('/mf/mentions', [MfController::class, 'mentions'])->name('mf.mentions');
-Route::get('/mf/confidentialite', [MfController::class, 'confidentialite'])->name('mf.confidentialite');
-Route::get('/mf/cookies', [MfController::class, 'cookies'])->name('mf.cookies');
-Route::get('/mf/conditions', [MfController::class, 'conditions'])->name('mf.conditions');
-Route::post('/mf/newsletter', [MfController::class, 'newsletter'])->name('mf.newsletter');
+Route::get('/', [MfController::class, 'index'])->name('mf.index');
+Route::get('/etablissement', [MfController::class, 'etablissement'])->name('mf.etablissement');
+Route::get('/application', [MfController::class, 'application'])->name('mf.application');
+Route::get('/compagnon', [MfController::class, 'compagnon'])->name('mf.compagnon');
+Route::get('/tarifs', [MfController::class, 'tarifs'])->name('mf.tarifs');
+Route::get('/contact', [MfController::class, 'contact'])->name('mf.contact');
+Route::post('/contact', [MfController::class, 'contactSend'])->name('mf.contact.send');
+Route::get('/mentions', [MfController::class, 'mentions'])->name('mf.mentions');
+Route::get('/confidentialite', [MfController::class, 'confidentialite'])->name('mf.confidentialite');
+Route::get('/cookies', [MfController::class, 'cookies'])->name('mf.cookies');
+Route::get('/conditions', [MfController::class, 'conditions'])->name('mf.conditions');
+Route::post('/newsletter', [MfController::class, 'newsletter'])->name('mf.newsletter');
+// Route::get('/parametrage', [MfController::class, 'parametrage'])->name('mf.parametrage');
 
-// utilisé dans js/pages/mf/index.js pour la recherche d'établissement en Homepage
-Route::post('/mf/search-school', [MfController::class, 'searchSchool'])->name('mf.searchSchool');
-// Route::get('/mf/parametrage', [MfController::class, 'parametrage'])->name('mf.parametrage');
-// Route::get('/mf/compagnon', [MfController::class, 'compagnon'])->name('mf.compagnon');
-// Route::get('/mf/tarif', [MfController::class, 'tarif'])->name('mf.tarif');
+// utilisé dans public/assets/js/index.js pour la recherche d'établissement en Homepage
+Route::post('/search-school', [MfController::class, 'searchSchool'])->name('mf.searchSchool');
 
 
-Route::get('/', [VitrineController::class, 'index'])->name('vitrine.index');
-Route::get('/cahier', [VitrineController::class, 'cahier'])->name('vitrine.cahier');
-Route::get('/eleves', [VitrineController::class, 'eleves'])->name('vitrine.eleves');
-Route::get('/fiches', [VitrineController::class, 'fiches'])->name('vitrine.fiches');
-Route::get('/calendrier', [VitrineController::class, 'calendrier'])->name('vitrine.calendrier');
-Route::get('/parametrage', [VitrineController::class, 'parametrage'])->name('vitrine.parametrage');
-Route::get('/compagnon', [VitrineController::class, 'compagnon'])->name('vitrine.compagnon');
-Route::get('/tarif', [VitrineController::class, 'tarif'])->name('vitrine.tarif');
-Route::get('/conditions', [VitrineController::class, 'conditions'])->name('vitrine.conditions');
-Route::get('/mentions', [VitrineController::class, 'mentions'])->name('vitrine.mentions');
-Route::get('/confidentialite', [VitrineController::class, 'confidentialite'])->name('vitrine.confidentialite');
-Route::get('/cookies', [VitrineController::class, 'cookies'])->name('vitrine.cookies');
-
-Route::get('/contact', [VitrineController::class, 'contact'])->name('vitrine.contact');
-Route::post('/contact', [VitrineController::class, 'contactSend'])->name('vitrine.contact.send');
+// Route::get('/', [VitrineController::class, 'index'])->name('vitrine.index');
+// Route::get('/cahier', [VitrineController::class, 'cahier'])->name('vitrine.cahier');
+// Route::get('/eleves', [VitrineController::class, 'eleves'])->name('vitrine.eleves');
+// Route::get('/fiches', [VitrineController::class, 'fiches'])->name('vitrine.fiches');
+// Route::get('/calendrier', [VitrineController::class, 'calendrier'])->name('vitrine.calendrier');
+// Route::get('/parametrage', [VitrineController::class, 'parametrage'])->name('vitrine.parametrage');
+// Route::get('/compagnon', [VitrineController::class, 'compagnon'])->name('vitrine.compagnon');
+// Route::get('/tarif', [VitrineController::class, 'tarif'])->name('vitrine.tarif');
+// Route::get('/conditions', [VitrineController::class, 'conditions'])->name('vitrine.conditions');
+// Route::get('/mentions', [VitrineController::class, 'mentions'])->name('vitrine.mentions');
+// Route::get('/confidentialite', [VitrineController::class, 'confidentialite'])->name('vitrine.confidentialite');
+// Route::get('/cookies', [VitrineController::class, 'cookies'])->name('vitrine.cookies');
+// Route::get('/contact', [VitrineController::class, 'contact'])->name('vitrine.contact');
+// Route::post('/contact', [VitrineController::class, 'contactSend'])->name('vitrine.contact.send');
 
 Route::get('/cahier/auth/{token}', [PdfController::class, 'telechargementDuCahierParLesParents'])->name('cahier.predownload');
 Route::post('/cahier/auth', [PdfController::class, 'telechargementDuCahierParLesParentsPost'])->name('cahier.predownload.post');

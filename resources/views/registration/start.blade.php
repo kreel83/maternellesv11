@@ -1,4 +1,4 @@
-@extends('layouts.template1', ['titre' => 'Mon compte '.env('APP_NAME')])
+@extends('layouts.template1', ['titre' => 'Mon compte '.config('app.name')])
 
 @section('content')
 

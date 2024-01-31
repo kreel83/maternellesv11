@@ -164,8 +164,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
 
                                 <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center justify-content-center" data-bs-toggle="dropdown">
                                     <div class="d-flex flex-column justify-content-center align-items-center justify-content-center">
-                                        {{-- <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}"> --}}
-                                        <div class="{{ env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">
+                                        {{-- <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}"> --}}
+                                        <div class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}">
                                             <strong style="font-size: 13px">{{ ucfirst(strtolower(Auth::user()->prenom)) }} {{ strtoupper(Auth::user()->name) }}</strong>
                                         </div>
                                         @if (session('classe_active'))
@@ -195,7 +195,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                             <span class="nav-item navbar-text">Autres classes :</span>
                                             @foreach (session('autres_classes') as $classe)
                                                 @php
-                                                    $token = md5(Auth::id().$classe->id.env('HASH_SECRET'));
+                                                    $token = md5(Auth::id().$classe->id.config('app.custom.hash_secret'));
                                                 @endphp
                                                 <a href="{{ route('changerClasse',['classe' => $classe->id, 'token' => $token]) }}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
                                             @endforeach
@@ -343,8 +343,8 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
         <div class="modal-body text-center">
             Vous utilisez une version " découverte " de l'application<br>
             Cette version est limitée à 10 notations.<br><br>
-            Abonnez-vous pour {{ env('PRIX_ABONNEMENT') }} € / an pour profiter<br>
-            pleinement de l'application <strong>{{ env('APP_NAME') }}</strong>
+            Abonnez-vous pour {{ config('app.custom.prix_abonnement') }} € / an pour profiter<br>
+            pleinement de l'application <strong>{{ config('app.name') }}</strong>
             <div>
                 <a href="{{ route('subscribe.index') }}" class="btnAction mx-auto" style="background-color: rgb(116, 205, 116)">Je m'abonne</a>
                 <button class="btnAction mx-auto" data-bs-dismiss="modal" aria-label="Close">Je teste l'application</button>

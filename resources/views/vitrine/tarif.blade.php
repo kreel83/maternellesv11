@@ -20,7 +20,7 @@
 					<div class="section-header left-style mb-olpo">
 						<span class="cate">Tarif</span>
 						<h3>12,90 € par an tout compris</h3>
-						<p>Notre service en ligne <b>{{ env('APP_NAME') }}</b> offre une flexibilité accrue.
+						<p>Notre service en ligne <b>{{ config('app.name') }}</b> offre une flexibilité accrue.
 						Gérez votre classe depuis votre ordinateur ou votre tablette en toute sécurité. L'application mobile (compagnon) est le 
 						complément idéal en classe pour inscrire des notes sur l'instant.
 						</p>

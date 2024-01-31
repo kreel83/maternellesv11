@@ -51,7 +51,7 @@
                 @if($pendings->count() > 0)
                     @foreach ($pendings as $pending)
                         @php
-                            $token = md5($pending->id.env('HASH_SECRET'));
+                            $token = md5($pending->id.config('app.custom.hash_secret'));
                         @endphp
                         <li>
                             @if(isset($pending->prenom))
@@ -83,7 +83,7 @@
                 @if($partages->count() > 0)
                     @foreach ($partages as $partage)
                         @php
-                            $token = md5($partage->id.env('HASH_SECRET'));
+                            $token = md5($partage->id.config('app.custom.hash_secret'));
                         @endphp
                         <li>
 							<span class="me-2">{{ $partage->prenom.' '.$partage->name }} ({{ $roles[strval($partage->role)] }})</span> 

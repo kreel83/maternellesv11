@@ -9,7 +9,7 @@ $(document).on('click','.boutonSearchSchool', function() {
         });
         $.ajax({
             method: 'POST',
-            url: '/mf/search-school',
+            url: '/search-school',
             data: {
                 search: search,
             },

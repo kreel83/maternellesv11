@@ -120,7 +120,7 @@ class PartageController extends Controller
     }
 
     public function supprimePartage($classeuser_id, Request $request) {
-        $token = md5($classeuser_id.env('HASH_SECRET'));
+        $token = md5($classeuser_id.config('app.custom.hash_secret'));
         if($token != $request->token) {
             return redirect()->route('partager')
                 ->with('status', 'danger')
@@ -142,7 +142,7 @@ class PartageController extends Controller
     }
 
     public function supprimePartageFinal(Request $request) {
-        $token = md5($request->classeuser_id.env('HASH_SECRET'));
+        $token = md5($request->classeuser_id.config('app.custom.hash_secret'));
         if($token != $request->token) {
             return redirect()->route('partager')
             ->with('status', 'danger')

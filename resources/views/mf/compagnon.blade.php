@@ -1,8 +1,8 @@
 @extends('layouts.mf')
 
 @section('seo')
-    <title>Le Compagnon : l'application mobile pour {{ env('APP_NAME') }}</title>
-    <meta name="description" content="Le compagnon est le complément de votre application {{ env('APP_NAME') }} et permet l'évaluation des élèves en classe">
+    <title>Le Compagnon : l'application mobile pour {{ config('app.name') }}</title>
+    <meta name="description" content="Le compagnon est le complément de votre application {{ config('app.name') }} et permet l'évaluation des élèves en classe">
 @endsection
 
 @section('content')
@@ -162,7 +162,7 @@
                                 </div>
                                 <span>05</span>
                                 <h5>Temps réel</h5>
-                                <p>Données mises à jour instantanément dans votre compte {{ env('APP_NAME') }}</p>
+                                <p>Données mises à jour instantanément dans votre compte {{ config('app.name') }}</p>
                                 {{-- <a href="service-detail.html"><i class="flaticon-arrow-pointing-to-right"></i></a> --}}
                             </div>
                         </div>

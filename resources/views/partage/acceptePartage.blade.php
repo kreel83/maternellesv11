@@ -1,4 +1,4 @@
-@extends('layouts.parentLayout',['titre' => env('APP_NAME')])
+@extends('layouts.parentLayout',['titre' => config('app.name')])
 
 @section('content')
 

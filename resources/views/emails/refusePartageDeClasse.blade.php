@@ -115,10 +115,10 @@
             <br><br>
             Nous vous informons que {{ Auth::user()->prenom.' '.Auth::user()->name }} a refusé votre demande de partage de classe.
             <br><br>
-            L'équipe <a href="{{ route('vitrine.index') }}">{{env('APP_NAME')}}</a> se tient à votre disposition pour toute question ou assistance supplémentaire.
+            L'équipe <a href="{{ route('mf.index') }}">{{config('app.name')}}</a> se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">
-                L’équipe {{env('APP_NAME')}}
+                L’équipe {{config('app.name')}}
             </div>
         </p>
     </div>

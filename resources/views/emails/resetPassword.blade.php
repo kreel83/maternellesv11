@@ -108,7 +108,7 @@
         <p>
             Bonjour <span class="prenom">{{ ucfirst($prenom) }}</span>
             <br><br>
-            Nous avons reçu une demande de réinitialisation du mot de passe de votre compte {{env('APP_NAME')}}. Veuillez cliquer sur le lien ci-dessous pour le réinitialiser.
+            Nous avons reçu une demande de réinitialisation du mot de passe de votre compte {{config('app.name')}}. Veuillez cliquer sur le lien ci-dessous pour le réinitialiser.
             <br><br>
             <a href="{{ $resetLink }}">CHANGER DE MOT DE PASSE</a>
             <br><br>
@@ -118,10 +118,10 @@
             <br><br>
             {{ $resetLink }}
             <br><br><br><br>
-            L'équipe {{env('APP_NAME')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
+            L'équipe {{config('app.name')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">
-                L’équipe {{env('APP_NAME')}}
+                L’équipe {{config('app.name')}}
             </div>
         </p>
     </div>

@@ -28,7 +28,7 @@ class PdfController extends Controller
 
     public static function genereLienVersCahierEnPdf(Enfant $enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
-        $token = $periode . md5($enfant->id.uniqid().env('HASH_SECRET'));
+        $token = $periode . md5($enfant->id.uniqid().config('app.custom.hash_secret'));
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
         // Envoi des emails aux contacts de l'enfant...
@@ -76,7 +76,7 @@ class PdfController extends Controller
         $date = Carbon::create($request->annee, $request->mois, $request->jour);
         $ddn = $date->format('Y-m-d');
         /*
-        $token = md5($request->id.$ddn.env('HASH_SECRET'));
+        $token = md5($request->id.$ddn.config('app.custom.hash_secret'));
         if($token != $request->token) {
             return Redirect::back()->withErrors(['msg' => 'Token invalide']);
         }

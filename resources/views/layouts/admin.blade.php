@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
     <nav class="navbar navbar-expand-lg fixed-top" aria-label="" style="background-color: #E7FCFF">
         <div class="container-fluid">
             <a href="{{ route('admin.index') }}" class="brand-logo">
-                <img src="{{ asset('img/deco/logo.png') }}" alt="{{ env('APP_NAME').' Administration' }}" width="130">
+                <img src="{{ asset('img/deco/logo.png') }}" alt="{{ config('app.name').' Administration' }}" width="130">
             </a>
         {{-- <a class="navbar-brand me-5" href="{{route('admin.index')}}">Les maternelles - Administration</a> --}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">

@@ -31,7 +31,7 @@
                     <p>Vous allez partager votre classe avec {{ $newUser->prenom.' '.$newUser->name }}.</p>
                     <p>Un courrier électronique contenant un lien de confirmation va lui être envoyé.</p>
                 @else
-                    <p>Cette personne ne possède pas encore de compte sur {{ env('APP_NAME') }}.</p>
+                    <p>Cette personne ne possède pas encore de compte sur {{ config('app.name') }}.</p>
                     <p>Un courrier électronique va lui être envoyé pour l'inviter à créer son compte et accepter le partage de votre classe.</p>
                 @endif
 

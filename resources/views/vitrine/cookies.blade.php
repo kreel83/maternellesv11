@@ -14,7 +14,7 @@
 
         <h3>Politique en matière de cookies pour Les maternelles</h3>
 
-        <p>Voici la politique en matière de cookies du site Les maternelles, accessible à partir de {{ env('APP_URL') }}</p>
+        <p>Voici la politique en matière de cookies du site Les maternelles, accessible à partir de {{ config('app.url') }}</p>
 
         <p><strong>Qu'est-ce qu'un cookie ?</strong></p>
 

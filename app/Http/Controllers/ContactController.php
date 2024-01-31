@@ -21,7 +21,7 @@ class ContactController extends Controller
         ]);
         // Envoi d'un email pour nous prévenir
         $user = Auth::user();
-        $to = explode(',', env('ADMIN_EMAILS'));
+        $to = explode(',', config('app.custom.admin_emails'));
         Mail::to($to)->send(new DemandeDeContact($user, $request->subject, $request->message));
         return back()
             ->with('status', 'success')

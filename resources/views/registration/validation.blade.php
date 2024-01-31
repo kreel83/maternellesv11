@@ -1,4 +1,4 @@
-@extends('layouts.template1', ['titre' => 'Mon compte '.env('APP_NAME')])
+@extends('layouts.template1', ['titre' => 'Mon compte '.config('app.name')])
 
 @section('content')
 
@@ -20,7 +20,7 @@
         </div>
     </div> 
 
-    <h3 class="mb-3">Création de votre compte {{ env('APP_NAME') }}</h3>
+    <h3 class="mb-3">Création de votre compte {{ config('app.name') }}</h3>
     <p>Félicitations, votre adresse e-mail est validée.</p>
     <p>Pour terminer la création de votre compte, veuillez choisir un mot de passe :</p>
 

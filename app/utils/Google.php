@@ -66,7 +66,7 @@ class Google {
     }
 
     public static  function url_connection() {
-        $url_redrect = env('APP_URL').'/connect';
+        $url_redrect = config('app.url').'/connect';
 
         $google_id = env('GOOGLE_ID');
         return "https://accounts.google.com/o/oauth2/v2/auth?scope=email&access_type=online&response_type=code&redirect_uri=$url_redrect&client_id=$google_id";

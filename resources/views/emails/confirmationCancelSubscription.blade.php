@@ -108,13 +108,13 @@
         <p>
             Bonjour,
             <br><br>
-            Nous vous informons que votre abonnement au service {{env('APP_NAME')}} a été résilié avec succès.
+            Nous vous informons que votre abonnement au service {{config('app.name')}} a été résilié avec succès.
             <br><br><br><br>
 
-            L'équipe {{env('APP_NAME')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
+            L'équipe {{config('app.name')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">
-                L’équipe {{env('APP_NAME')}}
+                L’équipe {{config('app.name')}}
             </div>
         </p>
     </div>

@@ -119,9 +119,7 @@ class ItemController extends Controller
     }
 
     public function CommitSaveReussite(Request $request) {
-        Log::info('CommitSaveReussite (itemcontroller) '.$request);
-        Log::info('request->id = '.$request->id);
-        Log::info('request->texte = '.$request->texte);
+        //Log::info('CommitSaveReussite (itemcontroller) '.$request);
         $r = ReussiteSection::find($request->id);
         $r->description = $request->texte;
         $r->save();

@@ -35,7 +35,7 @@ class SendInvoiceToSchool extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Remboursement de mon abonnement '.env('APP_NAME'),
+            subject: 'Remboursement de mon abonnement '.config('app.name'),
         );
     }
 

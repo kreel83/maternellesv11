@@ -32,7 +32,7 @@ class ConfirmationSubscription extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Confirmation de votre abonnement au service '.env('APP_NAME'),
+            subject: 'Confirmation de votre abonnement au service '.config('app.name'),
         );
     }
 

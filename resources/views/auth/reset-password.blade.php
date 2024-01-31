@@ -53,7 +53,7 @@
 
 <div class="mb-3 d-flex justify-content-center">
            
-  <a href="{{route('vitrine.index')}}" class="brand-logo">
+  <a href="{{route('mf.index')}}" class="brand-logo">
   <img src="{{asset('img/deco/logo.png')}}" alt="" width="250" class="d-bloc mx-auto">
   </a>
 

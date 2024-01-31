@@ -2,7 +2,7 @@
 
 @section('seo')
     <title>Politique de confidentialité</title>
-    <meta name="description" content="La politique de confidentialité du site internet {{ env('APP_NAME') }}">
+    <meta name="description" content="La politique de confidentialité du site internet {{ config('app.name') }}">
 @endsection
 
 @section('content')
@@ -52,7 +52,7 @@
 
                     <h5 class="mt-3">1. Introduction</h5>
 
-                    <p>Merci de visiter notre site Internet. Chez {{ env('APP_NAME') }}, nous accordons une grande importance à la protection de vos données personnelles et nous nous engageons à respecter la réglementation en vigueur, notamment le Règlement Général sur la Protection des Données (RGPD).</p>
+                    <p>Merci de visiter notre site Internet. Chez {{ config('app.name') }}, nous accordons une grande importance à la protection de vos données personnelles et nous nous engageons à respecter la réglementation en vigueur, notamment le Règlement Général sur la Protection des Données (RGPD).</p>
 
                     <h5 class="mt-3">2. Collecte des données</h5>
 
