@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="content text-center">
+                        <div class="content text-center mx-auto titre_banner">
                             <h2>Politique de confidentialité</h2>
 
                         </div>

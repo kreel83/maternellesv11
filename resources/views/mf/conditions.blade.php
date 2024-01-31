@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="content text-center">
+                        <div class="content text-center mx-auto titre_banner">
                             <h2>Conditions générales de vente</h2>
 
                         </div>
@@ -103,7 +103,7 @@
                     <p><strong>Prix</strong></p>
                     <p>8.1 ET BAM Solutions offre au Client la possibilité de tester le service au travers d’un “Mode découverte” limité à 10 évaluations pour sa classe. Toutes les fonctions du service sont disponibles.</p>
                     <p>8.2 En contrepartie de l’accès au service en “Mode Premium” dans les conditions prévues par les présentes, le Client s’engage à payer à ET BAM Solutions une rémunération d’utilisation du service. En cas de résiliation anticipée du Contrat pour quelque cause que ce soit, le Client s’engage à régler à ET BAM Solutions l’intégralité des sommes restant dues au titre de la redevance du Service.</p>
-                    <p>8.3 Le montant de la rémunération du service est indiqué sur le Site et précisément sur la <a href="{{ route('mf.tarification') }}">page tarifs</a>, en euros, hors taxes et toutes taxes comprises. Les tarifs indiqués sur le Site sont ceux en vigueur le jour de la souscription de l’abonnement.</p>
+                    <p>8.3 Le montant de la rémunération du service est indiqué sur le Site et précisément sur la <a href="{{ route('mf.tarifs') }}">page tarifs</a>, en euros, hors taxes et toutes taxes comprises. Les tarifs indiqués sur le Site sont ceux en vigueur le jour de la souscription de l’abonnement.</p>
                     <p>8.4 Le montant de la rémunération du service est payable lors de la souscription de l’abonnement, puis selon les conditions définies à l’article 6 ci-dessus. Le règlement de la rémunération du service s’opérera via notre solution de paiement sécurisée qui offre plusieurs modes de paiement. Les sommes dues à ET BAM Solutions ne comprennent pas le coût de la connexion Internet qui reste à la charge du Client.</p>
                     <p>8.5 ET BAM Solutions pourra modifier le montant de la rémunération du service sous réserve d’informer par tous moyens le Client au moins quinze (15) jours avant l’entrée en vigueur de cette modification tarifaire. La nouvelle rémunération du service ne s’applique qu’à la reconduction du service : le mois suivant la notification au Client pour les forfaits à paiement mensuel, l’année suivant la notification au Client pour les forfaits à paiement annuel. Le Client est libre de s’opposer au changement de tarif en résiliant son abonnement depuis son compte personnel dans un délai de quinze (15) jours suivant la notification au Client. A défaut de demande de résiliation dans ce délai, le Client est réputé avoir accepté la nouvelle rémunération du service.</p>
                     <p><strong>Commande</strong></p>

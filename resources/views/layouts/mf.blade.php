@@ -163,7 +163,7 @@
                                 </li> --}}
                                 <li class="d-flex align-items-center">
                                     <i class="far fa-envelope"></i>
-                                    <p><a href="{{ route('mf.contact') }}">Nous contacter</a></p>
+                                    <p><a href="{{ route('mf.contact') }}" style="color: #061738; font-weight: bold">Nous contacter</a></p>
                                 </li>
                             </ul>
                             <p class="mt-4">
