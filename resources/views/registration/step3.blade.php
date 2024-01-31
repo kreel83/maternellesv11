@@ -1,4 +1,4 @@
-@extends('layouts.template1', ['titre' => 'Mon compte '.env('APP_NAME')])
+@extends('layouts.template1', ['titre' => 'Mon compte '.config('app.name')])
 
 @section('content')
 
@@ -22,7 +22,7 @@
 <div class="card mx-auto">
     <div class="card-header">
         <div class="d-flex justify-content-between pt-2">
-            <h5>Création de mon compte {{ env('APP_NAME' )}}</h5>
+            <h5>Création de mon compte {{ config('app.name') }}</h5>
             <h5><span class="badge bg-info">{{ $role == 'admin' ? 'Administrateur' : 'Enseignant' }}</span></h5>
         </div>
     </div>

@@ -108,16 +108,16 @@
         <p>
             Bonjour <span class="prenom">{{ ucfirst($prenom) }}</span>,
             <br><br>
-            {{ $nomDemandeur }} souhaite partager sa classe avec vous sur l'application {{env('APP_NAME')}}.
+            {{ $nomDemandeur }} souhaite partager sa classe avec vous sur l'application {{config('app.name')}}.
             <br><br>
             <b>Veuillez confirmer en cliquant <a href="{{ $verificationLink }}">sur ce lien</a>.</b>
             <br><br><br><br>
             Si vous ne souhaitez pas avoir l'accès à cette classe, veuillez ignorer ce message.
             <br><br>
-            L'équipe {{env('APP_NAME')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
+            L'équipe {{config('app.name')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">
-                L’équipe {{env('APP_NAME')}}
+                L’équipe {{config('app.name')}}
             </div>
         </p>
     </div>

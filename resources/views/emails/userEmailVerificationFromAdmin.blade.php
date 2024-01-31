@@ -108,15 +108,15 @@
         <p>
             Bonjour <span class="prenom">{{ ucfirst($prenom) }}</span>,
             <br><br>
-            Nous sommes ravis de vous informer que votre compte {{env('APP_NAME')}} a été créé avec succès par votre établissement.
+            Nous sommes ravis de vous informer que votre compte {{config('app.name')}} a été créé avec succès par votre établissement.
             <br><br>
             <b>Veuillez confirmer votre adresse email en cliquant <a href="{{ $verificationLink }}">sur ce lien.</a> afin de l'activer.</b>
             <br><br><br><br>
 
-            L'équipe {{env('APP_NAME')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
+            L'équipe {{config('app.name')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">
-                L’équipe {{env('APP_NAME')}}
+                L’équipe {{config('app.name')}}
             </div>
         </p>
     </div>

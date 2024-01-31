@@ -69,7 +69,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-widget widget-about">
                             <h5 class="title">A propos</h5>
-                            <p>{{ env('APP_NAME') }} est un service en ligne pour faciliter la gestion d'une classe de maternelle et l'édition du cahier de réussites.</p>
+                            <p>{{ config('app.name') }} est un service en ligne pour faciliter la gestion d'une classe de maternelle et l'édition du cahier de réussites.</p>
                             <ul class="contact">
                                 <li><i class="fas fa-headphones-alt"></i> 09 08 07 06 05</li>
                                 <li><i class="fas fa-home"></i> Notre adresse</li>

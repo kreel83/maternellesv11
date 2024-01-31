@@ -63,7 +63,7 @@
                 <tr class="classe" data-classe="{{$classe->id}}">
                     <td class="ps-5">    
                         <span>{{$classe->description}}</span> 
-                        <span class="{{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$classe->name}}</span> {{$classe->prenom}} 
+                        <span class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}">{{$classe->name}}</span> {{$classe->prenom}} 
                     </td>
                 </tr>
                 @endforeach
@@ -108,7 +108,7 @@
                             <input type="checkbox" class="choix choix_liste" data-id="{{$enfant->id}}">
                         </td>
                         <td>
-                            <span class="{{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$enfant->nom}}</span> {{ $enfant->prenom}} <span class="psmsgs">{{$enfant->psmsgs}}</span>
+                            <span class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}">{{$enfant->nom}}</span> {{ $enfant->prenom}} <span class="psmsgs">{{$enfant->psmsgs}}</span>
                         </td>
                     </tr>
                     @endforeach

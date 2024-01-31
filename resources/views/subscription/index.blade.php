@@ -44,11 +44,11 @@
             </div>     
         @endif
 
-        <p class="px-5">Bienvenue sur {{ env('APP_NAME') }}, la plateforme complète de gestion de classe de maternelle qui simplifie votre quotidien éducatif. Nous comprenons l'importance de créer un environnement pédagogique fluide et efficace pour vous, enseignants de maternelle.</p>
+        <p class="px-5">Bienvenue sur {{ config('app.name') }}, la plateforme complète de gestion de classe de maternelle qui simplifie votre quotidien éducatif. Nous comprenons l'importance de créer un environnement pédagogique fluide et efficace pour vous, enseignants de maternelle.</p>
 
         <div class="mb-4">
           {{-- <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}"> --}}
-            <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ env('APP_NAME' )}} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
+            <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ config('app.name') }} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
           <a class="btnAction mx-auto">
             Je souhaite m'abonner au service
           </a>
@@ -94,7 +94,7 @@
               </style>
 
               <div class="corps_abonnement">
-                  <h3 class="mb-4"  style="color: var(--main-color)">Pourquoi choisir {{ env('APP_NAME') }} ?</h3>
+                  <h3 class="mb-4"  style="color: var(--main-color)">Pourquoi choisir {{ config('app.name') }} ?</h3>
 
                   <h4><i class="fa-regular fa-star me-1" style="color: var(--main-color)"></i> Une gestion de classe simplifiée</h4>
                   <p>Notre plateforme a été spécialement conçue pour répondre aux besoins uniques des enseignants de maternelle. Gérez facilement votre classe, suivez les progrès des élèves et organisez vos activités en quelques clics.</p>
@@ -111,9 +111,9 @@
                   <h3 class="mb-3" style="color: var(--main-color)">Comment s'abonner ?</h3>
 
                   <ol>
-                      <li><strong>Aucun frais cachés</strong> : l'abonnement au service {{ env('APP_NAME') }} est au prix de {{ env('PRIX_ABONNEMENT') }} € pour 1 an et sera reconduit automatiquement à la fin de chaque période sauf résiliation de votre part. Vous pourrez résilier votre abonnement à tout moment.</li>
+                      <li><strong>Aucun frais cachés</strong> : l'abonnement au service {{ config('app.name') }} est au prix de {{ config('app.custom.prix_abonnement') }} € pour 1 an et sera reconduit automatiquement à la fin de chaque période sauf résiliation de votre part. Vous pourrez résilier votre abonnement à tout moment.</li>
                       <li><strong>Informations de paiement sécurisé</strong> : saisissez vos informations de paiement en toute confiance grâce à notre système sécurisé.</li>
-                      <li><strong>Commencez à profiter de tous les avantages</strong> : une fois votre abonnement confirmé, plongez dans l'univers simplifié de la gestion de classe avec {{ env('APP_NAME') }}.</li>
+                      <li><strong>Commencez à profiter de tous les avantages</strong> : une fois votre abonnement confirmé, plongez dans l'univers simplifié de la gestion de classe avec {{ config('app.name') }}.</li>
                   </ol>                
               </div>
 
@@ -125,7 +125,7 @@
 
           <div class="mb-3">
             {{-- <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}"> --}}
-              <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ env('APP_NAME' )}} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
+              <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ config('app.name') }} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
             <a class="btnAction mx-auto">
               Je souhaite m'abonner au service
             </a>
@@ -180,7 +180,7 @@
 
 {{-- @if ($status != 'actif')
     <p>Vous n'avez pas d'abonnement en cours.</p>
-    <p><a href="{{ route('subscribe.cardform') }}">Je souhaite m'abonner au service <i>{{ env('APP_NAME') }}</i></a></p>
+    <p><a href="{{ route('subscribe.cardform') }}">Je souhaite m'abonner au service <i>{{ config('app.name') }}</i></a></p>
 @else
     <p>Statut : {{ $status }}</p>
                     

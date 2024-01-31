@@ -96,7 +96,7 @@ class SubscriptionController extends Controller
                 return redirect()->route('subscribe.waiting');
             // return redirect()->route('depart')
             //     ->with('status', 'success')
-            //     ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.');
+            //     ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.config('app.name').' pour 1 an.');
             // return view("subscription.result")
             //     ->with('result', 'succeeded');
         }
@@ -127,7 +127,7 @@ class SubscriptionController extends Controller
         }
         // if($request->success) {
         //     $status = 'success';
-        //     $msg = 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.';
+        //     $msg = 'Merci ! Vous êtes maintenant abonné(e) au service '.config('app.name').' pour 1 an.';
         // } else {
         //     $status = 'danger';
         //     $msg = 'Une erreur est survenue.';
@@ -284,7 +284,7 @@ class SubscriptionController extends Controller
             session(['is_abonne' => true]);
             return redirect()->route('depart')
             ->with('status', 'success')
-            ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.env('APP_NAME').' pour 1 an.');
+            ->with('msg', 'Merci ! Vous êtes maintenant abonné(e) au service '.config('app.name').' pour 1 an.');
         } else {
             return view("subscription.waiting");
         }

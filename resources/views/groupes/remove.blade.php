@@ -133,7 +133,7 @@
         </div>
         <div class="mb-3">
         @foreach ($enfants as $enfant)
-            {{ $enfant->prenom}} <span class="{{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$enfant->nom}}</span><br>
+            {{ $enfant->prenom}} <span class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}">{{$enfant->nom}}</span><br>
         @endforeach
         </div>
         <div>

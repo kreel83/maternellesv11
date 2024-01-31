@@ -1,7 +1,7 @@
 @extends('layouts.mf')
 
 @section('seo')
-    <title>Les tarifs de l'application {{ env('APP_NAME') }}</title>
+    <title>Les tarifs de l'application {{ config('app.name') }}</title>
     <meta name="description" content="Les Maternelles est un service en ligne pour optimiser la gestion d'une classe de maternelle">
 @endsection
 
@@ -29,7 +29,7 @@
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                     <div class="section-title wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="1s">
                         <h2>un prix unique <br> un abonnement sécurisé</h2>
-                        <p>Votre application complète vous est proposée au prix de {{ env('PRIX_ABONNEMENT') }} € TTC</p>
+                        <p>Votre application complète vous est proposée au prix de {{ config('app.custom.prix_abonnement') }} € TTC</p>
                         <p>Les abonnements se font par carte bancaire ou par PayPal</p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
 
                                 </ul>
                                 <div class="purchase">
-                                    <h3>{{ env('PRIX_ABONNEMENT') }} € / an <span>TTC</span></h3>
+                                    <h3>{{ config('app.custom.prix_abonnement') }} € / an <span>TTC</span></h3>
                                     <a href="{{ route('registration.start') }}">je m'abonne</a>
                                 </div>
                             </div>

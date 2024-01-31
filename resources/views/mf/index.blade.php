@@ -1,8 +1,8 @@
 @extends('layouts.mf')
 
 @section('seo')
-    <title>Gestion de votre classe de maternelle en ligne</title>
-    <meta name="description" content="Les Maternelles est un service en ligne pour optimiser la gestion d'une classe de maternelle">
+    <title>Gestion de votre classe de maternelle - Edition des cahiers de réussites</title>
+    <meta name="description" content="{{ config('app.name') }} est un service en ligne pour optimiser la gestion d'une classe de maternelle et concevoir les cahiers de réussites">
 @endsection
 
 @section('content')
@@ -180,7 +180,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5">
                             <div class="image text-center wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img1.jpg" alt="About">
+                                <img class="rounded" src="assets/images/home1/about/img1.jpg" alt="About">
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -191,8 +191,8 @@
                                             <i class="flaticon-ribbon"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Gestion de la Classe Simplifiée</h6>
-                                            <p>Créez votre classe en quelques clics. La maîtresse peut facilement saisir les détails de sa classe, définir les paramètres, et commencer rapidement.</p>
+                                            <h6>Gestion de la classe simplifiée</h6>
+                                            <p>Créez votre classe en quelques clics. Vous pouvez facilement saisir les détails de sa classe, définir les paramètres, et commencer rapidement.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -200,7 +200,7 @@
                                             <i class="flaticon-ribbon"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Importation de Classes Antérieures</h6>
+                                            <h6>Importation de classes antérieures</h6>
                                             <p>Gagnez du temps en important les données de votre classe de l'année précédente. Un processus simple pour garantir une continuité fluide d'une année à l'autre.</p>
                                         </div>
                                     </li>
@@ -209,8 +209,8 @@
                                             <i class="flaticon-24-hours"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Ajout Facile d'Élèves</h6>
-                                            <p>Pour les nouveaux arrivants, ajoutez rapidement de nouveaux élèves à votre liste. Un processus intuitif pour assurer une mise à jour constante de la composition de la classe.</p>
+                                            <h6>Ajout facile d'élèves</h6>
+                                            <p>Pour les nouveaux arrivants, ajoutez rapidement de nouveaux élèves à votre classe. Un processus intuitif pour assurer une mise à jour constante de la composition de la classe.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -219,7 +219,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Mode multi-classes</h6>
-                                            <p>Un professeur peut gérer plusieurs classes.</p>
+                                            <p>Vous pouvez gérer plusieurs classes simultanément.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -227,8 +227,8 @@
                                             <i class="flaticon-24-hours"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Classes Partagées</h6>
-                                            <p>Notre système de partage de classe permet à un professeur titulaire de partager la gestion de sa classe avec un professeur co-titulaire ou suppléant</p>
+                                            <h6>Classes partagées</h6>
+                                            <p>Notre système de partage de classe unique permet à un professeur titulaire de partager la gestion de sa classe avec un professeur co-titulaire ou suppléant.</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -246,8 +246,8 @@
                                             <i class="flaticon-mobile-app-developing"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Catalogue d'Activités Étendu</h6>
-                                            <p>Choisissez parmi une liste complète de 192 activités soigneusement réparties dans 32 catégories. Des options variées pour s'adapter à tous les aspects du programme éducatif.</p>
+                                            <h6>Catalogue d'activités étendu</h6>
+                                            <p>Choisissez parmi une liste complète de plus de 190 activités soigneusement réparties dans 32 catégories. Des options variées pour s'adapter à tous les aspects du programme éducatif.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -256,7 +256,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Création et personnalisation de ses propres activités</h6>
-                                            <p>Choisissez parmi une liste complète de 192 activités soigneusement réparties dans 32 catégories. Des options variées pour s'adapter à tous les aspects du programme éducatif.</p>
+                                            <p>Vous pouvez créer vos propres activités via une interface simple et intuitive.</p>
                                         </div>
                                     </li>
                                     <li class="d-flex">
@@ -264,7 +264,7 @@
                                             <i class="flaticon-setup"></i>
                                         </div>
                                         <div class="text">
-                                            <h6>Suivi des Activités Tout au Long de l'Année</h6>
+                                            <h6>Suivi des activités tout au long de l'année</h6>
                                             <p>Enregistrez les progrès des élèves sur chaque activité tout au long de l'année. Un moyen efficace de documenter les réussites individuelles et de suivre le développement global de la classe.</p>
                                         </div>
                                     </li>
@@ -274,7 +274,7 @@
                                         </div>
                                         <div class="text">
                                             <h6>Notation Intuitive</h6>
-                                            <p>Donnez des notes aux élèves avec facilité. Un système de notation intuitif qui permet à la maîtresse de documenter les performances des élèves de manière détaillée et compréhensible.</p>
+                                            <p>Donnez des notes aux élèves avec facilité. Un système de notation intuitif qui vous permet de documenter les performances des élèves de manière détaillée et compréhensible.</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -282,7 +282,7 @@
                         </div>
                         <div class="col-lg-5 order-0 order-lg-1">
                             <div class="image text-center wow fadeInRight" data-wow-delay="0.3s" data-wow-duration="1s">
-                                <img src="assets/images/home1/about/img2.jpg" alt="About">
+                                <img class="rounded" src="assets/images/home1/about/img2.jpg" alt="About">
                             </div>
                         </div>
                     </div>
@@ -318,7 +318,7 @@
             <div class="row filters">
                 <div class="col-xl-4 col-lg-4 col-md-6 mix ios des">
                     <div class="item wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/01-dashboard.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/01-dashboard.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Le tableau de bord</h6>
@@ -330,7 +330,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix and app">
                     <div class="item wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/02-cahier.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/02-cahier.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Le cahier de réussite</h6>
@@ -342,7 +342,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix and mar">
                     <div class="item wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/03-avatar.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/03-avatar.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>J'affecte un avatar à mon élève</h6>
@@ -354,7 +354,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix des app">
                     <div class="item wow fadeInUp" data-wow-delay="0.8s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/04-calendrier.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/04-calendrier.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Le calendrier</h6>
@@ -366,7 +366,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix ios and">
                     <div class="item wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/05-activite.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/05-activite.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Je sélectionne mes activités</h6>
@@ -378,7 +378,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix des mar">
                     <div class="item wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/06-redaction.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/06-redaction.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Je rédige mon cahier de réussite</h6>
@@ -390,7 +390,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix des app">
                     <div class="item wow fadeInUp" data-wow-delay="0.8s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/07-parametres.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/07-parametres.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Je gère les paramètres de ma classe</h6>
@@ -402,7 +402,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix ios and">
                     <div class="item wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/08-evaluation.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/08-evaluation.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>J'évalue mes élèves</h6>
@@ -414,7 +414,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix des mar">
                     <div class="item wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                        <img src="assets/images/home1/project/09-groupes.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/09-groupes.png" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>J'affecte un groupe à mes élèves</h6>
@@ -509,7 +509,7 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="image">
-                                    <img src="assets/images/home1/mobile.png" alt="Mobile">
+                                    <img class="rounded" src="assets/images/inner/home-mobile.jpg" alt="Mobile">
                                 </div>
                             </div>
                             <div class="col-lg-7">

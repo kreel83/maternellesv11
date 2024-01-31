@@ -99,9 +99,7 @@
         <div class="d-flex justify-content-center mb-3">
            
             <div>
-                <a href="{{route('vitrine.index')}}" class="brand-logo">
-                    <img class="img-fluid" src="{{asset('img/deco/logo-mail.png')}}" alt="" width="250">
-                </a>
+              <img class="img-fluid" src="{{asset('img/deco/logo-mail.png')}}" alt="" width="250">
             </div>
     
         </div>

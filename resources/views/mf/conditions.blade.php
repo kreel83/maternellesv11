@@ -2,7 +2,7 @@
 
 @section('seo')
     <title>Conditions générales de vente</title>
-    <meta name="description" content="Les conditions générales de vente du site internet {{ env('APP_NAME') }}">
+    <meta name="description" content="Les conditions générales de vente du site internet {{ config('app.name') }}">
 @endsection
 
 @section('content')
@@ -52,19 +52,19 @@
 
                     <p>Les présentes Conditions Générales de Vente sont à jour au 01 janvier 2023.</p>
                     <p>Entre :</p>
-                    <p>ET BAM Solutions – SAS au capital social de 1000 euros, domiciliée au 33 rue Claire Joie, 83200 Toulon – {{ env('APP_URL') }} – R.C.S 983 750 118 R.C.S. Toulon  – Siren 983 750 118.</p>
+                    <p>ET BAM Solutions – SAS au capital social de 1000 euros, domiciliée au 33 rue Claire Joie, 83200 Toulon – {{ config('app.url') }} – R.C.S 983 750 118 R.C.S. Toulon  – Siren 983 750 118.</p>
                     <p>Ci-après « ET BAM Solutions »</p>
                     <p>Et :</p>
                     <p>Ci-après « le Client »</p>
                     <p>Ensemble dénommées “les Parties” et séparément “une Partie”</p>
-                    <p>ET BAM Solutions a pour activité la création et le développement d’un logiciel accessible depuis le site internet {{ env('APP_URL') }} (ci-après le Site) pour les enseignant(e)s de classe de maternelle.</p>
+                    <p>ET BAM Solutions a pour activité la création et le développement d’un logiciel accessible depuis le site internet {{ config('app.url') }} (ci-après le Site) pour les enseignant(e)s de classe de maternelle.</p>
 
                     <h5 class="mt-3">ARTICLE 1 - Dispositions générales</h5>
                     <p>1.1 Le terme " Client “ désigne toute personne, morale ou physique, ayant souscrit à l’offre d’abonnement.</p>
                     <p>1.2 Le terme “ Consommation ” désigne toute action du Client qui s’apparente à une utilisation de l’abonnement, notamment le fait de se loguer sur la plateforme, d’y mettre à jour des données, de poser une question au support client, sans que cette liste soit exhaustive.</p>
                     <p>1.3 Le terme " Tiers " désigne toute personne physique ou morale non-partie aux présentes Conditions Générales de Vente (CGV).</p>
-                    <p>1.4 Le terme “ Site “ désigne le site internet commercial de la société ET BAM Solutions (accessible à l’adresse {{ env('APP_URL') }}).</p>
-                    <p>1.5 Le terme “ Service “ désigne l’ensemble des offres détaillées sur le site {{ env('APP_URL') }}</p>
+                    <p>1.4 Le terme “ Site “ désigne le site internet commercial de la société ET BAM Solutions (accessible à l’adresse {{ config('app.url') }}).</p>
+                    <p>1.5 Le terme “ Service “ désigne l’ensemble des offres détaillées sur le site {{ config('app.url') }}</p>
                     <p>1.6 Les présentes CGV régissent la relation contractuelle entre les Parties. Elles s’appliquent aux seuls professionnels à l’exclusion des consommateurs. A ce titre, le Client reconnaît avoir la qualité de professionnel, conformément aux dispositions du Code de la consommation applicables. Le Client reconnaît également avoir le pouvoir pour engager la société partie au Contrat.</p>
                     <p>1.7 Les présentes CGV se substituent à tout autre document antérieur ou tout autre accord écrit ou verbal en relation avec le même objet, et prévaut sur toute disposition contraire qui pourrait être contenue dans les documents émanant du Client.</p>
                     <p>1.8 Si l’une quelconque disposition de ces CGV ou son application à toute personne ou circonstance est jugée nulle, cette nullité ne concernera pas les autres dispositions ou applications de ces CGV, qui resteront en vigueur indépendamment de la disposition jugée nulle. A cette fin, les dispositions de ces CGV sont déclarées autonomes.</p>
@@ -103,7 +103,7 @@
                     <p><strong>Prix</strong></p>
                     <p>8.1 ET BAM Solutions offre au Client la possibilité de tester le service au travers d’un “Mode découverte” limité à 10 évaluations pour sa classe. Toutes les fonctions du service sont disponibles.</p>
                     <p>8.2 En contrepartie de l’accès au service en “Mode Premium” dans les conditions prévues par les présentes, le Client s’engage à payer à ET BAM Solutions une rémunération d’utilisation du service. En cas de résiliation anticipée du Contrat pour quelque cause que ce soit, le Client s’engage à régler à ET BAM Solutions l’intégralité des sommes restant dues au titre de la redevance du Service.</p>
-                    <p>8.3 Le montant de la rémunération du service est indiqué sur le Site et précisément sur la <a href="{{ route('mf.tarification') }}">page tarifs</a>, en euros, hors taxes et toutes taxes comprises. Les tarifs indiqués sur le Site sont ceux en vigueur le jour de la souscription de l’abonnement.</p>
+                    <p>8.3 Le montant de la rémunération du service est indiqué sur le Site et précisément sur la <a href="{{ route('mf.tarifs') }}">page tarifs</a>, en euros, hors taxes et toutes taxes comprises. Les tarifs indiqués sur le Site sont ceux en vigueur le jour de la souscription de l’abonnement.</p>
                     <p>8.4 Le montant de la rémunération du service est payable lors de la souscription de l’abonnement, puis selon les conditions définies à l’article 6 ci-dessus. Le règlement de la rémunération du service s’opérera via notre solution de paiement sécurisée qui offre plusieurs modes de paiement. Les sommes dues à ET BAM Solutions ne comprennent pas le coût de la connexion Internet qui reste à la charge du Client.</p>
                     <p>8.5 ET BAM Solutions pourra modifier le montant de la rémunération du service sous réserve d’informer par tous moyens le Client au moins quinze (15) jours avant l’entrée en vigueur de cette modification tarifaire. La nouvelle rémunération du service ne s’applique qu’à la reconduction du service : le mois suivant la notification au Client pour les forfaits à paiement mensuel, l’année suivant la notification au Client pour les forfaits à paiement annuel. Le Client est libre de s’opposer au changement de tarif en résiliant son abonnement depuis son compte personnel dans un délai de quinze (15) jours suivant la notification au Client. A défaut de demande de résiliation dans ce délai, le Client est réputé avoir accepté la nouvelle rémunération du service.</p>
                     <p><strong>Commande</strong></p>

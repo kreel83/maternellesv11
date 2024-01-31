@@ -57,7 +57,7 @@
                         <td class="name {{ $eleve->genre }}">
                             <div>
 
-                                @if (env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER'))
+                                @if (config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user'))
                                 <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">                                   
                                     {{$eleve->prenom. ' ' }}
                                     <span class="blur">{{$eleve->nom}}</span>
@@ -123,7 +123,7 @@
                         <td class="name {{ $eleve->genre }}">
                             <div>
 
-                                @if (env('APP_DEMO') && Auth::id() == env('APP_DEMO_USER'))
+                                @if (config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user'))
                                 <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">                                   
                                     {{$eleve->prenom. ' ' }}
                                     <span class="blur">{{$eleve->nom}}</span>

@@ -47,7 +47,7 @@
 
                     <div class="col">
                         <i class="fas fa-envelope fa-2x"></i>
-                        <p>{{ env('MAIL_FROM_ADDRESS') }}</p>
+                        <p>{{ config('mail.from.address') }}</p>
                     </div>
                     
                 </div>

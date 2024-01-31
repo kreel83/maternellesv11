@@ -50,7 +50,7 @@ if (!is_null($enfant->groupe) && $lesgroupes) {
         <div class="name d-flex flex-column justify-content-center align-items-center" style="color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
           <div style="line-height: 15px; margin-top: 10px">{{$enfant->prenom}}</div>
 
-          <div style="font-size: 0.9rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 {{ env('App_DEMO') && Auth::id() == env('APP_DEMO_USER') ? 'blur' : null}}">{{$enfant->nom}}</div>
+          <div style="font-size: 0.9rem;color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}" class="ms-2 mt-1 {{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}">{{$enfant->nom}}</div>
           </div>
         <div class="title" style="font-size: 0.8rem; font-weight: bold;border-color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">
 

@@ -99,7 +99,7 @@ class RegisteredUserController extends Controller
 
         // ecole_id = 0 si le user n'est pas rattaché à un établissement
         $ecole_id = ($request->switch == '1') ? '0' : strtoupper($request->ecole_id);
-        $token = md5($request->role.$ecole_id.env('HASH_SECRET'));
+        $token = md5($request->role.$ecole_id.config('app.custom.hash_secret'));
         $route = ($request->switch == '1') ? 'registration.step3' : 'registration.step2';
 
         return redirect()->route($route, [
@@ -113,7 +113,7 @@ class RegisteredUserController extends Controller
     public function registrationStep2($role, $ecole_id, $token)
     {
         // verification du Token
-        if($token != md5($role.$ecole_id.env('HASH_SECRET'))) {
+        if($token != md5($role.$ecole_id.config('app.custom.hash_secret'))) {
             return redirect()->route('registration.start')
                 ->with('status', 'danger')
                 ->with('msg', 'Token invalide.');
@@ -128,7 +128,7 @@ class RegisteredUserController extends Controller
     public function registrationStep3(Request $request)
     {
         // verification Token
-        if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
+        if($request->token != md5($request->role.$request->ecole_id.config('app.custom.hash_secret'))) {
             return redirect()->route('registration.start')
                 ->with('status', 'danger')
                 ->with('msg', 'Token invalide.');
@@ -156,7 +156,7 @@ class RegisteredUserController extends Controller
     public function registrationStep3Post(Request $request)
     {
         // verification du Token
-        if($request->token != md5($request->role.$request->ecole_id.env('HASH_SECRET'))) {
+        if($request->token != md5($request->role.$request->ecole_id.config('app.custom.hash_secret'))) {
             return redirect()->route('registration.start')
                 ->with('status', 'danger')
                 ->with('msg', 'Token invalide.');

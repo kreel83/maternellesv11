@@ -532,7 +532,7 @@ p {
   margin-top: -8px;
 }
 .section-title h2{
-  text-transform: capitalize;
+  /* /* text-transform: capitalize; */ */
   font-weight: 700;
   font-family: var(--josefin);
   padding-bottom: 15px;
@@ -819,7 +819,7 @@ p {
   line-height: 50px;
   color: var(--dark);
   background: var(--white);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -869,7 +869,7 @@ p {
   font-size: 24px;
   font-weight: 700;
   color: var(--dark);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-family: var(--josefin);
 }
 .modal .modal-body .inputs{
@@ -896,7 +896,7 @@ p {
 .modal .modal-body .inputs::placeholder{
   font-size: 16px;
   color: var(--grey);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .modal .modal-body .search-area{
   position: relative;
@@ -970,7 +970,7 @@ p {
 .home1.feature .item h5{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .home1.feature .item p{
   padding-top: 10px;
@@ -1038,7 +1038,7 @@ p {
 .home1.counter .item h4{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-top: 15px;
   padding-bottom: 20px;
 }
@@ -1064,7 +1064,7 @@ p {
   padding-bottom: 35px;
 }
 .home1.about .content h6{
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .home1.about .content p{
   width: 80%;
@@ -1094,7 +1094,7 @@ p {
   display: inline-block;
   font-family: var(--heebo);
   font-size: 17px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-weight: 400;
   color: var(--grey);
   clip-path: polygon(0 0, 100% 0%, 70% 100%, 0% 100%);
@@ -1143,13 +1143,13 @@ p {
   font-weight: 700;
   font-family: var(--josefin);
   color: var(--white);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .home1.portfolio .item p{
   font-weight: 500;
   font-family: var(--heebo);
   color: var(--white);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .home1.portfolio .item a i{
   font-size: 40px;
@@ -1171,7 +1171,7 @@ p {
 .home1.team .item h6{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-top: 30px;
 }
 .home1.team .item h6:hover{
@@ -1187,7 +1187,7 @@ p {
   -o-transition: all linear 0.3s;
 }
 .home1.team .item p{
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-top: 5px;
   padding-bottom: 15px;
 }
@@ -1325,7 +1325,7 @@ p {
 .home1.video .content p{
   color: var(--white);
   font-size: 20px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-weight: 500;
   padding-top: 55px;
 }
@@ -1385,7 +1385,7 @@ p {
 }
 .home1.client .item h6{
   font-family: var(--josefin);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-weight: 700;
   padding-top: 35px;
   padding-bottom: 5px;
@@ -1394,7 +1394,7 @@ p {
   width: 77%;
 }
 .home1.client .item .designation{
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .home1.client .client-slider{
   padding-bottom: 60px;
@@ -1485,7 +1485,7 @@ p {
   font-family: var(--heebo);
   font-size: 15px;
   font-weight: 400;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--grey);
 }
 
@@ -1503,7 +1503,7 @@ p {
   font-weight: 600;
   font-size: 18px;
   line-height: 30px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   margin-top: 15px;
   background: var(--gradient);
   -webkit-background-clip: text;
@@ -1536,7 +1536,7 @@ p {
 .footer .footer-top .title h5{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .footer .footer-top .desc{
   padding-right: 120px;
@@ -1634,7 +1634,7 @@ p {
   line-height: 26px;
   font-family: var(--heebo);
   font-weight: 400;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--grey);
 }
 .footer .footer-top .navigation li a:hover,
@@ -1654,7 +1654,7 @@ p {
   font-weight: 400;
   font-size: 15px;
   color: var(--grey);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .footer .footer-top .form-area{
   position: relative;
@@ -1702,7 +1702,7 @@ p {
   font-family: var(--heebo);
   color: var(--grey);
   font-weight: 400;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-size: 16px;
 }
 .footer .footer-bottom ul li a:hover{
@@ -1784,7 +1784,7 @@ p {
 }
 .home2.newsletter .form-area .inputs::placeholder{
   font-family: var(--heebo);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--grey);
   font-size: 16px;
   font-weight: 400;
@@ -1795,7 +1795,7 @@ p {
   background: var(--deep-orange);
   width: 155px;
   font-family: var(--heebo);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-size: 18px;
   font-weight: 400;
   color: var(--white);
@@ -1907,14 +1907,14 @@ p {
   font-family: var(--josefin);
   font-weight: 700;
   color: var(--deep-orange);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-bottom: 5px;
 }
 .home2.pricing .item .price-title h4{
   font-family: var(--josefin);
   font-weight: 700;
   font-size: 26px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-bottom: 20px;
 }
 .home2.pricing .item ul li{
@@ -1922,7 +1922,7 @@ p {
   font-size: 16px;
   line-height: 27px;
   font-weight: 400;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--grey);
   padding-bottom: 25px;
 }
@@ -1947,7 +1947,7 @@ p {
   font-size: 38px;
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-bottom: 10px;
 }
 
@@ -1965,7 +1965,7 @@ p {
   font-family: var(--heebo);
   font-weight: 500;
   font-size: 16px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   line-height: 48px;
   padding: 0 25px;
   border-radius: 24px;
@@ -2042,14 +2042,14 @@ p {
   /* background: rgba(0, 0, 0, 0.6); */
 }
 .inner-page.banner .titre_banner{
-  background-color: rgba(0,0,0,0.5); border-radius: 8px; width: fit-content;padding: 20px 32px 0 32px;
+  background-color: rgba(0,0,0,0.6); border-radius: 8px; width: fit-content;padding: 20px 32px 0 32px;
 }
 .inner-page.banner h2{
   font-family: var(--josefin);
   font-size: 45px;
   font-weight: 700;
   color: var(--white);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-bottom: 10px;
 }
 .inner-page.banner .breadcrumb{
@@ -2058,7 +2058,7 @@ p {
 .inner-page.banner .breadcrumb-item a,
 .inner-page.banner .breadcrumb-item{
   font-family: var(--josefin);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--white);
   font-weight: 400;
   font-size: 18px;
@@ -2113,7 +2113,7 @@ p {
 }
 .blog-page.blog-detail .blog-img .option p {
   font-family: var(--josefin);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--white);
   line-height: 20px;
   padding-top: 8px;
@@ -2130,7 +2130,7 @@ p {
   font-weight: 700;
   padding-top: 25px;
   font-size: 28px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .blog-page.blog-detail .content blockquote {
@@ -2172,7 +2172,7 @@ p {
   font-family: var(--josefin);
   font-size: 18px;
   color: var(--deep-orange);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-weight: 600;
 }
 .blog-page.blog-detail .share-blog .social li {
@@ -2191,7 +2191,7 @@ p {
   color: var(--deep-orange);
 }
 .blog-page.blog-detail .share-blog p {
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   transition: 0.3s;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
@@ -2271,7 +2271,7 @@ p {
   font-family: var(--josefin);
   font-size: 20px;
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .blog-page.blog-detail .comment .all-comment li h6:hover {
   color: var(--deep-orange);
@@ -2292,7 +2292,7 @@ p {
   color: var(--deep-orange);
 }
 .blog-page.blog-detail .comment .all-comment li .reply p {
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   transition: all linear 0.3s;
   -webkit-transition: all linear 0.3s;
   -moz-transition: all linear 0.3s;
@@ -2327,7 +2327,7 @@ p {
   background: rgba(251, 108, 98, 0.1);
 }
 .blog-page.blog-detail .comment .input-field::placeholder {
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-family: var(--josefin);
   font-size: 16px;
   color: var(--grey);
@@ -2342,7 +2342,7 @@ p {
   padding: 0 35px;
   font-family: var(--josefin);
   font-weight: 500;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-size: 18px;
   color: var(--white);
   background: var(--deep-orange);
@@ -2391,7 +2391,7 @@ p {
   border-color: var(--deep-orange);
 }
 .blog-page.blog-detail .blog-sidebar .inputs::placeholder{
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-family: var(--josefin);
   font-size: 16px;
   color: var(--grey);
@@ -2421,7 +2421,7 @@ p {
 .blog-page.blog-detail .blog-sidebar .title h5{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   position: relative;
 }
 .blog-page.blog-detail .blog-sidebar .title h5:after{
@@ -2446,7 +2446,7 @@ p {
 }
 .blog-page.blog-detail .blog-sidebar .category ul li p{
   font-family: var(--josefin);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .blog-page.blog-detail .blog-sidebar .category ul li:hover p{
   color: var(--deep-orange);
@@ -2474,7 +2474,7 @@ p {
 }
 .blog-page.blog-detail .blog-sidebar .popular ul li p{
   font-family: var(--josefin);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .blog-page.blog-detail .blog-sidebar .popular ul li i{
   padding-right: 10px;
@@ -2489,7 +2489,7 @@ p {
   padding: 0 10px;
   font-family: var(--josefin);
   color: var(--grey);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   border: 1px solid #ddd;
   margin-right: 15px;
   margin-bottom: 20px;
@@ -2538,7 +2538,7 @@ p {
 .service-page.detail .right-part .title h5{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   position: relative;
 }
 .service-page.detail .right-part .title h5:after{
@@ -2560,7 +2560,7 @@ p {
 }
 .service-page.detail .right-part .item ul li p{
   color: var(--grey);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .service-page.detail .right-part .hours{
   padding: 15px;
@@ -2580,7 +2580,7 @@ p {
   -moz-border-radius: 24px;
   -ms-border-radius: 24px;
   -o-border-radius: 24px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--white);
   transition: all linear 0.3s;
   -webkit-transition: all linear 0.3s;
@@ -2634,7 +2634,7 @@ p {
 .project-page.project-detail .sub-title h5{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   position: relative;
 }
 .project-page.project-detail .sub-title h5:after{
@@ -2662,12 +2662,12 @@ p {
   font-family: var(--josefin);
   font-size: 18px;
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   width: 50%;
 }
 .project-page.project-detail .info li p{
   width: 50%;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .project-page.project-detail .info li ul li{
   border: 0;
@@ -2694,7 +2694,7 @@ p {
   padding-bottom: 15px;
 }
 .project-page.project-detail .title h4{
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-weight: 700;
   font-size: 28px;
   font-family: var(--josefin);
@@ -2738,10 +2738,10 @@ p {
 .team-page.team-detail .personal-info .name h5{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .team-page.team-detail .personal-info .name p{
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   padding-top: 5px;
 }
 .team-page.team-detail .personal-info .name ul{
@@ -2777,7 +2777,7 @@ p {
 .team-page.team-detail .title h5{
   font-family: var(--josefin);
   font-weight: 700;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   position: relative;
 }
 .team-page.team-detail .title h5:after{
@@ -2793,7 +2793,7 @@ p {
 .team-page.team-detail .table tr td{
   font-family: var(--heebo);
   font-weight: 400;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-size: 16px;
   line-height: 28px;
   color: var(--grey);
@@ -2827,7 +2827,7 @@ p {
 .contact-page.contact .content h6{
   font-family: var(--josefin);
   font-weight: 600;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .contact-page.contact .content h2{
   font-family: var(--josefin);
@@ -2866,7 +2866,7 @@ p {
   font-weight: 400;
   font-size: 16px;
   color: var(--grey);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .contact-page.contact .content button{
   font-family: var(--josefin);
@@ -2879,7 +2879,7 @@ p {
   -o-border-radius: 24px;
   line-height: 48px;
   padding: 0 30px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--white);
   background: var(--gradient);
   position: relative;
@@ -2935,7 +2935,7 @@ p {
 .contact-page.contact ul li h5{
   font-family: var(--josefin);
   font-weight: 600;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .contact-page.location #map {

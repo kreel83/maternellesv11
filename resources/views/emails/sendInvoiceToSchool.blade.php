@@ -114,7 +114,7 @@
         <p>
             Bonjour,
             <br><br>
-            Veuillez trouver en pièce jointe la facture de mon abonnement <strong><i>{{ env('APP_NAME')}}</i></strong> pour remboursement.
+            Veuillez trouver en pièce jointe la facture de mon abonnement <strong><i>{{ config('app.name') }}</i></strong> pour remboursement.
             <br><br>
             Je vous en remercie par avance.
             <br><br>

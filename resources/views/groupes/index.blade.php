@@ -94,7 +94,7 @@
         <div class="groupe_container mt-5">
             @foreach ($groupes as $key=>$groupe)
                     @php
-                        $token = md5(Auth::id().$loop->index.env('HASH_SECRET'));
+                        $token = md5(Auth::id().$loop->index.config('app.custom.hash_secret'));
                     @endphp
                 <div class="d-flex mb-3 groupe_card position-relative">
                     <div class="groupe_titre">{{$key +1 }}</div>
@@ -119,7 +119,7 @@
             @if (sizeof($groupes) < 4) 
                <div class="groupe_card d-flex justify-content-center align-items-center">
                     @php
-                    $token = md5(Auth::id().'new'.env('HASH_SECRET'));
+                    $token = md5(Auth::id().'new'.config('app.custom.hash_secret'));
                     @endphp
                     <a href="{{ route('editerUnGroupe', ['id' => 'new', 'token' => $token]) }}" style="font-size: 60px"><i class="fa-solid fa-plus"></i></a> 
                 </div>      

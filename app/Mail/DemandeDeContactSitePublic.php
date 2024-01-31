@@ -34,9 +34,9 @@ class DemandeDeContactSitePublic extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(env('MAIL_FROM_ADDRESS'), $this->name),
+            from: new Address(config('mail.from.address'), $this->name),
             replyTo: [$this->email],
-            subject: $this->subject.' - '.env('APP_NAME'),
+            subject: $this->subject.' - '.config('app.name'),
         );
     }
 

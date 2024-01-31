@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <title>Création de mon compte sur {{ env('APP_NAME') }}</title>
+        <title>Création de mon compte sur {{ config('app.name') }}</title>
         <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
@@ -15,7 +15,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
             <div class="container-fluid">
-                <a href="{{ route('vitrine.index') }}" class="brand-logo d-none d-lg-block">
+                <a href="{{ route('mf.index') }}" class="brand-logo d-none d-lg-block">
                     <img src="{{ asset('img/deco/logo.png') }}" alt="" width="130">
                 </a>
             </div>
@@ -28,7 +28,7 @@
             {{-- <div class="d-flex justify-content-center mt-1 mb-3">
             
                 <div>
-                    <a href="{{route('vitrine.index')}}" class="brand-logo">
+                    <a href="{{route('mf.index')}}" class="brand-logo">
                         <img src="{{asset('img/deco/logo-couleur.png')}}" alt="" width="300">
                     </a>
                 </div>

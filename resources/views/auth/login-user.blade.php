@@ -1,4 +1,4 @@
-@extends('layouts.template1', ['titre' => 'Connexion à mon compte '.env('APP_NAME')])
+@extends('layouts.template1', ['titre' => 'Connexion à mon compte '.config('app.name')])
 
 @section('content')
 
@@ -21,7 +21,7 @@
                     </div>
             
                     <div class="mb-3 text-center">
-                        <p>Vous n'avez pas encore de compte {{ env('APP_NAME') }} ? <br><a href="{{ route('registration.start') }}"   style="color: var(--main-color)">Créez un compte.</a></p>
+                        <p>Vous n'avez pas encore de compte {{ config('app.name') }} ? <br><a href="{{ route('registration.start') }}"   style="color: var(--main-color)">Créez un compte.</a></p>
                     </div>
             
                     @include('include.display_msg_error')

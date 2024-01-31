@@ -36,7 +36,7 @@
 </x-guest-layout> --}}
 
 
-@extends('layouts.template1', ['titre' => 'Réinitialisation du mot de passe '.env('APP_NAME')])
+@extends('layouts.template1', ['titre' => 'Réinitialisation du mot de passe '.config('app.name')])
 
 @section('content')
 

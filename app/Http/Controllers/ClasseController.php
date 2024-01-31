@@ -13,7 +13,7 @@ class ClasseController extends Controller
 
     public function changerclasse(Request $request) {
         // vérification du token de sécurité initialisé dans le menu
-        $token = md5(Auth::id().$request->classe.env('HASH_SECRET'));
+        $token = md5(Auth::id().$request->classe.config('app.custom.hash_secret'));
         if($token != $request->token) {
             return redirect()->route('error')->with('msg', 'Token incorrect.');
         }

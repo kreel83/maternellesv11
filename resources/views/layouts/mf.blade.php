@@ -108,7 +108,7 @@
                 <div class="col-lg-12">
                     <nav class="navbar p-0">
                         <!-- header logo -->
-                        <a class="navbar-brand p-0" href="index.html">
+                        <a class="navbar-brand p-0" href="{{ route('mf.index') }}">
                             <img src="{{asset('assets/images/logo.png')}}" alt="Logo" width="150" />
                         </a>
                         <div class="header-menu position-static">
@@ -116,10 +116,10 @@
                                 <li class="active">
                                     <a href="{{route('mf.index')}}">Accueil</a>
                                 </li>
-                                <li><a href="{{route('mf.application')}}">l'application</a></li>
-                                <li><a href="{{route('mf.compagnon')}}">le compagnon</a></li>
-                                <li><a href="{{route('mf.tarifs')}}">tarifs</a></li>
-                                <li><a href="{{route('mf.contact')}}">contact</a></li>
+                                <li><a href="{{route('mf.application')}}">L'application</a></li>
+                                <li><a href="{{route('mf.compagnon')}}">Le compagnon</a></li>
+                                <li><a href="{{route('mf.tarifs')}}">Tarifs</a></li>
+                                <li><a href="{{route('mf.contact')}}">Contact</a></li>
                             </ul>
                         </div>
                         <div class="right-part">
@@ -127,8 +127,8 @@
                                 {{-- <li>
                                     <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="flaticon-loupe"></i></button>
                                 </li> --}}
-                                <li><a class="btn_custom" href="{{route('login')}}">Se connecter</a></li>
-                                <li><a class="btn_custom" href="{{route('registration.start')}}">Essayez gratuitement</a></li>
+                                <li><a style="background:#97CD2C !important" class="btn_custom" href="{{route('login')}}">Se connecter</a></li>
+                                <li><a style="background: #33cdec !important" class="btn_custom" href="{{route('registration.start')}}">Essayez gratuitement</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -151,7 +151,7 @@
                             <div class="title">
                                 <h5>A propos</h5>
                             </div>
-                            <p class="desc">{{ env('APP_NAME') }} est un service en ligne pour faciliter la gestion d'une classe de maternelle et la conception des cahiers de réussites.</p>
+                            <p class="desc">{{ config('app.name') }} est un service en ligne pour faciliter la gestion d'une classe de maternelle et la conception des cahiers de réussites.</p>
                             <ul class="address">
                                 {{-- <li class="d-flex align-items-top">
                                     <i class="fas fa-map-marker-alt"></i>
@@ -178,9 +178,9 @@
                             </div>
                             <ul class="navigation">
                                 <li><a href="{{ route('mf.index') }}">Accueil</a></li>
-                                <li><a href="{{route('mf.application')}}">l'application</a></li>
-                                <li><a href="{{route('mf.compagnon')}}">le compagnon</a></li>
-                                <li><a href="{{route('mf.tarifs')}}">tarifs</a></li>
+                                <li><a href="{{route('mf.application')}}">L'application</a></li>
+                                <li><a href="{{route('mf.compagnon')}}">Le compagnon</a></li>
+                                <li><a href="{{route('mf.tarifs')}}">Tarifs</a></li>
                                 <li><a href="{{route('registration.start')}}">Créer un compte</a></li>
                             </ul>
                         </div>
@@ -247,6 +247,8 @@
                 </div>
             </div>
         </section>
+
+
 
     <!-- jquery -->
 

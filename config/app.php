@@ -4,6 +4,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Custom variables
+    |--------------------------------------------------------------------------
+    |
+    | Custom values in .env file
+    |
+    */
+
+    'custom' => [
+        'hash_secret' => env('HASH_SECRET', 'cw0Mb63xnX4l4%e!YtZC'),
+        'prix_abonnement' => env('PRIX_ABONNEMENT', '14,90'),
+        'start_invoice_number' => env('START_INVOICE_NUMBER', 8300100),
+        'admin_emails' => env('ADMIN_EMAILS', 'thierry.thevenoud@gmail.com,marc.borgna@gmail.com'),
+        'app_demo' => env('APP_DEMO', false),
+        'app_demo_user' => env('APP_DEMO_USER', 47),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
@@ -13,7 +31,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Maternelle Facile'),
 
     /*
     |--------------------------------------------------------------------------

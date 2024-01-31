@@ -104,9 +104,9 @@
                 <div class="col-lg-6">
                     <div class="about-content">
                         <div class="section-header left-style mb-olpo">
-                            <span class="cate">{{ env('APP_NAME') }}</span>
+                            <span class="cate">{{ config('app.name') }}</span>
                             <h3 class="title">Les points forts de notre service</h3>
-                            <p>Notre service en ligne <b>{{ env('APP_NAME') }}</b> offre une flexibilité accrue.
+                            <p>Notre service en ligne <b>{{ config('app.name') }}</b> offre une flexibilité accrue.
                             Gérez votre classe depuis votre ordinateur ou votre tablette en toute sécurité. L'application mobile (compagnon) est le 
                             complément idéal en classe pour inscrire des notes sur l'instant.
                             </p>

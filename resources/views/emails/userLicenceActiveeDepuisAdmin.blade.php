@@ -110,13 +110,13 @@
             <br><br>
             Nous sommes ravis de vous informer qu'une licence à votre nom a été activée par votre établissement.
             <br><br>
-            Vous pouvez dès à présent vous connecter à votre compte {{env('APP_NAME')}} en <a href="{{ route('login') }}">cliquant ici</a>.
+            Vous pouvez dès à présent vous connecter à votre compte {{config('app.name')}} en <a href="{{ route('login') }}">cliquant ici</a>.
             <br><br><br><br>
 
-            L'équipe {{env('APP_NAME')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
+            L'équipe {{config('app.name')}} se tient à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
             <div style="font-style: italic; color: #545454">
-                L’équipe {{env('APP_NAME')}}
+                L’équipe {{config('app.name')}}
             </div>
         </p>
     </div>
