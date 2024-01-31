@@ -55,8 +55,7 @@ class SuperAdminController extends Controller
 
     public function checkEnvVariables() {
         if(trim(env('APP_NAME')) == '') {
-            Artisan::call('optimize:clear');
-            Artisan::call('config:cache');
+            Artisan::call('config:clear');
             Mail::to('thierry.thevenoud@gmail.com')->send(new CheckEnvVariables());
             Mail::to('marc.borgna@gmail.com')->send(new CheckEnvVariables());
         }
