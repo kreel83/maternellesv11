@@ -1250,7 +1250,7 @@ p {
 .home1.mobile .image{
   position: absolute;
   bottom: 0;
-  left: 50px;
+  left: 130px;
 }
 .home1.mobile .content{
   padding: 55px 100px 60px 30px;
@@ -1279,7 +1279,7 @@ p {
   background-attachment: fixed !important;
 }
 .home1.video .overlay{
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(0, 0, 0, 0.4);
   padding-top: 320px;
   padding-bottom: 120px;
 }

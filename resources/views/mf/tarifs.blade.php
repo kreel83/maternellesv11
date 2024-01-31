@@ -29,8 +29,10 @@
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                     <div class="section-title wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="1s">
                         <h2>un prix unique <br> un abonnement sécurisé</h2>
-                        <p>Votre application complète vous est proposée au prix de {{ config('app.custom.prix_abonnement') }} € TTC</p>
-                        <p>Les abonnements se font par carte bancaire ou par PayPal</p>
+
+                        <p>Votre application complète vous est proposée au prix de {{ config('app.custom.prix_abonnement') }} € TTC par an.</p>
+                        <p>Les abonnements se font par carte bancaire ou par PayPal.</p>
+
                     </div>
                 </div>
                 <div class="col-lg-12">

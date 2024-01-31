@@ -509,7 +509,9 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="image">
-                                    <img class="rounded" src="assets/images/inner/home-mobile.jpg" alt="Mobile">
+
+                                    <img src="assets/images/home1/mobile.png" alt="Mobile" width="250px">
+
                                 </div>
                             </div>
                             <div class="col-lg-7">
@@ -543,14 +545,14 @@
         <div class="overlay">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
+                    {{-- <div class="col-lg-12">
                         <div class="content text-center">
                             <a class="vid-icon venobox" data-autoplay="true" data-vbtype="video" href="https://www.youtube.com/watch?v=LCmsrVOXzZc">
                                 <i class="fas fa-play"></i>
                             </a>
                             <p>working video</p>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

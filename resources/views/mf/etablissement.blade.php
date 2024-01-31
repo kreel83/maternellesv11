@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="content text-center">
+                        <div class="content text-center mx-auto titre_banner">
                             <h2>Les établissements référencés</h2>
 
                         </div>
@@ -52,7 +52,7 @@
                     <label class="mb-2" for="searchSchool" style="font-size:1.2em;">Chercher votre établissement parmi plus de 36,000 établissements référencés dans l'application {{ config('app.name') }} :</label>
                     <div class="d-flex">
                         <input type="text" class="form-control" name="searchSchool" id="searchSchool" placeholder="Code établissement, code postal, nom école, ville...">
-                        <a class="btn btn-primary boutonSearchSchool">Lancer la recherche</a>
+                        <a class="btn btn-secondary boutonSearchSchool">Lancer la recherche</a>
                     </div>
 
                     <div id="afficheLaListeDesEtablissements" class="mt-3"></div>
