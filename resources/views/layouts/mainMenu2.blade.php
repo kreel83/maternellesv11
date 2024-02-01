@@ -185,7 +185,11 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
                                     @else
                                         <a href="{{ route('createclasse') }}" class="nav-item link-warning" style="color: orange !important">Aucune classe créée</a>
                                     @endif
-                                    @if(session()->has('classe_active') && session('classe_active')->user_id == Auth()->id())
+                                    @if(session()->has('is_abonne') && 
+                                        session()->has('classe_active') && 
+                                        session('classe_active')->user_id == Auth()->id() && 
+                                        session('is_abonne')
+                                        )
                                         <li><hr class="dropdown-divider"></li>
                                         <a class="nav-item nav-link  {{ $menu == 'partager' ? 'active' : null }}" href="{{ route('partager') }}"><i class="fa-solid fa-share me-2"></i> Partager ma classe</a>
                                     @endif
@@ -342,7 +346,7 @@ https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js
       <div class="modal-content  position-relative">
         <div class="modal-body text-center">
             Vous utilisez une version " découverte " de l'application<br>
-            Cette version est limitée à 10 notations.<br><br>
+            Cette version est limitée à {{ config('app.custom.evaluations_gratuites') }} évaluations.<br><br>
             Abonnez-vous pour {{ config('app.custom.prix_abonnement') }} € / an pour profiter<br>
             pleinement de l'application <strong>{{ config('app.name') }}</strong>
             <div>

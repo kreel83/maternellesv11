@@ -53,7 +53,9 @@ class DataController extends Controller
             $dispatcher = Enfant::getEventDispatcher();
             Enfant::unsetEventDispatcher();
             //$enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('user_id', $user->id)->get();
-            $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe','periode')->where('classe_id', $user->classe_id)->get();
+            $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe','periode')
+                ->where('classe_id', $user->classe_id)
+                ->get();
             Enfant::setEventDispatcher($dispatcher);
 
             $sections = Section::select('id','court')->get();
@@ -76,7 +78,7 @@ class DataController extends Controller
                 'sections' => $sections,
                 'resultats' => $resultats,
                 'items' => $items,
-            ], 200);
+            ], 200)->setEncodingOptions(JSON_NUMERIC_CHECK);
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -120,7 +122,7 @@ class DataController extends Controller
             return response()->json([
                 'success' => true,
                 'resultat' => $resultat,
-            ], 200);
+            ], 200)->setEncodingOptions(JSON_NUMERIC_CHECK);
 
         } catch (\Throwable $th) {
             return response()->json([

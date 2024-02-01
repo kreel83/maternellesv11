@@ -17,15 +17,16 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $logo, $url;
+    public $logo, $url, $ecole;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($url)
+    public function __construct($url, $ecole)
     {
         $this->logo = Utils::getLogoForMail();
         $this->url = $url;
+        $this->ecole = $ecole;
     }
 
     /**
@@ -33,11 +34,12 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
      */
     public function envelope(): Envelope
     {
-        $ecole = Ecole::where('identifiant_de_l_etablissement', session('classe_active')->ecole_identifiant_de_l_etablissement)
-            ->first();
+        // $ecole = Ecole::where('identifiant_de_l_etablissement', session('classe_active')->ecole_identifiant_de_l_etablissement)
+        //     ->first();
         return new Envelope(
             // from: new Address(Auth::user()->email, Auth::user()->prenom.' '.Auth::user()->name),
-            from: new Address(Auth::user()->email, $ecole->nom_etablissement),
+            // from: new Address(Auth::user()->email, $ecole->nom_etablissement),
+            from: new Address($this->ecole->mail, $this->ecole->nom_etablissement),
             subject: 'Téléchargement du cahier de réussites de votre enfant',
         );
     }

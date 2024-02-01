@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
+use App\Models\Ecole;
 use App\Models\Enfant;
 use App\Models\Reussite;
 use Carbon\Carbon;
@@ -31,10 +32,14 @@ class PdfController extends Controller
         $token = $periode . md5($enfant->id.uniqid().config('app.custom.hash_secret'));
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
+        // récupération mail et nom de l'école comme expéditeur du mail aux parents
+        $ecole = Ecole::select('nom_etablissement', 'mail')
+            ->where('identifiant_de_l_etablissement', session('classe_active')->ecole_identifiant_de_l_etablissement)
+            ->first();
         // Envoi des emails aux contacts de l'enfant...
         $mails = $enfant->tableauDesMailsEnfant();
         foreach($mails as $email) {
-            Mail::to($email)->send(new EnvoiLeLienDeTelechargementDuCahier($url));
+            Mail::to($email)->send(new EnvoiLeLienDeTelechargementDuCahier($url, $ecole));
             $is_sent = true;
         }
         if($is_sent) {
@@ -65,11 +70,15 @@ class PdfController extends Controller
     }
 
     public function telechargementDuCahierParLesParents($token) {
+        $dispatcher = Enfant::getEventDispatcher();
+        Enfant::unsetEventDispatcher();
         $enfant = Enfant::where('token', $token)->first()->prenom;
-        return view('cahiers.telechargement')
-            ->with('token', $token)
-            ->with('enfant', $enfant)
-            ;
+        Enfant::setEventDispatcher($dispatcher);
+        if($enfant) {
+            return view('cahiers.telechargement2')
+                ->with('token', $token)
+                ->with('enfant', $enfant);
+        }
     }
 
     public function telechargementDuCahierParLesParentsPost(Request $request) {

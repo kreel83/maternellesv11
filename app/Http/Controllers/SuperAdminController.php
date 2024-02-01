@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\CheckEnvVariables;
 use App\Models\Ecole;
 use App\Models\Vacance;
+use App\utils\Utils;
 use Artisan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

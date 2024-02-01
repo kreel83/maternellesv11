@@ -18,6 +18,7 @@ return [
         'admin_emails' => env('ADMIN_EMAILS', 'thierry.thevenoud@gmail.com,marc.borgna@gmail.com'),
         'app_demo' => env('APP_DEMO', false),
         'app_demo_user' => env('APP_DEMO_USER', 47),
+        'evaluations_gratuites' => env('EVALUATIONS_GRATUITES', 10),
     ],
 
     /*

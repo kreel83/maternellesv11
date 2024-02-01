@@ -8,27 +8,8 @@
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-
-        <!-- Fonts -->
-        <!--<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">-->
-
-        <!--
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-                width: 100%;
-                height: 100vh;
-            }
-            .container {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        </style>
-        -->
+        {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"> --}}
+        <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
     </head>
 
     <body id="backEndUser">
