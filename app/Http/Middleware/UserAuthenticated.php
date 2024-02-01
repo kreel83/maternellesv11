@@ -23,18 +23,6 @@ class UserAuthenticated
         if ($request->route('enfant_id')) $id_enfant = $request->route('enfant_id');
         if ($request->enfant_id) $id_enfant = $request->enfant_id;
         
-        // if (!$request->session()->has('lienPourPartageDansMenu')) {
-        //     $partage = Classe::where('user_id', Auth::id())->first();
-        //     $request->session()->put('lienPourPartageDansMenu', $partage);
-        //     $request->session()->save();
-        // }
-
-        // $classeActive = Classe::find(Auth::user()->classe_id);
-        // if ($classeActive) {
-        //     session(['nom_de_la_classe' => $classeActive->description]);
-        //     session(['id_de_la_classe' => $classeActive->id]);
-        // } 
-
         if (!$request->session()->has('classe_active') && !is_null(Auth::user()->classe_id)) {
             $classeActive = Classe::find(Auth::user()->classe_id);
             

@@ -143,7 +143,7 @@ class ItemController extends Controller
         if (!$user->is_abonne()) {
             $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
             $compte = Resultat::where('user_id', $user->id)->count();
-            if ($compte == 10 && !$search) {
+            if ($compte == config('app.custom.evaluations_gratuites') && !$search) {
                 return 'demo';
             }
         }

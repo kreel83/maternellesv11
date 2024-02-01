@@ -541,7 +541,7 @@
     <!-- end mobile area -->
 
     <!-- start video area -->
-    <section class="home1 video" data-img="assets/images/home1/bear.png">
+    <section class="home1 video" data-img="assets/images/home1/bear.jpg">
         <div class="overlay">
             <div class="container">
                 <div class="row">
