@@ -35,7 +35,7 @@
 
 @import "./responsive.scss";
 
-@import "../../node_modules/quill/dist/quill.snow.css";
+// @import "../../node_modules/quill/dist/quill.snow.css";
 
 //@import "~@fortawesome/fontawesome-pro/scss/fontawesome";
 
@@ -52,9 +52,13 @@
         background-color: var(--back-color) !important;
     }
 
+    #appli {
+        margin-top: 30px;
+    }
+
     @media only screen and (max-width: 994px) {
         #appli {
-            margin-top: -50px;
+            margin-top: 100px;
         }
     }
 

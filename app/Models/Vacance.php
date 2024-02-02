@@ -36,7 +36,7 @@ class Vacance extends Model
      */
     public static function listeDesProchainesVacances() {
         return self::select('start_date', 'description')
-        ->where('ecole_code_academie', session('classe_active')->code_academie)
+        ->where('ecole_code_academie', session('classe_active')->ecole_code_academie)
         ->whereDate('start_date', '>=', Carbon::now())
         ->get();
     }
