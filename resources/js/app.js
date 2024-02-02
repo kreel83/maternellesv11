@@ -1,5 +1,6 @@
 
 import $ from 'jquery';
+window.$ = $;
 // import 'bootstrap';
 
 import { Modal } from 'bootstrap'
@@ -11,12 +12,15 @@ import '@fortawesome/fontawesome-free/scss/regular.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
+import '/node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+
 
 
 // import '../../node_modules/quill/dist/quill';
 
 
-//import Quill from 'quill/quill';
+import Quill from 'quill/quill';
+import 'quill/dist/quill.snow.css';
 //window.Quill = Quill;
 
 
@@ -127,21 +131,16 @@ if ($('.editorApercu').length) {
         var SizeStyle = Quill.import('attributors/style/size');
         Quill.register(ColorClass, true);
         Quill.register(SizeStyle, true);
-        Quill.register("modules/resize", window.QuillResizeImage);
+
         var toolbarOptions = ['bold', 'italic', 'underline', 'strike'];
         var quill = new Quill(el, {
             modules: {
 
                 toolbar: toolbarOptions,
-                resize: {
-                    locale: {
-                    center: "center",
-                    },
-                },
+
 
             },
             theme: 'snow',
-            // ImageResize: {}
 
         });
 

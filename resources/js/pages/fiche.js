@@ -300,42 +300,42 @@ const choixTypeFiches = (Modal) => {
 }
 
 const initFiche = () => {
-    $( function() {
-        $( "#sortable" ).disableSelection();
-        $( "#sortable" ).sortable({
-            start: function() {
-                $('#sortable').css('background-color', 'lightgray')
-                $(this).find('.action').addClass('d-none')
+    // $( function() {
+    //     $( "#sortable" ).disableSelection();
+    //     $( "#sortable" ).sortable({
+    //         start: function() {
+    //             $('#sortable').css('background-color', 'lightgray')
+    //             $(this).find('.action').addClass('d-none')
 
-            },
-            stop: function() {
-                $('#sortable').css('background-color', 'transparent')
-                $(this).find('.action').removeClass('d-none')
-                let pos = []
-                let section = $('.selectSectionFiche.selected').data('value');
-                console.log(section)
-                $('.card_fiche[data-type="mesfiches"][data-section="'+section+'"]').each((index, el) => {
-                    console.log(el)
-                    pos.push($(el).attr('data-selection'))
-                })
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
-                });
-                $.ajax({
-                    method: 'POST',
-                    url: '/app/fiches/order',
-                    data : {
-                        pos: pos,
-                        section: section
-                    },
-                    success: function() {
-                        console.log('ok')
-                    }
-                })
-            }
-        });
-    } );
+    //         },
+    //         stop: function() {
+    //             $('#sortable').css('background-color', 'transparent')
+    //             $(this).find('.action').removeClass('d-none')
+    //             let pos = []
+    //             let section = $('.selectSectionFiche.selected').data('value');
+    //             console.log(section)
+    //             $('.card_fiche[data-type="mesfiches"][data-section="'+section+'"]').each((index, el) => {
+    //                 console.log(el)
+    //                 pos.push($(el).attr('data-selection'))
+    //             })
+    //             $.ajaxSetup({
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                    }
+    //             });
+    //             $.ajax({
+    //                 method: 'POST',
+    //                 url: '/app/fiches/order',
+    //                 data : {
+    //                     pos: pos,
+    //                     section: section
+    //                 },
+    //                 success: function() {
+    //                     console.log('ok')
+    //                 }
+    //             })
+    //         }
+    //     });
+    // } );
 }
 
 const choixFiltre = (Modal, quill) => {

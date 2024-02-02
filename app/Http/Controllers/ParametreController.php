@@ -334,6 +334,7 @@ class ParametreController extends Controller
 
             $conges = array();
             $vacances = Vacance::listeDesProchainesVacances();
+           
             foreach($vacances as $vacance) {
                 $conges[] = array(
                     'date' => $vacance->start_date, 
