@@ -194,10 +194,9 @@ class User extends Authenticatable
     }
 
     public function directeur() {
-        
+        if (session()->get('classe_active') == null) return null;
         $directeur = session('classe_active')->direction;        
         return json_decode($directeur);
-    
     }
 
     public function check_partage() {

@@ -49,7 +49,7 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            /* justify-content: center; */
             align-items: center;
             background: linear-gradient(135deg, var(--main-color) 10%, var(--third-color) 100%);
         }
@@ -105,17 +105,19 @@
         }
 
         .btn-go {
-            width: 350px;
-            height: 70px;
+            w_idth: 350px;
+            h_eight: 70px;
             border-radius: 40px;
             background-color: green;
             color: white;
             text-align: center;
-            line-height: 70px;
+            l_ine-height: 70px;
             border: none;
             outline: none;
             margin: 0 auto;
             text-decoration: none;
+            padding: 10px;
+            font-size:20px;
         }
         .btn-go:hover {
             color: white ! important;
@@ -152,78 +154,102 @@
         }
     </style>
 
-    <div id="espaceParent">
+    <div class="pt-3" id="espaceParent">
 
 
-        <div class="d-flex justify-content-center flex-column" style="color: white">
+        {{-- <div class="d-flex justify-content-center flex-column" style="color: white">
             <div class="mb-5 text-center">
                 <img src="{{asset('img/deco/logo.png')}}" alt="" width="240">
             </div>
-            <div class="text-center fs-1"><span class="fw-bold">B</span>ienvenue </div>
+            <div class="text-center fs-1"><span class="fw-bold">B</span>ienvenue</div>
             <div class="text-center fs-3">dans la section de téléchargement</div> 
             <div class="text-center fs-3">du cahier de réussite de votre enfant.</div>
             <div class="text-center my-3 fs-1 fw-bolder">{{$enfant}}</div>            
+        </div> --}}
+
+        <div class="d-flex justify-content-center mb-3">
+            <img src="{{asset('img/deco/logo.png')}}" alt="" width="240">    
         </div>
 
-
-
-
-
-        <form class="d-flex w-25 flex-column" action="{{ route('cahier.predownload.post') }}" method="POST">
-            @csrf
-            <input type="hidden" name="token" value="{{ $token }}">
-
-
-
+        <div class="text-center" style="color: white">
+            <div class="fs-1"><span class="fw-bold">B</span>ienvenue</div>
+            <div class="fs-3">dans la section de téléchargement</div> 
+            <div class="fs-3">du cahier de réussite de votre enfant.</div>
+            <div class="my-3 fs-1 fw-bolder">{{$enfant}}</div>
+        </div>
+        
 
             @if (session('success'))
 
-
                 <div class="d-flex justify-content-center mt-5">
-                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'see']) }}" class="btn-go bleu">Voir le cahier de réussite</a>
+                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'see']) }}" class="btn-go bleu" target="_blank">Voir le cahier de réussite</a>
                 </div>         
                 <div class="d-flex justify-content-center mt-5">
-                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'download']) }}" class="btn-go orange">Télécharger le cahier de réussite</a>
+                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'download']) }}" class="btn-go orange" target="_blank">Télécharger le cahier de réussite</a>
                 </div>         
 
             @else
-            <div class="d-flex">
-                <div class="input-group position-relative jour_bloc focus">
-                    <label for="" class="label_jour">jour</label>
-                    <input type="text"  id="jour" name="jour" placeholder="{{ old('jour') }}" value="" required autofocus>
-                    <div class="trait">
-                        <div class="focus"></div>
-                        <div></div>
+
+                <form class="container row justify-content-center" action="{{ route('cahier.predownload.post') }}" method="POST">
+                @csrf
+
+                    <input type="hidden" name="token" value="{{ $token }}">
+             
+                    <p class="text-center" style="color:white">Veuillez renseigner la date de naissance de votre enfant</p>
+
+                    <div class="d-flex justify-content-center">
+                    @include('include.display_msg_error')
                     </div>
+
+                    <div class="col-auto">
+                    <input type="number" class="form-control-lg me-2 mt-1" name="jour" placeholder="Jour de naissance" value="{{ old('jour') }}">
+                    </div>
+                    <div class="col-auto">
+                    <input type="number" class="form-control-lg me-2 mt-1" name="mois" placeholder="Mois de naissance" value="{{ old('mois') }}">
+                    </div>
+                    <div class="col-auto">
+                    <input type="number" class="form-control-lg me-2 mt-1" name="annee" placeholder="Année de naissance" value="{{ old('annee') }}">
+                    </div>
+
+                    {{-- <div class="input-group position-relative jour_bloc focus">
+                        <label for="" class="label_jour">jour</label>
+                        <input type="text"  id="jour" name="jour" placeholder="{{ old('jour') }}" value="" required autofocus>
+                        <div class="trait">
+                            <div class="focus"></div>
+                            <div></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group position-relative mois_bloc">
+                        <label for="" class="label_mois">mois</label>
+                        <input type="text"  id="mois" name="mois" placeholder="{{ old('mois') }}" value="" required>
+                        <div class="trait">
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group position-relative annee_bloc">
+                        <label for="" class="label_annee">année</label>
+                        <input type="text" id="annee" name="annee" placeholder="{{ old('annee') }}" value="" required>
+                        <div class="trait" style="width: 190px">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div> --}}
+                {{-- </div> --}}
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn-go w-50">Vérifier</button>
                 </div>
 
-                <div class="input-group position-relative mois_bloc">
-                    <label for="" class="label_mois">mois</label>
-                    <input type="text"  id="mois" name="mois" placeholder="{{ old('mois') }}" value="" required>
-                    <div class="trait">
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
+                </form>
 
-                <div class="input-group position-relative annee_bloc">
-                    <label for="" class="label_annee">année</label>
-                    <input type="text" id="annee" name="annee" placeholder="{{ old('annee') }}" value="" required>
-                    <div class="trait" style="width: 190px">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-            </div>
-                <div class="d-flex justify-content-center mt-5">
-                    <button type="submit" class="btn-go">Vérification de sa date de naissance</button>
-                </div>            
             @endif
 
-
-        </form>
+    </div>
+    
 
         {{-- @if (session('success'))
             <div class="alert alert-success">
@@ -235,7 +261,7 @@
 
 
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
 
             $(document).on('click', '.jour_bloc, .mois_bloc, .annee_bloc', function(e) {
@@ -369,7 +395,7 @@
             })
 
         })
-    </script>
+    </script> --}}
 
 @endsection
 

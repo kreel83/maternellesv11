@@ -45,8 +45,8 @@
                                    
                                 </div>
                                 <ul>
-                                    <li><i class="fas fa-check"></i>10 évaluations par classe</li>
-                                    <li><i class="fas fa-check"></i>Accès à toute les fonctionnalités de l'application</li>
+                                    <li><i class="fas fa-check"></i>{{ config('app.custom.evaluations_gratuites') }} évaluations par classe</li>
+                                    <li><i class="fas fa-check"></i>Accès à toutes les fonctionnalités de l'application</li>
 
                                 </ul>
                                 <div class="purchase">
@@ -63,8 +63,9 @@
                                     <!-- <h4>"business"</h4> -->
                                 </div>
                                 <ul>
-                                    <li><i class="fas fa-check"></i>Evaluation illimités</li>
-                                    <li><i class="fas fa-check"></i>Accès à toute les fonctionnalités de l'application</li>
+                                    <li><i class="fas fa-check"></i>Evaluations illimitées</li>
+                                    <li><i class="fas fa-check"></i>Accès à toutes les fonctionnalités de l'application</li>
+                                    <li><i class="fas fa-check"></i>Partage de classe</li>
 
                                 </ul>
                                 <div class="purchase">
