@@ -23,4 +23,15 @@ class Classe extends Model
     public function state() {
         return $this;
     }
+
+    public function directeur() {
+        return json_decode($this->direction);
+    }
+
+    public function directeur_civilite() {
+        $directeur = $this->direction;        
+        $d = json_decode($directeur);
+        return $d->civilite ?? null;
+    }
+
 }

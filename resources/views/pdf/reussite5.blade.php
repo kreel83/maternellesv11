@@ -522,12 +522,19 @@
                     @endif
 
 
-                    @if ($user->directeur())
+                    @if ($classe->directeur())
+                    <tr>
+                        <td style="font-weight: bolder; color: black">{{$classe->directeur()->civilite == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
+                        <td style='padding-left: 15px'>{{$classe->directeur()->prenom.' '.$classe->directeur()->nom}}</td>
+                    </tr>
+                    @endif
+                    {{-- @if ($user->directeur())
                     <tr>
                         <td style="font-weight: bolder; color: black">{{$user->directeur()->civilite == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
                         <td style='padding-left: 15px'>{{$user->directeur()->prenom.' '.$user->directeur()->nom}}</td>
                     </tr>
-                    @endif
+                    @endif --}}
+
                 </table>
             </td>
         </tr>
@@ -535,12 +542,17 @@
     </table>
     
     <div class="position-adresse-ecole">
+        <div class="nom_ecole">{{$ecole->nom_etablissement}}</div>
+        <div class="adresse_ecole">{{$ecole->adresse_1}}</div>
+        <div class="adresse_ecole">{{$ecole->adresse_2}}</div>
+        <div class="adresse_ecole">{{$ecole->adresse_3}}</div>
+    </div>
+    {{-- <div class="position-adresse-ecole">
         <div class="nom_ecole">{{$user->name_ecole()->nom_etablissement}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_1}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_2}}</div>
         <div class="adresse_ecole">{{$user->name_ecole()->adresse_3}}</div>
-        {{-- <div class="texte_directeur">{{$user->directeur == 0 ? 'Directeur ' : 'Directrice '}} : <span class="nom_directeur">{{$user->directeur == 0 ? 'Monsieur ' : 'Madame '}}{{$user->nom_directeur}}</span></div> --}}
-    </div>
+    </div> --}}
 
 </div>
 </div>
@@ -643,13 +655,13 @@
             <div class="signature_title">Les signatures</div>
             <table style="border-spacing: 10px; bordert: 1px solid lightgray">
                 <tr>
-
-                    @if ($user->civilite == 'Mme')
+                    <td style="width: 210px"><div class="contenu_signature">{{ $user->civilite == 'Mme' ? 'La maîtresse' : 'Le maître' }}</div></td>
+                    {{-- @if ($user->civilite == 'Mme')
                         <td style="width: 210px"><div class="contenu_signature">La maîtresse</div></td>
                     @else
                         <td style="width: 210px"><div class="contenu_signature">Le maître</div></td>
-                    @endif
-                    @if ($user->directeur_civilite() == 'M.')
+                    @endif --}}
+                    @if ($classe->directeur_civilite() == 'M.')
                         <td style="width: 210px"><div class="contenu_signature">Le directeur</div></td>
                     @else
                         <td style="width: 210px"><div class="contenu_signature">La directrice</div></td>

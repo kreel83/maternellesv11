@@ -70,10 +70,7 @@ class PdfController extends Controller
     }
 
     public function telechargementDuCahierParLesParents($token) {
-        $dispatcher = Enfant::getEventDispatcher();
-        Enfant::unsetEventDispatcher();
-        $enfant = Enfant::where('token', $token)->first()->prenom;
-        Enfant::setEventDispatcher($dispatcher);
+        $enfant = DB::table('enfants')->where('token', $token)->first()->prenom;
         if($enfant) {
             return view('cahiers.telechargement2')
                 ->with('token', $token)
@@ -91,13 +88,15 @@ class PdfController extends Controller
         }
         */
         
-        $enfant = DB::select('select id,ddn from enfants where token = ?', [$request->token]);
+        $enfant = DB::table('enfants')->where('token', $request->token)->first();
+        // $enfant = DB::select('select id,ddn from enfants where token = ?', [$request->token]);
 
         if(!$enfant) {
             return Redirect::back()->withInput()->withErrors(['msg' => 'Enfant non trouvé']);
         }
 
-        if($ddn != $enfant[0]->ddn) {
+        // if($ddn != $enfant[0]->ddn) {
+        if($ddn != $enfant->ddn) {
             return Redirect::back()->withInput()->withErrors(['msg' => 'Enfant non trouvé (date de naissance erronée)']);
         }
 

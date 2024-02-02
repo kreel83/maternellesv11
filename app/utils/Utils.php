@@ -1,10 +1,13 @@
 <?php
 namespace App\utils;
 
+use App\Models\Classe;
 use App\Models\Enfant;
 use App\Models\Licence;
 use App\Models\Subscription;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Utils {
 
@@ -26,16 +29,23 @@ class Utils {
     }
 
 
-
-
-    function periode($enfant, $p) {             
-        $periodes = $enfant->user_rel->periodes;        
+    function periode($enfant, $p) {
+        $periodes = Classe::find($enfant->classe_id)->periodes;
         $periode =    [   1 => ['Année entière'], 
                           2 => ['Premier semestre','Second semestre'], 
                           3 => ['Premier trimestre','Deuxième trimestre','Troisième trimestre']
                         ];  
         return $periode[$periodes][(int)$p -1];
-    }   
+    }
+
+    // function periode($enfant, $p) {
+    //     $periodes = $enfant->user_rel->periodes;
+    //     $periode =    [   1 => ['Année entière'], 
+    //                       2 => ['Premier semestre','Second semestre'], 
+    //                       3 => ['Premier trimestre','Deuxième trimestre','Troisième trimestre']
+    //                     ];  
+    //     return $periode[$periodes][(int)$p -1];
+    // }   
     
     public static function formatWithPrenom($texte, $enfant) {
         if ($enfant->genre == 'F') {            
