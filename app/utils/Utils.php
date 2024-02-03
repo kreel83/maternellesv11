@@ -28,7 +28,6 @@ class Utils {
         return $result;
     }
 
-
     function periode($enfant, $p) {
         $periodes = Classe::find($enfant->classe_id)->periodes;
         $periode =    [   1 => ['Année entière'], 
