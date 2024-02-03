@@ -195,13 +195,11 @@ class CahierController extends Controller
     
     public function seepdf($token, $enfant_id = null, $periode = null, $state = 'see') {
         // si enfant_id contient l'ID de l'enfant alors token doit avoir la valeur 0 dans la route
-       
+        // WARNING !!! PDF pour Parent pas de Auth:: ni de session
 
         if(!is_null($enfant_id)) {
             // Fonction appelée depuis le compte user
-            $user = User::select('civilite', 'prenom', 'name')->find(session('classe_active')->user_id);
-            dd($user);
-            $classe = Classe::find(session('classe_active')->id);
+            $classe = session('classe_active');
             $enfant = Enfant::where('id', $enfant_id)->where('user_id', session('classe_active')->user_id)->first();
             if($enfant && filter_var($periode, FILTER_VALIDATE_INT) !== false) {
                 $id = $enfant->id;
@@ -210,11 +208,8 @@ class CahierController extends Controller
             }
         } else {
             // Fonction appelée depuis l'espace parent            
-            // $enfant = DB::table('enfants')->where('token', $token)->first();
             $enfant = Enfant::where('token', $token)->first();
             $classe = Classe::find($enfant->classe_id);
-            //$user = User::find($classe->user_id);
-            $user = DB::table('users')->select('civilite', 'prenom', 'name')->find($classe->user_id);
             if($enfant) {
                 $id = $enfant->id;
                 $periode = Str::substr($token, 0, 1);
@@ -224,7 +219,8 @@ class CahierController extends Controller
             }
         }
 
-        
+        // sous cette forme pour ne pas declencher d'event
+        $user = DB::table('users')->select('civilite', 'prenom', 'name')->find($classe->user_id);
 
         $resultats = Resultat::select('categories.section2','items.*','resultats.*','sections.name as name_section','sections.color','sections.texte')
             ->join('items','items.id','resultats.item_id')
@@ -249,14 +245,7 @@ class CahierController extends Controller
 
         $resultats = $resultats->groupBy('section_id')->toArray();
 
-        // PDF pour Parent pas de Auth:: ni de session
-        // $user = User::find(session('classe_active')->user_id);
-
-        // cotitulaires / suppléant -> pas d'utilisation de SESSION pour les parents
-        // $classeUsers = ClasseUser::select('civilite', 'name', 'prenom', 'classe_users.role')
-        //     ->where('classe_users.classe_id', session('classe_active')->id)
-        //     ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')
-        //     ->get();
+        // Recherche de cotitulaires / suppléants
         $classeUsers = ClasseUser::select('civilite', 'name', 'prenom', 'classe_users.role')
             ->where('classe_users.classe_id', $classe->id)
             ->rightJoin('users', 'users.id', '=', 'classe_users.user_id')

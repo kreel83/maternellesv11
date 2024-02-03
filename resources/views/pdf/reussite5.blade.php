@@ -653,20 +653,25 @@
 
         <div class="signature">
             <div class="signature_title">Les signatures</div>
-            <table style="border-spacing: 10px; bordert: 1px solid lightgray">
+            <table style="border-spacing: 10px; width:100%">
                 <tr>
-                    <td style="width: 210px"><div class="contenu_signature">{{ $user->civilite == 'Mme' ? 'La maîtresse' : 'Le maître' }}</div></td>
-                    {{-- @if ($user->civilite == 'Mme')
-                        <td style="width: 210px"><div class="contenu_signature">La maîtresse</div></td>
-                    @else
-                        <td style="width: 210px"><div class="contenu_signature">Le maître</div></td>
-                    @endif --}}
-                    @if ($classe->directeur_civilite() == 'M.')
-                        <td style="width: 210px"><div class="contenu_signature">Le directeur</div></td>
-                    @else
-                        <td style="width: 210px"><div class="contenu_signature">La directrice</div></td>
-                    @endif
-                    <td style="width: 210px"><div class="contenu_signature">Les parents</div></td>
+                    <td style="">
+                        <div class="contenu_signature">
+                            {{ $user->civilite == 'Mme' ? 'La maîtresse' : 'Le maître' }}
+                        </div>
+                    </td>
+
+                    <td style="">
+                        <div class="contenu_signature">
+                            {{ $classe->directeur_civilite() == 'Mme' ? 'La directrice' : 'Le directeur' }}
+                        </div>
+                    </td>
+
+                    <td style="">
+                        <div class="contenu_signature">
+                            Les parents
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>

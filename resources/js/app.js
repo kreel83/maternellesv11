@@ -19,7 +19,7 @@ import '/node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 // import '../../node_modules/quill/dist/quill';
 
 
-import Quill from 'quill/quill';
+import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 //window.Quill = Quill;
 
