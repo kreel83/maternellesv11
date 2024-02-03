@@ -6,20 +6,20 @@ window.$ = $;
 import { Modal } from 'bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.css'
-import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
-import '@fortawesome/fontawesome-free/scss/brands.scss';
-import '@fortawesome/fontawesome-free/scss/regular.scss';
-import '@fortawesome/fontawesome-free/scss/solid.scss';
-import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
+// import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+// import '@fortawesome/fontawesome-free/scss/brands.scss';
+// import '@fortawesome/fontawesome-free/scss/regular.scss';
+// import '@fortawesome/fontawesome-free/scss/solid.scss';
+// import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
-import '/node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+// import '@fortawesome/fontawesome-free/css/all.css';
 
 
 
 // import '../../node_modules/quill/dist/quill';
 
 
-import Quill from 'quill/quill';
+import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 //window.Quill = Quill;
 
@@ -259,7 +259,7 @@ assigneLicence()
 
 
 tutos()
-envoiCahierIndividuel()
+envoiCahierIndividuel(Modal)
 
 partageDeClasse()
 creationCompte()

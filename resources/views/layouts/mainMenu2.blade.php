@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
     {{-- <script defer src="https://cdn.jsdelivr.net/gh/hunghg255/quill-resize-module/dist/quill-resize-image.min.js"></script> --}}
 
     <!-- Theme included stylesheets -->
+    {{-- <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script> --}}
     {{-- <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js" defer></script> --}}
 
@@ -33,8 +34,9 @@ use Illuminate\Support\Facades\Auth;
 {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>  --}}
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
-    {{-- <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/all.css') }}"> --}}
 
 
 </head>

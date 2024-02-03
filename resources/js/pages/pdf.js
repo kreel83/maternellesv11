@@ -1,15 +1,18 @@
 
-const envoiCahierIndividuel = () => {
+const envoiCahierIndividuel = (Modal) => {
 
     // Bouton envoi tous les cahiers
     $(document).on('click','.bulk', function(e) {
         e.preventDefault();
         $('#periode').val($(this).val());
+        var myModal = new Modal(document.getElementById('envoiTousLesCahiersModal'))
+        myModal.show()
         //var periode = $(this).val();
         //$('#periodeBulkEnvoi').val(periode);
         //$('#periode').val(periode);
-        $("#envoiTousLesCahiersModal").modal('show');
+        // $("#envoiTousLesCahiersModal").modal('show');
     })
+
     $(document).on('click','#confirmationEnvoiTousLesCahiers', function() {
         var form = $("#bulkForm");
         var url = form.attr('action');
@@ -24,7 +27,7 @@ const envoiCahierIndividuel = () => {
             error: function(data) { 
             } 
         });
-        $("#envoiTousLesCahiersModal").modal('hide');
+        // $("#envoiTousLesCahiersModal").modal('hide');
     })
     // Fin bouton envoi tous les cahiers
 
