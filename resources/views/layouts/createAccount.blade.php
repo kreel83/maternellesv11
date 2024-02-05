@@ -8,41 +8,27 @@
         <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-
+        <link href="{{ asset('fontawesome/css/all.min.css') }}" rel="stylesheet">
     </head>
 
     <body id="backEndUser">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
-            <div class="container-fluid">
-                <a href="{{ route('mf.index') }}" class="brand-logo d-none d-lg-block">
-                    <img src="{{ asset('img/deco/logo.png') }}" alt="" width="130">
-                </a>
-            </div>
-        </nav>
-
-        <div style="margin-top: 80px"></div>
+        <div class="mb-5" style="padding:10px; background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);">
+            <a href="{{ route('mf.index') }}">
+                <img src="{{ asset('img/deco/logo.png') }}" width="150">
+            </a>
+        </div>
 
         <div class="container">
 
-            {{-- <div class="d-flex justify-content-center mt-1 mb-3">
-            
-                <div>
-                    <a href="{{route('mf.index')}}" class="brand-logo">
-                        <img src="{{asset('img/deco/logo-couleur.png')}}" alt="" width="300">
-                    </a>
-                </div>
-            
-            </div>     --}}
-            
             @yield('content')
 
         </div>
 
     {{-- @include('footer.footer');   --}}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
     </body>
 </html>

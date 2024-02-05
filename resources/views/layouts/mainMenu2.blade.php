@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Auth;
 {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>  --}}
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
-    <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet">
+    <link href="{{ asset('fontawesome/css/all.min.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">
     {{-- <link rel="stylesheet" href="{{ asset('assets/all.css') }}"> --}}
 

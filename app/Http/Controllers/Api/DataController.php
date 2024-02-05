@@ -75,6 +75,7 @@ class DataController extends Controller
                 
             return response()->json([
                 'success' => true,
+                'is_abonne' => $user->is_abonne(),
                 'classes' => $classes,
 	            'groupes' => $groupes,
                 'user' => $user,
@@ -82,7 +83,8 @@ class DataController extends Controller
                 'sections' => $sections,
                 'resultats' => $resultats,
                 'items' => $items,
-            ], 200)->setEncodingOptions(JSON_NUMERIC_CHECK);
+            ], 200);
+            //], 200)->setEncodingOptions(JSON_NUMERIC_CHECK);
 
         } catch (\Throwable $th) {
             return response()->json([
