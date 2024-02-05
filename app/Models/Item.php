@@ -17,6 +17,8 @@ class Item extends Model
 
     protected $casts = [
         'section_id' => 'integer',
+        'lvl' => 'string',
+        'st' => 'string',
     ]; 
 
     public $image_name;

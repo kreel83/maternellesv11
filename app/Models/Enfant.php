@@ -20,6 +20,7 @@ class Enfant extends Model
 
     protected $casts = [
         'groupe' => 'integer',
+        'periode' => 'integer',
     ];
 
     const DEGRADE = [

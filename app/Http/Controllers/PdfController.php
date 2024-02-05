@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Ecole;
 use App\Models\Enfant;
@@ -73,34 +74,35 @@ class PdfController extends Controller
         return $is_sent;
     }
 
-    // public function telechargementDuCahierParLesParents($token) {
-    //     //$enfant = DB::table('enfants')->where('token', $token)->first()->prenom;
-    //     $enfant = Enfant::where('token', $token)->first();
-    //     $classe = Classe::find($enfant->classe_id);
-    //     // sous cette forme pour ne pas declencher d'event
-    //     $user = DB::table('users')->select('civilite', 'prenom', 'name')->find($classe->user_id);
-    //     $ecole = Ecole::where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
-    //     // La période est le 1er caractère du Token
-    //     $periode = Str::substr($token, 0, 1);
-    //     $utils = new Utils;
-    //     $periode = $utils->periode($enfant, $periode);
-    //     if($enfant) {
-    //         return view('cahiers.telechargement3')
-    //             ->with('token', $token)
-    //             ->with('periode', $periode)
-    //             ->with('user', $user)
-    //             ->with('ecole', $ecole)
-    //             ->with('enfant', $enfant);
-    //     }
-    // }
     public function telechargementDuCahierParLesParents($token) {
-        $enfant = DB::table('enfants')->where('token', $token)->first()->prenom;
+        //$enfant = DB::table('enfants')->where('token', $token)->first()->prenom;
+        $enfant = Enfant::where('token', $token)->first();
+        $classe = Classe::find($enfant->classe_id);
+        // sous cette forme pour ne pas declencher d'event
+        //$user = DB::table('users')->select('civilite', 'prenom', 'name')->find($classe->user_id);
+		$user = User::select('civilite', 'prenom', 'name')->find($classe->user_id);
+        $ecole = Ecole::where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
+        // La période est le 1er caractère du Token
+        $periode = Str::substr($token, 0, 1);
+        $utils = new Utils;
+        $periode = $utils->periode($enfant, $periode);
         if($enfant) {
-            return view('cahiers.telechargement2')
+            return view('cahiers.telechargement3')
                 ->with('token', $token)
+                ->with('periode', $periode)
+                ->with('user', $user)
+                ->with('ecole', $ecole)
                 ->with('enfant', $enfant);
         }
     }
+    // public function telechargementDuCahierParLesParents($token) {
+    //     $enfant = DB::table('enfants')->where('token', $token)->first()->prenom;
+    //     if($enfant) {
+    //         return view('cahiers.telechargement2')
+    //             ->with('token', $token)
+    //             ->with('enfant', $enfant);
+    //     }
+    // }
 
     public function telechargementDuCahierParLesParentsPost(Request $request) {
         $date = Carbon::create($request->annee, $request->mois, $request->jour);
