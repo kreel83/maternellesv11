@@ -46,6 +46,7 @@ class EleveEvent
         $enfant->mail4 = isset($mails[3]) ? $mails[3] : null;
         $enfant->jour = Carbon::parse($enfant->ddn)->format('d');
         $enfant->age = $this->convertDate(Carbon::parse($enfant->ddn)->diffForHumans([ 'parts'=>2, 'short'=>false, ]));
+        $enfant->age = str_replace('il y a '," ", $enfant->age);
         if ($enfant->photo) {
             $enfant->photoEleve = Storage::url($enfant->photo);
         } else {

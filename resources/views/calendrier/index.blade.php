@@ -33,15 +33,16 @@
 @section('content')
 
 <div id="calendrier_view" class="position-relative mt-5">
-  <div class="d-flex justify-content-between">
-    <ol class="breadcrumb">
+  <div class="d-flex justify-content-between mx-5">
+    <ol class="breadcrumb position-relative w-100">
         <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
         <li class="breadcrumb-item active" aria-current="page">Calendrier</li>
+        <span class="help position-absolute" data-location="calendrier.main"><i class="fa-light fa-message-question"></i></span>
       </ol>
-    <div class="d-none d-xl-block" data-bs-toggle="modal" data-bs-target="#EventModal">
+    </div>
+    <div class="d-none d-xl-block ms-5" data-bs-toggle="modal" data-bs-target="#EventModal">
       <a href="#" style="color: var(--main-color)"><i class="fa-light fa-calendar-plus me-2"></i>Ajouter un évènement</a>
       </div>  
-  </div>
 
  
 

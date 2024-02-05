@@ -62,17 +62,21 @@
 
 </style>
 
+<div class="mt-5">
+
+
 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb position-relative mx-5">
         <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
         <li class="breadcrumb-item active" aria-current="page">Création des groupes</li>
+        <span class="help position-absolute" data-location="eleve.groupes.edit"><i class="fa-light fa-message-question"></i></span>
     </ol>
 </nav>
 
 @if($id == 'new')
-    <h4 class="mb-3 text-center">Je crée un nouveau groupe</h4>
+    <h4 class="mb-3 text-center" style="color: var(--main-color)">Je crée un nouveau groupe</h4>
 @else
-    <h4 class="mb-3 text-center">Je modifie un groupe</h4>
+    <h4 class="mb-3 text-center" style="color: var(--main-color)">Je modifie un groupe</h4>
 @endif
 
 @include('include.display_msg_error')
@@ -94,9 +98,9 @@
     }
 }
 </style>
-<div class="create_container">
+<div class="create_container mt-5">
 
-    <div class="alert alert-info">
+    <div class="alert alert-info" style="background-color: var(--second-color); color: white; border: none">
         Vous pouvez donner un nom à votre groupe, choisir une couleur de texte et de fond.<br> 
         Si vous n'indiquez pas de nom, le groupe sera juste une couleur.
         
@@ -150,16 +154,17 @@
         <div class="d-flex w-100 justify-content-between">
 
             <div class="mb-5">
-                <button type="submit" class="custom_button">{{ ($id == 'new') ? 'Créer le groupe' : 'Sauvegarder' }}</button>
+                <button type="submit" class="btnAction">{{ ($id == 'new') ? 'Créer le groupe' : 'Sauvegarder' }}</button>
             </div>
     
             <div class="mb-3">
-                <a href="{{ route('groupe') }}" class="btn btn-outline-secondary btn-sm">Annuler</a>
+                <a href="{{ route('groupe') }}" class="btnAction inverse">Annuler</a>
             </div>
         </div>
 
     </form>
     
+</div>
 </div>
 
 @endsection    

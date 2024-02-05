@@ -10,10 +10,21 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
 
 <div class="d-none d-md-block">
     <div class="container my-5 page">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb position-relative my-3">
+              <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
+              <li class="breadcrumb-item"><a href="{{route('enfants',['type' => "ciu"])}}">Liste des enfants</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Réussite</li>
+              <span class="help position-absolute" data-location="eleves.reussite.main"><i class="fa-light fa-message-question"></i></span>
+            </ol>
+          </nav>
 
-    <div><span style="color:green"><i class="fa-solid fa-circle-check"></i></span> :  Cahier prêt à être envoyé aux parents.</div>
-    <div><span style="color:orange"><i class="fa-solid fa-circle-check"></i></span> :  Cahier pas encore terminé (non définitif).</div>
-    <div><span style="color:red"><i class="fa-solid fa-circle-check"></i></span> :  Le cahier n'est pas encore crée pour la période.</div>
+          <div class="d-flex justify-content-between w-100 my-3">
+            <div><span style="color:green"><i class="fa-solid fa-circle-check"></i></span> :  Cahier prêt à être envoyé aux parents.</div>
+            <div><span style="color:orange"><i class="fa-solid fa-circle-check"></i></span> :  Cahier pas encore terminé (non définitif).</div>
+            <div><span style="color:red"><i class="fa-solid fa-circle-check"></i></span> :  Le cahier n'est pas encore crée pour la période.</div>
+
+          </div>
 
     {{-- Retour assignation licence --}}
     @if(session()->has('success'))
@@ -55,10 +66,10 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                         <th>Emails parents</th>
                         @for ($periode=1;$periode<=$maxPeriode;$periode++)
                             <th class="text-center align-top" colspan="1">
-                                <h5>Période {{$periode}}</h5>
+                                <h6 style="color: var(--main-color)">Période {{$periode}}</h6>
                                 @if($displayBtnBulk[$periode])
                                     {{--<button name="btnSubmit" value="{{$periode}}" class="btn btn-outline-primary mt-2 mb-2 btn-sm">Envoyer les cahiers</button>--}}
-                                    <button id="btnSubmit{{$periode}}" type="button" value="{{$periode}}" class="btn btn-outline-primary mt-2 mb-2 btn-sm bulk">Envoyer les cahiers</button>
+                                    <button id="btnSubmit{{$periode}}" type="button" value="{{$periode}}" class="mx-auto btnAction inverse mt-2 mb-2 bulk">Envoyer les cahiers</button>
                                 @endif
                             </th>
                         @endfor

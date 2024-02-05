@@ -179,6 +179,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/parametres/activeAcquisAide', [parametreController::class, 'activeAcquisAide'])->name('activeAcquisAide');
     Route::get('/parametres/activehelp', [parametreController::class, 'activehelp'])->name('activehelp');
     Route::get('/parametres/classe',[parametreController::class,'parametresClasse'])->name('parametresClasse');
+    Route::get('/parametres/mails',[parametreController::class,'parametresMails'])->name('parametresMails');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');
     Route::get('/fiches/setClassification', [ficheController::class, 'setClassification'])->name('setClassification');

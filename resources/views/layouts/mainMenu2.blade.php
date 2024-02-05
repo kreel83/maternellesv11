@@ -129,7 +129,7 @@ use Illuminate\Support\Facades\Auth;
                             <a href="{{ route('calendrier') }}" class="nav-item nav-link  {{ $params ? 'active' : null }}  {{$hasClassActive}}">Calendrier</a>
 
                             @php
-                                $params = in_array($menu, ['commentaire', 'periode', 'eleve', 'item', 'create_item', 'aide', 'ecole', 'groupe']);
+                                $params = in_array($menu, ['commentaire', 'periode', 'eleve', 'item', 'create_item', 'aide', 'ecole', 'groupe','mails']);
                             @endphp
 
                             <div class="nav-item dropdown">
@@ -140,6 +140,7 @@ use Illuminate\Support\Facades\Auth;
                                     <a href="{{ route('createFiche') }}" class="nav-item nav-link {{ $menu == 'create_item' ? 'active' : null }}  {{$hasClassActive}}">Je crée mes activités</a>
                                     <a href="{{ route('groupe') }}" class="nav-item nav-link {{ $menu == 'groupe' ? 'active' : null }}  {{$hasClassActive}}">Mes groupes</a>
                                     <a href="{{ route('phrases') }}" class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}  {{$hasClassActive}}">Mes phrases prédéfinies</a>
+                                    <a href="{{ route('parametresMails') }}" class="nav-item nav-link {{ $menu == 'mails' ? 'active' : null }}  {{$hasClassActive}}">Je personalise mes mails</a>
                                 </div>
                             </div>
 
@@ -362,15 +363,17 @@ use Illuminate\Support\Facades\Auth;
     </div>
   </div>
 
+
+
   <!-- Modal -->
 <div class="modal fade" id="modalHelp" tabindex="-1" aria-labelledby="modalHelp" aria-hidden="true">
-    <div class="modal-dialog" style="top: 150px">
+    <div class="modal-dialog modal-lg" style="top: 150px">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Quelques explications :)</h5>
+          <h5 class="modal-title" id="exampleModalLabel" style="color: var(--main-color)">Quelques explications sur cette page</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="min-height: 400px; max-height:400px; overflow-y: auto">
           ...
         </div>
         <div class="modal-footer">

@@ -24,10 +24,11 @@
 
     <div class="position-relative gx-0 mt-5" id="page_items">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb position-relative me-5">
               <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
               <li class="breadcrumb-item"><a href="{{route('enfants',['type' => $type])}}">Liste des enfants</a></li>
               <li class="breadcrumb-item active" aria-current="page">Evaluation</li>
+              <span class="help position-absolute" data-location="eleves.evaluation.main"><i class="fa-light fa-message-question"></i></span>
             </ol>
           </nav>
 
@@ -115,9 +116,7 @@
 
             <div id="mesfiches" class="listItems d-flex justify-content-center">
                 <div class="fiche_container fiches mesitems position-relative d-flex">                    
-                    <span class="help position-absolute fs-1" data-location="eleve.import.eleves"><i class="fa-light fa-message-question"></i></span>
-                    
-
+                   
                             @foreach ($fiches as $fiche)
                                 @include('cards.item')
                             @endforeach                             

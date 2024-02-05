@@ -34,15 +34,19 @@
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
             aria-label="breadcrumb">
 
-            <ol class="breadcrumb">
+            <ol class="breadcrumb position-relative">
                 <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
                 <li class="breadcrumb-item"><a href="/app/fiches?section={{ $itemactuel->section_id }}">Les fiches</a></li>
                 @if ($new)
                     <li class="breadcrumb-item active" aria-current="page">Création d'une fiche d'activité</li>
-                @elseif ($duplicate)
+                    <span class="help position-absolute" data-location="fiches.creation.main"><i class="fa-light fa-message-question"></i></span>
+                    
+                    @elseif ($duplicate)
                     <li class="breadcrumb-item active" aria-current="page">Duplication d'un fiche d'activité</li>
-                @else
+                    <span class="help position-absolute" data-location="fiches.duplicate.main"><i class="fa-light fa-message-question"></i></span>
+                    @else
                     <li class="breadcrumb-item active" aria-current="page">Modification d'un fiche d'activité</li>
+                    <span class="help position-absolute" data-location="fiches.modification.main"><i class="fa-light fa-message-question"></i></span>
                 @endif
             </ol>
         </nav>
@@ -65,7 +69,7 @@
 
 
                     <div class="form-group cadre-group">
-                        <div class="h5">Domaine et activité <span class="help" data-location="fiche.create.domaine"><i class="fa-light fa-message-question"></i></span></div>
+                        <div class="h5">Domaine et activité </div>
                         <select class="form-select my-4 form_section" id="section_id" name="section_id"
                             {{ $duplicate ? 'disabled' : null }}>
                             <option value="" selected>Choisissez un domaine...</option>
@@ -125,7 +129,7 @@
                             <div class="col-md-2 mt-3">
                                 <button type="button" class="btnAction biblioModal" data-bs-toggle="modal"
                                     data-bs-target="#biblioModal">
-                                    bibliotheque d'image
+                                    bibliotheque d'images
                                 </button>
                             </div>                            
                         </div>
@@ -136,7 +140,7 @@
                 <div class="col-xs-12 col-xl-6 ps-4 create_droit">
 
                     <div class="form-group cadre-group">
-                        <div class="h5">Section et titre<span class="help" data-location="fiche.create.section"><i class="fa-light fa-message-question"></i></span></div>
+                        <div class="h5">Section et titre</div>
                         {{-- <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre"> --}}
                         <div class="my-2 form_maternelle" id="filtre">
                             <div class="form-check form-check-inline">
