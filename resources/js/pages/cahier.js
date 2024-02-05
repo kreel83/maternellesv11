@@ -80,9 +80,8 @@ const choicePhrase = (Modal) => {
     })
 
     $(document).on('click','.raz_search_phrase', function(e) {
-        $('.searchPhrase').val('')
-        var element = $(this).closest('.partieDroite')
-        $(element).find('.badge_phrase_container li').removeClass('d-none') 
+        $('.searchPhraseCreation').val('')
+        $('.phrase_bloc').removeClass('d-none').addClass('d-flex')
 
     })
 

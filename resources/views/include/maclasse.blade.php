@@ -9,9 +9,10 @@
     aria-label="breadcrumb">
     
     
-    <ol class="breadcrumb">
+    <ol class="breadcrumb position-relative">
         <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
         <li class="breadcrumb-item active" aria-current="page">Ma classe</li>
+        <span class="help position-absolute" data-location="classe.liste.main"><i class="fa-light fa-message-question"></i></span>
     </ol>
     
     </nav>
@@ -23,6 +24,7 @@
             <div class="d-flex">
                 <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
                 <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
+              
             </div>
             @isset($is_creator)
                 @if($is_creator)

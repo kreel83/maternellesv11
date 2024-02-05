@@ -7,6 +7,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
         <li class="breadcrumb-item active" aria-current="page">Création des phrases prédéfinies</li>
+        <span class="help position-absolute" data-location="phrases.creation.main"><i class="fa-light fa-message-question"></i></span>
       </ol>
     </nav>
     @php
@@ -75,7 +76,7 @@
             <div class="input-group my-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
                 <input type="text" class="form-control searchPhraseCreation" placeholder="Chercher une phrase" aria-label="Chercher un élève" aria-describedby="basic-addon1">
-                <span class="input-group-text raz_search_phrase" style="cursor: pointer"><i class="fa-sharp fa-solid fa-xmark"></i></span>
+                <span class="input-group-text raz_search_phrase" style="cursor: pointer"><i class="fa-solid fa-xmark"></i></span>
               </div>
               <div id="tableauDesPhrases" class="my-4">
 

@@ -17,20 +17,24 @@
 
 </style>
 
+<div class="mt-5">
+
+
     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb position-relative">
             <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
-            <li class="breadcrumb-item active" aria-current="page">Création des groupes</li>
+            <li class="breadcrumb-item active" aria-current="page">Gestion des groupes</li>
+            <span class="help position-absolute" data-location="eleve.groupes.manage"><i class="fa-light fa-message-question"></i></span>
         </ol>
     </nav>
 
-    <h4 class="mb-3">Gestion des groupes</h4>
+    <h4 class="mb-3" style="color: var(--main-color)">Gestion des groupes</h4>
 
     @include('include.display_msg_error')
 
 
  
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info" role="alert" style="background-color: var(--second-color); color: white; border: none">
             @if (4 - $nbGroupe == 0)
                 Vous pouvez ne pouvez plus créer de groupe (4 maximum)
             @else
@@ -62,17 +66,25 @@
         }
         .groupe_titre {
             position: absolute;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             top: -16px;
             left: 30px;
             font-weight: 400;
             font-size: 16px;
             padding: 4px 16px;
             background-color: white;
-            border-radius: 14px;
+            color: var(--main-color);
+            font-weight: bold;
+            border-radius: 50%;
             box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
         }
         .groupe_controle {
             position: absolute;
+            color: var(--second-color);
             top: -16px;
             right: 30px;
             font-weight: 400;
@@ -99,9 +111,9 @@
                 <div class="d-flex mb-3 groupe_card position-relative">
                     <div class="groupe_titre">{{$key +1 }}</div>
                     <div class="groupe_controle d-flex w-25 justify-content-center">
-                        <a  style="color: black" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><i class="fa-solid fa-edit"></i></a>
+                        <a  style="color: var(--main-color)" href="{{ route('editerUnGroupe', ['id' => $loop->index, 'token' => $token]) }}"><i class="fa-solid fa-edit"></i></a>
                         @if ($key == sizeof($groupes) -1)
-                        <div data-bs-toggle="modal" data-bs-target="#ModalSupprimerGroupe" class="ms-3" style="color: black" ><span style="cursor: pointer"><i class="fa-solid fa-trash"></i></div>
+                        <div data-bs-toggle="modal" data-bs-target="#ModalSupprimerGroupe" class="ms-3" style="color: var(--second-color)" ><span style="cursor: pointer"><i class="fa-solid fa-trash"></i></div>
                         @endif
                     </div>
                     
@@ -125,6 +137,8 @@
                 </div>      
             @endif
         </div>
+        
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="ModalSupprimerGroupe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

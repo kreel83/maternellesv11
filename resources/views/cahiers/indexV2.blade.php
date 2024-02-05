@@ -27,10 +27,11 @@
 
     <div id="cahierView" class="row gx-0 position-relative mt-5" data-enfant="{{ $enfant->id }}">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb position-relative mx-5">
               <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
               <li class="breadcrumb-item"><a href="{{route('enfants',['type' => $type])}}">Liste des enfants</a></li>
               <li class="breadcrumb-item active" aria-current="page">Réussite</li>
+              <span class="help position-absolute" data-location="eleves.reussite.main"><i class="fa-light fa-message-question"></i></span>
             </ol>
           </nav>
         @if ($enfant->genre == 'F')
@@ -160,9 +161,7 @@
                                         @endforeach
                                         
                                     </select>      
-                                    @if ($sec->id == 2)                          
-                                    <span class="help position-absolute" style="right: -20px" data-location="cahier.create.phrase"><i class="fa-light fa-message-question"></i></span>
-                                    @endif
+
                                 </div>
 
                                 @endif
@@ -176,9 +175,7 @@
                     <div class="position-absolute d-none saisie" data-section="{{$sec->id}}" style="right: 20px; top: 97px">
                         <div style="font-size: 12px; color: red">Saisie en cours</div>
                     </div>
-                    @if ($sec->id == 2)
-                    <span class="help position-absolute" style="right: 20px; top: 50px" data-location="cahier.create.quill"><i class="fa-light fa-message-question"></i></span>
-                    @endif
+
                     
                     <div id="editorApercu{{$sec->id}}" data-origine="true"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$sec->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-width: 820px" class="ql-container ql-snow editorApercu position-relative">
                         {!! $resultats[$sec->id] ?? null!!}

@@ -581,4 +581,8 @@ class ParametreController extends Controller
         if ($help) return $help->texte;
         return 'Aucune information disponible';
     }
+
+    public function parametresMails() {
+        return view('parametresMails.index');
+    }
 }
