@@ -56,7 +56,7 @@
             <div class="d-flex justify-content-between align-items-center my-5 flex-column flex-xl-row">
 
                     <div class="d-flex ps-2 align-items-center enfant_pill mb-3">
-                        <div class="arrowLeft me-2">
+                        <div class="d-none d-xl-block arrowLeft me-2">
                             <a href="{{ route('enfants',['type' => 'evaluation']) }}">
                                 <i class="fa-solid fa-arrow-left"></i>
                             </a>
@@ -114,10 +114,16 @@
 
 
             <div id="mesfiches" class="listItems d-flex justify-content-center">
-                <div class="fiche_container fiches mesitems">                    
-                    @foreach ($fiches as $fiche)
-                        @include('cards.item')
-                    @endforeach                    
+                <div class="fiche_container fiches mesitems position-relative d-flex">                    
+                    <span class="help position-absolute fs-1" data-location="eleve.import.eleves"><i class="fa-light fa-message-question"></i></span>
+                    
+
+                            @foreach ($fiches as $fiche)
+                                @include('cards.item')
+                            @endforeach                             
+           
+                   
+                    </div>
                     <div class="noFiche d-none">
                         <div>Aucune activité sélectionnée</div>
                         <a class="linkNoFiche btnAction mt-5" href="">Ajouter des activités</a>

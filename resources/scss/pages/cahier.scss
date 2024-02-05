@@ -258,8 +258,17 @@
 
     #cahierView {
         padding: 4px !important;
+        .arrowLeft {
+            display: none;
+        }
         .bloc_editon {
             width: 100% !important;
+            .titreSectionEdition {
+                font-size: 14px !important;
+            }
+            img {
+                display: none;
+            }
         }
         .section_container {
             width: calc(100vw - 70px) !important;

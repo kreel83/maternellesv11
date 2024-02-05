@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\Auth;
     }
 </style>
 
-<body id="backEndUser">
+<body id="backEndUser" data-help="{{Auth::user()->help}}">
 
     {{-- <input type="hidden" id="tuto" value="{{ Auth::user()->configuration->tuto ?? null }}"> --}}
     <input type="hidden" id="type" value="{{ $tuto ?? null }}">
@@ -361,6 +361,40 @@ use Illuminate\Support\Facades\Auth;
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="modalHelp" tabindex="-1" aria-labelledby="modalHelp" aria-hidden="true">
+    <div class="modal-dialog" style="top: 150px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Quelques explications :)</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btnAction" data-bs-dismiss="modal">Fermer</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false"
+        id="ToastInfo">
+        <div class="toast-header">
+
+            <strong class="me-auto">Yes !</strong>
+
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            
+        </div>
+    </div>
+</div>
 
 
 

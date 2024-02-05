@@ -12,6 +12,8 @@
     }
 </style>
 
+
+
 <div class="action d-flex flex-wrap">
     <button class="my-1 btn notation niveau_3"  data-notation="3">Acquis</button>
     <button class="my-1 btn notation niveau_2"   data-notation="2">Acquis avec aide</button>

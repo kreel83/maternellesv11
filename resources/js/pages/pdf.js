@@ -36,13 +36,14 @@ const envoiCahierIndividuel = (Modal) => {
         e.preventDefault();
         var id = $(this).attr('id');
         $('#confirmationRenvoiMailId').val(id);
-        $('#renvoiModal').modal("show");
+        var myModal = new Modal(document.getElementById('renvoiModal'))
+        myModal.show()
     })
     $(document).on('click','#confirmationRenvoiMail', function(e) {
         e.preventDefault();
         var id = $('#confirmationRenvoiMailId').val();
         envoiLeLien(id);
-        $('#renvoiModal').modal("hide");
+      
     })
     // Fin renvoi d'un cahier
 

@@ -1,5 +1,17 @@
 #backEndUser {
 
+
+    .help {
+        cursor: pointer;
+        margin-left: 5px;
+        top: -5px;
+        right: -5px;
+        color: var(--main-color);
+        font-size: 20px;
+        
+
+    }
+
     .custom_button_secondary {
         padding: 6px 16px;
         background-color: var(--second-color);

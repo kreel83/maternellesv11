@@ -20,7 +20,8 @@
 
             </div> --}}
 
-            <div id="eleveCard" style="" data-enfant="{{$enfant->id}}">
+            <div id="eleveCard" style="" data-enfant="{{$enfant->id}}" class="position-relative">
+                <span class="help position-absolute" data-id="6"><i class="fa-light fa-message-question"></i></span>
                 @include('cards.enfant',['type' => 'none'])
 
             </div>

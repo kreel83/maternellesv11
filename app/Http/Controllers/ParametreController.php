@@ -11,6 +11,7 @@ use App\Models\Section;
 use App\Models\Phrase;
 use App\Models\Enfant;
 use App\Models\Event;
+use App\Models\Help;
 use App\Models\Vacance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -237,6 +238,16 @@ class ParametreController extends Controller
 
             $this->maclasseactuelle->desactive_devenir_eleve = ($request->activeDomaineEleve == 'on' ? 0 : 1);
             $this->maclasseactuelle->save();
+        
+        //return redirect()->back()->with('success','Le domaine a bien été désactivé');
+        return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
+    }
+
+    public function activehelp(Request $request) {
+        
+
+            Auth::user()->help = $request->state == 'false' ? 0 : 1;
+            Auth::user()->save();
         
         //return redirect()->back()->with('success','Le domaine a bien été désactivé');
         return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
@@ -563,5 +574,11 @@ class ParametreController extends Controller
             ->with('directeur', $directeur)
             ->with('sections', $sections)
             ->with('equipes', $equipes);
+    }
+
+    public function help($location) {
+        $help = Help::where('location', $location)->first();
+        if ($help) return $help->texte;
+        return 'Aucune information disponible';
     }
 }

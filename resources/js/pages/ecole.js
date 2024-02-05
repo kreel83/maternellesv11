@@ -1,6 +1,32 @@
 
 import * as bootstrap from 'bootstrap';
 
+
+const help = (Modal, Toast) => {
+    $(document).on('change','#activehelp', function() {
+       var state = $('#activehelp').prop('checked')
+        $.get('/app/parametres/activehelp?state='+state, function(data) {
+            var toast = new Toast(document.getElementById('ToastInfo'), {})
+            $('#ToastInfo .toast-body').text('L\'activation des aides a été modifiée')
+            toast.show()
+            setTimeout(() => {
+                toast.dispose()
+                location.reload()
+            }, 2000);
+        })
+
+    })
+    $(document).on('click','.help', function() {
+        var id = $(this).data('location')
+        var myModal = new Modal(document.getElementById('modalHelp'))
+        $.get('/app/help/'+id, function(data) {
+            $('#modalHelp .modal-body').html(data)
+            myModal.show()
+        })
+
+    })
+}
+
 const chercheCommune = () => {
     $(document).on('click','#chercheCommuneBtn', function() {
         var search = $('#chercheDpt').val()
@@ -71,4 +97,4 @@ const choixEcole = () => {
 }
 
 
-export {chercheCommune, chercheEcole, choixEcole}
+export {chercheCommune, chercheEcole, choixEcole, help}

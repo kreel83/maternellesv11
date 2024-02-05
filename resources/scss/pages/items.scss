@@ -77,7 +77,8 @@
     @media (max-width: 994px) {
         .liste_section {
             width: 400px !important;
-            padding-right: 0 !important;
+            padding: 0 8% !important;
+            justify-content: center;
         }
         .fiche_container {
             justify-content: center;

@@ -78,6 +78,19 @@
                 </div>
             </div>       
         </div>
+        <div class="gridcadre grid3 d-flex justify-content-center align-items-center tuto_tutoriel">
+            <div class="gridTitre">Activation des aides</div>
+            <div class="mt-3">
+                
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="activehelp" name="activeDomaineEleve" {{Auth::user()->help == 1 ? 'checked' : null}}>
+                        <label class="form-check-label" for="activeDomaineEleve">Activer les bulles d'aides</label>
+                    </div>
+                    
+              
+            </div>
+              
+        </div>
 
         {{-- <div class="gridcadre grid3 d-flex justify-content-between w-100 tuto_aides">
             <div class="gridTitre">Mes aides maternelles</div>
@@ -215,6 +228,8 @@
 
 
 </div>
+
+
 
 
 

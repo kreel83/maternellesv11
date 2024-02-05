@@ -1,5 +1,11 @@
 #backEndUser {
 
+	&[data-help="0"] {
+		.help {
+			display: none;
+		}
+	}
+
 	body {
 		font-family: $font-family-sans-serif;
 		background-color: var(--back-color) !important;
