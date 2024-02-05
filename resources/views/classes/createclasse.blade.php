@@ -8,7 +8,7 @@
 
         @include('partage.include_partage')
     @endif
-    <div class="card mx-auto w-75 p-3 mt-3" style="border: none; border-radius: 40px">
+    <div class="card mx-auto w-75 p-3 mt-3">
         <div class="ms-3" style="border: none; border-radius: 40px">
             <div class="d-flex justify-content-between pt-2">
                 <h5>{{ $title }} - Etape 1/2</h5>
@@ -24,7 +24,7 @@
             <input type="hidden" name="classe_id" value="{{ isset($classe) ? $classe->id : 'new' }}">
 
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-xl-6">
                     <label for="ecole_id" class="form-label"><strong>Identifiant de votre établissement :</strong></label>
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-school"></i></span>
@@ -77,19 +77,19 @@
             </div>
 
             <div class="mb-3">
-                <div class="d-flex flex-row">
+                <div class="row align-items-end">
 
-                    <div class="form-group me-2">            
+                    <div class="col-12 col-xl-4">            
                         <select class="form-select" name="civilite">
                             <option value="">Veuillez sélectionner</option>
                             <option value="M." {{ old('civilite', isset($direction) ? $direction['civilite'] : '') == 'M.' ? 'selected' : null}}>Monsieur</option>
                             <option value="Mme" {{ old('civilite', isset($direction) ? $direction['civilite'] : '') == 'Mme' ? 'selected' : null}}>Madame</option>
                         </select>
                     </div> 
-                    <div class="me-2">
+                    <div class="mt-2 col-12 col-xl-4">
                         <input type="text" class="form-control" name="prenom" value="{{ old('prenom', isset($direction) ? $direction['prenom'] : '') }}" placeholder="Prénom" />
                     </div> 
-                    <div>
+                    <div class="mt-2 col-12 col-xl-4">
                         <input type="text" class="form-control" name="nom" value="{{ old('nom', isset($direction) ? $direction['nom'] : '') }}" placeholder="Nom" />
                     </div>                
 

@@ -65,7 +65,7 @@
 
 
                     <div class="form-group cadre-group">
-                        <div class="h5">Domaine et activité</div>
+                        <div class="h5">Domaine et activité <span class="help" data-location="fiche.create.domaine"><i class="fa-light fa-message-question"></i></span></div>
                         <select class="form-select my-4 form_section" id="section_id" name="section_id"
                             {{ $duplicate ? 'disabled' : null }}>
                             <option value="" selected>Choisissez un domaine...</option>
@@ -107,7 +107,7 @@
                     </div>
                     <div
                         class="cadre-group form_image d-flex   flex-column  {{ isset($section->id) ? null : 'd-none' }}">
-                        <div class="h5">Illustation</div>
+                        <div class="h5">Illustation<span class="help" data-location="fiche.create.illustration"><i class="fa-light fa-message-question"></i></span></div>
                         <div class="d-flex flex-column flex-md-row justify-content-between px-5">
                             <input accept="image/*" name="file" type='file' id="photoEnfantInput" hidden />
 
@@ -136,7 +136,7 @@
                 <div class="col-xs-12 col-xl-6 ps-4 create_droit">
 
                     <div class="form-group cadre-group">
-                        <div class="h5">Section et titre</div>
+                        <div class="h5">Section et titre<span class="help" data-location="fiche.create.section"><i class="fa-light fa-message-question"></i></span></div>
                         {{-- <div class="d-flex justify-content-between my-2 form_maternelle" id="filtre"> --}}
                         <div class="my-2 form_maternelle" id="filtre">
                             <div class="form-check form-check-inline">
@@ -181,7 +181,7 @@
 
 
                     <div class="d-flex flex-column mb-4 cadre-group pt-4 ">
-                        <div class="h5">Phrase</div>
+                        <div class="h5">Phrase<span class="help" data-location="fiche.create.phrase"><i class="fa-light fa-message-question"></i></span></div>
 
                         <div class="d-flex justify-content-between">
                             <div>Exemple : Tom sait compter jusqu'à 5.</div>

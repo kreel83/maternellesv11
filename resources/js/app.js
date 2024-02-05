@@ -1,9 +1,9 @@
 
-import $ from 'jquery';
-window.$ = $;
+// import $ from 'jquery';
+// window.$ = $;
 // import 'bootstrap';
 
-import { Modal } from 'bootstrap'
+import { Modal, Toast } from 'bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.css'
 // import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
@@ -30,7 +30,7 @@ import './menu'
 import { importation} from './pages/import';
 import { tutos } from './tutos/tutos';
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
-import {chercheCommune, chercheEcole, choixEcole} from "./pages/ecole";
+import {chercheCommune, chercheEcole, choixEcole, help} from "./pages/ecole";
 import {choix_eleve, photo_eleve, preview_photo, delete_photo, setDefaultImg} from "./pages/eleve";
 import {selectItem, hamburger} from './pages/items';
 import {choicePhrase, clickOnNav, saveTexte, onload, apercu, clickOnDefinif, saveTexteReussite, phraseCommentaireGeneral, saveCommentaireGeneral, clickOnCahier} from './pages/cahier';
@@ -260,6 +260,7 @@ assigneLicence()
 
 tutos()
 envoiCahierIndividuel(Modal)
+help(Modal, Toast)
 
 partageDeClasse()
 creationCompte()

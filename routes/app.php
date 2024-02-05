@@ -113,6 +113,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/reussite', [EnfantController::class, 'reussite'])->name('reussite');
 
     Route::get('/toto', [CahierController::class, 'toto'])->name('cahiertoto');
+    Route::get('/help/{location}', [ParametreController::class, 'help'])->name('help');
 
     Route::get('/enfants', [EnfantController::class, 'index'])->name('enfants');
     Route::get('/enfants/{enfant_id}/items', [ItemController::class, 'index'])->name('items');
@@ -176,6 +177,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
     Route::get('/parametres/activeDomaineEleve', [parametreController::class, 'activeDomaineEleve'])->name('activeDomaineEleve');
     Route::get('/parametres/activeAcquisAide', [parametreController::class, 'activeAcquisAide'])->name('activeAcquisAide');
+    Route::get('/parametres/activehelp', [parametreController::class, 'activehelp'])->name('activehelp');
     Route::get('/parametres/classe',[parametreController::class,'parametresClasse'])->name('parametresClasse');
 
     Route::get('/fiches', [ficheController::class, 'index'])->name('fiches');

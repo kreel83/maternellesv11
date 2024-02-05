@@ -120,6 +120,8 @@
                                 <li><a href="{{route('mf.compagnon')}}">Le compagnon</a></li>
                                 <li><a href="{{route('mf.tarifs')}}">Tarifs</a></li>
                                 <li><a href="{{route('mf.contact')}}">Contact</a></li>
+                                <li class="d-xxl-none"><a href="{{route('login')}}">Se connecter</a></li>
+                                <li class="d-xxl-none"><a href="{{route('registration.start')}}">Essayer gratuitement</a></li>
                             </ul>
                         </div>
                         <div class="right-part">
@@ -127,8 +129,8 @@
                                 {{-- <li>
                                     <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="flaticon-loupe"></i></button>
                                 </li> --}}
-                                <li><a style="background:#97CD2C !important" class="btn_custom" href="{{route('login')}}">Se connecter</a></li>
-                                <li><a style="background: #33cdec !important" class="btn_custom" href="{{route('registration.start')}}">Essayez gratuitement</a></li>
+                                <li class="d-none d-xxl-block"><a style="background:#97CD2C !important" class="btn_custom" href="{{route('login')}}">Se connecter</a></li>
+                                <li class="d-none d-xxl-block"><a style="background: #33cdec !important" class="btn_custom" href="{{route('registration.start')}}">Essayez gratuitement</a></li>
                             </ul>
                         </div>
                     </nav>

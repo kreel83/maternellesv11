@@ -115,16 +115,7 @@
                 <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
             </form>    
         </div>
-        {{-- <div class="gridcadre grid6 d-flex justify-content-center align-items-center tuto_tutoriel">
-            <div class="gridTitre">Tutoriel</div>
-            <form action="{{route('modeTuto')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">            
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="tuto_form" name="state" value="on" {{ Auth::user()->configuration->tuto == 1 ? 'checked' : null}}>
-                    <label class="form-check-label" for="tuto_form">Mode Tutoriel activé</label>
-                  </div>
-                <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
-            </form>    
-        </div> --}}
+
 
         <style>
             .section_ligne {
@@ -155,6 +146,19 @@
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->classe_active()->desactive_devenir_eleve == 0 ? 'checked' : null}}>
                         <label class="form-check-label" for="activeDomaineEleve">Activer le domaine " Devenir élève " dans le cahier de réussites</label>
+                    </div>
+                    <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
+                </form>
+            </div>
+              
+        </div>
+        <div class="gridcadre grid7 d-flex justify-content-center align-items-center tuto_tutoriel">
+            <div class="gridTitre">Activation des aides</div>
+            <div class="mt-3">
+                <form action="{{route('activeDomaineEleve')}}" class=" d-flex flex-column justify-content-center align-items-center">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->classe_active()->help == 0 ? 'checked' : null}}>
+                        <label class="form-check-label" for="activeDomaineEleve">Activer les bulles d'aides</label>
                     </div>
                     <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
                 </form>

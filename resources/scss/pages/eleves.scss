@@ -29,6 +29,8 @@
     .liste_eleves, .import_eleves_container {
 
 
+
+
         .inactiveEleve {
             right: 10px; top: 10px; color:var(--main-color);
             display: none;
@@ -61,6 +63,7 @@
             height: 600px;
             overflow-y: auto;
                 .fiche_eleve {
+                   
                 &:hover {
                     background-color: #272C34;
                     color: white;

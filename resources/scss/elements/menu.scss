@@ -21,6 +21,7 @@
 
 
 
+
     .navbar a {
         color: white;
         margin: 0 10px;
@@ -54,10 +55,9 @@
 
 
     @media only screen and (max-width: 994px) {
-        // .navbar  {
-        //     background-color: var(--main-color) !important;
-        //     color: white !important
-        // }
+        .navbar  {
+            padding: 5px 0 !important;
+        }
         .contenu_du_menu {
             padding-top: 40px;
         }

@@ -156,7 +156,7 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary" id="confirmationRenvoiMail">Renvoyer le Mail</button>
+            <button type="button" class="btn btn-primary" id="confirmationRenvoiMail"  data-bs-dismiss="modal">Renvoyer le Mail</button>
             <input type="hidden" id="confirmationRenvoiMailId">
         </div>
         </div>

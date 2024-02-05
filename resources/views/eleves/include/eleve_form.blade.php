@@ -24,7 +24,7 @@
 
         </style>
 
-        <div class="d-flex justify-content-between mb-2 px-5">
+        <div class="d-flex justify-content-between mb-2 bloc_genre">
             <div class="input-group text-center" style="border-right: 3px solid var(--main-color)">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-venus"></i></span> 
                 <input type="radio" class="btn-check genre-check" name="genre" id="genref" value="F" {{$eleve['genre'] == 'F' ? 'checked' : null}}>

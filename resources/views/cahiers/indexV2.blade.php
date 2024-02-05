@@ -140,7 +140,7 @@
                         height="45px" >
                         <div class="d-flex flex-column ms-3">
                             
-                            <div style="color: {{$sec->color}}; font-size: 18px">
+                            <div class="titreSectionEdition" style="color: {{$sec->color}}; font-size: 18px">
                                 {{$sec->name}}
                             </div>
                             <div class="row">
@@ -148,7 +148,7 @@
                                 <div class="col-auto">
                                     <label for="" style="font-size: 12px">Phrases prédéfinies : </label>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-auto position-relative">
                                     <select name="" id="" class="selectionCommentaire form-control form-control-sm" data-prenom="{{$enfant->prenom}}" data-genre="{{$enfant->genre}}" data-section="{{$sec->id}}" style="width: 300px; font-size: 12px">
                                         <option value="null">Veuillez selectionner</option>
                                         @foreach ($commentaires[$sec->id] as $commentaire)
@@ -159,7 +159,10 @@
                                         @endif
                                         @endforeach
                                         
-                                    </select>                                
+                                    </select>      
+                                    @if ($sec->id == 2)                          
+                                    <span class="help position-absolute" style="right: -20px" data-location="cahier.create.phrase"><i class="fa-light fa-message-question"></i></span>
+                                    @endif
                                 </div>
 
                                 @endif
@@ -173,6 +176,9 @@
                     <div class="position-absolute d-none saisie" data-section="{{$sec->id}}" style="right: 20px; top: 97px">
                         <div style="font-size: 12px; color: red">Saisie en cours</div>
                     </div>
+                    @if ($sec->id == 2)
+                    <span class="help position-absolute" style="right: 20px; top: 50px" data-location="cahier.create.quill"><i class="fa-light fa-message-question"></i></span>
+                    @endif
                     
                     <div id="editorApercu{{$sec->id}}" data-origine="true"  data-texte="{{$resultats[$sec->id] ?? null}}" data-section="{{$sec->id}}" data-enfant="{{$enfant->id}}" style="min-height: 100px; height: auto;max-width: 820px" class="ql-container ql-snow editorApercu position-relative">
                         {!! $resultats[$sec->id] ?? null!!}

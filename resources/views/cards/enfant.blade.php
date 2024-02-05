@@ -32,6 +32,7 @@ if (!is_null($enfant->groupe) && $lesgroupes) {
   $groupe = $lesgroupes[$enfant->groupe];
   
 }
+
 @endphp
 
 <div class="card-enfant position-relative" data-type="{{$type}}" data-enfant="{{$enfant->id}}">

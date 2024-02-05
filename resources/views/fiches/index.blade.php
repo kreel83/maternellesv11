@@ -13,7 +13,7 @@
             </ol>
         </nav>
 
-        <div data-section="{{ $section->id }}" class="liste_section d-flex align-items-end" style="width: 1000px !important">
+        <div data-section="{{ $section->id }}" class="liste_section d-flex align-items-end h-auto" style="width: 1000px !important">
             
                 @foreach ($sections as $sec)
                     @if ($sec->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
@@ -34,7 +34,7 @@
                         </div>
                     @endif
                 @endforeach
-                <div class="d-flex flex-column" style="height: 60px">
+                <div class="d-flex flex-column bloc_importation" style="height: 60px">
                     @if (Auth::user()->hasResultats() ==  0)
                         <div title="Importer vos activités par section" style="font-size: 14px; color: var(--main-color); margin-left: 40px; cursor: pointer" id="importationFiches" data-bs-toggle="modal" data-bs-target="#importSection" style="width: 50px;height: 53px; border-radius: 10px; margin: 0; margin-left: 20px; margin-bottom: 20px">
                             <i class="fa-solid fa-file-import me-1"></i><span>Importer des fiches "activités"</span>
