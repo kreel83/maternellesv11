@@ -6,13 +6,16 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
-        <li class="breadcrumb-item active" aria-current="page">Création des mails</li>
+        <li class="breadcrumb-item active" aria-current="page">Personalisation des mails</li>
         <span class="help position-absolute" data-location="phrases.creation.main"><i class="fa-light fa-message-question"></i></span>
       </ol>
     </nav>
 
 <div class="form-group" style="margin-top: 40px">
+  <div id="customMail" data-origine="true"  style="min-height: 100px; height: auto;max-width: 820px; min-height: 400px" class="ql-container ql-snow customMail position-relative">
     
+  </div>
+  <button class="btnAction" id="saveCustoMail">Sauvegarder</button>
 </div>
 
   
