@@ -202,6 +202,18 @@ if ($('#editorModif').length) {
     selectItem(Modal, quill4)
 }
 
+if ($('#customMail').length) {
+    console.log('mail')
+
+    var quillMail = new Quill('#customMail', {
+        modules: {
+            toolbar: true    // Snow includes toolbar by default
+        },
+        theme: 'snow'
+    });
+
+}
+
 window.section_active = null
 
 

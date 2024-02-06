@@ -4,7 +4,7 @@ namespace App\Events;
 
 use App\Models\Configuration;
 use App\Models\Enfant;
-use App\Models\classe;
+use App\Models\Classe;
 use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
