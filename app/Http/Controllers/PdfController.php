@@ -48,7 +48,6 @@ class PdfController extends Controller
             Mail::to($email)->send(new EnvoiLeLienDeTelechargementDuCahier($url, $ecole, $classeMail));
             $is_sent = true;
         }
-        $is_sent = false;
         if($is_sent) {
             $reussite = Reussite::where([
                 ['user_id', session('classe_active')->user_id],
