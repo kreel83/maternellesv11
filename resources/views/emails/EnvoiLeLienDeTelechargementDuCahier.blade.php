@@ -112,17 +112,51 @@
 
     <div id="body">
         <p>
-            Bonjour,
-            <br><br>
+            @if($classeMail)
+                {!! $classeMail->message !!}
+                <br>
+            @else
+                Bonjour,
+                <br><br>
+            @endif
+            
             Pour télécharger le cahier de réussites de votre enfant veuillez cliquer sur le lien ci-dessous :
             <br><br>
             <a href="{{ $url }}">Accéder à votre espace de téléchargement</a>
             <br><br>
             Je me tiens à votre disposition pour toute question ou assistance supplémentaire.
             <br><br><br>
+            {{-- <div style="font-style: italic; color: #545454"> --}}
+            <div style="font-style: italic;">
+                {{ Auth::user()->prenom.' '.Auth::user()->name }}<br>
+                <span style="color: #545454">
+                {{ $ecole->nom_etablissement.', '.$ecole->adresse_1 }}
+                @if (trim($ecole->adresse_2) != '')
+                    {{ ', '.$ecole->adresse_2 }}
+                @endif
+                {{ ', '.$ecole->adresse_3 }}
+                </span>
+            </div>
+
+
+            {{-- Bonjour,
+            <br><br>
+            Pour télécharger le cahier de réussites de votre enfant veuillez cliquer sur le lien ci-dessous :
+            <br><br>
+            <a href="{{ $url }}">Accéder à votre espace de téléchargement</a>
+            <br><br>
+            @if($classeMail)
+                <br>
+                {!! $classeMail->message !!}
+                <br>
+            @else
+                <br><br>
+            @endif
+            Je me tiens à votre disposition pour toute question ou assistance supplémentaire.
+            <br><br><br>
             <div style="font-style: italic; color: #545454">
                 {{ Auth::user()->prenom.' '.Auth::user()->name }}
-            </div>
+            </div> --}}
         </p>
     </div>
 

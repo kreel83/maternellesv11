@@ -17,16 +17,17 @@ class EnvoiLeLienDeTelechargementDuCahier extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $logo, $url, $ecole;
+    public $logo, $url, $ecole, $classeMail;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($url, $ecole)
+    public function __construct($url, $ecole, $classeMail)
     {
         $this->logo = Utils::getLogoForMail();
         $this->url = $url;
         $this->ecole = $ecole;
+        $this->classeMail = $classeMail;
     }
 
     /**
