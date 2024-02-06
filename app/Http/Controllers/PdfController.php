@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
 use App\Models\User;
 use App\Models\Classe;
+use App\Models\ClasseMail;
 use App\Models\Ecole;
 use App\Models\Enfant;
 use App\Models\Reussite;
@@ -37,16 +38,17 @@ class PdfController extends Controller
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
         // récupération mail et nom de l'école comme expéditeur du mail aux parents
-        $ecole = Ecole::select('nom_etablissement', 'mail')
+        $ecole = Ecole::select('nom_etablissement', 'mail','adresse_1', 'adresse_2', 'adresse_3')
             ->where('identifiant_de_l_etablissement', session('classe_active')->ecole_identifiant_de_l_etablissement)
             ->first();
+        $classeMail = ClasseMail::where('classe_id', session('classe_active')->id)->first();
         // Envoi des emails aux contacts de l'enfant...
         $mails = $enfant->tableauDesMailsEnfant();
         foreach($mails as $email) {
-            Mail::to($email)->send(new EnvoiLeLienDeTelechargementDuCahier($url, $ecole));
+            Mail::to($email)->send(new EnvoiLeLienDeTelechargementDuCahier($url, $ecole, $classeMail));
             $is_sent = true;
         }
-        //$is_sent = false;
+        $is_sent = false;
         if($is_sent) {
             $reussite = Reussite::where([
                 ['user_id', session('classe_active')->user_id],
