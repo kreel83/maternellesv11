@@ -9,6 +9,7 @@ use App\Models\Resultat;
 use App\Models\Fiche;
 use App\Models\Section;
 use App\Models\Phrase;
+use App\Models\ClasseMail;
 use App\Models\Enfant;
 use App\Models\Event;
 use App\Models\Help;
@@ -583,6 +584,24 @@ class ParametreController extends Controller
     }
 
     public function parametresMails() {
-        return view('parametresMails.index');
+        $customMail = ClasseMail::where('classe_id', session('classe_active')->id)->first();
+        // dd($customMail->message);
+
+        return view('parametresMails.index')->with('message', $customMail->message ?? null);
+    }
+
+    public function saveCustomMail(Request $request) {
+        if ($request->quill) {
+            $quill = $request->quill;
+            $customMail = ClasseMail::where('classe_id', session('classe_active')->id)->first();
+            if (!$customMail) {
+                $customMail = new ClasseMail();
+            }
+            $customMail->classe_id = session('classe_active')->id;
+            $customMail->message = $request->quill;
+            $customMail->save();
+
+
+        }
     }
 }

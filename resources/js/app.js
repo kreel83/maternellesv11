@@ -27,6 +27,7 @@ import 'quill/dist/quill.snow.css';
 import Alpine from 'alpinejs';
 
 import './menu'
+import { mailFunction } from './pages/mail';
 import { importation} from './pages/import';
 import { tutos } from './tutos/tutos';
 import {selection, hover, choosePeriode, savePeriode, initCalendar, initCalendrier, initCalendrierPeriodes} from "./pages/calendrier";
@@ -204,13 +205,32 @@ if ($('#editorModif').length) {
 
 if ($('#customMail').length) {
     console.log('mail')
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote'],
+      
+                // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
 
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                       // text direction
+      
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+
+      
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+
+        [{ 'align': [] }],
+      
+        ['clean']                                         // remove formatting button
+      ];
     var quillMail = new Quill('#customMail', {
         modules: {
-            toolbar: true    // Snow includes toolbar by default
+            toolbar: toolbarOptions    // Snow includes toolbar by default
         },
         theme: 'snow'
     });
+    mailFunction(quillMail)
 
 }
 

@@ -13,7 +13,7 @@
 
 <div class="form-group" style="margin-top: 40px">
   <div id="customMail" data-origine="true"  style="min-height: 100px; height: auto;max-width: 820px; min-height: 400px" class="ql-container ql-snow customMail position-relative">
-    
+     {!! $message !!}
   </div>
   <button class="btnAction" id="saveCustoMail">Sauvegarder</button>
 </div>
