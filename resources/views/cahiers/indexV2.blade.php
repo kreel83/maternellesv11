@@ -141,8 +141,16 @@
                         height="45px" >
                         <div class="d-flex flex-column ms-3">
                             
-                            <div class="titreSectionEdition" style="color: {{$sec->color}}; font-size: 18px">
-                                {{$sec->name}}
+                            <div class="titreSectionEdition d-flex" style="color: {{$sec->color}}; font-size: 18px">
+                                <span>{{$sec->name}}</span>
+                                @if ($isChrome &&  ($sec->id  ==  99))
+                                <span>
+                                <span type="button" class="btnAction ms-3 mt-0" data-bs-toggle="modal" data-bs-target="#micro">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </span>
+                                </span>
+                                
+                                @endif
                             </div>
                             <div class="row">
                                 @if (isset($commentaires[$sec->id]))
@@ -209,7 +217,35 @@
 
     </div>
 
+<!-- Modal -->
+<div class="modal fade" id="micro" tabindex="-1" aria-labelledby="micro" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="top: 120px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Enregistreur vocal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" style="margin-top: 40px">
 
+                <div class="d-flex align-items-center pb-4">
+                    <div>
+                        <button class="btnAction inverse mt-0 me-4" id="record"><i class="fa-solid fa-microphone-slash"></i></button>
+                    </div>                    
+                    <div id="instruction" style="color: var(--main-color); font-weight: bolder"></div>
+                </div>
+
+                <textarea name="" id="commentaire_general_dictee"  style="width: 100%" rows="10"></textarea>
+                
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btnAction inverse" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" class="btnAction" id="importTexte"  data-bs-dismiss="modal">Importer le texte</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Modal -->
 <div class="modal fade" id="informationcommentairePDF" tabindex="-1" aria-labelledby="informationcommentairePDF" aria-hidden="true">
     <div class="modal-dialog" style="top: 200px">

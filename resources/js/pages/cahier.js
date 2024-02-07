@@ -176,7 +176,93 @@ const saveTexteReussite = (quill) => {
 
 const clickOnCahier = (quill, myModal) => {
 
+    $(document).on('click','#importTexte', function() {
+        var texte = $('#commentaire_general_dictee').val()
+        $('#editorApercu99').attr('data-texte', texte)
+        var editorElement = document.getElementById('editorApercu99');
+        var quillInstance = editorElement.__quill || quill;
+        quillInstance.root.innerHTML = texte
 
+    })
+
+
+    $(document).on('click','#record', function() {
+        console.log('coucou')
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+
+        const recognition = new window.SpeechRecognition();
+        recognition.lang = 'fr-FR';
+        recognition.continuous = true;
+        recognition.maxAlternatives = 1;
+        recognition.start()
+        $(this).find('i').toggleClass('fa-microphone-slash fa-microphone')
+        if ($(this).find('i').hasClass('fa-microphone-slash')) {
+            recognition.stop()
+            
+        } else {
+            $('#commentaire_general_dictee').trigger('focus')
+            var content = ''
+            if ($('#commentaire_general_dictee').val().trim().length > 0) content = $('#commentaire_general_dictee').val();
+            var instruction = $('#instruction')
+    
+            recognition.onstart = function() {
+                instruction.text('La dictée vocale est active')
+            }
+    
+            recognition.onspeechend = function() {
+                instruction.text('Aucune activité - Désactivation de la dictée vocale')
+                recognition.stop()
+                $('#record').find('i').removeClass('fa-microphone').addClass('fa-microphone-slash')
+            }
+    
+            recognition.onerror = function() {
+                instruction.text("Ooups ! j'ai pas compris ! Veuillez répéter s'il vous plait ")
+            }
+    
+            recognition.onresult = function(event) {
+                if (event.results.length > 0) {
+                    var sonuc = event.results[event.results.length -1];
+                    var nv = true;
+                    var first = true;
+                    if (sonuc.isFinal) {
+                      var transcript = sonuc[0].transcript;
+    
+                      if (transcript.includes('à la ligne')) transcript = transcript.replace(' à la ligne','\r\n')
+                      if (transcript.includes('nouveau paragraphe')) transcript = transcript.replace(' nouveau paragraphe','\r\n\r\n')
+                      if (transcript.includes('deux points')) transcript = transcript.replace(' deux points',':')
+                      if (transcript.includes('Point Virgule')) transcript = transcript.replace(' Point Virgule',';')
+                      if (transcript.includes('virgule')) transcript = transcript.replace(' virgule',', ')
+                      if (transcript.includes('ouvre la parenthèse')) transcript = transcript.replace(' ouvre la parenthèse',' (')
+                      if (transcript.includes('ferme la parenthèse')) transcript = transcript.replace(' ferme la parenthèse',') ')
+                      if (transcript.includes('ouvre les guillemets')) transcript = transcript.replace(' ouvre les guillemets',' "')
+                      if (transcript.includes('ferme les guillemets')) transcript = transcript.replace(' ferme les guillemets','" ')
+                      if (transcript.includes(' point')) {
+                        nv = true;
+                      }  else {
+                        nv = false;
+                      }
+                      transcript = transcript.replace(' point','. ')
+                      
+                      
+                      if (nv || first) transcript = transcript.charAt(0).toUpperCase() + transcript.slice(1);
+                        content += transcript;    
+                        nv = true;        
+                        $('#commentaire_general_dictee').val(content); 
+                        console.log(sonuc[0])
+                    }
+                  }
+    
+    
+    
+            }
+        }
+       
+
+
+
+
+
+    })
 
 
 
