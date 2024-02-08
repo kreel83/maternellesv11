@@ -585,23 +585,25 @@ class ParametreController extends Controller
 
     public function parametresMails() {
         $customMail = ClasseMail::where('classe_id', session('classe_active')->id)->first();
-        // dd($customMail->message);
-
         return view('parametresMails.index')->with('message', $customMail->message ?? null);
     }
 
     public function saveCustomMail(Request $request) {
         if ($request->quill) {
-            $quill = $request->quill;
             $customMail = ClasseMail::where('classe_id', session('classe_active')->id)->first();
-            if (!$customMail) {
-                $customMail = new ClasseMail();
+            if($request->quill == '<p><br></p>') {
+                if ($customMail) {
+                    $customMail->delete();
+                }
+            } else {
+                $customMail = ClasseMail::where('classe_id', session('classe_active')->id)->first();
+                if (!$customMail) {
+                    $customMail = new ClasseMail();
+                }
+                $customMail->classe_id = session('classe_active')->id;
+                $customMail->message = $request->quill;
+                $customMail->save();   
             }
-            $customMail->classe_id = session('classe_active')->id;
-            $customMail->message = $request->quill;
-            $customMail->save();
-
-
         }
     }
 }

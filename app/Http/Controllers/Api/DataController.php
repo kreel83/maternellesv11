@@ -50,17 +50,12 @@ class DataController extends Controller
 	        $user->setVisible(['id', 'classe_id', 'name', 'prenom']);
             $classes->setVisible(['id', 'description']);
             
-            // $dispatcher = Enfant::getEventDispatcher();
-            // Enfant::unsetEventDispatcher();
-            // //$enfants = Enfant::select('id','nom','prenom','photo','genre','groupe')->where('user_id', $user->id)->get();
-            // $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe','periode')
-            //     ->where('classe_id', $user->classe_id)
-            //     ->get();
-            // Enfant::setEventDispatcher($dispatcher);
-            $enfants = DB::table('enfants')
-                ->select('id','nom','prenom','photo','genre','groupe','periode')
+            $dispatcher = Enfant::getEventDispatcher();
+            Enfant::unsetEventDispatcher();
+            $enfants = Enfant::select('id','nom','prenom','photo','genre','groupe','periode')
                 ->where('classe_id', $user->classe_id)
                 ->get();
+            Enfant::setEventDispatcher($dispatcher);
 
             $sections = Section::select('id','court')->get();
 
