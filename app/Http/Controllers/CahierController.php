@@ -620,6 +620,7 @@ class CahierController extends Controller
             ->with('titre','Cahier')
             ->with('isChrome',Browser::isChrome())
             ->with('enfant',$enfant)
+            ->with('isChrome', Browser::isChrome())
             ->with('commentaires',$commentaires)
             ->with('reussite',$search_reussite)
             ->with('isreussite',$r)

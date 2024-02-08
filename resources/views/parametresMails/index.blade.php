@@ -17,6 +17,7 @@
 
       <div class="d-flex" id="customMailStatus"></div>
 
+
       <p>Vous pouvez créer le mail qui sera envoyé aux parents avec le lien de téléchargement du cahier de réussites.</p>
       <p>Si vous laissez cette zone vide, notre mail par défaut sera utilisé.</p>
       <div id="customMail" data-origine="true"  style="min-height: 100px; height: auto;max-width: 820px; min-height: 400px" class="ql-container ql-snow customMail position-relative">
