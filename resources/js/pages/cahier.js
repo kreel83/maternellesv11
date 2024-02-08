@@ -181,7 +181,7 @@ const clickOnCahier = (quill, myModal) => {
         $('#editorApercu99').attr('data-texte', texte)
         var editorElement = document.getElementById('editorApercu99');
         var quillInstance = editorElement.__quill || quill;
-        quillInstance.root.innerHTML = texte
+        quillInstance.setText(texte)
 
     })
 
@@ -201,6 +201,7 @@ const clickOnCahier = (quill, myModal) => {
             
         } else {
             $('#commentaire_general_dictee').trigger('focus')
+
             var content = ''
             if ($('#commentaire_general_dictee').val().trim().length > 0) content = $('#commentaire_general_dictee').val();
             var instruction = $('#instruction')
@@ -228,6 +229,7 @@ const clickOnCahier = (quill, myModal) => {
                       var transcript = sonuc[0].transcript;
     
                       if (transcript.includes('à la ligne')) transcript = transcript.replace(' à la ligne','\r\n')
+                      if (transcript.includes('retour à la ligne')) transcript = transcript.replace(' retour à la ligne','\r\n')
                       if (transcript.includes('nouveau paragraphe')) transcript = transcript.replace(' nouveau paragraphe','\r\n\r\n')
                       if (transcript.includes('deux points')) transcript = transcript.replace(' deux points',':')
                       if (transcript.includes('Point Virgule')) transcript = transcript.replace(' Point Virgule',';')
