@@ -71,6 +71,7 @@ class DataController extends Controller
             return response()->json([
                 'success' => true,
                 'is_abonne' => $user->is_abonne(),
+                'evaluations_gratuites' => (int)config('app.custom.evaluations_gratuites'),
                 'classes' => $classes,
 	            'groupes' => $groupes,
                 'user' => $user,
@@ -123,7 +124,8 @@ class DataController extends Controller
             return response()->json([
                 'success' => true,
                 'resultat' => $resultat,
-            ], 200)->setEncodingOptions(JSON_NUMERIC_CHECK);
+            ], 200);
+            //->setEncodingOptions(JSON_NUMERIC_CHECK);
 
         } catch (\Throwable $th) {
             return response()->json([
