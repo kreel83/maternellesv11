@@ -343,9 +343,7 @@ class ficheController extends Controller
 
     public function choix(Request $request) {
             $liste = explode(',',$request->order);
- 
-            $fiche = Fiche::where('user_id', Auth::id())->where('section_id',$request->section)->orderBy('order', 'DESC')->first();
-            $order =  ($fiche) ? $fiche->order + 1 : 1;
+
             $fiche = new Fiche();
             $fiche->item_id = $request->fiche;
             $fiche->parent_type = $request->table;
@@ -357,7 +355,7 @@ class ficheController extends Controller
             $t = $fiche->id;
 
             foreach ($liste as $key=>$item) {
-               $p = Fiche::where('user_id', Auth::id())->where('item_id', $item)->first();
+               $p = Fiche::find($item);
                $p->order = $key + 1;
                $p->save(); 
             }
