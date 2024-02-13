@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Références introuvables.',
+    'failed' => 'Compte inexistant ou inactif.',
     'password' => 'Le mot de passe indiqué est incorrect.',
     'throttle' => 'Trop de tentatives de connexion. Veuillez réessayer dans :seconds secondes.',
 

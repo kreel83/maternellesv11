@@ -47,74 +47,66 @@
     </x-auth-card>
 </x-guest-layout> --}}
 
-@extends('layouts.parentLayout', ['titre' => 'Réinitialisation du mot de passe', 'menu' => 'item', 'log' => true])
+@extends('layouts.template1', ['titre' => 'Réinitialisation du mot de passe'])
 
 @section('content')
 
-<div class="mb-3 d-flex justify-content-center">
-           
-  <a href="{{route('mf.index')}}" class="brand-logo">
-  <img src="{{asset('img/deco/logo.png')}}" alt="" width="250" class="d-bloc mx-auto">
-  </a>
+  <div class="card mx-auto w-75">
 
-</div>    
+      <div class="card-body">
 
-<div class="card mx-auto w-75">
+          @if (session()->has('status'))
+              <div class="alert alert-info">
+                  <x-auth-session-status class="mb-4" :status="session('status')" />
+              </div>
+          @endif
+          
+          <form method="POST" action="{{ route('password.update') }}">
+          @csrf
 
-    <div class="card-body">
+          <!-- Password Reset Token -->
+          <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        @if (session()->has('status'))
-            <div class="alert alert-info">
-                <x-auth-session-status class="mb-4" :status="session('status')" />
-            </div>
-        @endif
-        
-        <form method="POST" action="{{ route('password.update') }}">
-        @csrf
+          <!-- Validation Errors -->
+          @if ($errors->any())
+          <div class="alert alert-danger">
+                  @foreach ($errors->all() as $error)
+                      {{ $error }}<br>
+                  @endforeach
+          </div>
+          @endif
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+          <h4 class="mb-3">Réinitialisation du mot de passe</h4>
 
-        <!-- Validation Errors -->
-        @if ($errors->any())
-        <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
-        </div>
-        @endif
+          <p>Indiquez ci-dessous votre adresse mail ainsi que votre nouveau mot de passe.</p>
 
-        <h4 class="mb-3">Réinitialisation du mot de passe</h4>
+          <!-- Email Address -->
+          <div class="input-group mb-3">
+              <span class="input-group-text bg-light" id="email"><i class="fa-solid fa-envelope"></i></span>
+              <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $request->email) }}" placeholder="Votre adresse mail" required>
+          </div>
 
-        <p>Indiquez ci-dessous votre adresse e-mail ainsi que votre nouveau mot de passe.</p>
+          <!-- Password -->
+          <div class="input-group mb-3">
+            <span class="input-group-text bg-dark" id="password"><i class="fa-solid fa-key"></i></span>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Nouveau mot de passe" required>
+          </div>
 
-        <!-- Email Address -->
-        <div class="input-group mb-3">
-            <span class="input-group-text bg-light" id="email">@</span>
-            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $request->email) }}" placeholder="Votre adresse e-mail" required>
-        </div>
+          <!-- Confirm Password -->
+          <div class="input-group mb-3">
+            <span class="input-group-text bg-dark" id="password_confirmation"><i class="fa-solid fa-key"></i></span>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmation du mot de passe" required>
+          </div>
 
-        <!-- Password -->
-        <div class="input-group mb-3">
-          <span class="input-group-text bg-dark" id="password"><i class="fa-solid fa-lock"></i></span>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Nouveau mot de passe" required>
-        </div>
+          <div class="mb-3 gap-2 d-grid">
+              <button type="submit" class="btnAction" style="width:100%">Envoyer</button>
+          </div>
 
-        <!-- Confirm Password -->
-        <div class="input-group mb-3">
-          <span class="input-group-text bg-dark" id="password_confirmation"><i class="fa-solid fa-lock"></i></span>
-          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmation du mot de passe" required>
-        </div>
+          </form>
 
-        <div class="mb-3 gap-2 d-grid">
-            <button type="submit" class="btn btn-primary">Envoyer</button>
-        </div>
+      </div>
 
-        </form>
-
-    </div>
-
-</div>
+  </div>
 
 @endsection
 
