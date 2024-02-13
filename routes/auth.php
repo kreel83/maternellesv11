@@ -78,3 +78,5 @@ Route::get('/register/step4', [RegisteredUserController::class, 'registrationSte
 Route::get('/register/validation/{token}', [RegisteredUserController::class, 'valideUser'])->name('registration.validation');  // utilisé pour valider une adresse mail depuis email
 // utilisé dans register.js :
 Route::post('/register/search/etablissement', [RegisteredUserController::class, 'registrationChercheEtablissement']);
+// route pour création simplifiée de compte sans code etablissement, uniquement enseignant :
+Route::post('/register/newaccount', [RegisteredUserController::class, 'registrationNewaccountPost'])->name('registration.newaccount.post');

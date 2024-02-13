@@ -29,7 +29,7 @@
 
         <ul>
             <li>Vérifier sa présence dans le dossier 'Spam' ou 'Courrier indésirable' de votre messagerie.</li>
-            <li><a href="{{ route('vitrine.contact') }}">Obtenir de l'aide via notre formulaire de contact</a></li>
+            <li><a href="{{ route('mf.contact') }}">Obtenir de l'aide via notre formulaire de contact</a></li>
         </ul>
         
         

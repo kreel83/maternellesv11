@@ -48,34 +48,38 @@
             <div class="alert alert-info">
                 <x-auth-session-status class="mb-4" :status="session('status')" />
             </div>
-        @endif
+            <div class="mt-3 text-center">
+              <a href="{{ route('login') }}" class="btnAction" style="display: block; width: 100%">Se connecter</a>
+          </div>
+        @else
         
-        <form method="POST" action="{{ route('password.email') }}">
-        @csrf
+          <form method="POST" action="{{ route('password.email') }}">
+          @csrf
 
-        <!-- Validation Errors -->
-        @if ($errors->any())
-        <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
-        </div>
+          <!-- Validation Errors -->
+          @if ($errors->any())
+          <div class="alert alert-danger">
+                  @foreach ($errors->all() as $error)
+                      {{ $error }}<br>
+                  @endforeach
+          </div>
+          @endif
+
+          <h4 class="mb-3 text-center" style="color: var(--main-color)">Mot de passe oublié ?</h4>
+
+          <p>Indiquez ci-dessous votre adresse e-mail pour recevoir un lien de réinitialisation de votre mot de passe.</p>
+
+          <div class="input-group mb-3">
+              <span class="input-group-text" id="email"><i class="fa-solid fa-envelope"></i></span>
+              <input type="email" class="form-control" id="email" name="email" value="" placeholder="Votre adresse e-mail" required>
+          </div>
+
+          <div class="mb-3 gap-2 d-grid">
+              <button type="submit" class="btnAction" style="display: block; width: 100%">Envoyer</button>
+          </div>
+
+          </form>
         @endif
-
-        <h4 class="mb-3 text-center" style="color: var(--main-color)">Mot de passe oublié ?</h4>
-
-        <p>Indiquez ci-dessous votre adresse e-mail pour recevoir un lien de réinitialisation de votre mot de passe.</p>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text bg-light" id="email">@</span>
-            <input type="email" class="form-control" id="email" name="email" value="" placeholder="Votre adresse e-mail" required>
-        </div>
-
-        <div class="mb-3 gap-2 d-grid">
-            <button type="submit" class="btnAction" style="display: block; width: 100%">Envoyer</button>
-        </div>
-
-        </form>
 
     </div>
 

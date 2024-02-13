@@ -60,7 +60,7 @@
             </form>
         </div>
 
-        <div class="gridcadre grid2">
+        {{-- <div class="gridcadre grid2">
             <div class="gridTitre">Mon établissement</div>
             <div class="mt-4 text-center">
                 <h3><span class="badge bg-secondary">{{$user->ecole_id}}</span></h3>
@@ -77,7 +77,8 @@
                     <input type="text" class="custom-input" name="email" value="{{$user->classe_active()->ecole->telephone}}" disabled/>
                 </div>
             </div>       
-        </div>
+        </div> --}}
+
         <div class="gridcadre grid3 d-flex justify-content-center align-items-center tuto_tutoriel">
             <div class="gridTitre">Activation des aides</div>
             <div class="mt-3">

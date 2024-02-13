@@ -27,13 +27,13 @@
                     @include('include.display_msg_error')
   
                     <div class="input-group mb-4">
-                      <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-user"></i></span>
+                      <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
                         <input type="email" id="email" name="email" class="form-control"
                         placeholder="Adresse e-mail" autofocus />
                     </div>
             
                     <div class="input-group mb-4">
-                      <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-key"></i></span>
+                      <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-key"></i></span>
                         <input type="password" name="password" id="password" class="form-control" 
                         placeholder="Mot de passe"/>
                     </div>
