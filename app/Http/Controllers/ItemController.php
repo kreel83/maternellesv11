@@ -138,6 +138,7 @@ class ItemController extends Controller
 
     public function saveResultat(Request $request) {
         
+
         $user = Auth::user();
         
         if (!$user->is_abonne()) {
@@ -166,6 +167,7 @@ class ItemController extends Controller
 
         if ($search && $request->note == 0) {
             $search->delete();
+            return 'modif';
            
         }
 
