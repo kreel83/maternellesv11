@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid row">
-<h1 class="text-center">Apercu et édition du cahier de réussite de {{$enfant->prenom}}</h1>
+<h1 class="text-center">Apercu et édition du cahier de réussites de {{$enfant->prenom}}</h1>
 
 <h3 class="text-center mb-5">
    {{$title}}

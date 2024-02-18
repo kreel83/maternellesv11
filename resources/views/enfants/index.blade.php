@@ -53,30 +53,6 @@
                 </form>                
         </div> 
 
-        {{-- @if ($type == "reussite")
-                @if($canSendPDF)
-                <div class="alert alert-success" role="alert">
-                    <div class="row d-flex">
-                        <div class="col">
-                            Tous les cahiers de réussite sont prêts. 
-                        </div>
-                        <div class="col">
-                            <a href="{{ route('envoiCahier') }}" class="btn btn-success text-right">Envoyer aux parents</a>
-                        </div>
-                    </div>
-                </div>
-                @else
-                    <div class="alert alert-warning" role="alert">
-                        <div class="row d-flex">
-                            <div class="col">
-                                Tous les cahiers de réussite ne sont pas prêts. 
-                            </div>		
-                        </div>
-                    </div>
-                @endif
-        @endif --}}
-
-
         <div class="row gx-0">
                 @if ($ordre == 'groupe')
                 <div class="col-md-12 d-flex flex-column">

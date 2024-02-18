@@ -161,7 +161,7 @@
             </div>
             <div class="text-center fs-1"><span class="fw-bold">B</span>ienvenue </div>
             <div class="text-center fs-3">dans la section de téléchargement</div> 
-            <div class="text-center fs-3">du cahier de réussite de votre enfant.</div>
+            <div class="text-center fs-3">du cahier de réussites de votre enfant.</div>
             <div class="text-center my-3 fs-1 fw-bolder">{{$enfant}}</div>            
         </div>
 

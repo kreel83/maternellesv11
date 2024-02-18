@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewAccount;
 use App\Mail\UserEmailVerificationSelfRegistration;
 use App\Models\Ecole;
 use App\Models\User;
@@ -280,29 +281,8 @@ class RegisteredUserController extends Controller
         return json_encode($result);
     }
 
-    public function registrationNewaccountPost(Request $request)
+    public function registrationNewaccountPost(NewAccount $request)
     {
-        $request->validate([
-            'civilite' => ['required', 'string'],
-            'name' => ['required', 'string', 'max:255'],
-            'prenom' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ], [
-            'civilite.required' => 'La civilité est obligatoire.',
-            'name.required' => 'Le nom est obligatoire.',
-            'name.max' => 'Le nom est limité à 255 caractères.',
-            'prenom.required' => 'Le prénom est obligatoire.',
-            'prenom.max' => 'Le prénom est limité à 255 caractères.',
-            'email.required' => 'Adresse mail obligatoire.',
-            'email.max' => 'Adresse mail limitée à 255 caractères.',
-            'email.unique' => 'Un compte existe déjà pour cette adresse mail.',
-            'password.required' => 'Mot de passe obligatoire.',
-            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
-            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
-
-        ]);
-
         $token = md5(microtime(TRUE)*100000);
 
         User::create([
@@ -318,10 +298,6 @@ class RegisteredUserController extends Controller
         $verificationLink = route('registration.validation', ['token' => $token]);
         Mail::to($request->email)->send(new UserEmailVerificationSelfRegistration($verificationLink, $request->prenom));
 
-        // si probleme envoi mail
-        // php artisan config:cache
-        // php artisan config:clear
-        // php artisan cache:clear
         $request->session()->put('email', $request->email);
         $request->session()->put('role', $request->role);
         return redirect()->route('registration.step4')->with('email', $request->email);

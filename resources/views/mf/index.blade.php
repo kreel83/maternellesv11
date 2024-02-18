@@ -318,7 +318,7 @@
             <div class="row filters">
                 <div class="col-xl-4 col-lg-4 col-md-6 mix ios des">
                     <div class="item wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
-                        <img class="rounded" src="assets/images/home1/project/01-dashboard.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/01-dashboard.jpg" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Le tableau de bord</h6>
@@ -330,7 +330,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix and app">
                     <div class="item wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                        <img class="rounded" src="assets/images/home1/project/02-cahier.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/02-cahier.jpg" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Le cahier de réussite</h6>
@@ -342,7 +342,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix and mar">
                     <div class="item wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="1s">
-                        <img class="rounded" src="assets/images/home1/project/03-avatar.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/03-avatar.jpg" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>J'affecte un avatar à mon élève</h6>
@@ -366,7 +366,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix ios and">
                     <div class="item wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
-                        <img class="rounded" src="assets/images/home1/project/05-activite.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/05-activite.jpg" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Je sélectionne mes activités</h6>
@@ -378,7 +378,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix des mar">
                     <div class="item wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                        <img class="rounded" src="assets/images/home1/project/06-redaction.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/06-redaction.jpg" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Je rédige mon cahier de réussite</h6>
@@ -390,7 +390,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix des app">
                     <div class="item wow fadeInUp" data-wow-delay="0.8s" data-wow-duration="1s">
-                        <img class="rounded" src="assets/images/home1/project/07-parametres.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/07-parametres.jpg" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>Je gère les paramètres de ma classe</h6>
@@ -414,7 +414,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mix des mar">
                     <div class="item wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                        <img class="rounded" src="assets/images/home1/project/09-groupes.png" alt="Project">
+                        <img class="rounded" src="assets/images/home1/project/09-groupes.jpg" alt="Project">
                         <div class="overlay">
                             <div class="text">
                                 <h6>J'affecte un groupe à mes élèves</h6>

@@ -327,7 +327,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-info mt-2 mb-2" role="alert" style="font-size: 14px">
-                    Vous devez rédiger un texte qui sera repris dans le cahier de réussite à la validation de cette
+                    Vous devez rédiger un texte qui sera repris dans le cahier de réussites à la validation de cette
                     activité. <br> Par convention, utilisez le prénom <strong>Tom</strong> dans la rédaction de votre phrase.<br>
                     Notre intelligence artificielle fera le reste :)
                 </div>

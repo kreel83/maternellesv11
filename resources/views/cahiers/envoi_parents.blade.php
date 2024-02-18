@@ -4,7 +4,7 @@
 
 <h1>Envoi du cahier de réussite</h1>
 
-<p>Vous allez envoyer un courrier électronique contenant un lien pour télécharger le cahier de réussite à tous les parents des élèves de votre classe.</p>
+<p>Vous allez envoyer un courrier électronique contenant un lien pour télécharger le cahier de réussites à tous les parents des élèves de votre classe.</p>
 
 @if (count($badEmails) > 0)
     <div class="alert alert-warning" role="alert">

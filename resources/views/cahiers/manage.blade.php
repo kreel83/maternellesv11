@@ -29,7 +29,7 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
     {{-- Retour assignation licence --}}
     @if(session()->has('success'))
         @if(session('success'))
-            <div class="mt-2 alert alert-success" role="alert">Les cahiers de réussite ont été envoyés.</div>
+            <div class="mt-2 alert alert-success" role="alert">Les cahiers de réussites ont été envoyés.</div>
         @else
             <div class="mt-2 alert alert-danger" role="alert">
                 {!! implode('<br>', session('error')) !!}
