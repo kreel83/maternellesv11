@@ -11,7 +11,7 @@
 	<div class="alert alert-success" role="alert">
 		<div class="row d-flex">
 			<div class="col">
-					Tous les cahiers de réussite sont prêts. 
+					Tous les cahiers de réussites sont prêts. 
 			</div>
 			<div class="col">
 					<a href="{{ route('envoiCahier') }}" class="btn btn-success text-right">Envoyer aux parents</a>
@@ -22,7 +22,7 @@
 	<div class="alert alert-warning" role="alert">
 		<div class="row d-flex">
 			<div class="col">
-					Tous les cahiers de réussite ne sont pas prêts. 
+					Tous les cahiers de réussites ne sont pas prêts. 
 			</div>		
 		</div>
 	</div>

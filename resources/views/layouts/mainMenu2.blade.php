@@ -116,8 +116,8 @@ use Illuminate\Support\Facades\Auth;
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}" data-bs-toggle="dropdown">Les cahiers de réussites</a>
                                     <div class="dropdown-menu">
-                                        <a href="{{ route('enfants', ['type' => 'reussite']) }}" class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les cahiers de réussite</a>
-                                        <a href="{{ route('cahierManage') }}" class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère les cahiers de réussite</a>
+                                        <a href="{{ route('enfants', ['type' => 'reussite']) }}" class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les cahiers de réussites</a>
+                                        <a href="{{ route('cahierManage') }}" class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère les cahiers de réussites</a>
                                     </div>
                                 </div>
                             @endif

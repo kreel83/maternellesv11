@@ -139,7 +139,7 @@
         <div class="modal-dialog" style="top: 150px">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Modification du cahier de réussite de la section</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Modification du cahier de réussites de la section</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

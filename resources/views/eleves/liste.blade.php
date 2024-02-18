@@ -156,13 +156,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <small>Le prochain cahier de réussite pour cette élève est prévu fin :</small>
+                    <small>Le prochain cahier de réussites pour cette élève est prévu fin :</small>
 
 
                     <hr>
                     <div class="form-check" style="height: 15px">
                         <input type="checkbox" class="form-check-input" id="reussite" value="true">
-                        <label class="form-sh-label" for="reussite">Suspendre la création de cahier de réussite ?</label>
+                        <label class="form-sh-label" for="reussite">Suspendre la création de cahier de réussites ?</label>
                     </div>
                     <div>
 

@@ -124,7 +124,7 @@
             <label class="form-sh-label" for="sh2" style="font-size: 12px; color: grey;padding-top: 2px">L'élève arrive en cours d'année</label>
         </div>
         <div id="selectPeriodeBloc" class="d-none mb-2">
-            <label for="" style="font-size: 14px; color: grey">Prochain cahier de réussite prévu pour fin :</label>    
+            <label for="" style="font-size: 14px; color: grey">Prochain cahier de réussites prévu pour fin :</label>    
             <select name="periode"  class="form-select" style="font-size: 14px; color: grey">
                 <option value="">Choississez une période</option>
                 @foreach ($periodes as $key => $periode)

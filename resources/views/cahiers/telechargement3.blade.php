@@ -184,7 +184,7 @@
 
             <div class="text-center">
                 <div class="fs-1"><span class="fw-bold">B</span>ienvenue</div>
-                <div class="fs-4">dans la section de téléchargement du cahier de réussite de</div>
+                <div class="fs-4">dans la section de téléchargement du cahier de réussites de</div>
                 <div class="fs-1 fw-bolder">{!! $enfant->formatPdf() !!}</div>
             </div>
         

@@ -62,7 +62,7 @@
                     @endif
                     <div class="ms-1 ms-2 pt-2" style="font-size: 14px">
                         <div  style="font-size: 24px;font-weight: bolder; color: {{$enfant->genre == 'F' ? 'var(--pink)' : 'var(--blue)'}}">{{ $enfant->prenom }} <span class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}">{{ $enfant->nom }}</span></div>
-                        <div>Cahier de réussite | {{ $title }}</div>
+                        <div>Cahier de réussites | {{ $title }}</div>
                         
                     </div>
                     
