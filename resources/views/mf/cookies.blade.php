@@ -22,7 +22,7 @@
 
 
     <!-- start banner area -->
-    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-bg5.jpg')}}">
+    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-legal.jpg')}}">
         <div class="overlay">
             <div class="container">
                 <div class="row">
