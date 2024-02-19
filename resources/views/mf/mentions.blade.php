@@ -22,7 +22,7 @@
 
 
     <!-- start banner area -->
-    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-bg5.jpg')}}">
+    <section class="inner-page banner" data-img="{{asset('assets/images/inner/banner-legal.jpg')}}">
         <div class="overlay">
             <div class="container">
                 <div class="row">
@@ -68,8 +68,8 @@
                     Registre du Commerce et des Sociétés de TOULON sous le numéro 983 750 118 dont le siège social
                     est situé au 33 Rue Claire Joie, 83200 Toulon.<br>
                     Adresse e-mail : {{ config('mail.from.address') }}<br>
-                    N° de TVA intracommunautaire : **************<br>
-                    Le Directeur de la publication est **************<br>
+                    N° de TVA intracommunautaire : en cours d'attribution<br>
+                    Le Directeur de la publication est M. Marc Borgna<br>
                     ci-après l'"Editeur".
                     </p>
 
