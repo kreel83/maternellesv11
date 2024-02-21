@@ -35,7 +35,7 @@
 
 <h5 class="mt-3">Sécurité</h5>
 
-<p>Lors de votre navigation sur nos sites internet et notre application mobile les données sont chiffrées via un protocole https.</p>
+<p>Lors de votre navigation sur notre site internet et notre application mobile les données sont chiffrées via un protocole https.</p>
 <p>Concernant votre espace client, vous devez respecter les consignes de création de mot de passe indiquées. En cas d’oubli ou perte de mot de passe vous devrez suivre les instructions relatives à la réinitialisation de celui-ci.</p>
 <p>Le stockage de vos données est effectué sur des serveurs sécurisés, situés en France.</p>
 
@@ -68,7 +68,7 @@
 
 <br>
 <p><strong>2. Nature des opérations réalisées sur les données</strong></p>
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
     <tbody><tr>
     <td></td>
     <td><p align="center">Cochez </p></td>
@@ -128,8 +128,8 @@
     </tr>
     <tr>
     <td><p>Diffusion ou toute autre forme de mise à disposition</p></td>
-    <td style="text-align:center;"><p><i class="fa-regular fa-square-check"></i> </p></td>
-    <td><p>Mise à disposition des données pour les enseignants via l'application.</p></td>
+    <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
+    <td><p></p></td>
     </tr>
     <tr>
     <td><p>Rapprochement ou l'interconnexion</p></td>
@@ -144,15 +144,15 @@
     </tr>
     <tr>
     <td><p>Impression</p></td>
-    <td style="text-align:center;"><p><i class="fa-regular fa-square-check"></i> </p></td>
-    <td><p>Impression de toute donnée du logiciel.</p></td>
+    <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
+    <td><p></p></td>
     </tr>
     <tr>
     <td><p>Saisie</p></td>
     <td style="text-align:center;"><p><i class="fa-regular fa-square-check"></i> </p></td>
     <td><p>Toute donnée du logiciel, par exemple&nbsp;:<br>
-    - Informations des élèves et de leurs responsables légaux,<br>
-    - Informations pédagogiques (évaluations) par l'équipe éducative</p></td>
+    - Informations des élèves et de leurs responsables légaux.<br>
+    - Informations pédagogiques (évaluations) par l'équipe éducative<./p></td>
     </tr>
     <tr>
     <td><p>Contrôle</p></td>
@@ -176,8 +176,8 @@
 <br>
 
 <p><strong>3. Catégories de données à caractère personnel traitées</strong></p>
-<p><u>Application {{ config('app.name') }}</u></p>
-<table class="table table-striped">
+<p><u>Logiciel {{ config('app.name') }}</u></p>
+<table class="table table-striped table-bordered">
 <tbody><tr>
 <td></td>
 <td><p>Cochez </p></td>
@@ -196,9 +196,8 @@ Civilité, nom, prénoms, adresse électronique.<br>
 </tr>
 <tr>
 <td><p>Vie personnelle (habitudes de vie, situation familiale, etc.)</p></td>
-<td style="text-align:center;"><p><i class="fa-regular fa-square-check"></i> </p></td>
-<td><p><u>Élèves&nbsp;:</u><br>
-Situation de handicap.</p></td>
+<td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
+<td><p></p></td>
 </tr>
 <tr>
 <td><p>Vie scolaire et/ou vie professionnelle (CV, formation professionnelles, distinction et diplômes)</p></td>
@@ -218,7 +217,7 @@ Evaluation des compétences.</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square-check"></i> </p></td>
 <td><p>
 <u>Professeurs&nbsp;:</u><br>
-N° CB : pour s'abonner au logiciel {{ config('app.name') }}    
+N° CB : pour s'abonner au logiciel {{ config('app.name') }} et géré par <a href="https://stripe.com" target="_blank">Stripe</a>.
 </p></td>
 </tr>
 <tr>
@@ -312,7 +311,7 @@ N° CB : pour s'abonner au logiciel {{ config('app.name') }}
 <br>
 
 <p><strong>4. Durée de conservation des données</strong></p>
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
 <tbody><tr>
 <td></td>
 <td><p align="center">Durée de conservation<br>
@@ -322,20 +321,18 @@ archivage</p></td>
 </tr>
 <tr>
 <td><p>Etat civil, identité, données d'identification, images…</p></td>
-<td><p>Les données d'état-civil peuvent être conservées maximum trois ans à partir de la date de recueil de ces informations.<br>
-Applications mobiles&nbsp;:<br>
-Les données sont conservées tant que le compte est présent dans le logiciel.</p></td>
-<td><p>Les années antérieures sont conservées en archivage intermédiaire 3 années maximum.</p></td>
+<td><p>Les données d'état-civil peuvent être conservées maximum trois ans à partir de la date de recueil de ces informations.</p></td>
+<td><p>Les années antérieures sont conservées 3 années maximum, à but de récupération de données (réplication de la base de données de production).</p></td>
 </tr>
 <tr>
 <td><p>Vie personnelle (habitudes de vie, situation familiale, etc.)</p></td>
 <td><p>Les données sont conservées pour une durée correspondant à l'année scolaire.</p></td>
-<td><p>Les années antérieures sont conservées en archivage intermédiaire 3 années maximum.</p></td>
+<td><p>Les années antérieures sont conservées 3 années maximum, à but de récupération de données (réplication de la base de données de production).</p></td>
 </tr>
 <tr>
 <td><p>Vie scolaire et/ou vie professionnelle (CV, formation professionnelles, distinction et diplômes)</p></td>
 <td><p>Les données sont conservées pour une durée correspondant à l'année scolaire.</p></td>
-<td><p>Les années antérieures sont conservées en archivage intermédiaire 3 années maximum.</p></td>
+<td><p>Les années antérieures sont conservées 3 années maximum, à but de récupération de données (réplication de la base de données de production).</p></td>
 </tr>
 <tr>
 <td><p>Informations d'ordre économique et financier (revenus, situation financière, situation fiscale, etc.)</p></td>
