@@ -171,7 +171,7 @@
                                 </li>
                             </ul>
                             <p class="mt-4">
-                                &copy; 2023 ET BAM Solutions. Tous droits réservés.
+                                &copy; 2023 ET BAM Solutions.<br>Tous droits réservés.
                             </p>
                         </div>
                     </div>
@@ -185,7 +185,7 @@
                                 <li><a href="{{route('mf.application')}}">L'application</a></li>
                                 <li><a href="{{route('mf.compagnon')}}">Le compagnon</a></li>
                                 <li><a href="{{route('mf.tarifs')}}">Tarifs</a></li>
-                                {{-- <li><a href="{{route('registration.start')}}">Créer un compte</a></li> --}}
+                                <li><a href="{{route('registration.start')}}">Créer un compte</a></li>
                             </ul>
                         </div>
                     </div>
@@ -196,7 +196,7 @@
                             </div>
                             <ul class="navigation">
                                 <li><a href="{{ route('mf.index') }}">Accueil</a></li>
-                                <li><a href="{{ route('mf.conditions') }}">Conditions générales de vente</a></li>
+                                <li><a href="{{ route('mf.conditions') }}">Conditions générales d'utilisation</a></li>
                                 <li><a href="{{ route('mf.mentions') }}">Mentions légales</a></li>
                                 <li><a href="{{ route('mf.donnees') }}">Données personnelles</a></li>
                                 <li><a href="{{ route('mf.cookies') }}">Utilisation des cookies</a></li>
