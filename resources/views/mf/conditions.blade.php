@@ -1,8 +1,8 @@
 @extends('layouts.mf')
 
 @section('seo')
-    <title>Conditions générales de vente</title>
-    <meta name="description" content="Les conditions générales de vente du site internet {{ config('app.name') }}">
+    <title>Conditions générales d'utilisation</title>
+    <meta name="description" content="Les conditions générales d'utilisation du site internet {{ config('app.name') }}">
 @endsection
 
 @section('content')

@@ -60,7 +60,7 @@
                     <li>- Internes ou tiers, respectivement liés à notre site internet ou aux services tiers que nous intégrons sur notre site internet.</li>
                     </ul>
                     <br>
-                    <p><strong>Acception des cookies lors de la première visite</strong></p>
+                    <p><strong>Acceptation des cookies lors de la première visite</strong></p>
                     <p>Si nous ne détectons pas de cookie interne lors de votre visite sur nos sites internet nous vous proposerons d'accepter ou non l'utilisation des cookies.</p>
 
 
