@@ -57,7 +57,7 @@
                     visiteurs, ci-après l""Utilisateur", du site {{ config('app.url') }} , ci-après le "Site", les
                     présentes mentions légales.</p>
 
-                    <p>La connexion et la navigation sur le Site par l’Utilisateur implique acceptation intégrale et sans réserve
+                    <p>La connexion et la navigation sur le Site par l’Utilisateur implique l'acceptation intégrale et sans réserve
                     des présentes mentions légales.</p>
 
                     <p>Ces dernières sont accessibles sur le Site à la rubrique « Mentions légales ».</p>

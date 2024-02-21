@@ -43,20 +43,18 @@
 <p>ET BAM Solutions est le seul destinataire de vos données. Aucune information personnelle n'est cédée à des tiers en dehors de procédures légales.</p>
 <p>Par ailleurs, ET BAM Solutions ne collecte aucune « données sensibles ».</p>
 
-<h5 class="mt-3">Vos droits Informatique et Libertés</h5>
+<h5 class="mt-3">Services et sites internet tiers</h5>
+<p>ET BAM Solutions utilise le service tiers de paiement sécurisé <a href="https://stripe.com" target="_blank">Stripe</a> à des fins d'abonnement au logiciel {{ config('app.name') }}.</p>
+<p>En aucun cas ET BAM Solutions n'a connaissance de vos données bancaires et ne les stockent pas.</p>
 
+<h5 class="mt-3">Vos droits Informatique et Libertés</h5>
 <p>Conformément à la loi Informatique et Libertés du 06 janvier 1978 modifiée, vous disposez d’un droit d'accès, de rectification, d’effacement, de limitation, d’opposition, à la portabilité aux informations vous concernant. Vous disposez du droit de définir des directives relatives au sort de vos données personnelles et à la manière dont vous souhaitez que vos droits soient exercés après votre décès. Vous disposez également du droit d’introduire une réclamation auprès de la Cnil.</p>
 
 <h5 class="mt-3">Exercer vos droits Informatique et Libertés</h5>
-
 <p>Vous pouvez exercer vos droits en envoyant votre demande à : SAS ET BAM Solutions - DPO - 33 rue Claire Joie - 83200 Toulon ou par email à : donneepersonnelle@etbamsolutions.com. Une réponse vous sera alors adressée dans un délai de 1 mois suivant la réception de la demande.</p>
-
 <p>Toute demande d'accès, de rectification, d’effacement, de limitation, d’opposition, à la portabilité portant sur vos données nécessite la présentation d’une pièce d’identité par envoi électronique ou courrier. Sans cette pièce, pour la protection de vos informations personnelles, il nous est impossible de vous les divulguer ou de les modifier.</p>
-
-<p>Toutefois, lorsque votre demande de suppression porte sur votre compte sur {{ config('app.url') }}, et que l’adresse email du compte à supprimer correspond à l’adresse email avec laquelle vous nous écrivez, il n’est pas nécessaire de nous fournir une pièce d’identité. Vous pouvez alors nous envoyer simplement un email à donneepersonnelle@etbamsolutions.com. Si l’adresse email avec laquelle vous nous écrivez ne correspondant à l’adresse email du compte à supprimer, vous devrez nous transmettre par voie électronique ou courrier, une copie de votre pièce d’identité.</p>
-
+<p>Toutefois, lorsque votre demande de suppression porte sur votre compte sur {{ config('app.url') }}, et que l’adresse email du compte à supprimer correspond à l’adresse email avec laquelle vous nous écrivez, il n’est pas nécessaire de nous fournir une pièce d’identité. Vous pouvez alors nous envoyer simplement un email à donneepersonnelle@etbamsolutions.com. Si l’adresse email avec laquelle vous nous écrivez ne correspond pas à l’adresse email du compte à supprimer, vous devrez nous transmettre par voie électronique ou courrier, une copie de votre pièce d’identité.</p>
 <p>Nous précisons que certaines informations vous concernant ne peuvent, pour des raisons légales, être modifiées ou supprimées de nos bases de données. ET BAM Solutions pourra également démontrer, le cas échéant, qu’il existe des motifs légitimes et impérieux pour poursuivre le traitement qui prévalent sur les droits et les libertés de la personne concernée.</p>
-
 <p>En cas de décès qui serait porté à notre connaissance, nous vous informons que vos données seront supprimées, sauf nécessité de conservation pendant une durée déterminée pour des motifs tenant à nos obligations légales et réglementaires et/ou aux délais légaux de prescription, et après le cas échéant avoir été communiquées à un tiers éventuellement désigné par vos soins.</p>
 
 <h5 class="mt-3">Description du traitement</h5>
@@ -64,9 +62,9 @@
 <p><strong>1. Finalités : Objet du ou des traitement(s)</strong></p>
 <p>Finalité principale :</p>
 <p>- Logiciel</p>
-<p>Evaluation des élèves et conception du cahier de réussites.</p>
+<p>Évaluation des élèves et conception du cahier de réussites.</p>
 <p>- Application mobile (Compagnon)</p>
-<p>Evaluation des élèves.</p>
+<p>Évaluation des élèves.</p>
 
 <br>
 <p><strong>2. Nature des opérations réalisées sur les données</strong></p>
@@ -212,12 +210,16 @@ Evaluation des compétences.</p></td>
 <tr>
 <td><p>Informations d'ordre économique et financier (revenus, situation financière, situation fiscale, etc.)</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
-<td><p></p></td>
+<td><p>
+</p></td>
 </tr>
 <tr>
-<td><p>Données bancaires (n° compte, RIB, IBAN, n° CB, etc.)</p></td>
-<td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
-<td></td>
+<td><p>Données bancaires (n° de compte, RIB, IBAN, n° CB, etc.)</p></td>
+<td style="text-align:center;"><p><i class="fa-regular fa-square-check"></i> </p></td>
+<td><p>
+<u>Professeurs&nbsp;:</u><br>
+N° CB : pour s'abonner au logiciel {{ config('app.name') }}    
+</p></td>
 </tr>
 <tr>
 <td><p>Données de connexion (adresse IP, identifiants dans des logs, etc.) </p></td>
@@ -322,7 +324,7 @@ archivage</p></td>
 <td><p>Etat civil, identité, données d'identification, images…</p></td>
 <td><p>Les données d'état-civil peuvent être conservées maximum trois ans à partir de la date de recueil de ces informations.<br>
 Applications mobiles&nbsp;:<br>
-Les données sont conservées tant que le compte est présent dans l’application mobile.</p></td>
+Les données sont conservées tant que le compte est présent dans le logiciel.</p></td>
 <td><p>Les années antérieures sont conservées en archivage intermédiaire 3 années maximum.</p></td>
 </tr>
 <tr>
@@ -341,8 +343,8 @@ Les données sont conservées tant que le compte est présent dans l’applicati
 <td><p></p></td>
 </tr>
 <tr>
-<td><p>Données bancaires (n° compte, RIB, IBAN, n° CB, etc.)</p></td>
-<td></td>
+<td><p>Données bancaires (n° de compte, RIB, IBAN, n° CB, etc.)</p></td>
+<td><p></p></td>
 <td></td>
 </tr>
 <tr>
@@ -351,7 +353,7 @@ Les données sont conservées tant que le compte est présent dans l’applicati
 <td><p></p></td>
 </tr>
 <tr>
-<td><p>Dnnées de localisation (déplacements, données GPS, GSM, etc.)</p></td>
+<td><p>Données de localisation (déplacements, données GPS, GSM, etc.)</p></td>
 <td></td>
 <td></td>
 </tr>
