@@ -1,4 +1,4 @@
-<p>Les présentes Conditions Générales de Vente sont à jour au 01 janvier 2023.</p>
+{{-- <p>Les présentes Conditions Générales de Vente sont à jour au 01 janvier 2023.</p> --}}
 <p>Entre :</p>
 <p>ET BAM Solutions – SAS au capital social de 1000 euros, domiciliée au 33 rue Claire Joie, 83200 Toulon – {{ config('app.url') }} – R.C.S 983 750 118 R.C.S. Toulon  – Siren 983 750 118.</p>
 <p>Ci-après « ET BAM Solutions »</p>
@@ -83,7 +83,7 @@ Le Client est réputé avoir pris connaissance et accepté les présentes CGV et
 <p>11.3 Le Client s’engage à ne pas reconstituer ou tenter de reconstituer, à partir des données et/ou au moyen du service, une base de données visant à offrir, directement ou indirectement, à titre gratuit ou à titre onéreux, le même service ou un service comparable, à toutes personnes tierces à son entreprise dans le but de contourner la personnalisation d’accès au service dont il bénéficie.</p>
 <p>11.4 Le Client s’engage plus généralement à ne pas porter atteinte aux droits de propriété intellectuelle détenus par ET BAM Solutions sur le service ou tout autre élément figurant sur le Site protégé par un droit de propriété intellectuelle, en ce compris les marques et logos.</p>
 <h5 class="mt-3">ARTICLE 12 - Confidentialité des données du Client</h5>
-<p>Les dispositions concernant la protection des données personnelles telles qu’issues de la Loi Informatique et Libertés en date du 6 janvier 1978 modifiée, et du Règlement européen sur la protection des données personnelles (« RGPD ») sont situées dans un document annexe intitulé <a href="{{ route('mf.confidentialite') }}">« Politique de Confidentialité »</a></p>
+<p>Les dispositions concernant la protection des données personnelles telles qu’issues de la Loi Informatique et Libertés en date du 6 janvier 1978 modifiée, et du Règlement européen sur la protection des données personnelles (« RGPD ») sont situées dans un document annexe intitulé <a href="{{ route('mf.donnees') }}">« Politique de protection des données personnelles »</a></p>
 <h5 class="mt-3">ARTICLE 13 – Dispositions générales</h5>
 <p>13.1 Droit applicable : Le contrat est interprété et régi conformément au droit français sans tenir compte des principes de conflits de lois.</p>
 <p>13.2 Attribution de compétence : Seront seuls compétents pour connaître des litiges de toutes natures ou de contestations relatives à l’interprétation ou à l’exécution des présentes CGV, les Tribunaux du ressort de la Cour d’appel de Aix-en-Provence, nonobstant pluralité de défendeurs, demande incidente ou référé ou appels en garantie, à moins que ET BAM Solutions ne préfère saisir toute autre juridiction compétente.</p>

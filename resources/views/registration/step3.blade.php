@@ -106,7 +106,7 @@
             <div class="form-check justify-content-center">
                 <input class="form-check-input me-2" type="checkbox" value="" id="agree" required />
                 <label class="form-check-label" for="agree">
-                    J'ai lu et j'accepte les <a href="#voirCGU" data-bs-toggle="modal">conditions générales d'utilisation</a> et notre <a href="#voirConfidentialite" data-bs-toggle="modal">politique de confidentialité</a>.
+                    J'ai lu et j'accepte les <a href="#voirCGU" data-bs-toggle="modal">conditions générales d'utilisation</a> et notre <a href="#voirConfidentialite" data-bs-toggle="modal">politique de protection des données personnelles</a>.
                 </label>
             </div>
 
@@ -131,7 +131,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Conditions générales de vente</h5>
+                <h5 class="modal-title">Conditions générales d'utilisation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -148,7 +148,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Politique de confidentialité</h5>
+                <h5 class="modal-title">Politique de protection des données personnelles</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

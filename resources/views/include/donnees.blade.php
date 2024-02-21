@@ -323,17 +323,17 @@ archivage</p></td>
 <td><p>Les données d'état-civil peuvent être conservées maximum trois ans à partir de la date de recueil de ces informations.<br>
 Applications mobiles&nbsp;:<br>
 Les données sont conservées tant que le compte est présent dans l’application mobile.</p></td>
-<td><p>Les années antérieures sont conservées en archivage intermédiaire 5 années maximum.</p></td>
+<td><p>Les années antérieures sont conservées en archivage intermédiaire 3 années maximum.</p></td>
 </tr>
 <tr>
 <td><p>Vie personnelle (habitudes de vie, situation familiale, etc.)</p></td>
 <td><p>Les données sont conservées pour une durée correspondant à l'année scolaire.</p></td>
-<td><p>Les années antérieures sont conservées en archivage intermédiaire 5 années maximum.</p></td>
+<td><p>Les années antérieures sont conservées en archivage intermédiaire 3 années maximum.</p></td>
 </tr>
 <tr>
 <td><p>Vie scolaire et/ou vie professionnelle (CV, formation professionnelles, distinction et diplômes)</p></td>
 <td><p>Les données sont conservées pour une durée correspondant à l'année scolaire.</p></td>
-<td><p>Les années antérieures sont conservées en archivage intermédiaire 5 années maximum.</p></td>
+<td><p>Les années antérieures sont conservées en archivage intermédiaire 3 années maximum.</p></td>
 </tr>
 <tr>
 <td><p>Informations d'ordre économique et financier (revenus, situation financière, situation fiscale, etc.)</p></td>
