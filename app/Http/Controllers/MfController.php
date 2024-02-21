@@ -35,8 +35,8 @@ class MfController extends Controller
         return view('mf.mentions');
     }
 
-    public function confidentialite() {
-        return view('mf.confidentialite');
+    public function donnees() {
+        return view('mf.donnees');
     }
 
     public function cookies() {

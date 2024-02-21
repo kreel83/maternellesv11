@@ -44,8 +44,8 @@
             <div class="row">
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                     <div class="section-title wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="1s">
-                        <h2>Mentions légales</h2>
-                        <p>En vigueur au 01/01/2024</p>
+                        <h2>Mentions légales {{ config('app.name') }}</h2>
+                        {{-- <p>En vigueur au 01/01/2024</p> --}}
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -62,32 +62,66 @@
 
                     <p>Ces dernières sont accessibles sur le Site à la rubrique « Mentions légales ».</p>
 
-                    <h5 class="mt-3">ARTICLE 1 - L'EDITEUR</h5>
+                    <h5 class="mt-3">1 - Responsable du site</h5>
 
-                    <p>L'édition du Site est assurée par ET BAM Solutions, SAS au capital de 1000 euros, immatriculée au
-                    Registre du Commerce et des Sociétés de TOULON sous le numéro 983 750 118 dont le siège social
-                    est situé au 33 Rue Claire Joie, 83200 Toulon.<br>
+                    <p>ET BAM Solutions, SAS au capital de 1000 euros<br>
+                    Siège social : 33 Rue Claire Joie - 83200 Toulon<br>
+                    Tél : 06 64 17 41 99<br>
                     Adresse e-mail : {{ config('mail.from.address') }}<br>
+                    RCS de TOULON, n° 983 750 118<br>
                     N° de TVA intracommunautaire : en cours d'attribution<br>
-                    Le Directeur de la publication est M. Marc Borgna<br>
-                    ci-après l'"Editeur".
                     </p>
 
-                    <h5 class="mt-3">ARTICLE 2 - L'HEBERGEUR</h5>
+                    <h5 class="mt-3">2 - Directeur de la publication</h5>
+                    Marc Borgna<br>
+                    ET BAM Solutions - Responsable développement<br>
+                    33 Rue Claire Joie<br>
+                    83200 Toulon<br>
+                    Tél : 06 70 92 93 20<br>
+                    <a href="{{ route('mf.contact') }}">Contactez-nous</a>
 
-                    <p>L'hébergeur du Site est la société Planethoster, dont le siège social est situé au 4416
-                    Louis-B.-Mayer Laval, Québec Canada H7P 0G1, avec le numéro de téléphone : +33176604143.</p>
 
-                    <h5 class="mt-3">ARTICLE 3 - ACCES AU SITE</h5>
+                    <h5 class="mt-3">3 - Fournisseur d'hébergement du site</h5>
 
-                    <p>Le Site est accessible en tout endroit, 7j/7, 24h/24 sauf cas de force majeure, interruption
-                    programmée ou non et pouvant découlant d’une nécessité de maintenance.</p>
+                    <p>PLANETHOSTER<br>
+                    4416 Louis-B.-Mayer Laval<br>
+                    Québec Canada H7P 0G1<br>
+                    Tél : 01 76 60 41 43<br><br>
+                    Centre de données - France<br>
+                    L’infrastructure Cloud Hybride de PlanetHoster est distribuée à travers ses installations à Paris, France. Les installations sont situées dans des centres de données possédant les certifications :
+                    <ul>
+                    <li>TIER III et TIER IV (99.982% uptime)</li>
+                    <li>SSAE16/ISAE3402 SOC-1 Type II</li>
+                    <li>ISO 50001</li>
+                    <li>ISO 27001</li>
+                    <li> ISO 9001</li>
+                    <li>PCI-DSS</li>
+                    <li>nfrastructure validée par l’ICANN</li>
+                    <li>SOC-2 Type II</li>
+                    </ul>
+                    </p>
 
-                    <p>En cas de modification, interruption ou suspension du Site, l'Editeur ne saurait être tenu responsable.</p>
+                    <h5 class="mt-3">4 - Propriété intellectuelle</h5>
+                    <p>Le Site est la propriété exclusive de ET BAM Solutions. ET BAM Solutions est titulaire de l'ensemble des droits de propriété intellectuelle relatifs au Site et notamment de tous les éléments graphiques, sonores, textuels, logiciels, y compris la technologie sous-jacente, ou de toute autre nature, composant le Site.</p>
+                    <p>ET BAM Solutions est également titulaire des marques ayant fait l'objet de dépôts auprès de l'INPI et des noms de domaine régulièrement enregistrés.</p>
+                    <p>L'Utilisateur s'engage ainsi à ne pas porter atteinte aux droits de propriété intellectuelle de ET BAM Solutions et s'interdit, à ce titre, de reproduire, de représenter ou de diffuser, même partiellement, tout élément protégé par un droit de propriété intellectuelle, à défaut d'en avoir eu préalablement l'autorisation expresse.</p>
+                    <p>De même, tout procédé, relevant notamment de la technique du framing ou du deep-linking est formellement prohibé, sauf autorisation expresse, spéciale et écrite délivrée par ET BAM Solutions.</p>
 
-                    <h5 class="mt-3">ARTICLE 4 - COLLECTE DES DONNEES</h5>
+                    {{-- <p>Le Site est accessible en tout endroit, 7j/7, 24h/24 sauf cas de force majeure, interruption
+                    programmée ou non et pouvant découlant d’une nécessité de maintenance.</p> 
+                    <p>En cas de modification, interruption ou suspension du Site, l'Editeur ne saurait être tenu responsable.</p> --}}
 
-                    <p>Le Site assure à l'Utilisateur une collecte et un traitement d'informations personnelles dans le respect
+                    <h5 class="mt-3">5 - Portée des contenus</h5>
+                    <p>Les informations communiquées sur le site {{ config('app.name') }} sont fournies à titre indicatif. Elles ne sauraient engager la responsabilité de ET BAM Solutions. Elles peuvent être modifiées ou mises à jour sans préavis.</p>
+                    <p>La responsabilité de ET BAM Solutions ne saurait être engagée pour tout dommage, de quelque nature qu'il soit, direct ou indirect, toute omission ou erreur ou impossibilité d'accéder au Site.</p>
+
+                    <h5 class="mt-3">6 - Liens hypertexte</h5>
+                    <p>La mise en place de liens hypertextes en direction du Site nécessite l'autorisation expresse et préalable de ET BAM Solutions.</p>
+                    <p>Il suffit pour cela de nous contacter via le formulaire suivant : <a href="{{ route('mf.contact') }}">Contactez-nous</a>.</p>
+                    <p>Pour toute remarque concernant le site, veuillez nous contacter via la rubrique <a href="{{ route('mf.contact') }}">Contactez-nous</a>.</p>
+                    <p>Aucune plainte, déclaration ou demande de conseil ne doit être transmise par cette boîte aux lettres électronique, mais uniquement par voie postale.</p>
+
+                    {{-- <p>Le Site assure à l'Utilisateur une collecte et un traitement d'informations personnelles dans le respect
                     de la vie privée conformément à la loi n°78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers
                     et aux libertés.</p>
 
@@ -98,7 +132,7 @@
 
                     <p>Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du Site,
                     sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires
-                    telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil.</p>
+                    telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil.</p> --}}
 
                     
                 </div>

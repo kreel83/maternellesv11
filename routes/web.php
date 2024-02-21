@@ -26,7 +26,7 @@ Route::get('/tarifs', [MfController::class, 'tarifs'])->name('mf.tarifs');
 Route::get('/contact', [MfController::class, 'contact'])->name('mf.contact');
 Route::post('/contact', [MfController::class, 'contactSend'])->name('mf.contact.send');
 Route::get('/mentions', [MfController::class, 'mentions'])->name('mf.mentions');
-Route::get('/confidentialite', [MfController::class, 'confidentialite'])->name('mf.confidentialite');
+Route::get('/donnees-personnelles', [MfController::class, 'donnees'])->name('mf.donnees');
 Route::get('/cookies', [MfController::class, 'cookies'])->name('mf.cookies');
 Route::get('/conditions', [MfController::class, 'conditions'])->name('mf.conditions');
 Route::post('/newsletter', [MfController::class, 'newsletter'])->name('mf.newsletter');
