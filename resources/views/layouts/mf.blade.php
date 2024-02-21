@@ -192,13 +192,13 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="content">
                             <div class="title">
-                                <h5>Support</h5>
+                                <h5>Informations Légales</h5>
                             </div>
                             <ul class="navigation">
-                                <li><a href="{{ route('mf.index') }}">Accueil</a></li>
+                                {{-- <li><a href="{{ route('mf.index') }}">Accueil</a></li> --}}
                                 <li><a href="{{ route('mf.conditions') }}">Conditions générales d'utilisation</a></li>
                                 <li><a href="{{ route('mf.mentions') }}">Mentions légales</a></li>
-                                <li><a href="{{ route('mf.donnees') }}">Données personnelles</a></li>
+                                <li><a href="{{ route('mf.donnees') }}">Politique de protection des données personnelles</a></li>
                                 <li><a href="{{ route('mf.cookies') }}">Utilisation des cookies</a></li>
                             </ul>
                         </div>
