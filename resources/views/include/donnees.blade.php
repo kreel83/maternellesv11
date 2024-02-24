@@ -71,8 +71,8 @@
 <table class="table table-striped table-bordered">
     <tbody><tr>
     <td></td>
-    <td><p align="center">Cochez </p></td>
-    <td><p align="center">Commentaires / précisions</p></td>
+    <td style="text-align:center;"><p>Collecte</p></td>
+    <td style="text-align:center;"><p>Commentaires / précisions</p></td>
     </tr>
     <tr>
     <td><p>Collecte</p></td>
@@ -177,11 +177,12 @@
 
 <p><strong>3. Catégories de données à caractère personnel traitées</strong></p>
 <p><u>Logiciel {{ config('app.name') }}</u></p>
+<br>
 <table class="table table-striped table-bordered">
 <tbody><tr>
 <td></td>
-<td><p>Cochez </p></td>
-<td><p>Description</p></td>
+<td style="text-align:center;"><p>Collecte</p></td>
+<td style="text-align:center;"><p>Description</p></td>
 </tr>
 <tr>
 <td><p>Etat civil, identité, données d'identification, images…</p></td>
@@ -221,7 +222,7 @@ N° CB : pour s'abonner au logiciel {{ config('app.name') }} et géré par <a hr
 </p></td>
 </tr>
 <tr>
-<td><p>Données de connexion (adresse IP, identifiants dans des logs, etc.) </p></td>
+<td><p>Données de connexion (adresse IP, identifiants dans des logs, etc.)</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td><p></p></td>
 </tr>
@@ -231,42 +232,42 @@ N° CB : pour s'abonner au logiciel {{ config('app.name') }} et géré par <a hr
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant l'origine raciale ou ethnique </p></td>
+<td><p>Données révélant l'origine raciale ou ethnique</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant les opinions politiques </p></td>
+<td><p>Données révélant les opinions politiques</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant les convictions religieuses ou philosophiques&nbsp; </p></td>
+<td><p>Données révélant les convictions religieuses ou philosophiques</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant l'appartenance syndicale </p></td>
+<td><p>Données révélant l'appartenance syndicale</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données génétiques </p></td>
+<td><p>Données génétiques</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données biométriques aux fins d'identifier une personne physique de manière unique </p></td>
+<td><p>Données biométriques aux fins d'identifier une personne physique de manière unique</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Numéro de sécurité sociale </p></td>
+<td><p>Numéro de sécurité sociale</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données concernant la santé </p></td>
+<td><p>Données concernant la santé</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td><p></p></td>
 </tr>
@@ -276,7 +277,7 @@ N° CB : pour s'abonner au logiciel {{ config('app.name') }} et géré par <a hr
 <td></td>
 </tr>
 <tr>
-<td><p>Données relatives à des condamnations pénales ou infractions </p></td>
+<td><p>Données relatives à des condamnations pénales ou infractions</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square"></i> </p></td>
 <td></td>
 </tr>
@@ -294,14 +295,14 @@ N° CB : pour s'abonner au logiciel {{ config('app.name') }} et géré par <a hr
 </table>
 <br>
 <p><u>Application Mobile (Compagnon)</u></p>
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
 <tbody><tr>
 <td></td>
-<td><p>Cochez </p></td>
+<td style="text-align:center;"><p>Collecte</p></td>
 <td><p>Description</p></td>
 </tr>
 <tr>
-<td><p>Données    d'identification</p></td>
+<td><p>Données d'identification</p></td>
 <td style="text-align:center;"><p><i class="fa-regular fa-square-check"></i> </p></td>
 <td><p>Adresse du serveur {{ config('app.name') }}, identifiants des comptes Utilisateur, jetons de connexion.</p></td>
 </tr>
@@ -345,7 +346,7 @@ archivage</p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données de connexion (adresse IP, identifiants dans des logs, etc.) </p></td>
+<td><p>Données de connexion (adresse IP, identifiants dans des logs, etc.)</p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
@@ -355,42 +356,42 @@ archivage</p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant l'origine raciale ou ethnique </p></td>
+<td><p>Données révélant l'origine raciale ou ethnique</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant les opinions politiques </p></td>
+<td><p>Données révélant les opinions politiques</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant les convictions religieuses ou philosophiques&nbsp; </p></td>
+<td><p>Données révélant les convictions religieuses ou philosophiques</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données révélant l'appartenance syndicale </p></td>
+<td><p>Données révélant l'appartenance syndicale</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données génétiques </p></td>
+<td><p>Données génétiques</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données biométriques aux fins d'identifier une personne physique de manière unique </p></td>
+<td><p>Données biométriques aux fins d'identifier une personne physique de manière unique</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Numéro de sécurité sociale </p></td>
+<td><p>Numéro de sécurité sociale</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données concernant la santé </p></td>
+<td><p>Données concernant la santé</p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
@@ -400,17 +401,17 @@ archivage</p></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données relatives à des condamnations pénales ou infractions </p></td>
+<td><p>Données relatives à des condamnations pénales ou infractions</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Données relatives aux mineurs </p></td>
+<td><p>Données relatives aux mineurs</p></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><p>Autres données </p></td>
+<td><p>Autres données</p></td>
 <td></td>
 <td></td>
 </tr>
@@ -418,6 +419,6 @@ archivage</p></td>
 </table>
 <br>
 <p><strong>5. Catégories de personnes concernées</strong></p>
-<p>Professeurs et personnels de l'établissement</p>
-<p>Élèves de l'établissement</p>
-<p>Responsables légaux des élèves de l'établissement</p>
+<p>Professeurs et personnels de l'établissement.</p>
+<p>Élèves de l'établissement.</p>
+<p>Responsables légaux des élèves de l'établissement.</p>
