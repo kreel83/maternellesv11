@@ -81,7 +81,7 @@ class GroupeController extends Controller
     }
 
     public function editerUnGroupe($id, Request $request) {
-        $token = md5(Auth::id().$id.config('app.custom.hash_secret'));
+        $token = md5(Auth::id().$id.env('HASH_SECRET'));
         if($token != $request->token) {
             return redirect()->route('groupe')
                 ->with('status', 'danger')
@@ -100,7 +100,7 @@ class GroupeController extends Controller
     }
 
     public function editerUnGroupePost(Request $request) {
-        $token = md5(Auth::id().$request->id.config('app.custom.hash_secret'));
+        $token = md5(Auth::id().$request->id.env('HASH_SECRET'));
         if($token != $request->token) {
             return redirect()->route('groupe')
                 ->with('status', 'danger')
@@ -146,7 +146,7 @@ class GroupeController extends Controller
 
     public function supprimerUnGroupe($id, Request $request) {
         
-        $token = md5(Auth::id().$id.config('app.custom.hash_secret'));        
+        $token = md5(Auth::id().$id.env('HASH_SECRET'));        
         
         
         $groupes = Auth::user()->groupes();

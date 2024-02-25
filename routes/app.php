@@ -149,6 +149,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/enfants/cahier/apercu/{token}/{enfant_id}/{periode}', [CahierController::class, 'seepdf'])->name('cahierApercu');
     // cette route est utilisée dans pdf.js :
     Route::post('/enfants/cahier/envoi/individuel', [PdfController::class, 'envoiCahierIndividuel'])->name('cahierManage.individuel');
+    Route::get('/enfants/cahier/bulk/confirm/{periode}', [PdfController::class, 'cahierBulkConfirm'])->name('cahierManage.bulk.confirm');
 
     Route::get('/get_liste_phrase/{section_id}/{enfant_id}', [CahierController::class, 'get_liste_phrase'])->name('get_liste_phrase');
     Route::get('/get_images/{section_id}', [FicheController::class, 'get_images'])->name('get_images');

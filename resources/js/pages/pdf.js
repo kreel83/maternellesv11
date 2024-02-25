@@ -1,6 +1,34 @@
 
 const envoiCahierIndividuel = (Modal) => {
 
+    // Bouton envoi tous les cahiers en 2 étapes
+    $(document).on('click','.manageBulkEnvoiButton', function(e) {
+        e.preventDefault();
+        $('#manageBulkEnvoiGroupButton').hide();
+        $('#manageBulkEnvoiProcessing').show();
+        var form = $("#manageBulkEnvoiForm");
+        var url = form.attr('action');
+        $.ajax({ 
+            type: "POST", 
+            url: url, 
+            data: form.serialize(),
+            success: function(data) {
+                $('#manageBulkEnvoiProcessing').hide();
+                var json = JSON.parse(data)
+                if(json.success) {
+                    $('#manageBulkEnvoiSuccess').show();
+                } else {
+                    $('#manageBulkEnvoiWarning').show();
+                    $('#manageBulkEnvoiErrorMsg').html(json.error);
+                    $('#manageBulkEnvoiError').show();
+                }
+                $('#manageBulkEnvoiBackBtn').show();
+            }, 
+            error: function(data) { 
+            } 
+        });
+    })
+
     // Bouton envoi tous les cahiers
     $(document).on('click','.bulk', function(e) {
         e.preventDefault();

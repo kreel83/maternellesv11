@@ -174,83 +174,14 @@
             <div>
                <img class="img-fluid" src="{{asset('img/deco/logo.png')}}" width="200">
             </div>
-            <div class="enseignant">
-                {{ $user->civilite == 'Mme' ? 'La maîtresse' : 'Le maître' }}<br>
-                {{ucfirst(strtolower($user->prenom))}} {{strtoupper($user->name)}}
-            </div>
         </div>
 
         <div class="container">
 
             <div class="text-center">
-                <div class="fs-1"><span class="fw-bold">B</span>ienvenue</div>
-                <div class="fs-4">dans la section de téléchargement du cahier de réussites de</div>
-                <div class="fs-1 fw-bolder">{!! $enfant->formatPdf() !!}</div>
-            </div>
-        
-
-            @if (session('success'))
-
-                <div class="d-flex justify-content-center mt-4">
-                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'see']) }}" class="btn-go bleu" target="_blank">Voir le cahier de réussite</a>
-                </div>         
-                <div class="d-flex justify-content-center mt-4">
-                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'download']) }}" class="btn-go orange" target="_blank">Télécharger le cahier de réussite</a>
-                </div>         
-
-            @else
-
-                <form class="row justify-content-center" action="{{ route('cahier.predownload.post') }}" method="POST">
-                @csrf
-
-                    <input type="hidden" name="token" value="{{ $token }}">
-             
-                    <p class="text-center">Veuillez renseigner la date de naissance de votre enfant :</p>
-
-                    <div class="d-flex justify-content-center">
-                    @include('include.display_msg_error')
-                    </div>
-
-                    <div class="col-auto">
-                        <input type="number" class="form-control-lg me-2 mt-1" name="jour" placeholder="Jour de naissance" value="{{ old('jour') }}" required autofocus>
-                    </div>
-                    <div class="col-auto">
-                        <input type="number" class="form-control-lg me-2 mt-1" name="mois" placeholder="Mois de naissance" value="{{ old('mois') }}" required>
-                    </div>
-                    <div class="col-auto">
-                        <input type="number" class="form-control-lg me-2 mt-1" name="annee" placeholder="Année de naissance" value="{{ old('annee') }}" required>
-                    </div>
-
-                    <div class="d-flex justify-content-center mt-4">
-                        <button type="submit" class="btn-go w-50">Vérifier</button>
-                    </div>
-
-                </form>
-
-            @endif
-
-            <div class="row mb-3 mt-4">
-
-                <div class="col-sm-6 mt-2">
-                    <div class="card bulle">
-                        <div class="card-body">
-                            {{ $enfant->section() }}<br>
-                            {{ $periode }}<br>
-                            {{ App\utils\Utils::calcul_annee_scolaire_formated() }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 mt-2">
-                    <div class="card bulle">
-                        <div class="card-body">
-                            {{$ecole->nom_etablissement}}<br>
-                            {{$ecole->adresse_1}}<br>
-                            {{$ecole->adresse_3}}
-                        </div>
-                    </div>
-                </div>
-
+                <h5 class="mb-3">Oups ! Une erreur est survenue</h5>
+                <p>Merci de réessayer ultérieurement.</p>
+                <p>Si le problème persiste veuillez contacter l'enseignant(e) de votre enfant.</p>
             </div>
 
         </div>

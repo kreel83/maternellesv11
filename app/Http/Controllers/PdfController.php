@@ -12,6 +12,7 @@ use App\Models\Reussite;
 use App\utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
@@ -34,7 +35,7 @@ class PdfController extends Controller
 
     public static function genereLienVersCahierEnPdf(Enfant $enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
-        $token = $periode . md5($enfant->id.uniqid().config('app.custom.hash_secret'));
+        $token = $periode . md5($enfant->id.uniqid().env('HASH_SECRET'));
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
         // récupération mail et nom de l'école comme expéditeur du mail aux parents
@@ -76,24 +77,29 @@ class PdfController extends Controller
     }
 
     public function telechargementDuCahierParLesParents($token) {
-        //$enfant = DB::table('enfants')->where('token', $token)->first()->prenom;
+        Log::info("Téléchargement du cahier pour le token : $token");
+        //$enfant = DB::table('enfants')->where('token', $token)->first();
         $enfant = Enfant::where('token', $token)->first();
-        $classe = Classe::find($enfant->classe_id);
-        // sous cette forme pour ne pas declencher d'event
-        //$user = DB::table('users')->select('civilite', 'prenom', 'name')->find($classe->user_id);
-		$user = User::select('civilite', 'prenom', 'name')->find($classe->user_id);
-        $ecole = Ecole::where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
-        // La période est le 1er caractère du Token
-        $periode = Str::substr($token, 0, 1);
-        $utils = new Utils;
-        $periode = $utils->periode($enfant, $periode);
         if($enfant) {
-            return view('cahiers.telechargement3')
-                ->with('token', $token)
-                ->with('periode', $periode)
-                ->with('user', $user)
-                ->with('ecole', $ecole)
-                ->with('enfant', $enfant);
+            $classe = Classe::find($enfant->classe_id);
+            // sous cette forme pour ne pas declencher d'event
+            //$user = DB::table('users')->select('civilite', 'prenom', 'name')->find($classe->user_id);
+            $user = User::select('civilite', 'prenom', 'name')->find($classe->user_id);
+            $ecole = Ecole::where('identifiant_de_l_etablissement', $classe->ecole_identifiant_de_l_etablissement)->first();
+            // La période est le 1er caractère du Token
+            $periode = Str::substr($token, 0, 1);
+            $utils = new Utils;
+            $periode = $utils->periode($enfant, $periode);
+            if($enfant) {
+                return view('cahiers.telechargement3')
+                    ->with('token', $token)
+                    ->with('periode', $periode)
+                    ->with('user', $user)
+                    ->with('ecole', $ecole)
+                    ->with('enfant', $enfant);
+            }
+        } else {
+            return view('cahiers.telechargement3_error');
         }
     }
     // public function telechargementDuCahierParLesParents($token) {
@@ -109,7 +115,7 @@ class PdfController extends Controller
         $date = Carbon::create($request->annee, $request->mois, $request->jour);
         $ddn = $date->format('Y-m-d');
         /*
-        $token = md5($request->id.$ddn.config('app.custom.hash_secret'));
+        $token = md5($request->id.$ddn.env('HASH_SECRET'));
         if($token != $request->token) {
             return Redirect::back()->withErrors(['msg' => 'Token invalide']);
         }
@@ -192,7 +198,7 @@ class PdfController extends Controller
                 }
             }
         }
-        return view('cahiers.manage')
+        return view('cahiers.manage2')
             ->with('maxPeriode', $maxPeriode)
             ->with('statutCahier', $statutCahier)
             ->with('statutEmail', $statutEmail)
@@ -202,7 +208,7 @@ class PdfController extends Controller
     }
 
     public function cahierManagePost(Request $request) {
-        Log::info($request);
+        //Log::info($request);
         $error = array();
         $periode = $request->periode;
         $reussites = Reussite::where('user_id', session('classe_active')->user_id)
@@ -214,15 +220,20 @@ class PdfController extends Controller
             $enfant = Enfant::find($reussite->enfant_id);
             $isMailSent = $this->genereLienVersCahierEnPdf($enfant, $periode);
             if(!$isMailSent) {
-                $error[] = "L'envoi a échoué pour la période $periode de $enfant->prenom $enfant->nom";
+                $error[] = "L'envoi a échoué pour la période $periode de $enfant->prenom $enfant->nom : aucune adresse email renseignée dans sa fiche.";
             }
         }
         if($reussites->isEmpty()) {
             $error[] = "Aucun cahier à envoyer";
         }
-        Session::flash('success', (count($error) == 0));
-        Session::flash('error', $error);
-        return route('cahierManage');
+
+        return json_encode(['success' => (count($error) == 0), 'error' => implode('<br>', $error)]);
+
+        // retour pour le tout js avec modal confirmation
+        // Session::flash('success', (count($error) == 0));
+        // Session::flash('error', $error);
+        // return route('cahierManage');        
+
     }
 
     public function envoiCahierIndividuel(Request $request) {
@@ -239,6 +250,14 @@ class PdfController extends Controller
             $idtag = ($status == 'E') ? '#envoierror-'.$enfant->id : '#renvoi-'.$enfant->id;
             return json_encode(array('success' => false, 'idtag' => $idtag, 'status' => $status, 'enfant_id' => $enfant->id, 'msg' => '<div class="mt-2 mb-1 alert alert-danger" role="alert">L\'envoi a échoué</div>'));
         }
+    }
+
+    public function cahierBulkConfirm(Request $request, $periode) {
+        $token = md5(Auth::user()->email.$periode.env('HASH_SECRET'));
+        if($token != $request->token) {
+            return redirect()->route('error')->with('msg', 'Token incorrect.');
+        }
+        return view('cahiers.manageBulkEnvoi', compact('periode'));
     }
 
 }

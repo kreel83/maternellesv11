@@ -12,7 +12,6 @@ return [
     */
 
     'custom' => [
-        'hash_secret' => env('HASH_SECRET', 'cw0Mb63xnX4l4%e!YtZC'),
         'prix_abonnement' => env('PRIX_ABONNEMENT', '14,90'),
         'start_invoice_number' => env('START_INVOICE_NUMBER', 8300100),
         'admin_emails' => env('ADMIN_EMAILS', 'thierry.thevenoud@gmail.com,marc.borgna@gmail.com'),
