@@ -82,7 +82,7 @@ class UserController extends Controller
     public function validUserFromSelfRegistration(Request $request): View
     {
         // appelé depuis lien dans email envoyé quand un utilisateur s'enregistre par lui même
-        $token = md5($request->uID.$request->key.config('app.custom.hash_secret'));
+        $token = md5($request->uID.$request->key.env('HASH_SECRET'));
         if($token != $request->token) {
             $user = null;
         } else {

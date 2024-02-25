@@ -203,7 +203,7 @@ use Illuminate\Support\Facades\Auth;
                                             <span class="nav-item navbar-text">Autres classes :</span>
                                             @foreach (session('autres_classes') as $classe)
                                                 @php
-                                                    $token = md5(Auth::id().$classe->id.config('app.custom.hash_secret'));
+                                                    $token = md5(Auth::id().$classe->id.env('HASH_SECRET'));
                                                 @endphp
                                                 <a href="{{ route('changerClasse',['classe' => $classe->id, 'token' => $token]) }}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">{{$classe->description}}</a>
                                             @endforeach
