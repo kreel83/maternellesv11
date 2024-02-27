@@ -92,26 +92,27 @@ class Resultat extends Model
 	    });
 
 	    static::deleted(function($resultat) {
-            if ($resultat->notation == 2 && $resultat->autonome == 1) {
-                $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
-                if ($r)  {
-                    $s = ReussiteSection::where('section_id', $resultat->section_id)->where('reussite_id', $r->id)->first();           
-                    if ($s) {
-                        $enfant = Enfant::find($resultat->enfant_id);                    
-                        $exp = explode('</p>',$s->description);                        
-                        array_splice($exp, 1, 0, '<p>'.$resultat->item($enfant));                    
-                        foreach ($exp as $key=>$e) {
-                            if (str_contains($e,'<p>')) {
-                                $exp[$key] =  $exp[$key].'</p>';
-                            } 
+            // if ($resultat->notation == 2 && $resultat->autonome == 1) {
+            //     dd('coucou');
+            //     $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
+            //     if ($r)  {
+            //         $s = ReussiteSection::where('section_id', $resultat->section_id)->where('reussite_id', $r->id)->first();           
+            //         if ($s) {
+            //             $enfant = Enfant::find($resultat->enfant_id);                    
+            //             $exp = explode('</p>',$s->description);                        
+            //             array_splice($exp, 1, 0, '<p>'.$resultat->item($enfant));                    
+            //             foreach ($exp as $key=>$e) {
+            //                 if (str_contains($e,'<p>')) {
+            //                     $exp[$key] =  $exp[$key].'</p>';
+            //                 } 
 
-                        }
-                        $exp = join($exp);
-                        $s->description = $exp;
-                        $s->save();
-                    }              
-                }                
-            }
+            //             }
+            //             $exp = join($exp);
+            //             $s->description = $exp;
+            //             $s->save();
+            //         }              
+            //     }                
+            // }
 	    });
     
 	}

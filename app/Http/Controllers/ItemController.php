@@ -112,6 +112,7 @@ class ItemController extends Controller
         $reussite = Reussite::where('enfant_id', $enfant_id)->where('periode', $enfant->periode)->first();
         if ($reussite) {
             $r = ReussiteSection::where('section_id', $request->section)->where('reussite_id', $reussite->id)->first();
+           
             
 
         }
@@ -119,10 +120,17 @@ class ItemController extends Controller
     }
 
     public function CommitSaveReussite(Request $request) {
-        //Log::info('CommitSaveReussite (itemcontroller) '.$request);
         $r = ReussiteSection::find($request->id);
-        $r->description = $request->texte;
-        $r->save();
+        
+        if (trim(strip_tags($request->texte)) == "") {
+            $r->delete();
+
+        } else {
+            $r->description = $request->texte;
+            $r->save();            
+        }
+        //Log::info('CommitSaveReussite (itemcontroller) '.$request);
+
         return 'ok';
     }
 
@@ -137,8 +145,9 @@ class ItemController extends Controller
 
 
     public function saveResultat(Request $request) {
-        
 
+        
+        
         $user = Auth::user();
         
         if (!$user->is_abonne()) {
@@ -149,14 +158,25 @@ class ItemController extends Controller
             }
         }
 
+        $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();       
+        
+        if ($search && $request->note == 0) {
+            $search->delete();
+            return 'modif';
+            
+        }        
+
+        
         $autonome = 0;
         if ($request->note == 3) {
             $request->note = 2;
             $autonome = 1;
         }
+        
+        
 
 
-        $search = Resultat::where('enfant_id', $request->enfant)->where('item_id', $request->item)->first();
+
 
         if (session('classe_active')->desactive_acquis_aide == 1) {
             $acquis = ($search && $search->notation == 2 && $search->autonome == 1) ? true : false;
@@ -165,11 +185,7 @@ class ItemController extends Controller
         }
         
 
-        if ($search && $request->note == 0) {
-            $search->delete();
-            return 'modif';
-           
-        }
+
 
         $ancienne_note = null;
         if ($search) {

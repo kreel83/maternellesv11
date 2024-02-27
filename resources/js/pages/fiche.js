@@ -382,7 +382,8 @@ const choixFiltre = (Modal, quill) => {
                         backdrop: 'static', keyboard: false
                     })
                     var texte = $('#mesfiches').data('reussite_text')
-                    quill.root.innerHTML = data[0]
+                    // quill.root.innerHTML = data[0]
+                    quill.clipboard.dangerouslyPasteHTML(data[0]) 
                     modal.show()                    
                 })
 
