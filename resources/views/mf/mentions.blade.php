@@ -69,7 +69,7 @@
                     Tél : 06 64 17 41 99<br>
                     Adresse e-mail : {{ config('mail.from.address') }}<br>
                     RCS de TOULON, n° 983 750 118<br>
-                    N° de TVA intracommunautaire : en cours d'attribution<br>
+                    N° de TVA intracommunautaire : FR49983750118<br>
                     </p>
 
                     <h5 class="mt-3">2 - Directeur de la publication</h5>

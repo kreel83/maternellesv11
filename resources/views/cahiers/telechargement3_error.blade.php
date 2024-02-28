@@ -179,9 +179,10 @@
         <div class="container">
 
             <div class="text-center">
-                <h5 class="mb-3">Oups ! Une erreur est survenue</h5>
-                <p>Merci de réessayer ultérieurement.</p>
-                <p>Si le problème persiste veuillez contacter l'enseignant(e) de votre enfant.</p>
+                <h5 class="mb-3">Oups ! Ce lien de téléchargement a expiré.</h5>
+                <p>Merci de vérifier dans votre messagerie électronique si vous n'avez pas reçu un mail plus récent avec un autre lien de téléchargement.</p>
+                <p>Pensez à regarder également dans le dossier ' spam ' ou courriers indésirables de votre messagerie.</p>
+                <p>Si besoin, contacter l'enseignant(e) de votre enfant pour qu'elle vous renvoie un lien de téléchargement.</p>
             </div>
 
         </div>
