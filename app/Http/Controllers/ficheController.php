@@ -19,6 +19,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
+use Log;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class ficheController extends Controller
@@ -342,6 +343,7 @@ class ficheController extends Controller
     }
 
     public function choix(Request $request) {
+        dd($request);
             $liste = explode(',',$request->order);
 
             $fiche = new Fiche();
@@ -356,8 +358,12 @@ class ficheController extends Controller
 
             foreach ($liste as $key=>$item) {
                $p = Fiche::find($item);
-               $p->order = $key + 1;
-               $p->save(); 
+               if ($p) {
+                   $p->order = $key + 1;
+                   $p->save(); 
+               } else {
+                Log::info("Fiche à vérifier : $item du user : ".Auth::id());
+               }
             }
         
 
