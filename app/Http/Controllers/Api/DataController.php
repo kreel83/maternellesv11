@@ -139,20 +139,25 @@ class DataController extends Controller
         try {
             Log::info($request);
             $resultat = Resultat::find($request->id);
-             if($resultat) {
-            $resultat->notation = $request->notation;
-            $resultat->autonome = $request->autonome;
-            $resultat->save();
-            
-            return response()->json([
-                'success' => true,
-            ], 200);
-	} else {
-	return response()->json([
-                'success' => false,
-                'message' => 'Erreur : impossible de changer le résultat de l\'activité'
-            ], 500);
-	}
+            if($resultat) {
+                
+                if($request->notation != '0') {
+                    $resultat->notation = $request->notation;
+                    $resultat->autonome = $request->autonome;
+                    $resultat->save();
+                } else {
+                    $resultat->delete();
+                }
+                
+                return response()->json([
+                    'success' => true,
+                ], 200);
+            } else {
+                return response()->json([
+                        'success' => false,
+                        'message' => 'Erreur : impossible de changer le résultat de l\'activité'
+                    ], 500);
+            }
 
         } catch (\Throwable $th) {
             return response()->json([
