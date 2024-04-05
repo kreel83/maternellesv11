@@ -4,7 +4,7 @@
 
 @endphp
 
-    @if (!isset($is_dashboard))
+@if (!isset($is_dashboard))
     <nav class="my5" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
     aria-label="breadcrumb">
     
@@ -16,26 +16,26 @@
     </ol>
     
     </nav>
-    @endif
+@endif
 
-    @if (!isset($is_dashboard) || $listeDesEleves->isEmpty())
+@if (!isset($is_dashboard) || $listeDesEleves->isEmpty())
 
-        <div class="mb-3 d-flex justify-content-between bloc_controle_classe">
-            <div class="d-flex">
-                <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
-                <a href="{{route('import')}}" class="btnAction ">Importer un élève</a>
-              
-            </div>
-            @isset($is_creator)
-                @if($is_creator)
-                    <div>
-                        <a class="btnAction" href="{{ route('updateClasse') }}">Modifier la classe</a>
-                    </div>
-                @endif
-            @endisset
-        </div>        
+    <div class="mb-3 d-flex justify-content-between bloc_controle_classe">
+        <div class="d-flex">
+            <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
+            {{-- <a href="{{route('import')}}" class="btnAction ">Importer un élève</a> --}}
+            <a class="btnAction" data-bs-toggle="modal" data-bs-target="#importDisabled">Importer un élève</a>
+        </div>
+        @isset($is_creator)
+            @if($is_creator)
+                <div>
+                    <a class="btnAction" href="{{ route('updateClasse') }}">Modifier la classe</a>
+                </div>
+            @endif
+        @endisset
+    </div>        
 
-    @endif
+@endif
 
 <div class="row">
     <div class="col-md-6">
@@ -162,4 +162,21 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+<div class="modal fade" id="importDisabled" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Importation non disponible</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Cette fonction sera disponible à la rentrée 2026 et permettra d'importer des élèves des classes de l'année scolaire 2025-2026.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+        </div>
+    </div>
     </div>

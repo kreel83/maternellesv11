@@ -3,7 +3,15 @@ import { Modal } from 'bootstrap'
 const selectSectionFiche = (ficheSelect) => {
 
     $(document).on('change','.btn-check', function() {
-        $('.label-genre-check').toggleClass('checked')
+        var id = $(this).attr('id')
+        if(id == 'genref') {
+            $('#labelgenreg').removeClass('checked')
+            $('#labelgenref').addClass('checked')
+        } else {
+            $('#labelgenref').removeClass('checked')
+            $('#labelgenreg').addClass('checked')
+        }
+        // $('.label-genre-check').toggleClass('checked')
     })
 
     $(document).on('click','.caseLvl', function() {

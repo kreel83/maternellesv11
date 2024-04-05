@@ -84,7 +84,7 @@ if (!is_null($enfant->groupe) && $lesgroupes) {
   @endif  
   @if ($type == "reussite")
     <div class="footer p-2 d-flex justify-item-around position-relative"  style="background-color: var(--main-color)">
-        <a href="enfants/{{$enfant->id}}/cahierV2" style="font-size: 14px; padding-top: 7px"  ><i class="fa-light fa-notes me-2"></i>Mon cahier de réussite</a>
+        <a href="enfants/{{$enfant->id}}/cahierV2" style="font-size: 14px; padding-top: 7px"  ><i class="fa-light fa-notes me-2"></i>Mon cahier de réussites</a>
     </div>
   @endif
   @if ($type == "avatar")
