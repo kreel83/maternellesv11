@@ -49,9 +49,9 @@
         <div class="mb-4">
           {{-- <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}"> --}}
             <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ config('app.name') }} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
-          <a class="btnAction mx-auto">
+          {{-- <a class="btnAction mx-auto">
             Je souhaite m'abonner au service
-          </a>
+          </a> --}}
 
           @if (Auth::id() == 47)
             <a class="btn btn-primary" href="{{ route('subscribe.checkout') }}" target="_blank">Checkout</a>
@@ -126,9 +126,9 @@
           <div class="mb-3">
             {{-- <a class="btn btn-primary" href="{{ route('subscribe.cardform') }}"> --}}
               <div class="alert alert-info"><i class="fa-solid fa-circle-info me-1"></i> L'abonnement au service {{ config('app.name') }} sera bientôt disponible. Vous pouvez nous contacter en <a class="alert-link" href="{{ route('contact') }}">cliquant ici.</a></div>
-            <a class="btnAction mx-auto">
+            {{-- <a class="btnAction mx-auto">
               Je souhaite m'abonner au service
-            </a>
+            </a> --}}
 
             @if (Auth::id() == 47)
               <a class="btn btn-primary" href="{{ route('subscribe.checkout') }}" target="_blank">Checkout</a>

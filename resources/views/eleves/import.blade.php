@@ -54,7 +54,7 @@
         {{-- <img src="{{asset('img/deco/fond_1.jpg')}}" alt="" class="position-absolute" width="100%" height="100%" style="top:0;bottom:0;left:0;right:0; height: 100vh"> --}}
 
         <div class="col-md-6" style="color: var(--main-color); font-weight: bolder; width: 474px;padding: 16px;height: 617px; border: 1px solid var(--main-color); border-radius: 8px">
-            <div class="my-2">Les instituteurs de mon école<span class="help" data-location="eleve.import.instituteurs"><i class="fa-light fa-message-question"></i></span></div>
+            <div class="my-2">Les classes de l'année dernière<span class="help" data-location="eleve.import.instituteurs"><i class="fa-light fa-message-question"></i></span></div>
             <table class="table table-bordered">
                 <tr class="classe selected" data-classe="tous">
                     <td>Toutes les classes</td>                    

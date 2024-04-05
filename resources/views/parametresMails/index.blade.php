@@ -8,7 +8,7 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
-        <li class="breadcrumb-item active" aria-current="page">Personalisation des mails</li>
+        <li class="breadcrumb-item active" aria-current="page">Personnalisation des mails</li>
         <span class="help position-absolute" data-location="phrases.creation.main"><i class="fa-light fa-message-question"></i></span>
       </ol>
     </nav>    

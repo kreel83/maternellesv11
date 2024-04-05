@@ -140,7 +140,7 @@ use Illuminate\Support\Facades\Auth;
                                     <a href="{{ route('createFiche') }}" class="nav-item nav-link {{ $menu == 'create_item' ? 'active' : null }}  {{$hasClassActive}}">Je crée mes activités</a>
                                     <a href="{{ route('groupe') }}" class="nav-item nav-link {{ $menu == 'groupe' ? 'active' : null }}  {{$hasClassActive}}">Mes groupes</a>
                                     <a href="{{ route('phrases') }}" class="nav-item nav-link {{ $menu == 'commentaire' ? 'active' : null }}  {{$hasClassActive}}">Mes phrases prédéfinies</a>
-                                    <a href="{{ route('parametresMails') }}" class="nav-item nav-link {{ $menu == 'mails' ? 'active' : null }}  {{$hasClassActive}}">Je personalise mes mails</a>
+                                    <a href="{{ route('parametresMails') }}" class="nav-item nav-link {{ $menu == 'mails' ? 'active' : null }}  {{$hasClassActive}}">Je personnalise mes mails</a>
                                 </div>
                             </div>
 
