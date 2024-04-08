@@ -343,7 +343,7 @@ class ficheController extends Controller
     }
 
     public function choix(Request $request) {
-        dd($request);
+       
             $liste = explode(',',$request->order);
 
             $fiche = new Fiche();
