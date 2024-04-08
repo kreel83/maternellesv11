@@ -635,7 +635,6 @@ class CahierController extends Controller
     public function index($enfant_id) {
 
         $enfant = Enfant::find($enfant_id);
-        dd($enfant);
 
         $phrases = Phrase::where('enfant_id', $enfant_id)->get();
         $exclusion = $phrases->pluck('commentaire_id');
@@ -654,8 +653,6 @@ class CahierController extends Controller
         $grouped = $commentaire->mapToGroups(function ($item, $key) {
             return [$item['section_id'] => $item];
         });
-
-
 
         $resultats = $enfant->resultats();
         $reussite = Reussite::where('enfant_id', $enfant_id)->orderBy('periode', 'DESC')->first();

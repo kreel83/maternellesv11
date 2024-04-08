@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\CheckEnvVariables;
 use App\Models\Ecole;
+use App\Models\Item;
 use App\Models\Vacance;
 use App\utils\Utils;
 use Artisan;
@@ -60,6 +61,37 @@ class SuperAdminController extends Controller
             Mail::to('thierry.thevenoud@gmail.com')->send(new CheckEnvVariables());
             Mail::to('marc.borgna@gmail.com')->send(new CheckEnvVariables());
         }
+    }
+
+    public function checkItems() {
+        $items = Item::orderByDesc('id')->get();
+        $tom = array();
+        $lucie = array();
+        $memo = array();
+        $doublon = array();
+        foreach ($items as $item) {
+            if(stripos($item->phrase_masculin, 'Tom') === false) {
+                $tom[] = $item->id.', '.$item->phrase_masculin;
+            }
+            if(stripos($item->phrase_feminin, 'Lucie') === false) {
+                $lucie[] = $item->id.', '.$item->phrase_feminin;
+            }
+            if(in_array($item->name, $memo)) {
+                $search = Item::where('name', $item->name)->get();
+                $x = array();
+                foreach ($search as $value) {
+                    $x[] = $value->id.', '.$value->name.' ('.$value->phrase_masculin.') ('.$value->phrase_feminin.')';
+                }
+                $doublon[] = '<ul>'.implode('<li>', $x).'</ul>';
+            } else {
+                $memo[] = $item->name;
+            }
+        }
+        return view('superadmin.items')
+            ->with('items', $items)
+            ->with('doublon', $doublon)
+            ->with('tom', $tom)
+            ->with('lucie', $lucie);
     }
 
 }

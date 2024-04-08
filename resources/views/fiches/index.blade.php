@@ -9,7 +9,7 @@
 
             <ol class="breadcrumb position-relative">
                 <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Selection des fiches d'activités</li>
+                <li class="breadcrumb-item active" aria-current="page">Sélection des fiches d'activités</li>
                 <span class="help position-absolute" data-location="fiches.selection.main"><i class="fa-light fa-message-question"></i></span>
             </ol>
         </nav>
@@ -274,7 +274,9 @@
                         </div>
                         <ul id="enfant_liste"></ul>
                         <div class="alert alert-danger">La désélection de cette fiche entraînera la suppression de
-                            l'évaluation de ou des enfants sur cette activité. <br> Voulez-vous désélectionner cette fiche ?
+
+                            l'évaluation de ou des enfants sur cette activité.<br> Voulez-vous désélectionner cette fiche ?
+
                         </div>
 
 

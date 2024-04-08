@@ -13,8 +13,8 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb position-relative my-3">
               <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
-              <li class="breadcrumb-item"><a href="{{route('enfants',['type' => "ciu"])}}">Liste des enfants</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Réussite</li>
+              <li class="breadcrumb-item"><a href="{{route('enfants',['type' => "ciu"])}}">Liste des élèves</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Gestion des cahiers de réussites</li>
               <span class="help position-absolute" data-location="eleves.reussite.main"><i class="fa-light fa-message-question"></i></span>
             </ol>
           </nav>
@@ -93,7 +93,10 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                         </div>
                     </td>
 
-                    <td><span>{{ $enfant->prenom}}<span><span class="ms-1 ">{{$enfant->nom}}</span></td>
+
+                    {{-- <td>{{ $enfant->prenom.' '.$enfant->nom}}</td> --}}
+                    <td><a href="{{ route('voirEleve', ['enfant_id' => $enfant->id]) }}">{{ $enfant->prenom.' '.$enfant->nom}}</a></td>
+
                     <td>{{ strtoupper($enfant->psmsgs) }}</td>
                     <td class="mx-auto">
                         <div class="text-center groupe-terme {{isset($groupe) ? null : 'd-none'}}" style="border-radius: 4px; background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">
@@ -110,8 +113,8 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                             @if ($statutCahier[$enfant->id][$periode]['status'] == 'PRET')
                                 <div id="cahier-{{$enfant->id}}">
                                     <div class="btn-group" role="group" aria-label="Actions">
-                                        <a class="btn btn-outline-info btn-sm" type="button" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id, 'periode' => $periode]) }}" target="_blank"><i class="fa-regular fa-eye"></i> Aperçu</a>
-                                        <button id="{{$enfant->id}}-{{$periode}}-E" type="button" class="btn {{ $statutEmail[$enfant->id]['success'] ? 'btn-outline-success' : 'btn-outline-secondary'}} btn-sm envoicahier" role="button" {{ $statutEmail[$enfant->id]['success'] ? '' : 'disabled'}}>
+                                        <a class="btn btn-outline-info btn-sm" type="button" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id, 'periode' => $periode]) }}" target="_blank" title="Voir le cahier de réussites"><i class="fa-regular fa-eye"></i> Aperçu</a>
+                                        <button id="{{$enfant->id}}-{{$periode}}-E" type="button" class="btn {{ $statutEmail[$enfant->id]['success'] ? 'btn-outline-success' : 'btn-outline-secondary'}} btn-sm envoicahier" role="button" title="Envoyer le cahier de réussites" {{ $statutEmail[$enfant->id]['success'] ? '' : 'disabled'}}>
                                         {!! $statutCahier[$enfant->id][$periode]['msg'] !!}
                                         </button>                                
                                     </div>
@@ -121,7 +124,7 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                                 @if ($statutCahier[$enfant->id][$periode]['status'] == 'ENVOYE')
 
                                     <div class="btn-group" role="group" aria-label="Actions">
-                                        <a class="btn btn-outline-info btn-sm" type="button" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id, 'periode' => $periode]) }}" target="_blank"><i class="fa-regular fa-eye"></i> Aperçu</a>
+                                        <a class="btn btn-outline-info btn-sm" type="button" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id, 'periode' => $periode]) }}" target="_blank" title="Voir le cahier de réussites"><i class="fa-regular fa-eye"></i> Aperçu</a>
                                         <button id="{{$enfant->id}}-{{$periode}}-R" type="button" class="btn btn-success btn-sm renvoicahier" title="{{ $statutCahier[$enfant->id][$periode]['msg'] }}"><i class="fa-solid fa-envelope-circle-check fa-lg"></i> Renvoyer</button>
                                     </div>
                                     <div id="renvoi-{{$enfant->id}}"></div>
@@ -132,7 +135,7 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                                     <div id="renvoierror-{{$enfant->id}}"></div>
                                     --}}
                                 @else
-                                    <span style="color:{{$statutCahier[$enfant->id][$periode]['textcolor']}}">{!! $statutCahier[$enfant->id][$periode]['msg'] !!}</span>
+                                    <span style="color:{{$statutCahier[$enfant->id][$periode]['textcolor']}}" title="{{$statutCahier[$enfant->id][$periode]['title']}}">{!! $statutCahier[$enfant->id][$periode]['msg'] !!}</span>
                                 @endif
                             @endif
                         </td>

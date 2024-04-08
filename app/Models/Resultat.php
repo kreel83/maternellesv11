@@ -93,7 +93,6 @@ class Resultat extends Model
 
 	    static::deleted(function($resultat) {
             // if ($resultat->notation == 2 && $resultat->autonome == 1) {
-            //     dd('coucou');
             //     $r = Reussite::where('user_id', Auth::id())->where('periode', $resultat->periode)->where('enfant_id', $resultat->enfant_id)->where('definitif', 0)->first();
             //     if ($r)  {
             //         $s = ReussiteSection::where('section_id', $resultat->section_id)->where('reussite_id', $r->id)->first();           

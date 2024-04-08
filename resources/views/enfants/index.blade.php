@@ -15,7 +15,7 @@
                         <li class="breadcrumb-item active" aria-current="page">Affectation des groupes</li>                                
                         <span class="help position-absolute" data-location="eleves.liste.groupe"><i class="fa-light fa-message-question"></i></span>
                     @else
-                        <li class="breadcrumb-item active" aria-current="page">Liste des enfants</li>
+                        <li class="breadcrumb-item active" aria-current="page">Liste des élèves</li>
                         @if ($type == "avatar")
                             <span class="help position-absolute" data-location="eleves.liste.avatar"><i class="fa-light fa-message-question"></i></span>
                         @endif
