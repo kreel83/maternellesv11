@@ -62,7 +62,7 @@
                                 @if (config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user'))
                                 <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">                                   
                                     {{$eleve->prenom. ' ' }}
-                                    <span class="blur">{{$eleve->nom}}</span>
+                                    <span >{{$eleve->nom}}</span>
                                 </a>
                                 @else
                                 <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
@@ -128,7 +128,7 @@
                                 @if (config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user'))
                                 <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">                                   
                                     {{$eleve->prenom. ' ' }}
-                                    <span class="blur">{{$eleve->nom}}</span>
+                                    <span class="">{{$eleve->nom}}</span>
                                 </a>
                                 @else
                                 <a href="{{ route('voirEleve', ['enfant_id' => $eleve->id]) }}">
