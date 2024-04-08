@@ -169,8 +169,8 @@ use Illuminate\Support\Facades\Auth;
                                 <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }} d-flex align-items-center justify-content-center" data-bs-toggle="dropdown">
                                     <div class="d-flex flex-column justify-content-center align-items-center justify-content-center">
                                         {{-- <div style="font-size: 14px; font-weight: bolder;line-height: 14px" class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}"> --}}
-                                        <div class="{{ config('app.custom.app_demo') && Auth::id() == config('app.custom.app_demo_user') ? 'blur' : null}}">
-                                            <strong style="font-size: 13px">{{ ucfirst(strtolower(Auth::user()->prenom)) }} {{ strtoupper(Auth::user()->name) }}</strong>
+                                        <div class="">
+                                            <strong style="font-size: 13px">{{ ucfirst(strtolower(Auth::user()->prenom)) }} </strong>
                                         </div>
                                         @if (session('classe_active'))
 

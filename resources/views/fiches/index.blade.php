@@ -198,7 +198,7 @@
                               Grande section
                             </label>
                           </div>
-                          <button type="submit" class="btnAction">Selectionner</button>
+                          <button type="submit" class="btnAction">Sélectionner</button>
                         </form>
                           {{-- <hr>
                           <form action="{{route('importTemplate')}}" method="POST">
@@ -274,7 +274,9 @@
                         </div>
                         <ul id="enfant_liste"></ul>
                         <div class="alert alert-danger">La désélection de cette fiche entraînera la suppression de
+
                             l'évaluation de ou des enfants sur cette activité.<br> Voulez-vous désélectionner cette fiche ?
+
                         </div>
 
 
@@ -282,7 +284,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                        <button class="btn btn-primary deselectionneFiche" data-bs-dismiss="modal">Déselectionner la
+                        <button class="btn btn-primary deselectionneFiche" data-bs-dismiss="modal">Désélectionner la
                             fiche</button>
                     </div>
                 </div>

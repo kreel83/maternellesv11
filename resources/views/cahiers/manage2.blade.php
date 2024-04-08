@@ -19,10 +19,10 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
             </ol>
           </nav>
 
-          <div class="d-flex justify-content-between w-100 my-3">
-            <div><span style="color:green"><i class="fa-solid fa-circle-check"></i></span> :  Cahier prêt à être envoyé aux parents.</div>
-            <div><span style="color:orange"><i class="fa-solid fa-circle-check"></i></span> :  Cahier pas encore terminé (non définitif).</div>
-            <div><span style="color:red"><i class="fa-solid fa-circle-check"></i></span> :  Le cahier n'est pas encore crée pour la période.</div>
+          <div class="d-flex justify-content-between w-75 my-3">
+            {{-- <div><span style="color:green"><i class="fa-solid fa-circle-check"></i></span> :  Cahier prêt à être envoyé aux parents.</div> --}}
+            <div><span style="color:orange"><i class="fa-solid fa-circle-exclamation"></i></span> :  Le cahier n'est pas encore prêt à l'envoi.</div>
+            <div><span style="color:red"><i class="fa-solid fa-circle-question"></i></span> :  Le cahier n'est pas encore créé pour la période.</div>
 
           </div>
 
@@ -93,8 +93,10 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                         </div>
                     </td>
 
+
                     {{-- <td>{{ $enfant->prenom.' '.$enfant->nom}}</td> --}}
                     <td><a href="{{ route('voirEleve', ['enfant_id' => $enfant->id]) }}">{{ $enfant->prenom.' '.$enfant->nom}}</a></td>
+
                     <td>{{ strtoupper($enfant->psmsgs) }}</td>
                     <td class="mx-auto">
                         <div class="text-center groupe-terme {{isset($groupe) ? null : 'd-none'}}" style="border-radius: 4px; background-color: {{ $groupe["backgroundColor"] ?? '' }}; color:{{ $groupe["textColor"] ?? ''}} ; border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">
