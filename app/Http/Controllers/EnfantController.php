@@ -196,11 +196,6 @@ class EnfantController extends Controller
         return redirect()->back();
     }
 
-
-    public function password_pdf() {
-        dd('coucou');
-    }
-
     //***************************************************************************** */
     // Ci-dessous ANCIENNEMENT eleveController.php
     //***************************************************************************** */
@@ -395,7 +390,11 @@ class EnfantController extends Controller
         Enfant::updateOrCreate(['id' => $datas['id']], $datas);
 
         session(['is_enfants' => Classe::is_enfants()]);
-        return redirect()->route('maclasse');
+        if($request->backUrl) {
+            return redirect($request->backUrl);
+        } else {
+            return redirect()->route('maclasse');
+        }
     }
 
     public function addEleve() {

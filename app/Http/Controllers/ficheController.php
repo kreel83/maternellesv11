@@ -343,7 +343,6 @@ class ficheController extends Controller
     }
 
     public function choix(Request $request) {
-        dd($request);
             $liste = explode(',',$request->order);
 
             $fiche = new Fiche();
@@ -420,10 +419,7 @@ class ficheController extends Controller
             
             return $result['choices'][0]['message']['content'];
         }
-
-
-        // dd($request);
-        
+      
         $request->validate([
             'section_id' => ['required'],
             'categorie_id' => ['required'],

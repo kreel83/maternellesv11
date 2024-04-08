@@ -45,10 +45,10 @@
                     <i class="fa-solid fa-envelope"></i>
                     <input type="text" class="custom-input" name="email" value="{{$user->email}}" placeholder="Nom" disabled/>
                 </div>
-                <div class="icone-input my-2 little">
+				{{-- <div class="icone-input my-2 little">
                     <i class="fa-solid fa-phone"></i>
                         <input type="text" class="custom-input" name="phone" value="{{$user->phone}}" placeholder="Téléphone" />
-                </div>
+                </div> --}}
 
                 <div class="d-flex align-items-center">
                     <button type="submit" class="btnAction me-4">Sauvegarder</button>

@@ -218,8 +218,6 @@ class CalendrierController extends Controller
     }
 
     public function savePeriode(Request $request) {
-        dd($request);
-
         $user = Auth::id();
         Myperiode::where('user_id', $user)->where('annee', $request->annee)->delete();
         $actual = 1;

@@ -9,7 +9,7 @@
 
             <ol class="breadcrumb position-relative">
                 <li class="breadcrumb-item"><a href="{{ route('depart') }}">Tableau de bord</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Selection des fiches d'activités</li>
+                <li class="breadcrumb-item active" aria-current="page">Sélection des fiches d'activités</li>
                 <span class="help position-absolute" data-location="fiches.selection.main"><i class="fa-light fa-message-question"></i></span>
             </ol>
         </nav>
@@ -270,11 +270,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-warning">Une validation a déjà été effectuée sur cette fiche
-                            <br>sur les enfants suivants :
+                            <br>pour les enfants suivants :
                         </div>
                         <ul id="enfant_liste"></ul>
-                        <div class="alert alert-danger">La déselection de cette fiche entrainera la suppression de
-                            l'évaluation de ou des enfants sur cette activite. <br> Voulez-vous déselectionner cette fiche ?
+                        <div class="alert alert-danger">La désélection de cette fiche entraînera la suppression de
+                            l'évaluation de ou des enfants sur cette activité.<br> Voulez-vous désélectionner cette fiche ?
                         </div>
 
 

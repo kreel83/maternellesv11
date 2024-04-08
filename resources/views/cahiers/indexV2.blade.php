@@ -29,8 +29,8 @@
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb position-relative mx-5">
               <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
-              <li class="breadcrumb-item"><a href="{{route('enfants',['type' => $type])}}">Liste des enfants</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Réussite</li>
+              <li class="breadcrumb-item"><a href="{{route('enfants',['type' => $type])}}">Liste des élèves</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Mon cahier de réussites</li>
               <span class="help position-absolute" data-location="eleves.reussite.main"><i class="fa-light fa-message-question"></i></span>
             </ol>
           </nav>
@@ -121,13 +121,13 @@
             <div class="d-flex justify-content-center mx-auto">
                 <div class="form-check form-switch mt-2 ">
                     <input class="form-check-input seePdf" type="checkbox" id="seePdf1" {{ $reussite->definitif == 1 ? "checked" : null}} data-reussite="{{$reussite->id}}">
-                    <label class="form-check-label" for="seePdf1">Prét à l'envoi</label>
+                    <label class="form-check-label" for="seePdf1">Prêt à l'envoi</label>
                 </div> 
                 <div class="{{$reussite->definitif == 0 ? 'desactive' : 'active'}} ms-5 definitifPDF">
 
                     <a style="font-size: 25px" target="_blank" href="/app/enfants/cahier/apercu/0/{{$enfant->id}}/{{$enfant->periode}}">
                         <i class="fa-solid fa-file-pdf"></i>
-                        <span>Voir le cahier de réussite</span>
+                        <span>Voir le cahier de réussites</span>
                     </a>
                 </div>  
             </div>

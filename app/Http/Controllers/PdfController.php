@@ -182,18 +182,21 @@ class PdfController extends Controller
                             $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-regular fa-paper-plane fa-lg"></i> Envoyer';
                             $statutCahier[$enfant->id][$periode]['status'] = 'PRET';
                             $statutCahier[$enfant->id][$periode]['textcolor'] = 'green';
+                            $statutCahier[$enfant->id][$periode]['title'] = 'Le cahier est prêt à être envoyé';
                             $displayBtnBulk[$periode] = true;
                         } else {
                             // cahier non terminé
                             $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-circle-exclamation"></i>';
                             $statutCahier[$enfant->id][$periode]['status'] = 'PASPRET';
                             $statutCahier[$enfant->id][$periode]['textcolor'] = 'orange';
+                            $statutCahier[$enfant->id][$periode]['title'] = 'Le cahier n\'est pas encore prêt à l\'envoi';
                         }
                     } else {
                         // cahier non crée
                         $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-circle-question"></i>';
                         $statutCahier[$enfant->id][$periode]['status'] = 'INCONNU';
                         $statutCahier[$enfant->id][$periode]['textcolor'] = 'red';
+                        $statutCahier[$enfant->id][$periode]['title'] = 'Le cahier n\'est pas encore créé pour la période';
                     }
                 }
             }

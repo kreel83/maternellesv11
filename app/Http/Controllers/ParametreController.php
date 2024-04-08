@@ -294,14 +294,14 @@ class ParametreController extends Controller
             'civilite' => ['required'],
             'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
-            'phone' => ['max:10'],
+            //'phone' => ['max:10'],
         ], [
             'civilite.required' => 'La civilité est obligatoire.',
             'name.required' => 'Le nom est obligatoire.',
             'name.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
             'prenom.max' => 'Le prénom est limité à 255 caractères.',
-            'phone.max' => 'Le numéro de mobile est limité à 10 caractères.',
+            //'phone.max' => 'Le numéro de mobile est limité à 10 caractères.',
         ]);
 
 
@@ -314,10 +314,10 @@ class ParametreController extends Controller
 
 
         $user = Auth::user();
+		$user->civilite = $request->civilite;
         $user->name = strtoupper($request->name);
         $user->prenom = ucfirst($request->prenom);
-        $user->phone = $request->phone;
-        $user->civilite = $request->civilite;
+        //$user->phone = $request->phone;
         //$user->nom_ecole = ucfirst($request->nom_ecole);
         //$user->adresse_ecole = ucfirst($request->adresse_ecole);
         // $user->nom_directeur = ucfirst($request->nom_directeur);
