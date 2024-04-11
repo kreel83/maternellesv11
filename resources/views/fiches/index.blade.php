@@ -275,7 +275,7 @@
                         <ul id="enfant_liste"></ul>
                         <div class="alert alert-danger">La désélection de cette fiche entraînera la suppression de
 
-                            l'évaluation de ou des enfants sur cette activité.<br> Voulez-vous désélectionner cette fiche ?
+                            l'évaluation du ou des enfants sur cette activité.<br> Voulez-vous désélectionner cette fiche ?
 
                         </div>
 
