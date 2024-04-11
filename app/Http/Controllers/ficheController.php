@@ -320,19 +320,21 @@ class ficheController extends Controller
 
 
     public function retirerChoix(Request $request) {
-
+        // dd($request);
         $item_id = Fiche::find($request->fiche)->item_id;
+        
         $enfants = Enfant::where('classe_id', session('classe_active')->id)->pluck('id');
         
         $check = Resultat::where('item_id', $item_id)->whereIn('enfant_id', $enfants)->get();
 
-
         if ($check->count() == 0 || $request->state == 'confirmation') {
+            
             $fiche = Fiche::find($request->fiche);
             Resultat::where('item_id', $item_id)->delete();
             $fiche->delete();
             return 'ok';
         } else {
+            
             $enfants = [];
             foreach ($check as $line) {
                 $enfants[] = Enfant::find($line->enfant_id)->prenom;
