@@ -225,7 +225,7 @@ const selectFiche = (Modal) => {
 
 
     $(document).on('click','.deselectionneFiche', function() {
-        var id =$(this).data('fiche')
+        var id =$(this).attr('data-fiche')
         var that = $('.card_fiche[data-selection="'+id+'"]')
         $.get('/app/fiches/retirerChoix?fiche='+id+'&state=confirmation', function(data) {
             console.log(data)
