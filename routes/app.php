@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchatController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminLicenceController;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,8 @@ use App\Http\Controllers\ParametreController;
 use App\Http\Controllers\ficheController;
 use App\Http\Controllers\GoogleConnect;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FactureController;
+use App\Http\Controllers\LicenceController;
 use App\Http\Controllers\TutoController;
 use App\Http\Controllers\PartageController;
 use App\Http\Controllers\PdfController;
@@ -276,7 +279,19 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/partage/liste_partage',  [PartageController::class, 'liste_partage'])->name('liste_partage');
     // La route pour accepter un partage depuis un email est hors du middleware car publique : name('acceptePartage')
 
-    // Gestion des abonnements
+    // Gestion des abonnements & achats
+    Route::get('/licences', [LicenceController::class, 'index'])->name('licence.index');
+    Route::get('/licence/detail', [LicenceController::class, 'detail'])->name('licence.detail');
+
+    Route::get('factures', [FactureController::class, 'invoiceList'])->name("facture.list");
+    Route::get('/facture/download/{facture_number}', [FactureController::class, 'downloadInvoice'])->name('facture.download');
+    Route::get('facture/send/{facture_number}', [FactureController::class, 'sendInvoice'])->name("facture.send");   
+    // Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");    
+    // Route::get('/invoice/download/{facture_number}', [LicenceController::class, 'downloadInvoice'])->name('user.invoice.download');
+    // Route::get('invoice/send/{facture_number}', [LicenceController::class, 'sendInvoice'])->name("subscribe.invoice.send");   
+
+    Route::get('/achat', [AchatController::class, 'buyWithStripeCheckout'])->name('achat.checkout');
+    Route::get('/achat/success', [AchatController::class, 'buyWithStripeCheckoutSuccess'])->name('achat.success');
     Route::get('/abonnement', [SubscriptionController::class, 'index'])->name('subscribe.index');
     Route::get('/subscribe-checkout', [SubscriptionController::class, 'subscribeWithStripeCheckout'])->name('subscribe.checkout');
     Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
@@ -285,15 +300,11 @@ Route::middleware(['auth','user'])->group(function () {
 
     //Route::get('/subscribe', [SubscriptionController::class, 'cardform'])->name('subscribe.cardform');
     //Route::post('subscribe/create', [SubscriptionController::class, 'subscribe'])->name("subscribe.create");
-    Route::get('subscribe/invoice', [SubscriptionController::class, 'invoice'])->name("subscribe.invoice");
     Route::get('subscribe/cancel', [SubscriptionController::class, 'cancel'])->name("subscribe.cancel");
     Route::get('subscribe/cancel/end', [SubscriptionController::class, 'cancelsubscription'])->name("subscribe.cancelsubscription");
     Route::get('subscribe/resume', [SubscriptionController::class, 'resume'])->name("subscribe.resume");
     Route::post('subscribe/resume', [SubscriptionController::class, 'resumeSubscription'])->name("subscribe.resumesubscription");
     Route::get('subscribe/waiting', [SubscriptionController::class, 'stripeAttenteFinalisation'])->name("subscribe.waiting");
-    
-    Route::get('/invoice/download/{facture_number}', [SubscriptionController::class, 'downloadInvoice'])->name('user.invoice.download');
-    Route::get('invoice/send/{facture_number}', [SubscriptionController::class, 'sendInvoice'])->name("subscribe.invoice.send");    
 
 });
 

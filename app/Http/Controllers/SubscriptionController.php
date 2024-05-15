@@ -20,6 +20,7 @@ use PDF;
 
 class SubscriptionController extends Controller
 {
+
     public function index(Request $request): View
     {
         $invoices = Facture::where('user_id', Auth::id())->count();
@@ -197,66 +198,66 @@ class SubscriptionController extends Controller
         return back()->with(["result" => $result]);
     }
 
-    /**
-     * Affiche la liste des factures
-     *
-     * @return View
-     */
-    public function invoice(): View
-    {
-        $invoices = Facture::select('number', 'created_at', 'amount')->where('user_id', Auth::id())->orderByDesc('id')->get();
-        return view("subscription.invoice")
-            ->with('invoices', $invoices);
-    }
+    // /**
+    //  * Affiche la liste des factures
+    //  *
+    //  * @return View
+    //  */
+    // public function invoice(): View
+    // {
+    //     $invoices = Facture::select('number', 'created_at', 'amount')->where('user_id', Auth::id())->orderByDesc('id')->get();
+    //     return view("subscription.invoice")
+    //         ->with('invoices', $invoices);
+    // }
 
-    public function downloadInvoice($number)
-    {
-        $invoice = Facture::select('factures.id','factures.number','factures.created_at','transactions.payment_method')->where([
-            ['factures.number', $number],
-            ['factures.user_id', Auth::id()],
-        ])->leftJoin('transactions', 'factures.transaction_id', '=', 'transactions.id')->first();
-        if($invoice) {
-            $ecole = Ecole::where('identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)->first();
-            $lignes = FactureLigne::where('facture_id', $invoice->id)
-                ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
-                ->get();
-            $pdf = PDF::loadView('pdf.facture', [
-                'user' => Auth::user(),
-                'invoice' => $invoice,
-                'ecole' => $ecole,
-                'lignes' => $lignes
-            ]);
-            $pdf->add_info('Title', 'Facture n° '.ucfirst($invoice->number));
-            return $pdf->stream('Facture_'.$invoice->number.'.pdf');
-        } else {
-            return redirect()->route('subscribe.invoice')
-                ->with('status', 'danger')
-                ->with('msg', 'Facture introuvable.');
-        }
-    }
+    // public function downloadInvoice($number)
+    // {
+    //     $invoice = Facture::select('factures.id','factures.number','factures.created_at','transactions.payment_method')->where([
+    //         ['factures.number', $number],
+    //         ['factures.user_id', Auth::id()],
+    //     ])->leftJoin('transactions', 'factures.transaction_id', '=', 'transactions.id')->first();
+    //     if($invoice) {
+    //         $ecole = Ecole::where('identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)->first();
+    //         $lignes = FactureLigne::where('facture_id', $invoice->id)
+    //             ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
+    //             ->get();
+    //         $pdf = PDF::loadView('pdf.facture', [
+    //             'user' => Auth::user(),
+    //             'invoice' => $invoice,
+    //             'ecole' => $ecole,
+    //             'lignes' => $lignes
+    //         ]);
+    //         $pdf->add_info('Title', 'Facture n° '.ucfirst($invoice->number));
+    //         return $pdf->stream('Facture_'.$invoice->number.'.pdf');
+    //     } else {
+    //         return redirect()->route('subscribe.invoice')
+    //             ->with('status', 'danger')
+    //             ->with('msg', 'Facture introuvable.');
+    //     }
+    // }
 
-    public function sendInvoice($number)
-    {
-        $invoice = Facture::select('factures.id','factures.number','factures.created_at','transactions.payment_method')->where([
-            ['factures.number', $number],
-            ['factures.user_id', Auth::id()],
-        ])->leftJoin('transactions', 'factures.transaction_id', '=', 'transactions.id')->first();
-        if($invoice) {
-            $ecole = Ecole::where('identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)->first();
-            $lignes = FactureLigne::where('facture_id', $invoice->id)
-                ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
-                ->get();
-            $pdf = PDF::loadView('pdf.facture', ['user' => Auth::user(), 'invoice' => $invoice, 'ecole' => $ecole, 'lignes' => $lignes]);
-            Mail::to($ecole->mail)->send(new SendInvoiceToSchool($pdf->output(),'Facture_'.$invoice->number.'.pdf'));
-            return redirect()->route('subscribe.invoice')
-                ->with('status', 'success')
-                ->with('msg', 'Votre facture n° '.$number.' a été envoyée à votre établissement.');
-        } else {
-            return redirect()->route('subscribe.invoice')
-                ->with('status', 'danger')
-                ->with('msg', 'Facture introuvable.');
-        }
-    }
+    // public function sendInvoice($number)
+    // {
+    //     $invoice = Facture::select('factures.id','factures.number','factures.created_at','transactions.payment_method')->where([
+    //         ['factures.number', $number],
+    //         ['factures.user_id', Auth::id()],
+    //     ])->leftJoin('transactions', 'factures.transaction_id', '=', 'transactions.id')->first();
+    //     if($invoice) {
+    //         $ecole = Ecole::where('identifiant_de_l_etablissement', Auth::user()->ecole_identifiant_de_l_etablissement)->first();
+    //         $lignes = FactureLigne::where('facture_id', $invoice->id)
+    //             ->leftJoin('produits', 'facture_lignes.produit_id', '=', 'produits.id')
+    //             ->get();
+    //         $pdf = PDF::loadView('pdf.facture', ['user' => Auth::user(), 'invoice' => $invoice, 'ecole' => $ecole, 'lignes' => $lignes]);
+    //         Mail::to($ecole->mail)->send(new SendInvoiceToSchool($pdf->output(),'Facture_'.$invoice->number.'.pdf'));
+    //         return redirect()->route('subscribe.invoice')
+    //             ->with('status', 'success')
+    //             ->with('msg', 'Votre facture n° '.$number.' a été envoyée à votre établissement.');
+    //     } else {
+    //         return redirect()->route('subscribe.invoice')
+    //             ->with('status', 'danger')
+    //             ->with('msg', 'Facture introuvable.');
+    //     }
+    // }
 
     public function subscribeWithStripeCheckout(Request $request)
     {
@@ -265,7 +266,8 @@ class SubscriptionController extends Controller
         return $request->user()->newSubscription('default', $product->stripe_product_id)
             ->checkout([
                 'success_url' => route('subscribe.waiting'),
-                'cancel_url' => route('subscribe.index', ['checkout' => 'cancel']),
+                'cancel_url' => route('licence.index', ['checkout' => 'cancel']),
+                // 'cancel_url' => route('subscribe.index', ['checkout' => 'cancel']),
                 'subscription_data' => [
                     'metadata' => [
                         'user_id' => $request->user()->id,

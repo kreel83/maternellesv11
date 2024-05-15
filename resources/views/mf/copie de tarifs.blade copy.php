@@ -26,81 +26,51 @@
     <!-- start pricing area -->
     <section class="home2 pricing p-120">
         <div class="container">
-
             <div class="row">
                 <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                     <div class="section-title wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="1s">
+                        <h2>un prix unique <br> un abonnement sécurisé</h2>
 
-                        <h2>Formules {{ config('app.name') }}</h2>
-
-                        {{-- <h2>un prix unique <br> un abonnement sécurisé</h2>
                         <p>Votre application complète vous est proposée au prix de {{ config('app.custom.prix_abonnement') }} € TTC par an.</p>
-                        <p>Les abonnements se font par carte bancaire ou par PayPal.</p> --}}
+                        <p>Les abonnements se font par carte bancaire ou par PayPal.</p>
 
                     </div>
                 </div>
-
                 <div class="col-lg-12">
-
-                    <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-4">
-                            <div class="item wow fadeInLeft" data-wow-delay="0.2s" data-wow-duration="1s">
-                                <div class="price-title text-center">
-                                    <span>DECOUVERTE</span>
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="item text-center wow fadeInLeft" data-wow-delay="0.2s" data-wow-duration="1s">
+                                <div class="price-title">
+                                    <h5>DECOUVERTE</h5>
                                    
                                 </div>
                                 <ul>
-                                    <li><i class="fa fa-check"></i>{{ config('app.custom.evaluations_gratuites') }} évaluations par classe</li>
-                                    <li><i class="fa fa-check"></i>Fonctionnalités essentielles</li>
-                                    <li><i class="fa-solid fa-xmark"></i>Partage de classe</li>
-                                    <li><i class="fa-solid fa-xmark"></i>Importation des élèves</li>
-                                    <li><i class="fa-solid fa-xmark"></i>Compagnon mobile</li>
-
+                                    <li><i class="fas fa-check"></i>{{ config('app.custom.evaluations_gratuites') }} évaluations par classe</li>
+                                    <li><i class="fas fa-check"></i>Accès à toutes les fonctionnalités de l'application</li>
 
                                 </ul>
-                                <div class="purchase text-center">
+                                <div class="purchase">
                                     <h3>Gratuit</h3>
                                     <a href="{{ route('registration.start') }}">Je teste</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="item wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                                <div class="price-title text-center">
-                                    <span>ESSENTIELLE</span>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="item text-center active wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
+                                <div class="price-title">
+                                    <span>PREMIUM</span>
                                   
                                     <!-- <h4>"business"</h4> -->
                                 </div>
                                 <ul>
-                                    <li><i class="fa fa-check"></i>Evaluations illimitées</li>
-                                    <li><i class="fa fa-check"></i>Fonctionnalités essentielles</li>
-                                    <li><i class="fa-solid fa-xmark"></i>Partage de classe</li>
-                                    <li><i class="fa-solid fa-xmark"></i>Importation des élèves</li>
-                                    <li><i class="fa-solid fa-xmark"></i>Compagnon mobile</li>
+                                    <li><i class="fas fa-check"></i>Evaluations illimitées</li>
+                                    <li><i class="fas fa-check"></i>Accès à toutes les fonctionnalités de l'application</li>
+                                    <li><i class="fas fa-check"></i>Partage de classe</li>
 
                                 </ul>
-                                <div class="purchase text-center">
+                                <div class="purchase">
                                     <h3>{{ config('app.custom.prix_abonnement') }} € / an <span>TTC</span></h3>
                                     <a href="{{ route('registration.start') }}">je m'abonne</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="item active wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                                <div class="price-title text-center">
-                                    <span>PREMIUM</span>
-                                </div>
-                                <ul>
-                                    <li><i class="fas fa-check"></i>Evaluations illimitées</li>
-                                    <li><i class="fas fa-check"></i>Toutes les fonctionnalités</li>
-                                    <li><i class="fas fa-check"></i>Achat unique</li>
-                                    <li><i class="fas fa-check"></i>Licence nominative à vie</li>
-                                    <li><i class="fas fa-check"></i>Modules complémentaires en option</li>
-
-                                </ul>
-                                <div class="purchase text-center">
-                                    <h3>34,90 € <span>TTC</span></h3>
-                                    <a href="{{ route('registration.start') }}">je commande</a>
                                 </div>
                             </div>
                         </div>

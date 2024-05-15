@@ -44,13 +44,18 @@ class StripeEventListener
      */
     public function handle(WebhookReceived $event): void
     {
+
         if ($event->payload['type'] === 'charge.succeeded') {
-            // Log::info($event->payload);
+            Log::info($event->payload);
             $transaction = Transaction::ajouterUneTransactionStripe($event->payload);
             if(array_key_exists('method', $event->payload['data']['object']['metadata'])) {
                 $method = $event->payload['data']['object']['metadata']['method'];
-                if($method == 'purchase' || $method == 'renew') {
+                if($method == 'achat' || $method == 'purchase' || $method == 'renew') {
                     switch ($method) {
+                        case 'achat':
+                            // mise a jour du type de licence dans Users
+                            User::where('id', $event->payload['data']['object']['metadata']['user_id'])->update(['licence' => 'lifetime']);
+                            break;
                         case 'purchase':
                             $licence = new Licence();
                             $licence->createUserLicence($event->payload, $transaction);

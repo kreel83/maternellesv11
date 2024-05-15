@@ -149,7 +149,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('subscribe.resume')}}" class="dashboard-nav-dropdown-item {{$menu == 'reactiver' ? 'active' : null}}">Réactiver mon abonnement</a>
                 @endif
                 @if(session('menuAbonnement')['invoice'])
-                  <a href="{{route('subscribe.invoice')}}" class="dashboard-nav-dropdown-item {{$menu == 'facture' ? 'active' : null}}">Mes factures</a>
+                  <a href="{{route('facture.list')}}" class="dashboard-nav-dropdown-item {{$menu == 'facture' ? 'active' : null}}">Mes factures</a>
                 @endif
               </div>
             </div>

@@ -180,8 +180,32 @@ $is_dashboard = true;
         </div>
 
         <div class="div4 cadre_welcome">
+            <div class="titre_welcome">Ma licence</div> 
+            {{-- <div class="titre_welcome">Votre abonnement</div>  --}}
+            <div class="align-items-center pt-5">
+                @if ($is_abonne)
+                    <div class="abonnement_ok mb-3">
+                        <i class="fa-solid fa-circle-check"></i> Licence activée
+                        {{-- <i class="fa-solid fa-circle-check"></i> Abonnement actif --}}
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="btnAction" href="{{ route('licence.detail') }}">Voir le détail</a>
+                        {{-- <a class="btnAction" href="{{ route('subscribe.index') }}">Voir le détail</a> --}}
+                    </div>
+                @else
+                    <div class="abonnement_notOk mb-3">
+                        <i class="fa-solid fa-circle-exclamation"></i> Aucune licence active
+                        {{-- <i class="fa-solid fa-circle-exclamation"></i> Aucun abonnement --}}
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="btnAction" href="{{ route('licence.index') }}">Acheter une licence</a>
+                        {{-- <a class="btnAction" href="{{ route('licence.index') }}">S'abonner au service</a> --}}
+                    </div>
+                @endif
+            </div> 
+        </div>
+        {{-- <div class="div4 cadre_welcome">
             <div class="titre_welcome">Votre abonnement</div> 
-            {{-- <div class="d-flex justify-content-center align-items-center pt-5"> --}}
             <div class="align-items-center pt-5">
                 @if ($is_abonne)
                     <div class="abonnement_ok mb-3">
@@ -199,7 +223,7 @@ $is_dashboard = true;
                     </div>
                 @endif
             </div> 
-        </div>
+        </div> --}}
 
         <div class="div5 cadre_welcome"> 
             <div class="titre_welcome">Les 5 activités les plus acquises</div>

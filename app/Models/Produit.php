@@ -33,4 +33,14 @@ class Produit extends Model
     {
         return Produit::where('active_from', null)->first();
     }
+
+    /**
+     * Renvoi le produit en cours pour achat licence Premium
+     *
+     * @return Produit
+     */
+    public static function produitAchatPremium()
+    {
+        return Produit::where('reference', 'LIC-PREMIUM')->first();
+    }
 }

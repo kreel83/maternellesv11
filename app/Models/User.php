@@ -289,6 +289,10 @@ class User extends Authenticatable
                     return false;
                 }
                 break;
+            case('lifetime'):
+                // licence achat a vie
+                return true;
+                break;
         }
         return false;
     }

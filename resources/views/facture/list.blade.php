@@ -7,8 +7,7 @@
 
     <nav class="pb-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
         <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
-        <li class="breadcrumb-item" aria-current="page"><a href="{{ route('subscribe.index') }}">Mon abonnement</a></li>
+        <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>
         <li class="breadcrumb-item active" aria-current="page">Mes factures</li>
         </ol>
     </nav>
@@ -44,9 +43,9 @@
                             {{--<td>{{ $invoice->date()->format('d/m/Y') }}</td>--}}
                             <td>{{ $invoice->amount }} €</td>
                             {{--<td>{{ $invoice->total() }}</td>--}}
-                            <td><a href="{{ route('user.invoice.download', ['facture_number' => $invoice->number]) }}" target="_blank"><i class="fa-solid fa-download"></i></a></td>
+                            <td><a href="{{ route('facture.download', ['facture_number' => $invoice->number]) }}" target="_blank"><i class="fa-solid fa-download"></i></a></td>
                             @if(Auth::user()->ecole_identifiant_de_l_etablissement != '')
-                                <td><a href="{{ route('subscribe.invoice.send', ['facture_number' => $invoice->number]) }}" title="Envoyer à votre établissement"><i class="fa-solid fa-envelope"></i></a></td>
+                                <td><a href="{{ route('facture.send', ['facture_number' => $invoice->number]) }}" title="Envoyer à votre établissement"><i class="fa-solid fa-envelope"></i></a></td>
                             @endif
                         </tr>
                     @endforeach
