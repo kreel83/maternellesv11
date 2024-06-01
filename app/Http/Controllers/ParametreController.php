@@ -15,12 +15,12 @@ use App\Models\Event;
 use App\Models\Help;
 use App\Models\Vacance;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Validation\Rules;
 
 class ParametreController extends Controller
@@ -74,20 +74,38 @@ class ParametreController extends Controller
     }
 
 
+
+
+
+
     private function chatpht($reussite) {            
 
         $content = "Can you transform the following sentence with the first name \"Lucie\" who is a girl : ".$reussite;
 
-        $result = OpenAI::chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 
-                'content' => $content],
+        $client = new Client([
+            'verify' => false,
+            'base_uri' => 'https://api.openai.com/v1/',
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer '.env('OPENAI_API_KEY'),
             ],
-           
         ]);
         
-        return $result['choices'][0]['message']['content'];
+        $response = $client->post('chat/completions', [
+            'json' => [
+                "model" => "gpt-3.5-turbo",
+                "messages" =>  [
+                    [
+                        "role" => "user",
+                        "content" => $content
+                    ]
+                ],
+            ],
+        ]);
+        $data = json_decode($response->getBody()->getContents(), true);
+        $result = $data['choices'][0]['message']['content'];
+        return $result;                
+     
     }
 
     public function monprofil(Request $request) {

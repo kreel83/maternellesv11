@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Storage;
 use PDF;
 use Browser;
 use Illuminate\Support\Facades\DB;
-use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Support\Str;
 
 class CahierController extends Controller
@@ -138,20 +137,20 @@ class CahierController extends Controller
 
 
 
-    private function chatpht($reussite, $enfant) {
-        $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
-        $content = 'Remplace le terme "élève" par "il" ou "elle" de '.$enfant->prenom.' qui est '.$genre.". Le texte à traiter est : ".$reussite;
-        $result = OpenAI::chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 
-                'content' => $content],
-            ],
+    // private function chatpht($reussite, $enfant) {
+    //     $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
+    //     $content = 'Remplace le terme "élève" par "il" ou "elle" de '.$enfant->prenom.' qui est '.$genre.". Le texte à traiter est : ".$reussite;
+    //     $result = OpenAI::chat()->create([
+    //         'model' => 'gpt-3.5-turbo',
+    //         'messages' => [
+    //             ['role' => 'user', 
+    //             'content' => $content],
+    //         ],
            
-        ]);
+    //     ]);
         
-        return $result['choices'][0]['message']['content'];
-    }
+    //     return $result['choices'][0]['message']['content'];
+    // }
 
     public function reactualiser($enfant_id, Request $request) {
 
@@ -176,22 +175,22 @@ class CahierController extends Controller
     }
 
 
-    public function reformuler($enfant_id, Request $request) {
-        $enfant = Enfant::find($enfant_id);
+    // public function reformuler($enfant_id, Request $request) {
+    //     $enfant = Enfant::find($enfant_id);
         
-        $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
-        $variable = $request->quill;
-        $result = OpenAI::chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 
-                'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable et sachant que ".$enfant->prenom." est ".$genre.", peux-tu me récrire le texte suivant en utilisant le prénom de l'élève qu'en début de texte. l'élève est '.$genre.'. le texte : ".$variable.'"'],
-            ],
+    //     $genre = ($enfant->genre == 'F') ? 'une fille' : 'un garçon';
+    //     $variable = $request->quill;
+    //     $result = OpenAI::chat()->create([
+    //         'model' => 'gpt-3.5-turbo',
+    //         'messages' => [
+    //             ['role' => 'user', 
+    //             'content' => "Sachant qu'un tag h2 correspond à un paragraphe et qu'il n'est pas modifiable et sachant que ".$enfant->prenom." est ".$genre.", peux-tu me récrire le texte suivant en utilisant le prénom de l'élève qu'en début de texte. l'élève est '.$genre.'. le texte : ".$variable.'"'],
+    //         ],
            
-        ]);
-        return $result['choices'][0]['message']['content'];
+    //     ]);
+    //     return $result['choices'][0]['message']['content'];
 
-    }
+    // }
     
     public function seepdf(Request $request, $token, $enfant_id = null, $periode = null, $state = 'see') {
         // si enfant_id contient l'ID de l'enfant alors token doit avoir la valeur 0 dans la route
