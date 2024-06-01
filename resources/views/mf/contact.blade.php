@@ -95,6 +95,10 @@
                             <textarea class="inputs" name="message" placeholder="Votre message*" required>{{ old('message') }}</textarea>
                             {{-- <input type="text" placeholder="Votre message*" required class="inputs"> --}}
                         </div>
+                        <div class="mb-3">
+                        {!! NoCaptcha::renderJs() !!}
+                        {!! NoCaptcha::display() !!}
+                        </div>
                         <div class="col-md-12">
                             <button type="submit">Envoyer</button>
                         </div>

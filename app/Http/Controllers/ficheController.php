@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VerifieCreationFiche;
 use App\Models\Categorie;
 use App\Models\Fiche;
 use App\Models\Item;
@@ -13,7 +14,7 @@ use App\Models\Classification;
 use App\Models\Image as ImageTable;
 use App\Models\Template;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -397,7 +398,7 @@ class ficheController extends Controller
     }
 
 
-    public function savefiche(Request $request) {
+    public function savefiche(VerifieCreationFiche $request) {
 
         function set_lvl($request) {
             $r = $request->section;
@@ -408,7 +409,7 @@ class ficheController extends Controller
             return $lvl;
         }
 
-        function chatpht($reussite) {            
+        function chatpht($reussite) {
             $content = "Can you transform the following sentence with the first name \"Lucie\" who is a girl : ".$reussite;
             $result = OpenAI::chat()->create([
                 'model' => 'gpt-3.5-turbo',
@@ -422,34 +423,6 @@ class ficheController extends Controller
             return $result['choices'][0]['message']['content'];
         }
       
-        $request->validate([
-            'section_id' => ['required'],
-            'categorie_id' => ['required'],
-            'section' => ['required'],
-            'name' => ['required'],
-            'phrase' => [
-                'required',
-                'regex:/(?:^|\W)Tom(?:$|\W)/',
-                
-            ],
-
-        ], [
-            'section_id.required' => 'Le domaine est obligatoire.',
-            'categorie_id.required' => 'Une catégorie doit être sélectionnée.',
-            'section.required' => 'Une ou plusieurs sections doivent etre affectées à la fiche.',
-            'name.required' => 'Le titre de la fiche est obligatoire',
-            'phrase.required' => 'La phrase pré-enregistrée est obligatoire',
-            'phrase.regex' => 'La phrase doit contenir le prénom Tom obligatoirement'
-            
-
-        ]);
-
-
-
-        // $name_file = uniqid().'.jpg';
-        
-        
-
         $img = null;
         if ($request->duplicate) {
             $item = Item::find($request->duplicate);

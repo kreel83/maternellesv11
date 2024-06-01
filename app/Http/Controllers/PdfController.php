@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VerifieDDNTelechargementPdf;
 use App\Mail\EnvoiLeLienDeTelechargementDuCahier;
 use App\Models\User;
 use App\Models\Classe;
@@ -35,7 +36,8 @@ class PdfController extends Controller
 
     public static function genereLienVersCahierEnPdf(Enfant $enfant, $periode, $status = 'E') {
         // $status =  E (envoi)  R (renvoi)
-        $token = $periode . md5($enfant->id.uniqid().env('HASH_SECRET'));
+        $token = $periode.str()->random(128);
+        //$token = $periode.md5($enfant->id.uniqid().env('HASH_SECRET')).md5($enfant->ddn).md5(Auth::user()->email);
         $url = route('cahier.predownload', ['token' => $token]);
         $is_sent = false;
         // récupération mail et nom de l'école comme expéditeur du mail aux parents
@@ -102,39 +104,17 @@ class PdfController extends Controller
             return view('cahiers.telechargement3_error');
         }
     }
-    // public function telechargementDuCahierParLesParents($token) {
-    //     $enfant = DB::table('enfants')->where('token', $token)->first()->prenom;
-    //     if($enfant) {
-    //         return view('cahiers.telechargement2')
-    //             ->with('token', $token)
-    //             ->with('enfant', $enfant);
-    //     }
-    // }
 
-    public function telechargementDuCahierParLesParentsPost(Request $request) {
-        $date = Carbon::create($request->annee, $request->mois, $request->jour);
-        $ddn = $date->format('Y-m-d');
-        /*
-        $token = md5($request->id.$ddn.env('HASH_SECRET'));
-        if($token != $request->token) {
-            return Redirect::back()->withErrors(['msg' => 'Token invalide']);
-        }
-        */
-        
-        $enfant = DB::table('enfants')->where('token', $request->token)->first();
-        // $enfant = DB::select('select id,ddn from enfants where token = ?', [$request->token]);
-
+    public function telechargementDuCahierParLesParentsPost(VerifieDDNTelechargementPdf $request) {
+        $ddn = Carbon::create($request->annee, $request->mois, $request->jour)->format('Y-m-d');
+        $enfant = DB::table('enfants')
+            ->where('token', $request->token)
+            ->where('ddn', $ddn)
+            ->first();
         if(!$enfant) {
             return Redirect::back()->withInput()->withErrors(['msg' => 'Enfant non trouvé']);
         }
-
-        // if($ddn != $enfant[0]->ddn) {
-        if($ddn != $enfant->ddn) {
-            return Redirect::back()->withInput()->withErrors(['msg' => 'Enfant non trouvé (date de naissance erronée)']);
-        }
-
         return Redirect::back()->with(['success' => true, 'token' => $request->token]);
-
     }
 
     public function set_ordre(Request $request) {

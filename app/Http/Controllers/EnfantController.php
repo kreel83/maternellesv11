@@ -128,22 +128,18 @@ class EnfantController extends Controller
     }
 
     public function index(Request $request) {
-        
-        
-        
-        if (in_array($request->type,["evaluation","reussite"])) {
 
-            // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'))->where("reussite_disabled",0);
+        if (!in_array($request->type, ["evaluation", "reussite", "avatar", "affectation_groupe"])) {
+            abort(404);
+        }
+       
+        if (in_array($request->type, ["evaluation", "reussite"])) {
             $enfants = Enfant::where('classe_id', session('classe_active')->id)->where("reussite_disabled",0);
         } else {
-            // $enfants = Enfant::where('classe_id', session()->get('id_de_la_classe'));
             $enfants = Enfant::where('classe_id', session('classe_active')->id);
-            
-
             if (!$this->maclasseactuelle->groupes && $request->type == 'affectation_groupe') {
                 return view('enfants.no_groupes')->with('type', $request->type);
             }
-
         }
         $ordre = $request->ordre ?? 'alpha';
         switch($ordre) {
@@ -161,8 +157,6 @@ class EnfantController extends Controller
         ])->count();
         $canSendPDF = ($nbEnfants == $nbReussite);
         $avatar = '/storage/'.Auth::user()->repertoire.'/photos/avatarF.jpg';
-       
-
         
         return view('enfants.index')
             ->with('type', $request->type)

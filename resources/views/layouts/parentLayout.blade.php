@@ -7,6 +7,8 @@
         <title>{{ $titre }}</title>
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
+        <link href="{{ asset('fontawesome/css/all.min.css') }}" rel="stylesheet">
+
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
         {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"> --}}
         <link rel="icon" href="{{ asset('favicon/favicon.ico') }}">

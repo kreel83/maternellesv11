@@ -90,12 +90,14 @@ class MfController extends Controller
             'email' => ['required', 'string', 'email', 'max:255'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string'],
+            'g-recaptcha-response' => 'required|captcha',
         ], [
             'email.required' => 'Adresse mail obligatoire.',
             'email.max' => 'Adresse mail limitée à 255 caractères.',
             'subject.required' => 'L\'objet du message est obligatoire.',
             'subject.max' => 'L\'objet du message est limité à 255 caractères.',
             'message.required' => 'Le message est obligatoire.',
+            'g-recaptcha-response' => 'Merci de vérifier que vous n\'êtes pas un robot',
         ]);
 
         Contact::create([

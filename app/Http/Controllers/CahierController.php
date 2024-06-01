@@ -193,12 +193,15 @@ class CahierController extends Controller
 
     }
     
-    public function seepdf($token, $enfant_id = null, $periode = null, $state = 'see') {
+    public function seepdf(Request $request, $token, $enfant_id = null, $periode = null, $state = 'see') {
         // si enfant_id contient l'ID de l'enfant alors token doit avoir la valeur 0 dans la route
         // WARNING !!! PDF pour Parent pas de Auth:: ni de session
 
         if(!is_null($enfant_id)) {
             // Fonction appelée depuis le compte user
+            if(!in_array($state, ['see', 'download'])) {
+                return redirect()->route('error')->with('msg', 'Fonction invalide');
+            }
             $classe = session('classe_active');
             $enfant = Enfant::where('id', $enfant_id)->where('user_id', session('classe_active')->user_id)->first();
             if($enfant && filter_var($periode, FILTER_VALIDATE_INT) !== false) {
@@ -209,8 +212,14 @@ class CahierController extends Controller
         } else {
             // Fonction appelée depuis l'espace parent            
             $enfant = Enfant::where('token', $token)->first();
-            $classe = Classe::find($enfant->classe_id);
+            //$classe = Classe::find($enfant->classe_id);
             if($enfant) {
+                $state = $request->state;
+                if(!in_array($state, ['see', 'download'])) {
+                    return redirect()->route('cahier.predownload', ['token' => $token])
+                    ->withErrors(['msg' => 'Fonction invalide']);
+                }
+                $classe = Classe::find($enfant->classe_id);
                 $id = $enfant->id;
                 $periode = Str::substr($token, 0, 1);
             } else {
@@ -306,30 +315,53 @@ class CahierController extends Controller
         $utils = new Utils;
         $periode = $utils->periode($enfant, $periode);
 
-        if ($state == 'see') {
+        $pdf = PDF::loadView('pdf.reussite5', [
+            'reussiteSections' => $rs,
+            'customClass' => implode(' ', $customClass),
+            'reussite' => $reussite,
+            'resultats' => $resultats,
+            'sections' => $s,
+            'enfant' => $enfant,
+            'equipes' => $equipes,
+            'user' => $user,
+            'classeUsers' => $classeUsers,
+            'periode' => $periode,
+            'classe' => $classe,
+            'ecole' => $ecole,
+        ]);
 
-            $pdf = PDF::loadView('pdf.reussite5', [
-                'reussiteSections' => $rs,
-                'customClass' => implode(' ', $customClass),
-                'reussite' => $reussite,
-                'resultats' => $resultats,
-                'sections' => $s,
-                'enfant' => $enfant,
-                'equipes' => $equipes,
-                'user' => $user,
-                'classeUsers' => $classeUsers,
-                'periode' => $periode,
-                'classe' => $classe,
-                'ecole' => $ecole,
-            ]);
-            // download PDF file with download method
-            $pdf->add_info('Title', 'Cahier de réussites de '.ucfirst($enfant->prenom));
+        $pdf->add_info('Title', 'Cahier de réussites de '.ucfirst($enfant->prenom));
+        if($state == 'see') {
             return $pdf->stream('Cahier de réussites de '.ucfirst($enfant->prenom.'.pdf'));
         } else {
-            $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
-            $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
-            return redirect()->back()->with('success','le fichier a bien été enregistré');
+            return $pdf->download('Cahier de réussites de '.ucfirst($enfant->prenom.'.pdf'));
         }
+
+
+        // if ($state == 'see') {
+
+        //     $pdf = PDF::loadView('pdf.reussite5', [
+        //         'reussiteSections' => $rs,
+        //         'customClass' => implode(' ', $customClass),
+        //         'reussite' => $reussite,
+        //         'resultats' => $resultats,
+        //         'sections' => $s,
+        //         'enfant' => $enfant,
+        //         'equipes' => $equipes,
+        //         'user' => $user,
+        //         'classeUsers' => $classeUsers,
+        //         'periode' => $periode,
+        //         'classe' => $classe,
+        //         'ecole' => $ecole,
+        //     ]);
+        //     // download PDF file with download method
+        //     $pdf->add_info('Title', 'Cahier de réussites de '.ucfirst($enfant->prenom));
+        //     return $pdf->stream('Cahier de réussites de '.ucfirst($enfant->prenom.'.pdf'));
+        // } else {
+        //     $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
+        //     $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
+        //     return redirect()->back()->with('success','le fichier a bien été enregistré');
+        // }
 
     }
 
@@ -793,48 +825,5 @@ class CahierController extends Controller
         }
         return 'ok';            
     }
-
-    // public function envoiCahier() {
-    //     $enfants = Enfant::where([
-    //         ['user_id', Auth::id()],
-    //         ['reussite', 1]
-    //     ])->get();
-    //     $badEmails = [];
-    //     foreach ($enfants as $enfant) {
-    //         if (!filter_var($enfant->mail1, FILTER_VALIDATE_EMAIL) && !filter_var($enfant->mail2, FILTER_VALIDATE_EMAIL)) {
-    //             $badEmails[] = $enfant->prenom.' '.$enfant->nom;
-    //         }
-    //     }
-    //     return view('cahiers.envoi_parents')
-    //     ->with('badEmails', $badEmails);
-    // }    
-
-    // public function envoiCahierPost(Request $request) {
-    //     $request->validate([
-    //         'valider' => ['required', 'string'],
-    //     ], [
-    //         'valider.required' => 'La saisie du mot VALIDER est obligatoire',
-    //         'valider.string' => 'Format incorrecte',
-    //     ]);
-
-    //     if(Str::lower($request->valider) != 'valider') {
-    //         return Redirect::back()->withInput()->withErrors(['msg' => 'Saisie incorrecte']);
-    //     }
-
-    //     $enfants = Enfant::where([
-    //         ['user_id', Auth::id()],
-    //         ['reussite', 1]
-    //     ])->get();
-        
-    //     foreach ($enfants as $enfant) {
-    //         PdfController::genereLienVersCahierEnPdf($enfant);
-    //         
-    //     }
-
-    //     return view('cahiers.envoi_parents_result');
-        
-    //     
-       
-    // }
 
 }

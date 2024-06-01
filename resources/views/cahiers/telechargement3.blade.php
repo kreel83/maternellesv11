@@ -182,7 +182,7 @@
 
         <div class="container">
 
-            <div class="text-center">
+            <div class="text-center mb-3">
                 <div class="fs-1"><span class="fw-bold">B</span>ienvenue</div>
                 <div class="fs-4">dans la section de téléchargement du cahier de réussites de</div>
                 <div class="fs-1 fw-bolder">{!! $enfant->formatPdf() !!}</div>
@@ -191,11 +191,11 @@
 
             @if (session('success'))
 
-                <div class="d-flex justify-content-center mt-4">
-                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'see']) }}" class="btn-go bleu" target="_blank">Voir le cahier de réussite</a>
+                <div class="d-flex justify-content-center mb-4">
+                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'see']) }}" class="btn-go bleu" target="_blank">Voir le cahier de réussites</a>
                 </div>         
-                <div class="d-flex justify-content-center mt-4">
-                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'download']) }}" class="btn-go orange" target="_blank">Télécharger le cahier de réussite</a>
+                <div class="d-flex justify-content-center mb-4">
+                    <a href="{{ route('cahier.seepdf', ['token' => session('token'), 'state' => 'download']) }}" class="btn-go orange" target="_blank">Télécharger le cahier de réussites</a>
                 </div>         
 
             @else
@@ -211,17 +211,55 @@
                     @include('include.display_msg_error')
                     </div>
 
-                    <div class="col-auto">
-                        <input type="number" class="form-control-lg me-2 mt-1" name="jour" placeholder="Jour de naissance" value="{{ old('jour') }}" required autofocus>
+                    <div class="col-auto mt-2">
+                        <select class="form-select form-select-lg me-2" name="jour" autofocus>
+                            <option selected>Jour de naisssance</option>
+                            @for ($i=1; $i<= 31; $i++)
+                                <option value="{{ $i }}" 
+                                @if (old('jour') == $i)
+                                    selected
+                                @endif
+                                >{{ $i }}</option>
+                            @endfor
+                        </select>
+                        {{-- <input type="number" class="form-control-lg me-2 mt-1" name="jour" placeholder="Jour de naissance" value="{{ old('jour') }}" required autofocus> --}}
                     </div>
-                    <div class="col-auto">
-                        <input type="number" class="form-control-lg me-2 mt-1" name="mois" placeholder="Mois de naissance" value="{{ old('mois') }}" required>
+                    <div class="col-auto mt-2">
+                        @php
+                            $mois = array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
+                        @endphp
+                        <select class="form-select form-select-lg me-2" name="mois">
+                            <option selected>Mois de naisssance</option>
+                            @for ($i = 1; $i <= 12; $i++)
+                                <option value="{{ $i }}" 
+                                @if (old('mois') == $i)
+                                    selected
+                                @endif
+                                >{{ $mois[$i - 1] }}</option>
+                            @endfor
+                        </select>
+                        {{-- <input type="number" class="form-control-lg me-2 mt-1" name="mois" placeholder="Mois de naissance" value="{{ old('mois') }}" required> --}}
                     </div>
-                    <div class="col-auto">
-                        <input type="number" class="form-control-lg me-2 mt-1" name="annee" placeholder="Année de naissance" value="{{ old('annee') }}" required>
+                    <div class="col-auto mt-2">
+                        <select class="form-select form-select-lg me-2" name="annee">
+                            <option selected>Année de naisssance</option>
+                            @for ($i = now()->year-7; $i <= now()->year-2; $i++)
+                                <option value="{{ $i }}" 
+                                @if (old('annee') == $i)
+                                    selected
+                                @endif
+                                >{{ $i }}</option>
+                            @endfor
+                        </select>
+                        {{-- <input type="number" class="form-control-lg me-2 mt-1" name="annee" placeholder="Année de naissance" value="{{ old('annee') }}" required> --}}
                     </div>
 
-                    <div class="d-flex justify-content-center mt-4">
+                    <div class="d-flex justify-content-center mt-3">
+                        {!! NoCaptcha::renderJs() !!}
+                        {!! NoCaptcha::display() !!}
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
                         <button type="submit" class="btn-go w-50">Vérifier</button>
                     </div>
 
@@ -241,7 +279,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-6 mt-2">
+                <div class="col-sm-6 mt-2 mb-3">
                     <div class="card bulle">
                         <div class="card-body">
                             {{$ecole->nom_etablissement}}<br>

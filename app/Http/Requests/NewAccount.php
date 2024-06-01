@@ -28,6 +28,7 @@ class NewAccount extends FormRequest
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 
@@ -50,6 +51,7 @@ class NewAccount extends FormRequest
             'password.required' => 'Mot de passe obligatoire.',
             'password.confirmed' => 'La confirmation du mot de passe a échouée.',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'g-recaptcha-response' => 'Merci de vérifier que vous n\'êtes pas un robot',
         ];
     }
 
