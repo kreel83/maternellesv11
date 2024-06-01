@@ -51,7 +51,7 @@
             </ol>
         </nav>
 
-
+        @include('include.display_msg_error')
 
         <form class="mt-xl-5" action="{{ route('saveFiche') }}" method="post" id="form1" enctype="multipart/form-data"
             data-message={{ Session::has('message') }}>
@@ -133,7 +133,9 @@
                                 </button>
                             </div>                            
                         </div>
-
+                        @error('file')
+                        <div class="error_message">{{ $message }}</div>                                        
+                        @enderror
                     </div>
                 </div>
 

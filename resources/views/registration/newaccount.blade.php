@@ -6,7 +6,7 @@
       
 {{-- <div class="card mx-auto p-5" style="width: auto; height: auto"> --}}
 <form action="{{ route('registration.newaccount.post') }}" method="POST">
-    @csrf
+@csrf
 
 <div class="card mx-auto">
     <div class="card-header">
@@ -64,11 +64,16 @@
 
             </div>
 
-            <div class="form-check justify-content-center">
+            <div class="form-check justify-content-center mb-3">
                 <input class="form-check-input me-2" type="checkbox" value="" id="agree" required />
                 <label class="form-check-label" for="agree">
                     J'ai lu et j'accepte les <a href="#voirCGU" data-bs-toggle="modal">conditions générales d'utilisation</a> et notre <a href="#voirConfidentialite" data-bs-toggle="modal">politique de confidentialité</a>.
                 </label>
+            </div>
+
+            <div class="mb-3">
+                {!! NoCaptcha::renderJs() !!}
+                {!! NoCaptcha::display() !!}
             </div>
 
             {{-- <div class="d-flex justify-content-center">
