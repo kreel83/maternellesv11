@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules;
+use App\Rules\StrongPassword;
 
 class NewAccount extends FormRequest
 {
@@ -27,7 +28,15 @@ class NewAccount extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => [
+                'required',
+                'confirmed',
+                'string',
+                'min:8',
+                'max:20',
+                new StrongPassword,
+            ],
+            // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'g-recaptcha-response' => 'required|captcha',
         ];
     }
@@ -51,6 +60,8 @@ class NewAccount extends FormRequest
             'password.required' => 'Mot de passe obligatoire.',
             'password.confirmed' => 'La confirmation du mot de passe a échouée.',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'password.max' => 'Le mot de passe doit contenir au plus 20 caractères.',
+            'password.StrongPassword' => 'The password must include at least one uppercase letter, one number, and one special character.',
             'g-recaptcha-response' => 'Merci de vérifier que vous n\'êtes pas un robot',
         ];
     }

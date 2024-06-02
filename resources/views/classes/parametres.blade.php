@@ -7,7 +7,7 @@
     <nav class="pb-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('depart')}}">Tableau de bord</a></li>        
-            <li class="breadcrumb-item active" aria-current="page">Mon profil</li>
+            <li class="breadcrumb-item active" aria-current="page">Paramétre de ma classe</li>
           </ol>
     </nav>
 
@@ -31,15 +31,15 @@
                                 <i class="fa-solid fa-user"></i>
                                 <input type="text" class="custom-input" name="aide[{{$i}}][prenom]" value="{{$equipes[$i][0] ?? null}}" placeholder="Prénom" />
                             </div> 
-                            <div class="icone-input my-2 little">
+                            {{-- <div class="icone-input my-2 little">
                                 <i class="fa-solid fa-user"></i>
                                 <input type="text" class="custom-input" name="aide[{{$i}}][name]" value="{{$equipes[$i][1] ?? null}}" placeholder="Nom" />
-                            </div>
+                            </div> --}}
                             <div class="form-group">            
                                 <select class="custom-select little" name="aide[{{$i}}][fonction]">
-                                    <option value="">Choisissez</option>
+                                    <option value="">Choisissez une fonction</option>
                                     @foreach(App\Models\User::FONCTIONS as $key=>$fonction)
-                                        <option value="{{$key}}" {{(isset($equipes[$i][2]) && ($key == $equipes[$i][2])) ? 'selected' : null }}>{{$fonction}}</option>
+                                        <option value="{{$key}}" {{(isset($equipes[$i][1]) && ($key == $equipes[$i][1])) ? 'selected' : null }}>{{$fonction}}</option>
                                     @endforeach                                
                                 </select>
                                 @if(Session::has('error'.$i))

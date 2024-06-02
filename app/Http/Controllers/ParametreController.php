@@ -43,6 +43,7 @@ class ParametreController extends Controller
     }
 
     public function saveaidematernelle(Request $request) {
+        
 
         $aide = array();
 
@@ -51,14 +52,14 @@ class ParametreController extends Controller
             $aide[$i] = array_filter($request->aide[$i]);
 
             if (sizeof($aide[$i]) > 0) {
-                if (sizeof($aide[$i]) == 3) {
+                if (sizeof($aide[$i]) == 2) {
                     $arr = array();
                     $arr[] = ucfirst($aide[$i]['prenom']);
-                    $arr[] = strtoupper($aide[$i]['name']);
+                    // $arr[] = strtoupper($aide[$i]['name']);
                     $arr[] = $aide[$i]['fonction'];
                     $liste[$i] = $arr;
                 } else {
-                   session()->flash('error'.$i, 'Les 3 champs sont obligatoires');
+                   session()->flash('error'.$i, 'Les 2 champs sont obligatoires');
                    return redirect()->back()->withInput();
                 }                
             }
@@ -226,6 +227,8 @@ class ParametreController extends Controller
 
         $user = Auth::user();
 
+
+     
         
         
         $ecole = Ecole::select('nom_etablissement','adresse_1','adresse_2','adresse_3','telephone')
@@ -242,6 +245,7 @@ class ParametreController extends Controller
         $equipes = json_decode($this->maclasseactuelle->equipes, true);
 
 
+        
         return view('monprofil.index')
             ->with('request', $request->all() ?? [])
             ->with('periodes', $this->maclasseactuelle->periodes)
