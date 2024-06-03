@@ -31,13 +31,13 @@
                                 <i class="fa-solid fa-user"></i>
                                 <input type="text" class="custom-input" name="aide[{{$i}}][prenom]" value="{{$equipes[$i][0] ?? null}}" placeholder="Prénom" />
                             </div> 
-                            <div class="icone-input my-2 little">
+                            <!-- <div class="icone-input my-2 little">
                                 <i class="fa-solid fa-user"></i>
                                 <input type="text" class="custom-input" name="aide[{{$i}}][name]" value="{{$equipes[$i][1] ?? null}}" placeholder="Nom" />
-                            </div>
+                            </div> -->
                             <div class="form-group">            
                                 <select class="custom-select little" name="aide[{{$i}}][fonction]">
-                                    <option value="">Choisissez</option>
+                                    <option value="">Choisissez une fonction</option>
                                     @foreach(App\Models\User::FONCTIONS as $key=>$fonction)
                                         <option value="{{$key}}" {{(isset($equipes[$i][2]) && ($key == $equipes[$i][2])) ? 'selected' : null }}>{{$fonction}}</option>
                                     @endforeach                                
