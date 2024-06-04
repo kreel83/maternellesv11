@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InscriptionALaNewsletter;
+use App\Http\Requests\VerifieContactFormPublic;
 use App\Mail\DemandeDeContactSitePublic;
 use App\Models\Contact;
 use App\Models\Ecole;
@@ -82,23 +83,7 @@ class MfController extends Controller
         return json_encode($result);
     }
 
-    public function contactSend(Request $request) {
-
-        $request->validate([
-            'name' => ['nullable','string', 'max:255'],
-            'phone' => ['nullable','string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'subject' => ['required', 'string', 'max:255'],
-            'message' => ['required', 'string'],
-            'g-recaptcha-response' => 'required|captcha',
-        ], [
-            'email.required' => 'Adresse mail obligatoire.',
-            'email.max' => 'Adresse mail limitée à 255 caractères.',
-            'subject.required' => 'L\'objet du message est obligatoire.',
-            'subject.max' => 'L\'objet du message est limité à 255 caractères.',
-            'message.required' => 'Le message est obligatoire.',
-            'g-recaptcha-response' => 'Merci de vérifier que vous n\'êtes pas un robot',
-        ]);
+    public function contactSend(VerifieContactFormPublic $request) {
 
         Contact::create([
             'email' => $request->email,
@@ -108,8 +93,8 @@ class MfController extends Controller
             'message' => $request->message
         ]);
 
-        $to = explode(',', config('app.custom.admin_emails'));
-        Mail::to($to)->send(new DemandeDeContactSitePublic($request->subject, $request->message, $request->phone, $request->name, $request->email));
+        // Envoi d'un email pour nous prévenir
+        Mail::to(config('app.mail'))->send(new DemandeDeContactSitePublic($request->subject, $request->message, $request->phone, $request->name, $request->email));
 
         return view('mf.contact-sent');
 

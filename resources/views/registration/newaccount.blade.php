@@ -3,6 +3,10 @@
 @section('content')
 
 @include('include.display_msg_error')
+
+<div class="alert alert-info mb-3">
+    <i class="fa-solid fa-circle-info me-1"></i> L'application {{ config('app.name')}} est pleinement fonctionnelle et en phase de bêta-test actuellement. La demande d'agrément par l'éducation nationale est en cours. 
+</div>
       
 {{-- <div class="card mx-auto p-5" style="width: auto; height: auto"> --}}
 <form action="{{ route('registration.newaccount.post') }}" method="POST">

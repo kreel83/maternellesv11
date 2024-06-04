@@ -32,6 +32,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Maternelle Facile'),
+    'mail' => env('APP_MAIL', 'contact@maternellefacile.fr'),
 
     /*
     |--------------------------------------------------------------------------
