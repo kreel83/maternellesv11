@@ -506,15 +506,16 @@
                         @endforeach
                     @endif
                     @if ($equipes)
+                           
                         @foreach ($equipes as $equipe)
                             <tr>
-                            @if ($equipe[2] == 'aesh' )
+                            @if ($equipe[1] == 'aesh' )
                                 @if ($enfant->sh == 1) 
-                                    <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
+                                    <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[1]]}}</td>
                                     <td style='padding-left: 15px'>{{$equipe[0]}}</td>
                                 @endif
                             @else
-                                <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[2]]}}</td>
+                                <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[1]]}}</td>
                                 <td style='padding-left: 15px'>{{$equipe[0]}}</td>
                             @endif
                             </tr>

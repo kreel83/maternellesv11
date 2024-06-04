@@ -4,9 +4,15 @@
 
 @include('include.display_msg_error')
 
+
 <div class="alert alert-info mb-3">
     <i class="fa-solid fa-circle-info me-1"></i> L'application {{ config('app.name')}} est pleinement fonctionnelle et en phase de bêta-test actuellement. La demande d'agrément par l'éducation nationale est en cours. 
 </div>
+
+@php
+    $rules = "entre 8 et 20 caractères | une majuscule | un chifre | une minuscule | un caractère spécial "
+@endphp
+
       
 {{-- <div class="card mx-auto p-5" style="width: auto; height: auto"> --}}
 <form action="{{ route('registration.newaccount.post') }}" method="POST">
@@ -52,7 +58,7 @@
             <div class="row mb-3">
 
                 <div class="col-12 col-xl-6 mt-2 mb-2">
-                    <label for="password" class="form-label">Choisissez un mot de passe (minimum 8 caractères)</label>
+                    <label for="password" class="form-label">Choisissez un mot de passe <span title="{{ $rules }}" class="fas fa-circle-question"></span></label>
                     <input placeholder="Mot de passe" id="password" class="form-control block w-full"
                                     type="password"
                                     name="password"
