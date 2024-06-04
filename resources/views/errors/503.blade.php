@@ -41,5 +41,5 @@
 
     <h1>Oops, quelque chose ne va pas !!!</h1>
     <p>Désolé, un probleme est intervenu.</p>
-    <a href="{{ url('/app') }}">Retour au tableau de bord</a>
+    <a href="{{ route('depart') }}">Retour au tableau de bord</a>
 </div>

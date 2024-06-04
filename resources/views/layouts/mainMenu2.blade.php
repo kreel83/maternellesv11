@@ -95,7 +95,8 @@ use Illuminate\Support\Facades\Auth;
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle {{ $params ? 'active' : null }}" data-bs-toggle="dropdown">Ma classe</a>
                                 <div class="dropdown-menu">
-                                    <a href="{{ route('maclasse', ['type' => 'maclasse']) }}" class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite ma classe</a>
+                                    {{-- <a href="{{ route('maclasse', ['type' => 'maclasse']) }}" class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite ma classe</a> --}}
+                                    <a href="{{ route('maclasse') }}" class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite ma classe</a>
                                     @if (session('is_enfants'))
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }}" class="nav-item nav-link  {{$hasClassActive}} ">J'évalue mes élèves</a>
                                         <a href="{{ route('enfants', ['type' => 'avatar']) }}" class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}  {{$hasClassActive}}">Je choisis les avatars</a>
@@ -213,13 +214,17 @@ use Illuminate\Support\Facades\Auth;
                                         <hr class="dropdown-divider">
                                     </li>
                                     <a href="{{ route('monprofil') }}" class="nav-item nav-link  {{ $menu == 'monprofil' ? 'active' : null }}  {{$hasClassActive}}">Mon profil</a>
-                                    {{-- <a href="{{ route('subscribe.index') }}" class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon abonnement</a> --}}
-                                    @if (!Auth::user()->licence)
+                                    <a href="{{ route('subscribe.index') }}" class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mon abonnement</a>
+
+                                    {{-- Code ci-dessous pour licence abo / achat --}}
+                                    {{-- @if (!Auth::user()->licence)
                                         <a href="{{ route('licence.index') }}" class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Acheter une licence</a>
                                     @else
                                         <a href="{{ route('licence.detail') }}" class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Détail de ma licence</a>
                                         <a href="{{ route('facture.list') }}" class="nav-item nav-link  {{ $menu == 'abonnement' ? 'active' : null }}">Mes factures</a>
-                                    @endif                                    
+                                    @endif                                     
+                                    --}}
+                                    
                                     <a href="{{ route('changerLeMotDePasse') }}" class="nav-item nav-link  {{ $menu == 'lock' ? 'active' : null }}">Changer le mot de passe</a>
                                     <a class="nav-item nav-link  {{ $menu == 'contact' ? 'active' : null }}" href="{{ route('contact') }}">Nous contacter</a>
                                     <li>

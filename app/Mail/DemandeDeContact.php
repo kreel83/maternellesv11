@@ -32,9 +32,9 @@ class DemandeDeContact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            // from: new Address($this->user->email, $this->user->prenom.' '.$this->user->name),
-            from: new Address(config('mail.from.address'), $this->user->prenom.' '.$this->user->name),
-            replyTo: [$this->user->email],
+            from: new Address($this->user->email, $this->user->prenom.' '.$this->user->name),
+            // from: new Address(config('mail.from.address'), $this->user->prenom.' '.$this->user->name),
+            // replyTo: [$this->user->email],
             subject: $this->subject.' - '.config('app.name'),
         );
     }

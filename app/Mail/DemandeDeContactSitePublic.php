@@ -34,10 +34,14 @@ class DemandeDeContactSitePublic extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(config('mail.from.address'), $this->name),
-            replyTo: [$this->email],
+            from: new Address($this->email, $this->name),
             subject: $this->subject.' - '.config('app.name'),
         );
+        // return new Envelope(
+        //     from: new Address(config('mail.from.address'), $this->name),
+        //     replyTo: [$this->email],
+        //     subject: $this->subject.' - '.config('app.name'),
+        // );
     }
 
     /**
