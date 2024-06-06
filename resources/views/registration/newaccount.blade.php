@@ -18,7 +18,7 @@
 <form action="{{ route('registration.newaccount.post') }}" method="POST">
 @csrf
 
-<div class="card mx-auto">
+<div class="card mx-auto mb-3">
     <div class="card-header">
         <div class="d-flex justify-content-between pt-2">
             <h5>Création de mon compte {{ config('app.name') }}</h5>
@@ -92,14 +92,18 @@
                 </button>
             </div> --}}
     </div>
+
+    {{-- A REMETTRE A L'OUVERTURE --}}
     <div class="card-footer pb-3">
         <div class="d-flex justify-content-center align-items-center">
-            {{-- <a class="d-block"  href="{{ route('registration.start') }}">Annuler</a> --}}
-            <button class="btnAction mx-0">
+            <!-- <a class="d-block"  href="{{ route('registration.start') }}">Annuler</a> -->
+            {{-- <button class="btnAction mx-0">
                 {{ __('Créer le compte') }}
-            </button>
+            </button> --}}
+            <div class="alert alert-info">L'enregistrement n'est pas encore ouvert</div>
         </div>
     <div>
+
 </div>
 </form>
 
