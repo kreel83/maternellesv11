@@ -279,9 +279,14 @@ class ParametreController extends Controller
     public function activeAcquisAide(Request $request) {
         $this->maclasseactuelle->desactive_acquis_aide = ($request->activeAcquisAide == 'on' ? 0 : 1);
         $this->maclasseactuelle->save();
-    
-    return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
-}
+        return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
+    }
+
+    public function AffichageTextesFichesDansPDF(Request $request) {
+        $this->maclasseactuelle->textes_dans_pdf = $request->textes_dans_pdf;
+        $this->maclasseactuelle->save();
+        return redirect()->back()->with('status','success')->with('msg','La configuration a été mise à jour.');
+    }
 
     public function get_phrases(Request $request) {
         $c = Commentaire::find($request->id);
@@ -469,7 +474,6 @@ class ParametreController extends Controller
 
     public function deletePhrase($commentaire_id) {
         $c = Commentaire::find($commentaire_id);        
-
         $c->delete();
         return 'ok';
     }

@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Models\Classe;
+use App\Models\ClasseUser;
 use App\Models\Enfant;
+use App\Models\Reussite;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +20,11 @@ class UserAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-
+        //dd($request->route('enfant_id'));
         $id_enfant = null;
         if ($request->route('enfant_id')) $id_enfant = $request->route('enfant_id');
         if ($request->enfant_id) $id_enfant = $request->enfant_id;
-        
+        //dd('aaa : '.$id_enfant );
         if (!$request->session()->has('classe_active') && !is_null(Auth::user()->classe_id)) {
             $classeActive = Classe::find(Auth::user()->classe_id);
             
@@ -40,12 +42,34 @@ class UserAuthenticated
         // Récupération des paramètres passés dans les routes :
         // tous : $request->route()->parameters() / 1 seul : $request->route('nom_parametre')
         // $request->route()->getActionMethod()  ->  renvoi le nom de la route : ->name('')
+
+        // ***************************************************************************************** //
+        // Vérification si l'ID de l'enfant passé dans la route peut être consulté par l'utilisateur
+        // ***************************************************************************************** //
         if($id_enfant) {
             $enfant = Enfant::find($id_enfant);
             if(!$enfant) {
                 return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
             }
+            $classe = Classe::find($enfant->classe_id);
+            if($classe->id != session('classe_active')->id) {
+                return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
+            }
+            if(Auth::id() != $classe->user_id) {
+                $partage = ClasseUser::where('classe_id', $classe->id)
+                                ->where('user_id', Auth::id())
+                                ->first();
+                if(!$partage) {
+                    return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
+                }
+            }
         }
+        // if($id_enfant) {
+        //     $enfant = Enfant::find($id_enfant);
+        //     if(!$enfant) {
+        //         return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
+        //     }
+        // }
 
         if( Auth::check() )
         {

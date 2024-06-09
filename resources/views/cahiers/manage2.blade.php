@@ -23,10 +23,24 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
             {{-- <div><span style="color:green"><i class="fa-solid fa-circle-check"></i></span> :  Cahier prêt à être envoyé aux parents.</div> --}}
             <div><span style="color:orange"><i class="fa-solid fa-circle-exclamation"></i></span> :  Le cahier n'est pas encore prêt à l'envoi.</div>
             <div><span style="color:red"><i class="fa-solid fa-circle-question"></i></span> :  Le cahier n'est pas encore créé pour la période.</div>
-
           </div>
 
-    {{-- Retour assignation licence --}}
+          <div class="my-3">
+            <i class="fa-regular fa-circle-info me-1"></i>
+            @switch(Auth::user()->classe_active()->textes_dans_pdf)
+                @case('bottom')
+                    Les textes associés aux activités acquises <strong>seront affichés en bas</strong> dans le cahier de réussites.
+                    @break
+                @case('between')
+                    Les textes associés aux activités acquises <strong>seront affichés à la suite de ces dernières </strong> dans le cahier de réussites.
+                    @break
+                @default
+                    Les textes associés aux activités acquises <strong>ne seront pas affichés</strong> dans le cahier de réussites.
+            @endswitch
+            Pour changer cette option veuillez <a href="{{ route('parametresClasse').'/#textespdf' }}">cliquer ici</a>.
+          </div>
+
+
     @if(session()->has('success'))
         @if(session('success'))
             <div class="mt-2 alert alert-success" role="alert">Les cahiers de réussites ont été envoyés.</div>

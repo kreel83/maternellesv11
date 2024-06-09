@@ -283,7 +283,7 @@ class RegisteredUserController extends Controller
 
     public function registrationNewaccountPost(NewAccount $request)
     {
-        dd($request);
+
         $token = md5(microtime(TRUE)*100000);
 
         User::create([

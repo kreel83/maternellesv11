@@ -413,149 +413,135 @@
     <div class="body">
 
 
-    {{--
-    <div class="enfant">Cahier de réussites <br> de <br>
-        <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
-    </div>
-    --}}
+        {{--
+        <div class="enfant">Cahier de réussites <br> de <br>
+            <span class="initiale"> {{$enfant->prenom[0]}}</span><span>{{substr($enfant->prenom,1)}}</span>
+        </div>
+        --}}
 
-    {{--
-    <div class="photo_enfant position-avatar">
-        @if ($enfant->background)
-            <div class="m-2 degrade_card_enfant animaux little" data-enfant="{{$enfant->id}}">
+        {{--
+        <div class="photo_enfant position-avatar">
+            @if ($enfant->background)
+                <div class="m-2 degrade_card_enfant animaux little" data-enfant="{{$enfant->id}}">
+                    <img src="{{ public_path('/img/animaux/' . $enfant->photo) }}" width="150">
+                </div>
+            @else
                 <img src="{{ public_path('/img/animaux/' . $enfant->photo) }}" width="150">
-            </div>
-        @else
-            <img src="{{ public_path('/img/animaux/' . $enfant->photo) }}" width="150">
-        @endif
-    </div>
-    --}}
+            @endif
+        </div>
+        --}}
 
-    <table width="100%" style="margin-top:168px;">
-        <tr>
-            <td>
-                {{-- <div class="enfant" style="font-family:'script';font-size:80px"> --}}
-                <div class="enfant">
-                    {!! $enfant->formatPdf() !!}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{-- <div class="section" style="font-family: frenchScript; font-size:50px"> --}}
-                <div class="section">
-                    {{$enfant->section()}}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{-- <div class="periode" style="font-family: frenchScript; font-size: 50px"> --}}
-                <div class="periode">
-                    {{$periode}}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{-- <div class="annee" style="font-family:'frenchScript';font-size:50px"> --}}
-                <div class="annee">
-                    {{App\utils\Utils::calcul_annee_scolaire_formated()}}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
+        <table width="100%" style="margin-top:168px;">
+            <tr>
+                <td>
+                    {{-- <div class="enfant" style="font-family:'script';font-size:80px"> --}}
+                    <div class="enfant">
+                        {!! $enfant->formatPdf() !!}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{-- <div class="section" style="font-family: frenchScript; font-size:50px"> --}}
+                    <div class="section">
+                        {{$enfant->section()}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{-- <div class="periode" style="font-family: frenchScript; font-size: 50px"> --}}
+                    <div class="periode">
+                        {{$periode}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{-- <div class="annee" style="font-family:'frenchScript';font-size:50px"> --}}
+                    <div class="annee">
+                        {{App\utils\Utils::calcul_annee_scolaire_formated()}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
 
-                
-
-                <table align="center" class="e_quipe_array" style="font-size: 12px;position: absolute; top: 670px; left: 130px; transform: rotate(3deg)">
-                    <tr>
-                        @if ($user->civilite == 'Mme')
-                            <td style="font-weight: bolder; color: black">La maitresse</td>
-                        @else
-                            <td style="font-weight: bolder; color: black">Le maître</td>
-                        @endif
-
-                        <td style='padding-left: 15px'>{{ucfirst(strtolower($user->prenom))}} {{strtoupper($user->name)}}</td>                
-                    </tr>
-                    @if ($classeUsers)
-                        @foreach ($classeUsers as $classeUser)
-                            <tr>
-                            @if ($classeUser->civilite == 'Mme')
-                                <td style="font-weight: bolder; color: black">
-                                    La maitresse<br>
-                                    @if ($classeUser->role == 'co')
-                                        cotitulaire
-                                    @else
-                                        suppléante
-                                    @endif
-                                </td>
+                    <table align="center" class="e_quipe_array" style="font-size: 12px;position: absolute; top: 670px; left: 130px; transform: rotate(3deg)">
+                        <tr>
+                            @if ($user->civilite == 'Mme')
+                                <td style="font-weight: bolder; color: black">La maitresse</td>
                             @else
-                                <td style="font-weight: bolder; color: black">
-                                    Le maître<br>
-                                    @if ($classeUser->role == 'co')
-                                        cotitulaire
-                                    @else
-                                        suppléant
-                                    @endif
-                                </td>
+                                <td style="font-weight: bolder; color: black">Le maître</td>
                             @endif
-                            <td style='padding-left: 15px'>{{ucfirst(strtolower($classeUser->prenom))}} {{strtoupper($classeUser->name)}}</td>
-                            </tr>
-                        @endforeach
-                    @endif
-                    @if ($equipes)
-                           
-                        @foreach ($equipes as $equipe)
-                            <tr>
-                            @if ($equipe[1] == 'aesh' )
-                                @if ($enfant->sh == 1) 
+
+                            <td style='padding-left: 15px'>{{ucfirst(strtolower($user->prenom))}} {{strtoupper($user->name)}}</td>                
+                        </tr>
+                        @if ($classeUsers)
+                            @foreach ($classeUsers as $classeUser)
+                                <tr>
+                                @if ($classeUser->civilite == 'Mme')
+                                    <td style="font-weight: bolder; color: black">
+                                        La maitresse<br>
+                                        @if ($classeUser->role == 'co')
+                                            cotitulaire
+                                        @else
+                                            suppléante
+                                        @endif
+                                    </td>
+                                @else
+                                    <td style="font-weight: bolder; color: black">
+                                        Le maître<br>
+                                        @if ($classeUser->role == 'co')
+                                            cotitulaire
+                                        @else
+                                            suppléant
+                                        @endif
+                                    </td>
+                                @endif
+                                <td style='padding-left: 15px'>{{ucfirst(strtolower($classeUser->prenom))}} {{strtoupper($classeUser->name)}}</td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        @if ($equipes)
+                            
+                            @foreach ($equipes as $equipe)
+                                <tr>
+                                @if ($equipe[1] == 'aesh' )
+                                    @if ($enfant->sh == 1) 
+                                        <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[1]]}}</td>
+                                        <td style='padding-left: 15px'>{{$equipe[0]}}</td>
+                                    @endif
+                                @else
                                     <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[1]]}}</td>
                                     <td style='padding-left: 15px'>{{$equipe[0]}}</td>
                                 @endif
-                            @else
-                                <td style="font-weight: bolder; color: black">{{App\Models\Equipe::FONCTIONS[$equipe[1]]}}</td>
-                                <td style='padding-left: 15px'>{{$equipe[0]}}</td>
-                            @endif
-                            </tr>
-                        @endforeach
-                    @endif
+                                </tr>
+                            @endforeach
+                        @endif
 
 
-                    @if ($classe->directeur())
-                    <tr>
-                        <td style="font-weight: bolder; color: black">{{$classe->directeur()->civilite == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
-                        <td style='padding-left: 15px'>{{$classe->directeur()->prenom.' '.$classe->directeur()->nom}}</td>
-                    </tr>
-                    @endif
-                    {{-- @if ($user->directeur())
-                    <tr>
-                        <td style="font-weight: bolder; color: black">{{$user->directeur()->civilite == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
-                        <td style='padding-left: 15px'>{{$user->directeur()->prenom.' '.$user->directeur()->nom}}</td>
-                    </tr>
-                    @endif --}}
+                        @if ($classe->directeur())
+                        <tr>
+                            <td style="font-weight: bolder; color: black">{{$classe->directeur()->civilite == 'M.' ? 'Le directeur' : 'La directrice'}}</td>
+                            <td style='padding-left: 15px'>{{$classe->directeur()->prenom.' '.$classe->directeur()->nom}}</td>
+                        </tr>
+                        @endif
 
-                </table>
-            </td>
-        </tr>
+                    </table>
+                </td>
+            </tr>
 
-    </table>
-    
-    <div class="position-adresse-ecole">
-        <div class="nom_ecole">{{$ecole->nom_etablissement}}</div>
-        <div class="adresse_ecole">{{$ecole->adresse_1}}</div>
-        <div class="adresse_ecole">{{$ecole->adresse_2}}</div>
-        <div class="adresse_ecole">{{$ecole->adresse_3}}</div>
+        </table>
+        
+        <div class="position-adresse-ecole">
+            <div class="nom_ecole">{{$ecole->nom_etablissement}}</div>
+            <div class="adresse_ecole">{{$ecole->adresse_1}}</div>
+            <div class="adresse_ecole">{{$ecole->adresse_2}}</div>
+            <div class="adresse_ecole">{{$ecole->adresse_3}}</div>
+        </div>
+
     </div>
-    {{-- <div class="position-adresse-ecole">
-        <div class="nom_ecole">{{$user->name_ecole()->nom_etablissement}}</div>
-        <div class="adresse_ecole">{{$user->name_ecole()->adresse_1}}</div>
-        <div class="adresse_ecole">{{$user->name_ecole()->adresse_2}}</div>
-        <div class="adresse_ecole">{{$user->name_ecole()->adresse_3}}</div>
-    </div> --}}
-
-</div>
 </div>
 
 <div class="page-break"></div>
@@ -563,86 +549,146 @@
 @foreach($resultats as $k => $section)
 
     <div class="page">
-    <div class="body">
+        <div class="body">
 
-        {{-- <div class="titre-page titre{{$k}}">{!! $sections[$k]['name'] !!}</div> --}}
-        <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
+            <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
 
-        @php
-            $carte = 1;
-        @endphp
+            @php
+                $carte = 1;
+            @endphp
 
-            <table class="table-carte" cellpadding="0">
-            <tr>
-            @foreach ($section as $key => $resultat)
-                <td style="width: 160px; padding-right: 10px; padding-bottom:10px">
-                    <div class="card-pdf" style="border-color: {{$resultat['color']}}">
-                        <div class="haut_carte" style="background-color: {{$resultat['color']}}">
-                            <p class="titre1 " >{{$resultat['section2']}}</p>
+                <table class="table-carte" cellpadding="0">
+                <tr>
+                @foreach ($section as $key => $resultat)
+                    <td style="width: 160px; padding-right: 10px; padding-bottom:10px">
+                        <div class="card-pdf" style="border-color: {{$resultat['color']}}">
+                            <div class="haut_carte" style="background-color: {{$resultat['color']}}">
+                                <p class="titre1 " >{{$resultat['section2']}}</p>
+                            </div>
+                            <div class="bas_carte">
+                                @if ($resultat['image_nom'])
+                                    <img width="160" height="120" src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
+                                @else
+                                    <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
+                                @endif
+                                <p class="body">{{$resultat['name']}}</p>                            
+                            </div>
+
                         </div>
-                        <div class="bas_carte">
-                            @if ($resultat['image_nom'])
-                                <img width="160" height="120" src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
-                            @else
-                                <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
-                            @endif
-                            <p class="body">{{$resultat['name']}}</p>                            
-                        </div>
+                    </td>
+                    @if ($key != 0 && (($key - 3)  % 4 == 0))
+                        </tr>
+                        {{-- Saut de page si 12 fiches sur la page ET d'autres fiches a imprimer --}}
+                        @if ($carte % 12 == 0 && count($section) > 12)
+                            @php
+                                $carte = 1;
+                            @endphp
+                            </table>
+                            </div>  <!-- class="body"> -->
+                            </div>  <!-- class="page"> -->
 
-                    </div>
-                </td>
-                @if ($key != 0 && (($key - 3)  % 4 == 0))
-                    </tr>
-                    {{-- Saut de page si 12 fiches sur la page ET d'autres fiches a imprimer --}}
-                    @if ($carte % 12 == 0 && count($section) > 12)
-                        @php
-                            $carte = 1;
-                        @endphp
-                        </table>
-                        </div>  <!-- class="body"> -->
-                        </div>  <!-- class="page"> -->
+                            <div class="page-break"></div>
 
-                        <div class="page-break"></div>
+                            <div class="page">
+                            <div class="body">
 
-                        <div class="page">
-                        <div class="body">
-                            {{-- <div class="titre-page titre{{$k}}">{!! $sections[$k]['name'] !!}</div> --}}
-                            <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
-                            <table class="table-carte" cellpadding="0">
+                                <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
+                                <table class="table-carte" cellpadding="0">
+                        @endif
+                        <tr>
                     @endif
-                    <tr>
-                @endif
-                @php
-                    $carte++;
-                @endphp
-            @endforeach
-            </tr>
-        </table>
+                    @php
+                        $carte++;
+                    @endphp
+                @endforeach
+                </tr>
+            </table>
 
-        </div>
+            </div>
 
-    </div>  <!-- class="body"> -->
+        </div>  <!-- class="body"> -->
     </div> <!-- class="page"> -->
+
+    @if (Auth::user()->classe_active()->textes_dans_pdf == 'between')
+        <div class="page-break"></div>
+
+        <div class="page">
+            <div class="body">
+
+                <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
+                <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div>
+                
+            </div>  <!-- class="body"> -->
+        </div> <!-- class="page"> -->
+    @endif
+
+    <footer class="pagenum"></footer>
 
     <div class="page-break"></div>
 
+@endforeach
+
+@if (Auth::user()->classe_active()->textes_dans_pdf == 'bottom')
+    
     <div class="page">
         <div class="body">
 
-            {{-- <div class="titre-page titre{{$k}}">{!! $sections[$k]['name'] !!}</div> --}}
+            @php
+                $compteur = 0;
+                $compteur_max = 35;
+            @endphp
+
+            @foreach($resultats as $k => $section)
+
+            @php
+                $lignes = explode('</p>', $reussiteSections[$k]);
+                $compteur = $compteur + 5;              // titre de la section
+                // $compteur = $compteur + count($lignes) - 1; // nombre de lignes - 1
+            @endphp
+            @if ($compteur > $compteur_max)
+                </div>  <!-- class="body"> -->
+                </div> <!-- class="page"> -->
+                <div class="page-break"></div>
+                <div class="page">
+                <div class="body">
+                @php
+                    $compteur = 0;
+                @endphp
+            @endif
+
             <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
-            <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div>
+            
+            @foreach ($lignes as $ligne)
+                <div class="text-container">
+                    {{-- {!! str_replace(chr(13), '<br>', $ligne) !!} --}}
+                    {!! $ligne !!}
+                </div>
+                @php
+                    $compteur = $compteur + 1;
+                @endphp
+                @if ($compteur > $compteur_max)
+                    </div>  <!-- class="body"> -->
+                    </div> <!-- class="page"> -->
+                    <div class="page-break"></div>
+                    <div class="page">
+                    <div class="body">
+                    @php
+                        $compteur = 0;
+                    @endphp
+                @endif
+            @endforeach
+
+            {{-- <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div> --}}
+            <br>
+
+            @endforeach
             
         </div>  <!-- class="body"> -->
     </div> <!-- class="page"> -->
 
     <footer class="pagenum"></footer>
 
-    <div class="page-break">
-    </div>
-    </div>
-
-@endforeach
+@endif
 
 {{-- Commentaire général --}}
 <div class="page">

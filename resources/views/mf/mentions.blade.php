@@ -83,22 +83,11 @@
 
                     <h5 class="mt-3">3 - Fournisseur d'hébergement du site</h5>
 
-                    <p>PLANETHOSTER<br>
-                    4416 Louis-B.-Mayer Laval<br>
-                    Québec Canada H7P 0G1<br>
-                    Tél : 01 76 60 41 43<br><br>
-                    Centre de données - France<br>
-                    L’infrastructure Cloud Hybride de PlanetHoster est distribuée à travers ses installations à Paris, France. Les installations sont situées dans des centres de données possédant les certifications :
-                    <ul>
-                    <li>TIER III et TIER IV (99.982% uptime)</li>
-                    <li>SSAE16/ISAE3402 SOC-1 Type II</li>
-                    <li>ISO 50001</li>
-                    <li>ISO 27001</li>
-                    <li> ISO 9001</li>
-                    <li>PCI-DSS</li>
-                    <li>nfrastructure validée par l’ICANN</li>
-                    <li>SOC-2 Type II</li>
-                    </ul>
+                    <p>LIGNE WEB SERVICES<br>
+                    10 rue de Penthièvre<br>
+                    75008 PARIS<br>
+                    Tél : 01 77 62 30 03<br>
+                    <a href="https://www.lws.fr" target="_blank">lws.fr</a><br>
                     </p>
 
                     <h5 class="mt-3">4 - Propriété intellectuelle</h5>

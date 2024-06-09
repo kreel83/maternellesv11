@@ -468,6 +468,9 @@ class CahierController extends Controller
     public function definitif($reussite_id, Request $request)
     {
         $reussite = Reussite::find($reussite_id);
+        if(!$reussite->isUserCanUpdate()) {
+            return redirect()->route('error')->with('msg', 'Aucun élève trouvé.');
+        }
         $reussite->definitif = $request->state == "true" ? true : false;
         $reussite->equipes = session('classe_active')->equipes;
         $reussite->save();
@@ -751,20 +754,24 @@ class CahierController extends Controller
 
         } else {
             $section = Section::find($section_id);
-            $commentaire = Commentaire::where(function($query) {
-                $query->where('user_id', Auth::id())->orWhereNull('user_id');})
-                ->whereNotIn('id', $exclusion)
-                ->get();
-            Utils::commentaires($commentaire, $enfant->prenom, $enfant->genre);   
-            $grouped = $commentaire->mapToGroups(function ($item, $key) {
-                return [$item['section_id'] => $item];
-            });
+            if($section) {
+                $commentaire = Commentaire::where(function($query) {
+                    $query->where('user_id', Auth::id())->orWhereNull('user_id');})
+                    ->whereNotIn('id', $exclusion)
+                    ->get();
+                Utils::commentaires($commentaire, $enfant->prenom, $enfant->genre);   
+                $grouped = $commentaire->mapToGroups(function ($item, $key) {
+                    return [$item['section_id'] => $item];
+                });
 
-            return view('cahiers.liste_phrases')
-                ->with('phrases', $grouped)
-                ->with('section', $section)
-                ->with('enfant', $enfant)
-                ->with('type','reussite');            
+                return view('cahiers.liste_phrases')
+                    ->with('phrases', $grouped)
+                    ->with('section', $section)
+                    ->with('enfant', $enfant)
+                    ->with('type','reussite'); 
+            } else {
+                abort(404);
+            }
         }
 
     }

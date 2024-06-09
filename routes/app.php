@@ -138,7 +138,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/cahiers/get_apercu/{enfant_id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{enfant_id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
-    Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
+    //Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
     Route::get('/enfants/{enfant_id}/removeGroupe', [EnfantController::class, 'removeGroupe'])->name('removeGroupe'); // voir doublon avec seepdf
     Route::get('/cahier/{reussite_id}/definitif', [CahierController::class, 'definitif'])->name('definitif');
 
@@ -186,6 +186,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/parametres/get_phrases', [parametreController::class, 'get_phrases'])->name('get_phrases');
     Route::get('/parametres/activeDomaineEleve', [parametreController::class, 'activeDomaineEleve'])->name('activeDomaineEleve');
     Route::get('/parametres/activeAcquisAide', [parametreController::class, 'activeAcquisAide'])->name('activeAcquisAide');
+    Route::get('/parametres/textes', [parametreController::class, 'AffichageTextesFichesDansPDF'])->name('AffichageTextesFichesDansPDF');
     Route::get('/parametres/activehelp', [parametreController::class, 'activehelp'])->name('activehelp');
     Route::get('/parametres/classe',[parametreController::class,'parametresClasse'])->name('parametresClasse');
     Route::get('/parametres/mails',[parametreController::class,'parametresMails'])->name('parametresMails');

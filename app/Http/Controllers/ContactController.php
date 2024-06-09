@@ -16,6 +16,7 @@ class ContactController extends Controller
         // Sauvegarde du message dans la table 'contacts'
         Contact::create([
             'user_id' => Auth::id(),
+            'phone' => $request->phone,
             'subject' => $request->subject,
             'message' => $request->message
         ]);
