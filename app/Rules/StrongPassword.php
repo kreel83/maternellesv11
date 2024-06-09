@@ -14,6 +14,6 @@ class StrongPassword implements Rule
 
     public function message()
     {
-        return 'Le lot de passe de contenir au moins 1 majuscule, 1 minuscule, 1 nombre et un caractère spécial.';
+        return 'Le mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 nombre et un caractère spécial.';
     }
 }
