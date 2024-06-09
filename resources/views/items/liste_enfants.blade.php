@@ -60,40 +60,49 @@
 
 <style>
     .fiche_name {
-        font-size: 25px;
-        color: red;
+        font-size: 20px;
+        color: lightgrey;
     }
     .item_name {
-        font-size: 25px;
+        font-size: 20px;
     }
 </style>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-1">
+        <div class='selectSectionFiche selectSectionItem '
+            style="width: 80px;background-color: {{ $section->color }}; border-radius: 8px" title="{{$section->name}}"            
+            
+            >
+            <img src="{{ asset('img/illustrations/' . $section->logo) }}" alt="" width="75px"
+                height="75px">
+        </div>
+    </div>
+    <div class="col-md-7">
 
+        <div class="item_name" style="color: {{ $section->color }}">{{ $section->name}}</div>
        <div class="fiche_name">{{ $fiche->name}}</div>
-       <div class="item_name">{{ $section->name}}</div>
     </div>
     <div class="col-md-4">
 
-        <button class="btn btn-success mt-1 w-100" id="btnActiviteEleves">Définir cette activité comme acquise  </br>pour  <span id="nb_eleves_activite">{{$listeDesEleves->count()}}</span> éleves de la classe</button>
+        <button class="btnActionSpecial mt-1 w-100" id="btnActiviteEleves">Définir cette activité comme acquise  </br>pour  <span id="nb_eleves_activite">{{$listeDesEleves->count()}}</span> éleves de la classe</button>
     </div>
   
 
 </div>
 <div class="row my-5">
-    <div class="col-md-12 bloc_check_enfant d-flex me-2">
-        <div class="form-check" style="padding-left: 28px; border: 1px solid grey; border-radius: 8px">
-            <input class="form-check-input mx-1" type="checkbox" value="classe" data-groupe="classe" checked>
+    <div class="col-md-12 bloc_check_enfant d-flex">
+        <div class="form-check me-3" style="padding-left: 28px; border: 1px solid grey; border-radius: 8px">
+            <input class="form-check-input mx-1 " type="checkbox" value="classe" data-groupe="classe" checked>
             <label class="form-check-label mx-3" for="inlineCheckbox1">Toute la classe</label>
           </div>
 
 
           @foreach ($mesgroupes as $groupe)
-          <div class="form-check mt-2 w-25" style="border-radius:8px; background-color: {{$groupe['backgroundColor']}}; color: {{$groupe['textColor']}}">
-            <input class="form-check-input mx-1" type="checkbox" id="inlineCheckbox2" value="g{{$groupe['id']}}" data-groupe="groupe" checked>
-            <label class="form-check-label mx-3" for="inlineCheckbox2">{{$groupe['name']}}</label>
-          </div>
+            <div class="form-check me-3" style="border-radius:8px; background-color: {{$groupe['backgroundColor']}}; color: {{$groupe['textColor']}}">
+                <input class="form-check-input mx-1" type="checkbox" id="inlineCheckbox2" value="g{{$groupe['id']}}" data-groupe="groupe" checked>
+                <label class="form-check-label mx-3" for="inlineCheckbox2">{{$groupe['name']}}</label>
+            </div>
           @endforeach
           
     </div>   
@@ -119,7 +128,7 @@
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" data-groupe="g{{$eleve->groupe}}" data-enfant="{{$eleve->id}}" checked>
+                                <input class="form-check-input mt-3" type="checkbox" value="" data-groupe="g{{$eleve->groupe}}" data-enfant="{{$eleve->id}}" checked>
    
                               </div>
                         </td>
@@ -153,7 +162,7 @@
 
 
                         <td>
-                            <div class="groupe-terme {{ isset($groupe) ? null : 'd-none' }}"
+                            <div class="groupe-terme mt-3 {{ isset($groupe) ? null : 'd-none' }}"
                                 style="background-color: {{ $groupe['backgroundColor'] ?? '' }}; color:{{ $groupe['textColor'] ?? '' }}">
                                 {{ $groupe['name'] ?? '' }}</div>
 
@@ -183,7 +192,7 @@
                     <tr class="">
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" data-groupe="g{{$eleve->groupe}}" data-enfant="{{$eleve->id}}" checked>
+                                <input class="form-check-input mt-3" type="checkbox" value="" data-groupe="g{{$eleve->groupe}}" data-enfant="{{$eleve->id}}" checked>
    
                               </div>
                         </td>
