@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AchatController;
+use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminLicenceController;
 use Illuminate\Support\Facades\Route;
@@ -162,6 +163,10 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/getFiche', [ItemController::class, 'getFiche'])->name('getFiche');
     Route::post('/cahier/CommitSaveReussite', [ItemController::class, 'CommitSaveReussite'])->name('CommitSaveReussite');
     Route::get('/enfants/{enfant_id}/cahier/getReussite', [ItemController::class, 'getReussite'])->name('getReussite');
+    
+    Route::get('/activites', [ActiviteController::class, 'activites'])->name('activites');
+    Route::get('/activite', [ActiviteController::class, 'activite'])->name('activite');
+    Route::post('/activite', [ActiviteController::class, 'activite_post'])->name('activite.post');
 
     Route::get('/affectation_groupe',[GroupeController::class,'affectation_groupe'])->name('affectation_groupe');
     Route::get('/groupe/affectation',[GroupeController::class,'affectation'])->name('affectation');

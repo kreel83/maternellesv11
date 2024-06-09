@@ -1,3 +1,8 @@
+@if (isset($link))
+
+<a href="{{route('activite',['item_id' => $fiche->id])}}">
+@endif
+
 <div class="card_item shadowDepth1 ui-state-default position-relative  {{$fiche->section_id == $section->id ? null : 'd-none'}}"  data-section="{{$fiche->section_id}}" data-item="{{$fiche->id}}">
 <style>
     .action {
@@ -42,3 +47,6 @@
 
 
 </div>
+@if (isset($link))
+</a>
+@endif

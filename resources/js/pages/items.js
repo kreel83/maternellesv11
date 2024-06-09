@@ -26,6 +26,8 @@ const selectItem = (Modal, quill) => {
         
     })
 
+
+
     $(document).on('click','#CommitSaveReussite', function() {
         var id = $(this).attr('data-reussite')
         var texte = quill.root.innerHTML;

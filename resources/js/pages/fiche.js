@@ -14,6 +14,90 @@ const selectSectionFiche = (ficheSelect) => {
         // $('.label-genre-check').toggleClass('checked')
     })
 
+    $(document).on('click','.bloc_check_enfant input', function() {
+        var v = $(this).val()
+        var check = $(this).prop('checked')
+        switch (v) {
+            case 'classe' : $('.classe_dashboard input').prop('checked',check);
+                            $('.bloc_check_enfant input').prop('checked', check)
+                            break;
+            default :   
+                        $('.classe_dashboard input[data-groupe="'+v+'"]').prop('checked',check); 
+                        
+                        if ($('.classe_dashboard input:checked').length == $('.classe_dashboard input').length) {
+                            $('.bloc_check_enfant input[data-groupe="classe"]').prop('checked', true)                            
+                        } else {
+                            $('.bloc_check_enfant input[data-groupe="classe"]').prop('checked', false)
+
+                        }
+                        break;
+        }
+        console.log($('.classe_dashboard input:checked').length)
+        $('#nb_eleves_activite').text($('.classe_dashboard input:checked').length)
+        var selected = $('.classe_dashboard input:checked').length
+
+        if (selected == 0) {
+            $('#btnActiviteEleves').css('display','none')
+        } else {
+            $('#btnActiviteEleves').css('display','block')
+            $('#nb_eleves_activite').text(selected)
+        }
+    })
+
+
+
+    $(document).on('click','#btnActiviteEleves', function() {
+        var liste = []
+        $('.classe_dashboard input:checked').each((index, el) => {
+            liste.push($(el).data('enfant'))
+        })
+        var fiche = $('.liste_line').data('fiche')
+        $.ajax({
+            method: 'POST',
+            url: '/app/activite',
+            data : {
+                liste: liste,
+                fiche: fiche
+            },
+            success:function(data) {
+                console.log(data)
+            }
+        })
+        console.log(liste)
+
+    })
+
+    $(document).on('click','.selectSectionDiscipline', function() {
+        var section = $(this).data('value')
+        $('.card_item').addClass('d-none')
+        $('.card_item[data-section="'+section+'"]').removeClass('d-none')
+    })
+
+    $(document).on('click','.classe_dashboard input', function() {
+        var total = $('.classe_dashboard input').length
+        var selection = $('.classe_dashboard input:checked').length
+        var diff = total == selection
+        $('.bloc_check_enfant input[data-groupe="classe"]').prop('checked', diff)
+
+        var groupe = $(this).data('groupe')
+        if (groupe) {
+            var totalGroupe = $('.classe_dashboard input[data-groupe="'+groupe+'"]').length
+            var selectionGroupe = $('.classe_dashboard input[data-groupe="'+groupe+'"]:checked').length
+            console.log('coucou',totalGroupe,selectionGroupe)
+            diff = totalGroupe == selectionGroupe
+            $('.bloc_check_enfant input[value="'+groupe+'"').prop('checked', diff)
+        }
+
+        var selected = $('.classe_dashboard input:checked').length
+
+        if (selected == 0) {
+            $('#btnActiviteEleves').css('display','none')
+        } else {
+            $('#btnActiviteEleves').css('display','block')
+            $('#nb_eleves_activite').text(selected)
+        }
+    })
+
     $(document).on('click','.caseLvl', function() {
         var id =$(this).closest('.card-footer2').data('id')
         var lvl = $(this).text()
