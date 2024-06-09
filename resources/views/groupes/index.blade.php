@@ -105,9 +105,9 @@
 
         <div class="groupe_container mt-5">
             @foreach ($groupes as $key=>$groupe)
-                    @php
-                        $token = md5(Auth::id().$loop->index.env('HASH_SECRET'));
-                    @endphp
+                @php
+                    $token = md5(Auth::id().$loop->index.env('HASH_SECRET'));
+                @endphp
                 <div class="d-flex mb-3 groupe_card position-relative">
                     <div class="groupe_titre">{{$key +1 }}</div>
                     <div class="groupe_controle d-flex w-25 justify-content-center">
@@ -155,7 +155,10 @@
             
         </div>
         <div class="modal-footer">
-                    <a class="btnAction" href="{{ route('supprimerUnGroupe', ['id' => sizeof($groupes)]) }}" >Supprimer</a>
+            @php
+                $token = md5(Auth::id().sizeof($groupes).env('HASH_SECRET'));
+            @endphp
+            <a class="btnAction" href="{{ route('supprimerUnGroupe', ['id' => sizeof($groupes), 'token' => $token]) }}" >Supprimer</a>
         </div>
       </div>
     </div>

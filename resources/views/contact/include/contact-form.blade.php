@@ -1,4 +1,4 @@
-<div class="card w-75 mb-3 my-5 mx-auto text-center">
+<div class="card mb-3 mx-auto text-center">
 
     <div class="card-body">
 
@@ -19,6 +19,12 @@
                     </div>
 
                     <div class="mb-3 w-75 mx-auto">
+                        <label for="phone">Téléphone (facultatif)</label>
+                        <input type="text" class="form-control" id="phone" name="phone"
+                            value="{{ old('phone') }}">
+                    </div>
+
+                    <div class="mb-3 w-75 mx-auto">
                         <label for="subject">Objet de votre message</label>
                         <input type="text" class="form-control" id="subject" name="subject"
                             value="{{ old('subject') }}" required>
@@ -33,12 +39,12 @@
 
                 </div>
 
-                <div class="row mt-5 d-flex justify-content-around">
+                {{-- <div class="row mt-5 d-flex justify-content-around">
 
-                    {{-- <div class="col">
+                    <div class="col">
                         <i class="fas fa-map-marker-alt fa-2x"></i>
                         <p>83000 Toulon</p>
-                    </div> --}}
+                    </div>
 
                     <div class="col">
                         <i class="fas fa-phone fa-2x"></i>
@@ -47,10 +53,10 @@
 
                     <div class="col">
                         <i class="fas fa-envelope fa-2x"></i>
-                        <p>{{ config('mail.from.address') }}</p>
+                        <p>{{ config('app.mail') }}</p>
                     </div>
                     
-                </div>
+                </div> --}}
             
         </form>
 

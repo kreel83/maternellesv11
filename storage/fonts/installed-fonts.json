@@ -1,14 +1,14 @@
 {
     "agba": {
-        "normal": "agba_normal_db09576bb3cf565b335c85cf185b5da4"
+        "normal": "agba_normal_3449895f5643e69ffbcc53bf2c6ae29e"
     },
     "script": {
-        "normal": "script_normal_bfda1898a0594aa09c4713b6fb8f11ba"
+        "normal": "script_normal_def07297d29ee860e6e98837c3fab5cd"
     },
     "frenchscript": {
-        "normal": "frenchscript_normal_c8b908130b0cb77e11e52efad47f55f7"
+        "normal": "frenchscript_normal_b81768cde6b484a19faadaf6466f8690"
     },
     "roboto": {
-        "normal": "roboto_normal_5f86d78e9b98d5a20e14765b39a023fb"
+        "normal": "roboto_normal_c078d1dffe0690b2fe6f2b8d71b5aebf"
     }
 }

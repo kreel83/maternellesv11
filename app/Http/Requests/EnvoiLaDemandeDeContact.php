@@ -22,6 +22,7 @@ class EnvoiLaDemandeDeContact extends FormRequest
     public function rules(): array
     {
         return [
+            'phone' => ['string', 'max:20'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string'],
         ];
@@ -35,6 +36,8 @@ class EnvoiLaDemandeDeContact extends FormRequest
     public function messages(): array
     {
         return [
+            'phone.string' => 'Format du téléphone incorrect',
+            'phone.max' => 'Le téléphone peut contenir au maximum 20 caractères',
             'subject.required' => 'Veuillez indiquer l\'objet du message',
             'subject.string' => 'Format de l\'objet incorrect',
             'subject.max' => 'L\'objet peut contenir au maximum 255 caractères',

@@ -30,4 +30,25 @@ class Reussite extends Model
             return $liste;
 
     }
+
+    public function isUserCanUpdate() {
+        $enfant = Enfant::find($this->enfant_id);
+        if(!$enfant) {
+            return false;
+        }
+        $classe = Classe::find($enfant->classe_id);
+        if($classe->id != session('classe_active')->id) {
+            return false;
+        }
+        if(Auth::id() != $classe->user_id) {
+            $partage = ClasseUser::where('classe_id', $classe->id)
+                            ->where('user_id', Auth::id())
+                            ->first();
+            if(!$partage) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

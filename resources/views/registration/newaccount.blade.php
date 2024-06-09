@@ -97,10 +97,10 @@
     <div class="card-footer pb-3">
         <div class="d-flex justify-content-center align-items-center">
             <!-- <a class="d-block"  href="{{ route('registration.start') }}">Annuler</a> -->
-            {{-- <button class="btnAction mx-0">
+            <button class="btnAction mx-0">
                 {{ __('Créer le compte') }}
-            </button> --}}
-            <div class="alert alert-info">L'enregistrement n'est pas encore ouvert</div>
+            </button>
+            {{-- <div class="alert alert-info">L'enregistrement n'est pas encore ouvert</div> --}}
         </div>
     <div>
 
