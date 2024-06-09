@@ -133,6 +133,25 @@
     margin-bottom: 20px;
 }
 
+.btnActionSpecial {
+    margin-top: 15px;
+    border-radius: 25px;;
+    z-index: 10;
+   
+    color: white;
+    background: linear-gradient(180deg, var(--main-color) 0%, var(--third-color) 100%);
+    font-weight: 400;;
+    width: fit-content;
+    padding: 4px 24px;
+    border: none;
+    outline: none;
+    cursor: pointer;  
+    &.inverse {
+        color: var(--main-color);
+        background: white;
+        border: 1px solid var(--main-color); 
+    }  
+} 
 .btnAction {
     margin-top: 15px;
     border-radius: 25px;;

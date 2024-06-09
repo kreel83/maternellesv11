@@ -51,14 +51,8 @@
             
 
 
-            <div class="d-flex justify-content-between align-items-center my-5 flex-column flex-xl-row">
-
-
-                    
-                    <div data-section="{{ $section->id }}" class="liste_section pe-5 d-flex">
-                        
-
-    
+            <div class="d-flex justify-content-between align-items-center my-5 flex-column flex-xl-row">                    
+                    <div data-section="{{ $section->id }}" class="liste_section pe-5 d-flex">                         
                             @foreach ($sections as $sec)
                                 @if ($sec->id == 9 && Auth::user()->classe_active()->desactive_devenir_eleve == 1)
                                 @else
@@ -92,10 +86,12 @@
 
             <div id="mesfiches" class="listItems d-flex justify-content-center">
                 <div class="fiche_container fiches mesitems position-relative d-flex">                    
-                   
-                            @foreach ($fiches as $fiche)
-                                @include('cards.item',['link' => true])
-                            @endforeach                             
+                    <div class="d-flex justify-content-center flex-wrap">
+
+                        @foreach ($fiches as $fiche)
+                        @include('cards.item',['link' => true])
+                        @endforeach                             
+                    </div>
            
                    
                     </div>

@@ -33,7 +33,7 @@ class ActiviteController extends Controller
         $degrades = Enfant::DEGRADE;
         
         return view('items.liste_enfants')
-        ->with('section', Section::first())
+        ->with('section', Section::find($item->section_id))
         ->with('fiche', $item)
         ->with('degrades', $degrades)
         ->with('mesgroupes', $mesgroupes)
