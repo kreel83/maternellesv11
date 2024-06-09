@@ -6,7 +6,9 @@
     *  Basic Reset
     */
 
-    #page_items, #fiche_eleve, #modifyFicheModal  {
+
+
+    #page_items, #fiche_eleve, #modifyFicheModal, #page_activites, #page_activite  {
 
         .niveau_3 {
             background-color: var(--niveau_3);
@@ -40,13 +42,6 @@
             border-radius: 15px;;
             cursor: pointer;
             
-            &:hover {
-                .action {
-                
-                    top:0;                
-                }
-
-            }
 
             .notation {
                 display: flex;
@@ -136,6 +131,37 @@
 
         }
 
+    }
+
+    #page_items, #fiche_eleve, #modifyFicheModal {
+        .card_item {
+            &:hover {
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                   
+                .action {                
+                    top:0;                
+                }
+            }            
+        }
+    }
+    #page_activites {
+        .card_item {
+            &:hover {
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            }            
+        }
+    }
+
+    #page_activite {
+        .card_item {
+          
+            .card-footer2 {
+                display: none;
+            }
+            
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                   
+        }
     }
 
 }

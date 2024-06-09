@@ -99,6 +99,7 @@ use Illuminate\Support\Facades\Auth;
                                     <a href="{{ route('maclasse') }}" class="nav-item nav-link {{ $menu == 'maclasse' ? 'active' : null }} {{$hasClassActive}}" >J'édite ma classe</a>
                                     @if (session('is_enfants'))
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }}" class="nav-item nav-link  {{$hasClassActive}} ">J'évalue mes élèves</a>
+                                        <a href="{{ route('activites')}}" class="nav-item nav-link  {{$hasClassActive}} ">J'évalue par activités</a>
                                         <a href="{{ route('enfants', ['type' => 'avatar']) }}" class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}  {{$hasClassActive}}">Je choisis les avatars</a>
                                         <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}" class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}  {{$hasClassActive}}">J'affecte mes groupes</a>
                                     @endif

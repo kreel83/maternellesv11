@@ -10,7 +10,7 @@
 </div>
 
 @php
-    $rules = "entre 8 et 20 caractères | une majuscule | un chifre | une minuscule | un caractère spécial "
+    $rules = "entre 9 et 20 caractères | une majuscule | une minuscule | un chiffre  | un caractère spécial "
 @endphp
 
       
