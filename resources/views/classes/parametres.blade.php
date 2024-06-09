@@ -163,7 +163,7 @@
 
         <div class="gridcadre grid7 d-flex justify-content-center align-items-center tuto_tutoriel">
             <a name="textespdf">
-            <div class="gridTitre">Textes associés aux activités dans le cahier de réussites</div>
+            <div class="gridTitre">Commentaires des domaines d'activités du cahier de réussites</div>
             <div class="mt-3">
                 {{-- <form action="{{route('AffichageTextesFichesDansPDF')}}" class=" d-flex flex-column justify-content-center align-items-center"> --}}
                 <form action="{{ route('AffichageTextesFichesDansPDF') }}" class="d-flex flex-column">
@@ -171,19 +171,19 @@
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="textes_dans_pdf" id="textes_dans_pdf_bottom" value="bottom" {{Auth::user()->classe_active()->textes_dans_pdf == 'bottom' ? 'checked' : null}}>
                         <label class="form-check-label" for="textes_dans_pdf_bottom">
-                          Textes en fin de document
+                          Commentaires en fin de cahier
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="textes_dans_pdf" id="textes_dans_pdf_between" value="between" {{Auth::user()->classe_active()->textes_dans_pdf == 'between' ? 'checked' : null}}>
                         <label class="form-check-label" for="textes_dans_pdf_between">
-                          Textes à la suite des fiches d'activités
+                          Commentaires après chaque domaine d'activités
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="textes_dans_pdf" id="textes_dans_pdf_none" value="none" {{Auth::user()->classe_active()->textes_dans_pdf == 'none' ? 'checked' : null}}>
                         <label class="form-check-label" for="textes_dans_pdf_none">
-                          Ne pas afficher les textes
+                          Désactiver les commentaires des domaines d'activités
                         </label>
                     </div>
                     <button type="submit" style="" class="btnAction mt-3">Sauvegarder</button>
