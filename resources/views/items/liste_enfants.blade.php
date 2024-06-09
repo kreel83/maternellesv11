@@ -61,7 +61,8 @@
 <style>
     .fiche_name {
         font-size: 20px;
-        color: lightgrey;
+        color: #FB8064;
+        font-weight: bold;
     }
     .item_name {
         font-size: 20px;
@@ -193,8 +194,7 @@
                         <td>
                             <div class="form-check">
                                 <input class="form-check-input mt-3" type="checkbox" value="" data-groupe="g{{$eleve->groupe}}" data-enfant="{{$eleve->id}}" checked>
-   
-                              </div>
+                            </div>
                         </td>
                         <td>
                             <div class="m-2 degrade_card_enfant animaux"
