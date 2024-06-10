@@ -34,4 +34,17 @@ class Classe extends Model
         return $d->civilite ?? null;
     }
 
+    public function isEmails() {
+        $mails = array();
+        $enfants = Enfant::where('classe_id', $this->id)->get();
+        foreach ($enfants as $enfant) {
+            for ($i=1; $i<=4; $i++) { 
+                if(filter_var($enfant->{"mail$i"}, FILTER_VALIDATE_EMAIL)) {
+                    $mails[] = $enfant->{"mail$i"};
+                }
+            }
+        }
+        return count($mails) > 0;
+    }
+
 }

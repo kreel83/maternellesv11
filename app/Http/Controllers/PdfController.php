@@ -127,11 +127,13 @@ class PdfController extends Controller
     public function cahierManage(Request $request) {
         $ordre = $this->maclasseactuelle->ordre_pdf;
         $enfants = Enfant::where('classe_id', session('classe_active')->id)->orderBy($ordre)->get();
-        $reussites = Reussite::where('user_id', session('classe_active')->user_id)->get();
+        $reussites = Reussite::where('enfant_id',245)->where('user_id', session('classe_active')->user_id)->get();
+        //dd($reussites);
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();
         $statutEmail = array();        
         $displayBtnBulk = array_fill(1, $maxPeriode, false);
+        $classeEmails = session('classe_active')->isEmails();
         foreach ($enfants as $enfant) {
             
             $mails = $enfant->tableauDesMailsEnfant();
@@ -163,7 +165,7 @@ class PdfController extends Controller
                             $statutCahier[$enfant->id][$periode]['status'] = 'PRET';
                             $statutCahier[$enfant->id][$periode]['textcolor'] = 'green';
                             $statutCahier[$enfant->id][$periode]['title'] = 'Le cahier est prêt à être envoyé';
-                            $displayBtnBulk[$periode] = true;
+                            $displayBtnBulk[$periode] = $classeEmails & count($mails) > 0;
                         } else {
                             // cahier non terminé
                             $statutCahier[$enfant->id][$periode]['msg'] = '<i class="fa-solid fa-circle-exclamation"></i>';
