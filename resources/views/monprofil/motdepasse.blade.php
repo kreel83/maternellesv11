@@ -13,7 +13,7 @@
 
     <div class="card w-75 mx-auto">
 
-            <div class="card-header">
+            <div class="card-header" style="background-color: #FC8064; color: white">
                 <h5>Changement du mot de passe de connexion</h5>
             </div>
 
@@ -44,6 +44,8 @@
                     <!-- password -->
                     <div class="mb-3">
                         <label class="mb-2" for="password">Choisissez un nouveau mot de passe d'un minimum de 8 caractères</label>
+                        <br>
+            <small style="color: orangered">Le mot de passe doit contenir entre 9 et 20 caractères et inclure au moins une minuscule, une majuscule, un chiffre et un caractère spécial </small>
                         <input placeholder="{{ __('Nouveau mot de passe') }}" id="password" class="form-control block mt-1 w-full"
                                         type="password"
                                         name="password"

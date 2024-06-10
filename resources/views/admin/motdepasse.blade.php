@@ -28,6 +28,8 @@
 
         <!-- password -->
         <div class="mb-3">
+            
+            <small style="color: orangered">Le mot de passe doit contenir entre 9 et 20 caractères et inclure au moins une minuscule, une majuscule, un chiffre et un caractère spécial </small>
             <input placeholder="{{ __('Mot de passe') }}" id="password" class="form-control block mt-1 w-full"
                             type="password"
                             name="password"
