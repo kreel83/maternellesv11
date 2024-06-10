@@ -102,7 +102,7 @@
 
         </div>
         <div class="gridcadre grid4 d-flex justify-content-center align-items-center tuto_periodicite">
-            <div class="gridTitre">Périodocité</div>
+            <div class="gridTitre">Périodicité</div>
             <form action="{{route('periode_save')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">
             @csrf
                 <select name="periode" class="custom-select">

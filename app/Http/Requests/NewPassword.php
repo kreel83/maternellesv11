@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules;
 use App\Rules\StrongPassword;
 
-class NewAccount extends FormRequest
+class NewPassword extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,6 @@ class NewAccount extends FormRequest
     public function rules(): array
     {
         return [
-            'civilite' => ['required', 'string'],
-            'name' => ['required', 'string', 'max:255'],
-            'prenom' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => [
                 'required',
                 'confirmed',
@@ -35,9 +31,7 @@ class NewAccount extends FormRequest
                 'min:9',
                 'max:20',
                 new StrongPassword,
-            ],
-            // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'g-recaptcha-response' => 'required|captcha',
+            ]            
         ];
     }
 
@@ -49,21 +43,12 @@ class NewAccount extends FormRequest
     public function messages(): array
     {
         return [
-            'civilite.required' => 'La civilité est obligatoire.',
-            'name.required' => 'Le nom est obligatoire.',
-            'name.max' => 'Le nom est limité à 255 caractères.',
-            'prenom.required' => 'Le prénom est obligatoire.',
-            'prenom.max' => 'Le prénom est limité à 255 caractères.',
-            'email.required' => 'Adresse mail obligatoire.',
-            'email.max' => 'Adresse mail limitée à 255 caractères.',
-            'email.unique' => 'Un compte existe déjà pour cette adresse mail.',
             'password.required' => 'Mot de passe obligatoire.',
             'password.confirmed' => 'La confirmation du mot de passe a échoué.',
             'password.min' => 'Le mot de passe doit contenir au moins 9 caractères.',
             'password.max' => 'Le mot de passe doit contenir au plus 20 caractères.',
             'password.StrongPassword' => 'The password must include at least one uppercase letter, one number, and one special character.',
-            'g-recaptcha-response' => 'Merci de vérifier que vous n\'êtes pas un robot',
-        ];
+                    ];
     }
 
 }
