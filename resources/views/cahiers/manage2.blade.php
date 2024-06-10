@@ -29,15 +29,15 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
             <i class="fa-regular fa-circle-info me-1"></i>
             @switch(Auth::user()->classe_active()->textes_dans_pdf)
                 @case('bottom')
-                    Les textes associés aux activités acquises <strong>seront affichés en bas</strong> dans le cahier de réussites.
+                    Les commentaires associés aux domaines d'activités <strong>seront affichés en fin de cahier</strong>.
                     @break
                 @case('between')
-                    Les textes associés aux activités acquises <strong>seront affichés à la suite de ces dernières </strong> dans le cahier de réussites.
+                    Les commentaires associés aux domaines d'activités <strong>seront affichés après chaque domaine</strong> dans le cahier.
                     @break
                 @default
-                    Les textes associés aux activités acquises <strong>ne seront pas affichés</strong> dans le cahier de réussites.
+                    Les commentaires associés aux domaines d'activités <strong>ne seront pas affichés</strong> dans le cahier.
             @endswitch
-            Pour changer cette option veuillez <a href="{{ route('parametresClasse').'/#textespdf' }}">cliquer ici</a>.
+            Pour changer cette option, veuillez <a href="{{ route('parametresClasse').'/#textespdf' }}">cliquer ici</a>.
           </div>
 
 
@@ -78,7 +78,7 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
                         
                         <th>Groupe <span class="ms-2 ordreArray" style="cursor: pointer" data-ordre="groupe"><i class="fa-solid fa-arrow-down"></i></span></th>
                         <th>Emails parents</th>
-                        @for ($periode=1;$periode<=$maxPeriode;$periode++)
+                        @for ($periode=1; $periode <= $maxPeriode; $periode++)
                             <th class="text-center align-top" colspan="1">
                                 <h6 style="color: var(--main-color)">Période {{$periode}}</h6>
                                 @if($displayBtnBulk[$periode])
