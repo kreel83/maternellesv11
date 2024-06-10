@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewAccount;
+use App\Http\Requests\NewPassword;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Commentaire;
 use App\Models\Ecole;
@@ -542,17 +544,8 @@ class ParametreController extends Controller
         return view('monprofil.motdepasse');
     }
 
-    public function sauverLeMotDePasse(Request $request)
+    public function sauverLeMotDePasse(NewPassword $request)
     {
-
-        $request->validate([
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ], [
-            'password.required' => 'Mot de passe obligatoire.',
-            'password.confirmed' => 'La confirmation du mot de passe a échouée.',
-            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
-        ]);
-
         $user = Auth::user();
         $user->password = Hash::make($request->password);
         $user->save();

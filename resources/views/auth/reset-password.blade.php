@@ -77,9 +77,12 @@
           @endif
 
           <h4 class="mb-3">Réinitialisation du mot de passe</h4>
-
-          <p>Indiquez ci-dessous votre adresse mail ainsi que votre nouveau mot de passe.</p>
-
+          
+          <p>Indiquez ci-dessous votre adresse mail ainsi que votre nouveau mot de passe.
+            <br>
+            <small style="color: orangered">Le mot de passe doit contenir entre 9 et 20 caractères et inclure au moins une minuscule, une majuscule, un chiffre et un caractère spécial </small>
+          </p>
+          
           <!-- Email Address -->
           <div class="input-group mb-3">
               <span class="input-group-text bg-light" id="email"><i class="fa-solid fa-envelope"></i></span>
