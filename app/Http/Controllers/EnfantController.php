@@ -468,10 +468,41 @@ class EnfantController extends Controller
             ->with('eleves',$user->liste());
     }
 
+    public function impression(Request $request) {
+        switch ($request->type) {
+            case 'alpha' : $liste = $this->maclasseactuelle->classe()->orderBy('prenom')->get();break;
+            case 'date' : $liste = $this->maclasseactuelle->classe()->orderBy('ddn')->get();break;
+            case 'groupe' : $liste = $this->maclasseactuelle->classe()->orderBy('prenom')->get();$liste = $liste->groupBy('groupe');$liste = $liste->flatten();break;
+        }
+
+
+        $annee = Auth::user()->calcul_annee_scolaire();
+
+        $maitresse = $this->maclasseactuelle->maitresse->prenom.' '.$this->maclasseactuelle->maitresse->name;
+        $data = [
+            'students' => $liste,
+            'classe' => $this->maclasseactuelle,
+            'maitresse' => $maitresse,
+            'annee' => $annee.' / '.($annee + 1 )
+        ];
+        
+
+       
+       
+
+        // Load the view and pass the data
+        $pdf = PDF::loadView('pdf.liste_eleve', $data);
+
+        // Download the PDF file
+        return $pdf->download('pdf.liste_eleve');
+
+    }
+
     public function maclasse() {
         $listeDesEleves = Enfant::listeDesEleves();                
         $is_creator = Auth::id() == $this->maclasseactuelle->user_id;
         $middle = (int) $listeDesEleves->count() / 2;
+       
         return view('maclasse.index')
             ->with('middle', $middle)
             ->with('is_creator', $is_creator)
