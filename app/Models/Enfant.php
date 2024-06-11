@@ -24,15 +24,36 @@ class Enfant extends Model
     ];
 
     const DEGRADE = [
-        'b1' => 'linear-gradient(to top, #f6d365 0%, #fda085 100%)',
-        'b2' => 'linear-gradient(to top, #b721ff 0%, #21d4fd 100%);',
-        'b3' => 'linear-gradient(to top, #b8cbb8 0%, #ee609c 100%);',
-        'b4' => 'linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);',             
-        'b5' => 'linear-gradient(to top, #30cfd0 0%, #330867 100%);',
-        'b6' => 'linear-gradient(to top, #fddb92 0%, #d1fdff 100%);',             
-        'b7' => 'linear-gradient(to top, #d4fc79 0%, #96e6a1 100%);',
-        'b8' => 'linear-gradient(to top, #ff758c 0%, #ff7eb3 100%);',
-        'b9' => 'linear-gradient(to top, #0ba360 0%, #3cba92 100%);',
+        'b1' => 'linear-gradient(to top, #b8cbb8 0%, #b8cbb8 100%);',
+        'b2' => 'linear-gradient(to top, #b721ff 0%, #b721ff 100%);',
+        'b3' => 'linear-gradient(to top, #f6d365 0%, #f6d365 100%)',
+        'b4' => 'linear-gradient(to top, #cfd9df 0%, #cfd9df 100%);',             
+        'b5' => 'linear-gradient(to top, #00BFFF 0%, #00BFFF 100%);',
+        'b6' => 'linear-gradient(to top, #fddb92 0%, #fddb92 100%);',             
+        'b7' => 'linear-gradient(to top, #d4fc79 0%, #d4fc79 100%);',
+        'b8' => 'linear-gradient(to top, #ff758c 0%, #ff758c 100%);',
+        'b9' => 'linear-gradient(to top, #0ba360 0%, #0ba360 100%);',
+        'b10' => 'linear-gradient(to top, #FF1493 0%, #FF1493 100%);',
+        'b11' => 'linear-gradient(to top, #1E90FF 0%, #1E90FF 100%);',
+        'b12' => 'linear-gradient(to top, #FFD700 0%, #FFD700 100%);',
+        'b13' => 'linear-gradient(to top, #ADFF2F 0%, #ADFF2F 100%)',
+        'b14' => 'linear-gradient(to top, #FF69B4 0%, #FF69B4 100%);',             
+        'b15' => 'linear-gradient(to top, #8A2BE2 0%, #8A2BE2 100%);',
+        'b16' => 'linear-gradient(to top, #FF6347 0%, #FF6347 100%);',             
+        'b17' => 'linear-gradient(to top, #7FFF00 0%, #7FFF00 100%);',
+        'b18' => 'linear-gradient(to top, #40E0D0 0%, #40E0D0 100%);',
+        'b19' => 'linear-gradient(to top, #DA70D6 0%, #DA70D6 100%);',
+        'b20' => 'linear-gradient(to top, #FF4500 0%, #FF4500 100%);',
+        'b21' => 'linear-gradient(to top, #6495ED 0%, #6495ED 100%);',
+        'b22' => 'linear-gradient(to top, #FF8C00 0%, #FF8C00 100%);',
+        'b23' => 'linear-gradient(to top, #9932CC 0%, #9932CC 100%)',
+        'b24' => 'linear-gradient(to top, #00CED1 0%, #00CED1 100%);',             
+        'b25' => 'linear-gradient(to top, #8A2BE2 0%, #8A2BE2 100%);',
+        'b26' => 'linear-gradient(to top, #8B0000 0%, #8B0000 100%);',             
+        'b27' => 'linear-gradient(to top, #00FFFF 0%, #00FFFF 100%);',
+        'b28' => 'linear-gradient(to top, #FFA500 0%, #FFA500 100%);',
+        'b29' => 'linear-gradient(to top, #800080 0%, #800080 100%);',
+        'b30' => 'linear-gradient(to top, #00FF7F 0%, #00FF7F 100%);',
         // 'b10' => '0ba360:0ba360'    // ligne degradé à créer dans eventEnfant                 
     ];
     
@@ -72,6 +93,7 @@ class Enfant extends Model
         
 
     ];
+    protected $groupes;
 
     protected $dispatchesEvents = [
         'retrieved' => \App\Events\EleveEvent::class,
@@ -80,10 +102,34 @@ class Enfant extends Model
 
     public $mail1, $mail2, $mail3, $mail4, $photoEleve, $jour, $age, $groupeFormatted;
 
-
+    public function __construct()
+    {
+        $gs = session('classe_active')->groupes;
+        $this->groupes =json_decode($gs, true);
+    }
     public function item() {
           return $this->hasmany('App\Models\Item');
     }
+
+    public function groupe() {        
+        if ($this->groupes === null) return '<td></td>';
+        if ($this->groupe === null) return '<td></td>';       
+        $groupe = $this->groupes[$this->groupe];
+        $bg = $groupe['backgroundColor'];
+        $tx = $groupe['textColor'];
+        $name = $groupe['name'];        
+        return "<td style=\"background-color: $bg; color: $tx;\"><div >$name</div></td>";        
+    }
+
+    public function mails() {        
+        if ($this->mail === null) return '<td></td>';
+        $liste = explode(';',$this->mail);
+        $liste = join('<br/>', $liste);
+       
+        return "<td><div >$liste</div></td>";        
+    }
+
+
 
 
     public function state_reussite_definitif() {

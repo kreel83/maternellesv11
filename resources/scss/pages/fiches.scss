@@ -172,6 +172,10 @@
         background: white;
         border: 1px solid var(--main-color); 
     }  
+    &:hover {
+        background: linear-gradient(180deg, var(--third-color) 0%, var(--main-color) 100%); 
+        
+    }
 } 
 
 

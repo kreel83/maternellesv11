@@ -218,6 +218,7 @@ Route::middleware(['auth','user'])->group(function () {
 
     Route::get('/groupe',[GroupeController::class,'index'])->name('groupe');
     Route::get('/maclasse',[EnfantController::class,'maclasse'])->name('maclasse');
+    Route::get('/maclasse/impression',[EnfantController::class,'impression'])->name('maclasse.impression');
 
     Route::get('/eleves',[EnfantController::class,'liste'])->name('eleves');
     Route::get('/eleves/toggleInactiveEleve',[EnfantController::class,'toggleInactiveEleve'])->name('toggleInactiveEleve');

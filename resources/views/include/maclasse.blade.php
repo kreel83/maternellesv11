@@ -25,6 +25,7 @@
             <a href="{{ route('addEleve') }}" class="btnAction me-3">Ajouter un élève</a>
             {{-- <a href="{{route('import')}}" class="btnAction ">Importer un élève</a> --}}
             <a class="btnAction" data-bs-toggle="modal" data-bs-target="#importDisabled">Importer un élève</a>
+            <a class="btnAction ms-3" data-bs-toggle="modal" data-bs-target="#printClasse">Imprimer la classe</a>
         </div>
         @isset($is_creator)
             @if($is_creator)
@@ -176,6 +177,25 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+<div class="modal fade" id="printClasse" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Impression de la classe</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           <a href="{{route('maclasse.impression',['type' => 'alpha'])}}" class="btnAction w-100">Par ordre alphabétique</a>
+           <a href="{{route('maclasse.impression',['type' => 'date'])}}"class="btnAction w-100">Par année de naissance</a>
+           <a href="{{route('maclasse.impression',['type' => 'groupe'])}}"class="btnAction w-100">Par groupe</a>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btnAction" data-bs-dismiss="modal">Fermer</button>
         </div>
         </div>
     </div>

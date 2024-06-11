@@ -34,6 +34,14 @@ class Classe extends Model
         return $d->civilite ?? null;
     }
 
+
+    public function classe() {
+        return $this->hasMany('App\Models\Enfant','classe_id');
+    }
+
+    public function maitresse() {
+        return $this->belongsTo('App\Models\User','user_id');
+
     public function isEmails() {
         $mails = array();
         $enfants = Enfant::where('classe_id', $this->id)->get();
@@ -45,6 +53,7 @@ class Classe extends Model
             }
         }
         return count($mails) > 0;
+
     }
 
 }
