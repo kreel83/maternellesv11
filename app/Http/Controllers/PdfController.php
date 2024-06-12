@@ -114,6 +114,16 @@ class PdfController extends Controller
         if(!$enfant) {
             return Redirect::back()->withInput()->withErrors(['msg' => 'Enfant non trouvé']);
         }
+        $periode = substr($request->token, 0, 1);
+        $reussite = DB::table('reussites')
+            ->where('enfant_id', $enfant->id)
+            ->where('periode', $periode)
+            ->first();
+        if(is_null($reussite->downloaded_at)) {
+            DB::table('reussites')
+            ->where('id', $reussite->id)
+            ->update(['downloaded_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+        }
         return Redirect::back()->with(['success' => true, 'token' => $request->token]);
     }
 
@@ -127,8 +137,7 @@ class PdfController extends Controller
     public function cahierManage(Request $request) {
         $ordre = $this->maclasseactuelle->ordre_pdf;
         $enfants = Enfant::where('classe_id', session('classe_active')->id)->orderBy($ordre)->get();
-        $reussites = Reussite::where('enfant_id',245)->where('user_id', session('classe_active')->user_id)->get();
-        //dd($reussites);
+        $reussites = Reussite::where('user_id', session('classe_active')->user_id)->get();
         $maxPeriode = $request->user()->periodes;
         $statutCahier = array();
         $statutEmail = array();        
@@ -155,6 +164,7 @@ class PdfController extends Controller
                     $statutCahier[$enfant->id][$periode]['msg'] = 'Envoyé le '.Carbon::parse($r->send_at)->format('d/m/Y');
                     $statutCahier[$enfant->id][$periode]['status'] = 'ENVOYE';
                     $statutCahier[$enfant->id][$periode]['textcolor'] = 'black';
+                    $statutCahier[$enfant->id][$periode]['downloaded'] = 'Téléchargé le '.Carbon::parse($r->downloaded_at)->format('d/m/Y H:i:s');
                 } else {
                     // différents états du cahier
                     if(!empty($r)) {
@@ -183,6 +193,7 @@ class PdfController extends Controller
                 }
             }
         }
+        //dd($statutCahier);
         return view('cahiers.manage2')
             ->with('maxPeriode', $maxPeriode)
             ->with('statutCahier', $statutCahier)

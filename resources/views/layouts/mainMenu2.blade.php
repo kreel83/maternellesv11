@@ -102,6 +102,8 @@ use Illuminate\Support\Facades\Auth;
                                         <a href="{{ route('activites')}}" class="nav-item nav-link  {{$hasClassActive}} ">J'évalue par activités</a>
                                         <a href="{{ route('enfants', ['type' => 'avatar']) }}" class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}  {{$hasClassActive}}">Je choisis les avatars</a>
                                         <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}" class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}  {{$hasClassActive}}">J'affecte mes groupes</a>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <a href="{{ route('enfants', ['type' => 'synthese']) }}" class="nav-item nav-link  {{$hasClassActive}} ">Synthèse des acquis scolaires</a>
                                     @endif
                                     <li>
                                         <hr class="dropdown-divider">

@@ -138,6 +138,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/cahiers/get_apercu/{enfant_id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{enfant_id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
+    Route::get('/enfants/{enfant_id}/synthese', [EnfantController::class, 'syntheseDesAcquis'])->name('syntheseDesAcquis');
     //Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
     Route::get('/enfants/{enfant_id}/removeGroupe', [EnfantController::class, 'removeGroupe'])->name('removeGroupe'); // voir doublon avec seepdf
     Route::get('/cahier/{reussite_id}/definitif', [CahierController::class, 'definitif'])->name('definitif');

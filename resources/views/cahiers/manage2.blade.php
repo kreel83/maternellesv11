@@ -139,8 +139,20 @@ $lesgroupes = json_decode(Auth::user()->groupes(), true);
 
                                     <div class="btn-group" role="group" aria-label="Actions">
                                         <a class="btn btn-outline-info btn-sm" type="button" href="{{ route('cahierApercu', ['token' => 0, 'enfant_id' => $enfant->id, 'periode' => $periode]) }}" target="_blank" title="Voir le cahier de réussites"><i class="fa-regular fa-eye"></i> Aperçu</a>
-                                        <button id="{{$enfant->id}}-{{$periode}}-R" type="button" class="btn btn-success btn-sm renvoicahier" title="{{ $statutCahier[$enfant->id][$periode]['msg'] }}"><i class="fa-solid fa-envelope-circle-check fa-lg"></i> Renvoyer</button>
+                                        <button id="{{$enfant->id}}-{{$periode}}-R" type="button" class="btn btn-success btn-sm renvoicahier" title="{{ $statutCahier[$enfant->id][$periode]['msg'] }}"><i class="fa-solid fa-envelope-circle-check fa-lg"></i> Renvoyer
+                                            @if ($statutCahier[$enfant->id][$periode]['downloaded'])
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                                <i class="fa-regular fa-download" title="{{ $statutCahier[$enfant->id][$periode]['downloaded'] }}"></i>
+                                              </span>
+                                            </button>
+                                            @endif
                                     </div>
+                                    @if ($statutCahier[$enfant->id][$periode]['downloaded'])
+                                        {{-- <div class="mt-1">
+                                        <i class="fa-regular fa-download" title="{{ $statutCahier[$enfant->id][$periode]['downloaded'] }}"></i>
+                                        </div> --}}
+                                        {{-- <div class="mt-1"><small>{{ $statutCahier[$enfant->id][$periode]['downloaded'] }}</small></div> --}}
+                                    @endif
                                     <div id="renvoi-{{$enfant->id}}"></div>
                                     {{--
                                     <div id="renvoi-{{$enfant->id}}">

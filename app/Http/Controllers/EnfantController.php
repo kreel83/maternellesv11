@@ -129,11 +129,11 @@ class EnfantController extends Controller
 
     public function index(Request $request) {
 
-        if (!in_array($request->type, ["evaluation", "reussite", "avatar", "affectation_groupe"])) {
+        if (!in_array($request->type, ["evaluation", "reussite", "avatar", "affectation_groupe", "synthese"])) {
             abort(404);
         }
        
-        if (in_array($request->type, ["evaluation", "reussite"])) {
+        if (in_array($request->type, ["evaluation", "reussite", "synthese"])) {
             $enfants = Enfant::where('classe_id', session('classe_active')->id)->where("reussite_disabled",0);
         } else {
             $enfants = Enfant::where('classe_id', session('classe_active')->id);

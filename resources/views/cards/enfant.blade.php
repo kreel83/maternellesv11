@@ -67,51 +67,54 @@ if (!is_null($enfant->groupe) && $lesgroupes) {
   @if ($type == "evaluation")
     <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">
 
-        <a href="enfants/{{$enfant->id}}/items?section_id=2"  ><i style="font-size: 18px" class="fa-light fa-comment"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?section_id=3"  ><i style="font-size: 18px" class="fa-light fa-pen"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?section_id=4"  ><i style="font-size: 18px" class="fa-light fa-volleyball"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?section_id=5"  ><i style="font-size: 18px" class="fa-light fa-paintbrush-pencil"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?section_id=6"  ><i style="font-size: 18px" class="fa-light fa-hundred-points"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?section_id=7"  ><i style="font-size: 18px" class="fa-light fa-shapes"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?section_id=8"  ><i style="font-size: 18px" class="fa-light fa-clock"></i></a>
-        <a href="enfants/{{$enfant->id}}/items?section_id=10"  ><i style="font-size: 18px" class="fa-light fa-heart"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 2]) }}"><i style="font-size: 18px" class="fa-light fa-comment"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 3]) }}"><i style="font-size: 18px" class="fa-light fa-pen"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 4]) }}"><i style="font-size: 18px" class="fa-light fa-volleyball"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 5]) }}"><i style="font-size: 18px" class="fa-light fa-paintbrush-pencil"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 6]) }}"><i style="font-size: 18px" class="fa-light fa-hundred-points"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 7]) }}"><i style="font-size: 18px" class="fa-light fa-shapes"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 8]) }}"><i style="font-size: 18px" class="fa-light fa-clock"></i></a>
+        <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 10]) }}"><i style="font-size: 18px" class="fa-light fa-heart"></i></a>
         @if (Auth::user()->classe_active()->desactive_devenir_eleve == 0)
-        <a href="enfants/{{$enfant->id}}/items?section_id=9"  ><i style="font-size: 18px" class="fa-light fa-child-reaching"></i></a>
+          <a href="{{ route('items', ['enfant_id' => $enfant->id, 'section_id' => 9]) }}"  ><i style="font-size: 18px" class="fa-light fa-child-reaching"></i></a>
         @endif
         
     </div>
-
-  @endif  
+  @endif
+  @if ($type == "synthese")
+    <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">        
+        <small><a href="{{ route('syntheseDesAcquis', ['enfant_id' => $enfant->id]) }}" style="font-size: 14px; padding-top: 7px">Synthèse des acquis</a></small>
+    </div>
+  @endif
   @if ($type == "reussite")
     <div class="footer p-2 d-flex justify-item-around position-relative"  style="background-color: var(--main-color)">
-        <a href="enfants/{{$enfant->id}}/cahierV2" style="font-size: 14px; padding-top: 7px"  ><i class="fa-light fa-notes me-2"></i>Mon cahier de réussites</a>
+        <a href="{{ route('cahierV2', ['enfant_id' => $enfant->id]) }}" style="font-size: 14px; padding-top: 7px"><i class="fa-light fa-notes me-2"></i>Mon cahier de réussites</a>
     </div>
   @endif
   @if ($type == "avatar")
     <div class="footer p-2 d-flex justify-item-around"  style="background-color: var(--main-color)">        
-        <a href="enfants/{{$enfant->id}}/avatar"  class="btn_modif_avatar {{$kE == 0 ? 'modif_avatar' : null}}" >Modifier mon avatar</a>
+        <a href="{{ route('avatarEleve', ['enfant_id' => $enfant->id]) }}" class="btn_modif_avatar {{$kE == 0 ? 'modif_avatar' : null}}" >Modifier mon avatar</a>
     </div>
   @endif
   @if ($type == "affectation_groupe")
-  @php
   
-  $groupes = json_decode(Auth::user()->groupes(), true);
+    @php
+  
+    $groupes = json_decode(Auth::user()->groupes(), true);
       if (is_null($enfant->groupe) || !$lesgroupes) {
           $c = 'transparent';
       } else {
         $c = $groupes[$enfant->groupe]['backgroundColor'];
       }
 
-
-      
-
     @endphp
+
     <div class="footer p-2 d-flex h-auto; height: 300px !important"  style="background-color: var(--background-color)" data-enfant="{{$enfant->id}}">        
       <div class="d-flex w-100  justify-content-around flex-wrap {{$kE == 0 ? 'choix_groupe' :  null}}">
         @if ($groupes)
-        @foreach ($groupes as $key=>$terme)
-            <div class="badge_termes {{ $enfant->groupe != null && $key == $enfant->groupe ? 'active' : null}}" data-textColor="{{$terme['textColor']}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}; ; border: 1px solid {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
-        @endforeach
+          @foreach ($groupes as $key=>$terme)
+              <div class="badge_termes {{ $enfant->groupe != null && $key == $enfant->groupe ? 'active' : null}}" data-textColor="{{$terme['textColor']}}" data-color="{{$terme['backgroundColor']}}" style="background-color: {{$terme['backgroundColor']}}; color: {{$terme['textColor']}}; ; border: 1px solid {{$terme['textColor']}}" data-order="{{$key}}">{{$terme['name']}}</div>
+          @endforeach
         @endif
     </div>
     </div>
@@ -124,4 +127,3 @@ if (!is_null($enfant->groupe) && $lesgroupes) {
   @endif
 
 </div>
-
