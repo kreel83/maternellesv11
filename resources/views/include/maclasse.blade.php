@@ -190,9 +190,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-           <a href="{{route('maclasse.impression',['type' => 'alpha'])}}" class="btnAction w-100">Par ordre alphabétique</a>
-           <a href="{{route('maclasse.impression',['type' => 'date'])}}"class="btnAction w-100">Par année de naissance</a>
-           <a href="{{route('maclasse.impression',['type' => 'groupe'])}}"class="btnAction w-100">Par groupe</a>
+           <a target="_blank" href="{{route('maclasse.impression',['type' => 'alpha'])}}" class="btnAction w-100">Par ordre alphabétique</a>
+           <a target="_blank" href="{{route('maclasse.impression',['type' => 'date'])}}"class="btnAction w-100">Par année de naissance</a>
+           <a target="_blank" href="{{route('maclasse.impression',['type' => 'groupe'])}}"class="btnAction w-100">Par groupe</a>
         </div>
         <div class="modal-footer">
             <button type="button" class="btnAction" data-bs-dismiss="modal">Fermer</button>
