@@ -55,9 +55,10 @@
 
         <form class="mt-xl-5" action="{{ route('saveFiche') }}" method="post" id="form1" enctype="multipart/form-data"
             data-message={{ Session::has('message') }}>
+        @csrf
             <div class="row">
                 <div class="col-xs-12 col-xl-6 pe-4">
-                    @csrf
+                    
 
                     @if ($duplicate)
                         <input type="hidden" name="section_id" value="{{ $section->id }}">

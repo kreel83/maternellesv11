@@ -129,9 +129,9 @@
         <h5 class="modal-title" id="exampleModalLabel" style="color: var(--main-color)">Évènement</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="{{route('event')}}" method="POST" >
-            <div class="modal-body">
-                @csrf
+      <form action="{{route('event')}}" method="POST">
+      @csrf
+            <div class="modal-body">                
                 <input type="hidden" name="user_id" value="{{Auth::id()}}" >
                 <input type="hidden" name="id" value="new" >
                 <div class="form-floating my-3">

@@ -104,7 +104,6 @@
         <div class="gridcadre grid4 d-flex justify-content-center align-items-center tuto_periodicite">
             <div class="gridTitre">Périodicité</div>
             <form action="{{route('periode_save')}}" class="w-50 d-flex flex-column justify-content-center align-items-center">
-            @csrf
                 <select name="periode" class="custom-select">
                     <option value="1" {{$periodes == 1 ? 'selected' : null}}>Année entère</option>
                     <option value="2" {{$periodes == 2 ? 'selected' : null}}>Par semestre</option>
@@ -137,7 +136,6 @@
             <div class="gridTitre">Acquis avec aide</div>
             <div class="mt-3">
                 <form action="{{route('activeAcquisAide')}}" class=" d-flex flex-column justify-content-center align-items-center">
-                @csrf
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="activeAcquisAide" name="activeAcquisAide" {{Auth::user()->classe_active()->desactive_acquis_aide == 0 ? 'checked' : null}}>
                         <label class="form-check-label text-center" for="activeAcquisAide">Afficher les activités <strong>acquises avec aide</strong> <br>dans le cahier de réussites</label>
@@ -151,7 +149,6 @@
             <div class="gridTitre">Domaine optionnel</div>
             <div class="mt-3">
                 <form action="{{route('activeDomaineEleve')}}" class=" d-flex flex-column justify-content-center align-items-center">
-                @csrf
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="activeDomaineEleve" name="activeDomaineEleve" {{Auth::user()->classe_active()->desactive_devenir_eleve == 0 ? 'checked' : null}}>
                         <label class="form-check-label text-center" for="activeDomaineEleve">Activer le domaine " Devenir élève " <br>dans le cahier de réussites</label>
@@ -167,7 +164,6 @@
             <div class="mt-3">
                 {{-- <form action="{{route('AffichageTextesFichesDansPDF')}}" class=" d-flex flex-column justify-content-center align-items-center"> --}}
                 <form action="{{ route('AffichageTextesFichesDansPDF') }}" class="d-flex flex-column">
-                @csrf
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="textes_dans_pdf" id="textes_dans_pdf_bottom" value="bottom" {{Auth::user()->classe_active()->textes_dans_pdf == 'bottom' ? 'checked' : null}}>
                         <label class="form-check-label" for="textes_dans_pdf_bottom">

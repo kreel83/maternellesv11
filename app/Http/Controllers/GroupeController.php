@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\verifieCreationDeGroupe;
 use App\Models\Enfant;
 use App\Models\Classe;
 use Illuminate\Database\Eloquent\Collection;
@@ -99,7 +100,7 @@ class GroupeController extends Controller
             ->with('id', $id);
     }
 
-    public function editerUnGroupePost(Request $request) {
+    public function editerUnGroupePost(verifieCreationDeGroupe $request) {
         $token = md5(Auth::id().$request->id.env('HASH_SECRET'));
         if($token != $request->token) {
             return redirect()->route('groupe')
@@ -107,14 +108,6 @@ class GroupeController extends Controller
                 ->with('msg', 'Token invalide.');
         }
 
-        $request->validate([
-            'groupName' => ['string', 'max:12', 'nullable'],
-        ], [
-            'groupName.required' => 'Le nom est obligatoire.',
-            'groupName.max' => 'Le nom est limité à 12 caractères.',
-        ]);
-
-        // $classe = Classe::find(session()->get('id_de_la_classe'));
         $classe = session('classe_active');
         $groupes = $classe->groupes;
         if ($groupes) {
