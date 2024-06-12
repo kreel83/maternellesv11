@@ -26,6 +26,7 @@ class VerifieDDNTelechargementPdf extends FormRequest
             'mois' => ['required', 'integer', 'numeric'],
             'annee' => ['required', 'integer', 'numeric'],
             'token' => ['required', 'string'],
+            'attestation'=> ['required'],
             'g-recaptcha-response' => 'required|captcha',
         ];
     }
@@ -38,10 +39,17 @@ class VerifieDDNTelechargementPdf extends FormRequest
     public function messages(): array
     {
         return [
-            'jour' => 'Veuillez indiquer le jour de naissance.',
-            'mois' => 'Veuillez indiquer le mois de naissance.',
-            'annee' => 'Veuillez indiquer l\'année de naissance.',
-            'token' => 'Token invalide.',
+            'jour.required' => 'Veuillez indiquer le jour de naissance.',
+            'jour.integer' => 'Jour incorrect.',
+            'jour.numeric' => 'Jour incorrect.',
+            'mois.required' => 'Veuillez indiquer le mois de naissance.',
+            'mois.integer' => 'Mois incorrect.',
+            'mois.numeric' => 'Mois incorrect.',
+            'annee.required' => 'Veuillez indiquer l\'année de naissance.',
+            'annee.integer' => 'Année incorrecte.',
+            'annee.numeric' => 'Année incorrecte.',
+            'token.required' => 'Token invalide.',
+            'attestation.required' => 'Veuillez cocher la case attestant prendre connaissance du document.',
             'g-recaptcha-response' => 'Merci de vérifier que vous n\'êtes pas un robot.',
         ];
     }

@@ -22,6 +22,9 @@
                         @if ($type == "evaluation")
                             <span class="help position-absolute" data-location="eleves.liste.evaluation"><i class="fa-light fa-message-question"></i></span>
                         @endif
+                        @if ($type == "synthese")
+                            <span class="help position-absolute" data-location="eleves.liste.synthese"><i class="fa-light fa-message-question"></i></span>
+                        @endif
                         @if ($type == "reussite")
                             <span class="help position-absolute" data-location="eleves.liste.reussite"><i class="fa-light fa-message-question"></i></span>
                         @endif
