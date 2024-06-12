@@ -41,6 +41,7 @@ class Classe extends Model
 
     public function maitresse() {
         return $this->belongsTo('App\Models\User','user_id');
+    }
 
     public function isEmails() {
         $mails = array();
