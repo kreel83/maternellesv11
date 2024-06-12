@@ -73,15 +73,9 @@
     </ol>
 </nav>
 
-@if($id == 'new')
-    <h4 class="mb-3 text-center" style="color: var(--main-color)">Je crée un nouveau groupe</h4>
-@else
-    <h4 class="mb-3 text-center" style="color: var(--main-color)">Je modifie un groupe</h4>
-@endif
 
-@include('include.display_msg_error')
 
-<style>
+{{-- <style>
     .create_container {
         margin: 0 15rem;
         display: flex;
@@ -97,72 +91,83 @@
             margin: 0 8px;
     }
 }
-</style>
-<div class="create_container mt-5">
+</style> --}}
+<div class="create_container">
 
-    <div class="alert alert-info" style="background-color: var(--second-color); color: white; border: none">
-        Vous pouvez donner un nom à votre groupe, choisir une couleur de texte et de fond.<br> 
-        Si vous n'indiquez pas de nom, le groupe sera juste une couleur.
-        
+    <div class="card w-75 mx-auto">
+        <div class="card-header">
+            @if($id == 'new')
+                <h4 class="text-center mt-2" style="color: var(--main-color)">Je crée un nouveau groupe</h4>
+            @else
+                <h4 class="text-center mt-2" style="color: var(--main-color)">Je modifie un groupe</h4>
+            @endif
+        </div>
+        <div class="card-body p-2"> 
 
-    </div>
-
-    <style>
-        #apercuGroupe {
-            border: 1px solid grey;
-            border-radius: 15px;
-            line-height: 30px;
-            font-weight: bolder;
-        }
-    </style>
-    <form action="{{ route('editerUnGroupePost') }}" method="POST">
-    @csrf
-
-        <input type="hidden" name="id" value="{{ $id }}">
-        <input type="hidden" name="token" value="{{ $token }}">
-
-        <div class="d-flex flex-column mb-3">
-            <div class="p-2">
-                <label for="">Nom du groupe (facultatif)</label>
-                <input type="text" class="form-control p-2" name="groupName" id="groupName" value="{{ $id != 'new' ? $groupes[$id]['name'] : null}}">
-                <small for="groupName">12 caractères maximum</small>
+            <div class="alert alert-info mt-2">
+                <i class="fa-solid fa-circle-info me-1"></i> Pour choisir une couleur de texte et de fond, cliquez dans les cercles de couleur.       
             </div>
-            <div class="d-flex flex-row my-5 align-items-center">
-                <div class="p-2 me-3 align-middle">
-                    <input type="color" value="{{ $id != 'new' ? $groupes[$id]['textColor'] : '#000000' }}" name="groupTextColor" id="groupTextColor" class="style2"/><br>
-                    <small for="groupTextColor">Couleur du texte</small>
-                </div>
-                <div class="p-2">
-                    <input type="color" value="{{ $id != 'new' ? $groupes[$id]['backgroundColor'] : '#ffffff' }}" name="groupBackgroundColor" id="groupBackgroundColor" class="style2"/><br>
-                    <small for="groupBackgroundColor">Couleur du fond</small>
-                </div>
-                <div class="p-2 text-center">
-                    <div>
-                        <input class="text-center" type="text" value="{{ $id != 'new' ? $groupes[$id]['name'] : null }}" 
-                        @if($id != 'new')
-                            style="background: {{ $groupes[$id]['backgroundColor'] }}; color: {{ $groupes[$id]['textColor'] }}" 
-                        @endif
-                        class="custom-input br-40" id="apercuGroupe" readonly>
+
+            <style>
+                #apercuGroupe {
+                    border: 1px solid grey;
+                    border-radius: 15px;
+                    line-height: 30px;
+                    font-weight: bolder;
+                }
+            </style>
+
+            @include('include.display_msg_error')
+
+            <form action="{{ route('editerUnGroupePost') }}" method="POST">
+            @csrf
+
+                <input type="hidden" name="id" value="{{ $id }}">
+                <input type="hidden" name="token" value="{{ $token }}">
+
+                <div class="d-flex flex-column mb-3">
+                    <div class="p-2">
+                        <label class="form-label" for="groupName">Nom du groupe</label>
+                        <input type="text" class="form-control p-2" name="groupName" id="groupName" value="{{ $id != 'new' ? $groupes[$id]['name'] : null}}" aria-describedby="nameHelp" autofocus required>
+                        <div class="form-text" for="nameHelp">12 caractères maximum</div>
                     </div>
-                    <small>Apercu de mon groupe</small>
+                    <div class="d-flex flex-row mb-3 align-items-center">
+                        <div class="p-2 me-3 align-middle">
+                            <input type="color" value="{{ $id != 'new' ? $groupes[$id]['textColor'] : '#000000' }}" name="groupTextColor" id="groupTextColor" class="style2"/><br>
+                            <small for="groupTextColor">Couleur du texte</small>
+                        </div>
+                        <div class="p-2">
+                            <input type="color" value="{{ $id != 'new' ? $groupes[$id]['backgroundColor'] : '#ffffff' }}" name="groupBackgroundColor" id="groupBackgroundColor" class="style2"/><br>
+                            <small for="groupBackgroundColor">Couleur du fond</small>
+                        </div>
+                        <div class="p-2 text-center">
+                            <div>
+                                <input class="text-center" type="text" value="{{ $id != 'new' ? $groupes[$id]['name'] : null }}" 
+                                @if($id != 'new')
+                                    style="background: {{ $groupes[$id]['backgroundColor'] }}; color: {{ $groupes[$id]['textColor'] }}" 
+                                @endif
+                                class="custom-input br-40" id="apercuGroupe" readonly>
+                            </div>
+                            <small>Apercu de mon groupe</small>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <div class="d-flex w-100 justify-content-between">
+
+                    <div class="mb-3">
+                        <a href="{{ route('groupe') }}" class="btnAction inverse">Annuler</a>
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btnAction">{{ ($id == 'new') ? 'Créer le groupe' : 'Sauvegarder' }}</button>
+                    </div>
+                        
+                </div>
+
+            </form>
         </div>
-
-
-
-        <div class="d-flex w-100 justify-content-between">
-
-            <div class="mb-5">
-                <button type="submit" class="btnAction">{{ ($id == 'new') ? 'Créer le groupe' : 'Sauvegarder' }}</button>
-            </div>
-    
-            <div class="mb-3">
-                <a href="{{ route('groupe') }}" class="btnAction inverse">Annuler</a>
-            </div>
-        </div>
-
-    </form>
+    </div>
     
 </div>
 </div>

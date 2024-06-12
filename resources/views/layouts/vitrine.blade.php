@@ -139,6 +139,7 @@
                             <h5 class="title">Inscription à la Newsletter</h5>
                             <p>Entrez votre email et recevez les dernières mises à jour et informations sur notre plateforme.</p>
                             <form class="footer-form" action="#" method="post">
+                            @csrf
                                 <input type="text" placeholder="Entrez votre email" name="email">
                                 <button type="submit">
                                     <span class="shape"></span>
