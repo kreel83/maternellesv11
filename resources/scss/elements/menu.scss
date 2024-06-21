@@ -19,6 +19,21 @@
         width: 185px;
     }
 
+    #customMailStatus {
+        #customMail {
+            background-color: white;
+            }        
+                .ql-toolbar {
+                    background-color: #FC8265;
+                    color: white;
+                }
+                .ql-stroke, .ql-picker-label:before {
+                    stroke: #f8f5f5;
+                }
+                .ql-fill, .ql-picker-label:before {
+                    fill: #f8f5f5; /* Change la couleur de remplissage des icônes */
+                  }
+    }
 
 
 

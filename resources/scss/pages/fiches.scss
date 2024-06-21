@@ -166,11 +166,23 @@
     padding: 4px 24px;
     border: none;
     outline: none;
-    cursor: pointer;  
+    cursor: pointer; 
+    &.valide {
+        color: white;
+        background: linear-gradient(to bottom, #13f513, #187418);
+        border: none;
+        &:hover {
+          color: white !important;  
+          background: linear-gradient(to bottom, #187418, #13f513);
+        }
+    } 
     &.inverse {
         color: var(--main-color);
         background: white;
         border: 1px solid var(--main-color); 
+        &:hover {
+          color: white !important;  
+        }
     }  
     &:hover {
         background: linear-gradient(180deg, var(--third-color) 0%, var(--main-color) 100%); 
@@ -259,7 +271,7 @@
            font-weight: bolder;
         }
         &:hover {
-            padding: 5px;
+            // padding: 5px;
             font-weight: bolder;
             
         }
