@@ -34,6 +34,12 @@ class Classe extends Model
         return $d->civilite ?? null;
     }
 
+    public function has_gs() {
+        return  Enfant::where('psmsgs','gs')->where('classe_id', session('classe_active')->id)->first();
+        
+        
+    }
+
 
     public function classe() {
         return $this->hasMany('App\Models\Enfant','classe_id');

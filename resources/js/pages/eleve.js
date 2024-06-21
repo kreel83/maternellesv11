@@ -409,6 +409,56 @@ const photo_eleve = () => {
 
     })
 
+    $(document).on('change','.radioSynthese', function() {
+        var id = $('#synthese').data('id')
+        var result = $(this).val()
+        $(this).closest('tr').find('.left').removeClass('orangered')
+        $.ajax({
+            method: 'POST',
+            url: '/app/enfants/'+id+'/synthese/acquis',
+            data : {
+                id: id,
+                result: result
+                },
+                success: function(data) {
+                    console.log(data)
+                }
+            })
+    })
+                    
+    $(document).on('click','#btnReady', function() {
+        var id = $('#synthese').data('id')
+        var ready = $(this).prop('checked')
+        $.ajax({
+            method: 'POST',
+            url: '/app/enfants/'+id+'/synthese/ready',
+            data : {
+                ready: ready
+            },
+            success: function(data) {
+                $('#btnSend').toggleClass('d-none')
+            }
+        })
+    })
+
+    $(document).on('click','.savingBtn', function() {
+        var texte = $(this).closest('tr').find('.observation').val()
+        var id = $('#synthese').data('id')
+        var section = $(this).data('section')
+
+        $.ajax({
+            method: 'POST',
+            url: '/app/enfants/'+id+'/synthese/observation',
+            data : {
+                texte: texte,
+                section: section
+            },
+            success: function(data) {
+                console.log(data)
+            }
+        })
+    })
+
     $(document).on('click', '#confirmationModal #upgradeResultat', function(event) {
         var id = $(this).attr('data-id')
         console.log('id')

@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 @php
+// session('classe_active')->has_gs();
     $hasClassActive = 'disabled';
     // if (session()->get('id_de_la_classe')) {
     if (session('classe_active')) {
@@ -101,9 +102,12 @@ use Illuminate\Support\Facades\Auth;
                                         <a href="{{ route('enfants', ['type' => 'evaluation']) }}" class="nav-item nav-link  {{$hasClassActive}} ">J'évalue mes élèves</a>
                                         <a href="{{ route('activites')}}" class="nav-item nav-link  {{$hasClassActive}} ">J'évalue par activités</a>
                                         <a href="{{ route('enfants', ['type' => 'avatar']) }}" class="nav-item nav-link {{ $menu == 'avatar' ? 'active' : null }}  {{$hasClassActive}}">Je choisis les avatars</a>
+
+                                        
                                         <a href="{{ route('enfants', ['type' => 'affectation_groupe']) }}" class="nav-item nav-link {{ $menu == 'affectation_groupe' ? 'active' : null }}  {{$hasClassActive}}">J'affecte mes groupes</a>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <a href="{{ route('enfants', ['type' => 'synthese']) }}" class="nav-item nav-link  {{$hasClassActive}} ">Synthèse des acquis scolaires</a>
+                                        
+                                        {{-- <li><hr class="dropdown-divider"></li> --}}
+                                        
                                     @endif
                                     <li>
                                         <hr class="dropdown-divider">
@@ -122,6 +126,9 @@ use Illuminate\Support\Facades\Auth;
                                     <div class="dropdown-menu">
                                         <a href="{{ route('enfants', ['type' => 'reussite']) }}" class="nav-item nav-link {{ $menu == 'reussite' ? 'active' : null }}">J'édite les cahiers de réussites</a>
                                         <a href="{{ route('cahierManage') }}" class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère les cahiers de réussites</a>
+
+                                        <a href="{{ route('enfants', ['type' => 'synthese']) }}" class="nav-item nav-link  {{$hasClassActive}} {{session('classe_active')->has_gs() ? null : 'disabled'}}" disabled>Synthèse des acquis scolaires</a>
+                             
                                     </div>
                                 </div>
                             @endif

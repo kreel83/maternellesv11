@@ -133,9 +133,13 @@ class EnfantController extends Controller
             abort(404);
         }
        
-        if (in_array($request->type, ["evaluation", "reussite", "synthese"])) {
+        if (in_array($request->type, ["synthese"])) {
+            $enfants = Enfant::where('classe_id', session('classe_active')->id)->where("psmsgs","gs");
+        } 
+        if (in_array($request->type, ["evaluation", "reussite"])) {
             $enfants = Enfant::where('classe_id', session('classe_active')->id)->where("reussite_disabled",0);
-        } else {
+        } 
+        if (in_array($request->type, ['avatar','affectation_groupe'])) {
             $enfants = Enfant::where('classe_id', session('classe_active')->id);
             if (!$this->maclasseactuelle->groupes && $request->type == 'affectation_groupe') {
                 return view('enfants.no_groupes')->with('type', $request->type);

@@ -13,6 +13,8 @@ const selectItem = (Modal, quill) => {
         })
     })
 
+
+
     $('.selectSectionItem').on('click', function() {
         $('.noFiche').addClass('d-none') 
         const section = $(this).data('value');

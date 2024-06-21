@@ -21,6 +21,7 @@ use App\Http\Controllers\TutoController;
 use App\Http\Controllers\PartageController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\SyntheseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,7 +139,11 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/cahiers/get_apercu/{enfant_id}', [CahierController::class, 'get_apercu'])->name('get_apercu');
     Route::get('/enfants/{enfant_id}/cahier/savepdf', [CahierController::class, 'savepdf'])->name('savepdf');
     Route::get('/enfants/{enfant_id}/avatar', [EnfantController::class, 'avatarEleve'])->name('avatarEleve');
-    Route::get('/enfants/{enfant_id}/synthese', [EnfantController::class, 'syntheseDesAcquis'])->name('syntheseDesAcquis');
+    Route::get('/enfants/{enfant_id}/synthese', [SyntheseController::class, 'index'])->name('syntheseDesAcquis');
+    Route::post('/enfants/{enfant_id}/synthese/acquis', [SyntheseController::class, 'save_synthese'])->name('syntheseDesAcquis_save_synthese');
+    Route::post('/enfants/{enfant_id}/synthese/observation', [SyntheseController::class, 'save_observation'])->name('syntheseDesAcquis_save_observation');
+    Route::post('/enfants/{enfant_id}/synthese/ready', [SyntheseController::class, 'save_ready'])->name('syntheseDesAcquis_save_ready');
+    Route::get('/enfants/{enfant_id}/synthese/view', [SyntheseController::class, 'view'])->name('syntheseDesAcquis_views');
     //Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf
     Route::get('/enfants/{enfant_id}/removeGroupe', [EnfantController::class, 'removeGroupe'])->name('removeGroupe'); // voir doublon avec seepdf
     Route::get('/cahier/{reussite_id}/definitif', [CahierController::class, 'definitif'])->name('definitif');

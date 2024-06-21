@@ -28,7 +28,7 @@
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lines-leaning"></i></span>
             <select name="psmsgs" id="psmsgs" value="{{$eleve['psmsgs']}}" class="form-select" style="font-size: 14px; color: grey">
-                <option value="">Choississez une section</option>
+                <option value="">Choisissez une section</option>
                 <option value="ps" {{$eleve['psmsgs'] == 'ps' ? 'selected' : null}}>Petite section</option>    
                 <option value="ms" {{$eleve['psmsgs'] == 'ms' ? 'selected' : null}}>Moyenne section</option>    
                 <option value="gs" {{$eleve['psmsgs'] == 'gs' ? 'selected' : null}}>Grande section</option>    
