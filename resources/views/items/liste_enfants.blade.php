@@ -70,6 +70,7 @@
 </style>
 
 <div class="row">
+    <input type="hidden" id="fiche_selected" value="{{$fiche->id}}">
     <div class="col-md-1">
         <div class='selectSectionFiche selectSectionItem '
             style="width: 80px;background-color: {{ $section->color }}; border-radius: 8px" title="{{$section->name}}"            
@@ -97,9 +98,12 @@
             <input class="form-check-input mx-1 " type="checkbox" value="classe" data-groupe="classe" checked>
             <label class="form-check-label mx-3" for="inlineCheckbox1">Toute la classe</label>
           </div>
-
-
-          @foreach ($mesgroupes as $groupe)
+              
+              
+              @foreach ($mesgroupes as $groupe)
+          {{-- @php
+              dd($groupe);
+              @endphp --}}
             <div class="form-check me-3" style="border-radius:8px; background-color: {{$groupe['backgroundColor']}}; color: {{$groupe['textColor']}}">
                 <input class="form-check-input mx-1" type="checkbox" id="inlineCheckbox2" value="g{{$groupe['id']}}" data-groupe="groupe" checked>
                 <label class="form-check-label mx-3" for="inlineCheckbox2">{{$groupe['name']}}</label>
@@ -164,7 +168,7 @@
 
                         <td>
                             <div class="groupe-terme mt-3 {{ isset($groupe) ? null : 'd-none' }}"
-                                style="background-color: {{ $groupe['backgroundColor'] ?? '' }}; color:{{ $groupe['textColor'] ?? '' }}">
+                                style="background-color: {{ $groupe['backgroundColor'] ?? '' }}; color:{{ $groupe['textColor'] ?? '' }};border: 1px solid {{$groupe["textColor"] ?? 'transparent'}}">
                                 {{ $groupe['name'] ?? '' }}</div>
 
                         </td>

@@ -43,6 +43,7 @@ class ActiviteController extends Controller
     }
 
     public function activite_post(Request $request) {
+        
         $item = Item::find($request->fiche);
         
         foreach ($request->liste as $enfant) {

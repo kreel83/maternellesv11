@@ -142,6 +142,7 @@ Route::middleware(['auth','user'])->group(function () {
     Route::get('/enfants/{enfant_id}/synthese', [SyntheseController::class, 'index'])->name('syntheseDesAcquis');
     Route::post('/enfants/{enfant_id}/synthese/acquis', [SyntheseController::class, 'save_synthese'])->name('syntheseDesAcquis_save_synthese');
     Route::post('/enfants/{enfant_id}/synthese/observation', [SyntheseController::class, 'save_observation'])->name('syntheseDesAcquis_save_observation');
+    Route::post('/enfants/{enfant_id}/synthese/observation_seule', [SyntheseController::class, 'save_observation_seule'])->name('syntheseDesAcquis_save_observation_seule');
     Route::post('/enfants/{enfant_id}/synthese/ready', [SyntheseController::class, 'save_ready'])->name('syntheseDesAcquis_save_ready');
     Route::get('/enfants/{enfant_id}/synthese/view', [SyntheseController::class, 'view'])->name('syntheseDesAcquis_views');
     //Route::get('/enfants/{id}/cahier/apercu', [CahierController::class, 'apercu'])->name('apercu'); // voir doublon avec seepdf

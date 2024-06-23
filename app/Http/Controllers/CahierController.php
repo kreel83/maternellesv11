@@ -313,6 +313,7 @@ class CahierController extends Controller
 
         $utils = new Utils;
         $periode = $utils->periode($enfant, $periode);
+ 
 
         $pdf = PDF::loadView('pdf.reussite5', [
             'reussiteSections' => $rs,

@@ -436,12 +436,34 @@ const photo_eleve = () => {
                 ready: ready
             },
             success: function(data) {
-                $('#btnSend').toggleClass('d-none')
+                $('#btnView').toggleClass('d-none')
             }
         })
     })
 
-    $(document).on('click','.savingBtn', function() {
+    $(document).on('click','.savingBtn_observation', function() {
+        var section = $(this).data('section')
+        var id = $('#synthese').data('id')
+        var liste = []
+        $('textarea[data-section="'+6+'"]').each((index, el) => {
+            var result = {}
+            result.id = $(el).data('ligne')
+            result.observation = $(el).val()
+            liste.push(result)
+        })
+        $.ajax({
+            method: 'POST',
+            url: '/app/enfants/'+id+'/synthese/observation_seule',
+            data : {
+                liste: liste,
+                section: section
+            },
+            success: function(data) {
+                console.log(data)
+            }
+        })
+    })
+    $(document).on('click','.savingBtn_note', function() {
         var texte = $(this).closest('tr').find('.observation').val()
         var id = $('#synthese').data('id')
         var section = $(this).data('section')
