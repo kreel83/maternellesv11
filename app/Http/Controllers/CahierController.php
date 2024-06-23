@@ -235,7 +235,7 @@ class CahierController extends Controller
             ->leftJoin('categories','categories.id', '=', 'items.categorie_id')
             ->join('sections','sections.id','resultats.section_id')
             ->where('enfant_id', $id)
-            ->where('periode', $periode)
+            ->where('periode', '<=', $periode)
             ->orderBy('sections.ordre')
             ->orderBy('resultats.section_id')
             ->orderBy('items.categorie_id')
@@ -313,7 +313,9 @@ class CahierController extends Controller
 
         $utils = new Utils;
         $periode = $utils->periode($enfant, $periode);
- 
+
+        $annee_scolaire = Utils::calcul_annee_scolaire_formated();
+
 
         $pdf = PDF::loadView('pdf.reussite5', [
             'reussiteSections' => $rs,
@@ -330,38 +332,12 @@ class CahierController extends Controller
             'ecole' => $ecole,
         ]);
 
-        $pdf->add_info('Title', 'Cahier de réussites de '.ucfirst($enfant->prenom));
+        $pdf->add_info('Title', 'Cahier de réussites de '.ucfirst($enfant->prenom).' - '.$enfant->section().' - '.$periode.' '.$annee_scolaire);
         if($state == 'see') {
-            return $pdf->stream('Cahier de réussites de '.ucfirst($enfant->prenom.'.pdf'));
+            return $pdf->stream('Cahier de réussites de '.ucfirst($enfant->prenom).' - '.$enfant->section().' - '.$periode.' '.$annee_scolaire.'.pdf');
         } else {
-            return $pdf->download('Cahier de réussites de '.ucfirst($enfant->prenom.'.pdf'));
+            return $pdf->download('Cahier de réussites de '.ucfirst($enfant->prenom).' - '.$enfant->section().' - '.$periode.' '.$annee_scolaire.'.pdf');
         }
-
-
-        // if ($state == 'see') {
-
-        //     $pdf = PDF::loadView('pdf.reussite5', [
-        //         'reussiteSections' => $rs,
-        //         'customClass' => implode(' ', $customClass),
-        //         'reussite' => $reussite,
-        //         'resultats' => $resultats,
-        //         'sections' => $s,
-        //         'enfant' => $enfant,
-        //         'equipes' => $equipes,
-        //         'user' => $user,
-        //         'classeUsers' => $classeUsers,
-        //         'periode' => $periode,
-        //         'classe' => $classe,
-        //         'ecole' => $ecole,
-        //     ]);
-        //     // download PDF file with download method
-        //     $pdf->add_info('Title', 'Cahier de réussites de '.ucfirst($enfant->prenom));
-        //     return $pdf->stream('Cahier de réussites de '.ucfirst($enfant->prenom.'.pdf'));
-        // } else {
-        //     $pdf = PDF::loadView('pdf.reussite', ['reussite' => $reussite, 'resultats' => $resultats, 'sections' => $s, 'enfant' => $enfant, 'user' => $user, 'equipes' => $equipes]);
-        //     $result = Storage::disk('public')->put($rep.'/pdf/'.$n.'.pdf', $pdf->output());    
-        //     return redirect()->back()->with('success','le fichier a bien été enregistré');
-        // }
 
     }
 

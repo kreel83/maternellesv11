@@ -155,6 +155,8 @@ Route::middleware(['auth','user'])->group(function () {
     // Route::get('/enfants/cahier/envoi', [CahierController::class, 'envoiCahier'])->name('envoiCahier');
     // Route::post('/enfants/cahier/envoi', [CahierController::class, 'envoiCahierPost'])->name('envoiCahier.post');
         
+    Route::get('/enfants/synthese/manage', [SyntheseController::class, 'syntheseManage'])->name('syntheseManage');
+    Route::post('/enfants/synthese/manage', [SyntheseController::class, 'syntheseManagePost'])->name('syntheseManage.post');    
     Route::get('/enfants/cahier/manage', [PdfController::class, 'cahierManage'])->name('cahierManage');
     Route::post('/enfants/cahier/manage', [PdfController::class, 'cahierManagePost'])->name('cahierManage.post');
     Route::get('/enfants/cahier/apercu/{token}/{enfant_id}/{periode}', [CahierController::class, 'seepdf'])->name('cahierApercu');
