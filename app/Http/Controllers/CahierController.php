@@ -313,7 +313,9 @@ class CahierController extends Controller
 
         $utils = new Utils;
         $periode = $utils->periode($enfant, $periode);
+
         $annee_scolaire = Utils::calcul_annee_scolaire_formated();
+
 
         $pdf = PDF::loadView('pdf.reussite5', [
             'reussiteSections' => $rs,

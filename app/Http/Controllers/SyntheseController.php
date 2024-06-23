@@ -27,9 +27,33 @@ class SyntheseController extends Controller
 
     public function index($id) {
         $enfant = Enfant::find($id);
-        $notes = Synthese::where('enfant_id', $id)->whereNotNull('acquis')->pluck('acquis','acquis_scolaires_section_id')->toArray();
-        $acquis = AcquisScolairesSection::all()->groupBy('acquis_scolaire_id');
+        
+        [$acquis, $autres] = $this->calcul_synthese($id);
+        
 
+        $cahier_synthese = CahiersSynthese::where('enfant_id', $id)->first();
+        $observations = $cahier_synthese ? $cahier_synthese->observations : [];
+        $ready = $cahier_synthese ? $cahier_synthese->ready : false;
+        $mail_send = $cahier_synthese && $cahier_synthese->send_at ? $cahier_synthese->send_at : null;
+        
+               
+                    
+        return view('synthese.index')
+            ->with('acquis', $acquis)
+            ->with('autres', $autres)
+            ->with('ready', $ready)
+            ->with('mail_send', $mail_send)
+            ->with('observations', $observations)
+            ->with('enfant', $enfant);
+    }
+
+    private function calcul_synthese($id) {
+        $enfant = Enfant::find($id);
+        $notes = Synthese::where('enfant_id', $id)->whereNull('observation')->whereNotNull('acquis')->pluck('acquis','acquis_scolaires_section_id')->toArray();
+        $acquis = AcquisScolairesSection::where('type','boolean')->get()->groupBy('acquis_scolaire_id');
+        $autres = AcquisScolairesSection::where('type','string')->get()->groupBy('acquis_scolaire_id');
+        $obs = Synthese::where('enfant_id', $id)->whereNull('acquis')->whereNotNull('observation')->pluck('observation','acquis_scolaires_section_id')->toArray();
+        
         // Transformer le résultat en tableau avec les rôles comme clés
         $acquis = $acquis->mapWithKeys(function ($items, $key) {
             
@@ -45,51 +69,36 @@ class SyntheseController extends Controller
             }                    
         }
 
-        $cahier_synthese = CahiersSynthese::where('enfant_id', $id)->first();
-        $observations = $cahier_synthese ? $cahier_synthese->observations : [];
-        $ready = $cahier_synthese ? $cahier_synthese->ready : false;
-        $mail_send = $cahier_synthese && $cahier_synthese->send_at ? $cahier_synthese->send_at : null;
-        
-        
-               
-                    
-        return view('synthese.index')
-            ->with('acquis', $acquis)
-            ->with('ready', $ready)
-            ->with('mail_send', $mail_send)
-            ->with('observations', $observations)
-            ->with('enfant', $enfant);
+        // Transformer le résultat en tableau avec les rôles comme clés (observations)
+        $autres = $autres->mapWithKeys(function ($items, $key) {
+            
+            return [$key => $items->toArray()];
+        })->toArray();
+        foreach ($autres as $k1=>$arr) {
+            foreach ($arr as $k2=>$aa) {
+                if (array_key_exists($aa['id'], $obs)) {                    
+                    $autres[$k1][$k2]['observation'] = $obs[$aa['id']];
+                    } else {
+                    $autres[$k1][$k2]['observation'] = null;
+                }                    
+            }                    
+        }
+
+        return [$acquis, $autres];
     }
 
 
     public function view($enfant_id) {
         $enfant = Enfant::find($enfant_id);
-        $notes = Synthese::where('enfant_id', $enfant_id)->whereNotNull('acquis')->pluck('acquis','acquis_scolaires_section_id')->toArray();
-        $acquis = AcquisScolairesSection::all()->groupBy('acquis_scolaire_id');
-
-        // Transformer le résultat en tableau avec les rôles comme clés
-        $acquis = $acquis->mapWithKeys(function ($items, $key) {
-            
-            return [$key => $items->toArray()];
-        })->toArray();
-        foreach ($acquis as $k1=>$arr) {
-            foreach ($arr as $k2=>$aa) {
-                if (array_key_exists($aa['id'], $notes)) {
-                    
-                    $acquis[$k1][$k2]['note'] = $notes[$aa['id']];
-                    } else {
-                    $acquis[$k1][$k2]['note'] = null;
-
-                }
-                    
-            }
-                    
-        }
+        
+        [$acquis, $autres] = $this->calcul_synthese($enfant_id);
+        
 
         $cahier_synthese = CahiersSynthese::where('enfant_id', $enfant_id)->first();
         $observations = $cahier_synthese ? $cahier_synthese->observations : [];
         $data = [
             'acquis' => $acquis,
+            'autres' => $autres,
             'observations' => $observations,
             'enfant' => $enfant,
             'ecole' => Auth::user()->name_ecole()->nom_etablissement
@@ -120,6 +129,35 @@ class SyntheseController extends Controller
         }
 
         return 'ok';
+    }
+
+    public function save_observation_seule($enfant_id, Request $request) {
+        
+        foreach ($request->liste as $ligne) {
+            $search = Synthese::where('enfant_id', $enfant_id)->where('acquis_scolaires_section_id', $ligne['id'])->first();
+            if ($search) {
+                if ($ligne['observation']) {
+                    $search->observation = $ligne['observation'];
+                    $search->updated_at = Carbon::now();
+                    $search->save();
+                } else {    
+                    $search->delete();
+                }
+
+            } else {
+                $search = new Synthese();
+                $search->acquis_scolaires_section_id = $ligne['id'];
+                $search->enfant_id = $enfant_id;
+                $search->acquis = null;
+                $search->observation = $ligne['observation'];
+                $search->created_at = Carbon::now();
+                $search->updated_at = Carbon::now();
+                $search->save();
+            
+            }
+                
+        }
+        return 'done';
     }
 
     public function save_ready($enfant_id, Request $request) {

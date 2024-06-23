@@ -15,18 +15,24 @@
         text-align: left !important;
     }
 
+    .observation {
+        border-color: orangered;
+        resize: none;
+        font-size: 12px;
+        min-height: 100px;
+    }
+
 
     
 
     .full-height {
-        height: 100%;
+        
         width: 100%;
-        min-height: 100% !important;
+        min-height: calc(100% - 25px) !important;
         border: 1px solid orangered;
         font-size: 12px;
         text-align: left;
         padding: 8px;
-        border-radius: 6px
     }
     .full-height.full-height:focus {
         border-width: 2px !important;
@@ -54,10 +60,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: lightgreen; /* Juste pour illustrer */
     display: flex;
     align-items: center;
     justify-content: center;
+    }
+
+    .btnAction.synthese {
+        border-radius: 0% !important;
+        padding: 2px 0;
     }
 
 </style>
@@ -73,7 +83,7 @@
                     </div>
                     <div>
                         @if ($ready)
-                        <button class="btnAction {{$mail_send ? 'valide' : null}} {{!$ready ? 'd-none' : null}}"  id="btnSend"><i class="fa-solid fa-paper-plane"></i></button>   
+                        {{-- <button class="btnAction {{$mail_send ? 'valide' : null}} {{!$ready ? 'd-none' : null}}"  id="btnSend"><i class="fa-solid fa-paper-plane"></i></button>    --}}
                         <a target="_blank" href="{{route('syntheseDesAcquis_views',['enfant_id' => $enfant->id])}}" class="btnAction"  id="btnView"><i class="fa-solid fa-eye"></i></a>   
                         @endif
                     </div>                    
@@ -100,14 +110,13 @@
                 <td>  <input class="form-check-input radioSynthese" type="radio" name="ligne{{$key}}-0" value="{{$acquis[$key][0]['id']}}-1" {{$acquis[$key][0]['note'] === 1 ? 'checked' : null}}></td>
                 <td>  <input class="form-check-input radioSynthese" type="radio" name="ligne{{$key}}-0" value="{{$acquis[$key][0]['id']}}-2" {{$acquis[$key][0]['note'] === 2 ? 'checked' : null}}></td>                
                 <td rowspan="{{sizeof($section) }}" class="position-relative p-0">
-                    <div class="container_observation">
+                    <div class="container_observation d-flex flex-column">
 
                         <textarea class="full-height observation"  >{{$observations[$key]  ?? null}}</textarea>
+                        <button data-section="{{$key}}" class="btnAction synthese w-100 m-0 savingBtn_note" style="font-size: 12px"><i class="fas fa-save me-2"></i>Sauvegarder</button>
                     </div>
                 </td>
-                <td class="saving">
-                    <button class="btnAction savingBtn" data-section="{{$key}}" ><i class="fas fa-save"></i></button>
-                </td>
+
             </tr> 
             @foreach ($section as $k=>$ligne )
                 @if ($k != 0)
@@ -123,6 +132,39 @@
 
         @endforeach
 
+    </table>
+    <table class="table table-bordered">
+        @foreach ($autres as $key=>$section)
+
+            <tr>
+                <td class="text-center" colspan="2">{{AcquisScolaire::getDescriptionSection($key)}}</td>
+             
+            </tr>
+
+            @foreach ($section as $k=>$ligne )
+               
+                <tr>
+                    <td class="left">{{$ligne['description']}}</td>
+                    <td class="p-0 m-0">
+                        <div class="d-flex flex-column">
+                            <textarea class="observation" style="width: 100%" data-ligne="{{$ligne['id']}}" data-section="{{$key}}">{{$ligne['observation']}}</textarea>
+                           
+                            </div>
+                            </td>
+                            
+                            
+                            </tr>       
+                            
+                            @endforeach
+                            <tr >
+                                <td style="background-color: transparent !important; outline: none !important"></td>
+                                <td style="background-color: transparent !important" class="p-0">
+                                    <button data-section="{{$key}}" class="btnAction synthese w-100 m-0 savingBtn_observation" style="font-size: 12px"><i class="fas fa-save me-2"></i>Sauvegarder</button>
+
+                                </td>
+            </tr>
+
+        @endforeach
     </table>
 </div>
 

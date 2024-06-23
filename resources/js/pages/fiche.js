@@ -1,4 +1,4 @@
-import { Modal } from 'bootstrap'
+import { Modal, Toast } from 'bootstrap'
 
 const selectSectionFiche = (ficheSelect) => {
 
@@ -51,7 +51,7 @@ const selectSectionFiche = (ficheSelect) => {
         $('.classe_dashboard input:checked').each((index, el) => {
             liste.push($(el).data('enfant'))
         })
-        var fiche = $('.liste_line').data('fiche')
+        var fiche = $('#fiche_selected').val()
         $.ajax({
             method: 'POST',
             url: '/app/activite',
@@ -60,10 +60,16 @@ const selectSectionFiche = (ficheSelect) => {
                 fiche: fiche
             },
             success:function(data) {
-                console.log(data)
+                var toast = new Toast(document.getElementById('ToastInfo'), {})
+                $('#ToastInfo .toast-body').text("Les activités ont bien été affectées")
+                toast.show()
+                setTimeout(() => {
+                    toast.dispose()
+                    window.location.href="/app/activites"
+                }, 2000);
             }
         })
-        console.log(liste)
+       
 
     })
 

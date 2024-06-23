@@ -251,7 +251,7 @@ jeducpliquelafiche()
 jemodifielafiche()
 initFiche()
 var ficheSelect;
-selectSectionFiche(ficheSelect)
+selectSectionFiche(ficheSelect, Toast)
 selectFiche(Modal)
 choixTypeFiches(Modal)
 choixFiltre(Modal, quill4)
