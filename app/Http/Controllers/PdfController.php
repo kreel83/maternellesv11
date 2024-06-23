@@ -193,7 +193,7 @@ class PdfController extends Controller
                 }
             }
         }
-        //dd($statutCahier);
+
         return view('cahiers.manage2')
             ->with('maxPeriode', $maxPeriode)
             ->with('statutCahier', $statutCahier)

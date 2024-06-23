@@ -634,37 +634,16 @@
         <div class="body">
 
             @php
+                $compteur_resultats = 1;
                 $compteur = 0;
                 $compteur_max = 35;
             @endphp
 
             @foreach($resultats as $k => $section)
-
-            @php
-                $lignes = explode('</p>', $reussiteSections[$k]);
-                $compteur = $compteur + 5;              // titre de la section
-                // $compteur = $compteur + count($lignes) - 1; // nombre de lignes - 1
-            @endphp
-            @if ($compteur > $compteur_max)
-                </div>  <!-- class="body"> -->
-                </div> <!-- class="page"> -->
-                <div class="page-break"></div>
-                <div class="page">
-                <div class="body">
+{{-- {{ $reussiteSections[$k] }} --}}
                 @php
-                    $compteur = 0;
-                @endphp
-            @endif
-
-            <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
-            
-            @foreach ($lignes as $ligne)
-                <div class="text-container">
-                    {{-- {!! str_replace(chr(13), '<br>', $ligne) !!} --}}
-                    {!! $ligne !!}
-                </div>
-                @php
-                    $compteur = $compteur + 1;
+                    $lignes = explode('</p>', $reussiteSections[$k]);
+                    $compteur = $compteur + 5;              // titre de la section
                 @endphp
                 @if ($compteur > $compteur_max)
                     </div>  <!-- class="body"> -->
@@ -676,10 +655,33 @@
                         $compteur = 0;
                     @endphp
                 @endif
-            @endforeach
 
-            {{-- <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div> --}}
-            <br>
+                <div class="{{ $sections[$k]['class'] }}">{!! $sections[$k]['name'] !!}</div>
+
+                @foreach ($lignes as $ligne)
+                    <div class="text-container">
+                        {!! $ligne.'</p>' !!}
+                    </div>
+                    @php
+                        $compteur = $compteur + 1;
+                    @endphp
+                    @if ($compteur > $compteur_max && $compteur_resultats != count($resultats))
+                        </div>  <!-- class="body"> -->
+                        </div> <!-- class="page"> -->
+                        <div class="page-break"></div>
+                        <div class="page">
+                        <div class="body">
+                        @php
+                            $compteur = 0;
+                        @endphp
+                    @endif
+                @endforeach
+
+                {{-- <div class="text-container">{!! str_replace(chr(13), '<br>', $reussiteSections[$k]) !!}</div> --}}
+                <br>
+                @php
+                    $compteur_resultats = $compteur_resultats + 1;
+                @endphp
 
             @endforeach
             

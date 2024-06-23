@@ -117,7 +117,7 @@ use Illuminate\Support\Facades\Auth;
                             </div>
 
                             @php
-                                $params = in_array($menu, ['manage', 'reussite']);
+                                $params = in_array($menu, ['manage', 'reussite', 'manage_synthese']);
                             @endphp
 
                             @if (session('is_enfants'))
@@ -128,7 +128,7 @@ use Illuminate\Support\Facades\Auth;
                                         <a href="{{ route('cahierManage') }}" class="nav-item nav-link {{ $menu == 'manage' ? 'active' : null }}">Je gère les cahiers de réussites</a>
 
                                         <a href="{{ route('enfants', ['type' => 'synthese']) }}" class="nav-item nav-link  {{$hasClassActive}} {{session('classe_active')->has_gs() ? null : 'disabled'}}" disabled>Synthèse des acquis scolaires</a>
-                             
+                                        {{-- <a href="{{ route('syntheseManage') }}" class="nav-item nav-link {{ $menu == 'manage_synthese' ? 'active' : null }}">Je gère les synthèses</a> --}}
                                     </div>
                                 </div>
                             @endif
