@@ -74,7 +74,7 @@
 
 <div id="synthese" class="my-5 py-5" data-id="{{$enfant->id}}">
    <table class="table" id="syntheseArray">
-        <tr>
+        <tr style="text-align: center">
             <th style="width: 40%">
                 <div class="d-flex align-items-center justify-content-between px-5">
                     <div class="form-check form-switch d-flex justify-content-center pt-4 me-3">
@@ -90,9 +90,9 @@
                 </div>
 
             </th>
-            <th style="width: 10%">{{$enfant->prenom}} ne réussit pas encore</th>
-            <th style="width: 10%">{{$enfant->prenom}} est en voie de réussite</th>
-            <th style="width: 10%">{{$enfant->prenom}} réussit souvent</th>
+            <th style="width: 10%">{{$enfant->prenom}}<br> ne réussit pas encore</th>
+            <th style="width: 10%">{{$enfant->prenom}}<br> est en voie de réussite</th>
+            <th style="width: 10%">{{$enfant->prenom}}<br> réussit<br> souvent</th>
             <th style="width: 30%">Points forts et besoins à prendre en compte</th>
             
         </tr>
