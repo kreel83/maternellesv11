@@ -567,7 +567,8 @@
                             </div>
                             <div class="bas_carte">
                                 @if ($resultat['image_nom'])
-                                    <img width="160" height="120" src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
+                                    {{-- <img width="160" height="120" src="{{public_path('storage/items/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card"> --}}
+                                    <img width="160" height="120" src="{{public_path('storage/items_160x120/'.$resultat["section_id"].DIRECTORY_SEPARATOR.$resultat['image_nom'])}}" class="image_card">
                                 @else
                                     <img src="{{public_path('storage/items/none/'.$resultat["section_id"].'-none-color.png')}}" class="image_card">
                                 @endif

@@ -11,6 +11,8 @@ use Artisan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class SuperAdminController extends Controller
 {
@@ -92,6 +94,45 @@ class SuperAdminController extends Controller
             ->with('doublon', $doublon)
             ->with('tom', $tom)
             ->with('lucie', $lucie);
+    }
+
+    public function thumbnails() {
+
+        $width = 160;
+        $height = 120;
+
+        $files = Storage::allFiles('items');
+        $destinationFolder = 'items_160x120';
+
+        foreach ($files as $path) {
+            $file = pathinfo($path);
+            //    dd($file);
+            $fileName = $file['filename'] . '.' . $file['extension'];
+
+            if($file['extension']=='png' || $file['extension']=='jpg' || $file['extension']=='gif') {
+
+                $mainFile = $file['dirname'].'/'.$file['basename'];
+                
+                $path = str_replace('items', $destinationFolder, $file['dirname']);
+
+                $thumb_image = \Image::make(Storage::disk('public')->get($mainFile))->resize($width, $height, function ($constraint) {
+
+                $constraint->aspectRatio();
+
+                $constraint->upsize();
+
+                })->encode($file['extension'], 70);
+
+                if($thumb_image->width() != 147) {
+                    Log::info('pas 800x600 : '.$mainFile);
+                }
+
+                Storage::disk('public')->put($path.'/' . $fileName, $thumb_image);  
+                //break;
+            }
+
+        }
+
     }
 
 }
