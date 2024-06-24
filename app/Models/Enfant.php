@@ -104,9 +104,14 @@ class Enfant extends Model
 
     public function __construct()
     {
-        $gs = session('classe_active')->groupes;
-        $this->groupes =json_decode($gs, true);
+        if(session('classe_active')) {
+            $gs = session('classe_active')->groupes;
+            $this->groupes = json_decode($gs, true);
+        } else {
+            $this->groupes = null;
+        }
     }
+
     public function item() {
           return $this->hasmany('App\Models\Item');
     }

@@ -79,3 +79,4 @@ Route::get('/waitpayment', [TestController::class, 'waitingStripe']);
 Route::get('/sa-chargevacances', [SuperAdminController::class, 'chargementDesVacancesScolaires']);
 Route::get('/sa-checkenv', [SuperAdminController::class, 'checkEnvVariables']);
 Route::get('/sa-items', [SuperAdminController::class, 'checkItems']);
+Route::get('/sa-thumb', [SuperAdminController::class, 'thumbnails']);
