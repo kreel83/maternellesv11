@@ -109,6 +109,7 @@ class Enfant extends Model
             $this->groupes = json_decode($gs, true);
         } else {
             $this->groupes = null;
+            
         }
     }
 
