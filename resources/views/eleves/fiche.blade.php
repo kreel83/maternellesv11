@@ -45,11 +45,11 @@
         <li class="breadcrumb-item active" aria-current="page">Mon élève</li>
     </ol>
 
-    <div class="gx-0 navigateur" style="width: 100%; height: 100vh; max-height: 100vh">
+    <div class="gx-0 navigateur">
         {{-- <img src="{{asset('img/deco/fond_1.jpg')}}" alt="" class="position-absolute" width="100%" style="top:0;bottom:0;left:0;right:0"> --}}
 
      <div class="row justify-content-center">
-            <div class="col-12 col-xl-6 mb-5 eleveContainerModif" style="border: 1px solid var(--main-color); border-radius: 8px">
+            <div class="col-12 col-xl-6 mb-5 eleveContainerModif gx-0" >
                 <style>
                     .croix {
                         right: 50px; top: 50px; cursor: pointer;

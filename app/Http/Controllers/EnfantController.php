@@ -337,6 +337,7 @@ class EnfantController extends Controller
     public function enregistre(Request $request) {
 
         $request->validate([
+            'genre' => ['required'],
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'ddn' => ['required', 'date'],
@@ -345,7 +346,9 @@ class EnfantController extends Controller
             'mail2' => ['email:rfc,dns','nullable'],
             'mail3' => ['email:rfc,dns','nullable'],
             'mail4' => ['email:rfc,dns','nullable'],
+            'periode' => 'required_if:eleveCoursAnnee,1'
         ], [
+            'genre.required' => 'Le genre est obligatoire.',
             'nom.required' => 'Le nom est obligatoire.',
             'nom.max' => 'Le nom est limité à 255 caractères.',
             'prenom.required' => 'Le prénom est obligatoire.',
@@ -355,7 +358,8 @@ class EnfantController extends Controller
             'mail1.email' => 'Le mail principal ne semble pas correct',
             'mail2.email' => 'Le mail secondaire ne semble pas correct',
             'mail3.email' => 'Le mail additionnel ne semble pas correct',
-            'mail4.email' => 'Le mail additionnel ne semble pas correct'
+            'mail4.email' => 'Le mail additionnel ne semble pas correct',
+            'periode' => "La période n'est pas renseignée",
         ]);
 
         $datas = $request->except(['_token']);
@@ -415,6 +419,7 @@ class EnfantController extends Controller
             'mail2' => null,
             'mail3' => null,
             'mail4' => null,
+            'periode' => 1
         );
         $resultats = new Resultat();
         $sections = Section::all();
@@ -454,7 +459,8 @@ class EnfantController extends Controller
             'mail2' => $enfant->mail2,
             'mail3' => $enfant->mail3,
             'mail4' => $enfant->mail4,
-            'classe_n1_id' => $enfant->classe_n1_id
+            'classe_n1_id' => $enfant->classe_n1_id,
+            'periode' => $enfant->periode
         );
         $resultats = Resultat::resultatsPourUnEleve($enfant_id);
         $sections = Section::all();
