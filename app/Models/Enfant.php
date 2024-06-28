@@ -252,7 +252,7 @@ class Enfant extends Model
 
     public static function listeDesEleves() {
         // $liste = self::where('classe_id', session()->get('id_de_la_classe'))->get();
-        return self::where('classe_id', session('classe_active')->id)->get();
+        return self::where('classe_id', session('classe_active')->id)->orderBy('prenom')->get();
     }
 
     public function tableauDesMailsEnfant() {
